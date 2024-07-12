@@ -1,102 +1,191 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from frasgout12.his.huawei.com (frasgout12.his.huawei.com [14.137.139.154])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60454136678;
-	Wed,  3 Jul 2024 20:28:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A371212DDAF
+	for <lkmm@lists.linux.dev>; Fri, 12 Jul 2024 08:25:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=14.137.139.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720038519; cv=none; b=SqLn0V9d5+M4lcPP70clq3JmxE77EwpzjZEJ6E1efSg/0Vp64D9NO3t32xDBhyj60chSZPVdTvW6sBcNOAIygqlc9HRcpsr9MZGwmIRzfzkfAHy3UrznxtLIDJ4/uZb4Olq8Kaxz4zkUg7sJhRjmWjoIbwEhVjefZFWWIuSWMQ4=
+	t=1720772758; cv=none; b=gXneIiA0WK/nvSNdYAV31rgqr7ADpMljl7BBNZDPK5TsuKrSVyjBmRvrOCoYMWIms5nK3/gnbtecYCcJTY7R3vhn0J0hAZ79WmLd2FQbIZtFwXIwC0V3jNX0ozRxDb+ph+wcyO3PcErOge7o1+YUcp4giMPD8ZV42l4aMGutFgc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720038519; c=relaxed/simple;
-	bh=rWOY/eZHQ6NmW7nwT3ZK+FVd8KVqf6h8wNDPai7bkt8=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=haUe80xRSfL2Wg/enH9mUVgT/5/zhLYnhDv58KMIbqYrcOOcGW0Mcu+/AWLfLhvNheNUpdowRJD++tUK+DKxx27kkXoyUG5/0VjB4fcnGRi02QvUUITOt18J4yM4LEFilvyn4Vhu4FsSl4Rgrk9v/mQQvtIG57AUPMUFq2GeNf4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=BW4YyhxP; arc=none smtp.client-ip=10.30.226.201
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="BW4YyhxP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD64FC2BD10;
-	Wed,  3 Jul 2024 20:28:38 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1720038518;
-	bh=rWOY/eZHQ6NmW7nwT3ZK+FVd8KVqf6h8wNDPai7bkt8=;
-	h=Date:From:To:Cc:Subject:Reply-To:References:In-Reply-To:From;
-	b=BW4YyhxPLFzfu81I5dST6ulSzXWgpJu2KCnP4Iw+8bLOXS7wdQSYotQCs8rzcD3/Q
-	 vb+cn3KEsgIg6IXXKBElT22JcGij+Iqn6DMfIV3C+Ar/+EPQGo1p7N6tjzI6IlhcV9
-	 zOAS6ZZNQlcLWPB2WgJP6maKJ2Lk91Fk6tIe42gxoHtaG52p/uh/LH+fQ3W1t7+k0F
-	 heOcYOlRaV9uIQy5dvHA1LQyrf2WCBvPueVIGD/miZbmxrPaCz2t6LapUW2xA2NB1u
-	 5Xxb+PW9JTP2Ha9PCUHyjsCdeeL59hI9+N1dDbLa34bCec4Qk3WaL2R8f5oJ8kbPwy
-	 hSmTTJXrozlFw==
-Received: by paulmck-ThinkPad-P17-Gen-1.home (Postfix, from userid 1000)
-	id 4F5D3CE0BC3; Wed,  3 Jul 2024 13:28:38 -0700 (PDT)
-Date: Wed, 3 Jul 2024 13:28:38 -0700
-From: "Paul E. McKenney" <paulmck@kernel.org>
-To: Boqun Feng <boqun.feng@gmail.com>
-Cc: linux-kernel@vger.kernel.org, lkmm@lists.linux.dev,
-	Alan Stern <stern@rowland.harvard.edu>,
-	Andrea Parri <parri.andrea@gmail.com>,
-	Will Deacon <will@kernel.org>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Nicholas Piggin <npiggin@gmail.com>,
-	David Howells <dhowells@redhat.com>,
-	Jade Alglave <j.alglave@ucl.ac.uk>,
-	Luc Maranget <luc.maranget@inria.fr>,
-	Akira Yokosawa <akiyks@gmail.com>,
-	Daniel Lustig <dlustig@nvidia.com>,
-	Joel Fernandes <joel@joelfernandes.org>, linux-arch@vger.kernel.org,
-	Miguel Ojeda <ojeda@kernel.org>,
-	Alex Gaynor <alex.gaynor@gmail.com>,
-	Wedson Almeida Filho <wedsonaf@gmail.com>,
-	Gary Guo <gary@garyguo.net>,
-	=?iso-8859-1?Q?Bj=F6rn?= Roy Baron <bjorn3_gh@protonmail.com>,
-	Benno Lossin <benno.lossin@proton.me>,
-	Andreas Hindborg <a.hindborg@samsung.com>,
-	Alice Ryhl <aliceryhl@google.com>, rust-for-linux@vger.kernel.org,
-	Jonas Oberhauser <jonas.oberhauser@huaweicloud.com>,
-	Hernan Ponce de Leon <hernan.poncedeleon@huaweicloud.com>,
-	Puranjay Mohan <puranjay@kernel.org>
-Subject: Re: [PATCH] MAINTAINERS: Add the dedicated maillist info for LKMM
-Message-ID: <eb163e7c-6c1a-4691-bf23-c8603d4d426b@paulmck-laptop>
-Reply-To: paulmck@kernel.org
-References: <20240703162616.78278-1-boqun.feng@gmail.com>
+	s=arc-20240116; t=1720772758; c=relaxed/simple;
+	bh=96SPCQiSgOxraPa5O4Ow8Hx1Id2vJ8/LG/Es8VJOpsc=;
+	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
+	 In-Reply-To:Content-Type; b=cHcYX9lSO+g/ApiKwe4+XdWH8GTogDeg3xoQngDCdH4zzxc9+o+uKI0ML5krFZn+s87fpq7g1EaaIha09hF2rm2H5XBCcuPhmZM4t4SVbp9mpw4ZqAR4HDottWnyKrj7tlrwnuNmojjWHY4HWNWB3byY7WmtcpJJgJLpGGbTcGg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=huaweicloud.com; spf=pass smtp.mailfrom=huaweicloud.com; arc=none smtp.client-ip=14.137.139.154
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=huaweicloud.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huaweicloud.com
+Received: from mail.maildlp.com (unknown [172.18.186.51])
+	by frasgout12.his.huawei.com (SkyGuard) with ESMTP id 4WL3WF4jlSz9v7JY
+	for <lkmm@lists.linux.dev>; Fri, 12 Jul 2024 15:43:53 +0800 (CST)
+Received: from mail02.huawei.com (unknown [7.182.16.27])
+	by mail.maildlp.com (Postfix) with ESMTP id 807D8140970
+	for <lkmm@lists.linux.dev>; Fri, 12 Jul 2024 16:07:11 +0800 (CST)
+Received: from [10.221.99.159] (unknown [10.221.99.159])
+	by APP2 (Coremail) with SMTP id GxC2BwDXe90i5JBmuR9PAQ--.17117S2;
+	Fri, 12 Jul 2024 09:07:10 +0100 (CET)
+Message-ID: <d6a76968-d10b-c60b-245a-f58116eca6af@huaweicloud.com>
+Date: Fri, 12 Jul 2024 10:06:55 +0200
 Precedence: bulk
 X-Mailing-List: lkmm@lists.linux.dev
 List-Id: <lkmm.lists.linux.dev>
 List-Subscribe: <mailto:lkmm+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:lkmm+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240703162616.78278-1-boqun.feng@gmail.com>
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.13.0
+Subject: Re: [PATCHv2 0/4] tools/memory-model: Define more of LKMM in
+ tools/memory-model
+From: Hernan Ponce de Leon <hernan.poncedeleon@huaweicloud.com>
+To: Alan Stern <stern@rowland.harvard.edu>,
+ Jonas Oberhauser <jonas.oberhauser@huaweicloud.com>
+Cc: paulmck@kernel.org, parri.andrea@gmail.com, will@kernel.org,
+ peterz@infradead.org, boqun.feng@gmail.com, npiggin@gmail.com,
+ dhowells@redhat.com, j.alglave@ucl.ac.uk, luc.maranget@inria.fr,
+ akiyks@gmail.com, dlustig@nvidia.com, joel@joelfernandes.org,
+ urezki@gmail.com, quic_neeraju@quicinc.com, frederic@kernel.org,
+ linux-kernel@vger.kernel.org, lkmm@lists.linux.dev
+References: <20240604152922.495908-1-jonas.oberhauser@huaweicloud.com>
+ <88c1ebc8-4805-4d1d-868a-889043899979@rowland.harvard.edu>
+ <bbc3bd10-3bf5-4b1a-a275-dd328c42e307@huaweicloud.com>
+ <f93f140b-13bc-4d00-adee-46cc1c016480@rowland.harvard.edu>
+ <4792c9e7-2594-3600-5d82-4cb1443fe670@huaweicloud.com>
+Content-Language: en-US
+In-Reply-To: <4792c9e7-2594-3600-5d82-4cb1443fe670@huaweicloud.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID:GxC2BwDXe90i5JBmuR9PAQ--.17117S2
+X-Coremail-Antispam: 1UD129KBjvJXoW3AryDZr4UWw1fJw4DXFyrJFb_yoW7XFWUp3
+	yUXFZ5Jr45Za18C3ykCF4UXw1rKrWqy3y5XrWrt3y3ZF43KFW5Jay0ywsF9F9rAr1Iqw1k
+	ZF17JF98CF9rAaUanT9S1TB71UUUUUUqnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+	9KBjDU0xBIdaVrnRJUUUB2b4IE77IF4wAFF20E14v26ryj6rWUM7CY07I20VC2zVCF04k2
+	6cxKx2IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4
+	vEj48ve4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Jr0_JF4l84ACjcxK6xIIjxv20xvEc7Cj
+	xVAFwI0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW8JVWxJwA2z4x0Y4vEx4A2jsIEc7CjxV
+	AFwI0_Gr0_Gr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l5I8CrVACY4xI64kE6c02F40E
+	x7xfMcIj6xIIjxv20xvE14v26r1j6r18McIj6I8E87Iv67AKxVWUJVW8JwAm72CE4IkC6x
+	0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lF7I21c0EjII2zVCS5cI20VAGYxC7M4IIrI8v6xkF
+	7I0E8cxan2IY04v7Mxk0xIA0c2IEe2xFo4CEbIxvr21l42xK82IYc2Ij64vIr41l4I8I3I
+	0E4IkC6x0Yz7v_Jr0_Gr1lx2IqxVAqx4xG67AKxVWUJVWUGwC20s026x8GjcxK67AKxVWU
+	GVWUWwC2zVAF1VAY17CE14v26r4a6rW5MIIYY7kG6xAYrwCIc40Y0x0EwIxGrwCI42IY6x
+	IIjxv20xvE14v26r1j6r1xMIIF0xvE2Ix0cI8IcVCY1x0267AKxVW8JVWxJwCI42IY6xAI
+	w20EY4v20xvaj40_WFyUJVCq3wCI42IY6I8E87Iv67AKxVWUJVW8JwCI42IY6I8E87Iv6x
+	kF7I0E14v26r4j6r4UJbIYCTnIWIevJa73UjIFyTuYvjxU1db1UUUUU
+X-CM-SenderInfo: xkhu0tnqos00pfhgvzhhrqqx5xdzvxpfor3voofrz/
 
-On Wed, Jul 03, 2024 at 09:26:16AM -0700, Boqun Feng wrote:
-> A dedicated mail list is created for Linux kernel memory model
-> discussion, and this could help more people to track down memory model
-> related discussion, since oftentimes memory model discussions would
-> involve a broader audience. Hence add the list information into the
-> maintainers entry of LKMM.
+On 6/10/2024 10:38 AM, Hernan Ponce de Leon wrote:
+> On 6/8/2024 3:00 AM, Alan Stern wrote:
+>> On Wed, Jun 05, 2024 at 09:58:42PM +0200, Jonas Oberhauser wrote:
+>>>
+>>>
+>>> Am 6/4/2024 um 7:56 PM schrieb Alan Stern:
+>>>> Just to clarify: Your first step encompasses patches 1 - 3, and the
+>>>> second step is patch 4.  The first three patches can be applied now, 
+>>>> but
+>>>> the last one needs to wait until herd7 has been updated.  Is this all
+>>>> correct?
+>>>
+>>> Exactly.
+>>
+>> With regard to patch 4, how much thought have you and Hernan given to
+>> backward compatibility?  Once herd7 is changed, old memory model files
+>> will no longer work correctly.
+>>
 > 
-> Signed-off-by: Boqun Feng <boqun.feng@gmail.com>
-
-Queued for v6.12, thank you!
-
-							Thanx, Paul
-
-> ---
->  MAINTAINERS | 1 +
->  1 file changed, 1 insertion(+)
+> Honestly, I did not think much about this (at least until Akira 
+> mentioned in my PR). My hope was that changes to the model could be 
+> back-ported to previous kernel versions. However that would not work for 
+> existing out-of-tree files.
 > 
-> diff --git a/MAINTAINERS b/MAINTAINERS
-> index 3f2047082073..a77bd8a49cd9 100644
-> --- a/MAINTAINERS
-> +++ b/MAINTAINERS
-> @@ -12796,6 +12796,7 @@ R:	Daniel Lustig <dlustig@nvidia.com>
->  R:	Joel Fernandes <joel@joelfernandes.org>
->  L:	linux-kernel@vger.kernel.org
->  L:	linux-arch@vger.kernel.org
-> +L:	lkmm@lists.linux.dev
->  S:	Supported
->  T:	git git://git.kernel.org/pub/scm/linux/kernel/git/paulmck/linux-rcu.git dev
->  F:	Documentation/atomic_bitops.txt
-> -- 
-> 2.39.3 (Apple Git-146)
+> My question is: is compatibility with out-of-tree files really a 
+> requirement? I would argue that if people are using outdated models, 
+> they may get wrong results anyway. This is because some of the changes 
+> done to lkmm during the last few years change the expected result for 
+> some litmus tests.
 > 
+> Hernan
+
+I pushed some new changes to the code for backward compatibility [1]. 
+The series also needs the patch at the bottom to properly deal with the 
+ordering of failing CAses and non-returning operations. With it, all 
+litmus tests return the correct result (the script needs to pass option 
+-lkmm-legacy false to herd).
+
+Implementation-wise, there are two things that I would like to have:
+
+- atomic_add_unless implementation is treated different than the rest 
+and it is one of the few remaining cases where memory orderings are 
+hardcoded [2]. I would like to define it in the .def file as
+
+	atomic_add_unless(X,V,U) __atomic_add_unless{ONCE}(X,V,U)
+
+- "deref" and "lderef" instructions seems to add a "rb_dep" fence. None 
+of the model files (.cat, .def, .bell) refers to "rb_dep" so this looks 
+useless to me. However, I never checked the details of these 
+dereferencing instruction so I might be missing something. Maybe Paul 
+can clarify.
+
+Hernan
+
+[1] https://github.com/herd/herdtools7/pull/865
+[2] https://github.com/herd/herdtools7/issues/868
+
+
+diff --git a/tools/memory-model/linux-kernel.def 
+b/tools/memory-model/linux-kernel.def
+index 001366ff3fb4..5a40c2cad39b 100644
+--- a/tools/memory-model/linux-kernel.def
++++ b/tools/memory-model/linux-kernel.def
+@@ -32,10 +32,10 @@ xchg(X,V)  __xchg{MB}(X,V)
+  xchg_relaxed(X,V) __xchg{ONCE}(X,V)
+  xchg_release(X,V) __xchg{RELEASE}(X,V)
+  xchg_acquire(X,V) __xchg{ACQUIRE}(X,V)
+-cmpxchg(X,V,W) __cmpxchg{MB}(X,V,W)
+-cmpxchg_relaxed(X,V,W) __cmpxchg{ONCE}(X,V,W)
+-cmpxchg_acquire(X,V,W) __cmpxchg{ACQUIRE}(X,V,W)
+-cmpxchg_release(X,V,W) __cmpxchg{RELEASE}(X,V,W)
++cmpxchg(X,V,W) __cmpxchg{MB,ONCE}(X,V,W)
++cmpxchg_relaxed(X,V,W) __cmpxchg{ONCE,ONCE}(X,V,W)
++cmpxchg_acquire(X,V,W) __cmpxchg{ACQUIRE,ONCE}(X,V,W)
++cmpxchg_release(X,V,W) __cmpxchg{RELEASE,ONCE}(X,V,W)
+
+  // Spinlocks
+  spin_lock(X) { __lock(X); }
+@@ -63,14 +63,14 @@ atomic_set(X,V) { WRITE_ONCE(*X,V); }
+  atomic_read_acquire(X) smp_load_acquire(X)
+  atomic_set_release(X,V) { smp_store_release(X,V); }
+
+-atomic_add(V,X) { __atomic_op(X,+,V); }
+-atomic_sub(V,X) { __atomic_op(X,-,V); }
+-atomic_and(V,X) { __atomic_op(X,&,V); }
+-atomic_or(V,X)  { __atomic_op(X,|,V); }
+-atomic_xor(V,X) { __atomic_op(X,^,V); }
+-atomic_inc(X)   { __atomic_op(X,+,1); }
+-atomic_dec(X)   { __atomic_op(X,-,1); }
+-atomic_andnot(V,X) { __atomic_op(X,&~,V); }
++atomic_add(V,X) { __atomic_op{NORETURN}(X,+,V); }
++atomic_sub(V,X) { __atomic_op{NORETURN}(X,-,V); }
++atomic_and(V,X) { __atomic_op{NORETURN}(X,&,V); }
++atomic_or(V,X)  { __atomic_op{NORETURN}(X,|,V); }
++atomic_xor(V,X) { __atomic_op{NORETURN}(X,^,V); }
++atomic_inc(X)   { __atomic_op{NORETURN}(X,+,1); }
++atomic_dec(X)   { __atomic_op{NORETURN}(X,-,1); }
++atomic_andnot(V,X) { __atomic_op{NORETURN}(X,&~,V); }
+
+  atomic_add_return(V,X) __atomic_op_return{MB}(X,+,V)
+  atomic_add_return_relaxed(V,X) __atomic_op_return{ONCE}(X,+,V)
+@@ -127,10 +127,10 @@ atomic_xchg(X,V) __xchg{MB}(X,V)
+  atomic_xchg_relaxed(X,V) __xchg{ONCE}(X,V)
+  atomic_xchg_release(X,V) __xchg{RELEASE}(X,V)
+  atomic_xchg_acquire(X,V) __xchg{ACQUIRE}(X,V)
+-atomic_cmpxchg(X,V,W) __cmpxchg{MB}(X,V,W)
+-atomic_cmpxchg_relaxed(X,V,W) __cmpxchg{ONCE}(X,V,W)
+-atomic_cmpxchg_acquire(X,V,W) __cmpxchg{ACQUIRE}(X,V,W)
+-atomic_cmpxchg_release(X,V,W) __cmpxchg{RELEASE}(X,V,W)
++atomic_cmpxchg(X,V,W) __cmpxchg{MB,ONCE}(X,V,W)
++atomic_cmpxchg_relaxed(X,V,W) __cmpxchg{ONCE,ONCE}(X,V,W)
++atomic_cmpxchg_acquire(X,V,W) __cmpxchg{ACQUIRE,ONCE}(X,V,W)
++atomic_cmpxchg_release(X,V,W) __cmpxchg{RELEASE,ONCE}(X,V,W)
+
+  atomic_sub_and_test(V,X) __atomic_op_return{MB}(X,-,V) == 0
+  atomic_dec_and_test(X)  __atomic_op_return{MB}(X,-,1) == 0
+

@@ -1,191 +1,84 @@
-Received: from frasgout12.his.huawei.com (frasgout12.his.huawei.com [14.137.139.154])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A371212DDAF
-	for <lkmm@lists.linux.dev>; Fri, 12 Jul 2024 08:25:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=14.137.139.154
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7EBA7346C;
+	Sun, 14 Jul 2024 16:28:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720772758; cv=none; b=gXneIiA0WK/nvSNdYAV31rgqr7ADpMljl7BBNZDPK5TsuKrSVyjBmRvrOCoYMWIms5nK3/gnbtecYCcJTY7R3vhn0J0hAZ79WmLd2FQbIZtFwXIwC0V3jNX0ozRxDb+ph+wcyO3PcErOge7o1+YUcp4giMPD8ZV42l4aMGutFgc=
+	t=1720974524; cv=none; b=bOdhNWPduTeBToNgoVJk2BUSrlZuFlNHuPBGZzgvYfRDmxBaaWJufwzA4dS2s5LtBzDSLJ1A8Q6YLFKKt9fJ6TYzfADKsX9cmdWvNLX59eFuakzrFhaCaKDfnshWsMcTotLYCAmx30X0t9Fd7xQq2CV/VuZb+K+fW6+FgpFUhPs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720772758; c=relaxed/simple;
-	bh=96SPCQiSgOxraPa5O4Ow8Hx1Id2vJ8/LG/Es8VJOpsc=;
-	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
-	 In-Reply-To:Content-Type; b=cHcYX9lSO+g/ApiKwe4+XdWH8GTogDeg3xoQngDCdH4zzxc9+o+uKI0ML5krFZn+s87fpq7g1EaaIha09hF2rm2H5XBCcuPhmZM4t4SVbp9mpw4ZqAR4HDottWnyKrj7tlrwnuNmojjWHY4HWNWB3byY7WmtcpJJgJLpGGbTcGg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=huaweicloud.com; spf=pass smtp.mailfrom=huaweicloud.com; arc=none smtp.client-ip=14.137.139.154
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=huaweicloud.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huaweicloud.com
-Received: from mail.maildlp.com (unknown [172.18.186.51])
-	by frasgout12.his.huawei.com (SkyGuard) with ESMTP id 4WL3WF4jlSz9v7JY
-	for <lkmm@lists.linux.dev>; Fri, 12 Jul 2024 15:43:53 +0800 (CST)
-Received: from mail02.huawei.com (unknown [7.182.16.27])
-	by mail.maildlp.com (Postfix) with ESMTP id 807D8140970
-	for <lkmm@lists.linux.dev>; Fri, 12 Jul 2024 16:07:11 +0800 (CST)
-Received: from [10.221.99.159] (unknown [10.221.99.159])
-	by APP2 (Coremail) with SMTP id GxC2BwDXe90i5JBmuR9PAQ--.17117S2;
-	Fri, 12 Jul 2024 09:07:10 +0100 (CET)
-Message-ID: <d6a76968-d10b-c60b-245a-f58116eca6af@huaweicloud.com>
-Date: Fri, 12 Jul 2024 10:06:55 +0200
+	s=arc-20240116; t=1720974524; c=relaxed/simple;
+	bh=YVh0TOFrc5B40PsDndvksJEx8IfAjErNBYJ/3kByK2M=;
+	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition; b=WlfEgsK7Gub5S4VklviTrFwjHJARhdn9j0tOgnNGbyppklGjlDj4mWd5zxZ5ALCYxroqPJyt4Dr0PaA5gl72+PVr+6mshdjTqjCTApCaMndm9im+ftKRFinEJZ1A+XQmz+r+oZUldwGFC0CAl7Yro9ZuyokpmQrt9xbQWILQ5fs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=kLqGDGKJ; arc=none smtp.client-ip=10.30.226.201
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="kLqGDGKJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 221FDC116B1;
+	Sun, 14 Jul 2024 16:28:44 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1720974524;
+	bh=YVh0TOFrc5B40PsDndvksJEx8IfAjErNBYJ/3kByK2M=;
+	h=Date:From:To:Cc:Subject:Reply-To:From;
+	b=kLqGDGKJ2KKxccVrx8HBp5UGlEVSv6V5UvacMXAmZVrTZsvPJ01Pvm83Inqy8cTg2
+	 VEfCEcmssIy1gSJ8fQrNiomJgVesKbgXe+w37/5YdhzIsHOx/JWunZsXY2r0bLUmVa
+	 OzFKiWkZBiY/oHtKHiOegd99GQYw6nQlP4LS8AcyTBBjlN76Hc+G6w/X65bjjH8ONC
+	 CodpcwddxmMIdDwzyxTaBe1C9JNYPNyppoLMX7aQcbwt8M2HTlo4L5dnBtmUadEM4d
+	 EPAWUg0WuwfPJj8ko5vny9/25nGSFo2UhKs1t78DNgHyyqN2hEVLvNDts5SkKKP/3y
+	 FKglO/dwWPx1A==
+Received: by paulmck-ThinkPad-P17-Gen-1.home (Postfix, from userid 1000)
+	id B27B1CE0B34; Sun, 14 Jul 2024 09:28:43 -0700 (PDT)
+Date: Sun, 14 Jul 2024 09:28:43 -0700
+From: "Paul E. McKenney" <paulmck@kernel.org>
+To: torvalds@linux-foundation.org
+Cc: linux-kernel@vger.kernel.org, linux-arch@vger.kernel.org,
+	lkmm@lists.linux.dev, stern@rowland.harvard.edu,
+	parri.andrea@gmail.com, will@kernel.org, peterz@infradead.org,
+	boqun.feng@gmail.com, npiggin@gmail.com, dhowells@redhat.com,
+	j.alglave@ucl.ac.uk, luc.maranget@inria.fr, akiyks@gmail.com,
+	dlustig@nvidia.com, joel@joelfernandes.org
+Subject: [GIT PULL] LKMM changes for v6.11
+Message-ID: <583d22d2-a123-4131-b4ac-20980357592b@paulmck-laptop>
+Reply-To: paulmck@kernel.org
 Precedence: bulk
 X-Mailing-List: lkmm@lists.linux.dev
 List-Id: <lkmm.lists.linux.dev>
 List-Subscribe: <mailto:lkmm+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:lkmm+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.13.0
-Subject: Re: [PATCHv2 0/4] tools/memory-model: Define more of LKMM in
- tools/memory-model
-From: Hernan Ponce de Leon <hernan.poncedeleon@huaweicloud.com>
-To: Alan Stern <stern@rowland.harvard.edu>,
- Jonas Oberhauser <jonas.oberhauser@huaweicloud.com>
-Cc: paulmck@kernel.org, parri.andrea@gmail.com, will@kernel.org,
- peterz@infradead.org, boqun.feng@gmail.com, npiggin@gmail.com,
- dhowells@redhat.com, j.alglave@ucl.ac.uk, luc.maranget@inria.fr,
- akiyks@gmail.com, dlustig@nvidia.com, joel@joelfernandes.org,
- urezki@gmail.com, quic_neeraju@quicinc.com, frederic@kernel.org,
- linux-kernel@vger.kernel.org, lkmm@lists.linux.dev
-References: <20240604152922.495908-1-jonas.oberhauser@huaweicloud.com>
- <88c1ebc8-4805-4d1d-868a-889043899979@rowland.harvard.edu>
- <bbc3bd10-3bf5-4b1a-a275-dd328c42e307@huaweicloud.com>
- <f93f140b-13bc-4d00-adee-46cc1c016480@rowland.harvard.edu>
- <4792c9e7-2594-3600-5d82-4cb1443fe670@huaweicloud.com>
-Content-Language: en-US
-In-Reply-To: <4792c9e7-2594-3600-5d82-4cb1443fe670@huaweicloud.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID:GxC2BwDXe90i5JBmuR9PAQ--.17117S2
-X-Coremail-Antispam: 1UD129KBjvJXoW3AryDZr4UWw1fJw4DXFyrJFb_yoW7XFWUp3
-	yUXFZ5Jr45Za18C3ykCF4UXw1rKrWqy3y5XrWrt3y3ZF43KFW5Jay0ywsF9F9rAr1Iqw1k
-	ZF17JF98CF9rAaUanT9S1TB71UUUUUUqnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
-	9KBjDU0xBIdaVrnRJUUUB2b4IE77IF4wAFF20E14v26ryj6rWUM7CY07I20VC2zVCF04k2
-	6cxKx2IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4
-	vEj48ve4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Jr0_JF4l84ACjcxK6xIIjxv20xvEc7Cj
-	xVAFwI0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW8JVWxJwA2z4x0Y4vEx4A2jsIEc7CjxV
-	AFwI0_Gr0_Gr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l5I8CrVACY4xI64kE6c02F40E
-	x7xfMcIj6xIIjxv20xvE14v26r1j6r18McIj6I8E87Iv67AKxVWUJVW8JwAm72CE4IkC6x
-	0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lF7I21c0EjII2zVCS5cI20VAGYxC7M4IIrI8v6xkF
-	7I0E8cxan2IY04v7Mxk0xIA0c2IEe2xFo4CEbIxvr21l42xK82IYc2Ij64vIr41l4I8I3I
-	0E4IkC6x0Yz7v_Jr0_Gr1lx2IqxVAqx4xG67AKxVWUJVWUGwC20s026x8GjcxK67AKxVWU
-	GVWUWwC2zVAF1VAY17CE14v26r4a6rW5MIIYY7kG6xAYrwCIc40Y0x0EwIxGrwCI42IY6x
-	IIjxv20xvE14v26r1j6r1xMIIF0xvE2Ix0cI8IcVCY1x0267AKxVW8JVWxJwCI42IY6xAI
-	w20EY4v20xvaj40_WFyUJVCq3wCI42IY6I8E87Iv67AKxVWUJVW8JwCI42IY6I8E87Iv6x
-	kF7I0E14v26r4j6r4UJbIYCTnIWIevJa73UjIFyTuYvjxU1db1UUUUU
-X-CM-SenderInfo: xkhu0tnqos00pfhgvzhhrqqx5xdzvxpfor3voofrz/
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-On 6/10/2024 10:38 AM, Hernan Ponce de Leon wrote:
-> On 6/8/2024 3:00 AM, Alan Stern wrote:
->> On Wed, Jun 05, 2024 at 09:58:42PM +0200, Jonas Oberhauser wrote:
->>>
->>>
->>> Am 6/4/2024 um 7:56 PM schrieb Alan Stern:
->>>> Just to clarify: Your first step encompasses patches 1 - 3, and the
->>>> second step is patch 4.  The first three patches can be applied now, 
->>>> but
->>>> the last one needs to wait until herd7 has been updated.  Is this all
->>>> correct?
->>>
->>> Exactly.
->>
->> With regard to patch 4, how much thought have you and Hernan given to
->> backward compatibility?  Once herd7 is changed, old memory model files
->> will no longer work correctly.
->>
-> 
-> Honestly, I did not think much about this (at least until Akira 
-> mentioned in my PR). My hope was that changes to the model could be 
-> back-ported to previous kernel versions. However that would not work for 
-> existing out-of-tree files.
-> 
-> My question is: is compatibility with out-of-tree files really a 
-> requirement? I would argue that if people are using outdated models, 
-> they may get wrong results anyway. This is because some of the changes 
-> done to lkmm during the last few years change the expected result for 
-> some litmus tests.
-> 
-> Hernan
+Hello, Linux,
 
-I pushed some new changes to the code for backward compatibility [1]. 
-The series also needs the patch at the bottom to properly deal with the 
-ordering of failing CAses and non-returning operations. With it, all 
-litmus tests return the correct result (the script needs to pass option 
--lkmm-legacy false to herd).
+When the merge window opens, please pull this LKMM update from:
 
-Implementation-wise, there are two things that I would like to have:
+  git://git.kernel.org/pub/scm/linux/kernel/git/paulmck/linux-rcu.git tags/lkmm.2024.07.12a
+  # HEAD: ea6ee1bac6034cb4e91bcc229ed1354ca1a024d5: tools/memory-model: Code reorganization in lock.cat (2024-06-06 11:24:58 -0700)
 
-- atomic_add_unless implementation is treated different than the rest 
-and it is one of the few remaining cases where memory orderings are 
-hardcoded [2]. I would like to define it in the .def file as
+----------------------------------------------------------------
+lkmm: Fix corner-case locking bug and improve documentation
 
-	atomic_add_unless(X,V,U) __atomic_add_unless{ONCE}(X,V,U)
+A simple but odd single-process litmus test acquires and immediately
+releases a lock, then calls spin_is_locked().  LKMM acts if it was
+a deadlock due to an assumption that spin_is_locked() will follow a
+spin_lock() or some other process's spin_unlock().  This litmus test
+manages to violate this assumption because the spin_is_locked() follows
+the same process's spin_unlock().
 
-- "deref" and "lderef" instructions seems to add a "rb_dep" fence. None 
-of the model files (.cat, .def, .bell) refers to "rb_dep" so this looks 
-useless to me. However, I never checked the details of these 
-dereferencing instruction so I might be missing something. Maybe Paul 
-can clarify.
+This series fixes this bug, reorganizes and optimizes the lock.cat model,
+and updates documentation.
 
-Hernan
+----------------------------------------------------------------
+Alan Stern (2):
+      tools/memory-model: Fix bug in lock.cat
+      tools/memory-model: Code reorganization in lock.cat
 
-[1] https://github.com/herd/herdtools7/pull/865
-[2] https://github.com/herd/herdtools7/issues/868
+Paul E. McKenney (2):
+      tools/memory-model: Add KCSAN LF mentorship session citation
+      tools/memory-model: Add access-marking.txt to README
 
-
-diff --git a/tools/memory-model/linux-kernel.def 
-b/tools/memory-model/linux-kernel.def
-index 001366ff3fb4..5a40c2cad39b 100644
---- a/tools/memory-model/linux-kernel.def
-+++ b/tools/memory-model/linux-kernel.def
-@@ -32,10 +32,10 @@ xchg(X,V)  __xchg{MB}(X,V)
-  xchg_relaxed(X,V) __xchg{ONCE}(X,V)
-  xchg_release(X,V) __xchg{RELEASE}(X,V)
-  xchg_acquire(X,V) __xchg{ACQUIRE}(X,V)
--cmpxchg(X,V,W) __cmpxchg{MB}(X,V,W)
--cmpxchg_relaxed(X,V,W) __cmpxchg{ONCE}(X,V,W)
--cmpxchg_acquire(X,V,W) __cmpxchg{ACQUIRE}(X,V,W)
--cmpxchg_release(X,V,W) __cmpxchg{RELEASE}(X,V,W)
-+cmpxchg(X,V,W) __cmpxchg{MB,ONCE}(X,V,W)
-+cmpxchg_relaxed(X,V,W) __cmpxchg{ONCE,ONCE}(X,V,W)
-+cmpxchg_acquire(X,V,W) __cmpxchg{ACQUIRE,ONCE}(X,V,W)
-+cmpxchg_release(X,V,W) __cmpxchg{RELEASE,ONCE}(X,V,W)
-
-  // Spinlocks
-  spin_lock(X) { __lock(X); }
-@@ -63,14 +63,14 @@ atomic_set(X,V) { WRITE_ONCE(*X,V); }
-  atomic_read_acquire(X) smp_load_acquire(X)
-  atomic_set_release(X,V) { smp_store_release(X,V); }
-
--atomic_add(V,X) { __atomic_op(X,+,V); }
--atomic_sub(V,X) { __atomic_op(X,-,V); }
--atomic_and(V,X) { __atomic_op(X,&,V); }
--atomic_or(V,X)  { __atomic_op(X,|,V); }
--atomic_xor(V,X) { __atomic_op(X,^,V); }
--atomic_inc(X)   { __atomic_op(X,+,1); }
--atomic_dec(X)   { __atomic_op(X,-,1); }
--atomic_andnot(V,X) { __atomic_op(X,&~,V); }
-+atomic_add(V,X) { __atomic_op{NORETURN}(X,+,V); }
-+atomic_sub(V,X) { __atomic_op{NORETURN}(X,-,V); }
-+atomic_and(V,X) { __atomic_op{NORETURN}(X,&,V); }
-+atomic_or(V,X)  { __atomic_op{NORETURN}(X,|,V); }
-+atomic_xor(V,X) { __atomic_op{NORETURN}(X,^,V); }
-+atomic_inc(X)   { __atomic_op{NORETURN}(X,+,1); }
-+atomic_dec(X)   { __atomic_op{NORETURN}(X,-,1); }
-+atomic_andnot(V,X) { __atomic_op{NORETURN}(X,&~,V); }
-
-  atomic_add_return(V,X) __atomic_op_return{MB}(X,+,V)
-  atomic_add_return_relaxed(V,X) __atomic_op_return{ONCE}(X,+,V)
-@@ -127,10 +127,10 @@ atomic_xchg(X,V) __xchg{MB}(X,V)
-  atomic_xchg_relaxed(X,V) __xchg{ONCE}(X,V)
-  atomic_xchg_release(X,V) __xchg{RELEASE}(X,V)
-  atomic_xchg_acquire(X,V) __xchg{ACQUIRE}(X,V)
--atomic_cmpxchg(X,V,W) __cmpxchg{MB}(X,V,W)
--atomic_cmpxchg_relaxed(X,V,W) __cmpxchg{ONCE}(X,V,W)
--atomic_cmpxchg_acquire(X,V,W) __cmpxchg{ACQUIRE}(X,V,W)
--atomic_cmpxchg_release(X,V,W) __cmpxchg{RELEASE}(X,V,W)
-+atomic_cmpxchg(X,V,W) __cmpxchg{MB,ONCE}(X,V,W)
-+atomic_cmpxchg_relaxed(X,V,W) __cmpxchg{ONCE,ONCE}(X,V,W)
-+atomic_cmpxchg_acquire(X,V,W) __cmpxchg{ACQUIRE,ONCE}(X,V,W)
-+atomic_cmpxchg_release(X,V,W) __cmpxchg{RELEASE,ONCE}(X,V,W)
-
-  atomic_sub_and_test(V,X) __atomic_op_return{MB}(X,-,V) == 0
-  atomic_dec_and_test(X)  __atomic_op_return{MB}(X,-,1) == 0
-
+ tools/memory-model/Documentation/README            |  4 ++
+ .../memory-model/Documentation/access-marking.txt  | 10 ++--
+ tools/memory-model/lock.cat                        | 62 +++++++++++++---------
+ 3 files changed, 49 insertions(+), 27 deletions(-)

@@ -1,84 +1,63 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7EBA7346C;
-	Sun, 14 Jul 2024 16:28:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCC4E143866;
+	Mon, 15 Jul 2024 23:56:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720974524; cv=none; b=bOdhNWPduTeBToNgoVJk2BUSrlZuFlNHuPBGZzgvYfRDmxBaaWJufwzA4dS2s5LtBzDSLJ1A8Q6YLFKKt9fJ6TYzfADKsX9cmdWvNLX59eFuakzrFhaCaKDfnshWsMcTotLYCAmx30X0t9Fd7xQq2CV/VuZb+K+fW6+FgpFUhPs=
+	t=1721087783; cv=none; b=L8UiGGbQMgalMVgoFxqiDsRVQaBDgBtUsla2ZvIpi4QaJj13d+PxmoJETfIRgesmJZIdCCjVzV2kmcotGuLtVSvUw4nfETfqCOZ+oHmNvVjlQtqZG1m/xCkgyswlRhFcqVV+5ge09U2daAzkGXn4G1dd0Iv9e4ov4BbT2g5faIA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720974524; c=relaxed/simple;
-	bh=YVh0TOFrc5B40PsDndvksJEx8IfAjErNBYJ/3kByK2M=;
-	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition; b=WlfEgsK7Gub5S4VklviTrFwjHJARhdn9j0tOgnNGbyppklGjlDj4mWd5zxZ5ALCYxroqPJyt4Dr0PaA5gl72+PVr+6mshdjTqjCTApCaMndm9im+ftKRFinEJZ1A+XQmz+r+oZUldwGFC0CAl7Yro9ZuyokpmQrt9xbQWILQ5fs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=kLqGDGKJ; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1721087783; c=relaxed/simple;
+	bh=rQolAbacHYxjtHZ9yIGki1B+OWpVzHM0zNUy4nDb0K4=;
+	h=Subject:From:In-Reply-To:References:Message-Id:Date:To:Cc; b=jM+GzSKCs/fgaKn4kfZW7T0g2xq5esgjlZ8yx54rYOKoeq12TDyHJ8uf+Yw6sQvMoFwGEIuq1QVxNYNSCX1EoILZyE9aKBBQb2TFXp3SSs0s5k4rbNV9E+k9/saM/CSaKUxEYPmJUXg74EoZ6piQ/yab6Qr1Eqdm/9SoQoLYEkk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gRqj5Gdq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="kLqGDGKJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 221FDC116B1;
-	Sun, 14 Jul 2024 16:28:44 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gRqj5Gdq"
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 927CEC4AF0B;
+	Mon, 15 Jul 2024 23:56:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1720974524;
-	bh=YVh0TOFrc5B40PsDndvksJEx8IfAjErNBYJ/3kByK2M=;
-	h=Date:From:To:Cc:Subject:Reply-To:From;
-	b=kLqGDGKJ2KKxccVrx8HBp5UGlEVSv6V5UvacMXAmZVrTZsvPJ01Pvm83Inqy8cTg2
-	 VEfCEcmssIy1gSJ8fQrNiomJgVesKbgXe+w37/5YdhzIsHOx/JWunZsXY2r0bLUmVa
-	 OzFKiWkZBiY/oHtKHiOegd99GQYw6nQlP4LS8AcyTBBjlN76Hc+G6w/X65bjjH8ONC
-	 CodpcwddxmMIdDwzyxTaBe1C9JNYPNyppoLMX7aQcbwt8M2HTlo4L5dnBtmUadEM4d
-	 EPAWUg0WuwfPJj8ko5vny9/25nGSFo2UhKs1t78DNgHyyqN2hEVLvNDts5SkKKP/3y
-	 FKglO/dwWPx1A==
-Received: by paulmck-ThinkPad-P17-Gen-1.home (Postfix, from userid 1000)
-	id B27B1CE0B34; Sun, 14 Jul 2024 09:28:43 -0700 (PDT)
-Date: Sun, 14 Jul 2024 09:28:43 -0700
-From: "Paul E. McKenney" <paulmck@kernel.org>
-To: torvalds@linux-foundation.org
-Cc: linux-kernel@vger.kernel.org, linux-arch@vger.kernel.org,
-	lkmm@lists.linux.dev, stern@rowland.harvard.edu,
-	parri.andrea@gmail.com, will@kernel.org, peterz@infradead.org,
-	boqun.feng@gmail.com, npiggin@gmail.com, dhowells@redhat.com,
-	j.alglave@ucl.ac.uk, luc.maranget@inria.fr, akiyks@gmail.com,
-	dlustig@nvidia.com, joel@joelfernandes.org
-Subject: [GIT PULL] LKMM changes for v6.11
-Message-ID: <583d22d2-a123-4131-b4ac-20980357592b@paulmck-laptop>
-Reply-To: paulmck@kernel.org
+	s=k20201202; t=1721087783;
+	bh=rQolAbacHYxjtHZ9yIGki1B+OWpVzHM0zNUy4nDb0K4=;
+	h=Subject:From:In-Reply-To:References:Date:To:Cc:From;
+	b=gRqj5GdqxAOFWOd5hE6CkIy+nW8GltJ9CBlK4UmCsAA+sGf7TNt4kUmUPDZPgS5LX
+	 x0VqCKcJmsOl6k5EQqkAJN3I7XS/6lzcLx9jD0oSzOpeQy2gAINo6lxwee/jy3Gspp
+	 2ZCITCfdvEOBd5/ecPP6zmV+9SBUHm2JYpafDk2g1yFI5cVbdFWRPWRfGK16UOKiaL
+	 Eu4sZATh8Gy0TTyz5eQpjmD1ET3eyAumiAKeyDNSIM96PaEuNhShSXr8sHSi9O8NB6
+	 bBmcHI82yEEyUiObdLhLPvy3yutuum9lZuJdsgYyC70w6zismtIMZgdoB7nGP097tJ
+	 8Ex6AZl4O0FBg==
+Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
+	by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id 8635CC43443;
+	Mon, 15 Jul 2024 23:56:23 +0000 (UTC)
+Subject: Re: [GIT PULL] LKMM changes for v6.11
+From: pr-tracker-bot@kernel.org
+In-Reply-To: <583d22d2-a123-4131-b4ac-20980357592b@paulmck-laptop>
+References: <583d22d2-a123-4131-b4ac-20980357592b@paulmck-laptop>
+X-PR-Tracked-List-Id: <linux-kernel.vger.kernel.org>
+X-PR-Tracked-Message-Id: <583d22d2-a123-4131-b4ac-20980357592b@paulmck-laptop>
+X-PR-Tracked-Remote: git://git.kernel.org/pub/scm/linux/kernel/git/paulmck/linux-rcu.git tags/lkmm.2024.07.12a
+X-PR-Tracked-Commit-Id: ea6ee1bac6034cb4e91bcc229ed1354ca1a024d5
+X-PR-Merge-Tree: torvalds/linux.git
+X-PR-Merge-Refname: refs/heads/master
+X-PR-Merge-Commit-Id: 253e1e98180a124475327f2ce7b6f15f2e4d0d45
+Message-Id: <172108778354.25181.260564105341418366.pr-tracker-bot@kernel.org>
+Date: Mon, 15 Jul 2024 23:56:23 +0000
+To: "Paul E. McKenney" <paulmck@kernel.org>
+Cc: torvalds@linux-foundation.org, linux-kernel@vger.kernel.org, linux-arch@vger.kernel.org, lkmm@lists.linux.dev, stern@rowland.harvard.edu, parri.andrea@gmail.com, will@kernel.org, peterz@infradead.org, boqun.feng@gmail.com, npiggin@gmail.com, dhowells@redhat.com, j.alglave@ucl.ac.uk, luc.maranget@inria.fr, akiyks@gmail.com, dlustig@nvidia.com, joel@joelfernandes.org
 Precedence: bulk
 X-Mailing-List: lkmm@lists.linux.dev
 List-Id: <lkmm.lists.linux.dev>
 List-Subscribe: <mailto:lkmm+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:lkmm+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
 
-Hello, Linux,
+The pull request you sent on Sun, 14 Jul 2024 09:28:43 -0700:
 
-When the merge window opens, please pull this LKMM update from:
+> git://git.kernel.org/pub/scm/linux/kernel/git/paulmck/linux-rcu.git tags/lkmm.2024.07.12a
 
-  git://git.kernel.org/pub/scm/linux/kernel/git/paulmck/linux-rcu.git tags/lkmm.2024.07.12a
-  # HEAD: ea6ee1bac6034cb4e91bcc229ed1354ca1a024d5: tools/memory-model: Code reorganization in lock.cat (2024-06-06 11:24:58 -0700)
+has been merged into torvalds/linux.git:
+https://git.kernel.org/torvalds/c/253e1e98180a124475327f2ce7b6f15f2e4d0d45
 
-----------------------------------------------------------------
-lkmm: Fix corner-case locking bug and improve documentation
+Thank you!
 
-A simple but odd single-process litmus test acquires and immediately
-releases a lock, then calls spin_is_locked().  LKMM acts if it was
-a deadlock due to an assumption that spin_is_locked() will follow a
-spin_lock() or some other process's spin_unlock().  This litmus test
-manages to violate this assumption because the spin_is_locked() follows
-the same process's spin_unlock().
-
-This series fixes this bug, reorganizes and optimizes the lock.cat model,
-and updates documentation.
-
-----------------------------------------------------------------
-Alan Stern (2):
-      tools/memory-model: Fix bug in lock.cat
-      tools/memory-model: Code reorganization in lock.cat
-
-Paul E. McKenney (2):
-      tools/memory-model: Add KCSAN LF mentorship session citation
-      tools/memory-model: Add access-marking.txt to README
-
- tools/memory-model/Documentation/README            |  4 ++
- .../memory-model/Documentation/access-marking.txt  | 10 ++--
- tools/memory-model/lock.cat                        | 62 +++++++++++++---------
- 3 files changed, 49 insertions(+), 27 deletions(-)
+-- 
+Deet-doot-dot, I am a bot.
+https://korg.docs.kernel.org/prtracker.html

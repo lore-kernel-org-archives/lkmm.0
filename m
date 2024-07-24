@@ -1,307 +1,159 @@
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.9])
+Received: from mail-40133.protonmail.ch (mail-40133.protonmail.ch [185.70.40.133])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B88E4D8C1;
-	Wed, 24 Jul 2024 07:10:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=198.175.65.9
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721805059; cv=fail; b=N1XgyBw/9w1lzm19Okvf8b56u7L0xYyIHy+LlAdvVVsSJWEY6HO2g0un90bnc3+yWnp2RgPB0/gzhox2sG/lwqsFaDp/KXNcMILbl8a24T57lgJrFukRIMgYgQnXfe04UFYvoIp/m+fsbY2dOv/Eb6alDpS20mlNocFi9VKb7CA=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721805059; c=relaxed/simple;
-	bh=HnkD6SssZ9tSfkbybBxoWaIOJko+A0jcBtdlZUYQc7Y=;
-	h=Date:From:To:CC:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=lWztKO1XsXX7oE/l2NZhRr8C61mqeXYi25qzLXukKmfKyw9gpJBGMz67PC7CKUcyrqj8nTonMIcea1fCLF1yoNp3AB91/UGpvl/vREMu73aZOzXXo3enuXiu5qLTnWtNiUgp1IvT2q0fmYc/EctYgP29n/CpbZ0maXn7jRduaaw=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=JgHaAOr0; arc=fail smtp.client-ip=198.175.65.9
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9283B73440
+	for <lkmm@lists.linux.dev>; Wed, 24 Jul 2024 22:01:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.70.40.133
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1721858520; cv=none; b=qU4AFYL1+aRAIxv2+YV8ZhWhBmbr3FbJ6uhwjAnSxNWhIeKdJTmelSweXtJWjG4RLwQOX1E28U/61+Fb3eIVelge4yqYimq/mS0d2bcmmvpZpzUhx9/U6iHlxySVUcGympL1BwYU3Ju+zUgULWzCBLuSSGS5eCcqIp2UnGF0SSg=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1721858520; c=relaxed/simple;
+	bh=S1Dcl/aj7zeooOV/7eVXDKXqAlXYLBYJEg/YcpAH2to=;
+	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=OyKjvlGf4k3dmhHsES73CKSfpPwKERujE8nTB7qquTpz4L4/sx/YEpWEpJ2ePC3zy35DNVua0SDofJubrE4YiQ0H6fOpkEb1ykemxYugO91+hQGgAigb5yaCYiS2ZPyAZIg+PNBzv/0GGztl8CeoX0/SZcWvqhU8MCPfpjGFa5E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=proton.me; spf=pass smtp.mailfrom=proton.me; dkim=pass (2048-bit key) header.d=proton.me header.i=@proton.me header.b=Epg7dnUZ; arc=none smtp.client-ip=185.70.40.133
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=proton.me
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=proton.me
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="JgHaAOr0"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1721805058; x=1753341058;
-  h=date:from:to:cc:subject:message-id:references:
-   in-reply-to:mime-version;
-  bh=HnkD6SssZ9tSfkbybBxoWaIOJko+A0jcBtdlZUYQc7Y=;
-  b=JgHaAOr0f3V7hwJR6525ckWKSrQV9x97QuJxnXltGxRmOKhZhd09A3SR
-   t97al+hOy2t8bdxcvU1yX4i1RaaVV2//yQdmjqTSDdRJ3Ej8GP3Gmxh8u
-   m3aO1mVZu9qSgsPA3dDyDu66RLG3rIVFvQTeNRXWnA7Gt3/xOtmCCjoMX
-   FCt5eG6buGGNPRWYJ1yxTqD86kRP6LPrPoJH7bbntQoYqjfd58KMmFizA
-   soWyYNUpKeU3QCxKQR5AgY4Fr/EscFA9459hdVSC96Jzcg+fKr/Q9ZQ+k
-   m3yaaeOJMsh+Os3S1Woqd0lR/s1J0suX9FTC6/G7hGWoEaPWPLDX6uNu6
-   g==;
-X-CSE-ConnectionGUID: nXlEUaoEQbCvA2+n1Wxa4A==
-X-CSE-MsgGUID: lDLm4vO7Qc2gCwDwMztIYw==
-X-IronPort-AV: E=McAfee;i="6700,10204,11142"; a="41991299"
-X-IronPort-AV: E=Sophos;i="6.09,232,1716274800"; 
-   d="scan'208";a="41991299"
-Received: from orviesa003.jf.intel.com ([10.64.159.143])
-  by orvoesa101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 24 Jul 2024 00:10:57 -0700
-X-CSE-ConnectionGUID: Jaqs2gdwSwmsriONlt9YZQ==
-X-CSE-MsgGUID: U0qnBYbpS2acQfFWl3f2JQ==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.09,232,1716274800"; 
-   d="scan'208";a="57313532"
-Received: from fmsmsx601.amr.corp.intel.com ([10.18.126.81])
-  by orviesa003.jf.intel.com with ESMTP/TLS/AES256-GCM-SHA384; 24 Jul 2024 00:10:56 -0700
-Received: from fmsmsx603.amr.corp.intel.com (10.18.126.83) by
- fmsmsx601.amr.corp.intel.com (10.18.126.81) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.39; Wed, 24 Jul 2024 00:10:55 -0700
-Received: from FMSEDG603.ED.cps.intel.com (10.1.192.133) by
- fmsmsx603.amr.corp.intel.com (10.18.126.83) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.39 via Frontend Transport; Wed, 24 Jul 2024 00:10:55 -0700
-Received: from NAM10-BN7-obe.outbound.protection.outlook.com (104.47.70.42) by
- edgegateway.intel.com (192.55.55.68) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2507.39; Wed, 24 Jul 2024 00:10:54 -0700
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=iW3cw+YLtPjdXj6X6MHN+vSrs1yPvUwjvvXtMadyD2m4jabfyKAIV92gNKab2yzqkHJSULBAN+qujhit4JIlaISdQ6xvrSXiZl+HZf4K/Zu1Q371uFOBEzRZjMPg/ZFHbBAzDXFOpxgj7noVy5DGzVOfo/JqyVvybxdqzHrTtqLAbSFAf/BRvfTd3BBqZa8AMiQcIbTvrr0+OtB64u2NC3PngCKGXjYZwUjxSYUJwBD9HBCsGvcHXaypbM9RqVDJO5SXzp+Lf3LDwvLaPhTnKR6/njkAneAeVC7CtlB5vkwIpQSt7dUGPEzt/2Y7u+cQU5qtXFlo79ZoWEhF1nI42g==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=t2WW+nfgFyVihHqWDMgz9+SJdIAhfKT0P1djoybtBEw=;
- b=jBYMcGPiWNv8pLM2VdTUGB6b3m3k/MqiVSBwBaCZMsO95vrjPn5rfyvjhpYMAdkUCfyA5KXeNiCFcINp+wg5LGZjlxci/pWhoEbKmYqhGk27hKDugbB7hLZK9RH0/ElBlz7YgKq7z5+CbpGH48EwAyoy6VJJ/jmGKAryorGP0l6CKIilrK7plAU+SBVSDYUxZSR9rAb57AXHKMZZ1UxKQkcADJRW7P08mbtLSwesF154ETZHKsmf5hU5RM2C4TGdFt2IEg1Kl+bULAI+PYy9V7rA6Mq8rRQpxjEMLSmFReDkSjRcm+aqF2yRJmEwn1ue7w5M3Sn+5og3cKL7bviptw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
- dkim=pass header.d=intel.com; arc=none
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=intel.com;
-Received: from LV3PR11MB8603.namprd11.prod.outlook.com (2603:10b6:408:1b6::9)
- by MW5PR11MB5882.namprd11.prod.outlook.com (2603:10b6:303:19e::6) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7784.14; Wed, 24 Jul
- 2024 07:10:52 +0000
-Received: from LV3PR11MB8603.namprd11.prod.outlook.com
- ([fe80::4622:29cf:32b:7e5c]) by LV3PR11MB8603.namprd11.prod.outlook.com
- ([fe80::4622:29cf:32b:7e5c%5]) with mapi id 15.20.7762.027; Wed, 24 Jul 2024
- 07:10:52 +0000
-Date: Wed, 24 Jul 2024 15:10:36 +0800
-From: Oliver Sang <oliver.sang@intel.com>
-To: Dennis Zhou <dennis@kernel.org>
-CC: Boqun Feng <boqun.feng@gmail.com>, Tejun Heo <tj@kernel.org>, "Suren
- Baghdasaryan" <surenb@google.com>, <oe-lkp@lists.linux.dev>, <lkp@intel.com>,
-	<linux-kernel@vger.kernel.org>, Andrew Morton <akpm@linux-foundation.org>,
-	Kent Overstreet <kent.overstreet@linux.dev>, Kees Cook
-	<keescook@chromium.org>, Alexander Viro <viro@zeniv.linux.org.uk>, "Alex
- Gaynor" <alex.gaynor@gmail.com>, Alice Ryhl <aliceryhl@google.com>, "Andreas
- Hindborg" <a.hindborg@samsung.com>, Benno Lossin <benno.lossin@proton.me>,
-	=?iso-8859-1?Q?Bj=F6rn?= Roy Baron <bjorn3_gh@protonmail.com>, "Christoph
- Lameter" <cl@linux.com>, Gary Guo <gary@garyguo.net>, Miguel Ojeda
-	<ojeda@kernel.org>, Pasha Tatashin <pasha.tatashin@soleen.com>, "Peter
- Zijlstra" <peterz@infradead.org>, Vlastimil Babka <vbabka@suse.cz>, "Wedson
- Almeida Filho" <wedsonaf@gmail.com>, <linux-mm@kvack.org>,
-	<lkmm@lists.linux.dev>, <oliver.sang@intel.com>
-Subject: Re: [linus:master] [mm]  24e44cc22a:
- BUG:KCSAN:data-race_in_pcpu_alloc_noprof/pcpu_block_update_hint_alloc
-Message-ID: <ZqCo7H2gcA1dvIr4@xsang-OptiPlex-9020>
-References: <202407191651.f24e499d-oliver.sang@intel.com>
- <Zp6bMoDnUMxNrKos@boqun-archlinux>
- <Zp6cVgXJlzF4VOwl@slm.duckdns.org>
- <Zp6e1PWZbz4pkh9Z@boqun-archlinux>
- <Zp6kpCcQRPTGk1LK@V92F7Y9K0C.lan>
- <Zp7G4EfISRwlmmIT@boqun-archlinux>
- <Zp9EvUTqni5wMDlC@snowbird>
- <Zp9JIvoRVaa+w5OT@xsang-OptiPlex-9020>
- <Zp9J9t-KP17P-OFR@snowbird>
-Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
-In-Reply-To: <Zp9J9t-KP17P-OFR@snowbird>
-X-ClientProxiedBy: SI2PR01CA0019.apcprd01.prod.exchangelabs.com
- (2603:1096:4:192::12) To LV3PR11MB8603.namprd11.prod.outlook.com
- (2603:10b6:408:1b6::9)
+	dkim=pass (2048-bit key) header.d=proton.me header.i=@proton.me header.b="Epg7dnUZ"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=proton.me;
+	s=protonmail; t=1721858516; x=1722117716;
+	bh=S1Dcl/aj7zeooOV/7eVXDKXqAlXYLBYJEg/YcpAH2to=;
+	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
+	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
+	 Message-ID:BIMI-Selector;
+	b=Epg7dnUZFy+76QXsfAVXA0aewFnEPWvyDMjsY3f0N8gY2Jo8kQGqEBNQflK1VEICN
+	 v/Kz10R+eP2AoELNOn967z8aTkt2en1w2b2FWp3dcaNIlFpbmoFHRUB2USylc7ljNJ
+	 zI6Lo+pfgrrkISW7YiatFSJmDBhwG2pFQcruLrbJgEpD2J9o510XuFKu+SXCsvTqOa
+	 EDP4gYPNuauU0tPyhI6toUHx2YsZZbD16WThSUZdGbgsEPD3GepjENErN7iVuqD+A9
+	 yRot9TW6o1otDBVPzL34weZJNj1TM5jFMRuSUBpAMw14oBMXyI+y6LM0xChx+4+v20
+	 Pkc3IGH9VTsnQ==
+Date: Wed, 24 Jul 2024 22:01:50 +0000
+To: Boqun Feng <boqun.feng@gmail.com>
+From: Benno Lossin <benno.lossin@proton.me>
+Cc: Jonathan Corbet <corbet@lwn.net>, Miguel Ojeda <ojeda@kernel.org>, Alex Gaynor <alex.gaynor@gmail.com>, Wedson Almeida Filho <wedsonaf@gmail.com>, Gary Guo <gary@garyguo.net>, =?utf-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, Andreas Hindborg <a.hindborg@samsung.com>, Alice Ryhl <aliceryhl@google.com>, linux-doc@vger.kernel.org, linux-kernel@vger.kernel.org, rust-for-linux@vger.kernel.org, lkmm@lists.linux.dev
+Subject: Re: [RFC PATCH 1/5] doc: rust: create safety standard
+Message-ID: <289d66fb-a698-4d3b-b809-0e3305199a2c@proton.me>
+In-Reply-To: <Zprkf4FrBXgYmtgg@boqun-archlinux>
+References: <20240717221133.459589-1-benno.lossin@proton.me> <20240717221133.459589-2-benno.lossin@proton.me> <Zprkf4FrBXgYmtgg@boqun-archlinux>
+Feedback-ID: 71780778:user:proton
+X-Pm-Message-ID: dc87c75b1e7cfa0abb30624c92582fc9d58573a0
 Precedence: bulk
 X-Mailing-List: lkmm@lists.linux.dev
 List-Id: <lkmm.lists.linux.dev>
 List-Subscribe: <mailto:lkmm+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:lkmm+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: LV3PR11MB8603:EE_|MW5PR11MB5882:EE_
-X-MS-Office365-Filtering-Correlation-Id: 588ad149-77ae-415b-3238-08dcabafc097
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|1800799024|366016|376014|7416014;
-X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?9IcMisVKV28I8BAeP40S3fpUVdHL1B+yJcNhG4lDD755Cqqw3f1BtDvixXQx?=
- =?us-ascii?Q?nEivLai5AN4+/cW66iqCmyYyCFwd/oX35tPR+iQaGKVbyJ/VUpCxsOS+n+BL?=
- =?us-ascii?Q?E3JDvDfoEjOJU2fj7M5yPWm+VdsobQdGyJa7Ahv9427Zm2zey/3U/0Htgfka?=
- =?us-ascii?Q?SBd4++EhqM/hw6qtTBE94rJ7dkNdxYVQT5AlYXGDXDGf8bW/iO3Z13N5qEf7?=
- =?us-ascii?Q?KxFUncrQsyl9hkWrQh2tnyj7obGqAOGcUHuEfSasc7gpzbgTDP3RRxP68XoG?=
- =?us-ascii?Q?muLZcfNopqBrUpH2S+QNfgmhKh65bucY+6WQgJYv+c7Gy8jdQ/Uj/2BTrBWi?=
- =?us-ascii?Q?t4bnLkjTHJcjIBFEn8V0eTxc6SwL9Zk1AEcnE17DiSMb4DNdO6R5qQZ+VdB8?=
- =?us-ascii?Q?f9sxzJKTMWOzzDphP4qjcC7RHKmykWD6PGvbV4DuTfpZdehzZEnheEP0lk5I?=
- =?us-ascii?Q?FAGO3Lgddz+IpxRMW1jeQ2TRYsVItQ4NFzk8wdp1Li5K+JMT86jW2yRQ7vgM?=
- =?us-ascii?Q?vn2J7s8fgsDCOxaNwS1n4IPvlGUGzYnlrzYETkwYB4JK6eE5TXLNhd0o9+HU?=
- =?us-ascii?Q?LqALYuwypkzNqSGHk+rphKsW+fMykX+ptRzsdXL418fn2mPMiVCu9rFvAnr9?=
- =?us-ascii?Q?SEbxXZRdhmgmOehPEKsMjVGQSYIOP/EEG7velvNdLaT4o1z0fM8yRguh1825?=
- =?us-ascii?Q?/3GVOiLkT4YxmyA0D8brclc3iAaiGCdXWqOcbH4A8NeFmZ3+SvBjh+hlfaY4?=
- =?us-ascii?Q?ZVRGEl8PcLMoo3+yDpAlNYFIxs7Eesw6JlFymtuQ0N5++9ICvXVb6BbLhkv3?=
- =?us-ascii?Q?OEsbMqTW5HX4vkt5MxSz/o0fumROs7xclmecMNJyGo9HxbarWj0lk8pCazSI?=
- =?us-ascii?Q?FAIJsZdWoLrk62zEQi0RaKoWc8lATXgLXCbgeqoQNCsJlQUsxY9vWEHAI+Np?=
- =?us-ascii?Q?TbrF4QlGRqte40Ar9gYgPQUle0diE3f7EY2XzmS9tc60pKnHAWNeF47k+8oa?=
- =?us-ascii?Q?SqcNP+mnlzYBjKOSeCRqxQzlTHWWS/iAJaq61MnZqjVVM6YpVgco/+HinFPb?=
- =?us-ascii?Q?iOcJckaU9L3sBDbqVD3+6bWiMFhDOlmP7AgFvyEmDyotPGNBszNzI5VRqsri?=
- =?us-ascii?Q?OgIELbgoxMpvbajqWRMAwMY9dtzGoz+PbvYfuTG+SqAWQdahiWQ2fT5G83Q3?=
- =?us-ascii?Q?etQMdtdgNXWzaBtsLagAYI+43an5iZfJntPQ3yV+Ke7FSgsGIJ566AF7rJkK?=
- =?us-ascii?Q?CsO9RMztbBZfFeHIhvIZr9O4jOswINei6Si2bKrhgVLNfE3PWQRra2gcu2g0?=
- =?us-ascii?Q?ljHBtwdnOgsH4C9jOTbnhKHAQGg3T7SUyRtaWnl66tEodA=3D=3D?=
-X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:LV3PR11MB8603.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(366016)(376014)(7416014);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?5tXMQOW1qCtIJgIx5Nx74ITKiIrtSe/lGI2D4x4YqLxYVzaDQn3CWiilyKum?=
- =?us-ascii?Q?eVUew2e4RynP4vKvZw+efLU9zHg6BPFu+OMvGAXrRgTid7jRMB1DCyByEC22?=
- =?us-ascii?Q?12gX0SIAHqhNFFX+dn6AiTT3FfB+MuKvGTYk9M1p/r3ghiLOg637ulSnwPU+?=
- =?us-ascii?Q?APNuGdo3upoy650cMfxgALHhfQAVDG2AXQc8MNKN7FxDfvPxjZ+89fLHW2Hd?=
- =?us-ascii?Q?WbePWqSE5FsbTzS/kJP6yC22q+ehHtwHvNyxHzmg8R96TMJHQdZpLHgZSCU2?=
- =?us-ascii?Q?NMECqBkuX3bQGZ9/NDpa0bB8P3eqkckvuF/BCoPN25hjekE22ciRYbIZYM0o?=
- =?us-ascii?Q?NF3EcrenNRviG4b+trHqE2NNOq6gVmmgswz1GH6HhY/r8fMzx8anj+Ai1geC?=
- =?us-ascii?Q?L9zDgB3oE7l95SMj3jcfqDODHx62qWPHl91ZJYVcxAWnS/KkAxr74aQJzW1C?=
- =?us-ascii?Q?3PyJvHXtH6uJPEwnOJkjiyi78PWWWh4rLTSPoWTIOdDL/2NoZG6tTJEOqXNq?=
- =?us-ascii?Q?SCbOrtwIthHEUhkx2SkCTS8TUQ5ugf5DZJe/WZmA+9uCga7ydwrdqxfxWiVe?=
- =?us-ascii?Q?+S+hWB2La+FsDdxMIMoHdeZil/A8qE6i8HRGOEVa/HE/+RLg3eHn9kf6zOD/?=
- =?us-ascii?Q?UCekYsrQiG4u22hAmRSsAsTmaG3jyPFAftSahjF073Xk2/lrp443t/ht+Dwu?=
- =?us-ascii?Q?idf+YQVc9HtzkpSm/I4TnRelYgfWdPA9BXZLzW7xTd9BdkPwuJRsQxWsAOpK?=
- =?us-ascii?Q?06sQNZMdOcVkavwIgLnxfGX3gx3rCI6Uc7AXcLsDnpwLoyf9lFfbgGoorVT9?=
- =?us-ascii?Q?3KovujvH3uR3KxgtO8ug7M61nsbASK2uLrdw8KGI2AtRbrdPG6ZUHmw2Bql+?=
- =?us-ascii?Q?bZA5JqUvzbzlzyyuGMgg+Ndi6ni95qOzqnTBVppg8Q/5yCF0gvDAKkeEtW/Z?=
- =?us-ascii?Q?QRaCo2IOTWJHXkcsbNQux6gHlDfC57nmlEYM/wzbVrLMXDe1CNbpPyJqC7jn?=
- =?us-ascii?Q?lN4LNJjdzpOUfYidoNXAzmjFzNH26eZJHBcOOtGc8SqLr66MDgb+JDgQ7Cua?=
- =?us-ascii?Q?9ziTuduJqPbge1XoopxB5t8Afn6GoBnAAmcTS4wgdnTdYWHgIEN5wq4ZJjZR?=
- =?us-ascii?Q?S4SFem9CRMS7ttOWk0XTILnghr6b4jiZLumzCVv/3zHR/OM2JtDvBAqer5kP?=
- =?us-ascii?Q?8HcdeTYkmq7tG4PmwP8n47vGnlhl7UjM0gw1sxnhjfpK/7dh+kDnawpxPSY+?=
- =?us-ascii?Q?sqGxT4yZpm0L7OjaRhoFrNliHl5H7LqJc9ynOz6Eagocchb/RrNUqnm+rhG8?=
- =?us-ascii?Q?E9i/RUVMxXYBBq7K9yoPkUBbIK3RyQaKYCk8R/CoCx96xweSHEutQmwrTk0P?=
- =?us-ascii?Q?5pPcEa9s9qSyMWL45iyXhiOnIDTpz2DznrGa+S3NPiy+sw51BWyCwjf44r3V?=
- =?us-ascii?Q?vu3hpVzoWzwCwD4iV9YIx3r4jAWdLZlsL6n4k4Jy44tjNEyFcsLNHdrehulG?=
- =?us-ascii?Q?PbRi6YA4Z2Yn9VmuJjScWEd8TdUKIXYLor/Aau2ETVUqDrCZbo+jimhnsdq2?=
- =?us-ascii?Q?5u7FAZFYbMWIjrZ//7z3SDPfo5wDyPcT0HdFBJ9J?=
-X-MS-Exchange-CrossTenant-Network-Message-Id: 588ad149-77ae-415b-3238-08dcabafc097
-X-MS-Exchange-CrossTenant-AuthSource: LV3PR11MB8603.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 24 Jul 2024 07:10:52.1950
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: p6p5VLEIO1zA/hjFhj0pI9sjWUkYxP9wasql24eTHI8YTty4ph/KAU8jqit0NYJWxObYKdHZeqDSH9ID8nQCMg==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: MW5PR11MB5882
-X-OriginatorOrg: intel.com
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-hi, Dannis,
+On 20.07.24 00:11, Boqun Feng wrote:
+> Hi Benno,
+>=20
+> On Wed, Jul 17, 2024 at 10:12:29PM +0000, Benno Lossin wrote:
+> [...]
+>> @@ -0,0 +1,246 @@
+>> +.. SPDX-License-Identifier: GPL-2.0
+>> +.. highlight:: rust
+>> +
+>> +=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+>> +Rust Safety Standard
+>> +=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+>> +
+>> +Safe Rust code cannot have memory related bugs. This is a guarantee by =
+the Rust compiler. Of course
+>> +it is not without caveats: no compiler bugs, no bugs in the specificati=
+on etc. But the possibly most
+>> +important caveat is that of ``unsafe`` code. ``unsafe`` code needs to f=
+ollow certain rules in order
+>> +for safe code to enjoy the no-memory-bugs privilege. A simple example o=
+f such a rule is that
+>> +references must be valid for the duration of their lifetime. If any rul=
+e is violated, it can lead
+>> +to undefined behavior even in safe code! The term undefined behavior in=
+ Rust has a lot stricter
+>> +meaning than in C or C++: UB in Rust is totally forbidden. In C one mig=
+ht rely on the compiler
+>> +implementation to ensure correct code generation, but that is not the c=
+ase for Rust. You can read
+>=20
+> I don't disagree with your intention here (i.e. we should seek for
+> UB-free program), however, during the discussion on memory model, I got
+> response like in [1]:
+>=20
+> =09... they are technically wrong (violating the C standard), but
+> =09practically well-tested. (and then above I added that there's
+> =09good reasons for why they don't go wrong: volatile compilation
+> =09strategies and reordering constraints relating volatile, inline
+> =09asm, and non-atomics make it so that this almost 'has to' work,
+> =09I think.)
+>=20
+> which suggests that we should rely on the compiler implementation to
+> ensure the "correct" code generation.
 
-On Mon, Jul 22, 2024 at 11:13:10PM -0700, Dennis Zhou wrote:
-> Hi Oliver,
-> 
-> On Tue, Jul 23, 2024 at 02:09:38PM +0800, Oliver Sang wrote:
-> > hi, Dennis Zhou,
-> > 
-> > On Mon, Jul 22, 2024 at 10:50:53PM -0700, Dennis Zhou wrote:
-> > > On Mon, Jul 22, 2024 at 01:53:52PM -0700, Boqun Feng wrote:
-> > > > On Mon, Jul 22, 2024 at 11:27:48AM -0700, Dennis Zhou wrote:
-> > > > > Hello,
-> > > > > 
-> > > > > On Mon, Jul 22, 2024 at 11:03:00AM -0700, Boqun Feng wrote:
-> > > > > > On Mon, Jul 22, 2024 at 07:52:22AM -1000, Tejun Heo wrote:
-> > > > > > > On Mon, Jul 22, 2024 at 10:47:30AM -0700, Boqun Feng wrote:
-> > > > > > > > This looks like a data race because we read pcpu_nr_empty_pop_pages out
-> > > > > > > > of the lock for a best effort checking, @Tejun, maybe you could confirm
-> > > > > > > > on this?
-> > > > > > > 
-> > > > > > > That does sound plausible.
-> > > > > > > 
-> > > > > > > > -       if (pcpu_nr_empty_pop_pages < PCPU_EMPTY_POP_PAGES_LOW)
-> > > > > > > > +       /*
-> > > > > > > > +        * Checks pcpu_nr_empty_pop_pages out of the pcpu_lock, data races may
-> > > > > > > > +        * occur but this is just a best-effort checking, everything is synced
-> > > > > > > > +        * in pcpu_balance_work.
-> > > > > > > > +        */
-> > > > > > > > +       if (data_race(pcpu_nr_empty_pop_pages) < PCPU_EMPTY_POP_PAGES_LOW)
-> > > > > > > >                 pcpu_schedule_balance_work();
-> > > > > > > 
-> > > > > > > Would it be better to use READ/WRITE_ONCE() for the variable?
-> > > > > > > 
-> > > > > > 
-> > > > > > For READ/WRITE_ONCE(), we will need to replace all write accesses and
-> > > > > > all out-of-lock read accesses to pcpu_nr_empty_pop_pages, like below.
-> > > > > > It's better in the sense that it doesn't rely on compiler behaviors on
-> > > > > > data races, not sure about the performance impact though.
-> > > > > > 
-> > > > > 
-> > > > > I think a better alternative is we can move it up into the lock under
-> > > > > area_found. The value gets updated as part of pcpu_alloc_area() as the
-> > > > > code above populates percpu memory that is already allocated.
-> > > > > 
-> > > > 
-> > > > Not sure I followed what exactly you suggested here because I'm not
-> > > > familiar with the logic, but a simpler version would be:
-> > > > 
-> > > > 
-> > > 
-> > > I believe that's the only naked access of pcpu_nr_empty_pop_pages. So
-> > > I was thinking this'll fix this problem.
-> > > 
-> > > I also don't know how to rerun this CI tho..
-> > 
-> > we could test this patch. what's the base? could we apply it directly upon
-> > 24e44cc22a?
-> > 
-> > BTW, our bot is not so clever so far to auto test fix patches, so this is kind
-> > of manual effort. due to resource constraint, it will be hard for us to test
-> > each patch (we saw several patches in this thread already) or test very fast.
-> > 
-> 
-> Ah yeah that makes sense. If you don't mind testing the last one I sent,
-> the one below, that applies cleanly to 24e44cc22a.
+I disagree, why can't we get the specification to specify what we need?
+I would rather have a compiler and standard that are in sync and give us
+what we need, than have a standard that says we aren't allowed to do X,
+but compilers still allow you to do X. I don't understand why this is
+the case for C (I would bet this is is because of history/legacy).
 
-in our tests, you patch could solve the KCSAN issues. thanks
+> Basically, since LKMM relies on a few things that C standard dosen't
+> say, e.g. votatile accesses on certain types are atomic, behaviors of
+> asm blocks, dependencies. Let alone we have data_race() where for
+> example, the diagnostic code accesses the shared variable out of the
+> core synchronization design.
+>=20
+> All of the above is difficult to implement purely UB-free in Rust IIUC.
+> Of course you could argue the ideal way is to teach Rust how to model
+> these useful operations/patterns as non-UBs, but that's a relatively
+> high task:
+>=20
+> =09Or do we want to go well beyond what happens in C, and actually
+> =09define a memory model that both has the performance
+> =09characteristics required by Linux, and can be defined precisely
+> =09as a language-level graph-based (or ideally operational)
+> =09concurrency memory model? This is a monumental task and a large
+> =09open problem, and should not be on the list of blocking issues
+> =09for anything that needs to get done in the next 5 years. ;)
+>=20
+> from Ralf [2].
+>=20
+> Again, I don't want to rely on compiler's behaviors on UBs, it's just
+> the langauge is not ready for some jobs and programmers have to be
+> "creative".
 
-=========================================================================================
-compiler/group/kconfig/nr_groups/rootfs/runtime/tbox_group/testcase:
-  gcc-13/group-04/x86_64-randconfig-013-20240713/5/debian-11.1-i386-20220923.cgz/300s/vm-snb/trinity
+I think this is something that we need to very carefully evaluate on a
+case-by-case basis. I think that with Rust we have a clean slate and can
+try from the beginning to ensure that there is no
+compiler-but-not-specification behavior that we rely upon. AFAIK the
+Rust standard moves quicker than the C standard, so we might be able to
+influence it more easily.
 
-commit:
-  60fa4a9e23231 ("mm: percpu: add codetag reference into pcpuobj_ext")
-  24e44cc22aa31 ("mm: percpu: enable per-cpu allocation tagging")
-  dcfbb68202759 <--- your patch
+So what I am trying to say is: let UB be an actually useful term of
+forbidden behavior. If you want to convince me otherwise, I think we
+should talk specifics and not in this general way, since "sometimes UB
+is actually ok" is something that I don't want to accept in Rust as a
+general statement. If we have an exception, it should have a damn good
+reason to be an exception and then still I don't like it one bit. Can't
+we just ask the Rust folks to implement some compiler magic for us that
+achieves what we need without relying one some weird compiler quirk?
 
-60fa4a9e23231721 24e44cc22aa3112082f2ee23137 dcfbb6820275994e92a9dcf309e
----------------- --------------------------- ---------------------------
-       fail:runs  %reproduction    fail:runs  %reproduction    fail:runs
-           |             |             |             |             |
-        281:999        -28%            :998        -28%            :999   dmesg.BUG:KCSAN:data-race_in_pcpu_alloc/pcpu_block_update_hint_alloc
-        296:999        -30%            :998        -30%            :999   dmesg.BUG:KCSAN:data-race_in_pcpu_alloc/pcpu_block_update_hint_free
-         25:999         -3%            :998         -3%            :999   dmesg.BUG:KCSAN:data-race_in_pcpu_alloc/pcpu_chunk_populated
-           :999         29%         292:998          0%            :999   dmesg.BUG:KCSAN:data-race_in_pcpu_alloc_noprof/pcpu_block_update_hint_alloc
-           :999         27%         269:998          0%            :999   dmesg.BUG:KCSAN:data-race_in_pcpu_alloc_noprof/pcpu_block_update_hint_free
-           :999          4%          44:998          0%            :999   dmesg.BUG:KCSAN:data-race_in_pcpu_alloc_noprof/pcpu_chunk_populated
+---
+Cheers,
+Benno
 
-> 
-> Thanks,
-> Dennis
-> 
-> > > 
-> > > ---
-> > > diff --git a/mm/percpu.c b/mm/percpu.c
-> > > index 20d91af8c033..325fb8412e90 100644
-> > > --- a/mm/percpu.c
-> > > +++ b/mm/percpu.c
-> > > @@ -1864,6 +1864,10 @@ void __percpu *pcpu_alloc_noprof(size_t size, size_t align, bool reserved,
-> > >  
-> > >  area_found:
-> > >  	pcpu_stats_area_alloc(chunk, size);
-> > > +
-> > > +	if (pcpu_nr_empty_pop_pages < PCPU_EMPTY_POP_PAGES_LOW)
-> > > +		pcpu_schedule_balance_work();
-> > > +
-> > >  	spin_unlock_irqrestore(&pcpu_lock, flags);
-> > >  
-> > >  	/* populate if not all pages are already there */
-> > > @@ -1891,9 +1895,6 @@ void __percpu *pcpu_alloc_noprof(size_t size, size_t align, bool reserved,
-> > >  		mutex_unlock(&pcpu_alloc_mutex);
-> > >  	}
-> > >  
-> > > -	if (pcpu_nr_empty_pop_pages < PCPU_EMPTY_POP_PAGES_LOW)
-> > > -		pcpu_schedule_balance_work();
-> > > -
-> > >  	/* clear the areas and return address relative to base address */
-> > >  	for_each_possible_cpu(cpu)
-> > >  		memset((void *)pcpu_chunk_addr(chunk, cpu, 0) + off, 0, size);
+> Regards,
+> Boqun
+>=20
+> [1]: https://rust-lang.zulipchat.com/#narrow/stream/136281-t-opsem/topic/=
+.E2.9C.94.20Rust.20and.20the.20Linux.20Kernel.20Memory.20Model/near/4221932=
+12
+> [2]: https://github.com/rust-lang/unsafe-code-guidelines/issues/348#issue=
+comment-1221376388
+>=20
+>> +more about UB in Rust
+>> +`here <https://doc.rust-lang.org/reference/behavior-considered-undefine=
+d.html>`_.
+>> +
+> [...]
+

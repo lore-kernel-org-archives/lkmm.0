@@ -1,159 +1,186 @@
-Received: from mail-40133.protonmail.ch (mail-40133.protonmail.ch [185.70.40.133])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pg1-f171.google.com (mail-pg1-f171.google.com [209.85.215.171])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9283B73440
-	for <lkmm@lists.linux.dev>; Wed, 24 Jul 2024 22:01:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.70.40.133
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEFAE10FA;
+	Sat, 27 Jul 2024 03:15:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721858520; cv=none; b=qU4AFYL1+aRAIxv2+YV8ZhWhBmbr3FbJ6uhwjAnSxNWhIeKdJTmelSweXtJWjG4RLwQOX1E28U/61+Fb3eIVelge4yqYimq/mS0d2bcmmvpZpzUhx9/U6iHlxySVUcGympL1BwYU3Ju+zUgULWzCBLuSSGS5eCcqIp2UnGF0SSg=
+	t=1722050113; cv=none; b=RDUZLp/K3u1UbcXt1Af44FQXNEoU1RJO4kozlou/WSw1VOjT0H23vBAmqXVtrsWfyzYUcuiF0UpWOs/lhmoSRqpdhRNVf2QiwJng/8CQco2cOwrb+CIe956NIs68ptUZzLTzfZcY/LwhKOQOpMJV6WvHzEwgN0aSEuTsH5UTqYQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721858520; c=relaxed/simple;
-	bh=S1Dcl/aj7zeooOV/7eVXDKXqAlXYLBYJEg/YcpAH2to=;
-	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=OyKjvlGf4k3dmhHsES73CKSfpPwKERujE8nTB7qquTpz4L4/sx/YEpWEpJ2ePC3zy35DNVua0SDofJubrE4YiQ0H6fOpkEb1ykemxYugO91+hQGgAigb5yaCYiS2ZPyAZIg+PNBzv/0GGztl8CeoX0/SZcWvqhU8MCPfpjGFa5E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=proton.me; spf=pass smtp.mailfrom=proton.me; dkim=pass (2048-bit key) header.d=proton.me header.i=@proton.me header.b=Epg7dnUZ; arc=none smtp.client-ip=185.70.40.133
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=proton.me
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=proton.me
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=proton.me header.i=@proton.me header.b="Epg7dnUZ"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=proton.me;
-	s=protonmail; t=1721858516; x=1722117716;
-	bh=S1Dcl/aj7zeooOV/7eVXDKXqAlXYLBYJEg/YcpAH2to=;
-	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
-	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
-	 Message-ID:BIMI-Selector;
-	b=Epg7dnUZFy+76QXsfAVXA0aewFnEPWvyDMjsY3f0N8gY2Jo8kQGqEBNQflK1VEICN
-	 v/Kz10R+eP2AoELNOn967z8aTkt2en1w2b2FWp3dcaNIlFpbmoFHRUB2USylc7ljNJ
-	 zI6Lo+pfgrrkISW7YiatFSJmDBhwG2pFQcruLrbJgEpD2J9o510XuFKu+SXCsvTqOa
-	 EDP4gYPNuauU0tPyhI6toUHx2YsZZbD16WThSUZdGbgsEPD3GepjENErN7iVuqD+A9
-	 yRot9TW6o1otDBVPzL34weZJNj1TM5jFMRuSUBpAMw14oBMXyI+y6LM0xChx+4+v20
-	 Pkc3IGH9VTsnQ==
-Date: Wed, 24 Jul 2024 22:01:50 +0000
+	s=arc-20240116; t=1722050113; c=relaxed/simple;
+	bh=vfWLMUCNQqdCjzCDTMhi+pl6nCwaPxvVUzyCErSQoDo=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=iGxoIGfeKM1bs8Lc0V1OapSxOP4htO6oNZTQmmKw5Hj5U6WPIuBqH4KRlm/p54N11wf4uPQV1jhYzz8NZmmvVGmlHkVgBR+rsA4azH9k3hkcVbKTQq0Xq3D8AHcAcetuhUpk/KqDJh7cLac8Ifcnwsd60W/NL9fyizdJ8hHKsp4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=kernel.org; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.215.171
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=kernel.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-pg1-f171.google.com with SMTP id 41be03b00d2f7-76cb5b6b3e4so1086451a12.1;
+        Fri, 26 Jul 2024 20:15:11 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1722050111; x=1722654911;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=GLRbFlYw1y7KC9S4hQ5ZFyFBozLVkK+PnMW946p6k3U=;
+        b=jT9P5P93D3TqHdn+XFXdXoT2OJslMUxpY3aNVatl/6NRcfJBU+0OwEYB1TrLjSRJa2
+         NEgHZGv2RfdJEqFVSl0kAXELEhMszvUBzksTAUqdmGHcQmnvHAtbxIvcVzvTpDpy/jcn
+         hW7WTfzfYd1wNjYb1q/UpBQ5vB48gyIFDVmhGzxrKlyNcCg3HVbG+PkiyfYpGZmDXuux
+         XIV6XAqrbucSv97VtG5/0bEg3G0uQTWNFgZfCTx4xao6MTkjNsNV0uHPGtJesB5HqAWJ
+         uOndEBkJIMKI9EtZVA7z3fXFEfztaAqAzSL24R4K0lfywM/gzEshtYBdHDXnm8UYBLsh
+         mrnA==
+X-Forwarded-Encrypted: i=1; AJvYcCX4FfMfZMhYsQb6Bqhtfi5tFsBYrIiaT+4uq+cqlm4qrTGOZNdEF0DDe15UT6Xz+YziVUsPHbCD66IdyOnXizuzvC2gefH3xevfb/UGdOGyuy4sFPTCID1970ndog==
+X-Gm-Message-State: AOJu0YyPPI7iDQRoIjd1qFXVL1VjhnbW6eZnXQ/VfUKfMzsC9EuqXGB2
+	3lFsRfkVHSzeRbYPLFs1znAEKoD+ZR7kYrh55j1MUz5Gut3aOB/q
+X-Google-Smtp-Source: AGHT+IEh0vRQcYCjKacpBe+tlN5TG/wqG8G56zuBfhH316hJWOb2texq/hSHkLPuAMlU+eKcHwai8g==
+X-Received: by 2002:a17:903:228c:b0:1fd:6766:6848 with SMTP id d9443c01a7336-1ff0481b9d3mr18339475ad.17.1722050111104;
+        Fri, 26 Jul 2024 20:15:11 -0700 (PDT)
+Received: from snowbird ([136.25.84.117])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-1fed7c7f62fsm40488975ad.19.2024.07.26.20.15.09
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 26 Jul 2024 20:15:10 -0700 (PDT)
+Date: Fri, 26 Jul 2024 20:15:07 -0700
+From: Dennis Zhou <dennis@kernel.org>
 To: Boqun Feng <boqun.feng@gmail.com>
-From: Benno Lossin <benno.lossin@proton.me>
-Cc: Jonathan Corbet <corbet@lwn.net>, Miguel Ojeda <ojeda@kernel.org>, Alex Gaynor <alex.gaynor@gmail.com>, Wedson Almeida Filho <wedsonaf@gmail.com>, Gary Guo <gary@garyguo.net>, =?utf-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, Andreas Hindborg <a.hindborg@samsung.com>, Alice Ryhl <aliceryhl@google.com>, linux-doc@vger.kernel.org, linux-kernel@vger.kernel.org, rust-for-linux@vger.kernel.org, lkmm@lists.linux.dev
-Subject: Re: [RFC PATCH 1/5] doc: rust: create safety standard
-Message-ID: <289d66fb-a698-4d3b-b809-0e3305199a2c@proton.me>
-In-Reply-To: <Zprkf4FrBXgYmtgg@boqun-archlinux>
-References: <20240717221133.459589-1-benno.lossin@proton.me> <20240717221133.459589-2-benno.lossin@proton.me> <Zprkf4FrBXgYmtgg@boqun-archlinux>
-Feedback-ID: 71780778:user:proton
-X-Pm-Message-ID: dc87c75b1e7cfa0abb30624c92582fc9d58573a0
+Cc: Tejun Heo <tj@kernel.org>, kernel test robot <oliver.sang@intel.com>,
+	Suren Baghdasaryan <surenb@google.com>, oe-lkp@lists.linux.dev,
+	lkp@intel.com, linux-kernel@vger.kernel.org,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Kent Overstreet <kent.overstreet@linux.dev>,
+	Kees Cook <keescook@chromium.org>,
+	Alexander Viro <viro@zeniv.linux.org.uk>,
+	Alex Gaynor <alex.gaynor@gmail.com>,
+	Alice Ryhl <aliceryhl@google.com>,
+	Andreas Hindborg <a.hindborg@samsung.com>,
+	Benno Lossin <benno.lossin@proton.me>,
+	=?iso-8859-1?Q?Bj=F6rn?= Roy Baron <bjorn3_gh@protonmail.com>,
+	Christoph Lameter <cl@linux.com>, Gary Guo <gary@garyguo.net>,
+	Miguel Ojeda <ojeda@kernel.org>,
+	Pasha Tatashin <pasha.tatashin@soleen.com>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Vlastimil Babka <vbabka@suse.cz>,
+	Wedson Almeida Filho <wedsonaf@gmail.com>, linux-mm@kvack.org,
+	lkmm@lists.linux.dev
+Subject: Re: [linus:master] [mm]  24e44cc22a:
+ BUG:KCSAN:data-race_in_pcpu_alloc_noprof/pcpu_block_update_hint_alloc
+Message-ID: <ZqRmO6LNol6S65dm@snowbird>
+References: <202407191651.f24e499d-oliver.sang@intel.com>
+ <Zp6bMoDnUMxNrKos@boqun-archlinux>
+ <Zp6cVgXJlzF4VOwl@slm.duckdns.org>
+ <Zp6e1PWZbz4pkh9Z@boqun-archlinux>
+ <Zp6kpCcQRPTGk1LK@V92F7Y9K0C.lan>
+ <Zp7G4EfISRwlmmIT@boqun-archlinux>
+ <Zp9EvUTqni5wMDlC@snowbird>
+ <ZqAdGAD01kZPms2J@Boquns-Mac-mini.home>
 Precedence: bulk
 X-Mailing-List: lkmm@lists.linux.dev
 List-Id: <lkmm.lists.linux.dev>
 List-Subscribe: <mailto:lkmm+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:lkmm+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <ZqAdGAD01kZPms2J@Boquns-Mac-mini.home>
 
-On 20.07.24 00:11, Boqun Feng wrote:
-> Hi Benno,
->=20
-> On Wed, Jul 17, 2024 at 10:12:29PM +0000, Benno Lossin wrote:
-> [...]
->> @@ -0,0 +1,246 @@
->> +.. SPDX-License-Identifier: GPL-2.0
->> +.. highlight:: rust
->> +
->> +=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
->> +Rust Safety Standard
->> +=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
->> +
->> +Safe Rust code cannot have memory related bugs. This is a guarantee by =
-the Rust compiler. Of course
->> +it is not without caveats: no compiler bugs, no bugs in the specificati=
-on etc. But the possibly most
->> +important caveat is that of ``unsafe`` code. ``unsafe`` code needs to f=
-ollow certain rules in order
->> +for safe code to enjoy the no-memory-bugs privilege. A simple example o=
-f such a rule is that
->> +references must be valid for the duration of their lifetime. If any rul=
-e is violated, it can lead
->> +to undefined behavior even in safe code! The term undefined behavior in=
- Rust has a lot stricter
->> +meaning than in C or C++: UB in Rust is totally forbidden. In C one mig=
-ht rely on the compiler
->> +implementation to ensure correct code generation, but that is not the c=
-ase for Rust. You can read
->=20
-> I don't disagree with your intention here (i.e. we should seek for
-> UB-free program), however, during the discussion on memory model, I got
-> response like in [1]:
->=20
-> =09... they are technically wrong (violating the C standard), but
-> =09practically well-tested. (and then above I added that there's
-> =09good reasons for why they don't go wrong: volatile compilation
-> =09strategies and reordering constraints relating volatile, inline
-> =09asm, and non-atomics make it so that this almost 'has to' work,
-> =09I think.)
->=20
-> which suggests that we should rely on the compiler implementation to
-> ensure the "correct" code generation.
+On Tue, Jul 23, 2024 at 02:14:00PM -0700, Boqun Feng wrote:
+> On Mon, Jul 22, 2024 at 10:50:53PM -0700, Dennis Zhou wrote:
+> > On Mon, Jul 22, 2024 at 01:53:52PM -0700, Boqun Feng wrote:
+> > > On Mon, Jul 22, 2024 at 11:27:48AM -0700, Dennis Zhou wrote:
+> > > > Hello,
+> > > > 
+> > > > On Mon, Jul 22, 2024 at 11:03:00AM -0700, Boqun Feng wrote:
+> > > > > On Mon, Jul 22, 2024 at 07:52:22AM -1000, Tejun Heo wrote:
+> > > > > > On Mon, Jul 22, 2024 at 10:47:30AM -0700, Boqun Feng wrote:
+> > > > > > > This looks like a data race because we read pcpu_nr_empty_pop_pages out
+> > > > > > > of the lock for a best effort checking, @Tejun, maybe you could confirm
+> > > > > > > on this?
+> > > > > > 
+> > > > > > That does sound plausible.
+> > > > > > 
+> > > > > > > -       if (pcpu_nr_empty_pop_pages < PCPU_EMPTY_POP_PAGES_LOW)
+> > > > > > > +       /*
+> > > > > > > +        * Checks pcpu_nr_empty_pop_pages out of the pcpu_lock, data races may
+> > > > > > > +        * occur but this is just a best-effort checking, everything is synced
+> > > > > > > +        * in pcpu_balance_work.
+> > > > > > > +        */
+> > > > > > > +       if (data_race(pcpu_nr_empty_pop_pages) < PCPU_EMPTY_POP_PAGES_LOW)
+> > > > > > >                 pcpu_schedule_balance_work();
+> > > > > > 
+> > > > > > Would it be better to use READ/WRITE_ONCE() for the variable?
+> > > > > > 
+> > > > > 
+> > > > > For READ/WRITE_ONCE(), we will need to replace all write accesses and
+> > > > > all out-of-lock read accesses to pcpu_nr_empty_pop_pages, like below.
+> > > > > It's better in the sense that it doesn't rely on compiler behaviors on
+> > > > > data races, not sure about the performance impact though.
+> > > > > 
+> > > > 
+> > > > I think a better alternative is we can move it up into the lock under
+> > > > area_found. The value gets updated as part of pcpu_alloc_area() as the
+> > > > code above populates percpu memory that is already allocated.
+> > > > 
+> > > 
+> > > Not sure I followed what exactly you suggested here because I'm not
+> > > familiar with the logic, but a simpler version would be:
+> > > 
+> > > 
+> > 
+> > I believe that's the only naked access of pcpu_nr_empty_pop_pages. So
+> > I was thinking this'll fix this problem.
+> > 
+> > I also don't know how to rerun this CI tho..
+> > 
+> > ---
+> > diff --git a/mm/percpu.c b/mm/percpu.c
+> > index 20d91af8c033..325fb8412e90 100644
+> > --- a/mm/percpu.c
+> > +++ b/mm/percpu.c
+> > @@ -1864,6 +1864,10 @@ void __percpu *pcpu_alloc_noprof(size_t size, size_t align, bool reserved,
+> >  
+> >  area_found:
+> >  	pcpu_stats_area_alloc(chunk, size);
+> > +
+> > +	if (pcpu_nr_empty_pop_pages < PCPU_EMPTY_POP_PAGES_LOW)
+> > +		pcpu_schedule_balance_work();
+> > +
+> 
+> But the pcpu_chunk_populated() afterwards could modify the
+> pcpu_nr_empty_pop_pages again, wouldn't this be a behavior changing?
+> 
 
-I disagree, why can't we get the specification to specify what we need?
-I would rather have a compiler and standard that are in sync and give us
-what we need, than have a standard that says we aren't allowed to do X,
-but compilers still allow you to do X. I don't understand why this is
-the case for C (I would bet this is is because of history/legacy).
+It does, but really at this point it's a mixed bag because the lock
+isn't permanently held at all while we do all these operations. The
+value is read at best effort.
 
-> Basically, since LKMM relies on a few things that C standard dosen't
-> say, e.g. votatile accesses on certain types are atomic, behaviors of
-> asm blocks, dependencies. Let alone we have data_race() where for
-> example, the diagnostic code accesses the shared variable out of the
-> core synchronization design.
->=20
-> All of the above is difficult to implement purely UB-free in Rust IIUC.
-> Of course you could argue the ideal way is to teach Rust how to model
-> these useful operations/patterns as non-UBs, but that's a relatively
-> high task:
->=20
-> =09Or do we want to go well beyond what happens in C, and actually
-> =09define a memory model that both has the performance
-> =09characteristics required by Linux, and can be defined precisely
-> =09as a language-level graph-based (or ideally operational)
-> =09concurrency memory model? This is a monumental task and a large
-> =09open problem, and should not be on the list of blocking issues
-> =09for anything that needs to get done in the next 5 years. ;)
->=20
-> from Ralf [2].
->=20
-> Again, I don't want to rely on compiler's behaviors on UBs, it's just
-> the langauge is not ready for some jobs and programmers have to be
-> "creative".
+Ultimately the code below is populating backing pages for non-atomic
+allocations. At this point the ideal situation is we're using an already
+populated page. There are caveats but I can't say the prior is any
+better than this version.
 
-I think this is something that we need to very carefully evaluate on a
-case-by-case basis. I think that with Rust we have a clean slate and can
-try from the beginning to ensure that there is no
-compiler-but-not-specification behavior that we rely upon. AFAIK the
-Rust standard moves quicker than the C standard, so we might be able to
-influence it more easily.
+The code you mentioned pairs with the comment on line 916 below.
 
-So what I am trying to say is: let UB be an actually useful term of
-forbidden behavior. If you want to convince me otherwise, I think we
-should talk specifics and not in this general way, since "sometimes UB
-is actually ok" is something that I don't want to accept in Rust as a
-general statement. If we have an exception, it should have a damn good
-reason to be an exception and then still I don't like it one bit. Can't
-we just ask the Rust folks to implement some compiler magic for us that
-achieves what we need without relying one some weird compiler quirk?
+	/*
+	 * If the allocation is not atomic, some blocks may not be
+	 * populated with pages, while we account it here.  The number
+	 * of pages will be added back with pcpu_chunk_populated()
+	 * when populating pages.
+	 */
 
----
-Cheers,
-Benno
+Thanks,
+Dennis
 
 > Regards,
 > Boqun
->=20
-> [1]: https://rust-lang.zulipchat.com/#narrow/stream/136281-t-opsem/topic/=
-.E2.9C.94.20Rust.20and.20the.20Linux.20Kernel.20Memory.20Model/near/4221932=
-12
-> [2]: https://github.com/rust-lang/unsafe-code-guidelines/issues/348#issue=
-comment-1221376388
->=20
->> +more about UB in Rust
->> +`here <https://doc.rust-lang.org/reference/behavior-considered-undefine=
-d.html>`_.
->> +
-> [...]
-
+> 
+> >  	spin_unlock_irqrestore(&pcpu_lock, flags);
+> >  
+> >  	/* populate if not all pages are already there */
+> > @@ -1891,9 +1895,6 @@ void __percpu *pcpu_alloc_noprof(size_t size, size_t align, bool reserved,
+> >  		mutex_unlock(&pcpu_alloc_mutex);
+> >  	}
+> >  
+> > -	if (pcpu_nr_empty_pop_pages < PCPU_EMPTY_POP_PAGES_LOW)
+> > -		pcpu_schedule_balance_work();
+> > -
+> >  	/* clear the areas and return address relative to base address */
+> >  	for_each_possible_cpu(cpu)
+> >  		memset((void *)pcpu_chunk_addr(chunk, cpu, 0) + off, 0, size);

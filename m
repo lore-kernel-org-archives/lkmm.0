@@ -1,40 +1,42 @@
 Received: from frasgout13.his.huawei.com (frasgout13.his.huawei.com [14.137.139.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A873215533F
-	for <lkmm@lists.linux.dev>; Mon, 29 Jul 2024 15:02:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 604A61E4A2
+	for <lkmm@lists.linux.dev>; Mon, 29 Jul 2024 15:19:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=14.137.139.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722265346; cv=none; b=l8wVgk2Xjy0sq5yfbdnhuLLuSJlUMw9o+E7vu+50BkugfsxQ2NU2HPIooNkMGFyDK2D2aE0DBPDtrYUpI+/Pw0G32zr4s7z+xBw0T3Agqfua1+OwLmMZaW4ZgB/XQ5fcjXtUB0BTkYXt7F9oiGE5tLvLUMNoCHvqxJAneIDystI=
+	t=1722266394; cv=none; b=ADaAloYeRAd6V0jH/xH9ICxxD/2H/RGpSBph/T5eVRqIRV/NrcisJvyXbSYd8C1ba8Hz6KJUWRn/rMXM4UZPNbUsQLpIUfZ9UBZxZEj0Ks/F7aoWp0GWPDbqxCQzwzj4NQ19DKMAKFDB7xafDGDdgK+FMwl9nm56yZNApY02H9s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722265346; c=relaxed/simple;
-	bh=oHcq7nl0d+/qsLBV8ODB4Tv02gHyy9C2ctfYNWXMdIM=;
+	s=arc-20240116; t=1722266394; c=relaxed/simple;
+	bh=NYCN56nKzaw4xD2f8FflikeMHC4Si0h4fXEFwtZoj4k=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=PZlfJSUZknyV7V0FI7RWJQlE42nSM8Vcb1rbQCxMGMCpt+DHUk9ICqtzLPldfeUxyaYc2py18FcrLWOPWObw7jX0ln8VYNUIzTRZg12McfS6LgMw2WZqpTghdqRe/VoNbHkfgnEI1WabF4lVsxIH7iVHWr6ZZIsrePiJcZDE91M=
+	 In-Reply-To:Content-Type; b=G9Yxei3AnZoljcWcFcM+c6er0+IzQRV8whgTM2ZYt7eHkjtfeDl2ab9cmNlcwesLvwrFvgXQ4bimJXL4Ykvb3wZSIw/AFk1vXOrwEp7LGbvUPiKhOytynEkTDsDr9cvIN3DS+tQlWVIHtMSSkc0yjVHxVd8kdAGQbGc68Hs87LM=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=huaweicloud.com; spf=pass smtp.mailfrom=huaweicloud.com; arc=none smtp.client-ip=14.137.139.46
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=huaweicloud.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huaweicloud.com
 Received: from mail.maildlp.com (unknown [172.18.186.51])
-	by frasgout13.his.huawei.com (SkyGuard) with ESMTP id 4WXggR4gtPz9v7Hl
-	for <lkmm@lists.linux.dev>; Mon, 29 Jul 2024 22:27:47 +0800 (CST)
+	by frasgout13.his.huawei.com (SkyGuard) with ESMTP id 4WXhQ33yywz9v7HF
+	for <lkmm@lists.linux.dev>; Mon, 29 Jul 2024 23:01:15 +0800 (CST)
 Received: from mail02.huawei.com (unknown [7.182.16.27])
-	by mail.maildlp.com (Postfix) with ESMTP id CF683140B1B
-	for <lkmm@lists.linux.dev>; Mon, 29 Jul 2024 22:46:12 +0800 (CST)
-Received: from [10.45.144.33] (unknown [10.45.144.33])
-	by APP2 (Coremail) with SMTP id GxC2BwCHpMEoq6dmpEAkAA--.5208S2;
-	Mon, 29 Jul 2024 15:46:12 +0100 (CET)
-Message-ID: <00f58d20-f92d-461e-beac-b307905cab3b@huaweicloud.com>
-Date: Mon, 29 Jul 2024 16:45:58 +0200
+	by mail.maildlp.com (Postfix) with ESMTP id 05B641400CA
+	for <lkmm@lists.linux.dev>; Mon, 29 Jul 2024 23:19:49 +0800 (CST)
+Received: from [10.221.99.159] (unknown [10.221.99.159])
+	by APP2 (Coremail) with SMTP id GxC2BwCHpMEJs6dmGaYkAA--.5463S2;
+	Mon, 29 Jul 2024 16:19:48 +0100 (CET)
+Message-ID: <e45bd166-348a-95b6-c17c-dcd2525f263c@huaweicloud.com>
+Date: Mon, 29 Jul 2024 17:19:34 +0200
 Precedence: bulk
 X-Mailing-List: lkmm@lists.linux.dev
 List-Id: <lkmm.lists.linux.dev>
 List-Subscribe: <mailto:lkmm+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:lkmm+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.13.0
 Subject: Re: [PATCHv2 0/4] tools/memory-model: Define more of LKMM in
  tools/memory-model
-To: Hernan Ponce de Leon <hernan.poncedeleon@huaweicloud.com>,
+Content-Language: en-US
+To: Jonas Oberhauser <jonas.oberhauser@huaweicloud.com>,
  Alan Stern <stern@rowland.harvard.edu>
 Cc: paulmck@kernel.org, parri.andrea@gmail.com, will@kernel.org,
  peterz@infradead.org, boqun.feng@gmail.com, npiggin@gmail.com,
@@ -49,108 +51,123 @@ References: <20240604152922.495908-1-jonas.oberhauser@huaweicloud.com>
  <4792c9e7-2594-3600-5d82-4cb1443fe670@huaweicloud.com>
  <d6a76968-d10b-c60b-245a-f58116eca6af@huaweicloud.com>
  <eb9548de-e66e-3dcd-9136-8702a5bc2934@huaweicloud.com>
-From: Jonas Oberhauser <jonas.oberhauser@huaweicloud.com>
-In-Reply-To: <eb9548de-e66e-3dcd-9136-8702a5bc2934@huaweicloud.com>
+ <00f58d20-f92d-461e-beac-b307905cab3b@huaweicloud.com>
+From: Hernan Ponce de Leon <hernan.poncedeleon@huaweicloud.com>
+In-Reply-To: <00f58d20-f92d-461e-beac-b307905cab3b@huaweicloud.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID:GxC2BwCHpMEoq6dmpEAkAA--.5208S2
-X-Coremail-Antispam: 1UD129KBjvJXoWxCr1DJr45XFWkJr1rJFWkZwb_yoW5ArW5pF
-	y5tFW3KFs7KF4ftr1Ikwnaqas2vF4xJF45XFn8trZrtr90vF9Ikr4Fyw1j9Fyq9rs3Wa1j
-	vFsxt3s7Z3WDZrJanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
-	9KBjDU0xBIdaVrnRJUUUBjb4IE77IF4wAFF20E14v26ryj6rWUM7CY07I20VC2zVCF04k2
+X-CM-TRANSID:GxC2BwCHpMEJs6dmGaYkAA--.5463S2
+X-Coremail-Antispam: 1UD129KBjvJXoWxCry7WF48AFyfZF4DGFWDCFg_yoW5tFWrpF
+	yrtFW5Krs7KF4fArn2yrnYqFySvFWxJF15XF15trWUKryqvFyYkr4Fyrn0kFyq9rs3Wr42
+	vrWUt34xZ3WDZrJanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+	9KBjDU0xBIdaVrnRJUUUP2b4IE77IF4wAFF20E14v26ryj6rWUM7CY07I20VC2zVCF04k2
 	6cxKx2IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4
 	vEj48ve4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Jr0_JF4l84ACjcxK6xIIjxv20xvEc7Cj
 	xVAFwI0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW8JVWxJwA2z4x0Y4vEx4A2jsIEc7CjxV
 	AFwI0_Gr0_Gr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l5I8CrVACY4xI64kE6c02F40E
 	x7xfMcIj6xIIjxv20xvE14v26r1j6r18McIj6I8E87Iv67AKxVWUJVW8JwAm72CE4IkC6x
 	0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lF7I21c0EjII2zVCS5cI20VAGYxC7M4IIrI8v6xkF
-	7I0E8cxan2IY04v7MxkF7I0En4kS14v26r4a6rW5MxAIw28IcxkI7VAKI48JMxC20s026x
-	CaFVCjc4AY6r1j6r4UMI8I3I0E5I8CrVAFwI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_
-	JrWlx4CE17CEb7AF67AKxVW8ZVWrXwCIccxYrVCFb41lIxkGc2Ij64vIr41lIxAIcVC0I7
-	IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7CjxVAFwI0_Gr0_Cr1lIxAIcVCF04k2
-	6cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r1j6r4UMIIF0xvEx4A2jsIEc7CjxV
-	AFwI0_Gr0_Gr1UYxBIdaVFxhVjvjDU0xZFpf9x07jjNtxUUUUU=
-X-CM-SenderInfo: 5mrqt2oorev25kdx2v3u6k3tpzhluzxrxghudrp/
+	7I0E8cxan2IY04v7Mxk0xIA0c2IEe2xFo4CEbIxvr21lc7CjxVAaw2AFwI0_GFv_Wryl42
+	xK82IYc2Ij64vIr41l4I8I3I0E4IkC6x0Yz7v_Jr0_Gr1lx2IqxVAqx4xG67AKxVWUJVWU
+	GwC20s026x8GjcxK67AKxVWUGVWUWwC2zVAF1VAY17CE14v26r4a6rW5MIIYY7kG6xAYrw
+	CIc40Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r1j6r1xMIIF0xvE2Ix0cI8IcVCY1x02
+	67AKxVW8JVWxJwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF4lIxAIcVC2z280aVAFwI0_Jr
+	0_Gr1lIxAIcVC2z280aVCY1x0267AKxVW8JVW8JrUvcSsGvfC2KfnxnUUI43ZEXa7IU8eH
+	q7UUUUU==
+X-CM-SenderInfo: xkhu0tnqos00pfhgvzhhrqqx5xdzvxpfor3voofrz/
 
-
-
-Am 7/29/2024 um 3:30 PM schrieb Hernan Ponce de Leon:
-> On 7/12/2024 10:06 AM, Hernan Ponce de Leon wrote:
->> On 6/10/2024 10:38 AM, Hernan Ponce de Leon wrote:
->>> On 6/8/2024 3:00 AM, Alan Stern wrote:
->>>> On Wed, Jun 05, 2024 at 09:58:42PM +0200, Jonas Oberhauser wrote:
+On 7/29/2024 4:45 PM, Jonas Oberhauser wrote:
+> 
+> 
+> Am 7/29/2024 um 3:30 PM schrieb Hernan Ponce de Leon:
+>> On 7/12/2024 10:06 AM, Hernan Ponce de Leon wrote:
+>>> On 6/10/2024 10:38 AM, Hernan Ponce de Leon wrote:
+>>>> On 6/8/2024 3:00 AM, Alan Stern wrote:
+>>>>> On Wed, Jun 05, 2024 at 09:58:42PM +0200, Jonas Oberhauser wrote:
+>>>>>>
+>>>>>>
+>>>>>> Am 6/4/2024 um 7:56 PM schrieb Alan Stern:
+>>>>>>> Just to clarify: Your first step encompasses patches 1 - 3, and the
+>>>>>>> second step is patch 4.  The first three patches can be applied 
+>>>>>>> now, but
+>>>>>>> the last one needs to wait until herd7 has been updated.  Is this 
+>>>>>>> all
+>>>>>>> correct?
+>>>>>>
+>>>>>> Exactly.
 >>>>>
+>>>>> With regard to patch 4, how much thought have you and Hernan given to
+>>>>> backward compatibility?  Once herd7 is changed, old memory model files
+>>>>> will no longer work correctly.
 >>>>>
->>>>> Am 6/4/2024 um 7:56 PM schrieb Alan Stern:
->>>>>> Just to clarify: Your first step encompasses patches 1 - 3, and the
->>>>>> second step is patch 4.  The first three patches can be applied 
->>>>>> now, but
->>>>>> the last one needs to wait until herd7 has been updated.  Is this all
->>>>>> correct?
->>>>>
->>>>> Exactly.
 >>>>
->>>> With regard to patch 4, how much thought have you and Hernan given to
->>>> backward compatibility?  Once herd7 is changed, old memory model files
->>>> will no longer work correctly.
+>>>> Honestly, I did not think much about this (at least until Akira 
+>>>> mentioned in my PR). My hope was that changes to the model could be 
+>>>> back-ported to previous kernel versions. However that would not work 
+>>>> for existing out-of-tree files.
 >>>>
+>>>> My question is: is compatibility with out-of-tree files really a 
+>>>> requirement? I would argue that if people are using outdated models, 
+>>>> they may get wrong results anyway. This is because some of the 
+>>>> changes done to lkmm during the last few years change the expected 
+>>>> result for some litmus tests.
+>>>>
+>>>> Hernan
 >>>
->>> Honestly, I did not think much about this (at least until Akira 
->>> mentioned in my PR). My hope was that changes to the model could be 
->>> back-ported to previous kernel versions. However that would not work 
->>> for existing out-of-tree files.
->>>
->>> My question is: is compatibility with out-of-tree files really a 
->>> requirement? I would argue that if people are using outdated models, 
->>> they may get wrong results anyway. This is because some of the 
->>> changes done to lkmm during the last few years change the expected 
->>> result for some litmus tests.
->>>
->>> Hernan
+>>> I pushed some new changes to the code for backward compatibility [1]. 
+>>> The series also needs the patch at the bottom to properly deal with 
+>>> the ordering of failing CAses and non-returning operations. With it, 
+>>> all litmus tests return the correct result (the script needs to pass 
+>>> option -lkmm-legacy false to herd).
 >>
->> I pushed some new changes to the code for backward compatibility [1]. 
->> The series also needs the patch at the bottom to properly deal with 
->> the ordering of failing CAses and non-returning operations. With it, 
->> all litmus tests return the correct result (the script needs to pass 
->> option -lkmm-legacy false to herd).
+>> I have been playing around with an alternative to this.
+>>
+>> Rather than implementing this as an "option", I can implemented it as 
+>> a "model variant (*)" and add this to the model
 > 
-> I have been playing around with an alternative to this.
+> How exactly do these model variants get selected?
 > 
-> Rather than implementing this as an "option", I can implemented it as a 
-> "model variant (*)" and add this to the model
+> I was thinking that another good approach could be to have a new generic 
+> C model which doesn't know anything about LKMM. I believe this would be 
+> specified in the header of the .litmus files?
+> 
+> 
+>> flag ~empty (if "lkmmlatest" then 0 else _)
+>>    as new-lkmm-models-require-variant-lkmmlatest
+>>
+>> If the user forgets to set the variant for the new model, herd7 will 
+>> flag the executions showing that something is off.
+>>
+>> To be fully backward compatible, we would need to backport this to old 
+>> models
+>>
+>> flag ~empty (if "lkmmlatest" then 1 else _)
+>>    as new-lkmm-models-require-variant-lkmmlatest
+> 
+> should this be then _ else 0  ? or what does the _ do here?
 
-How exactly do these model variants get selected?
+Yes, my bad.
 
-I was thinking that another good approach could be to have a new generic 
-C model which doesn't know anything about LKMM. I believe this would be 
-specified in the header of the .litmus files?
+> 
+> I also don't think we can backport things to old models
 
+IIRC I have seen (non lkmm related) patches being backported to stable 
+kernel versions. Why can't we do this for lkmm if backward compatibility 
+is really a requirement? Otherwise I don't see a way of preventing 
+developers to use old models with the new option (since I plan to keep 
+the "old variant" as default, this would have to be done on purpose, but 
+still).
 
-> flag ~empty (if "lkmmlatest" then 0 else _)
->    as new-lkmm-models-require-variant-lkmmlatest
 > 
-> If the user forgets to set the variant for the new model, herd7 will 
-> flag the executions showing that something is off.
+>> If the user (wrongly) sets the variant for an old model, the the 
+>> executions will be flagged.
+>>
+>> Any thoughts?
+>>
+>> Hernan
+>>
+>> (*) This trick seems to be used for some arm models
+>>
+>> https://github.com/herd/herdtools7/blob/master/herd/libdir/arm-models/mixed/ec.cat#L66C1-L67C67
 > 
-> To be fully backward compatible, we would need to backport this to old 
-> models
-> 
-> flag ~empty (if "lkmmlatest" then 1 else _)
->    as new-lkmm-models-require-variant-lkmmlatest
-
-should this be then _ else 0  ? or what does the _ do here?
-
-I also don't think we can backport things to old models
-
-> If the user (wrongly) sets the variant for an old model, the the 
-> executions will be flagged.
-> 
-> Any thoughts?
-> 
-> Hernan
-> 
-> (*) This trick seems to be used for some arm models
-> 
-> https://github.com/herd/herdtools7/blob/master/herd/libdir/arm-models/mixed/ec.cat#L66C1-L67C67
-
 

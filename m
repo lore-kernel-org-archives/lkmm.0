@@ -1,43 +1,41 @@
-Received: from frasgout12.his.huawei.com (frasgout12.his.huawei.com [14.137.139.154])
+Received: from frasgout13.his.huawei.com (frasgout13.his.huawei.com [14.137.139.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C327D146D54
-	for <lkmm@lists.linux.dev>; Mon, 29 Jul 2024 13:46:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=14.137.139.154
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A873215533F
+	for <lkmm@lists.linux.dev>; Mon, 29 Jul 2024 15:02:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=14.137.139.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722260790; cv=none; b=fBGozPdDT0Dc4j6uDasYEFl8C9DlfHAXwE0SLR8Kr+hmMwIGvheNlNrCNVSx1hrSJHlEjjjEuzMjwdlY/xQhYYfxRXoKVlMbJ28eTen2X+yJo/USBhuCmmFF5qAGbI4EzJXLKX6sJgeiUb+i9/HxLtMRFja+mxDQhglJ8xVZaFE=
+	t=1722265346; cv=none; b=l8wVgk2Xjy0sq5yfbdnhuLLuSJlUMw9o+E7vu+50BkugfsxQ2NU2HPIooNkMGFyDK2D2aE0DBPDtrYUpI+/Pw0G32zr4s7z+xBw0T3Agqfua1+OwLmMZaW4ZgB/XQ5fcjXtUB0BTkYXt7F9oiGE5tLvLUMNoCHvqxJAneIDystI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722260790; c=relaxed/simple;
-	bh=ic8XRQiAlqkQrB7MWDOfDz6qDcJBANBuGQ4l/VlFBQE=;
-	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
-	 In-Reply-To:Content-Type; b=qasxHdQZpHvJ+pkbxy6waukNlk6Kt2uBo5xJkyQOvrN8IG5SmFI8ax24LeZMxZQAa1K5yRG2CJRICDaXxLQVKN9To8PntrojJ+yrzVYM+seDVKNRPb4mToS6rGL8zN13kY6t/o01S5QpLqWwzGKTBvRrwmdqp3YLBljPkkLKuUI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=huaweicloud.com; spf=pass smtp.mailfrom=huaweicloud.com; arc=none smtp.client-ip=14.137.139.154
+	s=arc-20240116; t=1722265346; c=relaxed/simple;
+	bh=oHcq7nl0d+/qsLBV8ODB4Tv02gHyy9C2ctfYNWXMdIM=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=PZlfJSUZknyV7V0FI7RWJQlE42nSM8Vcb1rbQCxMGMCpt+DHUk9ICqtzLPldfeUxyaYc2py18FcrLWOPWObw7jX0ln8VYNUIzTRZg12McfS6LgMw2WZqpTghdqRe/VoNbHkfgnEI1WabF4lVsxIH7iVHWr6ZZIsrePiJcZDE91M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=huaweicloud.com; spf=pass smtp.mailfrom=huaweicloud.com; arc=none smtp.client-ip=14.137.139.46
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=huaweicloud.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huaweicloud.com
-Received: from mail.maildlp.com (unknown [172.18.186.29])
-	by frasgout12.his.huawei.com (SkyGuard) with ESMTP id 4WXdtB0zTTz9v7JT
-	for <lkmm@lists.linux.dev>; Mon, 29 Jul 2024 21:06:58 +0800 (CST)
-Received: from mail02.huawei.com (unknown [7.182.16.47])
-	by mail.maildlp.com (Postfix) with ESMTP id D3FF51402CF
-	for <lkmm@lists.linux.dev>; Mon, 29 Jul 2024 21:30:51 +0800 (CST)
-Received: from [10.221.99.159] (unknown [10.221.99.159])
-	by APP1 (Coremail) with SMTP id LxC2BwAXToiAmadmLA0jAA--.48820S2;
-	Mon, 29 Jul 2024 14:30:51 +0100 (CET)
-Message-ID: <eb9548de-e66e-3dcd-9136-8702a5bc2934@huaweicloud.com>
-Date: Mon, 29 Jul 2024 15:30:37 +0200
+Received: from mail.maildlp.com (unknown [172.18.186.51])
+	by frasgout13.his.huawei.com (SkyGuard) with ESMTP id 4WXggR4gtPz9v7Hl
+	for <lkmm@lists.linux.dev>; Mon, 29 Jul 2024 22:27:47 +0800 (CST)
+Received: from mail02.huawei.com (unknown [7.182.16.27])
+	by mail.maildlp.com (Postfix) with ESMTP id CF683140B1B
+	for <lkmm@lists.linux.dev>; Mon, 29 Jul 2024 22:46:12 +0800 (CST)
+Received: from [10.45.144.33] (unknown [10.45.144.33])
+	by APP2 (Coremail) with SMTP id GxC2BwCHpMEoq6dmpEAkAA--.5208S2;
+	Mon, 29 Jul 2024 15:46:12 +0100 (CET)
+Message-ID: <00f58d20-f92d-461e-beac-b307905cab3b@huaweicloud.com>
+Date: Mon, 29 Jul 2024 16:45:58 +0200
 Precedence: bulk
 X-Mailing-List: lkmm@lists.linux.dev
 List-Id: <lkmm.lists.linux.dev>
 List-Subscribe: <mailto:lkmm+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:lkmm+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.13.0
+User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCHv2 0/4] tools/memory-model: Define more of LKMM in
  tools/memory-model
-From: Hernan Ponce de Leon <hernan.poncedeleon@huaweicloud.com>
-To: Alan Stern <stern@rowland.harvard.edu>,
- Jonas Oberhauser <jonas.oberhauser@huaweicloud.com>
+To: Hernan Ponce de Leon <hernan.poncedeleon@huaweicloud.com>,
+ Alan Stern <stern@rowland.harvard.edu>
 Cc: paulmck@kernel.org, parri.andrea@gmail.com, will@kernel.org,
  peterz@infradead.org, boqun.feng@gmail.com, npiggin@gmail.com,
  dhowells@redhat.com, j.alglave@ucl.ac.uk, luc.maranget@inria.fr,
@@ -50,174 +48,109 @@ References: <20240604152922.495908-1-jonas.oberhauser@huaweicloud.com>
  <f93f140b-13bc-4d00-adee-46cc1c016480@rowland.harvard.edu>
  <4792c9e7-2594-3600-5d82-4cb1443fe670@huaweicloud.com>
  <d6a76968-d10b-c60b-245a-f58116eca6af@huaweicloud.com>
-Content-Language: en-US
-In-Reply-To: <d6a76968-d10b-c60b-245a-f58116eca6af@huaweicloud.com>
+ <eb9548de-e66e-3dcd-9136-8702a5bc2934@huaweicloud.com>
+From: Jonas Oberhauser <jonas.oberhauser@huaweicloud.com>
+In-Reply-To: <eb9548de-e66e-3dcd-9136-8702a5bc2934@huaweicloud.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID:LxC2BwAXToiAmadmLA0jAA--.48820S2
-X-Coremail-Antispam: 1UD129KBjvJXoW3AryDZr4UWw17CFWxAFWfuFg_yoWxGw15p3
-	yDXFZ8Jrs8Zw48C3ykKa1UXwn5KrWqy345XrWrt34YvFnxKrWrWay0yw4q9F1UAw1Ivw1k
-	ZF17JF98CFsrJaUanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
-	9KBjDU0xBIdaVrnRJUUUP2b4IE77IF4wAFF20E14v26ryj6rWUM7CY07I20VC2zVCF04k2
+X-CM-TRANSID:GxC2BwCHpMEoq6dmpEAkAA--.5208S2
+X-Coremail-Antispam: 1UD129KBjvJXoWxCr1DJr45XFWkJr1rJFWkZwb_yoW5ArW5pF
+	y5tFW3KFs7KF4ftr1Ikwnaqas2vF4xJF45XFn8trZrtr90vF9Ikr4Fyw1j9Fyq9rs3Wa1j
+	vFsxt3s7Z3WDZrJanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+	9KBjDU0xBIdaVrnRJUUUBjb4IE77IF4wAFF20E14v26ryj6rWUM7CY07I20VC2zVCF04k2
 	6cxKx2IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4
 	vEj48ve4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Jr0_JF4l84ACjcxK6xIIjxv20xvEc7Cj
 	xVAFwI0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW8JVWxJwA2z4x0Y4vEx4A2jsIEc7CjxV
 	AFwI0_Gr0_Gr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l5I8CrVACY4xI64kE6c02F40E
 	x7xfMcIj6xIIjxv20xvE14v26r1j6r18McIj6I8E87Iv67AKxVWUJVW8JwAm72CE4IkC6x
 	0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lF7I21c0EjII2zVCS5cI20VAGYxC7M4IIrI8v6xkF
-	7I0E8cxan2IY04v7Mxk0xIA0c2IEe2xFo4CEbIxvr21lc7CjxVAaw2AFwI0_GFv_Wryl42
-	xK82IYc2Ij64vIr41l4I8I3I0E4IkC6x0Yz7v_Jr0_Gr1lx2IqxVAqx4xG67AKxVWUJVWU
-	GwC20s026x8GjcxK67AKxVWUGVWUWwC2zVAF1VAY17CE14v26r4a6rW5MIIYY7kG6xAYrw
-	CIc40Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r1j6r1xMIIF0xvE2Ix0cI8IcVCY1x02
-	67AKxVW8JVWxJwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF4lIxAIcVC2z280aVAFwI0_Jr
-	0_Gr1lIxAIcVC2z280aVCY1x0267AKxVW8JVW8JrUvcSsGvfC2KfnxnUUI43ZEXa7IU8eH
-	q7UUUUU==
-X-CM-SenderInfo: xkhu0tnqos00pfhgvzhhrqqx5xdzvxpfor3voofrz/
+	7I0E8cxan2IY04v7MxkF7I0En4kS14v26r4a6rW5MxAIw28IcxkI7VAKI48JMxC20s026x
+	CaFVCjc4AY6r1j6r4UMI8I3I0E5I8CrVAFwI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_
+	JrWlx4CE17CEb7AF67AKxVW8ZVWrXwCIccxYrVCFb41lIxkGc2Ij64vIr41lIxAIcVC0I7
+	IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7CjxVAFwI0_Gr0_Cr1lIxAIcVCF04k2
+	6cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r1j6r4UMIIF0xvEx4A2jsIEc7CjxV
+	AFwI0_Gr0_Gr1UYxBIdaVFxhVjvjDU0xZFpf9x07jjNtxUUUUU=
+X-CM-SenderInfo: 5mrqt2oorev25kdx2v3u6k3tpzhluzxrxghudrp/
 
-On 7/12/2024 10:06 AM, Hernan Ponce de Leon wrote:
-> On 6/10/2024 10:38 AM, Hernan Ponce de Leon wrote:
->> On 6/8/2024 3:00 AM, Alan Stern wrote:
->>> On Wed, Jun 05, 2024 at 09:58:42PM +0200, Jonas Oberhauser wrote:
+
+
+Am 7/29/2024 um 3:30 PM schrieb Hernan Ponce de Leon:
+> On 7/12/2024 10:06 AM, Hernan Ponce de Leon wrote:
+>> On 6/10/2024 10:38 AM, Hernan Ponce de Leon wrote:
+>>> On 6/8/2024 3:00 AM, Alan Stern wrote:
+>>>> On Wed, Jun 05, 2024 at 09:58:42PM +0200, Jonas Oberhauser wrote:
+>>>>>
+>>>>>
+>>>>> Am 6/4/2024 um 7:56 PM schrieb Alan Stern:
+>>>>>> Just to clarify: Your first step encompasses patches 1 - 3, and the
+>>>>>> second step is patch 4.  The first three patches can be applied 
+>>>>>> now, but
+>>>>>> the last one needs to wait until herd7 has been updated.  Is this all
+>>>>>> correct?
+>>>>>
+>>>>> Exactly.
 >>>>
+>>>> With regard to patch 4, how much thought have you and Hernan given to
+>>>> backward compatibility?  Once herd7 is changed, old memory model files
+>>>> will no longer work correctly.
 >>>>
->>>> Am 6/4/2024 um 7:56 PM schrieb Alan Stern:
->>>>> Just to clarify: Your first step encompasses patches 1 - 3, and the
->>>>> second step is patch 4.  The first three patches can be applied 
->>>>> now, but
->>>>> the last one needs to wait until herd7 has been updated.  Is this all
->>>>> correct?
->>>>
->>>> Exactly.
 >>>
->>> With regard to patch 4, how much thought have you and Hernan given to
->>> backward compatibility?  Once herd7 is changed, old memory model files
->>> will no longer work correctly.
+>>> Honestly, I did not think much about this (at least until Akira 
+>>> mentioned in my PR). My hope was that changes to the model could be 
+>>> back-ported to previous kernel versions. However that would not work 
+>>> for existing out-of-tree files.
 >>>
+>>> My question is: is compatibility with out-of-tree files really a 
+>>> requirement? I would argue that if people are using outdated models, 
+>>> they may get wrong results anyway. This is because some of the 
+>>> changes done to lkmm during the last few years change the expected 
+>>> result for some litmus tests.
+>>>
+>>> Hernan
 >>
->> Honestly, I did not think much about this (at least until Akira 
->> mentioned in my PR). My hope was that changes to the model could be 
->> back-ported to previous kernel versions. However that would not work 
->> for existing out-of-tree files.
->>
->> My question is: is compatibility with out-of-tree files really a 
->> requirement? I would argue that if people are using outdated models, 
->> they may get wrong results anyway. This is because some of the changes 
->> done to lkmm during the last few years change the expected result for 
->> some litmus tests.
->>
->> Hernan
+>> I pushed some new changes to the code for backward compatibility [1]. 
+>> The series also needs the patch at the bottom to properly deal with 
+>> the ordering of failing CAses and non-returning operations. With it, 
+>> all litmus tests return the correct result (the script needs to pass 
+>> option -lkmm-legacy false to herd).
 > 
-> I pushed some new changes to the code for backward compatibility [1]. 
-> The series also needs the patch at the bottom to properly deal with the 
-> ordering of failing CAses and non-returning operations. With it, all 
-> litmus tests return the correct result (the script needs to pass option 
-> -lkmm-legacy false to herd).
-
-I have been playing around with an alternative to this.
-
-Rather than implementing this as an "option", I can implemented it as a 
-"model variant (*)" and add this to the model
-
-flag ~empty (if "lkmmlatest" then 0 else _)
-   as new-lkmm-models-require-variant-lkmmlatest
-
-If the user forgets to set the variant for the new model, herd7 will 
-flag the executions showing that something is off.
-
-To be fully backward compatible, we would need to backport this to old 
-models
-
-flag ~empty (if "lkmmlatest" then 1 else _)
-   as new-lkmm-models-require-variant-lkmmlatest
-
-If the user (wrongly) sets the variant for an old model, the the 
-executions will be flagged.
-
-Any thoughts?
-
-Hernan
-
-(*) This trick seems to be used for some arm models
-
-https://github.com/herd/herdtools7/blob/master/herd/libdir/arm-models/mixed/ec.cat#L66C1-L67C67
-
+> I have been playing around with an alternative to this.
 > 
-> Implementation-wise, there are two things that I would like to have:
+> Rather than implementing this as an "option", I can implemented it as a 
+> "model variant (*)" and add this to the model
+
+How exactly do these model variants get selected?
+
+I was thinking that another good approach could be to have a new generic 
+C model which doesn't know anything about LKMM. I believe this would be 
+specified in the header of the .litmus files?
+
+
+> flag ~empty (if "lkmmlatest" then 0 else _)
+>    as new-lkmm-models-require-variant-lkmmlatest
 > 
-> - atomic_add_unless implementation is treated different than the rest 
-> and it is one of the few remaining cases where memory orderings are 
-> hardcoded [2]. I would like to define it in the .def file as
+> If the user forgets to set the variant for the new model, herd7 will 
+> flag the executions showing that something is off.
 > 
->      atomic_add_unless(X,V,U) __atomic_add_unless{ONCE}(X,V,U)
+> To be fully backward compatible, we would need to backport this to old 
+> models
 > 
-> - "deref" and "lderef" instructions seems to add a "rb_dep" fence. None 
-> of the model files (.cat, .def, .bell) refers to "rb_dep" so this looks 
-> useless to me. However, I never checked the details of these 
-> dereferencing instruction so I might be missing something. Maybe Paul 
-> can clarify.
+> flag ~empty (if "lkmmlatest" then 1 else _)
+>    as new-lkmm-models-require-variant-lkmmlatest
+
+should this be then _ else 0  ? or what does the _ do here?
+
+I also don't think we can backport things to old models
+
+> If the user (wrongly) sets the variant for an old model, the the 
+> executions will be flagged.
+> 
+> Any thoughts?
 > 
 > Hernan
 > 
-> [1] https://github.com/herd/herdtools7/pull/865
-> [2] https://github.com/herd/herdtools7/issues/868
+> (*) This trick seems to be used for some arm models
 > 
-> 
-> diff --git a/tools/memory-model/linux-kernel.def 
-> b/tools/memory-model/linux-kernel.def
-> index 001366ff3fb4..5a40c2cad39b 100644
-> --- a/tools/memory-model/linux-kernel.def
-> +++ b/tools/memory-model/linux-kernel.def
-> @@ -32,10 +32,10 @@ xchg(X,V)  __xchg{MB}(X,V)
->   xchg_relaxed(X,V) __xchg{ONCE}(X,V)
->   xchg_release(X,V) __xchg{RELEASE}(X,V)
->   xchg_acquire(X,V) __xchg{ACQUIRE}(X,V)
-> -cmpxchg(X,V,W) __cmpxchg{MB}(X,V,W)
-> -cmpxchg_relaxed(X,V,W) __cmpxchg{ONCE}(X,V,W)
-> -cmpxchg_acquire(X,V,W) __cmpxchg{ACQUIRE}(X,V,W)
-> -cmpxchg_release(X,V,W) __cmpxchg{RELEASE}(X,V,W)
-> +cmpxchg(X,V,W) __cmpxchg{MB,ONCE}(X,V,W)
-> +cmpxchg_relaxed(X,V,W) __cmpxchg{ONCE,ONCE}(X,V,W)
-> +cmpxchg_acquire(X,V,W) __cmpxchg{ACQUIRE,ONCE}(X,V,W)
-> +cmpxchg_release(X,V,W) __cmpxchg{RELEASE,ONCE}(X,V,W)
-> 
->   // Spinlocks
->   spin_lock(X) { __lock(X); }
-> @@ -63,14 +63,14 @@ atomic_set(X,V) { WRITE_ONCE(*X,V); }
->   atomic_read_acquire(X) smp_load_acquire(X)
->   atomic_set_release(X,V) { smp_store_release(X,V); }
-> 
-> -atomic_add(V,X) { __atomic_op(X,+,V); }
-> -atomic_sub(V,X) { __atomic_op(X,-,V); }
-> -atomic_and(V,X) { __atomic_op(X,&,V); }
-> -atomic_or(V,X)  { __atomic_op(X,|,V); }
-> -atomic_xor(V,X) { __atomic_op(X,^,V); }
-> -atomic_inc(X)   { __atomic_op(X,+,1); }
-> -atomic_dec(X)   { __atomic_op(X,-,1); }
-> -atomic_andnot(V,X) { __atomic_op(X,&~,V); }
-> +atomic_add(V,X) { __atomic_op{NORETURN}(X,+,V); }
-> +atomic_sub(V,X) { __atomic_op{NORETURN}(X,-,V); }
-> +atomic_and(V,X) { __atomic_op{NORETURN}(X,&,V); }
-> +atomic_or(V,X)  { __atomic_op{NORETURN}(X,|,V); }
-> +atomic_xor(V,X) { __atomic_op{NORETURN}(X,^,V); }
-> +atomic_inc(X)   { __atomic_op{NORETURN}(X,+,1); }
-> +atomic_dec(X)   { __atomic_op{NORETURN}(X,-,1); }
-> +atomic_andnot(V,X) { __atomic_op{NORETURN}(X,&~,V); }
-> 
->   atomic_add_return(V,X) __atomic_op_return{MB}(X,+,V)
->   atomic_add_return_relaxed(V,X) __atomic_op_return{ONCE}(X,+,V)
-> @@ -127,10 +127,10 @@ atomic_xchg(X,V) __xchg{MB}(X,V)
->   atomic_xchg_relaxed(X,V) __xchg{ONCE}(X,V)
->   atomic_xchg_release(X,V) __xchg{RELEASE}(X,V)
->   atomic_xchg_acquire(X,V) __xchg{ACQUIRE}(X,V)
-> -atomic_cmpxchg(X,V,W) __cmpxchg{MB}(X,V,W)
-> -atomic_cmpxchg_relaxed(X,V,W) __cmpxchg{ONCE}(X,V,W)
-> -atomic_cmpxchg_acquire(X,V,W) __cmpxchg{ACQUIRE}(X,V,W)
-> -atomic_cmpxchg_release(X,V,W) __cmpxchg{RELEASE}(X,V,W)
-> +atomic_cmpxchg(X,V,W) __cmpxchg{MB,ONCE}(X,V,W)
-> +atomic_cmpxchg_relaxed(X,V,W) __cmpxchg{ONCE,ONCE}(X,V,W)
-> +atomic_cmpxchg_acquire(X,V,W) __cmpxchg{ACQUIRE,ONCE}(X,V,W)
-> +atomic_cmpxchg_release(X,V,W) __cmpxchg{RELEASE,ONCE}(X,V,W)
-> 
->   atomic_sub_and_test(V,X) __atomic_op_return{MB}(X,-,V) == 0
->   atomic_dec_and_test(X)  __atomic_op_return{MB}(X,-,1) == 0
+> https://github.com/herd/herdtools7/blob/master/herd/libdir/arm-models/mixed/ec.cat#L66C1-L67C67
+
 

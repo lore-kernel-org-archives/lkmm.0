@@ -1,186 +1,223 @@
-Received: from mail-pg1-f171.google.com (mail-pg1-f171.google.com [209.85.215.171])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from frasgout12.his.huawei.com (frasgout12.his.huawei.com [14.137.139.154])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEFAE10FA;
-	Sat, 27 Jul 2024 03:15:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C327D146D54
+	for <lkmm@lists.linux.dev>; Mon, 29 Jul 2024 13:46:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=14.137.139.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722050113; cv=none; b=RDUZLp/K3u1UbcXt1Af44FQXNEoU1RJO4kozlou/WSw1VOjT0H23vBAmqXVtrsWfyzYUcuiF0UpWOs/lhmoSRqpdhRNVf2QiwJng/8CQco2cOwrb+CIe956NIs68ptUZzLTzfZcY/LwhKOQOpMJV6WvHzEwgN0aSEuTsH5UTqYQ=
+	t=1722260790; cv=none; b=fBGozPdDT0Dc4j6uDasYEFl8C9DlfHAXwE0SLR8Kr+hmMwIGvheNlNrCNVSx1hrSJHlEjjjEuzMjwdlY/xQhYYfxRXoKVlMbJ28eTen2X+yJo/USBhuCmmFF5qAGbI4EzJXLKX6sJgeiUb+i9/HxLtMRFja+mxDQhglJ8xVZaFE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722050113; c=relaxed/simple;
-	bh=vfWLMUCNQqdCjzCDTMhi+pl6nCwaPxvVUzyCErSQoDo=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=iGxoIGfeKM1bs8Lc0V1OapSxOP4htO6oNZTQmmKw5Hj5U6WPIuBqH4KRlm/p54N11wf4uPQV1jhYzz8NZmmvVGmlHkVgBR+rsA4azH9k3hkcVbKTQq0Xq3D8AHcAcetuhUpk/KqDJh7cLac8Ifcnwsd60W/NL9fyizdJ8hHKsp4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=kernel.org; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.215.171
-Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=kernel.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-pg1-f171.google.com with SMTP id 41be03b00d2f7-76cb5b6b3e4so1086451a12.1;
-        Fri, 26 Jul 2024 20:15:11 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1722050111; x=1722654911;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=GLRbFlYw1y7KC9S4hQ5ZFyFBozLVkK+PnMW946p6k3U=;
-        b=jT9P5P93D3TqHdn+XFXdXoT2OJslMUxpY3aNVatl/6NRcfJBU+0OwEYB1TrLjSRJa2
-         NEgHZGv2RfdJEqFVSl0kAXELEhMszvUBzksTAUqdmGHcQmnvHAtbxIvcVzvTpDpy/jcn
-         hW7WTfzfYd1wNjYb1q/UpBQ5vB48gyIFDVmhGzxrKlyNcCg3HVbG+PkiyfYpGZmDXuux
-         XIV6XAqrbucSv97VtG5/0bEg3G0uQTWNFgZfCTx4xao6MTkjNsNV0uHPGtJesB5HqAWJ
-         uOndEBkJIMKI9EtZVA7z3fXFEfztaAqAzSL24R4K0lfywM/gzEshtYBdHDXnm8UYBLsh
-         mrnA==
-X-Forwarded-Encrypted: i=1; AJvYcCX4FfMfZMhYsQb6Bqhtfi5tFsBYrIiaT+4uq+cqlm4qrTGOZNdEF0DDe15UT6Xz+YziVUsPHbCD66IdyOnXizuzvC2gefH3xevfb/UGdOGyuy4sFPTCID1970ndog==
-X-Gm-Message-State: AOJu0YyPPI7iDQRoIjd1qFXVL1VjhnbW6eZnXQ/VfUKfMzsC9EuqXGB2
-	3lFsRfkVHSzeRbYPLFs1znAEKoD+ZR7kYrh55j1MUz5Gut3aOB/q
-X-Google-Smtp-Source: AGHT+IEh0vRQcYCjKacpBe+tlN5TG/wqG8G56zuBfhH316hJWOb2texq/hSHkLPuAMlU+eKcHwai8g==
-X-Received: by 2002:a17:903:228c:b0:1fd:6766:6848 with SMTP id d9443c01a7336-1ff0481b9d3mr18339475ad.17.1722050111104;
-        Fri, 26 Jul 2024 20:15:11 -0700 (PDT)
-Received: from snowbird ([136.25.84.117])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-1fed7c7f62fsm40488975ad.19.2024.07.26.20.15.09
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 26 Jul 2024 20:15:10 -0700 (PDT)
-Date: Fri, 26 Jul 2024 20:15:07 -0700
-From: Dennis Zhou <dennis@kernel.org>
-To: Boqun Feng <boqun.feng@gmail.com>
-Cc: Tejun Heo <tj@kernel.org>, kernel test robot <oliver.sang@intel.com>,
-	Suren Baghdasaryan <surenb@google.com>, oe-lkp@lists.linux.dev,
-	lkp@intel.com, linux-kernel@vger.kernel.org,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Kent Overstreet <kent.overstreet@linux.dev>,
-	Kees Cook <keescook@chromium.org>,
-	Alexander Viro <viro@zeniv.linux.org.uk>,
-	Alex Gaynor <alex.gaynor@gmail.com>,
-	Alice Ryhl <aliceryhl@google.com>,
-	Andreas Hindborg <a.hindborg@samsung.com>,
-	Benno Lossin <benno.lossin@proton.me>,
-	=?iso-8859-1?Q?Bj=F6rn?= Roy Baron <bjorn3_gh@protonmail.com>,
-	Christoph Lameter <cl@linux.com>, Gary Guo <gary@garyguo.net>,
-	Miguel Ojeda <ojeda@kernel.org>,
-	Pasha Tatashin <pasha.tatashin@soleen.com>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Vlastimil Babka <vbabka@suse.cz>,
-	Wedson Almeida Filho <wedsonaf@gmail.com>, linux-mm@kvack.org,
-	lkmm@lists.linux.dev
-Subject: Re: [linus:master] [mm]  24e44cc22a:
- BUG:KCSAN:data-race_in_pcpu_alloc_noprof/pcpu_block_update_hint_alloc
-Message-ID: <ZqRmO6LNol6S65dm@snowbird>
-References: <202407191651.f24e499d-oliver.sang@intel.com>
- <Zp6bMoDnUMxNrKos@boqun-archlinux>
- <Zp6cVgXJlzF4VOwl@slm.duckdns.org>
- <Zp6e1PWZbz4pkh9Z@boqun-archlinux>
- <Zp6kpCcQRPTGk1LK@V92F7Y9K0C.lan>
- <Zp7G4EfISRwlmmIT@boqun-archlinux>
- <Zp9EvUTqni5wMDlC@snowbird>
- <ZqAdGAD01kZPms2J@Boquns-Mac-mini.home>
+	s=arc-20240116; t=1722260790; c=relaxed/simple;
+	bh=ic8XRQiAlqkQrB7MWDOfDz6qDcJBANBuGQ4l/VlFBQE=;
+	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
+	 In-Reply-To:Content-Type; b=qasxHdQZpHvJ+pkbxy6waukNlk6Kt2uBo5xJkyQOvrN8IG5SmFI8ax24LeZMxZQAa1K5yRG2CJRICDaXxLQVKN9To8PntrojJ+yrzVYM+seDVKNRPb4mToS6rGL8zN13kY6t/o01S5QpLqWwzGKTBvRrwmdqp3YLBljPkkLKuUI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=huaweicloud.com; spf=pass smtp.mailfrom=huaweicloud.com; arc=none smtp.client-ip=14.137.139.154
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=huaweicloud.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huaweicloud.com
+Received: from mail.maildlp.com (unknown [172.18.186.29])
+	by frasgout12.his.huawei.com (SkyGuard) with ESMTP id 4WXdtB0zTTz9v7JT
+	for <lkmm@lists.linux.dev>; Mon, 29 Jul 2024 21:06:58 +0800 (CST)
+Received: from mail02.huawei.com (unknown [7.182.16.47])
+	by mail.maildlp.com (Postfix) with ESMTP id D3FF51402CF
+	for <lkmm@lists.linux.dev>; Mon, 29 Jul 2024 21:30:51 +0800 (CST)
+Received: from [10.221.99.159] (unknown [10.221.99.159])
+	by APP1 (Coremail) with SMTP id LxC2BwAXToiAmadmLA0jAA--.48820S2;
+	Mon, 29 Jul 2024 14:30:51 +0100 (CET)
+Message-ID: <eb9548de-e66e-3dcd-9136-8702a5bc2934@huaweicloud.com>
+Date: Mon, 29 Jul 2024 15:30:37 +0200
 Precedence: bulk
 X-Mailing-List: lkmm@lists.linux.dev
 List-Id: <lkmm.lists.linux.dev>
 List-Subscribe: <mailto:lkmm+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:lkmm+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <ZqAdGAD01kZPms2J@Boquns-Mac-mini.home>
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.13.0
+Subject: Re: [PATCHv2 0/4] tools/memory-model: Define more of LKMM in
+ tools/memory-model
+From: Hernan Ponce de Leon <hernan.poncedeleon@huaweicloud.com>
+To: Alan Stern <stern@rowland.harvard.edu>,
+ Jonas Oberhauser <jonas.oberhauser@huaweicloud.com>
+Cc: paulmck@kernel.org, parri.andrea@gmail.com, will@kernel.org,
+ peterz@infradead.org, boqun.feng@gmail.com, npiggin@gmail.com,
+ dhowells@redhat.com, j.alglave@ucl.ac.uk, luc.maranget@inria.fr,
+ akiyks@gmail.com, dlustig@nvidia.com, joel@joelfernandes.org,
+ urezki@gmail.com, quic_neeraju@quicinc.com, frederic@kernel.org,
+ linux-kernel@vger.kernel.org, lkmm@lists.linux.dev
+References: <20240604152922.495908-1-jonas.oberhauser@huaweicloud.com>
+ <88c1ebc8-4805-4d1d-868a-889043899979@rowland.harvard.edu>
+ <bbc3bd10-3bf5-4b1a-a275-dd328c42e307@huaweicloud.com>
+ <f93f140b-13bc-4d00-adee-46cc1c016480@rowland.harvard.edu>
+ <4792c9e7-2594-3600-5d82-4cb1443fe670@huaweicloud.com>
+ <d6a76968-d10b-c60b-245a-f58116eca6af@huaweicloud.com>
+Content-Language: en-US
+In-Reply-To: <d6a76968-d10b-c60b-245a-f58116eca6af@huaweicloud.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID:LxC2BwAXToiAmadmLA0jAA--.48820S2
+X-Coremail-Antispam: 1UD129KBjvJXoW3AryDZr4UWw17CFWxAFWfuFg_yoWxGw15p3
+	yDXFZ8Jrs8Zw48C3ykKa1UXwn5KrWqy345XrWrt34YvFnxKrWrWay0yw4q9F1UAw1Ivw1k
+	ZF17JF98CFsrJaUanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+	9KBjDU0xBIdaVrnRJUUUP2b4IE77IF4wAFF20E14v26ryj6rWUM7CY07I20VC2zVCF04k2
+	6cxKx2IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4
+	vEj48ve4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Jr0_JF4l84ACjcxK6xIIjxv20xvEc7Cj
+	xVAFwI0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW8JVWxJwA2z4x0Y4vEx4A2jsIEc7CjxV
+	AFwI0_Gr0_Gr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l5I8CrVACY4xI64kE6c02F40E
+	x7xfMcIj6xIIjxv20xvE14v26r1j6r18McIj6I8E87Iv67AKxVWUJVW8JwAm72CE4IkC6x
+	0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lF7I21c0EjII2zVCS5cI20VAGYxC7M4IIrI8v6xkF
+	7I0E8cxan2IY04v7Mxk0xIA0c2IEe2xFo4CEbIxvr21lc7CjxVAaw2AFwI0_GFv_Wryl42
+	xK82IYc2Ij64vIr41l4I8I3I0E4IkC6x0Yz7v_Jr0_Gr1lx2IqxVAqx4xG67AKxVWUJVWU
+	GwC20s026x8GjcxK67AKxVWUGVWUWwC2zVAF1VAY17CE14v26r4a6rW5MIIYY7kG6xAYrw
+	CIc40Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r1j6r1xMIIF0xvE2Ix0cI8IcVCY1x02
+	67AKxVW8JVWxJwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF4lIxAIcVC2z280aVAFwI0_Jr
+	0_Gr1lIxAIcVC2z280aVCY1x0267AKxVW8JVW8JrUvcSsGvfC2KfnxnUUI43ZEXa7IU8eH
+	q7UUUUU==
+X-CM-SenderInfo: xkhu0tnqos00pfhgvzhhrqqx5xdzvxpfor3voofrz/
 
-On Tue, Jul 23, 2024 at 02:14:00PM -0700, Boqun Feng wrote:
-> On Mon, Jul 22, 2024 at 10:50:53PM -0700, Dennis Zhou wrote:
-> > On Mon, Jul 22, 2024 at 01:53:52PM -0700, Boqun Feng wrote:
-> > > On Mon, Jul 22, 2024 at 11:27:48AM -0700, Dennis Zhou wrote:
-> > > > Hello,
-> > > > 
-> > > > On Mon, Jul 22, 2024 at 11:03:00AM -0700, Boqun Feng wrote:
-> > > > > On Mon, Jul 22, 2024 at 07:52:22AM -1000, Tejun Heo wrote:
-> > > > > > On Mon, Jul 22, 2024 at 10:47:30AM -0700, Boqun Feng wrote:
-> > > > > > > This looks like a data race because we read pcpu_nr_empty_pop_pages out
-> > > > > > > of the lock for a best effort checking, @Tejun, maybe you could confirm
-> > > > > > > on this?
-> > > > > > 
-> > > > > > That does sound plausible.
-> > > > > > 
-> > > > > > > -       if (pcpu_nr_empty_pop_pages < PCPU_EMPTY_POP_PAGES_LOW)
-> > > > > > > +       /*
-> > > > > > > +        * Checks pcpu_nr_empty_pop_pages out of the pcpu_lock, data races may
-> > > > > > > +        * occur but this is just a best-effort checking, everything is synced
-> > > > > > > +        * in pcpu_balance_work.
-> > > > > > > +        */
-> > > > > > > +       if (data_race(pcpu_nr_empty_pop_pages) < PCPU_EMPTY_POP_PAGES_LOW)
-> > > > > > >                 pcpu_schedule_balance_work();
-> > > > > > 
-> > > > > > Would it be better to use READ/WRITE_ONCE() for the variable?
-> > > > > > 
-> > > > > 
-> > > > > For READ/WRITE_ONCE(), we will need to replace all write accesses and
-> > > > > all out-of-lock read accesses to pcpu_nr_empty_pop_pages, like below.
-> > > > > It's better in the sense that it doesn't rely on compiler behaviors on
-> > > > > data races, not sure about the performance impact though.
-> > > > > 
-> > > > 
-> > > > I think a better alternative is we can move it up into the lock under
-> > > > area_found. The value gets updated as part of pcpu_alloc_area() as the
-> > > > code above populates percpu memory that is already allocated.
-> > > > 
-> > > 
-> > > Not sure I followed what exactly you suggested here because I'm not
-> > > familiar with the logic, but a simpler version would be:
-> > > 
-> > > 
-> > 
-> > I believe that's the only naked access of pcpu_nr_empty_pop_pages. So
-> > I was thinking this'll fix this problem.
-> > 
-> > I also don't know how to rerun this CI tho..
-> > 
-> > ---
-> > diff --git a/mm/percpu.c b/mm/percpu.c
-> > index 20d91af8c033..325fb8412e90 100644
-> > --- a/mm/percpu.c
-> > +++ b/mm/percpu.c
-> > @@ -1864,6 +1864,10 @@ void __percpu *pcpu_alloc_noprof(size_t size, size_t align, bool reserved,
-> >  
-> >  area_found:
-> >  	pcpu_stats_area_alloc(chunk, size);
-> > +
-> > +	if (pcpu_nr_empty_pop_pages < PCPU_EMPTY_POP_PAGES_LOW)
-> > +		pcpu_schedule_balance_work();
-> > +
+On 7/12/2024 10:06 AM, Hernan Ponce de Leon wrote:
+> On 6/10/2024 10:38 AM, Hernan Ponce de Leon wrote:
+>> On 6/8/2024 3:00 AM, Alan Stern wrote:
+>>> On Wed, Jun 05, 2024 at 09:58:42PM +0200, Jonas Oberhauser wrote:
+>>>>
+>>>>
+>>>> Am 6/4/2024 um 7:56 PM schrieb Alan Stern:
+>>>>> Just to clarify: Your first step encompasses patches 1 - 3, and the
+>>>>> second step is patch 4.  The first three patches can be applied 
+>>>>> now, but
+>>>>> the last one needs to wait until herd7 has been updated.  Is this all
+>>>>> correct?
+>>>>
+>>>> Exactly.
+>>>
+>>> With regard to patch 4, how much thought have you and Hernan given to
+>>> backward compatibility?  Once herd7 is changed, old memory model files
+>>> will no longer work correctly.
+>>>
+>>
+>> Honestly, I did not think much about this (at least until Akira 
+>> mentioned in my PR). My hope was that changes to the model could be 
+>> back-ported to previous kernel versions. However that would not work 
+>> for existing out-of-tree files.
+>>
+>> My question is: is compatibility with out-of-tree files really a 
+>> requirement? I would argue that if people are using outdated models, 
+>> they may get wrong results anyway. This is because some of the changes 
+>> done to lkmm during the last few years change the expected result for 
+>> some litmus tests.
+>>
+>> Hernan
 > 
-> But the pcpu_chunk_populated() afterwards could modify the
-> pcpu_nr_empty_pop_pages again, wouldn't this be a behavior changing?
+> I pushed some new changes to the code for backward compatibility [1]. 
+> The series also needs the patch at the bottom to properly deal with the 
+> ordering of failing CAses and non-returning operations. With it, all 
+> litmus tests return the correct result (the script needs to pass option 
+> -lkmm-legacy false to herd).
+
+I have been playing around with an alternative to this.
+
+Rather than implementing this as an "option", I can implemented it as a 
+"model variant (*)" and add this to the model
+
+flag ~empty (if "lkmmlatest" then 0 else _)
+   as new-lkmm-models-require-variant-lkmmlatest
+
+If the user forgets to set the variant for the new model, herd7 will 
+flag the executions showing that something is off.
+
+To be fully backward compatible, we would need to backport this to old 
+models
+
+flag ~empty (if "lkmmlatest" then 1 else _)
+   as new-lkmm-models-require-variant-lkmmlatest
+
+If the user (wrongly) sets the variant for an old model, the the 
+executions will be flagged.
+
+Any thoughts?
+
+Hernan
+
+(*) This trick seems to be used for some arm models
+
+https://github.com/herd/herdtools7/blob/master/herd/libdir/arm-models/mixed/ec.cat#L66C1-L67C67
+
 > 
-
-It does, but really at this point it's a mixed bag because the lock
-isn't permanently held at all while we do all these operations. The
-value is read at best effort.
-
-Ultimately the code below is populating backing pages for non-atomic
-allocations. At this point the ideal situation is we're using an already
-populated page. There are caveats but I can't say the prior is any
-better than this version.
-
-The code you mentioned pairs with the comment on line 916 below.
-
-	/*
-	 * If the allocation is not atomic, some blocks may not be
-	 * populated with pages, while we account it here.  The number
-	 * of pages will be added back with pcpu_chunk_populated()
-	 * when populating pages.
-	 */
-
-Thanks,
-Dennis
-
-> Regards,
-> Boqun
+> Implementation-wise, there are two things that I would like to have:
 > 
-> >  	spin_unlock_irqrestore(&pcpu_lock, flags);
-> >  
-> >  	/* populate if not all pages are already there */
-> > @@ -1891,9 +1895,6 @@ void __percpu *pcpu_alloc_noprof(size_t size, size_t align, bool reserved,
-> >  		mutex_unlock(&pcpu_alloc_mutex);
-> >  	}
-> >  
-> > -	if (pcpu_nr_empty_pop_pages < PCPU_EMPTY_POP_PAGES_LOW)
-> > -		pcpu_schedule_balance_work();
-> > -
-> >  	/* clear the areas and return address relative to base address */
-> >  	for_each_possible_cpu(cpu)
-> >  		memset((void *)pcpu_chunk_addr(chunk, cpu, 0) + off, 0, size);
+> - atomic_add_unless implementation is treated different than the rest 
+> and it is one of the few remaining cases where memory orderings are 
+> hardcoded [2]. I would like to define it in the .def file as
+> 
+>      atomic_add_unless(X,V,U) __atomic_add_unless{ONCE}(X,V,U)
+> 
+> - "deref" and "lderef" instructions seems to add a "rb_dep" fence. None 
+> of the model files (.cat, .def, .bell) refers to "rb_dep" so this looks 
+> useless to me. However, I never checked the details of these 
+> dereferencing instruction so I might be missing something. Maybe Paul 
+> can clarify.
+> 
+> Hernan
+> 
+> [1] https://github.com/herd/herdtools7/pull/865
+> [2] https://github.com/herd/herdtools7/issues/868
+> 
+> 
+> diff --git a/tools/memory-model/linux-kernel.def 
+> b/tools/memory-model/linux-kernel.def
+> index 001366ff3fb4..5a40c2cad39b 100644
+> --- a/tools/memory-model/linux-kernel.def
+> +++ b/tools/memory-model/linux-kernel.def
+> @@ -32,10 +32,10 @@ xchg(X,V)  __xchg{MB}(X,V)
+>   xchg_relaxed(X,V) __xchg{ONCE}(X,V)
+>   xchg_release(X,V) __xchg{RELEASE}(X,V)
+>   xchg_acquire(X,V) __xchg{ACQUIRE}(X,V)
+> -cmpxchg(X,V,W) __cmpxchg{MB}(X,V,W)
+> -cmpxchg_relaxed(X,V,W) __cmpxchg{ONCE}(X,V,W)
+> -cmpxchg_acquire(X,V,W) __cmpxchg{ACQUIRE}(X,V,W)
+> -cmpxchg_release(X,V,W) __cmpxchg{RELEASE}(X,V,W)
+> +cmpxchg(X,V,W) __cmpxchg{MB,ONCE}(X,V,W)
+> +cmpxchg_relaxed(X,V,W) __cmpxchg{ONCE,ONCE}(X,V,W)
+> +cmpxchg_acquire(X,V,W) __cmpxchg{ACQUIRE,ONCE}(X,V,W)
+> +cmpxchg_release(X,V,W) __cmpxchg{RELEASE,ONCE}(X,V,W)
+> 
+>   // Spinlocks
+>   spin_lock(X) { __lock(X); }
+> @@ -63,14 +63,14 @@ atomic_set(X,V) { WRITE_ONCE(*X,V); }
+>   atomic_read_acquire(X) smp_load_acquire(X)
+>   atomic_set_release(X,V) { smp_store_release(X,V); }
+> 
+> -atomic_add(V,X) { __atomic_op(X,+,V); }
+> -atomic_sub(V,X) { __atomic_op(X,-,V); }
+> -atomic_and(V,X) { __atomic_op(X,&,V); }
+> -atomic_or(V,X)  { __atomic_op(X,|,V); }
+> -atomic_xor(V,X) { __atomic_op(X,^,V); }
+> -atomic_inc(X)   { __atomic_op(X,+,1); }
+> -atomic_dec(X)   { __atomic_op(X,-,1); }
+> -atomic_andnot(V,X) { __atomic_op(X,&~,V); }
+> +atomic_add(V,X) { __atomic_op{NORETURN}(X,+,V); }
+> +atomic_sub(V,X) { __atomic_op{NORETURN}(X,-,V); }
+> +atomic_and(V,X) { __atomic_op{NORETURN}(X,&,V); }
+> +atomic_or(V,X)  { __atomic_op{NORETURN}(X,|,V); }
+> +atomic_xor(V,X) { __atomic_op{NORETURN}(X,^,V); }
+> +atomic_inc(X)   { __atomic_op{NORETURN}(X,+,1); }
+> +atomic_dec(X)   { __atomic_op{NORETURN}(X,-,1); }
+> +atomic_andnot(V,X) { __atomic_op{NORETURN}(X,&~,V); }
+> 
+>   atomic_add_return(V,X) __atomic_op_return{MB}(X,+,V)
+>   atomic_add_return_relaxed(V,X) __atomic_op_return{ONCE}(X,+,V)
+> @@ -127,10 +127,10 @@ atomic_xchg(X,V) __xchg{MB}(X,V)
+>   atomic_xchg_relaxed(X,V) __xchg{ONCE}(X,V)
+>   atomic_xchg_release(X,V) __xchg{RELEASE}(X,V)
+>   atomic_xchg_acquire(X,V) __xchg{ACQUIRE}(X,V)
+> -atomic_cmpxchg(X,V,W) __cmpxchg{MB}(X,V,W)
+> -atomic_cmpxchg_relaxed(X,V,W) __cmpxchg{ONCE}(X,V,W)
+> -atomic_cmpxchg_acquire(X,V,W) __cmpxchg{ACQUIRE}(X,V,W)
+> -atomic_cmpxchg_release(X,V,W) __cmpxchg{RELEASE}(X,V,W)
+> +atomic_cmpxchg(X,V,W) __cmpxchg{MB,ONCE}(X,V,W)
+> +atomic_cmpxchg_relaxed(X,V,W) __cmpxchg{ONCE,ONCE}(X,V,W)
+> +atomic_cmpxchg_acquire(X,V,W) __cmpxchg{ACQUIRE,ONCE}(X,V,W)
+> +atomic_cmpxchg_release(X,V,W) __cmpxchg{RELEASE,ONCE}(X,V,W)
+> 
+>   atomic_sub_and_test(V,X) __atomic_op_return{MB}(X,-,V) == 0
+>   atomic_dec_and_test(X)  __atomic_op_return{MB}(X,-,1) == 0
+

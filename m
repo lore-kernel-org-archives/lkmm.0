@@ -1,91 +1,104 @@
-Received: from mail-wm1-f49.google.com (mail-wm1-f49.google.com [209.85.128.49])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from frasgout11.his.huawei.com (frasgout11.his.huawei.com [14.137.139.23])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85170256D
-	for <lkmm@lists.linux.dev>; Fri,  2 Aug 2024 09:46:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C94731E2882
+	for <lkmm@lists.linux.dev>; Fri,  2 Aug 2024 11:40:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=14.137.139.23
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722591989; cv=none; b=Gp016tWGQpeG3gFzQm9jMc97FdNN06QeyDb29BmyKqOofNO2krYR97v6nJlLDGFnDlx3sB0I57UgW59vtBTyT0IlEmzcQwCMvyS6nTZYxFnt2Of66YY+GA52pBS8aQQ+ho8G3667O3yWZW3tLINswJ5DDhxwXExLFnYVgSMYhKg=
+	t=1722598850; cv=none; b=VSVKRkH/fxDncVP+fZEfCM8w0AL633jEUYjQUgeAuchCG7ZiRkMNM6XnUQO7kjnsXC91Wh59A0B08m91+MoMgoGMtK9Z5CWhATnW7KkpwMsWiuczwzovZiEKXQcVogvvZMQii4s1YWGYBpHblbNmqht+kovgNxO0FdiMBN+i57Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722591989; c=relaxed/simple;
-	bh=r+CuKV0BtJAp/fMFn++g/APZ2xgoalbuTBMWgFPMv9Y=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=u9hQb9tL8wJNxp2t7q0JLyWpa6uj492L++zYLGNdKSMi/3TgY9Xzfqs8xdS6FAPR0fVaZbZoRJpPdd3i5W1Zgc/Jkl3bTabJMUIQoy1fiZJm5TJ/rhVx+oM40fHJPlXVT134nDC91Ucf2X7jq3JSLjW0iakyC2vpW5JcULf5Zgw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=AnzqLqie; arc=none smtp.client-ip=209.85.128.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="AnzqLqie"
-Received: by mail-wm1-f49.google.com with SMTP id 5b1f17b1804b1-42819654737so47341015e9.1
-        for <lkmm@lists.linux.dev>; Fri, 02 Aug 2024 02:46:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1722591986; x=1723196786; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=q67BM/SyptRvsJWIM+wuVI8aE85d1Z8XEHPF+IhIGiI=;
-        b=AnzqLqie0BV56wSsZFS5pxLK+l57rmV8plmNOzmk4D2QFfZ/jr4dqyYZxUexAMizx9
-         npfKcsSgHi5U2zttKsSaWBm/Luba0oI7ZZ3S/No+CbSOpGyQti3Hp/ylG3A+1AvU4y43
-         uL1tCEFOGttGA/4xc87s6BxJmRXYFo1je/umfXBYe+Wav5eRgeCJZC7z8Sy+ha3OMBgy
-         jbN9IH0uFAWgUNDS45jiicz6i5RguatGmsAJ5a0K9F98BlARLtldtpFjWx00VJ1kGJ6N
-         vQ7GU0zUM/UM2XfeGmusCaQEXGeqvFYwhFcvQt0d8lMq12hUzbl9gxLtdQGGo6xolX2J
-         bduQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1722591986; x=1723196786;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=q67BM/SyptRvsJWIM+wuVI8aE85d1Z8XEHPF+IhIGiI=;
-        b=SaRKvXeG/HT23hcviAPGy6u+6YEvsHuvYPs8nADZ4s1MLVqm/3pkF+Qjr+lZ+EoNnk
-         rat9r1UP6qJ1HefgiHn1Iq4Y0yy7ovdF7tQ4iVoP3zxx8P4Tsdun1IJkM9iyZNz4Q+mA
-         rdsxtOfjcjEqipf2e7/75AopIVq0xmMOYvvINPufLy/1z+tTw4h1K0Gs6Tdv53GQlvQs
-         V2h2sOPySp4TloWgKRBfWLtoAAWG3AAyYLkXXU4UwcrAxeNiKYZhhJA9Gt5rzTUkdhDf
-         2OtLaE0K+pD0+jOq6N6EnC5T+eKMlkCBvvmQkYgcEJ+n3J2Dc9C7ymkKVf+uQoKmxdZI
-         b7rg==
-X-Forwarded-Encrypted: i=1; AJvYcCV51PmvPLbpmKREQg2xNeO3GLiGRF+dXOHW3lijgKp06PlebsktAPcDSGotV71eQ39fDy10wp7HPA/zO+0hB7l7ZnS37Q==
-X-Gm-Message-State: AOJu0YzrXwtEF9ShysMxi6Vas7Ol1EYu/jh3rxD9mjsPhlMAB3gUO8kT
-	2XNfPYlFD9xq0mRNkYlGPrvBh/Ev85mDe/vdVFK/wYvEwkuw0Ca1
-X-Google-Smtp-Source: AGHT+IFCLBjPsFTWDZkjzm22AGa3mLr/3SDceOhn+SPwLeYiThM/NnCa7DDCeZhNCep2iLYyQ6EoVg==
-X-Received: by 2002:a05:600c:1906:b0:426:686f:cb4c with SMTP id 5b1f17b1804b1-428e6b96b3bmr20772425e9.32.1722591985295;
-        Fri, 02 Aug 2024 02:46:25 -0700 (PDT)
-Received: from andrea ([151.76.3.213])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-42824ae7a59sm74389155e9.1.2024.08.02.02.46.23
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 02 Aug 2024 02:46:24 -0700 (PDT)
-Date: Fri, 2 Aug 2024 11:46:20 +0200
-From: Andrea Parri <parri.andrea@gmail.com>
-To: "Paul E. McKenney" <paulmck@kernel.org>
-Cc: linux-kernel@vger.kernel.org, linux-arch@vger.kernel.org,
-	lkmm@lists.linux.dev, kernel-team@meta.com, mingo@kernel.org,
-	stern@rowland.harvard.edu, will@kernel.org, peterz@infradead.org,
-	boqun.feng@gmail.com, npiggin@gmail.com, dhowells@redhat.com,
-	j.alglave@ucl.ac.uk, luc.maranget@inria.fr, akiyks@gmail.com
-Subject: Re: [PATCH memory-model 7/7] MAINTAINERS: Add the dedicated maillist
- info for LKMM
-Message-ID: <Zqyq7DjIrHAOqf0k@andrea>
-References: <e384a9ac-05c1-45d6-9639-28457dd183d9@paulmck-laptop>
- <20240802002215.4133695-7-paulmck@kernel.org>
+	s=arc-20240116; t=1722598850; c=relaxed/simple;
+	bh=E8Wj2Qe826SSpgPO1+n1aolYqoxkadAQ1V4WZVutK0s=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=bDsyBK+9gvVmxkg/KHiHUR/JacbFAuFu+xIO0bfr+O1PgC+dnOjEqcYhb8S2T88M04awZMjiHUzuD8CI3nJyBZG+AYmdDidLFPNlfqENpkqRoTsVRhYiePtXwOEsTp+QaK+Ze052bs6JJxaxIQanELuvWYhnWCamYjgpEY9trTI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=huaweicloud.com; spf=pass smtp.mailfrom=huaweicloud.com; arc=none smtp.client-ip=14.137.139.23
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=huaweicloud.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huaweicloud.com
+Received: from mail.maildlp.com (unknown [172.18.186.29])
+	by frasgout11.his.huawei.com (SkyGuard) with ESMTP id 4Wb3MB4q3Dz9v7Hp
+	for <lkmm@lists.linux.dev>; Fri,  2 Aug 2024 19:21:58 +0800 (CST)
+Received: from mail02.huawei.com (unknown [7.182.16.27])
+	by mail.maildlp.com (Postfix) with ESMTP id 9B75114040D
+	for <lkmm@lists.linux.dev>; Fri,  2 Aug 2024 19:40:32 +0800 (CST)
+Received: from [10.45.147.218] (unknown [10.45.147.218])
+	by APP2 (Coremail) with SMTP id GxC2BwB3lMGhxaxmYY9lAA--.45712S2;
+	Fri, 02 Aug 2024 12:40:32 +0100 (CET)
+Message-ID: <07bfa8d2-c4b1-4338-8a0f-52eba7f7f600@huaweicloud.com>
+Date: Fri, 2 Aug 2024 13:40:15 +0200
 Precedence: bulk
 X-Mailing-List: lkmm@lists.linux.dev
 List-Id: <lkmm.lists.linux.dev>
 List-Subscribe: <mailto:lkmm+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:lkmm+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240802002215.4133695-7-paulmck@kernel.org>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] MAINTAINERS: Add the dedicated maillist info for LKMM
+To: Boqun Feng <boqun.feng@gmail.com>, linux-kernel@vger.kernel.org,
+ lkmm@lists.linux.dev
+Cc: Alan Stern <stern@rowland.harvard.edu>,
+ Andrea Parri <parri.andrea@gmail.com>, Will Deacon <will@kernel.org>,
+ Peter Zijlstra <peterz@infradead.org>, Nicholas Piggin <npiggin@gmail.com>,
+ David Howells <dhowells@redhat.com>, Jade Alglave <j.alglave@ucl.ac.uk>,
+ Luc Maranget <luc.maranget@inria.fr>, "Paul E. McKenney"
+ <paulmck@kernel.org>, Akira Yokosawa <akiyks@gmail.com>,
+ Daniel Lustig <dlustig@nvidia.com>, Joel Fernandes <joel@joelfernandes.org>,
+ linux-arch@vger.kernel.org, Miguel Ojeda <ojeda@kernel.org>,
+ Alex Gaynor <alex.gaynor@gmail.com>,
+ Wedson Almeida Filho <wedsonaf@gmail.com>, Gary Guo <gary@garyguo.net>,
+ =?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>,
+ Benno Lossin <benno.lossin@proton.me>,
+ Andreas Hindborg <a.hindborg@samsung.com>, Alice Ryhl
+ <aliceryhl@google.com>, rust-for-linux@vger.kernel.org,
+ Hernan Ponce de Leon <hernan.poncedeleon@huaweicloud.com>,
+ Puranjay Mohan <puranjay@kernel.org>
+References: <20240703162616.78278-1-boqun.feng@gmail.com>
+From: Jonas Oberhauser <jonas.oberhauser@huaweicloud.com>
+In-Reply-To: <20240703162616.78278-1-boqun.feng@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-CM-TRANSID:GxC2BwB3lMGhxaxmYY9lAA--.45712S2
+X-Coremail-Antispam: 1UD129KBjvdXoWruF18Ww43CF48WFy5XrykuFg_yoWDJwcE9a
+	n7G3WIgr1DCFyjkw4kCF9Fyrn09rZ7CF1fW3Waqw43Xa4DGrsxt398KwnY93WDX348Cr4q
+	ya1fGFsagr13ujkaLaAFLSUrUUUUjb8apTn2vfkv8UJUUUU8Yxn0WfASr-VFAUDa7-sFnT
+	9fnUUIcSsGvfJTRUUUbVkFF20E14v26rWj6s0DM7CY07I20VC2zVCF04k26cxKx2IYs7xG
+	6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48ve4kI8w
+	A2z4x0Y4vE2Ix0cI8IcVAFwI0_Jr0_JF4l84ACjcxK6xIIjxv20xvEc7CjxVAFwI0_Gr0_
+	Cr1l84ACjcxK6I8E87Iv67AKxVW8JVWxJwA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_Gr0_Gr
+	1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj6xII
+	jxv20xvE14v26r1j6r18McIj6I8E87Iv67AKxVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_Gr
+	1lF7xvr2IY64vIr41lF7I21c0EjII2zVCS5cI20VAGYxC7M4IIrI8v6xkF7I0E8cxan2IY
+	04v7MxkF7I0En4kS14v26r4a6rW5MxAIw28IcxkI7VAKI48JMxC20s026xCaFVCjc4AY6r
+	1j6r4UMI8I3I0E5I8CrVAFwI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE17CE
+	b7AF67AKxVW8ZVWrXwCIc40Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r1j6r1xMIIF0x
+	vE2Ix0cI8IcVCY1x0267AKxVW8JVWxJwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF4lIxAI
+	cVC2z280aVAFwI0_Jr0_Gr1lIxAIcVC2z280aVCY1x0267AKxVW8JVW8JrUvcSsGvfC2Kf
+	nxnUUI43ZEXa7sRiuWl3UUUUU==
+X-CM-SenderInfo: 5mrqt2oorev25kdx2v3u6k3tpzhluzxrxghudrp/
 
-On Thu, Aug 01, 2024 at 05:22:15PM -0700, Paul E. McKenney wrote:
-> From: Boqun Feng <boqun.feng@gmail.com>
-> 
-> A dedicated mail list has been created for Linux kernel memory model
-> discussion, which could help people more easily track memory model
-> related discussions.  This could also help bring memory model discussions
-> to a broader audience.  Therefore, add the list information to the LKMM
-> maintainers entry.
+Awesome, thanks!
+
+Am 7/3/2024 um 6:26 PM schrieb Boqun Feng:
+> A dedicated mail list is created for Linux kernel memory model
+> discussion, and this could help more people to track down memory model
+> related discussion, since oftentimes memory model discussions would
+> involve a broader audience. Hence add the list information into the
+> maintainers entry of LKMM.
 > 
 > Signed-off-by: Boqun Feng <boqun.feng@gmail.com>
-> Signed-off-by: Paul E. McKenney <paulmck@kernel.org>
+> ---
+>   MAINTAINERS | 1 +
+>   1 file changed, 1 insertion(+)
+> 
+> diff --git a/MAINTAINERS b/MAINTAINERS
+> index 3f2047082073..a77bd8a49cd9 100644
+> --- a/MAINTAINERS
+> +++ b/MAINTAINERS
+> @@ -12796,6 +12796,7 @@ R:	Daniel Lustig <dlustig@nvidia.com>
+>   R:	Joel Fernandes <joel@joelfernandes.org>
+>   L:	linux-kernel@vger.kernel.org
+>   L:	linux-arch@vger.kernel.org
+> +L:	lkmm@lists.linux.dev
+>   S:	Supported
+>   T:	git git://git.kernel.org/pub/scm/linux/kernel/git/paulmck/linux-rcu.git dev
+>   F:	Documentation/atomic_bitops.txt
 
-Acked-by: Andrea Parri <parri.andrea@gmail.com>
-
-  Andrea

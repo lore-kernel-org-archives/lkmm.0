@@ -1,48 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1856136350;
-	Fri,  2 Aug 2024 17:47:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A523915C14D;
+	Tue, 17 Sep 2024 13:49:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722620848; cv=none; b=iTTNeWwySiZ29nWS+KeZVgM8XNwcQoANhWKZsFGT5MOPh9GMELOo5HMl8BcTm2HClh47IRBbwsmCujX4rK5CsD4YRqYyAdJqyLZNmtB/yG4EuuJRjQwBWTIYN89alxtZVl1kc6BMQp3042Nr/00FWa+X/lh/M7DdMGL5By2OCgg=
+	t=1726580948; cv=none; b=D3fmAmDpFGlsPpTVE6VP9ayS+9YvklS7RdF58tnFk9goAmXFSH+3pXp9b2p02cyzgYKZzVe9qln61kwj7E07nwuimBeAXAaE77eOL1oWeIQMnzZmeWKVTaD2Ug4LmPp7Ib0fc3IwDWjSpb+RvflsEI6TTU/Uo7zh5pv7Pypx+zM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722620848; c=relaxed/simple;
-	bh=59TiDqi3kg1UeIqPxlvhBXIwC01i6kboGdvd/Sllv5M=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=kg1u3vsxUYR8kI96TcJvOBsIlYtD4WqbLolEE8TcLUaIOFtqK7D4YIqC/mvzX6LZ0Vf1Bh6vIpAlkifYdikaGRdMjcVe6v+aqoZkoYYIdgzqDdy1T0Rb1CIl+OI/bH3uokazbHGCdPAcZcH5oeOd+pH9NssqWdaHTnN7vopvYSM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HX15cDUL; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1726580948; c=relaxed/simple;
+	bh=pRHFas6Nd62vPzByTiCSlPk2IN/k7lp11mG1EK/0PoA=;
+	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition; b=T8Ctq7UmU2GB2ck1nhPoQw24tmT08lg19mekm8eCFh91QZcqaTE35jWjdv7Cq5iaSRedwNx8jZ3KE7iGAXW3fuw7NzyyoJxJNS6IdHT1cK5ddsTucpAzD0Hqql8sYXAdq7dj15WHr2HG0C729Y3pUsrYwMft2VzuKE6nCj8dw04=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=pf6ZadLr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HX15cDUL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 825F6C32782;
-	Fri,  2 Aug 2024 17:47:27 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="pf6ZadLr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3EA2FC4CEC5;
+	Tue, 17 Sep 2024 13:49:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1722620847;
-	bh=59TiDqi3kg1UeIqPxlvhBXIwC01i6kboGdvd/Sllv5M=;
-	h=Date:From:To:Cc:Subject:Reply-To:References:In-Reply-To:From;
-	b=HX15cDULsbXp5AtvYHDvfrWo1epZQOr6dYesNDUxkx5+VkyFNsB3sT4EvQXNg5prj
-	 pPCG4ogikyzioKp2XoXg5xzx+jwMNkOcBw6ndyKY7WUnTP0S6doUVa6Pw7utj+xo/5
-	 ZFOpwQoQw4Kb73uNms+Yg7OHlX1xE4qVGmaTwJvqIYSOikbdECzUakbGSdet2NQHNI
-	 lxSksTsJjhFny92R4p+DBci9RRuQ3fEf9tcKqz2OHZn1li898Gj6ufawnvAsHNpmPG
-	 0WtI5NoCAsePN5ke0sCrqvlaeRXsHuyLKcS1MigBfzySu6nq/TrHRX/t6d6I+i8Uvo
-	 9uBAObNb71XtA==
+	s=k20201202; t=1726580948;
+	bh=pRHFas6Nd62vPzByTiCSlPk2IN/k7lp11mG1EK/0PoA=;
+	h=Date:From:To:Cc:Subject:Reply-To:From;
+	b=pf6ZadLrcmJxWZi7HUdbZpVJfg/qMW4gln/SFbJU/VCBKYzup2Xku6ngBI/InmTmc
+	 NH9q2L3lSjCj4xShE4KHr+cn7Re9+HDEY+oR0CadOI8LPpz4Jb3bcTkW4ZlyqGWanf
+	 /+z1Hxbjg14KRcANGtkhvP1OYoc3Uo096sS9qyFocH8tVgEtM/tZj0HVon6DTMlAM6
+	 I94Thll8cZJ7rHaeD2n6LlrZ4HYCv7DoA2pwMfskH1tSaojWiAudbN1crTS4zlfjGl
+	 wJfexERsFySPjmDKhaS4tc0+Uk3EMgtqFgfwhqM/DwgiQMsmAFlKfNT6o8yoSeu4pb
+	 3m9zmvXmpZdcA==
 Received: by paulmck-ThinkPad-P17-Gen-1.home (Postfix, from userid 1000)
-	id 25D47CE09DE; Fri,  2 Aug 2024 10:47:27 -0700 (PDT)
-Date: Fri, 2 Aug 2024 10:47:27 -0700
+	id 141FFCE0F73; Tue, 17 Sep 2024 06:49:05 -0700 (PDT)
+Date: Tue, 17 Sep 2024 06:49:05 -0700
 From: "Paul E. McKenney" <paulmck@kernel.org>
-To: Andrea Parri <parri.andrea@gmail.com>
-Cc: linux-kernel@vger.kernel.org, linux-arch@vger.kernel.org,
-	lkmm@lists.linux.dev, kernel-team@meta.com, mingo@kernel.org,
-	stern@rowland.harvard.edu, will@kernel.org, peterz@infradead.org,
-	boqun.feng@gmail.com, npiggin@gmail.com, dhowells@redhat.com,
-	j.alglave@ucl.ac.uk, luc.maranget@inria.fr, akiyks@gmail.com
-Subject: Re: [PATCH memory-model 7/7] MAINTAINERS: Add the dedicated maillist
- info for LKMM
-Message-ID: <d877a2a8-8040-42b1-bd2f-cd60b2a9f4c2@paulmck-laptop>
+To: torvalds@linux-foundation.org
+Cc: linux-kernel@vger.kernel.org, lkmm@lists.linux.dev,
+	parri.andrea@gmail.com, akiyks@gmail.com, boqun.feng@gmail.com
+Subject: [GIT PULL] LKMM changes for v6.12
+Message-ID: <acd68abf-715b-46b9-9e9b-818c40df1402@paulmck-laptop>
 Reply-To: paulmck@kernel.org
-References: <e384a9ac-05c1-45d6-9639-28457dd183d9@paulmck-laptop>
- <20240802002215.4133695-7-paulmck@kernel.org>
- <Zqyq7DjIrHAOqf0k@andrea>
 Precedence: bulk
 X-Mailing-List: lkmm@lists.linux.dev
 List-Id: <lkmm.lists.linux.dev>
@@ -51,23 +44,43 @@ List-Unsubscribe: <mailto:lkmm+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <Zqyq7DjIrHAOqf0k@andrea>
 
-On Fri, Aug 02, 2024 at 11:46:20AM +0200, Andrea Parri wrote:
-> On Thu, Aug 01, 2024 at 05:22:15PM -0700, Paul E. McKenney wrote:
-> > From: Boqun Feng <boqun.feng@gmail.com>
-> > 
-> > A dedicated mail list has been created for Linux kernel memory model
-> > discussion, which could help people more easily track memory model
-> > related discussions.  This could also help bring memory model discussions
-> > to a broader audience.  Therefore, add the list information to the LKMM
-> > maintainers entry.
-> > 
-> > Signed-off-by: Boqun Feng <boqun.feng@gmail.com>
-> > Signed-off-by: Paul E. McKenney <paulmck@kernel.org>
-> 
-> Acked-by: Andrea Parri <parri.andrea@gmail.com>
+Hello, Linus,
 
-Thank you!  I will apply this on my next rebase.
+Please pull this LKMM update from:
 
-							Thanx, Paul
+  git://git.kernel.org/pub/scm/linux/kernel/git/paulmck/linux-rcu.git tags/lkmm.2024.09.14b
+  # HEAD: a49f48cc7d26270bee727d30ce830d4129b33d4a: MAINTAINERS: Add the dedicated maillist info for LKMM (2024-09-13 23:56:44 -0700)
+
+----------------------------------------------------------------
+lkmm: Add documentation and mailing list
+
+This pull request contains documentation updates from Andrea Parri and
+Akira Yokosawa.  Also, there is now an lkmm@lists.linux.dev, and Boqun
+Feng's update adds this to the LKMM MAINTAINERS entry.
+
+Not included in this pull request are a couple of more commits from
+Puranjay Mohan adding more atomic operations to LKMM, but these await a
+herdtools7 release that includes tool-side support for this functionality.
+With luck, I will send a separate pull request for these later in the
+merge window.
+
+----------------------------------------------------------------
+Akira Yokosawa (3):
+      tools/memory-model: Add locking.txt and glossary.txt to README
+      tools/memory-model: simple.txt: Fix stale reference to recipes-pairs.txt
+      docs/memory-barriers.txt: Remove left-over references to "CACHE COHERENCY"
+
+Andrea Parri (1):
+      tools/memory-model: Document herd7 (abstract) representation
+
+Boqun Feng (1):
+      MAINTAINERS: Add the dedicated maillist info for LKMM
+
+ Documentation/memory-barriers.txt                  |   3 -
+ MAINTAINERS                                        |   1 +
+ tools/memory-model/Documentation/README            |  24 ++++-
+ .../Documentation/herd-representation.txt          | 110 +++++++++++++++++++++
+ tools/memory-model/Documentation/simple.txt        |   2 +-
+ 5 files changed, 135 insertions(+), 5 deletions(-)
+ create mode 100644 tools/memory-model/Documentation/herd-representation.txt

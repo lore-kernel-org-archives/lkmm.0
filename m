@@ -1,206 +1,155 @@
-Received: from mail-pj1-f49.google.com (mail-pj1-f49.google.com [209.85.216.49])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from frasgout12.his.huawei.com (frasgout12.his.huawei.com [14.137.139.154])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85BB51EB2F
-	for <lkmm@lists.linux.dev>; Thu, 19 Sep 2024 12:33:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F33EA19D096
+	for <lkmm@lists.linux.dev>; Thu, 19 Sep 2024 13:07:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=14.137.139.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726749228; cv=none; b=ui86WRmvRuPtbsumzGvWsuAWJ/hcIC8BXFKgjX08ykiApwkoMucZKR/HxJmq7fuXVhZmlBy6YMDJy3WTE8eGsYEpRGG/jplPObu3PvuulP0u6mQWYX1Fr4pShVqARDjpLeW8vteMhHtYiJugygzH6PSopL1J+KJ2t/hTinOFdI8=
+	t=1726751240; cv=none; b=L9GoGo3CIPO99tBASeazvEVYYzXLd9hwqTellE7J+TdRdXvsu2Y6uPospP2hS48vjXTPQyiEIPPvzUl8BKa9rLZFbdHqfRHjqunjXSPW4McXfpF2KB27E6dTBJFbnF5IjS1z1UJDa3GvWzAEvc/lHONZWg7obcYMYkq8YUkiYtQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726749228; c=relaxed/simple;
-	bh=V/jzswor5s1CzAW0ZUtaQ2xScydnXC/HzCHeyQzuX6s=;
-	h=Content-Type:Mime-Version:Subject:From:In-Reply-To:Date:Cc:
-	 Message-Id:References:To; b=Azi+UkWXDyilCFgSodJ744eLihr4UVP8xO8WMnYtOQ5bHQYsJVTcvSt2pAc3ErXAlsZos1VHT9oRmMb3tl7A/KxIIpHe65lhz/5wywDYzj//hRG+pwqhD48H2ynAr+cZc7j6lgr6DkxFls8JiiwOMstlyIVpzeq0wMLgXtuBwGA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=njBcxN0X; arc=none smtp.client-ip=209.85.216.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="njBcxN0X"
-Received: by mail-pj1-f49.google.com with SMTP id 98e67ed59e1d1-2db89fb53f9so571617a91.3
-        for <lkmm@lists.linux.dev>; Thu, 19 Sep 2024 05:33:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1726749227; x=1727354027; darn=lists.linux.dev;
-        h=to:references:message-id:content-transfer-encoding:cc:date
-         :in-reply-to:from:subject:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=QmKwDE+vQbJFZKx1pG1WdGf3eu6TWhTPyNHtYBECpZw=;
-        b=njBcxN0XxC1JxoOGx0E7pcpnuM9zd3WBiHUBZCM8jAIgFMbc+o8kw33YtASCPLsS8N
-         qUL8tV76P1SxFJXPXOeUPEmI2j2dMG4JNlmyZ8BmzQUOLnuN5GItlXh/clzlthHaF8yD
-         g8bJk+9EH6dfxQKS16AZ28g+G8Gx/DPhX+KpEWqqA6IUHar9M3wrXplbnF+wfW/j0dhN
-         aGDige2rbyHZRtUX/H9GGWq/6RCJ1eaJxrG7fCcktp9SQJgVQP7lVAWludjKjZtWyPvt
-         czuDdC23v+YRVIaAD8764Yo0yKJWiuGkRTM5XIHACqkfvXkONuQ01wRDmiq+uY1dnuZ0
-         Kduw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1726749227; x=1727354027;
-        h=to:references:message-id:content-transfer-encoding:cc:date
-         :in-reply-to:from:subject:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=QmKwDE+vQbJFZKx1pG1WdGf3eu6TWhTPyNHtYBECpZw=;
-        b=RRn3dosnIhCBIXO4hG11CLi+btAFM2O8qt6+lptaHS/MxIHgPBo8IAam2RhHrbqpHR
-         +Pp3g5EFYHf0k2F2Ff+TUEVURsBm9dTPiazBApd7oAf4Nc5c8gl2p4R/7Qx2nsqWdqwG
-         6nrtkSxR8cPSz5QGyqXU4S1NBhZOLvVfQNwr1TL5wNT5mz4ZdNpjoUi517y5Zs7MVfjF
-         nI+5yi+agfrbRJARma1upZKHEdCNLDWuLnutLmKhhwjQQ8nFEUMlqldUn3LVlrDdWyJi
-         LLSwxyzZRu9eem5d15/xZAdPZrb0YHB5hY21feNnmJeLS5C01J19nl0It187u0SSwnS0
-         piFw==
-X-Forwarded-Encrypted: i=1; AJvYcCVnqDPFZgYiYWpAG5/4T1bOy29y7Ucmn7Rvu8a7KRDbT5e8Src+hFHN2tuv6nVOAKwwy/1f@lists.linux.dev
-X-Gm-Message-State: AOJu0YwzN53vOhDPXOVzz+Ipeu77fUmny9o0piYbNBdL4LKwfYJVgn38
-	KQkhvTjhrS1qS5XWju6kQLVbvJd6GyZInK3YSXSi8yzdk/HxCaEB
-X-Google-Smtp-Source: AGHT+IEjFLx9rHSbMjqqXE9JnSVpBQ8FdB0R34tyP1bgjc3xd0VMFuHdGq+CTtZA/pDsiECQAkLVBA==
-X-Received: by 2002:a17:90a:6888:b0:2c4:e333:35e5 with SMTP id 98e67ed59e1d1-2dba00826f1mr31425087a91.36.1726749226750;
-        Thu, 19 Sep 2024 05:33:46 -0700 (PDT)
-Received: from smtpclient.apple ([2402:d0c0:11:86::1])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-2dd6ee898b6sm1673500a91.6.2024.09.19.05.33.40
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 19 Sep 2024 05:33:46 -0700 (PDT)
-Content-Type: text/plain;
-	charset=utf-8
+	s=arc-20240116; t=1726751240; c=relaxed/simple;
+	bh=xAYyOUZu5VrLtMeZwfppVF2iMz51plyd7LnCAKebZ4k=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=I+m9jA1uVjtmqsTEr7in0pFWBE4bpsoNk9eVd+OGs5cZVNo/lxwektyGmn9UFdC4bEMqiIvpc7opJXeF+wv+kbAZEEd2wmCbhGCozQweZ6dxUgCFV85ekTEUOWYhLysCLtAJ5TL4Ivn5xBDyAm0BhCHLHBBsgCEyoCtVeC/1TXQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=huaweicloud.com; spf=pass smtp.mailfrom=huaweicloud.com; arc=none smtp.client-ip=14.137.139.154
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=huaweicloud.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huaweicloud.com
+Received: from mail.maildlp.com (unknown [172.18.186.51])
+	by frasgout12.his.huawei.com (SkyGuard) with ESMTP id 4X8Zs35smcz9v7JW
+	for <lkmm@lists.linux.dev>; Thu, 19 Sep 2024 20:41:43 +0800 (CST)
+Received: from mail02.huawei.com (unknown [7.182.16.27])
+	by mail.maildlp.com (Postfix) with ESMTP id 2F2EE1401F1
+	for <lkmm@lists.linux.dev>; Thu, 19 Sep 2024 21:07:04 +0800 (CST)
+Received: from huaweicloud.com (unknown [10.206.133.88])
+	by APP2 (Coremail) with SMTP id GxC2BwBnFsfqIexmRoM8AQ--.55331S2;
+	Thu, 19 Sep 2024 14:07:03 +0100 (CET)
+From: Jonas Oberhauser <jonas.oberhauser@huaweicloud.com>
+To: paulmck@kernel.org
+Cc: stern@rowland.harvard.edu,
+	parri.andrea@gmail.com,
+	will@kernel.org,
+	peterz@infradead.org,
+	boqun.feng@gmail.com,
+	npiggin@gmail.com,
+	dhowells@redhat.com,
+	j.alglave@ucl.ac.uk,
+	luc.maranget@inria.fr,
+	akiyks@gmail.com,
+	dlustig@nvidia.com,
+	joel@joelfernandes.org,
+	urezki@gmail.com,
+	quic_neeraju@quicinc.com,
+	frederic@kernel.org,
+	linux-kernel@vger.kernel.org,
+	lkmm@lists.linux.dev,
+	hernan.poncedeleon@huaweicloud.com,
+	Jonas Oberhauser <jonas.oberhauser@huaweicloud.com>
+Subject: [PATCH v3 0/5] tools/memory-model: Define more of LKMM in tools/memory-model
+Date: Thu, 19 Sep 2024 15:06:29 +0200
+Message-Id: <20240919130634.298181-1-jonas.oberhauser@huaweicloud.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: lkmm@lists.linux.dev
 List-Id: <lkmm.lists.linux.dev>
 List-Subscribe: <mailto:lkmm+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:lkmm+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3776.700.51\))
-Subject: Re: [RFC PATCH 1/4] hazptr: Add initial implementation of hazard
- pointers
-From: Alan Huang <mmpgouride@gmail.com>
-In-Reply-To: <ZuvOWM5c8tZotHFL@boqun-archlinux>
-Date: Thu, 19 Sep 2024 20:33:27 +0800
-Cc: Lai Jiangshan <jiangshanlai@gmail.com>,
- LKML <linux-kernel@vger.kernel.org>,
- RCU <rcu@vger.kernel.org>,
- linux-mm@kvack.org,
- lkmm@lists.linux.dev,
- "Paul E. McKenney" <paulmck@kernel.org>,
- Frederic Weisbecker <frederic@kernel.org>,
- Neeraj Upadhyay <neeraj.upadhyay@kernel.org>,
- Joel Fernandes <joel@joelfernandes.org>,
- Josh Triplett <josh@joshtriplett.org>,
- "Uladzislau Rezki (Sony)" <urezki@gmail.com>,
- Steven Rostedt <rostedt@goodmis.org>,
- Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
- Zqiang <qiang.zhang1211@gmail.com>,
- Peter Zijlstra <peterz@infradead.org>,
- Ingo Molnar <mingo@redhat.com>,
- Will Deacon <will@kernel.org>,
- Waiman Long <longman@redhat.com>,
- Mark Rutland <mark.rutland@arm.com>,
- Thomas Gleixner <tglx@linutronix.de>,
- Kent Overstreet <kent.overstreet@gmail.com>,
- Linus Torvalds <torvalds@linux-foundation.org>,
- Vlastimil Babka <vbabka@suse.cz>,
- maged.michael@gmail.com,
- Neeraj upadhyay <neeraj.upadhyay@amd.com>
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <6B551C0A-3E09-45E2-9A00-03DEDB1EFEA7@gmail.com>
-References: <20240917143402.930114-1-boqun.feng@gmail.com>
- <20240917143402.930114-2-boqun.feng@gmail.com>
- <CAJhGHyD8MzUssfuKSGnu1arnayNOyBnUA03vYB0WWwbE3WzoZg@mail.gmail.com>
- <ZuvOWM5c8tZotHFL@boqun-archlinux>
-To: Boqun Feng <boqun.feng@gmail.com>
-X-Mailer: Apple Mail (2.3776.700.51)
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID:GxC2BwBnFsfqIexmRoM8AQ--.55331S2
+X-Coremail-Antispam: 1UD129KBjvJXoWxWw45urW3Xr4xWrW3tF4xJFb_yoW5KF4rpr
+	Z5G395Ka1Dtr9F9a18Wan7ZFySya1rGw47KFn7twn5uF15Wry0yr1Ika1Fvr9ruFW8XayU
+	Zr1jqr1kZw1DArJanT9S1TB71UUUUUDqnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+	9KBjDU0xBIdaVrnRJUUU9014x267AKxVW5JVWrJwAFc2x0x2IEx4CE42xK8VAvwI8IcIk0
+	rVWrJVCq3wAFIxvE14AKwVWUJVWUGwA2ocxC64kIII0Yj41l84x0c7CEw4AK67xGY2AK02
+	1l84ACjcxK6xIIjxv20xvE14v26r1j6r1xM28EF7xvwVC0I7IYx2IY6xkF7I0E14v26r4j
+	6F4UM28EF7xvwVC2z280aVAFwI0_Gr0_Cr1l84ACjcxK6I8E87Iv6xkF7I0E14v26r4j6r
+	4UJwAS0I0E0xvYzxvE52x082IY62kv0487Mc02F40EFcxC0VAKzVAqx4xG6I80ewAv7VC0
+	I7IYx2IY67AKxVWUJVWUGwAv7VC2z280aVAFwI0_Jr0_Gr1lOx8S6xCaFVCjc4AY6r1j6r
+	4UM4x0Y48IcxkI7VAKI48JM4x0x7Aq67IIx4CEVc8vx2IErcIFxwACI402YVCY1x02628v
+	n2kIc2xKxwCY1x0262kKe7AKxVW8ZVWrXwCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7x
+	kEbVWUJVW8JwC20s026c02F40E14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E
+	67AF67kF1VAFwI0_GFv_WrylIxkGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCw
+	CI42IY6xIIjxv20xvEc7CjxVAFwI0_Gr0_Cr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1x
+	MIIF0xvEx4A2jsIE14v26r4j6F4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Gr0_Gr1UYxBIda
+	VFxhVjvjDU0xZFpf9x0pRHUDLUUUUU=
+X-CM-SenderInfo: 5mrqt2oorev25kdx2v3u6k3tpzhluzxrxghudrp/
 
-2024=E5=B9=B49=E6=9C=8819=E6=97=A5 15:10=EF=BC=8CBoqun Feng =
-<boqun.feng@gmail.com> wrote=EF=BC=9A
->=20
-> On Thu, Sep 19, 2024 at 02:39:13PM +0800, Lai Jiangshan wrote:
->> On Tue, Sep 17, 2024 at 10:34=E2=80=AFPM Boqun Feng =
-<boqun.feng@gmail.com> wrote:
->>=20
->>> +static void hazptr_context_snap_readers_locked(struct =
-hazptr_reader_tree *tree,
->>> +                                              struct hazptr_context =
-*hzcp)
->>> +{
->>> +       lockdep_assert_held(hzcp->lock);
->>> +
->>> +       for (int i =3D 0; i < HAZPTR_SLOT_PER_CTX; i++) {
->>> +               /*
->>> +                * Pairs with smp_store_release() in =
-hazptr_{clear,free}().
->>> +                *
->>> +                * Ensure
->>> +                *
->>> +                * <reader>             <updater>
->>> +                *
->>> +                * [access protected pointers]
->>> +                * hazptr_clear();
->>> +                *   smp_store_release()
->>> +                *                      // in reader scan.
->>> +                *                      smp_load_acquire(); // is =
-null or unused.
->>> +                *                      [run callbacks] // all =
-accesses from
->>> +                *                                      // reader =
-must be
->>> +                *                                      // observed.
->>> +                */
->>> +               hazptr_t val =3D smp_load_acquire(&hzcp->slots[i]);
->>> +
->>> +               if (!is_null_or_unused(val)) {
->>> +                       struct hazptr_slot_snap *snap =3D =
-&hzcp->snaps[i];
->>> +
->>> +                       // Already in the tree, need to remove =
-first.
->>> +                       if (!is_null_or_unused(snap->slot)) {
->>> +                               reader_del(tree, snap);
->>> +                       }
->>> +                       snap->slot =3D val;
->>> +                       reader_add(tree, snap);
->>> +               }
->>> +       }
->>> +}
->>=20
->> Hello
->>=20
->> I'm curious about whether there are any possible memory leaks here.
->>=20
->> It seems that call_hazptr() never frees the memory until the slot is
->> set to another valid value.
->>=20
->> In the code here, the snap is not deleted when hzcp->snaps[i] is =
-null/unused
->> and snap->slot is not which I think it should be.
->>=20
->> And it can cause unneeded deletion and addition of the snap if the =
-slot
->> value is unchanged.
->>=20
->=20
-> I think you're right. (Although the node will be eventually deleted at
-> cleanup_hazptr_context(), however there could be a long-live
-> hazptr_context). It should be:
->=20
-> hazptr_t val =3D smp_load_acquire(&hzcp->slots[i]);
-> struct hazptr_slot_snap *snap =3D &hzcp->snaps[i];
->=20
-> if (val !=3D snap->slot) { // val changed, need to update the tree =
-node.
-> // Already in the tree, need to remove first.
-> if (!is_null_or_unused(snap->slot)) {
-> reader_del(tree, snap);
-> }
->=20
-> // use the latest snapshot.
-> snap->slot =3D val;
->=20
-> // Add it into tree if there is a reader
-> if (!is_null_or_unused(val))
-> reader_add(tree, snap);
-> }
+Currently, the effect of several tag on operations is defined only in
+the herd7 tool's OCaml code as syntax transformations, while the effect
+of all other tags is defined in tools/memory-model.
+This asymmetry means that two seemingly analogous definitions in 
+tools/memory-model behave quite differently because the generated
+representation is sometimes modified by hardcoded behavior in herd7.
 
-With this changed, and force users call hazptr_clear() like =
-rcu_read_unlock(), we could remove
-the reader_del() in cleanup_hazptr_context(), then remove the =
-tree->lock?
+It also makes it hard to see that the behavior of the formalization 
+matches the intuition described in explanation.txt without delving into
+the implementation of herd7.
 
->=20
-> Regards,
-> Boqun
->=20
->> I'm not so sure...
->>=20
->> Thanks
->> Lai
+Furthermore, this hardcoded behavior is hard to maintain inside herd7 and
+other tools implementing WMM, and has caused several bugs and confusions
+with the tool maintainers, e.g.:
 
+  https://github.com/MPI-SWS/genmc/issues/22
+  https://github.com/herd/herdtools7/issues/384#issuecomment-1132859904
+  https://github.com/hernanponcedeleon/Dat3M/issues/254
+
+It also means that potential future extensions of LKMM with new tags may
+not work without changing internals of the herd7 tool.
+
+In this patch series, we first emulate the effect of herd7 transformations
+in tools/memory-model through explicit rules in .cat and .bell files that
+reference the transformed tags.
+These transformations do not have any immediate effect with the current
+herd7 implementation, because they apply after the syntax transformations
+have already modified those tags.
+
+In a second step, we then distinguish between syntactic tags (that are
+placed by the programmer on operations, e.g., an 'ACQUIRE tag on both the
+read and write of an xchg_acquire() operation) and sets of events (that
+would be defined after the (emulated) transformations, e.g., an Acquire
+set that includes only on the read of the xchg_acquire(), but "has been
+removed" from the write).
+
+This second step (comprising patches 4 and 5) is incompatible with the
+current herd7 implementation, since herd7 uses hardcoded tag names to decide
+what to do with LKMM; therefore, the newly introduced syntactic tags will be
+ignored or processed incorrectly by herd7.
+
+
+Have fun,
+  jonas
+
+
+Changes from v1 to v2:
+   - addressed several spelling/style issues pointed out by Alan
+   - simplified the definition of Marked accesses based on a
+      suggestion by Alan
+
+Changes from v2 to v3:
+  - addressed imprecise comment pointed out by Boqun
+  - addressed the backwards compatibility issue pointed out by Akira
+    with help of Hernan: improved version compatibility by adding
+    an error message on older versions of herd and relying on a new
+    flag -lkmmv1 to select the version
+  - integrated recent patches, like the herd representation table
+    and primitives like atomic_add_unless or atomic_and_not
+
+
+Jonas Oberhauser (5):
+  tools/memory-model: Legitimize current use of tags in LKMM macros
+  tools/memory-model: Define applicable tags on operation in tools/...
+  tools/memory-model: Define effect of Mb tags on RMWs in tools/...
+  tools/memory-model: Switch to softcoded herd7 tags
+  tools/memory-model: Distinguish between syntactic and semantic tags
+
+ .../Documentation/herd-representation.txt     |  27 +--
+ tools/memory-model/linux-kernel.bell          |  33 ++-
+ tools/memory-model/linux-kernel.cat           |  10 +
+ tools/memory-model/linux-kernel.cfg           |   1 +
+ tools/memory-model/linux-kernel.def           | 196 +++++++++---------
+ .../litmus-tests/add-unless-mb.litmus         |  27 +++
+ 6 files changed, 176 insertions(+), 118 deletions(-)
+ create mode 100644 tools/memory-model/litmus-tests/add-unless-mb.litmus
+
+-- 
+2.34.1
 

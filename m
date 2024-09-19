@@ -1,57 +1,57 @@
-Received: from mail-pf1-f182.google.com (mail-pf1-f182.google.com [209.85.210.182])
+Received: from mail-pl1-f176.google.com (mail-pl1-f176.google.com [209.85.214.176])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D33A19CD17
-	for <lkmm@lists.linux.dev>; Thu, 19 Sep 2024 13:57:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 725241EA85
+	for <lkmm@lists.linux.dev>; Thu, 19 Sep 2024 16:10:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726754258; cv=none; b=Nxl1vepQnHGsE5QunzvrO2dDMJyK1hZM8PKKDKt0ZuxiMDMpbIbZS5anvvfCDMrZ2XzgjyjjmoYVsX2BT/BAxetsZLf06GdlnY7X9LDiGWUh0Kfx6AFrleKQgH8W0ZOfZgVlvKhYCc1YL5Oeq6GPc+kiBKZpmN7rOsYpli0Np5c=
+	t=1726762224; cv=none; b=Vfa+BRl97WiG0NhDPeTvp2LzKiSLFQ6W5PxcCvvHZUsLcscGyUyTPSWtvM/iX5daOTJErDrO+vyqTkHdeL0/75atalXcAhDJQ6lTKOAHyni5B023NlHt7MfodlgYfWCtq1LEOMr+CMU7XJBCjwELk0RWTePCELzv4EYN+Gn7YhM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726754258; c=relaxed/simple;
-	bh=rlSCdSdxPLC0z0AuFMduwMBmz9enE8vC/LaQSYEVWiU=;
+	s=arc-20240116; t=1726762224; c=relaxed/simple;
+	bh=TeWxYNML4uZ1URMQu31Nx1o53ehLgcKlEXaVaXJx29k=;
 	h=Content-Type:Mime-Version:Subject:From:In-Reply-To:Date:Cc:
-	 Message-Id:References:To; b=YG8fRADcmFL6jmkrQwQIGh36OhbFVcjE3NN7kVH2OqvFoaxW1lri/2HFTgmfLLtUoaKjOMWJU55wM+RyUTZ3WHngEsdbsO1KthIa3LNF8/tD7hh4Pe1F+5ztQ6OqsY3YLLak5L96TJWCsNXPvHQV5zwWDR9QdIXWEfkHElC3t7k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ErTuUChH; arc=none smtp.client-ip=209.85.210.182
+	 Message-Id:References:To; b=cc1Uc/cdw+sVcn57Tuxzon69f3J/mAUFug3YSRqVQ0r+7l2iLDPVdYThfDNhwVjXO7iCvnIB8ArbGPVSkkQe2hnS7rVYctUUr5pNiaDugiIwOb1fP3naF8yfrQdtgacd5lwjYXTLoU1CElsReFYYP+Kn1ovQ9ZB6JsMWaBj+In8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=DLDPr8sV; arc=none smtp.client-ip=209.85.214.176
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ErTuUChH"
-Received: by mail-pf1-f182.google.com with SMTP id d2e1a72fcca58-71781f42f75so813971b3a.1
-        for <lkmm@lists.linux.dev>; Thu, 19 Sep 2024 06:57:37 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DLDPr8sV"
+Received: by mail-pl1-f176.google.com with SMTP id d9443c01a7336-2068acc8a4fso11579375ad.1
+        for <lkmm@lists.linux.dev>; Thu, 19 Sep 2024 09:10:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1726754257; x=1727359057; darn=lists.linux.dev;
+        d=gmail.com; s=20230601; t=1726762223; x=1727367023; darn=lists.linux.dev;
         h=to:references:message-id:content-transfer-encoding:cc:date
          :in-reply-to:from:subject:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=W9KoiB0YsZBX4kdWY2koiL+vhQxEK5DgJarh6ifR10c=;
-        b=ErTuUChH69wwebOi2hM7xGHbgiuNqVNOIjJsVu7bSp7HpkS2+dnud/X5A8s8eRhAzB
-         MVqHvJQDgeYC2UY2KHvM+ik2lCFBV0Bqm7LeULVwwRomvlh2Vo0jdSgcME4z6c8fiCO/
-         zWrF4JngAcCum9+QL/jR0Vb4foLm7kHdmHmnmU0ntPDYlOgCFCgfAoex/81Zdqf/xvjQ
-         Mg0x/if9MUI/XoLe8jItVYIB8x5J8YGN8nKJRwdYMsjOs1OV3QzrN3+baNmuP1EECwtM
-         gdzyfBcMu5sRvFyNbWfWOL23Jun4Dq++Or+H6mr6AaomqXeK2U+iMgvYzSD4wBhQs0gt
-         Lwtw==
+        bh=PY/fGPKseiN5XtuGoO/dNcX3n8cZ54goexwrvXf3OMI=;
+        b=DLDPr8sV8ne6Jsmuf0vFe2LjrFRgz+yOTME2J+Ohjwtzz8uK5XQr6JCxbg5NJdcvN9
+         q1GMTmWiyItgUx+1O9gtN7NrLFFwNxJia5sJthAoliKAS2KSLJKWCSnPNQIXlS9dL1oz
+         5Y3K5S3xsA58RHjKwciIt/IAk9//J7IzHwM8HxcOjEXF/9wZA9KjTK8x+KOU0oPTFZ6Q
+         4nwgrcBNYy7+pyq3Z5C7vK6hGad+afxXC/e+ROuSR6qvpQbut7g1R7TzhZjmCi2vHNj3
+         cbP3E3YAjTABQjRmVKIiTLVOShkO7z3agTgE724ssK2MmNw1zjN+/227Pz40QDiubXr9
+         UF0Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1726754257; x=1727359057;
+        d=1e100.net; s=20230601; t=1726762223; x=1727367023;
         h=to:references:message-id:content-transfer-encoding:cc:date
          :in-reply-to:from:subject:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=W9KoiB0YsZBX4kdWY2koiL+vhQxEK5DgJarh6ifR10c=;
-        b=WlgUGoc/enteDu6BAzdvfPxs8/JWrrCX3sNGuRqtBR2WvbcViPUDQboPGwfk0xxmHt
-         WAJkb85EeAKC9NN5Y/T4qhIFvgM/OVmo+qlWm4WO49evZmhshRCyHVgednhN8RednkWg
-         6QfKlX6Zu/U+B0fzvrO36f3TxlQVapZ8RpMmd903KkDSJNpi1SvHH2mZbw4BDtHvzIbR
-         8XONok80ybIijRea4WHszL3f86Ox5ZMQmHWGJipeFm/9YJRpQtJpSEigRuIpT0BIh4cp
-         fH8Bp4l3n3PCgh8IANWCvh+k8XaDkWE2p7vucUDiciduZPtIUVFdruPhXb4DP4C1L1OH
-         cRJg==
-X-Forwarded-Encrypted: i=1; AJvYcCV8HSybBgR94bAXcOCRkrJXwDIBuYBeqwXutWRd2eVil1uZVlxsg5linB+ZAZOLyPbmeu9M@lists.linux.dev
-X-Gm-Message-State: AOJu0YxGKZq9JeFuoyu4YN6CYt2t/oFUkkPmmLs/7KWJLwV+LZw2G2Vh
-	hY/axVD1fhrlkVbSE6Xz909NIYnX15SIR2fYDGqp1297FUOqsYsU
-X-Google-Smtp-Source: AGHT+IG3NM9cbEsGODVNJC/nw53fZr59xEmoESCbE/ZFVMlqAxM2UadkXcrIOGgUj+nimzv9M+wsaw==
-X-Received: by 2002:aa7:8895:0:b0:717:8deb:c195 with SMTP id d2e1a72fcca58-719261eca18mr41957713b3a.21.1726754256588;
-        Thu, 19 Sep 2024 06:57:36 -0700 (PDT)
+        bh=PY/fGPKseiN5XtuGoO/dNcX3n8cZ54goexwrvXf3OMI=;
+        b=bBpnmQdfJX+ySBWT2ojVjFzXpywjxRZC3DeTUMo6pTBIvWAWhuhoVI+UwNdS92RAaI
+         SIw4uTnEThV4GLF7YE/D/1RPtyHeLD1LtR/G9qMY9BFnXJKpC1CAsHfLkS+quycr8Db4
+         6m5WRC0dwzXqlfHe8u0L9WPHlu6UgLC3NCnWHwFLhFv8SyxKqN1huvvphaaZYrVMADqN
+         YqAzR9D90d1mcE2a0jgeMyN282NBgoHsZXTERmv30bJNImbYpe+Dc7tVY2Ss2YWZAh7k
+         owP2+P9oYTQGKSiVbX15ChM1JFcGbYG6w2AddEqUPOOpc3+ZXOKFFzIXMVZYeEqf3oUZ
+         /eHA==
+X-Forwarded-Encrypted: i=1; AJvYcCUL6lGQH/2e5BLCseGSw07v+Pgy0IG6nGHYAL9HDFwoChlTs8d5j/MoYr2DryB5xSzlrkDR@lists.linux.dev
+X-Gm-Message-State: AOJu0YyfqbDH0DdjkhkjegfJj51qfw0IUcXtFX1Mct671gsXCHo+3qhN
+	Wy8Djxci1rKkOCJo7dgl5qD4oiUVsyMzcE7adgyztVv+uSm11XG8
+X-Google-Smtp-Source: AGHT+IE63MOrtSDNRE1puuTOcxVEkzUx9edmw7szWrDYdYgkMNwLAGdFxq+KU06AHJcAn9dSKTtEfw==
+X-Received: by 2002:a17:902:ea09:b0:206:9399:5dd7 with SMTP id d9443c01a7336-20782c16174mr330479015ad.56.1726762222437;
+        Thu, 19 Sep 2024 09:10:22 -0700 (PDT)
 Received: from smtpclient.apple ([2402:d0c0:11:86::1])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-71944bc543dsm8267246b3a.204.2024.09.19.06.57.26
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-207946d17fbsm81702445ad.152.2024.09.19.09.10.16
         (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 19 Sep 2024 06:57:36 -0700 (PDT)
+        Thu, 19 Sep 2024 09:10:21 -0700 (PDT)
 Content-Type: text/plain;
 	charset=utf-8
 Precedence: bulk
@@ -64,7 +64,7 @@ Subject: Re: [RFC PATCH 1/4] hazptr: Add initial implementation of hazard
  pointers
 From: Alan Huang <mmpgouride@gmail.com>
 In-Reply-To: <ZuvOWM5c8tZotHFL@boqun-archlinux>
-Date: Thu, 19 Sep 2024 21:57:12 +0800
+Date: Fri, 20 Sep 2024 00:10:03 +0800
 Cc: Lai Jiangshan <jiangshanlai@gmail.com>,
  LKML <linux-kernel@vger.kernel.org>,
  RCU <rcu@vger.kernel.org>,
@@ -91,7 +91,7 @@ Cc: Lai Jiangshan <jiangshanlai@gmail.com>,
  maged.michael@gmail.com,
  Neeraj upadhyay <neeraj.upadhyay@amd.com>
 Content-Transfer-Encoding: quoted-printable
-Message-Id: <D2BDE4C4-48DB-4813-9608-F672896E0121@gmail.com>
+Message-Id: <28F2EAFF-1DF6-41EC-9DFC-3B437D67D840@gmail.com>
 References: <20240917143402.930114-1-boqun.feng@gmail.com>
  <20240917143402.930114-2-boqun.feng@gmail.com>
  <CAJhGHyD8MzUssfuKSGnu1arnayNOyBnUA03vYB0WWwbE3WzoZg@mail.gmail.com>
@@ -189,26 +189,12 @@ node.
 > reader_add(tree, snap);
 > }
 
-It seems like that two different hazptr_context can=E2=80=99t be used to =
-protect the same pointer?
+Even using the same context, if two slots are used to protect the same =
+pointer, let it be ptr1,
+then if the second slot is reused for ptr2, ptr1=E2=80=99s callback will =
+be invoked even the first slot still has the ptr1.
 
-Otherwise the following can happen?
-
-thread1 					thread2  			=
-		 thread3(worker) 	      thread4
-hazptr_tryprotect(hzp1, ptr1)   hazptr_tryprotect(hzp2, ptr1)=20
-										=
-		 add ptr1 to tree
-hazptr_clear(hzp1)=20
-hazptr_tryprotect(hzp1, ptr2)=20
-										=
-		 delete ptr1 from tree     unpub ptr1
-										=
-						       call_hazptr(ptr1)
-										=
-						       oops: invoke =
-ptr1's callback
-Or am I missing something?
+The original patch also has this problem.
 
 >=20
 > Regards,

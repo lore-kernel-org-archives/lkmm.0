@@ -1,30 +1,30 @@
 Received: from frasgout11.his.huawei.com (frasgout11.his.huawei.com [14.137.139.23])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76BA0208D0
-	for <lkmm@lists.linux.dev>; Thu, 19 Sep 2024 20:30:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37400487AE
+	for <lkmm@lists.linux.dev>; Fri, 20 Sep 2024 07:44:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=14.137.139.23
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726777859; cv=none; b=PAeH+bbUvbESVNuZ9rO3+fVSw4IBm9Mb/6yuHC/Z7XdDVluh4IXfC95CaLU+4B/Z5rQXsfVvHPQaoEub18CWqiR8DAcpPTx5NrcAjC0+Aa6exE5PQE27eg/+IsZD/xrlFHYMDUbFy35+mwuRf4gFboDTZs9rAKCGDpnGjFQqWFs=
+	t=1726818261; cv=none; b=NPp+hB7eRAibao61j1nlC1HYSA+oSEcclc75pVAt9dON1vS4/JmOEtqgu60jzyLKmP9EcGoRZISrRu8CwTi9bqL+dag5Pys+GoqzE9k7oGAOs0eMWa0McYqVvYG7GrT/bJ1C3DMRdQgpQ1I+wMQIY96JoSDVORn7lffP9G7dMGk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726777859; c=relaxed/simple;
-	bh=QOg9SSVk+762Jv4vk+oIinpIn6nCAa6YYARFpckLiEs=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=MI0fkUHBbpAZwSnFJQFQFVwZU6TULhXtbg/eg2sROQAGOwqTY6C0t57uXvwk7l4WoH7qUHYQMDQyI3wm/a0J4wN1ldcecX8d0/uXi0TRr7/qwiU92aBtEyL6g3AGbBgyGrd42qGXBAXkhZTdZrL4sV6PJDLYmzNDQGP8KVT6nG0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=huaweicloud.com; spf=none smtp.mailfrom=huaweicloud.com; arc=none smtp.client-ip=14.137.139.23
+	s=arc-20240116; t=1726818261; c=relaxed/simple;
+	bh=YWSUNT3mvy5KQhGTIciRDN7UKP2afgrsJvQq8zmHzK4=;
+	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
+	 In-Reply-To:Content-Type; b=Ymj8DcvSzeELrl2oQnou2CxfLR8+Ow6aIClHxjXPHwQJER2Aw5r0J3J4uzBEWl4YcZJYetjSG0HfZ1iN6WLTaTPLmXYHnZEJL2DhnSXtYTTal+gttvTN+3WNmbXhbeYpsoqTcob0VD7HMDPM+cdsenHvX2PZunYII7lJsv/sBcE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=huaweicloud.com; spf=pass smtp.mailfrom=huaweicloud.com; arc=none smtp.client-ip=14.137.139.23
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=huaweicloud.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=huaweicloud.com
-Received: from mail.maildlp.com (unknown [172.18.186.51])
-	by frasgout11.his.huawei.com (SkyGuard) with ESMTP id 4X8mqk5VQpz9v7Hs
-	for <lkmm@lists.linux.dev>; Fri, 20 Sep 2024 04:11:14 +0800 (CST)
-Received: from mail02.huawei.com (unknown [7.182.16.47])
-	by mail.maildlp.com (Postfix) with ESMTP id 38F441402CE
-	for <lkmm@lists.linux.dev>; Fri, 20 Sep 2024 04:30:54 +0800 (CST)
-Received: from [10.81.207.148] (unknown [10.81.207.148])
-	by APP1 (Coremail) with SMTP id LxC2BwAXqTDsiexm4cs+AQ--.1103S2;
-	Thu, 19 Sep 2024 21:30:53 +0100 (CET)
-Message-ID: <abf4a899-e53e-41ac-91d6-1865ffeff5c6@huaweicloud.com>
-Date: Thu, 19 Sep 2024 22:30:34 +0200
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huaweicloud.com
+Received: from mail.maildlp.com (unknown [172.18.186.29])
+	by frasgout11.his.huawei.com (SkyGuard) with ESMTP id 4X93mf3RYjz9v7Hp
+	for <lkmm@lists.linux.dev>; Fri, 20 Sep 2024 15:24:34 +0800 (CST)
+Received: from mail02.huawei.com (unknown [7.182.16.27])
+	by mail.maildlp.com (Postfix) with ESMTP id 423F3140F78
+	for <lkmm@lists.linux.dev>; Fri, 20 Sep 2024 15:44:09 +0800 (CST)
+Received: from [10.45.149.49] (unknown [10.45.149.49])
+	by APP2 (Coremail) with SMTP id GxC2BwAHt8e6J+1m+mBJAQ--.61459S2;
+	Fri, 20 Sep 2024 08:44:08 +0100 (CET)
+Message-ID: <16c2aba7-212d-4612-8cea-50c64626d8f3@huaweicloud.com>
+Date: Fri, 20 Sep 2024 09:43:52 +0200
 Precedence: bulk
 X-Mailing-List: lkmm@lists.linux.dev
 List-Id: <lkmm.lists.linux.dev>
@@ -34,6 +34,7 @@ MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [RFC PATCH 1/4] hazptr: Add initial implementation of hazard
  pointers
+From: Jonas Oberhauser <jonas.oberhauser@huaweicloud.com>
 To: Jann Horn <jannh@google.com>, Boqun Feng <boqun.feng@gmail.com>,
  "Paul E. McKenney" <paulmck@kernel.org>
 Cc: linux-kernel@vger.kernel.org, rcu@vger.kernel.org, linux-mm@kvack.org,
@@ -54,160 +55,112 @@ Cc: linux-kernel@vger.kernel.org, rcu@vger.kernel.org, linux-mm@kvack.org,
 References: <20240917143402.930114-1-boqun.feng@gmail.com>
  <20240917143402.930114-2-boqun.feng@gmail.com>
  <CAG48ez0VN8oZcqhdzkWQgNv6bwUN=MUu5EacLg5iPvMQL+R-Qg@mail.gmail.com>
-From: Jonas Oberhauser <jonas.oberhauser@huaweicloud.com>
-In-Reply-To: <CAG48ez0VN8oZcqhdzkWQgNv6bwUN=MUu5EacLg5iPvMQL+R-Qg@mail.gmail.com>
+ <abf4a899-e53e-41ac-91d6-1865ffeff5c6@huaweicloud.com>
+In-Reply-To: <abf4a899-e53e-41ac-91d6-1865ffeff5c6@huaweicloud.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID:LxC2BwAXqTDsiexm4cs+AQ--.1103S2
-X-Coremail-Antispam: 1UD129KBjvJXoWxur18XrW3urWxZw4ftFyDtrb_yoWrAF48pr
-	WUKF1jyF4vywn2k34DZw42q3s7Gr1fZFy5G3s5K34UA3y5uF1SvFy3KrWa9FWkur4vyw10
-	vrsxZas7tr98JFJanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+X-CM-TRANSID:GxC2BwAHt8e6J+1m+mBJAQ--.61459S2
+X-Coremail-Antispam: 1UD129KBjvJXoWxur15GryfGF17Kw43Kr4xXrb_yoW5AF13pr
+	y8tF4UJryDJr1fAw1UXr1UX34UAr13J3WUJrn5WFyUJFWxGr1Igr1UXr1jgr1DAr4kJr1U
+	tr1UXr9xZry5XrDanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
 	9KBjDU0xBIdaVrnRJUUUvYb4IE77IF4wAFF20E14v26rWj6s0DM7CY07I20VC2zVCF04k2
 	6cxKx2IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4
 	vEj48ve4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Jr0_JF4l84ACjcxK6xIIjxv20xvEc7Cj
-	xVAFwI0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW8JVWxJwA2z4x0Y4vEx4A2jsIEc7CjxV
-	AFwI0_Gr1j6F4UJwAS0I0E0xvYzxvE52x082IY62kv0487Mc02F40EFcxC0VAKzVAqx4xG
-	6I80ewAv7VC0I7IYx2IY67AKxVWUJVWUGwAv7VC2z280aVAFwI0_Jr0_Gr1lOx8S6xCaFV
+	xVAFwI0_Cr0_Gr1UM28EF7xvwVC2z280aVAFwI0_Jr0_Gr1l84ACjcxK6I8E87Iv6xkF7I
+	0E14v26r4j6r4UJwAS0I0E0xvYzxvE52x082IY62kv0487Mc02F40EFcxC0VAKzVAqx4xG
+	6I80ewAv7VC0I7IYx2IY67AKxVWUGVWUXwAv7VC2z280aVAFwI0_Jr0_Gr1lOx8S6xCaFV
 	Cjc4AY6r1j6r4UM4x0Y48IcVAKI48JM4IIrI8v6xkF7I0E8cxan2IY04v7MxkF7I0En4kS
 	14v26r4a6rW5MxAIw28IcxkI7VAKI48JMxC20s026xCaFVCjc4AY6r1j6r4UMI8I3I0E5I
 	8CrVAFwI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE17CEb7AF67AKxVW8ZVWr
 	XwCIc40Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r1j6r1xMIIF0xvE2Ix0cI8IcVCY1x
-	0267AKxVW8JVWxJwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF4lIxAIcVC2z280aVAFwI0_
-	Gr0_Cr1lIxAIcVC2z280aVCY1x0267AKxVW8Jr0_Cr1UYxBIdaVFxhVjvjDU0xZFpf9x07
-	jxCztUUUUU=
+	0267AKxVWxJVW8Jr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v2
+	6r1j6r4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Gr0_Gr1UYxBIdaVFxhVjvjDU0xZFpf9x07
+	jzE__UUUUU=
 X-CM-SenderInfo: 5mrqt2oorev25kdx2v3u6k3tpzhluzxrxghudrp/
 
 
 
-
-Am 9/19/2024 um 2:12 AM schrieb Jann Horn:
-> On Tue, Sep 17, 2024 at 4:33 PM Boqun Feng <boqun.feng@gmail.com> wrote:
->> Hazard pointers [1] provide a way to dynamically distribute refcounting
->> and can be used to improve the scalability of refcounting without
->> significant space cost.
+Am 9/19/2024 um 10:30 PM schrieb Jonas Oberhauser:
 > 
->> +static inline void *__hazptr_tryprotect(hazptr_t *hzp,
->> +                                       void *const *p,
->> +                                       unsigned long head_offset)
->> +{
->> +       void *ptr;
->> +       struct callback_head *head;
->> +
->> +       ptr = READ_ONCE(*p);
->> +
->> +       if (ptr == NULL)
->> +               return NULL;
->> +
->> +       head = (struct callback_head *)(ptr + head_offset);
->> +
->> +       WRITE_ONCE(*hzp, head);
->> +       smp_mb();
->> +
->> +       ptr = READ_ONCE(*p); // read again
->> +
->> +       if (ptr + head_offset != head) { // pointer changed
->> +               WRITE_ONCE(*hzp, NULL);  // reset hazard pointer
->> +               return NULL;
->> +       } else
->> +               return ptr;
->> +}
 > 
-> I got nerdsniped by the Plumbers talk. So, about that smp_mb()...
 > 
-> I think you should be able to avoid the smp_mb() using relaxed atomics
-> (on architectures that have those), at the cost of something like a
-> cmpxchg-acquire sandwiched between a load-acquire and a relaxed load?
-> I'm not sure how their cost compares to an smp_mb() though.
+> Am 9/19/2024 um 2:12 AM schrieb Jann Horn:
+>> On Tue, Sep 17, 2024 at 4:33 PM Boqun Feng <boqun.feng@gmail.com> wrote:
+>>> Hazard pointers [1] provide a way to dynamically distribute refcounting
+>>> and can be used to improve the scalability of refcounting without
+>>> significant space cost.
+>>
+>>> +static inline void *__hazptr_tryprotect(hazptr_t *hzp,
+>>> +                                       void *const *p,
+>>> +                                       unsigned long head_offset)
+>>> +{
+>>> +       void *ptr;
+>>> +       struct callback_head *head;
+>>> +
+>>> +       ptr = READ_ONCE(*p);
+>>> +
+>>> +       if (ptr == NULL)
+>>> +               return NULL;
+>>> +
+>>> +       head = (struct callback_head *)(ptr + head_offset);
+>>> +
+>>> +       WRITE_ONCE(*hzp, head);
+>>> +       smp_mb();
+>>> +
+>>> +       ptr = READ_ONCE(*p); // read again
+>>> +
+>>> +       if (ptr + head_offset != head) { // pointer changed
+>>> +               WRITE_ONCE(*hzp, NULL);  // reset hazard pointer
+>>> +               return NULL;
+>>> +       } else
+>>> +               return ptr;
+>>> +}
+>>
+>> I got nerdsniped by the Plumbers talk. So, about that smp_mb()...
+>>
+>> I think you should be able to avoid the smp_mb() using relaxed atomics
+>> (on architectures that have those), at the cost of something like a
+>> cmpxchg-acquire sandwiched between a load-acquire and a relaxed load?
+>> I'm not sure how their cost compares to an smp_mb() though.
+> 
+> 
+> 
+> We have done a similar scheme before, and on some architectures (not 
+> x86) the RMW is slightly cheaper than the mb.
+> 
+> Your reasoning is a bit simplified because it seems to assume a stronger 
+> concept of ordering than LKMM has, but even with LKMM's ordering your 
+> code seems fine.
+> 
+> I feel it can even be simplified a little, the hazard bit does not seem 
+> necessary.
+> 
+> Assuming atomic operations for everything racy, relaxed unless stated 
+> otherwise:
+> 
+> (R)eader:
+> 
+>     old = read p // I don't think this needs acq, because of address 
+> dependencies (*)
+>     haz ||=_acq old
+>     if (read p != old) retry;
 
+I realized before going to bed that I copied a subtle mistake here from 
+Jann's code, we need an address dependency from this read, or it is not 
+ABA safe.
+This can be done with the small detour that Boqun used:
 
-
-We have done a similar scheme before, and on some architectures (not 
-x86) the RMW is slightly cheaper than the mb.
-
-Your reasoning is a bit simplified because it seems to assume a stronger 
-concept of ordering than LKMM has, but even with LKMM's ordering your 
-code seems fine.
-
-I feel it can even be simplified a little, the hazard bit does not seem 
-necessary.
-
-Assuming atomic operations for everything racy, relaxed unless stated 
-otherwise:
-
-(R)eader:
-
-    old = read p // I don't think this needs acq, because of address 
+      head = read p // I don't think this needs acq, because of address 
 dependencies (*)
-    haz ||=_acq old
-    if (read p != old) retry;
-    *old
-
-(W)riter:
-
-    p =_??? ... // assuming we don't set it to null this needs a rel
-    --- mb ---
-    haz ||= 0
-    while (read_acq haz == old) retry;
-    delete old
+      haz ||=_acq head
+      old = read p // again
+      if (head != old) retry;
+      barrier(); // ensure compiler does not use its knowledge that head 
+== old to do *head instead!
+      *old // definitely use the second read pointer so hardware can't 
+speculatively dereference this before the second read!
 
 
-In order to get a use-after-free, both of the  R:read p  need to read 
-before  W:p = ... , so because of the W:mb, they execute before  W:haz||=0 .
-
-Also, for the use-after-free,  W:read_acq haz  needs to read before (the 
-write part of)  R:haz||=_acq old .
-
-
-Then the  W:haz ||= 0  also needs to read before (the write part of) 
-R:haz||=_acq old  because of coherence on the same location.
-
-Since both of them are atomic RMW, the  W:haz||= 0  also needs to write 
-before (the write part of)  R:haz||=_acq old , and in the absence of 
-non-RMW writes (so assuming no thread will just store to the hazard 
-pointer), this implies that the latter reads-from an rmw-sequence-later 
-store than  W:haz||=0 , which therefore executes before  R:haz||=_acq old .
-
-But because of the acquire barrier,  R:haz||=_acq old  executes before 
-the second  R:read p .
-
-
-This gives a cycle
-    (2nd)R:read p  ->xb  W:haz||=0  ->xb  R:haz||=_acq  ->xb  (2nd)R:read p
-
-and therefore is forbidden.
-
-Note that in this argument, the two  R:read p  are not necessarily 
-reading from the same store. Because of ABA, it can happen that they 
-read from distinct stores and see the same value.
-
-It does require clearing hazard pointers with an RMW like atomic_and(0) 
-(**). The combination of the two RMW (for setting & clearing the hazard 
-pointer) might in total be slower again than an mb.
-
-
-(I took the liberty to add an acquire barrier in the writer's while loop 
-for the case where we read from the (not shown) release store of the 
-reader that clears the hazard pointer. It's arguable whether that acq is 
-needed since one could argue that a delete is a kind of store, in which 
-case control dependency would handle it.)
-
-have fun,
+Have a good time,
    jonas
-
-
-(*
-   you talk about sandwiching, and the data dependency does guarantee 
-some weaker form of sandwiching than the acq, but I don't think 
-sandwiching is required at all. If you happened to be able to set the 
-hazard pointer before reading the pointer, that would just extend the 
-protected area, wouldn't it?
-)
-
-(**
-I think if you clear the pointer with a store, the hazard bit does not 
-help. You could be overwriting the hazard bit, and the RMWs that set the 
-hazard bit might never propagate to your CPU.
-
-Also in your code you probably meant to clear the whole hazard pointer 
-in the retry code of the reader, not just the hazard bit.)
 

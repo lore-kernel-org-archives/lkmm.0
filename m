@@ -1,166 +1,271 @@
 Received: from frasgout11.his.huawei.com (frasgout11.his.huawei.com [14.137.139.23])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37400487AE
-	for <lkmm@lists.linux.dev>; Fri, 20 Sep 2024 07:44:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEF55143894
+	for <lkmm@lists.linux.dev>; Fri, 20 Sep 2024 12:23:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=14.137.139.23
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726818261; cv=none; b=NPp+hB7eRAibao61j1nlC1HYSA+oSEcclc75pVAt9dON1vS4/JmOEtqgu60jzyLKmP9EcGoRZISrRu8CwTi9bqL+dag5Pys+GoqzE9k7oGAOs0eMWa0McYqVvYG7GrT/bJ1C3DMRdQgpQ1I+wMQIY96JoSDVORn7lffP9G7dMGk=
+	t=1726835026; cv=none; b=q6m3Nl60N2errb0wTrVX7+ocRh4Rdmxl7Zuxh5+o6wwTf+aCGdYKwUvfTbJfJm/c49J7kaTDCCzyixxrCO/brLbr/sxpQerzokWg73RMVqHEJTVZm2GG98VtQKOluXxxjQErba+XRcx5WVeZW3nnVAm1IHChdtZO9xhPXKe6vzU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726818261; c=relaxed/simple;
-	bh=YWSUNT3mvy5KQhGTIciRDN7UKP2afgrsJvQq8zmHzK4=;
-	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
-	 In-Reply-To:Content-Type; b=Ymj8DcvSzeELrl2oQnou2CxfLR8+Ow6aIClHxjXPHwQJER2Aw5r0J3J4uzBEWl4YcZJYetjSG0HfZ1iN6WLTaTPLmXYHnZEJL2DhnSXtYTTal+gttvTN+3WNmbXhbeYpsoqTcob0VD7HMDPM+cdsenHvX2PZunYII7lJsv/sBcE=
+	s=arc-20240116; t=1726835026; c=relaxed/simple;
+	bh=1qm4nlLhoKRefDq20rEYZTzq+Mqtn0wRHas14hqmKyM=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=JcZUGgiJDqivcS1eHwkpMpYyBcg+HFSbzHgLQ/KWPMXStVijSpWh7VUu1nXervF0x7zI2BeD85S56sRFRc41fQX+oB2MzCBJjd/uMoq5swGwclDjL1AuRSWaJeNEZbf0RLp1tQCMmBDmamAslG7gBuCpmKfWOQ7APm4/p4U0UFI=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=huaweicloud.com; spf=pass smtp.mailfrom=huaweicloud.com; arc=none smtp.client-ip=14.137.139.23
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=huaweicloud.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huaweicloud.com
-Received: from mail.maildlp.com (unknown [172.18.186.29])
-	by frasgout11.his.huawei.com (SkyGuard) with ESMTP id 4X93mf3RYjz9v7Hp
-	for <lkmm@lists.linux.dev>; Fri, 20 Sep 2024 15:24:34 +0800 (CST)
-Received: from mail02.huawei.com (unknown [7.182.16.27])
-	by mail.maildlp.com (Postfix) with ESMTP id 423F3140F78
-	for <lkmm@lists.linux.dev>; Fri, 20 Sep 2024 15:44:09 +0800 (CST)
-Received: from [10.45.149.49] (unknown [10.45.149.49])
-	by APP2 (Coremail) with SMTP id GxC2BwAHt8e6J+1m+mBJAQ--.61459S2;
-	Fri, 20 Sep 2024 08:44:08 +0100 (CET)
-Message-ID: <16c2aba7-212d-4612-8cea-50c64626d8f3@huaweicloud.com>
-Date: Fri, 20 Sep 2024 09:43:52 +0200
+Received: from mail.maildlp.com (unknown [172.18.186.51])
+	by frasgout11.his.huawei.com (SkyGuard) with ESMTP id 4X99z42r1jz9v7Hl
+	for <lkmm@lists.linux.dev>; Fri, 20 Sep 2024 20:04:00 +0800 (CST)
+Received: from mail02.huawei.com (unknown [7.182.16.47])
+	by mail.maildlp.com (Postfix) with ESMTP id D4251140391
+	for <lkmm@lists.linux.dev>; Fri, 20 Sep 2024 20:23:34 +0800 (CST)
+Received: from [10.48.209.182] (unknown [10.48.209.182])
+	by APP1 (Coremail) with SMTP id LxC2BwBX6C87ae1mhrRJAQ--.58087S2;
+	Fri, 20 Sep 2024 13:23:34 +0100 (CET)
+Message-ID: <54cdab30-4135-7051-6469-25bfa8dfbfb7@huaweicloud.com>
+Date: Fri, 20 Sep 2024 14:23:22 +0200
 Precedence: bulk
 X-Mailing-List: lkmm@lists.linux.dev
 List-Id: <lkmm.lists.linux.dev>
 List-Subscribe: <mailto:lkmm+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:lkmm+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH 1/4] hazptr: Add initial implementation of hazard
- pointers
-From: Jonas Oberhauser <jonas.oberhauser@huaweicloud.com>
-To: Jann Horn <jannh@google.com>, Boqun Feng <boqun.feng@gmail.com>,
- "Paul E. McKenney" <paulmck@kernel.org>
-Cc: linux-kernel@vger.kernel.org, rcu@vger.kernel.org, linux-mm@kvack.org,
- lkmm@vger.kernel.org, Frederic Weisbecker <frederic@kernel.org>,
- Neeraj Upadhyay <neeraj.upadhyay@kernel.org>,
- Joel Fernandes <joel@joelfernandes.org>,
- Josh Triplett <josh@joshtriplett.org>, Uladzislau Rezki <urezki@gmail.com>,
- Steven Rostedt <rostedt@goodmis.org>,
- Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
- Lai Jiangshan <jiangshanlai@gmail.com>, Zqiang <qiang.zhang1211@gmail.com>,
- Peter Zijlstra <peterz@infradead.org>, Ingo Molnar <mingo@redhat.com>,
- Will Deacon <will@kernel.org>, Waiman Long <longman@redhat.com>,
- Mark Rutland <mark.rutland@arm.com>, Thomas Gleixner <tglx@linutronix.de>,
- Kent Overstreet <kent.overstreet@gmail.com>,
- Linus Torvalds <torvalds@linux-foundation.org>,
- Vlastimil Babka <vbabka@suse.cz>, maged.michael@gmail.com,
- Neeraj Upadhyay <neeraj.upadhyay@amd.com>, lkmm@lists.linux.dev
-References: <20240917143402.930114-1-boqun.feng@gmail.com>
- <20240917143402.930114-2-boqun.feng@gmail.com>
- <CAG48ez0VN8oZcqhdzkWQgNv6bwUN=MUu5EacLg5iPvMQL+R-Qg@mail.gmail.com>
- <abf4a899-e53e-41ac-91d6-1865ffeff5c6@huaweicloud.com>
-In-Reply-To: <abf4a899-e53e-41ac-91d6-1865ffeff5c6@huaweicloud.com>
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.13.0
+Subject: Re: [PATCH v3 4/5] tools/memory-model: Switch to softcoded herd7 tags
+Content-Language: en-US
+To: Jonas Oberhauser <jonas.oberhauser@huaweicloud.com>, paulmck@kernel.org
+Cc: stern@rowland.harvard.edu, parri.andrea@gmail.com, will@kernel.org,
+ peterz@infradead.org, boqun.feng@gmail.com, npiggin@gmail.com,
+ dhowells@redhat.com, j.alglave@ucl.ac.uk, luc.maranget@inria.fr,
+ akiyks@gmail.com, dlustig@nvidia.com, joel@joelfernandes.org,
+ urezki@gmail.com, quic_neeraju@quicinc.com, frederic@kernel.org,
+ linux-kernel@vger.kernel.org, lkmm@lists.linux.dev
+References: <20240919130634.298181-1-jonas.oberhauser@huaweicloud.com>
+ <20240919130634.298181-5-jonas.oberhauser@huaweicloud.com>
+From: Hernan Ponce de Leon <hernan.poncedeleon@huaweicloud.com>
+In-Reply-To: <20240919130634.298181-5-jonas.oberhauser@huaweicloud.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID:GxC2BwAHt8e6J+1m+mBJAQ--.61459S2
-X-Coremail-Antispam: 1UD129KBjvJXoWxur15GryfGF17Kw43Kr4xXrb_yoW5AF13pr
-	y8tF4UJryDJr1fAw1UXr1UX34UAr13J3WUJrn5WFyUJFWxGr1Igr1UXr1jgr1DAr4kJr1U
-	tr1UXr9xZry5XrDanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
-	9KBjDU0xBIdaVrnRJUUUvYb4IE77IF4wAFF20E14v26rWj6s0DM7CY07I20VC2zVCF04k2
-	6cxKx2IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4
-	vEj48ve4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Jr0_JF4l84ACjcxK6xIIjxv20xvEc7Cj
-	xVAFwI0_Cr0_Gr1UM28EF7xvwVC2z280aVAFwI0_Jr0_Gr1l84ACjcxK6I8E87Iv6xkF7I
-	0E14v26r4j6r4UJwAS0I0E0xvYzxvE52x082IY62kv0487Mc02F40EFcxC0VAKzVAqx4xG
-	6I80ewAv7VC0I7IYx2IY67AKxVWUGVWUXwAv7VC2z280aVAFwI0_Jr0_Gr1lOx8S6xCaFV
-	Cjc4AY6r1j6r4UM4x0Y48IcVAKI48JM4IIrI8v6xkF7I0E8cxan2IY04v7MxkF7I0En4kS
-	14v26r4a6rW5MxAIw28IcxkI7VAKI48JMxC20s026xCaFVCjc4AY6r1j6r4UMI8I3I0E5I
-	8CrVAFwI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE17CEb7AF67AKxVW8ZVWr
-	XwCIc40Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r1j6r1xMIIF0xvE2Ix0cI8IcVCY1x
-	0267AKxVWxJVW8Jr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v2
-	6r1j6r4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Gr0_Gr1UYxBIdaVFxhVjvjDU0xZFpf9x07
-	jzE__UUUUU=
-X-CM-SenderInfo: 5mrqt2oorev25kdx2v3u6k3tpzhluzxrxghudrp/
+Content-Transfer-Encoding: 7bit
+X-CM-TRANSID:LxC2BwBX6C87ae1mhrRJAQ--.58087S2
+X-Coremail-Antispam: 1UD129KBjvJXoW3ArWruF4xXF4UGw1xtF1rXrb_yoWfXF1xpr
+	s3JrZrKr4UXw1UJ34kGr4UC3WrWw40y3yUGr4kt34rZr12krs8A3W8Gr1vqryUJryUtw48
+	Xr12gFyqkr4UJrJanT9S1TB71UUUUUDqnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+	9KBjDU0xBIdaVrnRJUUUBY14x267AKxVW5JVWrJwAFc2x0x2IEx4CE42xK8VAvwI8IcIk0
+	rVWrJVCq3wAFIxvE14AKwVWUJVWUGwA2ocxC64kIII0Yj41l84x0c7CEw4AK67xGY2AK02
+	1l84ACjcxK6xIIjxv20xvE14v26r1j6r1xM28EF7xvwVC0I7IYx2IY6xkF7I0E14v26r4j
+	6F4UM28EF7xvwVC2z280aVAFwI0_Gr0_Cr1l84ACjcxK6I8E87Iv6xkF7I0E14v26r4j6r
+	4UJwAS0I0E0xvYzxvE52x082IY62kv0487Mc02F40EFcxC0VAKzVAqx4xG6I80ewAv7VC0
+	I7IYx2IY67AKxVWUGVWUXwAv7VC2z280aVAFwI0_Jr0_Gr1lOx8S6xCaFVCjc4AY6r1j6r
+	4UM4x0Y48IcVAKI48JM4x0x7Aq67IIx4CEVc8vx2IErcIFxwACI402YVCY1x02628vn2kI
+	c2xKxwCYjI0SjxkI62AI1cAE67vIY487MxkF7I0En4kS14v26r4a6rW5MxAIw28IcxkI7V
+	AKI48JMxC20s026xCaFVCjc4AY6r1j6r4UMI8I3I0E5I8CrVAFwI0_Jr0_Jr4lx2IqxVCj
+	r7xvwVAFwI0_JrI_JrWlx4CE17CEb7AF67AKxVW8ZVWrXwCIc40Y0x0EwIxGrwCI42IY6x
+	IIjxv20xvE14v26r1j6r1xMIIF0xvE2Ix0cI8IcVCY1x0267AKxVW8JVWxJwCI42IY6xAI
+	w20EY4v20xvaj40_Jr0_JF4lIxAIcVC2z280aVAFwI0_Jr0_Gr1lIxAIcVC2z280aVCY1x
+	0267AKxVW8JVW8JrUvcSsGvfC2KfnxnUUI43ZEXa7sRRKZX5UUUUU==
+X-CM-SenderInfo: xkhu0tnqos00pfhgvzhhrqqx5xdzvxpfor3voofrz/
 
+On 9/19/2024 3:06 PM, Jonas Oberhauser wrote:
+> A new version of Herd7 provides a -lkmmv1 switch which overrides the old herd7
+> behavior of simply ignoring any softcoded tags in the .def and .bell files. We
+> port LKMM to this version of Herd7 by providing the switch in linux-kernel.cfg
+> and reporting an error if the LKMM is used without this switch.
 
+The changes to herd7 are ready to be merged.
 
-Am 9/19/2024 um 10:30 PM schrieb Jonas Oberhauser:
-> 
-> 
-> 
-> Am 9/19/2024 um 2:12 AM schrieb Jann Horn:
->> On Tue, Sep 17, 2024 at 4:33 PM Boqun Feng <boqun.feng@gmail.com> wrote:
->>> Hazard pointers [1] provide a way to dynamically distribute refcounting
->>> and can be used to improve the scalability of refcounting without
->>> significant space cost.
->>
->>> +static inline void *__hazptr_tryprotect(hazptr_t *hzp,
->>> +                                       void *const *p,
->>> +                                       unsigned long head_offset)
->>> +{
->>> +       void *ptr;
->>> +       struct callback_head *head;
->>> +
->>> +       ptr = READ_ONCE(*p);
->>> +
->>> +       if (ptr == NULL)
->>> +               return NULL;
->>> +
->>> +       head = (struct callback_head *)(ptr + head_offset);
->>> +
->>> +       WRITE_ONCE(*hzp, head);
->>> +       smp_mb();
->>> +
->>> +       ptr = READ_ONCE(*p); // read again
->>> +
->>> +       if (ptr + head_offset != head) { // pointer changed
->>> +               WRITE_ONCE(*hzp, NULL);  // reset hazard pointer
->>> +               return NULL;
->>> +       } else
->>> +               return ptr;
->>> +}
->>
->> I got nerdsniped by the Plumbers talk. So, about that smp_mb()...
->>
->> I think you should be able to avoid the smp_mb() using relaxed atomics
->> (on architectures that have those), at the cost of something like a
->> cmpxchg-acquire sandwiched between a load-acquire and a relaxed load?
->> I'm not sure how their cost compares to an smp_mb() though.
-> 
-> 
-> 
-> We have done a similar scheme before, and on some architectures (not 
-> x86) the RMW is slightly cheaper than the mb.
-> 
-> Your reasoning is a bit simplified because it seems to assume a stronger 
-> concept of ordering than LKMM has, but even with LKMM's ordering your 
-> code seems fine.
-> 
-> I feel it can even be simplified a little, the hazard bit does not seem 
-> necessary.
-> 
-> Assuming atomic operations for everything racy, relaxed unless stated 
-> otherwise:
-> 
-> (R)eader:
-> 
->     old = read p // I don't think this needs acq, because of address 
-> dependencies (*)
->     haz ||=_acq old
->     if (read p != old) retry;
+     https://github.com/herd/herdtools7/pull/865
 
-I realized before going to bed that I copied a subtle mistake here from 
-Jann's code, we need an address dependency from this read, or it is not 
-ABA safe.
-This can be done with the small detour that Boqun used:
+I just asked Luc to put this on hold until this series is reviewed to be 
+sure no more changes are needed.
 
-      head = read p // I don't think this needs acq, because of address 
-dependencies (*)
-      haz ||=_acq head
-      old = read p // again
-      if (head != old) retry;
-      barrier(); // ensure compiler does not use its knowledge that head 
-== old to do *head instead!
-      *old // definitely use the second read pointer so hardware can't 
-speculatively dereference this before the second read!
+> 
+> To preserve the semantics of LKMM, we also softcode the Noreturn tag on atomic
+> RMW which do not return a value and define atomic_add_unless with an Mb tag in
+> linux-kernel.def.
+> 
+> We update the herd-representation.txt accordingly and clarify some of the
+> resulting combinations.
+> 
+> We also add a litmus test for atomic_add_unless which uncovered a bug in early
+> iterations of the Herd7 patch that implements the new switch.
+> 
+> (To be) Signed-off-by: Hernan Ponce de Leon <hernan.poncedeleon@huaweicloud.com>
 
+Signed-off-by: Hernan Ponce de Leon <hernan.poncedeleon@huaweicloud.com>
 
-Have a good time,
-   jonas
+> Signed-off by: Jonas Oberhauser <jonas.oberhauser@huaweicloud.com>
+> ---
+>   .../Documentation/herd-representation.txt     | 27 ++++++++++---------
+>   tools/memory-model/linux-kernel.bell          |  3 +++
+>   tools/memory-model/linux-kernel.cfg           |  1 +
+>   tools/memory-model/linux-kernel.def           | 18 +++++++------
+>   .../litmus-tests/add-unless-mb.litmus         | 27 +++++++++++++++++++
+>   5 files changed, 56 insertions(+), 20 deletions(-)
+>   create mode 100644 tools/memory-model/litmus-tests/add-unless-mb.litmus
+> 
+> diff --git a/tools/memory-model/Documentation/herd-representation.txt b/tools/memory-model/Documentation/herd-representation.txt
+> index ed988906f2b7..7ae1ff3d3769 100644
+> --- a/tools/memory-model/Documentation/herd-representation.txt
+> +++ b/tools/memory-model/Documentation/herd-representation.txt
+> @@ -18,6 +18,11 @@
+>   #
+>   # By convention, a blank line in a cell means "same as the preceding line".
+>   #
+> +# Note that the syntactic representation does not always match the sets and
+> +# relations in linux-kernel.cat, due to redefinitions in linux-kernel.bell and
+> +# lock.cat. For example, the po link between LKR and LKW is upgraded to an rmw
+> +# link, and W[acquire] are not included in the Acquire set.
+> +#
+>   # Disclaimer.  The table includes representations of "add" and "and" operations;
+>   # corresponding/identical representations of "sub", "inc", "dec" and "or", "xor",
+>   # "andnot" operations are omitted.
+> @@ -60,14 +65,13 @@
+>       ------------------------------------------------------------------------------
+>       |       RMW ops w/o return value |                                           |
+>       ------------------------------------------------------------------------------
+> -    |                     atomic_add | R*[noreturn] ->rmw W*[once]               |
+> +    |                     atomic_add | R*[noreturn] ->rmw W*[noreturn]           |
+>       |                     atomic_and |                                           |
+>       |                      spin_lock | LKR ->po LKW                              |
+>       ------------------------------------------------------------------------------
+>       |        RMW ops w/ return value |                                           |
+>       ------------------------------------------------------------------------------
+> -    |              atomic_add_return | F[mb] ->po R*[once]                       |
+> -    |                                |     ->rmw W*[once] ->po F[mb]             |
+> +    |              atomic_add_return | R*[mb] ->rmw W*[mb]                       |
+>       |               atomic_fetch_add |                                           |
+>       |               atomic_fetch_and |                                           |
+>       |                    atomic_xchg |                                           |
+> @@ -79,13 +83,13 @@
+>       |            atomic_xchg_relaxed |                                           |
+>       |                   xchg_relaxed |                                           |
+>       |    atomic_add_negative_relaxed |                                           |
+> -    |      atomic_add_return_acquire | R*[acquire] ->rmw W*[once]                |
+> +    |      atomic_add_return_acquire | R*[acquire] ->rmw W*[acquire]             |
+>       |       atomic_fetch_add_acquire |                                           |
+>       |       atomic_fetch_and_acquire |                                           |
+>       |            atomic_xchg_acquire |                                           |
+>       |                   xchg_acquire |                                           |
+>       |    atomic_add_negative_acquire |                                           |
+> -    |      atomic_add_return_release | R*[once] ->rmw W*[release]                |
+> +    |      atomic_add_return_release | R*[release] ->rmw W*[release]             |
+>       |       atomic_fetch_add_release |                                           |
+>       |       atomic_fetch_and_release |                                           |
+>       |            atomic_xchg_release |                                           |
+> @@ -94,17 +98,16 @@
+>       ------------------------------------------------------------------------------
+>       |            Conditional RMW ops |                                           |
+>       ------------------------------------------------------------------------------
+> -    |                 atomic_cmpxchg | On success: F[mb] ->po R*[once]           |
+> -    |                                |                 ->rmw W*[once] ->po F[mb] |
+> -    |                                | On failure: R*[once]                      |
+> +    |                 atomic_cmpxchg | On success: R*[mb] ->rmw W*[mb]           |
+> +    |                                | On failure: R*[mb]                        |
+>       |                        cmpxchg |                                           |
+>       |              atomic_add_unless |                                           |
+>       |         atomic_cmpxchg_relaxed | On success: R*[once] ->rmw W*[once]       |
+>       |                                | On failure: R*[once]                      |
+> -    |         atomic_cmpxchg_acquire | On success: R*[acquire] ->rmw W*[once]    |
+> -    |                                | On failure: R*[once]                      |
+> -    |         atomic_cmpxchg_release | On success: R*[once] ->rmw W*[release]    |
+> -    |                                | On failure: R*[once]                      |
+> +    |         atomic_cmpxchg_acquire | On success: R*[acquire] ->rmw W*[acquire] |
+> +    |                                | On failure: R*[acquire]                   |
+> +    |         atomic_cmpxchg_release | On success: R*[release] ->rmw W*[release] |
+> +    |                                | On failure: R*[release]                   |
+>       |                   spin_trylock | On success: LKR ->po LKW                  |
+>       |                                | On failure: LF                            |
+>       ------------------------------------------------------------------------------
+> diff --git a/tools/memory-model/linux-kernel.bell b/tools/memory-model/linux-kernel.bell
+> index 7c9ae48b9437..703028e5e091 100644
+> --- a/tools/memory-model/linux-kernel.bell
+> +++ b/tools/memory-model/linux-kernel.bell
+> @@ -94,3 +94,6 @@ let carry-dep = (data ; [~ Srcu-unlock] ; rfi)*
+>   let addr = carry-dep ; addr
+>   let ctrl = carry-dep ; ctrl
+>   let data = carry-dep ; data
+> +
+> +flag ~empty (if "lkmmv1" then 0 else _)
+> +  as this-model-requires-variant-higher-than-lkmmv0
+> diff --git a/tools/memory-model/linux-kernel.cfg b/tools/memory-model/linux-kernel.cfg
+> index 3c8098e99f41..a5855363259a 100644
+> --- a/tools/memory-model/linux-kernel.cfg
+> +++ b/tools/memory-model/linux-kernel.cfg
+> @@ -1,6 +1,7 @@
+>   macros linux-kernel.def
+>   bell linux-kernel.bell
+>   model linux-kernel.cat
+> +variant lkmmv1
+>   graph columns
+>   squished true
+>   showevents noregs
+> diff --git a/tools/memory-model/linux-kernel.def b/tools/memory-model/linux-kernel.def
+> index a12b96c547b7..4281572732bd 100644
+> --- a/tools/memory-model/linux-kernel.def
+> +++ b/tools/memory-model/linux-kernel.def
+> @@ -63,14 +63,14 @@ atomic_set(X,V) { WRITE_ONCE(*X,V); }
+>   atomic_read_acquire(X) smp_load_acquire(X)
+>   atomic_set_release(X,V) { smp_store_release(X,V); }
+>   
+> -atomic_add(V,X) { __atomic_op(X,+,V); }
+> -atomic_sub(V,X) { __atomic_op(X,-,V); }
+> -atomic_and(V,X) { __atomic_op(X,&,V); }
+> -atomic_or(V,X)  { __atomic_op(X,|,V); }
+> -atomic_xor(V,X) { __atomic_op(X,^,V); }
+> -atomic_inc(X)   { __atomic_op(X,+,1); }
+> -atomic_dec(X)   { __atomic_op(X,-,1); }
+> -atomic_andnot(V,X) { __atomic_op(X,&~,V); }
+> +atomic_add(V,X) { __atomic_op{noreturn}(X,+,V); }
+> +atomic_sub(V,X) { __atomic_op{noreturn}(X,-,V); }
+> +atomic_and(V,X) { __atomic_op{noreturn}(X,&,V); }
+> +atomic_or(V,X)  { __atomic_op{noreturn}(X,|,V); }
+> +atomic_xor(V,X) { __atomic_op{noreturn}(X,^,V); }
+> +atomic_inc(X)   { __atomic_op{noreturn}(X,+,1); }
+> +atomic_dec(X)   { __atomic_op{noreturn}(X,-,1); }
+> +atomic_andnot(V,X) { __atomic_op{noreturn}(X,&~,V); }
+>   
+>   atomic_add_return(V,X) __atomic_op_return{mb}(X,+,V)
+>   atomic_add_return_relaxed(V,X) __atomic_op_return{once}(X,+,V)
+> @@ -144,3 +144,5 @@ atomic_fetch_andnot(V,X) __atomic_fetch_op{mb}(X,&~,V)
+>   atomic_fetch_andnot_acquire(V,X) __atomic_fetch_op{acquire}(X,&~,V)
+>   atomic_fetch_andnot_release(V,X) __atomic_fetch_op{release}(X,&~,V)
+>   atomic_fetch_andnot_relaxed(V,X) __atomic_fetch_op{once}(X,&~,V)
+> +
+> +atomic_add_unless(X,V,W) __atomic_add_unless{mb}(X,V,W)
+> \ No newline at end of file
+> diff --git a/tools/memory-model/litmus-tests/add-unless-mb.litmus b/tools/memory-model/litmus-tests/add-unless-mb.litmus
+> new file mode 100644
+> index 000000000000..72f76ff3f59d
+> --- /dev/null
+> +++ b/tools/memory-model/litmus-tests/add-unless-mb.litmus
+> @@ -0,0 +1,27 @@
+> +C add_unless_mb
+> +
+> +(*
+> + * Result: Never
+> + *
+> + * This litmus test demonstrates that a successful atomic_add_unless
+> + * acts as a full memory barrier, ensuring that *x=1 propagates to P1
+> + * before P1 executes *x=2.
+> + *)
+> +
+> +{}
+> +
+> +P0(atomic_t *x, atomic_t *y, atomic_t *z)
+> +{
+> +	WRITE_ONCE(*x, 1);
+> +	int r0 = atomic_add_unless(z,1,5);
+> +	WRITE_ONCE(*y, 1);
+> +}
+> +
+> +P1(atomic_t *x, atomic_t *y)
+> +{
+> +	int r0 = READ_ONCE(*y);
+> +	if (r0 == 1)
+> +		WRITE_ONCE(*x, 2);
+> +}
+> +
+> +exists (1:r0=1 /\ x=1)
 

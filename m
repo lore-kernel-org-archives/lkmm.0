@@ -1,113 +1,137 @@
-Received: from mail-pj1-f45.google.com (mail-pj1-f45.google.com [209.85.216.45])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtpout.efficios.com (smtpout.efficios.com [167.114.26.122])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39E6A13C9B8
-	for <lkmm@lists.linux.dev>; Sat, 21 Sep 2024 21:07:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42B7A18E375
+	for <lkmm@lists.linux.dev>; Sun, 22 Sep 2024 07:48:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=167.114.26.122
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726952857; cv=none; b=tBvenwFLpiQjlK63eyy8cdiTO/WoiNo0nHMCA84+odowkJCMFAOhgXtnQn2GvJVLDKVBwGUXG80i7ELYK1w6uomZNSu67u+sx/oXqag42c06YxcYaxshI5Xt71Jm7uwnom9nJdux3jSFKyfJp0XgJiCiPYczrxMO0UVORX8BLu8=
+	t=1726991326; cv=none; b=aFHl2oRqo+pjlKfx6EkOrWblDHJdqHHDPF4PDvv7RAQt1ZTMkm+bZoi/GoE9xUEMt8j9MZ6jNYbvii6lCw8ffEXX5lDH0oOUD3D1dALPgX+vICvBX+BuitinGAg5RkYww6LYKldSprun5Bjwr8TuxRsQHH4U0cZy4gSPb8qoI/I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726952857; c=relaxed/simple;
-	bh=lXi96evv14+QCYlApm0+UJoBiXFJ8NjukYfGt9BkWKI=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Rxqcurucy3BlrussftHdqeikOLG+JmK0kmus64i+nZrMQD0MQVDiS0wE4duh08VRcAui1pf8gD0jhga2lfx1TM5xrjepBoHMsfugsa0VLyF/rACDHr7Rv4ybcfLUpNp4pHkyOQVu5LDx87qBVlOhlFuvzG4nzbw0BPsCd4gJ6vU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=gd9D4Zh6; arc=none smtp.client-ip=209.85.216.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1726991326; c=relaxed/simple;
+	bh=vj89NnEO3dY9ymXcJzbHblA4gmtlMtSWhJT/+5TqzD4=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=NbmDtgaJnPWvr7wNSRiFTWR/fIaB/HwLAvO4042l2+6Qn4POjdVMGlaxXxGq1PVF7uVtG6j1rRZ6qm72/wBtkDoGLJvMiYoecWZlWX78t7rwHFwmF8RRb+TW4TDYI/AmirMXRKAPe4FTlOra2z8yRYnYc4KQFvpsAiiUgqVAzds=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=efficios.com; spf=pass smtp.mailfrom=efficios.com; dkim=pass (2048-bit key) header.d=efficios.com header.i=@efficios.com header.b=ZdPaISEe; arc=none smtp.client-ip=167.114.26.122
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=efficios.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=efficios.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gd9D4Zh6"
-Received: by mail-pj1-f45.google.com with SMTP id 98e67ed59e1d1-2d88c0f8e79so2587004a91.3
-        for <lkmm@lists.linux.dev>; Sat, 21 Sep 2024 14:07:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1726952855; x=1727557655; darn=lists.linux.dev;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=hp63dP1vIuDmvqlV49DXovWDm3PAu6Ul2JWTXyenPI4=;
-        b=gd9D4Zh67eCR3N8mn1oNS2qzuPStfiN9V6T3DIFgRQYq3OLmikzSXYpBAYpKIYVq0z
-         KYvOijDSa9wX/7l7qOmDiLDdAqk286R2G6b8OnigcKzDojhAyav1dJCwjlV3GCP4BA5D
-         36LQR9qaJ5ZnlPWsrDK04uWTqfs3zVpL1v0N7U605/XwhA3Gyw+E8dQU9QuZVf+N/3jH
-         PMXD8RvOuy1hKZLQCLNk7LxCJd16p64Fley/d7dFOL5OPH1Iye3v/Wt32+mINVn8+Sj6
-         xGIDyrIOpWW0dQexukM7KRXibkwAwqYi4S0GXFYLRWrjsf98F3mXX7SM1xEwq9jOvdqD
-         3XZw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1726952855; x=1727557655;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=hp63dP1vIuDmvqlV49DXovWDm3PAu6Ul2JWTXyenPI4=;
-        b=MhsDeajnClC1j9BhBv9hZfIbOIV+PjeqICd+W2IzVE3WIxIZGN5GLNciwhdN16XKYT
-         YxO7UtZBrY+JntuPy+F9cqSuVcg1alLyOdtiMYjU1DYgVlImS5C4hqCihCHueEhfu7o/
-         e7oQ0Ml2sxd8RTU/hdXHrw6QgHFLHZcUB2VoANiUjhDTR+bNIuOFtlds/2mamfaemnDo
-         xXTFwM4qNmDvSKFbNrJagwUowclewxo+gYnBuM3wltEitKfcaitGbvYWnvq5kG1+MQdP
-         xpnSVPlv1NpN369fGpkVLHBe/A1atcSXdtkOZ4VWOPtpZZkQi7rWUonos0oGjgEpYfwI
-         bLHA==
-X-Forwarded-Encrypted: i=1; AJvYcCUxO5ztEjZ4IlNH1+IHlCIWO6p3P2ncV9t6Eot11uILmCp9C6MoFiaxYNeiGZjYt0skvZjY@lists.linux.dev
-X-Gm-Message-State: AOJu0YyE5jyjGFKYh7x9KwnY42nqk+0W5OZJccrmMXRyv6K4rPq+zc1f
-	9rTdEaXMFobIym641o+/hofTGDQ+YXuAvdcUuu+kSvYt1kDVOO4kLGbFUkgFloBdRjjaGX7hXnd
-	RV7Uz0RH3UG5mC7I7YMVM4lOfs94=
-X-Google-Smtp-Source: AGHT+IFPDomxth+vXXT4e8DSQaPpBIrEW3tjeUXSZGZ0lRBYZWDifbwG+csE5HvRoTEna3+xfdCTpG/AjzzHz8zXHdw=
-X-Received: by 2002:a17:90b:a4a:b0:2d2:453:12cb with SMTP id
- 98e67ed59e1d1-2dd80c02ad9mr10560062a91.2.1726952855430; Sat, 21 Sep 2024
- 14:07:35 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=efficios.com header.i=@efficios.com header.b="ZdPaISEe"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=efficios.com;
+	s=smtpout1; t=1726991322;
+	bh=vj89NnEO3dY9ymXcJzbHblA4gmtlMtSWhJT/+5TqzD4=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=ZdPaISEemDKOOHayARAO5nS+VbU1ofrn5bcbePIQOVWcLhZ4HhVZRYpeGk9HY/TSa
+	 lG//+kwIWsQbu1p+8lDZM+S1yEGkOs7iLaEAlvO8z8D/d5U4pBf9L9OJxglypYg2Xy
+	 H4a4tgsyF5gv3FevVw9uug7Y6J372T4QT0N5a9cbXblTwYXLljxQxJPesROpXNvg1Z
+	 rsvBuN133yFnn/Qj13GkUfvxEjuQwNn8yowXKnJCT5nEup+H4rsGDcMEZcWL9z9SIg
+	 zSlSSMyRsJc8Pm09Hv+L+prx9QeQmFvGTMj6gkFtjXXoZCjimnuBKdt3fOaZsGd8m+
+	 LMLteOSGKL61w==
+Received: from [172.17.2.162] (unknown [178.208.16.192])
+	by smtpout.efficios.com (Postfix) with ESMTPSA id 4XBJCX3vk2z1LPp;
+	Sun, 22 Sep 2024 03:48:40 -0400 (EDT)
+Message-ID: <8185fa8b-f6de-4bed-9fd1-73b72fc6d716@efficios.com>
+Date: Sun, 22 Sep 2024 09:47:56 +0200
 Precedence: bulk
 X-Mailing-List: lkmm@lists.linux.dev
 List-Id: <lkmm.lists.linux.dev>
 List-Subscribe: <mailto:lkmm+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:lkmm+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20240921164210.256278-1-mathieu.desnoyers@efficios.com>
-In-Reply-To: <20240921164210.256278-1-mathieu.desnoyers@efficios.com>
-From: Lai Jiangshan <jiangshanlai@gmail.com>
-Date: Sun, 22 Sep 2024 05:07:23 +0800
-Message-ID: <CAJhGHyBOwwBhCW96MyFGPVWed2ko37mLeHzta2BzL6T-TzUnmg@mail.gmail.com>
+User-Agent: Mozilla Thunderbird
 Subject: Re: [RFC PATCH 1/1] hpref: Hazard Pointers with Reference Counter
-To: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
-Cc: Boqun Feng <boqun.feng@gmail.com>, "Paul E. McKenney" <paulmck@kernel.org>, 
-	linux-kernel@vger.kernel.org, Will Deacon <will@kernel.org>, 
-	Peter Zijlstra <peterz@infradead.org>, Alan Stern <stern@rowland.harvard.edu>, 
-	John Stultz <jstultz@google.com>, Linus Torvalds <torvalds@linux-foundation.org>, 
-	Frederic Weisbecker <frederic@kernel.org>, Joel Fernandes <joel@joelfernandes.org>, 
-	Josh Triplett <josh@joshtriplett.org>, Uladzislau Rezki <urezki@gmail.com>, 
-	Steven Rostedt <rostedt@goodmis.org>, Zqiang <qiang.zhang1211@gmail.com>, 
-	Ingo Molnar <mingo@redhat.com>, Waiman Long <longman@redhat.com>, 
-	Mark Rutland <mark.rutland@arm.com>, Thomas Gleixner <tglx@linutronix.de>, 
-	Vlastimil Babka <vbabka@suse.cz>, maged.michael@gmail.com, Mateusz Guzik <mjguzik@gmail.com>, 
-	rcu@vger.kernel.org, linux-mm@kvack.org, lkmm@lists.linux.dev
-Content-Type: text/plain; charset="UTF-8"
+To: Lai Jiangshan <jiangshanlai@gmail.com>
+Cc: Boqun Feng <boqun.feng@gmail.com>, "Paul E. McKenney"
+ <paulmck@kernel.org>, linux-kernel@vger.kernel.org,
+ Will Deacon <will@kernel.org>, Peter Zijlstra <peterz@infradead.org>,
+ Alan Stern <stern@rowland.harvard.edu>, John Stultz <jstultz@google.com>,
+ Linus Torvalds <torvalds@linux-foundation.org>,
+ Frederic Weisbecker <frederic@kernel.org>,
+ Joel Fernandes <joel@joelfernandes.org>,
+ Josh Triplett <josh@joshtriplett.org>, Uladzislau Rezki <urezki@gmail.com>,
+ Steven Rostedt <rostedt@goodmis.org>, Zqiang <qiang.zhang1211@gmail.com>,
+ Ingo Molnar <mingo@redhat.com>, Waiman Long <longman@redhat.com>,
+ Mark Rutland <mark.rutland@arm.com>, Thomas Gleixner <tglx@linutronix.de>,
+ Vlastimil Babka <vbabka@suse.cz>, maged.michael@gmail.com,
+ Mateusz Guzik <mjguzik@gmail.com>, rcu@vger.kernel.org, linux-mm@kvack.org,
+ lkmm@lists.linux.dev, Neeraj Upadhyay <Neeraj.Upadhyay@amd.com>
+References: <20240921164210.256278-1-mathieu.desnoyers@efficios.com>
+ <CAJhGHyBOwwBhCW96MyFGPVWed2ko37mLeHzta2BzL6T-TzUnmg@mail.gmail.com>
+From: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+Content-Language: en-US
+In-Reply-To: <CAJhGHyBOwwBhCW96MyFGPVWed2ko37mLeHzta2BzL6T-TzUnmg@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-> +/*
-> + * hpref_hp_get: Obtain a reference to a stable object, protected either
-> + *               by hazard pointer (fast-path) or using reference
-> + *               counter as fall-back.
-> + */
-> +static inline
-> +bool hpref_hp_get(struct hpref_node **node_p, struct hpref_ctx *ctx)
-> +{
-> +       int cpu = rseq_current_cpu_raw();
-> +       struct hpref_percpu_slots *cpu_slots = rseq_percpu_ptr(hpref_percpu_slots, cpu);
-> +       struct hpref_slot *slot = &cpu_slots->slots[cpu_slots->current_slot];
-> +       bool use_refcount = false;
-> +       struct hpref_node *node, *node2;
-> +       unsigned int next_slot;
-> +
-> +retry:
-> +       node = uatomic_load(node_p, CMM_RELAXED);
-> +       if (!node)
-> +               return false;
-> +       /* Use rseq to try setting current slot hp. Store B. */
-> +       if (rseq_load_cbne_store__ptr(RSEQ_MO_RELAXED, RSEQ_PERCPU_CPU_ID,
-> +                               (intptr_t *) &slot->node, (intptr_t) NULL,
-> +                               (intptr_t) node, cpu)) {
-> +               slot = &cpu_slots->slots[HPREF_EMERGENCY_SLOT];
+On 2024-09-21 23:07, Lai Jiangshan wrote:
+>> +/*
+>> + * hpref_hp_get: Obtain a reference to a stable object, protected either
+>> + *               by hazard pointer (fast-path) or using reference
+>> + *               counter as fall-back.
+>> + */
+>> +static inline
+>> +bool hpref_hp_get(struct hpref_node **node_p, struct hpref_ctx *ctx)
+>> +{
+>> +       int cpu = rseq_current_cpu_raw();
+>> +       struct hpref_percpu_slots *cpu_slots = rseq_percpu_ptr(hpref_percpu_slots, cpu);
+>> +       struct hpref_slot *slot = &cpu_slots->slots[cpu_slots->current_slot];
+>> +       bool use_refcount = false;
+>> +       struct hpref_node *node, *node2;
+>> +       unsigned int next_slot;
+>> +
+>> +retry:
+>> +       node = uatomic_load(node_p, CMM_RELAXED);
+>> +       if (!node)
+>> +               return false;
+>> +       /* Use rseq to try setting current slot hp. Store B. */
+>> +       if (rseq_load_cbne_store__ptr(RSEQ_MO_RELAXED, RSEQ_PERCPU_CPU_ID,
+>> +                               (intptr_t *) &slot->node, (intptr_t) NULL,
+>> +                               (intptr_t) node, cpu)) {
+>> +               slot = &cpu_slots->slots[HPREF_EMERGENCY_SLOT];
+> 
+> Can @cpu be possibly changed? if it can, it seems @cpu and @cpu_slots
+> should be updated first.
 
-Can @cpu be possibly changed? if it can, it seems @cpu and @cpu_slots
-should be updated first.
+Indeed, if migration happens between rseq_current_cpu_raw() and
+execution of rseq_load_cbne_store__ptr(), it will cause this
+second operation to fail. This in turn could cause the reader
+to retry for a long time (possibly forever) until it finally
+migrates back to the original CPU. As you suggest, we should
+re-load cpu and cpu_slots after failure here. More specifically,
+we should re-load those when the rseq c.s. fails with -1, which
+means it was abort or there was a cpu number mismatch. If the
+rseq c.s. returns 1, this means the slot did not contain NULL,
+so all we need to do is move over to the next slot.
 
-> +               use_refcount = true;
-> +               /*
-> +                * This may busy-wait for another reader using the
-> +                * emergency slot to transition to refcount.
-> +                */
-> +               caa_cpu_relax();
-> +               goto retry;
-> +       }
+While applying your suggested change, I noticed that I can
+improve the fast-path by removing the notion of "current_slot"
+number, and thus remove increment of this hint from the
+fast path. The fast path will instead just scan all 8 slots
+trying to find a NULL one. This also lessens the odds that
+the fast-path must fallback to refcount in case of concurrent
+use. It provides a 50% performance improvement for the fast
+path with barrier/membarrier pairing.
+
+I've updated the https://github.com/compudj/userspace-rcu-dev/tree/hpref
+volatile feature branch with these changes. I'll give others some
+time to provide feedback on the overall idea before sending out
+an updated patch.
+
+Thanks for your feedback!
+
+Mathieu
+
+> 
+>> +               use_refcount = true;
+>> +               /*
+>> +                * This may busy-wait for another reader using the
+>> +                * emergency slot to transition to refcount.
+>> +                */
+>> +               caa_cpu_relax();
+>> +               goto retry;
+>> +       }
+
+-- 
+Mathieu Desnoyers
+EfficiOS Inc.
+https://www.efficios.com
+

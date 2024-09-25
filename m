@@ -1,36 +1,30 @@
-Received: from smtpout.efficios.com (smtpout.efficios.com [167.114.26.122])
+Received: from frasgout11.his.huawei.com (frasgout11.his.huawei.com [14.137.139.23])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E50FA1D1F54
-	for <lkmm@lists.linux.dev>; Wed, 25 Sep 2024 11:59:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=167.114.26.122
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAEE317966F
+	for <lkmm@lists.linux.dev>; Wed, 25 Sep 2024 12:03:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=14.137.139.23
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727265599; cv=none; b=G+VYzuma0atCxLhiOCNe9Mzs+a9mSNKZktzhxzv0vQPLIEswBH4j+pFIqJwIAQ1pOlD0Vl8fdTFUFaAPzCziWWJEbqTIcB8wGsvjfKWoxBxGnOTwGcZbw9yX/z2JPfUWVFvFmnIizx/Y5n2QIlWwuXsMMzlUFkH3r6dyRONyytk=
+	t=1727265789; cv=none; b=OQg5VVTHIn7IVzi44NmUslgy84zvTOeVC6nBd5DUsbwrsXeycT3/3AV482LFmh2Qy9xHc904JIDEp7CsBylOmkZkTzUC5ZSA3sHtEItmpjwpuqVmWHcYXw2ncfEx8eGikA4XSI0f1uyXue1NObZslzovWwg613yvC/2GNd+wle4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727265599; c=relaxed/simple;
-	bh=W7bIXX4Xs7iiomVoHGKvUg62JxTlQSuNM0jVYBKFCDo=;
+	s=arc-20240116; t=1727265789; c=relaxed/simple;
+	bh=1kaYRJyiAfAl7JXGJzyXeta5OCaKkLICDp1w+ZIW4mU=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=R5ZYqKTQKHuzQ/D1E0VhU+SttNkUAnt5oyNdVnowqtWJDnQRzNBhKT9n1+3MW4uV9MSt0OB3ia1w35FEYlbL5uPnvuVlCCffZP1kWipBbg5bFkmA/3RpOjAS9tOMRhEomKo4+5Fc7nx8/1x7kNKIXmRGbHwKDEUBEfxE2Bh3ljc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=efficios.com; spf=pass smtp.mailfrom=efficios.com; dkim=pass (2048-bit key) header.d=efficios.com header.i=@efficios.com header.b=rlH3JZhc; arc=none smtp.client-ip=167.114.26.122
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=efficios.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=efficios.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=efficios.com header.i=@efficios.com header.b="rlH3JZhc"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=efficios.com;
-	s=smtpout1; t=1727265597;
-	bh=W7bIXX4Xs7iiomVoHGKvUg62JxTlQSuNM0jVYBKFCDo=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=rlH3JZhcD0hlsfIxRSykteKfS6UP3flhZBIz8ovXjkbvQLJd+/79GkBaccpm5Fj2K
-	 FNuQRXMZWCvYk/pch6SL1JjRWEL41u8xgsaFaTUNEfUVx3VFzY/WHMs9uNHnCn2IOC
-	 mdmu7H83iP/OQYf+vQgD+VFtqo0GnaloIgd6RkjSCu07mPbU3mMsTNFCop69HDAGIf
-	 lK3iWa4juqjRlwR5+5VI2g+gk6Y3eAO8kZjP8rA68im2ODFtxgSSnGEpbf1c+CNY5Q
-	 FRAzb6JGfxHV5zpjz2I71YvCyrqt8vZxufganosyz82TgmUFiHRKqnNcuMAZn/d0nR
-	 hYqYFGRm/Qlog==
-Received: from [192.168.126.112] (unknown [147.75.204.251])
-	by smtpout.efficios.com (Postfix) with ESMTPSA id 4XDFdt4nT3z1M9F;
-	Wed, 25 Sep 2024 07:59:46 -0400 (EDT)
-Message-ID: <4167e6f5-4ff9-4aaa-915e-c1e692ac785a@efficios.com>
-Date: Wed, 25 Sep 2024 13:59:06 +0200
+	 In-Reply-To:Content-Type; b=K38J60ZaTmdo0fFFSIRV7p3GaWLMxUoYUvlU3TX5RmEitvXYCScXLnEqhbDv3C1C11WuZZ2zBWbQYRQzZzxzzBpQcRroW6QnSSprrPqexITc30M1PmQ1uOOMfYnNMu5g8VjC1rjBVgsApWTmmyOJDmVu8woCdiu+LmAvefUEMAM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=huaweicloud.com; spf=none smtp.mailfrom=huaweicloud.com; arc=none smtp.client-ip=14.137.139.23
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=huaweicloud.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=huaweicloud.com
+Received: from mail.maildlp.com (unknown [172.18.186.51])
+	by frasgout11.his.huawei.com (SkyGuard) with ESMTP id 4XDFGr0B6zz9v7Hq
+	for <lkmm@lists.linux.dev>; Wed, 25 Sep 2024 19:43:16 +0800 (CST)
+Received: from mail02.huawei.com (unknown [7.182.16.47])
+	by mail.maildlp.com (Postfix) with ESMTP id 60A6D14037F
+	for <lkmm@lists.linux.dev>; Wed, 25 Sep 2024 20:03:02 +0800 (CST)
+Received: from [10.81.208.14] (unknown [10.81.208.14])
+	by APP1 (Coremail) with SMTP id LxC2BwDHWDDn+_Nmp9abAQ--.40229S2;
+	Wed, 25 Sep 2024 13:03:01 +0100 (CET)
+Message-ID: <b3b9e8e8-a3b5-4398-92b9-ff46b8ec53a9@huaweicloud.com>
+Date: Wed, 25 Sep 2024 14:02:44 +0200
 Precedence: bulk
 X-Mailing-List: lkmm@lists.linux.dev
 List-Id: <lkmm.lists.linux.dev>
@@ -38,107 +32,111 @@ List-Subscribe: <mailto:lkmm+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:lkmm+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH 1/4] hazptr: Add initial implementation of hazard
- pointers
-To: Boqun Feng <boqun.feng@gmail.com>,
- Jonas Oberhauser <jonas.oberhauser@huaweicloud.com>
-Cc: linux-kernel@vger.kernel.org, rcu@vger.kernel.org, linux-mm@kvack.org,
- lkmm@lists.linux.dev, "Paul E. McKenney" <paulmck@kernel.org>,
+Subject: Re: [RFC PATCH 1/1] hpref: Hazard Pointers with Reference Counter
+To: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
+ Boqun Feng <boqun.feng@gmail.com>, "Paul E. McKenney" <paulmck@kernel.org>
+Cc: linux-kernel@vger.kernel.org, Will Deacon <will@kernel.org>,
+ Peter Zijlstra <peterz@infradead.org>, Alan Stern
+ <stern@rowland.harvard.edu>, John Stultz <jstultz@google.com>,
+ Linus Torvalds <torvalds@linux-foundation.org>,
  Frederic Weisbecker <frederic@kernel.org>,
- Neeraj Upadhyay <neeraj.upadhyay@kernel.org>,
  Joel Fernandes <joel@joelfernandes.org>,
  Josh Triplett <josh@joshtriplett.org>, Uladzislau Rezki <urezki@gmail.com>,
  Steven Rostedt <rostedt@goodmis.org>, Lai Jiangshan
  <jiangshanlai@gmail.com>, Zqiang <qiang.zhang1211@gmail.com>,
- Peter Zijlstra <peterz@infradead.org>, Ingo Molnar <mingo@redhat.com>,
- Will Deacon <will@kernel.org>, Waiman Long <longman@redhat.com>,
+ Ingo Molnar <mingo@redhat.com>, Waiman Long <longman@redhat.com>,
  Mark Rutland <mark.rutland@arm.com>, Thomas Gleixner <tglx@linutronix.de>,
- Kent Overstreet <kent.overstreet@gmail.com>,
- Linus Torvalds <torvalds@linux-foundation.org>,
  Vlastimil Babka <vbabka@suse.cz>, maged.michael@gmail.com,
- Neeraj Upadhyay <neeraj.upadhyay@amd.com>
-References: <20240917143402.930114-1-boqun.feng@gmail.com>
- <20240917143402.930114-2-boqun.feng@gmail.com>
- <55975a55-302f-4c45-bfcc-192a8a1242e9@huaweicloud.com>
- <ZvPfmAp_2mDkI3ss@boqun-archlinux>
- <f5aeeeda-c725-422a-9481-4795bd3ade0f@huaweicloud.com>
- <ZvPp4taB9uu__oSQ@boqun-archlinux>
-From: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
-Content-Language: en-US
-In-Reply-To: <ZvPp4taB9uu__oSQ@boqun-archlinux>
+ Mateusz Guzik <mjguzik@gmail.com>, rcu@vger.kernel.org, linux-mm@kvack.org,
+ lkmm@lists.linux.dev
+References: <20240921164210.256278-1-mathieu.desnoyers@efficios.com>
+ <e4721439-8cad-4134-8c07-84b6ecc69573@huaweicloud.com>
+ <48ae741e-98aa-49d9-b677-6c4f8fd1bcb0@efficios.com>
+ <07c9285f-44a1-486a-8390-0c63cefae35a@huaweicloud.com>
+ <38b04b86-1e85-40f0-8174-3c8ab29cbcaf@efficios.com>
+From: Jonas Oberhauser <jonas.oberhauser@huaweicloud.com>
+In-Reply-To: <38b04b86-1e85-40f0-8174-3c8ab29cbcaf@efficios.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID:LxC2BwDHWDDn+_Nmp9abAQ--.40229S2
+X-Coremail-Antispam: 1UD129KBjvJXoW7Ar4xJFW8ArykWw4xZFyDAwb_yoW8Kr1Upr
+	ZxKa4q9F4kGF4Fkr1xtw1UWFy0yF1ftFW5XFyvgr1fAa90gry0gr13tF98u3ZxA397JryU
+	tr4FqrZxZasxJa7anT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+	9KBjDU0xBIdaVrnRJUUUvYb4IE77IF4wAFF20E14v26rWj6s0DM7CY07I20VC2zVCF04k2
+	6cxKx2IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4
+	vEj48ve4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Jr0_JF4l84ACjcxK6xIIjxv20xvEc7Cj
+	xVAFwI0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW8JVWxJwA2z4x0Y4vEx4A2jsIEc7CjxV
+	AFwI0_Gr1j6F4UJwAS0I0E0xvYzxvE52x082IY62kv0487Mc02F40EFcxC0VAKzVAqx4xG
+	6I80ewAv7VC0I7IYx2IY67AKxVWUJVWUGwAv7VC2z280aVAFwI0_Jr0_Gr1lOx8S6xCaFV
+	Cjc4AY6r1j6r4UM4x0Y48IcVAKI48JM4IIrI8v6xkF7I0E8cxan2IY04v7MxkF7I0En4kS
+	14v26r4a6rW5MxAIw28IcxkI7VAKI48JMxC20s026xCaFVCjc4AY6r1j6r4UMI8I3I0E5I
+	8CrVAFwI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE17CEb7AF67AKxVW8ZVWr
+	XwCIc40Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r1j6r1xMIIF0xvE2Ix0cI8IcVCY1x
+	0267AKxVW8JVWxJwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF4lIxAIcVC2z280aVAFwI0_
+	Jr0_Gr1lIxAIcVC2z280aVCY1x0267AKxVW8Jr0_Cr1UYxBIdaVFxhVjvjDU0xZFpf9x07
+	jxCztUUUUU=
+X-CM-SenderInfo: 5mrqt2oorev25kdx2v3u6k3tpzhluzxrxghudrp/
 
-On 2024-09-25 12:45, Boqun Feng wrote:
-> On Wed, Sep 25, 2024 at 12:11:52PM +0200, Jonas Oberhauser wrote:
+
+
+Am 9/25/2024 um 1:36 PM schrieb Mathieu Desnoyers:
+> On 2024-09-25 12:06, Jonas Oberhauser wrote:
 >>
 >>
->> Am 9/25/2024 um 12:02 PM schrieb Boqun Feng:
->>> Hi Jonas,
+>> Am 9/25/2024 um 8:35 AM schrieb Mathieu Desnoyers:
+>>> On 2024-09-25 07:57, Jonas Oberhauser wrote:
+>>>> Hi Mathieu,
+>>
+>>>> I haven't read your code in detail but it seems to me you have an 
+>>>> ABA bug: as I explained elsewhere, you could read the same pointer 
+>>>> after ABA but you don't synchronize with the newer store that gave 
+>>>> you node2, leaving you to speculatively read stale values through 
+>>>> *ctx->hp.
+>>>> (I am assuming here that ctx->hp is essentially an out parameter 
+>>>> used to let the caller know which node got protected).
 >>>
->>> Of
->>> course, if we are really worried about compilers being too "smart"
+>>> The following change should fix it:
+>>>
+>>>       cmm_barrier();
+>>> -    node2 = uatomic_load(node_p, CMM_RELAXED);    /* Load A */
+>>> +    node2 = rcu_dereference(*node_p);    /* Load A */
+>>>
 >>
->> Ah, I see you know me better and better...
+>> I don't think this fixes it, because IIRC rcu_dereference relies on 
+>> the address dependency (which we don't have here) to provide ordering.
 >>
->>> we can always do the comparison in asm code, then compilers don't know
->>> anything of the equality between 'ptr' and 'head - head_offset'.
->> Yes, but then a simple compiler barrier between the comparison and returning
->> ptr would also do the trick, right? And maybe easier on the eyes.
+>> I would recommend either:
 >>
+>> -    ctx->hp = node;
+>> +    ctx->hp = node2;
+>>
+>> which fixes the problem under the perhaps too weak assumption that the 
+>> compiler doesn't use its knowledge that node==node2 to just undo this 
+>> fix, or more strictly,
 > 
-> The thing about putting a compiler barrier is that it will prevent all
-> compiler reorderings, and some of the reordering may contribute to
-> better codegen. (I know in this case, we have a smp_mb(), but still
-> compilers can move unrelated code upto the second load for optimization
-> purpose). Asm comparison is cheaper in this way. But TBH, compilers
-> should provide a way to compare pointer values without using the result
-> for pointer equality proof, if "convert to unsigned long" doesn't work,
-> some other ways should work.
-> 
-
-Based on Documentation/RCU/rcu_dereference.rst :
-
--       Be very careful about comparing pointers obtained from
-         rcu_dereference() against non-NULL values.  As Linus Torvalds
-         explained, if the two pointers are equal, the compiler could
-         substitute the pointer you are comparing against for the pointer
-         obtained from rcu_dereference().  For example::
-
-                 p = rcu_dereference(gp);
-                 if (p == &default_struct)
-                         do_default(p->a);
-
-         Because the compiler now knows that the value of "p" is exactly
-         the address of the variable "default_struct", it is free to
-         transform this code into the following::
-
-                 p = rcu_dereference(gp);
-                 if (p == &default_struct)
-                         do_default(default_struct.a);
-
-         On ARM and Power hardware, the load from "default_struct.a"
-         can now be speculated, such that it might happen before the
-         rcu_dereference().  This could result in bugs due to misordering.
-
-So I am not only concerned about compiler proofs here, as it appears
-that the speculation done by the CPU can also cause issues on some
-architectures.
-
-Thanks,
-
-Mathieu
-
-> Regards,
-> Boqun
+> As stated in Documentation/RCU/rcu_dereference.rst from the Linux
+> kernel, comparing the result of rcu_dereference against another
+> non-NULL pointer is discouraged, as you rightly point out.
 > 
 >>
->> Have fun,
->>     jonas
+>> +    ctx->hp = READ_ONCE(node2);
 >>
+>> which I believe makes sure that the value of node2 is used.
+> 
+> I am not entirely sure this extra READ_ONCE() would be sufficient
+> to prevent the compiler from making assumptions about the content
+> of node2 and thus use the result of the first load (node) instead.
+> It would also not suffice to prevent the CPU from speculatively
+> using the result of the first load to perform dependent loads AFAIU.
 
--- 
-Mathieu Desnoyers
-EfficiOS Inc.
-https://www.efficios.com
+The reason I think it should be sufficient is that it forces the 
+compiler to assume that since the comparison, the value of node2 might 
+have changed.
+Therefore, simply using the value of node at that point should be 
+unsound from the compiler's POV.
+
+But I'm not a compiler expert... So I definitely support uneasiness 
+about this construct :))
+
+jonas
 

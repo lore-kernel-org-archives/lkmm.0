@@ -1,36 +1,30 @@
-Received: from smtpout.efficios.com (smtpout.efficios.com [167.114.26.122])
+Received: from frasgout13.his.huawei.com (frasgout13.his.huawei.com [14.137.139.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 737031D5AB1
-	for <lkmm@lists.linux.dev>; Thu, 26 Sep 2024 06:16:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=167.114.26.122
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FBF314AD25
+	for <lkmm@lists.linux.dev>; Thu, 26 Sep 2024 15:54:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=14.137.139.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727331414; cv=none; b=aMO/I0FbLR+JQJaXrP37oWVx0/3ibzBZm6wcndv7wv15CVUOehfh8cX4/nOylqoUpTg8e5PYGV8TE7UI1zpX4qG1RUJ3WtUCssvBUXrnLWhhnVxt/fIKiZQx5oQsvSYxSYJ/wK6qf44WzAvTAPy9rfWiRNYdAnB4kjNOSXQjB7s=
+	t=1727366059; cv=none; b=CBfOnGyVfffqJO+9UHNa0ctvWkgv2YI/3yzwfndmX9rBLc5hXYc6ND8t9NNdGqgx7djHNOjOXpM+N2S13vWMnoU2iqjBT+dVmxKdiZ8SdCPV8jpQX+lvX1GnFm6fjzbmwULNqkyaBf2C5PkFQGrxOCh5IJPBnH6/boQa31Hz7Gs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727331414; c=relaxed/simple;
-	bh=2MryQ9y2u2yCeiP4+Tmgt60Q1T0o9VzZCCgVPAQ/SZU=;
-	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
-	 In-Reply-To:Content-Type; b=JzUrH+ipAFcqx3PUY1gy6N64OeHiX2+gdRCKHjoPMgc1J1jWJKob1J1Ecqc/7p5X6qh2bJKyLtdZvJCGx1fEp145yW0iBtaz22iLsra7XskNK+5fXLAFHJhHIlVoZcd7g062hnweWTOl+Zo0Izdyb+45xzxfZOkCtb6ZJ3vUuNA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=efficios.com; spf=pass smtp.mailfrom=efficios.com; dkim=pass (2048-bit key) header.d=efficios.com header.i=@efficios.com header.b=uaTffgAN; arc=none smtp.client-ip=167.114.26.122
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=efficios.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=efficios.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=efficios.com header.i=@efficios.com header.b="uaTffgAN"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=efficios.com;
-	s=smtpout1; t=1727331410;
-	bh=2MryQ9y2u2yCeiP4+Tmgt60Q1T0o9VzZCCgVPAQ/SZU=;
-	h=Date:Subject:From:To:Cc:References:In-Reply-To:From;
-	b=uaTffgANpcaUG2l8vb0K1oMGlBXjCqou0aHpmIM+BLQrVN0IZp2fMg7Ssvr+ZRW3R
-	 XUsN8xAiiO2th9NYdxyix6uCqOlSPM5iCEheI1dGDlT6uC6gPe+DD33cXoJxKidxMK
-	 z75GOFKd2AEr4AHEf/516Z/+Acb1iEKhyEKZjwTx9O9WIje0J02IexJFYPA/bPu11/
-	 joB/V6tVu5lfcC4w89rfGmD3CWDkkGEIIa6fSreoibsZVGe/JPFeSNiQeBw9RqSDwD
-	 vEMWG0p4v4n0sg15c9W6UkNh//E9gmUpFgVWjE8L+t76+j6YGT2bOquVMAx3P5eO73
-	 6e92FeOV8q31Q==
-Received: from [172.17.2.162] (unknown [178.208.16.192])
-	by smtpout.efficios.com (Postfix) with ESMTPSA id 4XDjzg1sCtz1M6s;
-	Thu, 26 Sep 2024 02:16:47 -0400 (EDT)
-Message-ID: <2b2aea37-06fe-40cb-8458-9408406ebda6@efficios.com>
-Date: Thu, 26 Sep 2024 08:16:08 +0200
+	s=arc-20240116; t=1727366059; c=relaxed/simple;
+	bh=pcqEBfLkgGYCPeXstyQ0w7L6Flkbx892UwEEqSHOm/k=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=nzdWnJrFVwJfAf9c+Z9S50z+nBIKbyNYPTxe7kK9oLOxkeM4dgjYuAQfmzOGmDcwMibuX1jmgGbLjUHEZPvGfIP06vlpLKXecX1o8rrF975W5xgsltlCcHyf8+QNIbpgjOfJGi5BYr6cHRjdl8WUvjDnUPdxH4GbwMbHk4hnoF0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=huaweicloud.com; spf=pass smtp.mailfrom=huaweicloud.com; arc=none smtp.client-ip=14.137.139.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=huaweicloud.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huaweicloud.com
+Received: from mail.maildlp.com (unknown [172.18.186.29])
+	by frasgout13.his.huawei.com (SkyGuard) with ESMTP id 4XDyM20ZDXz9v7NF
+	for <lkmm@lists.linux.dev>; Thu, 26 Sep 2024 23:34:22 +0800 (CST)
+Received: from mail02.huawei.com (unknown [7.182.16.27])
+	by mail.maildlp.com (Postfix) with ESMTP id 898FA14022F
+	for <lkmm@lists.linux.dev>; Thu, 26 Sep 2024 23:54:02 +0800 (CST)
+Received: from [10.45.145.4] (unknown [10.45.145.4])
+	by APP2 (Coremail) with SMTP id GxC2BwAniMiLg_VmEOyyAQ--.33525S2;
+	Thu, 26 Sep 2024 16:54:02 +0100 (CET)
+Message-ID: <55633835-242c-4d7f-875b-24b16f17939c@huaweicloud.com>
+Date: Thu, 26 Sep 2024 17:53:44 +0200
 Precedence: bulk
 X-Mailing-List: lkmm@lists.linux.dev
 List-Id: <lkmm.lists.linux.dev>
@@ -40,10 +34,9 @@ MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [RFC PATCH 1/4] hazptr: Add initial implementation of hazard
  pointers
-From: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
-To: Boqun Feng <boqun.feng@gmail.com>
-Cc: Jonas Oberhauser <jonas.oberhauser@huaweicloud.com>,
- linux-kernel@vger.kernel.org, rcu@vger.kernel.org, linux-mm@kvack.org,
+To: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
+ Boqun Feng <boqun.feng@gmail.com>
+Cc: linux-kernel@vger.kernel.org, rcu@vger.kernel.org, linux-mm@kvack.org,
  lkmm@lists.linux.dev, "Paul E. McKenney" <paulmck@kernel.org>,
  Frederic Weisbecker <frederic@kernel.org>,
  Neeraj Upadhyay <neeraj.upadhyay@kernel.org>,
@@ -69,47 +62,94 @@ References: <20240917143402.930114-1-boqun.feng@gmail.com>
  <a87040be-890b-4e83-86bb-5018da4a894d@efficios.com>
  <48992c9f-6c61-4716-977c-66e946adb399@efficios.com>
  <e2733938-06fa-46c3-8839-4349fe50d46f@efficios.com>
-Content-Language: en-US
-In-Reply-To: <e2733938-06fa-46c3-8839-4349fe50d46f@efficios.com>
+ <2b2aea37-06fe-40cb-8458-9408406ebda6@efficios.com>
+From: Jonas Oberhauser <jonas.oberhauser@huaweicloud.com>
+In-Reply-To: <2b2aea37-06fe-40cb-8458-9408406ebda6@efficios.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
+X-CM-TRANSID:GxC2BwAniMiLg_VmEOyyAQ--.33525S2
+X-Coremail-Antispam: 1UD129KBjvJXoW7Ar4xWFy3Jw17Kw4kAr48Xrb_yoW8AFy8pr
+	4ftFWxXFWkua1rKwn7ta1UuFW5Jr4xJay5uF95JF18Ars5XF10qF12qryYga4fCr4kX34U
+	tFW5Xry3ZasxJaDanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+	9KBjDU0xBIdaVrnRJUUUvjb4IE77IF4wAFF20E14v26rWj6s0DM7CY07I20VC2zVCF04k2
+	6cxKx2IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4
+	vEj48ve4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Jr0_JF4l84ACjcxK6xIIjxv20xvEc7Cj
+	xVAFwI0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW8JVWxJwA2z4x0Y4vEx4A2jsIEc7CjxV
+	AFwI0_Gr0_Gr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l5I8CrVACY4xI64kE6c02F40E
+	x7xfMcIj6xIIjxv20xvE14v26r1j6r18McIj6I8E87Iv67AKxVWUJVW8JwAm72CE4IkC6x
+	0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lFIxGxcIEc7CjxVA2Y2ka0xkIwI1lc7CjxVAaw2AF
+	wI0_GFv_Wryl42xK82IYc2Ij64vIr41l4I8I3I0E4IkC6x0Yz7v_Jr0_Gr1lx2IqxVAqx4
+	xG67AKxVWUJVWUGwC20s026x8GjcxK67AKxVWUGVWUWwC2zVAF1VAY17CE14v26r4a6rW5
+	MIIYrxkI7VAKI48JMIIF0xvE2Ix0cI8IcVAFwI0_Jr0_JF4lIxAIcVC0I7IYx2IY6xkF7I
+	0E14v26r4j6F4UMIIF0xvE42xK8VAvwI8IcIk0rVWUJVWUCwCI42IY6I8E87Iv67AKxVWU
+	JVW8JwCI42IY6I8E87Iv6xkF7I0E14v26r4j6r4UJbIYCTnIWIevJa73UjIFyTuYvjxUIF
+	4iUUUUU
+X-CM-SenderInfo: 5mrqt2oorev25kdx2v3u6k3tpzhluzxrxghudrp/
 
-On 2024-09-25 15:20, Mathieu Desnoyers wrote:
-[...]
-> static inline
-> bool same_ptr(void *a, void *b)
-> {
->      asm goto (
->          "cmpq %[a], %[b]\n\t"
->          "jne %l[ne]\n\t"
->          : : [a] "r" (a), [b] "r" (b)
->          : : ne);
->      return true;
-> ne:
->      return false;
-> }
 
-Based on the information provided in this email thread,
-it appears the only concern when it comes to comparing a
-pointer loaded by rcu_dereference() with another pointer
-is the possibility of compiler optimizations.
 
-In the specific case of hazard pointer hpref_hp_get(), this
-function does both loads which are then compared with one
-another. Therefore, it is not possible for the user to
-provide a comparison value known at compile-time, except
-in the unlikely scenario where the hazard pointer would
-be const, which does not really make much sense.
+Am 9/26/2024 um 8:16 AM schrieb Mathieu Desnoyers:
+> On 2024-09-25 15:20, Mathieu Desnoyers wrote:
+> [...]
+>> static inline
+>> bool same_ptr(void *a, void *b)
+>> {
+>>      asm goto (
+>>          "cmpq %[a], %[b]\n\t"
+>>          "jne %l[ne]\n\t"
+>>          : : [a] "r" (a), [b] "r" (b)
+>>          : : ne);
+>>      return true;
+>> ne:
+>>      return false;
+>> }
+> 
+> Based on the information provided in this email thread,
+> it appears the only concern when it comes to comparing a
+> pointer loaded by rcu_dereference() with another pointer
+> is the possibility of compiler optimizations.
+> 
+> In the specific case of hazard pointer hpref_hp_get(), this
+> function does both loads which are then compared with one
+> another. Therefore, it is not possible for the user to
+> provide a comparison value known at compile-time, except
+> in the unlikely scenario where the hazard pointer would
+> be const, which does not really make much sense.
+> 
+> Therefore, just using rcu_dereference() for the second
+> load should be fine.
+> 
+> Thanks,
+> 
+> Mathieu
+> 
 
-Therefore, just using rcu_dereference() for the second
-load should be fine.
+No, the issue introduced by the compiler optimization (or by your 
+original patch) is that the CPU can speculatively load from the first 
+pointer as soon as it has completeled the load of that poitner:
 
-Thanks,
 
-Mathieu
+node = ...
+// t's value can be computed here, since the value of node is known
+...
+node2 = ...
+if (node == node2) // just a control dependency, doesn't prevent 
+speculatively loading node
+    t = *node
 
--- 
-Mathieu Desnoyers
-EfficiOS Inc.
-https://www.efficios.com
+if we can force the compiler's hand, it will generate this code which 
+provides the necessary ordering at hardware level:
+
+node = ...
+// t can't be computed here since the value of node2 is not known here
+...
+node2 = ...
+// t can be computed here
+if (node == node2)
+    t = *node2
+
+
+Kind regards,
+
+   jonas
 

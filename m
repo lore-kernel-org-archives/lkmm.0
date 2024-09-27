@@ -1,94 +1,94 @@
-Received: from mail-qk1-f170.google.com (mail-qk1-f170.google.com [209.85.222.170])
+Received: from mail-qt1-f172.google.com (mail-qt1-f172.google.com [209.85.160.172])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D4ED1B3B32
-	for <lkmm@lists.linux.dev>; Fri, 27 Sep 2024 23:11:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4863E2C1AE
+	for <lkmm@lists.linux.dev>; Fri, 27 Sep 2024 23:21:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727478664; cv=none; b=neKvqYZF6vTv0t/ItHVjx35dXtcx56Fz2qu0FjB6M0EvdI1WZEqdJAkwRrkjJiSkcgWdmVD37449aLaEXWbwaKvuIXBbhXeV4Tp7uqr375R4gBjznkGh+x8fZjM3kubhL9sLRLQj5kSqOv7K0R+PfZhdtCtCM+ia+Uc3vqEAGTg=
+	t=1727479272; cv=none; b=rGTXo8h14f543pDbrVJZTlpNR21YWZgj2zD2jcuoWyuCddqZGihHv90mf4ubdFxSJVLMRtxR7Ily9mXqKzr0GXkaZde1Q8F8qmP+weA7hio9KP+iTzEMBh6G12adqAVNbcU58G5OuTwlyd1MPQ/Y98hN2S7oA+A3g/B+jqpe0D0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727478664; c=relaxed/simple;
-	bh=740AN4G7rVFUt0rTKnr9lrFhTyrHEmKAmF186MUOJas=;
+	s=arc-20240116; t=1727479272; c=relaxed/simple;
+	bh=FEOA2rJOqDQDdAsoe75gRmLT3XIG7BacAiVDnHTKlsI=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=EFD/Uc2RxlukNxW4qESQSqb1oFd6glJ8RAwedXHJr4Wnd9sY68oF1ghNIUnXbgQeAGrEyS2RVmcbSlraHmZaOfXRH1hQ77jhXjFnZ7/2n54eAq8jqgX7fNBR5M57cd1ccXzBG75Q5jmZYaKyOzaXFLGFLct+jYtrCgRaaq4CdaY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=XkLnznes; arc=none smtp.client-ip=209.85.222.170
+	 Content-Type:Content-Disposition:In-Reply-To; b=dF0SXhHMtIOJMzRTsQhnhp6G/3M+2F6G28+EXGmd7r6nTopON05ziov6c00nZq2m0zJ+iVqaWH/zi0Oq1spxI5xJA0+4jaG1ArKLofeQ3QXKkUpqRLYD1ZO+8jY8ZDyCYdRfhbevzYhIcKPMQLoj/+2VcitMv5Nepv5ggksBoIg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=XwsFP+mz; arc=none smtp.client-ip=209.85.160.172
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XkLnznes"
-Received: by mail-qk1-f170.google.com with SMTP id af79cd13be357-7a99eee4a5bso205348485a.0
-        for <lkmm@lists.linux.dev>; Fri, 27 Sep 2024 16:11:02 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XwsFP+mz"
+Received: by mail-qt1-f172.google.com with SMTP id d75a77b69052e-4582760b79cso13466361cf.2
+        for <lkmm@lists.linux.dev>; Fri, 27 Sep 2024 16:21:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1727478662; x=1728083462; darn=lists.linux.dev;
+        d=gmail.com; s=20230601; t=1727479270; x=1728084070; darn=lists.linux.dev;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:feedback-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=vpoTAtzsVeeK1uuREm1KOA1rviE8CgrfOlB6HO554Gk=;
-        b=XkLnznesT/v4/dhas1pu2TKxwS9GFTqkWHYL1tNV9rn+R05WM6srbfL77LPy6g/swD
-         aB7Y4l9ny/i20ISOEct2buLweecWeN/xypta3LBVzH55f/5aKxyB1VOX3Eoc/3rTijfp
-         24duq5Jug/QFfZtdiTEU28jMA6H42wXcXCIFkIGwRvt3ibxjKhkd2/Fa0uMbeEj+Eq/p
-         AHBG0Ur/BRrEsErf26igWzvP3YRkUHUx6gptmJHUa5jLkCJKk1wU/vEkd1sa3vxC2tXo
-         PetlnheUXXZpgShP5o+8xXF0mG8Yswepnoy8KaO8xolMbxBJ0OexsileJTPaWIxPVG/J
-         fqmQ==
+        bh=sRWP0NQhRRIkTJAGGN9No6EkCeFNUseCOmrQOI6Inr4=;
+        b=XwsFP+mzO+7ZRKlBB0ibxEa4KnB8Mf2nIBM/lTPsPX1qCvhnPHMfOKwivwZukUR6pe
+         iQObTbtY+GDW57+H4Syp0btaiIhQDDK74hU61u5hsW9MmRP1UdopFHR4zPtiWzzS6e8l
+         dYsz19wYJ0kaADGNvFVvaef4RHHK4p2jYuUwlOfoEW5Ev9G1iy4a8cweF4vqTBvIhmST
+         bt0ytvVToCjq9bGZ0NATqwFgfFiU0OAA6XHy0Z5fs0L/fct0w3KA+pLFmNaUnPxh4Pyq
+         +9fM3gaAQcGmRWd48fvdZimv/CLEwij/5OrA9PaHGeIv/PvIW8Zo1rixlF47jjVE7VgZ
+         T/fA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1727478662; x=1728083462;
+        d=1e100.net; s=20230601; t=1727479270; x=1728084070;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:feedback-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=vpoTAtzsVeeK1uuREm1KOA1rviE8CgrfOlB6HO554Gk=;
-        b=FriA4X3OAkaTaB3+Fl+vmCK4bbro+mvXJI4YVPPJWufEDw1gxMUETI2lskw33IQhfm
-         p6Xhjx2BPZEZOOrKB/ycU1/eMcjOTB/AXqQJezwDRLUFYYQgrUIodpdVndUwg2kzKlwa
-         RFF6g6cSmIyneUr9/IpN+hgtK910IVq8AM2vLHZ566gA/g890Suo4rvQslIDGQWPEVew
-         3ayKooFFkAElTqe1ufvoOPLGzgI1StIskJblf2Cw5oGvlN+fAERhNyPJXDUqhi+3S0ui
-         lWViTM6rQ19WazJ0YtOtjco7dCBWC+7uM9PnpIpZsLAqCWb836OD84d+6abcmjkBtiDN
-         Swag==
-X-Forwarded-Encrypted: i=1; AJvYcCVWgH3xH2m1jIEaoge65dtXlPoAHwSItow0ZjyqK2v+HMPA7Byze1XcgXsBaEuhvPWExSPx@lists.linux.dev
-X-Gm-Message-State: AOJu0YxH7h3QSURAVVGf/hMCGgtp8VLx5saF8k5+ridoNfVAURtNS8uv
-	dVffHmEGpsJGocI4Tu595BmQcr+XQJJ237aHk/xrBZ0rmKIRWLBl
-X-Google-Smtp-Source: AGHT+IFBDTW5qDL4IO8+urSC0PfeHvBtwa+yXuuYMnvjq5EwYU75Ii6opIDkOZR/QjLSpzSZoio8og==
-X-Received: by 2002:a05:620a:414d:b0:7ab:3311:f0e with SMTP id af79cd13be357-7ae378562bfmr670455385a.33.1727478661811;
-        Fri, 27 Sep 2024 16:11:01 -0700 (PDT)
+        bh=sRWP0NQhRRIkTJAGGN9No6EkCeFNUseCOmrQOI6Inr4=;
+        b=TeQEE0H7luMuS2hi2Ym/9B5eCu5kcNDepI5Z8QdcdgTGU7T9lrw5fk8no5+b89AJc4
+         Qm3yLU69RFs1f66ZAKZsx3WIknkxY7h9jLXnR+iKmQg6tg4o3Ko6tM/BRBUjDygcAPfB
+         74N/0pN0vGAJ2WwbmHstRlAW7oF68RM99d5LuMB8rwv/XGLFIVMDqIb03ZEnTEotscDf
+         BidCPSqy1sC7DZCGWtaYXO3DG80rx/aRVEctG3LgGqZZc95Punjy0SAmZajDvXERLGzX
+         8xLIOfpOrsZN9y5n8GpRLULVq7VfoydPaFzwrTjcUE7yudMGW7n1gkU7PPSZQ9AF69hf
+         oYhQ==
+X-Forwarded-Encrypted: i=1; AJvYcCXg2vqOkMW8+Gbou8T2GXH4RshYeJhhDt/9WkQNfu9RJ9Pl46vmYUcMoU8+aXa4+/htN+p7@lists.linux.dev
+X-Gm-Message-State: AOJu0Yxz7wi3BAgHYGaniEYe2eGsMHrU+fCotvk2Pp6Vqr45bjBC0E0S
+	s6I2eIWeh8n+sW6J2hdyMhVHfnJ1VqM5aeqKRWkU+YzfleQ2keVA
+X-Google-Smtp-Source: AGHT+IFVYWr7YfLP2ZOmoXZeV+ICDbqgORNSo+RKjNe6YotBXK+vAKKnLzTlsohS5VqeARSVg8gozA==
+X-Received: by 2002:ac8:5a49:0:b0:458:5191:65c1 with SMTP id d75a77b69052e-45c9f20e2e4mr63920411cf.26.1727479270057;
+        Fri, 27 Sep 2024 16:21:10 -0700 (PDT)
 Received: from fauth-a2-smtp.messagingengine.com (fauth-a2-smtp.messagingengine.com. [103.168.172.201])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-7ae377d773asm136809785a.35.2024.09.27.16.11.00
+        by smtp.gmail.com with ESMTPSA id d75a77b69052e-45c9f290162sm12661021cf.3.2024.09.27.16.21.09
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 27 Sep 2024 16:11:01 -0700 (PDT)
-Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
-	by mailfauth.phl.internal (Postfix) with ESMTP id 7372A120006A;
-	Fri, 27 Sep 2024 19:11:00 -0400 (EDT)
+        Fri, 27 Sep 2024 16:21:09 -0700 (PDT)
+Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
+	by mailfauth.phl.internal (Postfix) with ESMTP id E1EA01200043;
+	Fri, 27 Sep 2024 19:21:08 -0400 (EDT)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-04.internal (MEProxy); Fri, 27 Sep 2024 19:11:00 -0400
-X-ME-Sender: <xms:hDv3ZkGbPqBxZMPVPpTfzsAQwg4Cbk3vG1ZHTBMD2wIHW-DYJcG6fA>
-    <xme:hDv3ZtWcBkBwg5os3IIZZDW8agEQHrzpRAXgvEsJcnf31CSUvFsBdeb9_l3evLu4e
-    0FOdThkW6XrFU2VUA>
-X-ME-Received: <xmr:hDv3ZuJ8dHV_dBwXtGz_JLSpg2nbWyxPgOWBHsUwxmfDn0AP4DD2miN46DQ5gQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvddutddgvddtucetufdoteggodetrfdotf
+  by phl-compute-01.internal (MEProxy); Fri, 27 Sep 2024 19:21:08 -0400
+X-ME-Sender: <xms:5D33ZpbOAoqWbsQEWv-2ah-lKjQzTxxiAx_96i-apsXeBvlGE10HCQ>
+    <xme:5D33ZgbWChfSpGTTSocGO_Rr4Q65sDBkqcjxHRDYqawY4cJD1TVkLXrIQ6YhXNZ1V
+    eodm74MS6NnU-I6Lw>
+X-ME-Received: <xmr:5D33Zr_czgSae13vz_NG4jWDYfzbfsgvdepqy4sYZ_Ztwi5uCik0-KzzAlhu2Q>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvddutddgvddvucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
     rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
     htshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddtvden
     ucfhrhhomhepuehoqhhunhcuhfgvnhhguceosghoqhhunhdrfhgvnhhgsehgmhgrihhlrd
-    gtohhmqeenucggtffrrghtthgvrhhnpeehudfgudffffetuedtvdehueevledvhfelleei
-    vedtgeeuhfegueevieduffeivdenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmh
-    epmhgrihhlfhhrohhmpegsohhquhhnodhmvghsmhhtphgruhhthhhpvghrshhonhgrlhhi
-    thihqdeiledvgeehtdeigedqudejjeekheehhedvqdgsohhquhhnrdhfvghngheppehgmh
-    grihhlrdgtohhmsehfihigmhgvrdhnrghmvgdpnhgspghrtghpthhtohepfedtpdhmohgu
-    vgepshhmthhpohhuthdprhgtphhtthhopehmrghthhhivghurdguvghsnhhohigvrhhsse
-    gvfhhfihgtihhoshdrtghomhdprhgtphhtthhopehtohhrvhgrlhgusheslhhinhhugidq
-    fhhouhhnuggrthhiohhnrdhorhhgpdhrtghpthhtoheplhhinhhugidqkhgvrhhnvghlse
-    hvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhrvghgkhhhsehlihhnuhig
-    fhhouhhnuggrthhiohhnrdhorhhgpdhrtghpthhtohepsghighgvrghshieslhhinhhuth
-    hrohhnihigrdguvgdprhgtphhtthhopehprghulhhmtghksehkvghrnhgvlhdrohhrghdp
-    rhgtphhtthhopeifihhllheskhgvrhhnvghlrdhorhhgpdhrtghpthhtohepphgvthgvrh
-    iisehinhhfrhgruggvrggurdhorhhgpdhrtghpthhtohepshhtvghrnhesrhhofihlrghn
-    ugdrhhgrrhhvrghrugdrvgguuh
-X-ME-Proxy: <xmx:hDv3ZmGkBwyCCO7_Q-3bDZzo7OaXqYKme-YmfhE3w33Edo2g1imhUg>
-    <xmx:hDv3ZqXnn-DJ9xdJOhPvA5oBEvMetPzoG2j4Dh3RVyeSPqmJFQyQzw>
-    <xmx:hDv3ZpN7NnF4R2jhMVMPF9yoCq7K20PWG89QlsYEFXewOWAE0kGnGw>
-    <xmx:hDv3Zh1BWv_8Cvz4V_E5YZ-x-F1StINAaeUB87SIcpBkXMYQJONh-w>
-    <xmx:hDv3ZjWUWgW2IxZocQuDaOvz6fGT0CXGe_BOmdHaYx-AP4peg6w6_yIK>
+    gtohhmqeenucggtffrrghtthgvrhhnpedttddugeeuveeghffgueffteffueehkeegtdff
+    feehhfejfffhgfefgeegteeghfenucffohhmrghinhepvghffhhitghiohhsrdgtohhmne
+    cuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepsghoqhhu
+    nhdomhgvshhmthhprghuthhhphgvrhhsohhnrghlihhthidqieelvdeghedtieegqdduje
+    ejkeehheehvddqsghoqhhunhdrfhgvnhhgpeepghhmrghilhdrtghomhesfhhigihmvgdr
+    nhgrmhgvpdhnsggprhgtphhtthhopedvledpmhhouggvpehsmhhtphhouhhtpdhrtghpth
+    htohepmhgrthhhihgvuhdruggvshhnohihvghrshesvghffhhitghiohhsrdgtohhmpdhr
+    tghpthhtohepthhorhhvrghlughssehlihhnuhigqdhfohhunhgurghtihhonhdrohhrgh
+    dprhgtphhtthhopehlihhnuhigqdhkvghrnhgvlhesvhhgvghrrdhkvghrnhgvlhdrohhr
+    ghdprhgtphhtthhopehgrhgvghhkhheslhhinhhugihfohhunhgurghtihhonhdrohhrgh
+    dprhgtphhtthhopegsihhgvggrshihsehlihhnuhhtrhhonhhigidruggvpdhrtghpthht
+    ohepphgruhhlmhgtkheskhgvrhhnvghlrdhorhhgpdhrtghpthhtohepfihilhhlsehkvg
+    hrnhgvlhdrohhrghdprhgtphhtthhopehpvghtvghriiesihhnfhhrrgguvggrugdrohhr
+    ghdprhgtphhtthhopehsthgvrhhnsehrohiflhgrnhgurdhhrghrvhgrrhgurdgvughu
+X-ME-Proxy: <xmx:5D33ZnoDX035qFKxQ5NqPjWe7tIhXakWcMSeR9X4B80yXSNB5mD-bw>
+    <xmx:5D33ZkrbT4sbI90ifwgb8pSgMwmpZ43xW7aaDI8bkL14ZvEDeC00Fw>
+    <xmx:5D33ZtR2I-Uj11BrrQ1qZLKmOIKT6mg52MSnXFZ4TimMZOuiIjK7yQ>
+    <xmx:5D33Zsqh6UJKV-ZYNMU8Zezt6tsCg8A_z-8ygUJOcF9ZE3uZIDVzjg>
+    <xmx:5D33Zt4rvr9Jo2GHF4t6OYBC0jChwiplFVQaxJyrH0yrUA4Patuw1kza>
 Feedback-ID: iad51458e:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 27 Sep 2024 19:10:59 -0400 (EDT)
-Date: Fri, 27 Sep 2024 16:10:09 -0700
+ 27 Sep 2024 19:21:08 -0400 (EDT)
+Date: Fri, 27 Sep 2024 16:20:18 -0700
 From: Boqun Feng <boqun.feng@gmail.com>
 To: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
 Cc: Linus Torvalds <torvalds@linux-foundation.org>,
@@ -109,12 +109,12 @@ Cc: Linus Torvalds <torvalds@linux-foundation.org>,
 	Waiman Long <longman@redhat.com>,	Mark Rutland <mark.rutland@arm.com>,
 	Thomas Gleixner <tglx@linutronix.de>,	Vlastimil Babka <vbabka@suse.cz>,
  maged.michael@gmail.com,	Mateusz Guzik <mjguzik@gmail.com>,
- rcu@vger.kernel.org,	linux-mm@kvack.org, lkmm@lists.linux.dev,
-	Gary Guo <gary@garyguo.net>
+ rcu@vger.kernel.org,	linux-mm@kvack.org, lkmm@lists.linux.dev
 Subject: Re: [RFC PATCH] compiler.h: Introduce ptr_eq() to preserve address
  dependency
-Message-ID: <Zvc7UQ3hsqF4dxtJ@boqun-archlinux>
+Message-ID: <Zvc9sg4TCqrmgjkz@boqun-archlinux>
 References: <20240927203334.976821-1-mathieu.desnoyers@efficios.com>
+ <23882bd6-c0e0-4f6c-9000-b79216194198@efficios.com>
 Precedence: bulk
 X-Mailing-List: lkmm@lists.linux.dev
 List-Id: <lkmm.lists.linux.dev>
@@ -123,187 +123,48 @@ List-Unsubscribe: <mailto:lkmm+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20240927203334.976821-1-mathieu.desnoyers@efficios.com>
+In-Reply-To: <23882bd6-c0e0-4f6c-9000-b79216194198@efficios.com>
 
-[Cc Gary]
+On Fri, Sep 27, 2024 at 07:05:53PM -0400, Mathieu Desnoyers wrote:
+> On 2024-09-27 22:33, Mathieu Desnoyers wrote:
+> [...]
+> 
+> > ---
+> >   include/linux/compiler.h | 62 ++++++++++++++++++++++++++++++++++++++++
+> >   1 file changed, 62 insertions(+)
+> > 
+> 
+> I'm wondering if this really belongs in compiler.h, or if it's so
+> RCU/HP specific that it should be implemented in rcupdate.h ?
+> 
+> [... ]
+> > +static __always_inline
+> > +int ptr_eq(const volatile void *a, const volatile void *b)
+> 
+> And perhaps rename this to rcu_ptr_eq() ?
+> 
 
-On Fri, Sep 27, 2024 at 04:33:34PM -0400, Mathieu Desnoyers wrote:
-> Compiler CSE and SSA GVN optimizations can cause the address dependency
-> of addresses returned by rcu_dereference to be lost when comparing those
-> pointers with either constants or previously loaded pointers.
-> 
-> Introduce ptr_eq() to compare two addresses while preserving the address
-> dependencies for later use of the address. It should be used when
-> comparing an address returned by rcu_dereference().
-> 
-> This is needed to prevent the compiler CSE and SSA GVN optimizations
-> from replacing the registers holding @a or @b based on their
-> equality, which does not preserve address dependencies and allows the
-> following misordering speculations:
-> 
-> - If @b is a constant, the compiler can issue the loads which depend
->   on @a before loading @a.
-> - If @b is a register populated by a prior load, weakly-ordered
->   CPUs can speculate loads which depend on @a before loading @a.
-> 
-> The same logic applies with @a and @b swapped.
-> 
-> The compiler barrier() is ineffective at fixing this issue.
-> It does not prevent the compiler CSE from losing the address dependency:
-> 
-> int fct_2_volatile_barriers(void)
-> {
->     int *a, *b;
-> 
->     do {
->         a = READ_ONCE(p);
->         asm volatile ("" : : : "memory");
->         b = READ_ONCE(p);
->     } while (a != b);
->     asm volatile ("" : : : "memory");  <----- barrier()
->     return *b;
-> }
-> 
-> With gcc 14.2 (arm64):
-> 
-> fct_2_volatile_barriers:
->         adrp    x0, .LANCHOR0
->         add     x0, x0, :lo12:.LANCHOR0
-> .L2:
->         ldr     x1, [x0]    <------ x1 populated by first load.
->         ldr     x2, [x0]
->         cmp     x1, x2
->         bne     .L2
->         ldr     w0, [x1]    <------ x1 is used for access which should depend on b.
->         ret
-> 
-> On weakly-ordered architectures, this lets CPU speculation use the
-> result from the first load to speculate "ldr w0, [x1]" before
-> "ldr x2, [x0]".
-> Based on the RCU documentation, the control dependency does not prevent
-> the CPU from speculating loads.
-> 
-> Suggested-by: Linus Torvalds <torvalds@linux-foundation.org>
-> Suggested-by: Boqun Feng <boqun.feng@gmail.com>
-> Signed-off-by: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
-> Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-> Cc: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-> Cc: "Paul E. McKenney" <paulmck@kernel.org>
-> Cc: Will Deacon <will@kernel.org>
-> Cc: Peter Zijlstra <peterz@infradead.org>
-> Cc: Boqun Feng <boqun.feng@gmail.com>
-> Cc: Alan Stern <stern@rowland.harvard.edu>
-> Cc: John Stultz <jstultz@google.com>
-> Cc: Neeraj Upadhyay <Neeraj.Upadhyay@amd.com>
-> Cc: Linus Torvalds <torvalds@linux-foundation.org>
-> Cc: Boqun Feng <boqun.feng@gmail.com>
-> Cc: Frederic Weisbecker <frederic@kernel.org>
-> Cc: Joel Fernandes <joel@joelfernandes.org>
-> Cc: Josh Triplett <josh@joshtriplett.org>
-> Cc: Uladzislau Rezki <urezki@gmail.com>
-> Cc: Steven Rostedt <rostedt@goodmis.org>
-> Cc: Lai Jiangshan <jiangshanlai@gmail.com>
-> Cc: Zqiang <qiang.zhang1211@gmail.com>
-> Cc: Ingo Molnar <mingo@redhat.com>
-> Cc: Waiman Long <longman@redhat.com>
-> Cc: Mark Rutland <mark.rutland@arm.com>
-> Cc: Thomas Gleixner <tglx@linutronix.de>
-> Cc: Vlastimil Babka <vbabka@suse.cz>
-> Cc: maged.michael@gmail.com
-> Cc: Mateusz Guzik <mjguzik@gmail.com>
-> Cc: rcu@vger.kernel.org
-> Cc: linux-mm@kvack.org
-> Cc: lkmm@lists.linux.dev
-> ---
->  include/linux/compiler.h | 62 ++++++++++++++++++++++++++++++++++++++++
->  1 file changed, 62 insertions(+)
-> 
-> diff --git a/include/linux/compiler.h b/include/linux/compiler.h
-> index 2df665fa2964..f26705c267e8 100644
-> --- a/include/linux/compiler.h
-> +++ b/include/linux/compiler.h
-> @@ -186,6 +186,68 @@ void ftrace_likely_update(struct ftrace_likely_data *f, int val,
->  	__asm__ ("" : "=r" (var) : "0" (var))
->  #endif
->  
-> +/*
-> + * Compare two addresses while preserving the address dependencies for
-> + * later use of the address. It should be used when comparing an address
-> + * returned by rcu_dereference().
-> + *
-> + * This is needed to prevent the compiler CSE and SSA GVN optimizations
-> + * from replacing the registers holding @a or @b based on their
-> + * equality, which does not preserve address dependencies and allows the
-> + * following misordering speculations:
-> + *
-> + * - If @b is a constant, the compiler can issue the loads which depend
-> + *   on @a before loading @a.
-> + * - If @b is a register populated by a prior load, weakly-ordered
-> + *   CPUs can speculate loads which depend on @a before loading @a.
-> + *
-> + * The same logic applies with @a and @b swapped.
-> + *
-> + * Return value: true if pointers are equal, false otherwise.
-> + *
-> + * The compiler barrier() is ineffective at fixing this issue. It does
-> + * not prevent the compiler CSE from losing the address dependency:
-> + *
-> + * int fct_2_volatile_barriers(void)
-> + * {
-> + *     int *a, *b;
-> + *
-> + *     do {
-> + *         a = READ_ONCE(p);
-> + *         asm volatile ("" : : : "memory");
-> + *         b = READ_ONCE(p);
-> + *     } while (a != b);
-> + *     asm volatile ("" : : : "memory");  <-- barrier()
-> + *     return *b;
-> + * }
-> + *
-> + * With gcc 14.2 (arm64):
-> + *
-> + * fct_2_volatile_barriers:
-> + *         adrp    x0, .LANCHOR0
-> + *         add     x0, x0, :lo12:.LANCHOR0
-> + * .L2:
-> + *         ldr     x1, [x0]  <-- x1 populated by first load.
-> + *         ldr     x2, [x0]
-> + *         cmp     x1, x2
-> + *         bne     .L2
-> + *         ldr     w0, [x1]  <-- x1 is used for access which should depend on b.
-> + *         ret
-> + *
-> + * On weakly-ordered architectures, this lets CPU speculation use the
-> + * result from the first load to speculate "ldr w0, [x1]" before
-> + * "ldr x2, [x0]".
-> + * Based on the RCU documentation, the control dependency does not
-> + * prevent the CPU from speculating loads.
-> + */
-> +static __always_inline
-> +int ptr_eq(const volatile void *a, const volatile void *b)
-> +{
-> +	OPTIMIZER_HIDE_VAR(a);
-> +	OPTIMIZER_HIDE_VAR(b);
-> +	return a == b;
-> +}
-> +
-
-This is better than what I proposed, thank you!
-
-Reviewed-by: Boqun Feng <boqun.feng@gmail.com>
-
-Could you also make some documentation changes at the "Be very careful
-about comparing pointers obtained from..." paragraph in
-Documentation/RCU/rcu_dereference.rst? Since 'ptr_eq' is a good tool in
-those cases mentioned there. Thanks.
+I think the current place and name is fine, yes RCU is the most
+important address dependency user, but there are other users as well.
 
 Regards,
 Boqun
 
->  #define __UNIQUE_ID(prefix) __PASTE(__PASTE(__UNIQUE_ID_, prefix), __COUNTER__)
->  
->  /**
+> Thanks,
+> 
+> Mathieu
+> 
+> > +{
+> > +	OPTIMIZER_HIDE_VAR(a);
+> > +	OPTIMIZER_HIDE_VAR(b);
+> > +	return a == b;
+> > +}
+> > +
+> 
+> 
+> 
 > -- 
-> 2.39.2
+> Mathieu Desnoyers
+> EfficiOS Inc.
+> https://www.efficios.com
 > 

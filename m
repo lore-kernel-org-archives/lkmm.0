@@ -1,211 +1,192 @@
-Received: from mail-qt1-f179.google.com (mail-qt1-f179.google.com [209.85.160.179])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtpout.efficios.com (smtpout.efficios.com [167.114.26.122])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36FD7166F23
-	for <lkmm@lists.linux.dev>; Fri, 27 Sep 2024 04:39:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18DAE1779BC
+	for <lkmm@lists.linux.dev>; Fri, 27 Sep 2024 11:01:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=167.114.26.122
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727411968; cv=none; b=o6XtGBskjjK5AhPrE5GMvApudiyV1YOY7Uyoy3s9JqvSF0GC8WkcuvxxUo6dTho1pJSFuNbi3S1Ky3EhPIYtZvdpVYboYgAlVSeoRA4/7AKOs8wwP1oq+wheCgKv2biC0oLy9UbkSwGWO4ah+QcKpx/fpHdpMTfxqZxSDkXkfOg=
+	t=1727434870; cv=none; b=esbLC/P4tHQn5C0ni/pS5BWg74itNiTsGd8IAHdA5sVGpFEBn25xAR8x5bQa+a0UJxTMzVrz7iytRetVWsYDUVI9E1MYGhMnFtGjFzzZMMS8FPkdbwJaMhc0URQXL0WQgjF58oNp6yvrp8y5Vyl02MnFQIr0CU0RQDzIJnpuSnU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727411968; c=relaxed/simple;
-	bh=w6DVDQjkuNJHV2tR9GWVHMeZWBXK08jPVFfyVvSYekU=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=lqvCoN25+VUAUBVOSY2WaXqT6wJqelsjt991C9vK2Oa9IlWi+HYglJlQPAiP56nQsmVYPaAdSBzX02A1CinqtA+rk9XB9veffdhFvBXxDafY5XImIyWagOnFRUI4/RT1K4GacZJnbsR2Oy0J7/RVJp9niipjvGb3GNjX6WNqhzo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=LAgWEpyp; arc=none smtp.client-ip=209.85.160.179
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1727434870; c=relaxed/simple;
+	bh=w+koXmB7BOFclIQM2otysNtBd+8qkrsHPTo5gWSR9w0=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=HvCQ8Sy5usDxqFf8XrAG1tgCOGnpniIgrRO01x67r6qUnHJgSfZKj2+Y6HWvOoWmjHlNNWin6WR05Z0gGNTtw5n7w6TXmAWPw8ncTd4l844z6QCg6h0B5m9ta8AnS+q8OZXElk7Y6hGIQewOMAEG+exVgEblv/W8aQUlOrRpEIo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=efficios.com; spf=pass smtp.mailfrom=efficios.com; dkim=pass (2048-bit key) header.d=efficios.com header.i=@efficios.com header.b=P9OowQtc; arc=none smtp.client-ip=167.114.26.122
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=efficios.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=efficios.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LAgWEpyp"
-Received: by mail-qt1-f179.google.com with SMTP id d75a77b69052e-458366791aaso9426631cf.1
-        for <lkmm@lists.linux.dev>; Thu, 26 Sep 2024 21:39:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1727411966; x=1728016766; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:feedback-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=dRU6/4TVUAhjoio/t/k6qqSqdEw/5cr8n1FQhHvr5Jw=;
-        b=LAgWEpyp9ASxtNe3g2B7niOPFCtfe0iDR8ZK7b8vExAg8gZVismBL8GkYiCTPJtqJC
-         EDesJXHyB7adN9sQMjeF3acHvJKvUhyqO/YL/B1waijjbbv5P3PuBuN7L3yCOGTf637K
-         kOJ6bAgac7oWeOa1uwMOdvsOckp+KZjZUY8/VcXBnR9npf6xZKJohxypsLDgkfK4qgWt
-         rvBZF2lDFohm5GwoSe2J1xKmEUefRfvi1IGAeLLW4pPkVHJJOOU0SsKGZ/YRHRbBUCuc
-         u53FiuggjW/ANIg4dxbKVEIL9h/TrQYguuXA8Y9U2LSVfbUcHUMPSHn4XDM1ZhyTIZFz
-         TacA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1727411966; x=1728016766;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:feedback-id:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=dRU6/4TVUAhjoio/t/k6qqSqdEw/5cr8n1FQhHvr5Jw=;
-        b=l3MVT/NsEGhJZaMU7gP9ZkGDext6y1l6fk0XEutLEU1d7ZwE30s3axZNtSvhel3z6f
-         tpol/jDDiAH2YY8OMdy+NhePegFuAPLDanqly+QitxgWaMUxavOgDpQqM6G3T7FDYdbL
-         z4HJR1Utz7UfYyl+yZx8lV5dqU/kg340h51eluMBf69PPSq/HjZD+6TwBRQwRchQu4cr
-         DailC2ZGsxEqUN+TETw+wxNPvJ1lLBvtUF6+vHYjjKrKlDifW95C8bfKA82sck2mbA+l
-         419DPUGomOLPPPQ3AKLDZkKm12Rxj9ll97QrNeZNHo6/JaAmHv4ysDrdckJNk5z1HP6n
-         5OcA==
-X-Forwarded-Encrypted: i=1; AJvYcCUhQeIA4AdNwFJvxZUCj1k+geBGhuZp0AXFe9dno79eIKJKV8JbB/EIs0FQsHR/EUHSSSY3@lists.linux.dev
-X-Gm-Message-State: AOJu0YwZElHkSV1Bc0WZEvDSRrW38e43BgCpJIzkhliNXkdjB5De7lLx
-	cC+t5t1CLEqsHCr7iAZ7BmEXyTHZIh6HWz0pRKDllPbJezYVugFd
-X-Google-Smtp-Source: AGHT+IGRJNR8YMG45DUkKzLpm66mQWZjHJK0giSYGof1EtZOJwSea9/ISL5wW4ohXqjOGHnxmP/MAA==
-X-Received: by 2002:a05:622a:3c6:b0:458:4fe5:b2f7 with SMTP id d75a77b69052e-45c9f1afb2dmr27273301cf.5.1727411965976;
-        Thu, 26 Sep 2024 21:39:25 -0700 (PDT)
-Received: from fauth-a2-smtp.messagingengine.com (fauth-a2-smtp.messagingengine.com. [103.168.172.201])
-        by smtp.gmail.com with ESMTPSA id d75a77b69052e-45c9f33a4c9sm4743071cf.73.2024.09.26.21.39.25
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 26 Sep 2024 21:39:25 -0700 (PDT)
-Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
-	by mailfauth.phl.internal (Postfix) with ESMTP id F372C1200043;
-	Fri, 27 Sep 2024 00:39:24 -0400 (EDT)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-05.internal (MEProxy); Fri, 27 Sep 2024 00:39:25 -0400
-X-ME-Sender: <xms:_Db2Zkk_zmSebOfd8O1C0dPjWEHeAc3XgIa7MGu-fQ_2TfzAqj73ug>
-    <xme:_Db2Zj2k7iVcRTB8aHCcinbmRlJKf27pwiY-9PsIpQpUTXvly-upYBVT0KRm3Ik6_
-    f3XDotMKSTX0SJk8Q>
-X-ME-Received: <xmr:_Db2ZioUx9N0ctlCUE1izEehr-fygmlBkkfn6jhGcf1Y-R-XLkuXTBytIR8lrA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvddtkedgkeegucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
-    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
-    htshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddtvden
-    ucfhrhhomhepuehoqhhunhcuhfgvnhhguceosghoqhhunhdrfhgvnhhgsehgmhgrihhlrd
-    gtohhmqeenucggtffrrghtthgvrhhnpeehudfgudffffetuedtvdehueevledvhfelleei
-    vedtgeeuhfegueevieduffeivdenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmh
-    epmhgrihhlfhhrohhmpegsohhquhhnodhmvghsmhhtphgruhhthhhpvghrshhonhgrlhhi
-    thihqdeiledvgeehtdeigedqudejjeekheehhedvqdgsohhquhhnrdhfvghngheppehgmh
-    grihhlrdgtohhmsehfihigmhgvrdhnrghmvgdpnhgspghrtghpthhtohepvdejpdhmohgu
-    vgepshhmthhpohhuthdprhgtphhtthhopehmrghthhhivghurdguvghsnhhohigvrhhsse
-    gvfhhfihgtihhoshdrtghomhdprhgtphhtthhopehtohhrvhgrlhgusheslhhinhhugidq
-    fhhouhhnuggrthhiohhnrdhorhhgpdhrtghpthhtohepjhhonhgrshdrohgsvghrhhgruh
-    hsvghrsehhuhgrfigvihgtlhhouhgurdgtohhmpdhrtghpthhtoheplhhinhhugidqkhgv
-    rhhnvghlsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtoheprhgtuhesvhhgvg
-    hrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehlihhnuhigqdhmmheskhhvrggtkhdr
-    ohhrghdprhgtphhtthhopehlkhhmmheslhhishhtshdrlhhinhhugidruggvvhdprhgtph
-    htthhopehprghulhhmtghksehkvghrnhgvlhdrohhrghdprhgtphhtthhopehfrhgvuggv
-    rhhitgeskhgvrhhnvghlrdhorhhg
-X-ME-Proxy: <xmx:_Db2Zgm-fE8hUMqHcNrwexhGyjRt8C6pMc4co2W-LVb-0PvCIjUHgQ>
-    <xmx:_Db2Zi3EaCVb2yT79AagRK1gPp6JkGM2Q4yorZ7HOy-59UQpgt_PrQ>
-    <xmx:_Db2ZnuRPm7ueXHyIKmUrw_sSK1EPmRfIKoFu0cKk1lqqPl2F4VOsQ>
-    <xmx:_Db2ZuUEWmG_uNpKv8Nlf5VYrJZPJLQo8ehdYpnsYKh5SYdlD-MGgQ>
-    <xmx:_Db2Zl2ghnXP6pi4SS_g5elLYJbdgdUI3qv93e4On4PdGEs2n0WR-gAC>
-Feedback-ID: iad51458e:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 27 Sep 2024 00:39:24 -0400 (EDT)
-Date: Thu, 26 Sep 2024 21:38:36 -0700
-From: Boqun Feng <boqun.feng@gmail.com>
-To: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
-Cc: Linus Torvalds <torvalds@linux-foundation.org>,
-	Jonas Oberhauser <jonas.oberhauser@huaweicloud.com>,
-	linux-kernel@vger.kernel.org, rcu@vger.kernel.org,
-	linux-mm@kvack.org, lkmm@lists.linux.dev,
-	"Paul E. McKenney" <paulmck@kernel.org>,
-	Frederic Weisbecker <frederic@kernel.org>,
-	Neeraj Upadhyay <neeraj.upadhyay@kernel.org>,
-	Joel Fernandes <joel@joelfernandes.org>,
-	Josh Triplett <josh@joshtriplett.org>,
-	Uladzislau Rezki <urezki@gmail.com>,
-	Steven Rostedt <rostedt@goodmis.org>,
-	Lai Jiangshan <jiangshanlai@gmail.com>,
-	Zqiang <qiang.zhang1211@gmail.com>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Ingo Molnar <mingo@redhat.com>, Will Deacon <will@kernel.org>,
-	Waiman Long <longman@redhat.com>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Kent Overstreet <kent.overstreet@gmail.com>,
-	Vlastimil Babka <vbabka@suse.cz>, maged.michael@gmail.com,
-	Neeraj Upadhyay <neeraj.upadhyay@amd.com>
-Subject: Re: [RFC PATCH 1/4] hazptr: Add initial implementation of hazard
- pointers
-Message-ID: <ZvY2zBiluLkqRSkc@boqun-archlinux>
-References: <ZvPp4taB9uu__oSQ@boqun-archlinux>
- <4167e6f5-4ff9-4aaa-915e-c1e692ac785a@efficios.com>
- <ZvP_H_R43bXpmkMS@boqun-archlinux>
- <a87040be-890b-4e83-86bb-5018da4a894d@efficios.com>
- <48992c9f-6c61-4716-977c-66e946adb399@efficios.com>
- <e2733938-06fa-46c3-8839-4349fe50d46f@efficios.com>
- <2b2aea37-06fe-40cb-8458-9408406ebda6@efficios.com>
- <55633835-242c-4d7f-875b-24b16f17939c@huaweicloud.com>
- <CAHk-=wjL803+FxtAPSGrWqThGQP5cCHzzwZJFq+-fkgt5DQ3VQ@mail.gmail.com>
- <bba2e656-4c3b-46db-b308-483de440b922@efficios.com>
+	dkim=pass (2048-bit key) header.d=efficios.com header.i=@efficios.com header.b="P9OowQtc"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=efficios.com;
+	s=smtpout1; t=1727434866;
+	bh=w+koXmB7BOFclIQM2otysNtBd+8qkrsHPTo5gWSR9w0=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=P9OowQtcg/QxmmMSafMStk7GwzfeXc0VlR4KwNBDSBeU9FcEPgC+OORMGH0KNgxEI
+	 80IVtAE4VvFyERUYPQwMwDGyQVqa4diNUZ3iTTWC9iUvIUG7HlTMng5UvPsNcLm3vx
+	 LWTaYRGt1Wq95ppZ3Syp3hzgWHbjTWLAm7k+vlz5FvAWwPmAzoBETI8LbX9UtizMgz
+	 aSMVNjXoHUWD5HTyBeGYAR/aEC3ZZCrXwtkqCUTQKik2gWlLwmysnSB3XAgcmwAsVb
+	 Od+NdeO+Gu9NBati/W1zCdsLNvNBB9B1NLaKQc7oH/FXFlk0vJ6K0OtrHMcmS+hAgP
+	 Arw3Innm1ID9g==
+Received: from [IPV6:2606:6d00:100:4000:cacb:9855:de1f:ded2] (unknown [IPv6:2606:6d00:100:4000:cacb:9855:de1f:ded2])
+	by smtpout.efficios.com (Postfix) with ESMTPSA id 4XFSFG1pQRz1MqK;
+	Fri, 27 Sep 2024 07:01:06 -0400 (EDT)
+Message-ID: <8aceaf4f-5578-4fca-8be7-3448d7b89721@efficios.com>
+Date: Fri, 27 Sep 2024 12:59:33 +0200
 Precedence: bulk
 X-Mailing-List: lkmm@lists.linux.dev
 List-Id: <lkmm.lists.linux.dev>
 List-Subscribe: <mailto:lkmm+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:lkmm+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <bba2e656-4c3b-46db-b308-483de440b922@efficios.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH 1/4] hazptr: Add initial implementation of hazard
+ pointers
+To: Boqun Feng <boqun.feng@gmail.com>,
+ Linus Torvalds <torvalds@linux-foundation.org>
+Cc: Jonas Oberhauser <jonas.oberhauser@huaweicloud.com>,
+ linux-kernel@vger.kernel.org, rcu@vger.kernel.org, linux-mm@kvack.org,
+ lkmm@lists.linux.dev, "Paul E. McKenney" <paulmck@kernel.org>,
+ Frederic Weisbecker <frederic@kernel.org>,
+ Neeraj Upadhyay <neeraj.upadhyay@kernel.org>,
+ Joel Fernandes <joel@joelfernandes.org>,
+ Josh Triplett <josh@joshtriplett.org>,
+ "Uladzislau Rezki (Sony)" <urezki@gmail.com>, rostedt <rostedt@goodmis.org>,
+ Lai Jiangshan <jiangshanlai@gmail.com>, Zqiang <qiang.zhang1211@gmail.com>,
+ Peter Zijlstra <peterz@infradead.org>, Ingo Molnar <mingo@redhat.com>,
+ Will Deacon <will@kernel.org>, Waiman Long <longman@redhat.com>,
+ Mark Rutland <mark.rutland@arm.com>, Thomas Gleixner <tglx@linutronix.de>,
+ Kent Overstreet <kent.overstreet@gmail.com>, Vlastimil Babka
+ <vbabka@suse.cz>, maged.michael@gmail.com,
+ Neeraj Upadhyay <neeraj.upadhyay@amd.com>
+References: <48992c9f-6c61-4716-977c-66e946adb399@efficios.com>
+ <e2733938-06fa-46c3-8839-4349fe50d46f@efficios.com>
+ <2b2aea37-06fe-40cb-8458-9408406ebda6@efficios.com>
+ <55633835-242c-4d7f-875b-24b16f17939c@huaweicloud.com>
+ <CAHk-=wjL803+FxtAPSGrWqThGQP5cCHzzwZJFq+-fkgt5DQ3VQ@mail.gmail.com>
+ <54487a36-f74c-46c3-aed7-fc86eaaa9ca2@huaweicloud.com>
+ <CAHk-=wifOW0VEh6uL3sHSaAUA46YmPDS9Wh5HnNC2JyOiXVA=Q@mail.gmail.com>
+ <ZvX12_1mK8983cXm@boqun-archlinux>
+ <0b262fe5-2fc5-478d-bf66-f208723238d5@efficios.com>
+ <e748893f-28a3-4b8a-a848-cfb1173ab940@app.fastmail.com>
+ <ZvY0gG2dCJApPbp5@boqun-archlinux>
+From: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+Content-Language: en-US
+In-Reply-To: <ZvY0gG2dCJApPbp5@boqun-archlinux>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Fri, Sep 27, 2024 at 03:20:40AM +0200, Mathieu Desnoyers wrote:
-> On 2024-09-26 18:12, Linus Torvalds wrote:
-> > On Thu, 26 Sept 2024 at 08:54, Jonas Oberhauser
-> > <jonas.oberhauser@huaweicloud.com> wrote:
-> > > 
-> > > No, the issue introduced by the compiler optimization (or by your
-> > > original patch) is that the CPU can speculatively load from the first
-> > > pointer as soon as it has completed the load of that pointer:
-> > 
-> > You mean the compiler can do it. The inline asm has no impact on what
-> > the CPU does. The conditional isn't a barrier for the actual hardware.
-> > But once the compiler doesn't try to do it, the data dependency on the
-> > address does end up being an ordering constraint on the hardware too
-> > (I'm happy to say that I haven't heard from the crazies that want
-> > value prediction in a long time).
-> > 
-> > Just use a barrier.  Or make sure to use the proper ordered memory
-> > accesses when possible. Don't use an inline asm for the compare - we
-> > don't even have anything insane like that as a portable helper, and we
-> > shouldn't have it.
+On 2024-09-27 06:28, Boqun Feng wrote:
+> On Fri, Sep 27, 2024 at 09:37:50AM +0800, Boqun Feng wrote:
+>>
+>>
+>> On Fri, Sep 27, 2024, at 9:30 AM, Mathieu Desnoyers wrote:
+>>> On 2024-09-27 02:01, Boqun Feng wrote:
+>>>> 	#define ADDRESS_EQ(var, expr)							\
+>>>> 	({										\
+>>>> 		bool _____cmp_res = (unsigned long)(var) == (unsigned long)(expr);	\
+>>>> 											\
+>>>> 		OPTIMIZER_HIDE_VAR(var);						\
+>>>> 		_____cmp_res;								\
+>>>> 	})
+>>>
+>>> If the goal is to ensure gcc uses the register populated by the
+>>> second, I'm afraid it does not work. AFAIU, "hiding" the dependency
+>>> chain does not prevent the SSA GVN optimization from combining the
 > 
-> How does the compiler barrier help in any way here ?
+> Note it's not hiding the dependency, rather the equality,
 > 
-> I am concerned about the compiler SSA GVN (Global Value Numbering)
-> optimizations, and I don't think a compiler barrier solves anything.
-> (or I'm missing something obvious)
+>>> registers as being one and choosing one arbitrary source. "hiding"
+> 
+> after OPTIMIZER_HIDE_VAR(var), compiler doesn't know whether 'var' is
+> equal to 'expr' anymore, because OPTIMIZER_HIDE_VAR(var) uses "=r"(var)
+> to indicate the output is overwritten. So when 'var' is referred later,
+> compiler cannot use the register for a 'expr' value or any other
+> register that has the same value, because 'var' may have a different
+> value from the compiler's POV.
+> 
+>>> the dependency chain before or after the comparison won't help here.
+>>>
+>>> int fct_hide_var_compare(void)
+>>> {
+>>>       int *a, *b;
+>>>
+>>>       do {
+>>>           a = READ_ONCE(p);
+>>>           asm volatile ("" : : : "memory");
+>>>           b = READ_ONCE(p);
+>>>       } while (!ADDRESS_EQ(a, b));
+>>
+>> Note that ADDRESS_EQ() only hide first parameter, so this should be ADDRESS_EQ(b, a).
+>>
+> 
+> I replaced ADDRESS_EQ(a, b) with ADDRESS_EQ(b, a), and the compile
+> result shows it can prevent the issue:
 
-I think you're right, a compiler barrier doesn't help here:
+I see, yes. It prevents the issue by making the compiler create
+a copy of the value "modified" by the asm before doing the equality
+comparison.
 
-	head = READ_ONCE(p);
-	smp_mb();
-	WRITE_ONCE(*slot, head);
+This means the compiler cannot derive the value for b from the first
+load when b is used after after the equality comparison.
 
-	ptr = READ_ONCE(p);
-	if (ptr != head) {
-		...
-	} else {
-		barrier();
-		return ptr;
-	}
+The only downside of OPTIMIZER_HIDE_VAR() is that it adds an extra
+"mov" instruction to move the content across registers. I don't think
+it matters performance wise though, so that solution is appealing
+because it is arch-agnostic.
 
-compilers can replace 'ptr' with 'head' because of the equality, and
-even putting barrier() here cannot prevent compiler to rewrite the else
-branch into:
+One small improvement over your proposed solution would be to apply
+OPTIMIZER_HIDE_VAR() on both inputs. Because this is not a volatile
+asm, it is simply optimized away if var1 or var2 is unused following
+the equality comparison. It is more convenient to prevent replacement
+of both addresses being compared by the other rather than providing
+the guarantee only on a single parameter:
 
-	else {
-		barrier();
-		return head;
-	}
+#define OPTIMIZER_HIDE_VAR(var)			\
+         __asm__ ("" : "+r" (var))
 
-because that's just using a different register, unrelated to memory
-accesses.
+#define ADDRESS_EQ(var1, var2)			\
+({						\
+	bool _____cmp_res = (var1) == (var2);	\
+						\
+	OPTIMIZER_HIDE_VAR(var1);		\
+	OPTIMIZER_HIDE_VAR(var2);		\
+	_____cmp_res;				\
+})
 
-Jonas, am I missing something subtle? Or this is different than what you
-proposed?
+Thanks,
 
-Regards,
-Boqun
+Mathieu
 
 > 
-> I was concerned about the suggestion from Jonas to use "node2"
-> rather than "node" after the equality check as a way to ensure
-> the intended register is used to return the pointer, because after
-> the SSA GVN optimization pass, AFAIU this won't help in any way.
-> I have a set of examples below that show gcc use the result of the
-> first load, and clang use the result of the second load (on
-> both x86-64 and aarch64). Likewise when a load-acquire is used as
-> second load, which I find odd. Hopefully mixing this optimization
-> from gcc with speculation still abide by the memory model.
+> gcc 14.2 x86-64:
 > 
-> Only the asm goto approach ensures that gcc uses the result from
-> the second load.
+> fct_hide_var_compare:
+> .L2:
+>          mov     rcx, QWORD PTR p[rip]
+>          mov     rdx, QWORD PTR p[rip]
+>          mov     rax, rdx
+>          cmp     rcx, rdx
+>          jne     .L2
+>          mov     eax, DWORD PTR [rax]
+>          ret
 > 
-[...]
+> gcc 14.2.0 ARM64:
+> 
+> fct_hide_var_compare:
+>          adrp    x2, p
+>          add     x2, x2, :lo12:p
+> .L2:
+>          ldr     x3, [x2]
+>          ldr     x1, [x2]
+>          mov     x0, x1
+>          cmp     x3, x1
+>          bne     .L2
+>          ldr     w0, [x0]
+>          ret
+> 
+> Link to godbolt:
+> 
+> 	https://godbolt.org/z/a7jsfzjxY-- 
+Mathieu Desnoyers
+EfficiOS Inc.
+https://www.efficios.com
+

@@ -1,223 +1,158 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from frasgout12.his.huawei.com (frasgout12.his.huawei.com [14.137.139.154])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51B1CAD2F;
-	Sun, 29 Sep 2024 17:07:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E62317E01C
+	for <lkmm@lists.linux.dev>; Mon, 30 Sep 2024 08:58:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=14.137.139.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727629656; cv=none; b=SJvT0L8H2dvkGlYpLFfS7giKHcqWpsuRkxMS72K7E58iEC9LWuAXoisIuwUkk1+tleR/1QltVBGl95v3kWdll45CRNaVdotQiHgDVcv6VazklEoSXGEwuA2cVK4GD+bZzD9hgbuVeW2zgfUZkk3egDEdTd4L9DmpohnwG1GIVvk=
+	t=1727686697; cv=none; b=DvudLOkSm1XA43EVDKWYYFjOfDIyY0jP0WP7kGNYqrZBwWt7SVvEqdhPsCQYXQbtDmUVYqP2CFlK8yxBYlJ2HWCpO/8AWoz7f5Ovt+iBRPsPiGonp+rygojWiOtwEWCRHrT6yKjJTxLURo/NxO4cMnJGNYJO4GwJcqS7Fw8z48A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727629656; c=relaxed/simple;
-	bh=O7w8DeVwq7CwRT5PMbyZVQpfUrTlDNjY5NwQLo7OfxA=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=sSyab/T9By/OkF3HaKxHchwl1d+pAJ3R+HaVgOMxKHVpz/06uFGgeEGiycXcEortQ4f67rQ5TpAfo8y+KkRPGOBR0z3nKgu8qy8vHmYHYD9yTrZBZ7xFKS9QDjQqycq2rQUbuIx7dMAM8gbbsXW5HP9ZPPMFVm9NsTVU3Ylk3QQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=t2LXR/Do; arc=none smtp.client-ip=10.30.226.201
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="t2LXR/Do"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6DBBC4CEC5;
-	Sun, 29 Sep 2024 17:07:35 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1727629655;
-	bh=O7w8DeVwq7CwRT5PMbyZVQpfUrTlDNjY5NwQLo7OfxA=;
-	h=Date:From:To:Cc:Subject:Reply-To:References:In-Reply-To:From;
-	b=t2LXR/DoOMh4sF/JbbWKkcGIj78RzUgUI8rsWOJITBhe6S9skX8osKV86lRHspwJ1
-	 tpYMKTXppM93TfsEcEru0yQz8rxkPjYPl4118Xa1M5HI2aNeEk8rT+kcdN7sVerTyr
-	 kswROxQkl3RFeliMR9ybHJXeo0nBBiUCG8izn5VsM/7D1zw8pNkpZIopW7RMUcDoSh
-	 brhwrd6Y+uWwi2vxh8/4YGF/vfJBmQ9NqpQ1uZyHOLc1UAxX7FJeaq0hutwHTzJK6a
-	 eCuUCucuyXbHZ6AF6OH/7t0czyr5NEN5GyAHjun6Ksb3yzjwHYT+zXBhgOIEVyvsuO
-	 bNImMGb9NCvtw==
-Received: by paulmck-ThinkPad-P17-Gen-1.home (Postfix, from userid 1000)
-	id 6E859CE04D4; Sun, 29 Sep 2024 10:07:35 -0700 (PDT)
-Date: Sun, 29 Sep 2024 10:07:35 -0700
-From: "Paul E. McKenney" <paulmck@kernel.org>
-To: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
-Cc: Linus Torvalds <torvalds@linux-foundation.org>,
-	linux-kernel@vger.kernel.org,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
-	Will Deacon <will@kernel.org>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Boqun Feng <boqun.feng@gmail.com>,
-	Alan Stern <stern@rowland.harvard.edu>,
-	John Stultz <jstultz@google.com>,
-	Neeraj Upadhyay <Neeraj.Upadhyay@amd.com>,
-	Frederic Weisbecker <frederic@kernel.org>,
-	Joel Fernandes <joel@joelfernandes.org>,
-	Josh Triplett <josh@joshtriplett.org>,
-	Uladzislau Rezki <urezki@gmail.com>,
-	Steven Rostedt <rostedt@goodmis.org>,
-	Lai Jiangshan <jiangshanlai@gmail.com>,
-	Zqiang <qiang.zhang1211@gmail.com>, Ingo Molnar <mingo@redhat.com>,
-	Waiman Long <longman@redhat.com>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Vlastimil Babka <vbabka@suse.cz>, maged.michael@gmail.com,
-	Mateusz Guzik <mjguzik@gmail.com>, Gary Guo <gary@garyguo.net>,
-	Jonas Oberhauser <jonas.oberhauser@huaweicloud.com>,
-	rcu@vger.kernel.org, linux-mm@kvack.org, lkmm@lists.linux.dev,
-	Nikita Popov <github@npopov.com>, llvm@lists.linux.dev
-Subject: Re: [PATCH v1 2/2] Documentation: RCU: Refer to ptr_eq()
-Message-ID: <cf2139e2-41cd-4213-89e9-c10873498edf@paulmck-laptop>
-Reply-To: paulmck@kernel.org
-References: <20240929111608.1016757-1-mathieu.desnoyers@efficios.com>
- <20240929111608.1016757-3-mathieu.desnoyers@efficios.com>
- <8153f0f1-fd18-4ae1-9dc5-f9b725429cad@paulmck-laptop>
- <3a298b64-dd7c-4a0d-950e-8e5b98b39fee@efficios.com>
+	s=arc-20240116; t=1727686697; c=relaxed/simple;
+	bh=pK9BBmAz7pGForOQWbZmxWWr5mRMu1MTSBFFRLgbCTw=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=VsK9JJWno8MUdM1v59lKeBdr/ycX7Ai5bXJwZHimikEXIPhC6MR6F7ap/wU35c8G0UpqcOlw8RHT8ptBp4sAI8+Xi6fgdFZ1lE1KrdCt8Im76QD3DYV6B2PhVl99Obry/LeDg7CE7vtF443EeIxO/CVd9L2QXo18GhLtEbBNEpk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=huaweicloud.com; spf=pass smtp.mailfrom=huaweicloud.com; arc=none smtp.client-ip=14.137.139.154
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=huaweicloud.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huaweicloud.com
+Received: from mail.maildlp.com (unknown [172.18.186.29])
+	by frasgout12.his.huawei.com (SkyGuard) with ESMTP id 4XHDpG44c1z9v7JS
+	for <lkmm@lists.linux.dev>; Mon, 30 Sep 2024 16:32:22 +0800 (CST)
+Received: from mail02.huawei.com (unknown [7.182.16.27])
+	by mail.maildlp.com (Postfix) with ESMTP id C92361404C6
+	for <lkmm@lists.linux.dev>; Mon, 30 Sep 2024 16:57:56 +0800 (CST)
+Received: from [10.81.211.60] (unknown [10.81.211.60])
+	by APP2 (Coremail) with SMTP id GxC2BwCXRscEaPpmNIbwAQ--.5120S2;
+	Mon, 30 Sep 2024 09:57:56 +0100 (CET)
+Message-ID: <8d20cf79-9fa5-4ced-aa91-232ccd545b59@huaweicloud.com>
+Date: Mon, 30 Sep 2024 10:57:37 +0200
 Precedence: bulk
 X-Mailing-List: lkmm@lists.linux.dev
 List-Id: <lkmm.lists.linux.dev>
 List-Subscribe: <mailto:lkmm+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:lkmm+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <3a298b64-dd7c-4a0d-950e-8e5b98b39fee@efficios.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/2] compiler.h: Introduce ptr_eq() to preserve address
+ dependency
+To: Alan Huang <mmpgouride@gmail.com>,
+ Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+Cc: Alan Stern <stern@rowland.harvard.edu>,
+ Linus Torvalds <torvalds@linux-foundation.org>,
+ LKML <linux-kernel@vger.kernel.org>,
+ Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+ Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
+ "Paul E. McKenney" <paulmck@kernel.org>, Will Deacon <will@kernel.org>,
+ Peter Zijlstra <peterz@infradead.org>, Boqun Feng <boqun.feng@gmail.com>,
+ John Stultz <jstultz@google.com>, Neeraj upadhyay <Neeraj.Upadhyay@amd.com>,
+ Frederic Weisbecker <frederic@kernel.org>,
+ Joel Fernandes <joel@joelfernandes.org>,
+ Josh Triplett <josh@joshtriplett.org>,
+ "Uladzislau Rezki (Sony)" <urezki@gmail.com>,
+ Steven Rostedt <rostedt@goodmis.org>, Lai Jiangshan
+ <jiangshanlai@gmail.com>, Zqiang <qiang.zhang1211@gmail.com>,
+ Ingo Molnar <mingo@redhat.com>, Waiman Long <longman@redhat.com>,
+ Mark Rutland <mark.rutland@arm.com>, Thomas Gleixner <tglx@linutronix.de>,
+ Vlastimil Babka <vbabka@suse.cz>, maged.michael@gmail.com,
+ Mateusz Guzik <mjguzik@gmail.com>, Gary Guo <gary@garyguo.net>,
+ RCU <rcu@vger.kernel.org>, linux-mm@kvack.org, lkmm@lists.linux.dev
+References: <20240928135128.991110-1-mathieu.desnoyers@efficios.com>
+ <20240928135128.991110-2-mathieu.desnoyers@efficios.com>
+ <02c63e79-ec8c-4d6a-9fcf-75f0e67ea242@rowland.harvard.edu>
+ <2091628c-2d96-4492-99d9-0f6a61b08d1d@efficios.com>
+ <d2c87672-af75-4210-bd96-d7f38f2f63ac@rowland.harvard.edu>
+ <d49f5d9f-559d-449b-b330-9e5a57d9b438@efficios.com>
+ <D31AF4E7-B9D5-4D2F-A4B9-1E12B5E69549@gmail.com>
+From: Jonas Oberhauser <jonas.oberhauser@huaweicloud.com>
+In-Reply-To: <D31AF4E7-B9D5-4D2F-A4B9-1E12B5E69549@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID:GxC2BwCXRscEaPpmNIbwAQ--.5120S2
+X-Coremail-Antispam: 1UD129KBjvJXoWxZFyrGr4xCFykJF4Duw45KFg_yoW5AF4DpF
+	W7Ka17KF4kJF1akr90y348uFy5trn7tFyYv3Z5tr1xCws0gF1fZr43tFyYkasxCwn7t34j
+	vr1Yv3sIvasxAaDanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+	9KBjDU0xBIdaVrnRJUUUvjb4IE77IF4wAFF20E14v26rWj6s0DM7CY07I20VC2zVCF04k2
+	6cxKx2IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4
+	vEj48ve4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Jr0_JF4l84ACjcxK6xIIjxv20xvEc7Cj
+	xVAFwI0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW8JVWxJwA2z4x0Y4vEx4A2jsIEc7CjxV
+	AFwI0_Gr0_Gr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l5I8CrVACY4xI64kE6c02F40E
+	x7xfMcIj6xIIjxv20xvE14v26r1j6r18McIj6I8E87Iv67AKxVWUJVW8JwAm72CE4IkC6x
+	0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lFIxGxcIEc7CjxVA2Y2ka0xkIwI1lc7CjxVAaw2AF
+	wI0_GFv_Wryl42xK82IYc2Ij64vIr41l4I8I3I0E4IkC6x0Yz7v_Jr0_Gr1lx2IqxVAqx4
+	xG67AKxVWUJVWUGwC20s026x8GjcxK67AKxVWUGVWUWwC2zVAF1VAY17CE14v26r4a6rW5
+	MIIYrxkI7VAKI48JMIIF0xvE2Ix0cI8IcVAFwI0_Jr0_JF4lIxAIcVC0I7IYx2IY6xkF7I
+	0E14v26r4j6F4UMIIF0xvE42xK8VAvwI8IcIk0rVWUJVWUCwCI42IY6I8E87Iv67AKxVWU
+	JVW8JwCI42IY6I8E87Iv6xkF7I0E14v26r4j6r4UJbIYCTnIWIevJa73UjIFyTuYvjxUIF
+	4iUUUUU
+X-CM-SenderInfo: 5mrqt2oorev25kdx2v3u6k3tpzhluzxrxghudrp/
 
-On Sun, Sep 29, 2024 at 12:09:54PM -0400, Mathieu Desnoyers wrote:
-> On 2024-09-29 17:51, Paul E. McKenney wrote:
-> > On Sun, Sep 29, 2024 at 07:16:08AM -0400, Mathieu Desnoyers wrote:
-> > > Refer to ptr_eq() in the rcu_dereference() documentation.
-> > > 
-> > > ptr_eq() is a mechanism that preserves address dependencies when
-> > > comparing pointers, and should be favored when comparing a pointer
-> > > obtained from rcu_dereference() against another pointer.
-> > > 
-> > > Signed-off-by: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
-> > > Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-> > > Cc: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-> > > Cc: "Paul E. McKenney" <paulmck@kernel.org>
-> > > Cc: Will Deacon <will@kernel.org>
-> > > Cc: Peter Zijlstra <peterz@infradead.org>
-> > > Cc: Boqun Feng <boqun.feng@gmail.com>
-> > > Cc: Alan Stern <stern@rowland.harvard.edu>
-> > > Cc: John Stultz <jstultz@google.com>
-> > > Cc: Neeraj Upadhyay <Neeraj.Upadhyay@amd.com>
-> > > Cc: Linus Torvalds <torvalds@linux-foundation.org>
-> > > Cc: Boqun Feng <boqun.feng@gmail.com>
-> > > Cc: Frederic Weisbecker <frederic@kernel.org>
-> > > Cc: Joel Fernandes <joel@joelfernandes.org>
-> > > Cc: Josh Triplett <josh@joshtriplett.org>
-> > > Cc: Uladzislau Rezki <urezki@gmail.com>
-> > > Cc: Steven Rostedt <rostedt@goodmis.org>
-> > > Cc: Lai Jiangshan <jiangshanlai@gmail.com>
-> > > Cc: Zqiang <qiang.zhang1211@gmail.com>
-> > > Cc: Ingo Molnar <mingo@redhat.com>
-> > > Cc: Waiman Long <longman@redhat.com>
-> > > Cc: Mark Rutland <mark.rutland@arm.com>
-> > > Cc: Thomas Gleixner <tglx@linutronix.de>
-> > > Cc: Vlastimil Babka <vbabka@suse.cz>
-> > > Cc: maged.michael@gmail.com
-> > > Cc: Mateusz Guzik <mjguzik@gmail.com>
-> > > Cc: Gary Guo <gary@garyguo.net>
-> > > Cc: Jonas Oberhauser <jonas.oberhauser@huaweicloud.com>
-> > > Cc: rcu@vger.kernel.org
-> > > Cc: linux-mm@kvack.org
-> > > Cc: lkmm@lists.linux.dev
-> > > Cc: Nikita Popov <github@npopov.com>
-> > > Cc: llvm@lists.linux.dev
-> > > ---
-> > > Changes since v0:
-> > > - Include feedback from Alan Stern.
-> > > ---
-> > >   Documentation/RCU/rcu_dereference.rst | 32 ++++++++++++++++++++++-----
-> > >   1 file changed, 27 insertions(+), 5 deletions(-)
-> > > 
-> > > diff --git a/Documentation/RCU/rcu_dereference.rst b/Documentation/RCU/rcu_dereference.rst
-> > > index 2524dcdadde2..9ef97b7ca74d 100644
-> > > --- a/Documentation/RCU/rcu_dereference.rst
-> > > +++ b/Documentation/RCU/rcu_dereference.rst
-> > > @@ -104,11 +104,12 @@ readers working properly:
-> > >   	after such branches, but can speculate loads, which can again
-> > >   	result in misordering bugs.
-> > > --	Be very careful about comparing pointers obtained from
-> > > -	rcu_dereference() against non-NULL values.  As Linus Torvalds
-> > > -	explained, if the two pointers are equal, the compiler could
-> > > -	substitute the pointer you are comparing against for the pointer
-> > > -	obtained from rcu_dereference().  For example::
-> > > +-	Use operations that preserve address dependencies (such as
-> > > +	"ptr_eq()") to compare pointers obtained from rcu_dereference()
-> > > +	against non-NULL pointers. As Linus Torvalds explained, if the
-> > > +	two pointers are equal, the compiler could substitute the
-> > > +	pointer you are comparing against for the pointer obtained from
-> > > +	rcu_dereference().  For example::
-> > >   		p = rcu_dereference(gp);
-> > >   		if (p == &default_struct)
-> > > @@ -125,6 +126,23 @@ readers working properly:
-> > >   	On ARM and Power hardware, the load from "default_struct.a"
-> > >   	can now be speculated, such that it might happen before the
-> > >   	rcu_dereference().  This could result in bugs due to misordering.
-> > > +	Performing the comparison with "ptr_eq()" ensures the compiler
-> > > +	does not perform such transformation.
-> > > +
-> > > +	If the comparison is against another pointer, the compiler is
-> > > +	allowed to use either pointer for the following accesses, which
-> > > +	loses the address dependency and allows weakly-ordered
-> > > +	architectures such as ARM and PowerPC to speculate the
-> > > +	address-dependent load before rcu_dereference().  For example::
-> > > +
-> > > +		p1 = READ_ONCE(gp);
-> > > +		p2 = rcu_dereference(gp);
-> > > +		if (p1 == p2)
-> > > +			do_default(p2->a);
-> > > +
-> > > +	The compiler can use p1->a rather than p2->a, destroying the
-> > > +	address dependency.  Performing the comparison with "ptr_eq()"
-> > > +	ensures the compiler preserves the address dependencies.
-> > 
-> > Bitter experience leads me to suggest a "// BUGGY" comment on the "if"
-> > statement in the above example, and a corrected code snippet right here.  :-/
-> 
-> Changing for the following:
-> 
-> +               p1 = READ_ONCE(gp);
-> +               p2 = rcu_dereference(gp);
-> +               if (p1 == p2)  /* BUGGY!!! */
-> +                       do_default(p2->a);
-> +
-> +       The compiler can use p1->a rather than p2->a, destroying the
-> +       address dependency.  Performing the comparison with "ptr_eq()"
-> +       ensures the compiler preserves the address dependencies.
-> +       Corrected code::
-> +
-> +               p1 = READ_ONCE(gp);
-> +               p2 = rcu_dereference(gp);
-> +               if (ptr_eq(p1, p2))
-> +                       do_default(p2->a);
-> 
-> > 
-> > Other than that, loks good!
-> 
-> Let me know if I should add an acked-by from you on this
-> documentation patch as well.
 
-Much better!
 
-Acked-by: Paul E. McKenney <paulmck@kernel.org>
+Am 9/29/2024 um 12:26 AM schrieb Alan Huang:
+> 2024年9月28日 23:55，Mathieu Desnoyers <mathieu.desnoyers@efficios.com> wrote：
+>>
+>> On 2024-09-28 17:49, Alan Stern wrote:
+>>> On Sat, Sep 28, 2024 at 11:32:18AM -0400, Mathieu Desnoyers wrote:
+>>>> On 2024-09-28 16:49, Alan Stern wrote:
+>>>>> On Sat, Sep 28, 2024 at 09:51:27AM -0400, Mathieu Desnoyers wrote:
+>>>>>> equality, which does not preserve address dependencies and allows the
+>>>>>> following misordering speculations:
+>>>>>>
+>>>>>> - If @b is a constant, the compiler can issue the loads which depend
+>>>>>>     on @a before loading @a.
+>>>>>> - If @b is a register populated by a prior load, weakly-ordered
+>>>>>>     CPUs can speculate loads which depend on @a before loading @a.
+>>>>>
+>>>>> It shouldn't matter whether @a and @b are constants, registers, or
+>>>>> anything else.  All that matters is that the compiler uses the wrong
+>>>>> one, which allows weakly ordered CPUs to speculate loads you wouldn't
+>>>>> expect it to, based on the source code alone.
+>>>>
+>>>> I only partially agree here.
+>>>>
+>>>> On weakly-ordered architectures, indeed we don't care whether the
+>>>> issue is caused by the compiler reordering the code (constant)
+>>>> or the CPU speculating the load (registers).
+>>>>
+>>>> However, on strongly-ordered architectures, AFAIU, only the constant
+>>>> case is problematic (compiler reordering the dependent load), because
+>>> I thought you were trying to prevent the compiler from using one pointer
+>>> instead of the other, not trying to prevent it from reordering anything.
+>>> Isn't this the point the documentation wants to get across when it says
+>>> that comparing pointers can be dangerous?
+>>
+>> The motivation for introducing ptr_eq() is indeed because the
+>> compiler barrier is not sufficient to prevent the compiler from
+>> using one pointer instead of the other.
+> 
+> barrier_data(&b) prevents that.
 
-> Thanks,
-> 
-> Mathieu
-> 
-> > 
-> > 							Thanx, Paul
-> > 
-> > >   	However, comparisons are OK in the following cases:
-> > > @@ -204,6 +222,10 @@ readers working properly:
-> > >   		comparison will provide exactly the information that the
-> > >   		compiler needs to deduce the value of the pointer.
-> > > +	When in doubt, use operations that preserve address dependencies
-> > > +	(such as "ptr_eq()") to compare pointers obtained from
-> > > +	rcu_dereference() against non-NULL pointers.
-> > > +
-> > >   -	Disable any value-speculation optimizations that your compiler
-> > >   	might provide, especially if you are making use of feedback-based
-> > >   	optimizations that take data collected from prior runs.  Such
-> > > -- 
-> > > 2.39.2
-> > > 
-> 
-> -- 
-> Mathieu Desnoyers
-> EfficiOS Inc.
-> https://www.efficios.com
-> 
+I don't think one barrier_data can garantuee preventing this, because 
+right after doing the comparison, the compiler still could do b=a.
+
+In that case you would be guaranteed to use the value in b, but that 
+value is not the value loaded into b originally but rather the value 
+loaded into a, and hence your address dependency goes to the wrong load 
+still.
+
+However, doing
+
+barrier_data(&b);
+if (a == b) {
+    barrier();
+    foo(*b);
+}
+
+might maybe prevent it, because after the address of b is escaped, the 
+compiler might no longer be allowed to just do b=a;, but I'm not sure if 
+that is completely correct, since the compiler knows b==a and no other 
+thread can be concurrently modifying a or b. Therefore, given that the 
+compiler knows the hardware, it might know that assigning b=a would not 
+cause any  race-related issues even if another thread was reading b 
+concurrently.
+
+Finally, it may be only a combination of barrier_data and making b 
+volatile could be guaranteed to solve the issue, but the code will be 
+very obscure compared to using ptr_eq.
+
+   jonas
+

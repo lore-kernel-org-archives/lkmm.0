@@ -1,152 +1,160 @@
-Received: from frasgout11.his.huawei.com (frasgout11.his.huawei.com [14.137.139.23])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qk1-f174.google.com (mail-qk1-f174.google.com [209.85.222.174])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75FBB126C03
-	for <lkmm@lists.linux.dev>; Mon, 30 Sep 2024 17:05:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=14.137.139.23
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01542198850
+	for <lkmm@lists.linux.dev>; Mon, 30 Sep 2024 18:53:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727715944; cv=none; b=KbE95pVqSOVAHtqABWP8iS3MPuPU6neYRh9uVF1W98Y3fw/Rf9D6PFtY480xBmZxxk5GJWSUPwU9Ln50ymCazn31mjO+WLMnmoLo+Tzt4HgfbuNuoZGKIoYBH21uSm1qg7cZ/RdNk24dKL+oaucm+tvGDTlQcohpDKIZGzcQ2OY=
+	t=1727722389; cv=none; b=DgrXAHyZVb9d2FLbvSmiiIlFl9K9Q4efWeZ60wyU0hQ3ouTDA255qzUThyvq7G9G7umjGn5/Ni46ptj5IAbBwjnCTCztsDvSrk6+EvBeDr9GzU9Ka8XGRko0RAvK6gtFBU2DvYIyqkRphCKYuUrGIu34AgCSHLGSWeRBAkrjhjA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727715944; c=relaxed/simple;
-	bh=RILc8DXqlujmScmAB8dI/uIvf3KRk+SNjPvRDlWDEdY=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=iqGSs6TF/dexCYVVdIk5r7rN5bIX+0Wx1WquOXmmQ3gNEclMqWVNLgbkcbK2V5F0HkwJTuq9XtqJqQpW7gfOjpk9jBSjcZPez1ZLV1MDGhw4zJu/OWvs6xUvQQivW0VhA5Cg/P8uwpYU34zarIqXUEZBTJX3CuIlWRx20SWCpJY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=huaweicloud.com; spf=pass smtp.mailfrom=huaweicloud.com; arc=none smtp.client-ip=14.137.139.23
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=huaweicloud.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huaweicloud.com
-Received: from mail.maildlp.com (unknown [172.18.186.29])
-	by frasgout11.his.huawei.com (SkyGuard) with ESMTP id 4XHRlW6mF8z9v7Hq
-	for <lkmm@lists.linux.dev>; Tue,  1 Oct 2024 00:45:43 +0800 (CST)
-Received: from mail02.huawei.com (unknown [7.182.16.47])
-	by mail.maildlp.com (Postfix) with ESMTP id 1344A1404F6
-	for <lkmm@lists.linux.dev>; Tue,  1 Oct 2024 01:05:27 +0800 (CST)
-Received: from [10.81.209.28] (unknown [10.81.209.28])
-	by APP1 (Coremail) with SMTP id LxC2BwAnuC9G2vpmEMjxAQ--.62409S2;
-	Mon, 30 Sep 2024 18:05:26 +0100 (CET)
-Message-ID: <5d7d8a59-57f5-4125-95bb-fda9c193b9cf@huaweicloud.com>
-Date: Mon, 30 Sep 2024 19:05:06 +0200
+	s=arc-20240116; t=1727722389; c=relaxed/simple;
+	bh=OhFYS2zLBVylMlhXJpUaVCRzSOpOEfPox/eu3c+3Bu4=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=k0euPA5b6WRDl3CDJ79kHLXUE8DbLSvahNQ47xeCvveLJjZoc97sM8yTzDOzva7oKQjCVw7zGUwP4I2mWjCxJ8gncf16Tz2Gl1Bzn9WWCDJxyjinAzNp0af2+xqOZ39gVb1wzYTQc6Xox3JsVnA5a6jJjqEISBX5JhnoWxxqB/k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=rowland.harvard.edu; spf=fail smtp.mailfrom=g.harvard.edu; dkim=pass (2048-bit key) header.d=rowland.harvard.edu header.i=@rowland.harvard.edu header.b=ScmwgFMr; arc=none smtp.client-ip=209.85.222.174
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=rowland.harvard.edu
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=g.harvard.edu
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=rowland.harvard.edu header.i=@rowland.harvard.edu header.b="ScmwgFMr"
+Received: by mail-qk1-f174.google.com with SMTP id af79cd13be357-7a9ab721058so495953985a.1
+        for <lkmm@lists.linux.dev>; Mon, 30 Sep 2024 11:53:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=rowland.harvard.edu; s=google; t=1727722387; x=1728327187; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=Q3nc/E6veIr73qBv2y/aevoRhI95QWm1Rj9HOPT08sU=;
+        b=ScmwgFMrCRN1mWVGGjcI+DdAuMhDakWnvozD0zuDHTplNz7g3Gxo16ZYZwVxg7cTMq
+         UAv/t4/vXThXoMVPQaYXwP8RdOg8f2x+P5V2pNNI3PT9CIgBVOM7S/Yhp0Zk5QsiNkjC
+         i3J0tnFBvNr+/xBxARPhqicR1zF97af8/rs/JJvYLZo/Z5M7rkX+w0jhwDjTUPUnbD8Q
+         Cdf7xTvYId3Cf59fc7i6sIn9SAjql0YBCJGpDhoKYKpqKMGVjt39CFVGXG2g4Mn/srr5
+         syHuC8/hp5uR5cp7WNEfdk912tj/s4Nx8NY8JQoiaaMnzAbKP0IyunpRyPwI3ZjJ+CoV
+         0OsA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1727722387; x=1728327187;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=Q3nc/E6veIr73qBv2y/aevoRhI95QWm1Rj9HOPT08sU=;
+        b=ueXfgKBAm9Rvly8XRYg28EiwGdgB993NcaLQ+WNqL6A6LJWC4iVdP6TG/uesCwireV
+         nzUG3t1yZsuaOOcGhX3c9OYIS8nR2VxmtfBovFsTo217gDbgN5vAWsfa88pmzi6FKIuj
+         RX+NGp+zzGqXj/iT3rEYd01tpcvEAJr1KdegSoFUzP5gnHb9CAPoSa2SfRNhsClGbq6S
+         JxJBvxXPzk0nJMiTnnxhnmTnK+Egs4zKiUN6+QU0ZPee1mRgM3omwAYjzI7n8CqH/vIR
+         DNoTvnwTHzmLuTLcv0CyDYQcmTee1ktMbBAs8cYvkP3JKKyjjlnD7T5GgAbjtSob88an
+         cd9w==
+X-Forwarded-Encrypted: i=1; AJvYcCW2c/bNWScmKWblFGshzsseH0yPDAAE29zO0Ba7I/Y3Io+yyezilvsYlpU4tPsBlTA0/pLL@lists.linux.dev
+X-Gm-Message-State: AOJu0YwONlJh0B20VKPrQ/v3gvvW8SP64iQBwQ4m5TXymw4ODG0z1KBm
+	1dnIMaSTvygZ+t+uBgI49mCJimUgbqqtVUmqC5az9OfBM28Ng9xU6zhkeO0Obg==
+X-Google-Smtp-Source: AGHT+IGKwCrS47yaTQ0BeOhoXQcBFlAYv3nhqHOPGUF2suoHUqsJsO84VsCTi/F+Qxr0yXZrYyaBIQ==
+X-Received: by 2002:a05:6214:2d13:b0:6cb:3be9:1816 with SMTP id 6a1803df08f44-6cb729e7801mr8703456d6.24.1727722386910;
+        Mon, 30 Sep 2024 11:53:06 -0700 (PDT)
+Received: from rowland.harvard.edu ([2601:19b:681:fd10::5638])
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-6cb3b67f247sm41724056d6.107.2024.09.30.11.53.04
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 30 Sep 2024 11:53:06 -0700 (PDT)
+Date: Mon, 30 Sep 2024 14:53:02 -0400
+From: Alan Stern <stern@rowland.harvard.edu>
+To: Jonas Oberhauser <jonas.oberhauser@huaweicloud.com>
+Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	linux-kernel@vger.kernel.org,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
+	"Paul E. McKenney" <paulmck@kernel.org>,
+	Will Deacon <will@kernel.org>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Boqun Feng <boqun.feng@gmail.com>, John Stultz <jstultz@google.com>,
+	Neeraj Upadhyay <Neeraj.Upadhyay@amd.com>,
+	Frederic Weisbecker <frederic@kernel.org>,
+	Joel Fernandes <joel@joelfernandes.org>,
+	Josh Triplett <josh@joshtriplett.org>,
+	Uladzislau Rezki <urezki@gmail.com>,
+	Steven Rostedt <rostedt@goodmis.org>,
+	Lai Jiangshan <jiangshanlai@gmail.com>,
+	Zqiang <qiang.zhang1211@gmail.com>, Ingo Molnar <mingo@redhat.com>,
+	Waiman Long <longman@redhat.com>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Vlastimil Babka <vbabka@suse.cz>, maged.michael@gmail.com,
+	Mateusz Guzik <mjguzik@gmail.com>, Gary Guo <gary@garyguo.net>,
+	rcu@vger.kernel.org, linux-mm@kvack.org, lkmm@lists.linux.dev
+Subject: Re: [PATCH 1/2] compiler.h: Introduce ptr_eq() to preserve address
+ dependency
+Message-ID: <82e97ad5-17ad-418d-8791-22297acc7af4@rowland.harvard.edu>
+References: <20240928135128.991110-1-mathieu.desnoyers@efficios.com>
+ <20240928135128.991110-2-mathieu.desnoyers@efficios.com>
+ <02c63e79-ec8c-4d6a-9fcf-75f0e67ea242@rowland.harvard.edu>
+ <9539c551-5c91-42db-8ac1-cff1d6d7c293@huaweicloud.com>
+ <2cdda043-1ad9-40cf-a157-0c16a0ffb046@rowland.harvard.edu>
+ <5d7d8a59-57f5-4125-95bb-fda9c193b9cf@huaweicloud.com>
 Precedence: bulk
 X-Mailing-List: lkmm@lists.linux.dev
 List-Id: <lkmm.lists.linux.dev>
 List-Subscribe: <mailto:lkmm+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:lkmm+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] compiler.h: Introduce ptr_eq() to preserve address
- dependency
-To: Alan Stern <stern@rowland.harvard.edu>
-Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
- Linus Torvalds <torvalds@linux-foundation.org>,
- linux-kernel@vger.kernel.org, Greg Kroah-Hartman
- <gregkh@linuxfoundation.org>,
- Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
- "Paul E. McKenney" <paulmck@kernel.org>, Will Deacon <will@kernel.org>,
- Peter Zijlstra <peterz@infradead.org>, Boqun Feng <boqun.feng@gmail.com>,
- John Stultz <jstultz@google.com>, Neeraj Upadhyay <Neeraj.Upadhyay@amd.com>,
- Frederic Weisbecker <frederic@kernel.org>,
- Joel Fernandes <joel@joelfernandes.org>,
- Josh Triplett <josh@joshtriplett.org>, Uladzislau Rezki <urezki@gmail.com>,
- Steven Rostedt <rostedt@goodmis.org>, Lai Jiangshan
- <jiangshanlai@gmail.com>, Zqiang <qiang.zhang1211@gmail.com>,
- Ingo Molnar <mingo@redhat.com>, Waiman Long <longman@redhat.com>,
- Mark Rutland <mark.rutland@arm.com>, Thomas Gleixner <tglx@linutronix.de>,
- Vlastimil Babka <vbabka@suse.cz>, maged.michael@gmail.com,
- Mateusz Guzik <mjguzik@gmail.com>, Gary Guo <gary@garyguo.net>,
- rcu@vger.kernel.org, linux-mm@kvack.org, lkmm@lists.linux.dev
-References: <20240928135128.991110-1-mathieu.desnoyers@efficios.com>
- <20240928135128.991110-2-mathieu.desnoyers@efficios.com>
- <02c63e79-ec8c-4d6a-9fcf-75f0e67ea242@rowland.harvard.edu>
- <9539c551-5c91-42db-8ac1-cff1d6d7c293@huaweicloud.com>
- <2cdda043-1ad9-40cf-a157-0c16a0ffb046@rowland.harvard.edu>
-From: Jonas Oberhauser <jonas.oberhauser@huaweicloud.com>
-In-Reply-To: <2cdda043-1ad9-40cf-a157-0c16a0ffb046@rowland.harvard.edu>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-CM-TRANSID:LxC2BwAnuC9G2vpmEMjxAQ--.62409S2
-X-Coremail-Antispam: 1UD129KBjvJXoW7uF4xJr1fCF4kCF1fKr17Jrb_yoW8Zryfpr
-	Z8ta15KF4kGw13Crs0yw15ZFWa9an3KFy5Wrn7XrW0kan09FyfKF47KFy5uF9xZ34fJrWj
-	y3yUurWfuFy3JaDanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
-	9KBjDU0xBIdaVrnRJUUUvYb4IE77IF4wAFF20E14v26rWj6s0DM7CY07I20VC2zVCF04k2
-	6cxKx2IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4
-	vEj48ve4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Jr0_JF4l84ACjcxK6xIIjxv20xvEc7Cj
-	xVAFwI0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW8JVWxJwA2z4x0Y4vEx4A2jsIEc7CjxV
-	AFwI0_Gr1j6F4UJwAS0I0E0xvYzxvE52x082IY62kv0487Mc02F40EFcxC0VAKzVAqx4xG
-	6I80ewAv7VC0I7IYx2IY67AKxVWUJVWUGwAv7VC2z280aVAFwI0_Jr0_Gr1lOx8S6xCaFV
-	Cjc4AY6r1j6r4UM4x0Y48IcVAKI48JM4IIrI8v6xkF7I0E8cxan2IY04v7MxkF7I0En4kS
-	14v26r4a6rW5MxAIw28IcxkI7VAKI48JMxC20s026xCaFVCjc4AY6r1j6r4UMI8I3I0E5I
-	8CrVAFwI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE17CEb7AF67AKxVW8ZVWr
-	XwCIc40Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r1j6r1xMIIF0xvE2Ix0cI8IcVCY1x
-	0267AKxVW8JVWxJwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF4lIxAIcVC2z280aVAFwI0_
-	Gr0_Cr1lIxAIcVC2z280aVCY1x0267AKxVW8Jr0_Cr1UYxBIdaVFxhVjvjDU0xZFpf9x07
-	jxCztUUUUU=
-X-CM-SenderInfo: 5mrqt2oorev25kdx2v3u6k3tpzhluzxrxghudrp/
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <5d7d8a59-57f5-4125-95bb-fda9c193b9cf@huaweicloud.com>
 
-
-
-Am 9/30/2024 um 6:43 PM schrieb Alan Stern:
-> On Mon, Sep 30, 2024 at 01:26:53PM +0200, Jonas Oberhauser wrote:
->>
->>
->> Am 9/28/2024 um 4:49 PM schrieb Alan Stern:
->>> On Sat, Sep 28, 2024 at 09:51:27AM -0400, Mathieu Desnoyers wrote:
->>>> Compiler CSE and SSA GVN optimizations can cause the address dependency
->>>> of addresses returned by rcu_dereference to be lost when comparing those
->>>> pointers with either constants or previously loaded pointers.
->>>>
->>>> Introduce ptr_eq() to compare two addresses while preserving the address
->>>> dependencies for later use of the address. It should be used when
->>>> comparing an address returned by rcu_dereference().
->>>>
->>>> This is needed to prevent the compiler CSE and SSA GVN optimizations
->>>> from replacing the registers holding @a or @b based on their
->>>
->>> "Replacing" isn't the right word.  What the compiler does is use one
->>> rather than the other.  Furthermore, the compiler can play these games
->>> even with values that aren't in registers.
->>>
->>> You should just say: "... from using @a (or @b) in places where the
->>> source refers to @b (or @a) (based on the fact that after the
->>> comparison, the two are known to be equal), which does not ..."
->>
->> I should also point out that it is not enough to prevent the compiler from
->> using @a instead of @b.
->>
->> It must also be prevented from assigning @b=@a, which it is often allowed to
->> do after finding @a==@b.
+On Mon, Sep 30, 2024 at 07:05:06PM +0200, Jonas Oberhauser wrote:
 > 
-> Wouldn't that be a bug? 
+> 
+> Am 9/30/2024 um 6:43 PM schrieb Alan Stern:
+> > On Mon, Sep 30, 2024 at 01:26:53PM +0200, Jonas Oberhauser wrote:
+> > > 
+> > > 
+> > > Am 9/28/2024 um 4:49 PM schrieb Alan Stern:
+> > > 
+> > > I should also point out that it is not enough to prevent the compiler from
+> > > using @a instead of @b.
+> > > 
+> > > It must also be prevented from assigning @b=@a, which it is often allowed to
+> > > do after finding @a==@b.
+> > 
+> > Wouldn't that be a bug?
+> 
+> That's why I said that it is often allowed to do it. In your case it
+> wouldn't, but it is often possible when a and b are non-atomic &
+> non-volatile (and haven't escaped, and I believe sometimes even then).
+> 
+> It happens for example here with GCC 14.1.0 -O3:
+> 
+> int fct_hide(void)
+> {
+>     int *a, *b;
+> 
+>     do {
+>         a = READ_ONCE(p);
+>         asm volatile ("" : : : "memory");
+>         b = READ_ONCE(p);
+>     } while (a != b);
+>     OPTIMIZER_HIDE_VAR(b);
+>     return *b;
+> }
+> 
+> 
+> 
+>         ldr     r1, [r2]
+>         ldr     r3, [r2]
+>         cmp     r1, r3
+>         bne     .L6
+>         mov     r3, r1   // nay...
 
-That's why I said that it is often allowed to do it. In your case it 
-wouldn't, but it is often possible when a and b are non-atomic & 
-non-volatile (and haven't escaped, and I believe sometimes even then).
+A totally unnecessary instruction, which accomplishes nothing other than 
+to waste time, space, and energy.  But nonetheless, allowed -- I agree.
 
-It happens for example here with GCC 14.1.0 -O3:
+The people in charge of GCC's optimizer might like to hear about this, 
+if they're not already aware of it...
 
-int fct_hide(void)
-{
-     int *a, *b;
+>         ldr     r0, [r3] // yay!
+>         bx      lr
 
-     do {
-         a = READ_ONCE(p);
-         asm volatile ("" : : : "memory");
-         b = READ_ONCE(p);
-     } while (a != b);
-     OPTIMIZER_HIDE_VAR(b);
-     return *b;
-}
+One could argue that in this example the compiler _has_ used *a instead 
+of *b.  However, such an argument would have more force if we had 
+described what we are talking about more precisely.
 
+Yes, we do want to prevent compilers from doing this.  I'm not sure that 
+it really needs to be mentioned in the comments or commit description, 
+though.
 
-
-         ldr     r1, [r2]
-         ldr     r3, [r2]
-         cmp     r1, r3
-         bne     .L6
-         mov     r3, r1   // nay...
-         ldr     r0, [r3] // yay!
-         bx      lr
-
-
-Have fun,
-
-    jonas
-
+Alan

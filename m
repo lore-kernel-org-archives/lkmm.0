@@ -1,102 +1,60 @@
-Received: from mail-pl1-f173.google.com (mail-pl1-f173.google.com [209.85.214.173])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from frasgout13.his.huawei.com (frasgout13.his.huawei.com [14.137.139.46])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 995E51EA84
-	for <lkmm@lists.linux.dev>; Mon, 30 Sep 2024 09:28:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDE73188733
+	for <lkmm@lists.linux.dev>; Mon, 30 Sep 2024 09:33:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=14.137.139.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727688487; cv=none; b=n0LznZ6Kwf0xEhNudfo6Lr8LZA6MmmSuaZcybCyYXKpwVP1ZesBNQuNJDuHlvuKF6WIHmkCfBIpDy0xUEQyy2UjHS3RDt9rohfZhD3Q0X/FvUqTR0O0PJi+qMMSHVnh90l4GQ6ykEtz40V3SFPXJQ1cjYkQrqsjwKj2/hJQB2rs=
+	t=1727688836; cv=none; b=fRJ3Sw4+hwareWP1X0AGCCbv/8wF0IHZtTDHSzsiRCtO/enw6WOslxKKp7SBjO8c4BYYG+ppbZGunivR0N0fnNKs3+j7x7sFvghOcf+GXFZwcYXb35PwBKpg34TTid1S/6Fw0Q8FD7Z04CrywJKN8sH/RPVaaKX1o2an/x7fyRw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727688487; c=relaxed/simple;
-	bh=/Y/WvIG5HM8QB3Mef/wYZC810KU9XO+QwbXNzClpnfs=;
-	h=Content-Type:Mime-Version:Subject:From:In-Reply-To:Date:Cc:
-	 Message-Id:References:To; b=AwpPHYXwSgQmpVuD93MASpiUiw6OjwH1EAq+oqc7YJ5kUEtQvqU0UI+sEXfQTL0JfTzZH7Jzutl0izzBzxzpcSql3sVMALQWelJk6QGGfPtLkkSMyNa3KgBe9i40sv0Vicfq/cllmin7jjyeEYSzfdyieOyoD8uYmUDmShyjE80=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=F/iut7fh; arc=none smtp.client-ip=209.85.214.173
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="F/iut7fh"
-Received: by mail-pl1-f173.google.com with SMTP id d9443c01a7336-20696938f86so35176355ad.3
-        for <lkmm@lists.linux.dev>; Mon, 30 Sep 2024 02:28:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1727688485; x=1728293285; darn=lists.linux.dev;
-        h=to:references:message-id:content-transfer-encoding:cc:date
-         :in-reply-to:from:subject:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=z059m6JExv5qpwK4TrSHM55XYy4d2Mm8ALddHKMFxag=;
-        b=F/iut7fhpBUPo8SxrFV6cAv1dIbgrZk87wVLC/P6afzHI5qzJ/PmR/fTkM2bSH9dJM
-         A145vEuHyKanglyH8BTtyhdweQD7oGawTni0itUHR8tooJtDK4dMi0zpjxAwhPKGZ1kS
-         i+5DwOFxkeaWvvLV7aHaYTOETrqkiRZGnzToNQy7LDHshGNzhZuAkzfqcB32GSRxwz7o
-         nptUjXk6Q45+tpRRu8CCkZ0XxU6Awc9eMnFlOnaL+QrLNVQYXsU7CXQP2nuaaAq5TlmE
-         GsSBzDaPlYBG4S3EmcJILIvNOftwtNPyPe6vduT7UK+KPd4YgyJNIEwuuBuRIm36vZgO
-         m2tQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1727688485; x=1728293285;
-        h=to:references:message-id:content-transfer-encoding:cc:date
-         :in-reply-to:from:subject:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=z059m6JExv5qpwK4TrSHM55XYy4d2Mm8ALddHKMFxag=;
-        b=QWguqmRX/B518ZqEvwP4xVazUq9PoxiUb/hocjFZ2W578reHE4GhzN/vKb6vtguxfe
-         SuDhGgT9cXxOl9CrRxWvo4GHasuPwQYB/XUCc2DjGHirLDfG1pj6+wPR58sRNg3fLQ8O
-         tfpNXEVPPwyk8/VXzZqftFvn7BBgqT6Ptf310qh5WddsAZM77VlzvCj9bfCNVvgd4+tJ
-         Xb1T6QMT9cn7WBpw6NsZ6Kq6yqGWoej3OLZYp0/6yYvQbJWpxdbj8YVEt6rrgBaj4YiX
-         CCZ8ta/K9Cv79OOOeSve3iRg+UE3AmaxdLVfXWVA38N+p5GdI3Oux1ltchV30rzA2tUP
-         NEPQ==
-X-Forwarded-Encrypted: i=1; AJvYcCW8eJELpL8EyZSH1yvAelX3jGWMIs5xVD9Gd3FN1c/QEJurm6LdozZBg3z2YGdyoJhkIDLe@lists.linux.dev
-X-Gm-Message-State: AOJu0YzyAKagFNuIC5Cnt9Fnun6Jgl3cek9/OjnryA0epVJnO4QbJ7dI
-	UF+wFW7d4h7jviVbm+CQCZRf8wn+44yFQeohGbE3FafIumini9hn
-X-Google-Smtp-Source: AGHT+IFEpUA9lBz28DWCV9NGf0oBtIqIPy4MpNVYCvzKykDQJRwefTC7jlNkxWq5imCATpncdx/8Kg==
-X-Received: by 2002:a17:90a:a58e:b0:2e0:808f:ef9e with SMTP id 98e67ed59e1d1-2e0b8ec8cebmr13138814a91.26.1727688484625;
-        Mon, 30 Sep 2024 02:28:04 -0700 (PDT)
-Received: from smtpclient.apple ([2402:d0c0:11:86::1])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-2e05b57decdsm13371449a91.1.2024.09.30.02.27.57
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 30 Sep 2024 02:28:04 -0700 (PDT)
-Content-Type: text/plain;
-	charset=utf-8
+	s=arc-20240116; t=1727688836; c=relaxed/simple;
+	bh=ttw3/7AfZzhAFU54uuXkNQKKqdfEwEj/HVqjJllteuo=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=B+XkgJe1jmoZ38qELRTTsFaJ5Qf7S0sySywkEEbEJ4esto85AhNtESIiRJZC4nuLtOSvsHnNkgqN+sDpzAxsl/DAS+o+DaSKpSSKVd20K3ysrgfgAMeQV9Hcwe5tlxOF19sMx7l5p9gaOeZ+LTJQfCyRRWYqlyHrPR+p2HU7y5g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=huaweicloud.com; spf=pass smtp.mailfrom=huaweicloud.com; arc=none smtp.client-ip=14.137.139.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=huaweicloud.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huaweicloud.com
+Received: from mail.maildlp.com (unknown [172.18.186.51])
+	by frasgout13.his.huawei.com (SkyGuard) with ESMTP id 4XHFkC2q6lz9v7NY
+	for <lkmm@lists.linux.dev>; Mon, 30 Sep 2024 17:13:55 +0800 (CST)
+Received: from mail02.huawei.com (unknown [7.182.16.27])
+	by mail.maildlp.com (Postfix) with ESMTP id 7D7F0140381
+	for <lkmm@lists.linux.dev>; Mon, 30 Sep 2024 17:33:45 +0800 (CST)
+Received: from [10.81.211.60] (unknown [10.81.211.60])
+	by APP2 (Coremail) with SMTP id GxC2BwD3psdocPpmCvLwAQ--.5053S2;
+	Mon, 30 Sep 2024 10:33:44 +0100 (CET)
+Message-ID: <c2e5b1ee-eeee-4614-9b42-d6bbf7a67162@huaweicloud.com>
+Date: Mon, 30 Sep 2024 11:33:26 +0200
 Precedence: bulk
 X-Mailing-List: lkmm@lists.linux.dev
 List-Id: <lkmm.lists.linux.dev>
 List-Subscribe: <mailto:lkmm+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:lkmm+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3776.700.51\))
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH 1/2] compiler.h: Introduce ptr_eq() to preserve address
  dependency
-From: Alan Huang <mmpgouride@gmail.com>
-In-Reply-To: <EEAE4623-DCD7-4BBE-8E06-7F6FF6E3070B@gmail.com>
-Date: Mon, 30 Sep 2024 17:27:45 +0800
+To: Alan Huang <mmpgouride@gmail.com>
 Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
  Alan Stern <stern@rowland.harvard.edu>,
  Linus Torvalds <torvalds@linux-foundation.org>,
  LKML <linux-kernel@vger.kernel.org>,
  Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
  Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
- "Paul E. McKenney" <paulmck@kernel.org>,
- Will Deacon <will@kernel.org>,
- Peter Zijlstra <peterz@infradead.org>,
- Boqun Feng <boqun.feng@gmail.com>,
- John Stultz <jstultz@google.com>,
- Neeraj upadhyay <Neeraj.Upadhyay@amd.com>,
+ "Paul E. McKenney" <paulmck@kernel.org>, Will Deacon <will@kernel.org>,
+ Peter Zijlstra <peterz@infradead.org>, Boqun Feng <boqun.feng@gmail.com>,
+ John Stultz <jstultz@google.com>, Neeraj upadhyay <Neeraj.Upadhyay@amd.com>,
  Frederic Weisbecker <frederic@kernel.org>,
  Joel Fernandes <joel@joelfernandes.org>,
  Josh Triplett <josh@joshtriplett.org>,
  "Uladzislau Rezki (Sony)" <urezki@gmail.com>,
- Steven Rostedt <rostedt@goodmis.org>,
- Lai Jiangshan <jiangshanlai@gmail.com>,
- Zqiang <qiang.zhang1211@gmail.com>,
- Ingo Molnar <mingo@redhat.com>,
- Waiman Long <longman@redhat.com>,
- Mark Rutland <mark.rutland@arm.com>,
- Thomas Gleixner <tglx@linutronix.de>,
- Vlastimil Babka <vbabka@suse.cz>,
- maged.michael@gmail.com,
- Mateusz Guzik <mjguzik@gmail.com>,
- Gary Guo <gary@garyguo.net>,
- RCU <rcu@vger.kernel.org>,
- linux-mm@kvack.org,
- lkmm@lists.linux.dev
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <E2551572-494D-46A0-A1D5-DF91DDB8B9F9@gmail.com>
+ Steven Rostedt <rostedt@goodmis.org>, Lai Jiangshan
+ <jiangshanlai@gmail.com>, Zqiang <qiang.zhang1211@gmail.com>,
+ Ingo Molnar <mingo@redhat.com>, Waiman Long <longman@redhat.com>,
+ Mark Rutland <mark.rutland@arm.com>, Thomas Gleixner <tglx@linutronix.de>,
+ Vlastimil Babka <vbabka@suse.cz>, maged.michael@gmail.com,
+ Mateusz Guzik <mjguzik@gmail.com>, Gary Guo <gary@garyguo.net>,
+ RCU <rcu@vger.kernel.org>, linux-mm@kvack.org, lkmm@lists.linux.dev
 References: <20240928135128.991110-1-mathieu.desnoyers@efficios.com>
  <20240928135128.991110-2-mathieu.desnoyers@efficios.com>
  <02c63e79-ec8c-4d6a-9fcf-75f0e67ea242@rowland.harvard.edu>
@@ -106,104 +64,83 @@ References: <20240928135128.991110-1-mathieu.desnoyers@efficios.com>
  <D31AF4E7-B9D5-4D2F-A4B9-1E12B5E69549@gmail.com>
  <8d20cf79-9fa5-4ced-aa91-232ccd545b59@huaweicloud.com>
  <EEAE4623-DCD7-4BBE-8E06-7F6FF6E3070B@gmail.com>
-To: Jonas Oberhauser <jonas.oberhauser@huaweicloud.com>
-X-Mailer: Apple Mail (2.3776.700.51)
+ <E2551572-494D-46A0-A1D5-DF91DDB8B9F9@gmail.com>
+From: Jonas Oberhauser <jonas.oberhauser@huaweicloud.com>
+In-Reply-To: <E2551572-494D-46A0-A1D5-DF91DDB8B9F9@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID:GxC2BwD3psdocPpmCvLwAQ--.5053S2
+X-Coremail-Antispam: 1UD129KBjvJXoWxJr1kKw48GFyUtrWxCFy3Jwb_yoW8Ar1Dpr
+	W7Kay7KFn7XF4YyFWUtw18Cw1jqFZaqa90v3Z5Ar1xCFZ0k3WfCr4xtryUCa43u397J340
+	vrWY934Ig3W5AaUanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+	9KBjDU0xBIdaVrnRJUUUvjb4IE77IF4wAFF20E14v26rWj6s0DM7CY07I20VC2zVCF04k2
+	6cxKx2IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4
+	vEj48ve4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Jr0_JF4l84ACjcxK6xIIjxv20xvEc7Cj
+	xVAFwI0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW8JVWxJwA2z4x0Y4vEx4A2jsIEc7CjxV
+	AFwI0_Gr0_Gr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l5I8CrVACY4xI64kE6c02F40E
+	x7xfMcIj6xIIjxv20xvE14v26r1j6r18McIj6I8E87Iv67AKxVWUJVW8JwAm72CE4IkC6x
+	0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lFIxGxcIEc7CjxVA2Y2ka0xkIwI1lc7CjxVAaw2AF
+	wI0_GFv_Wryl42xK82IYc2Ij64vIr41l4I8I3I0E4IkC6x0Yz7v_Jr0_Gr1lx2IqxVAqx4
+	xG67AKxVWUJVWUGwC20s026x8GjcxK67AKxVWUGVWUWwC2zVAF1VAY17CE14v26r4a6rW5
+	MIIYrxkI7VAKI48JMIIF0xvE2Ix0cI8IcVAFwI0_Jr0_JF4lIxAIcVC0I7IYx2IY6xkF7I
+	0E14v26r4j6F4UMIIF0xvE42xK8VAvwI8IcIk0rVWUJVWUCwCI42IY6I8E87Iv67AKxVWU
+	JVW8JwCI42IY6I8E87Iv6xkF7I0E14v26r4j6r4UJbIYCTnIWIevJa73UjIFyTuYvjxUIF
+	4iUUUUU
+X-CM-SenderInfo: 5mrqt2oorev25kdx2v3u6k3tpzhluzxrxghudrp/
 
-2024=E5=B9=B49=E6=9C=8830=E6=97=A5 17:15=EF=BC=8CAlan Huang =
-<mmpgouride@gmail.com> =E5=86=99=E9=81=93=EF=BC=9A
->=20
-> 2024=E5=B9=B49=E6=9C=8830=E6=97=A5 16:57=EF=BC=8CJonas Oberhauser =
-<jonas.oberhauser@huaweicloud.com> =E5=86=99=E9=81=93=EF=BC=9A
->>=20
->>=20
->>=20
->> Am 9/29/2024 um 12:26 AM schrieb Alan Huang:
->>> 2024=E5=B9=B49=E6=9C=8828=E6=97=A5 23:55=EF=BC=8CMathieu Desnoyers =
-<mathieu.desnoyers@efficios.com> wrote=EF=BC=9A
->>>>=20
->>>> On 2024-09-28 17:49, Alan Stern wrote:
->>>>> On Sat, Sep 28, 2024 at 11:32:18AM -0400, Mathieu Desnoyers wrote:
->>>>>> On 2024-09-28 16:49, Alan Stern wrote:
->>>>>>> On Sat, Sep 28, 2024 at 09:51:27AM -0400, Mathieu Desnoyers =
-wrote:
->>>>>>>> equality, which does not preserve address dependencies and =
-allows the
->>>>>>>> following misordering speculations:
->>>>>>>>=20
->>>>>>>> - If @b is a constant, the compiler can issue the loads which =
-depend
->>>>>>>>   on @a before loading @a.
->>>>>>>> - If @b is a register populated by a prior load, weakly-ordered
->>>>>>>>   CPUs can speculate loads which depend on @a before loading =
-@a.
->>>>>>>=20
->>>>>>> It shouldn't matter whether @a and @b are constants, registers, =
-or
->>>>>>> anything else.  All that matters is that the compiler uses the =
-wrong
->>>>>>> one, which allows weakly ordered CPUs to speculate loads you =
-wouldn't
->>>>>>> expect it to, based on the source code alone.
->>>>>>=20
->>>>>> I only partially agree here.
->>>>>>=20
->>>>>> On weakly-ordered architectures, indeed we don't care whether the
->>>>>> issue is caused by the compiler reordering the code (constant)
->>>>>> or the CPU speculating the load (registers).
->>>>>>=20
->>>>>> However, on strongly-ordered architectures, AFAIU, only the =
-constant
->>>>>> case is problematic (compiler reordering the dependent load), =
-because
->>>>> I thought you were trying to prevent the compiler from using one =
-pointer
->>>>> instead of the other, not trying to prevent it from reordering =
-anything.
->>>>> Isn't this the point the documentation wants to get across when it =
-says
->>>>> that comparing pointers can be dangerous?
->>>>=20
->>>> The motivation for introducing ptr_eq() is indeed because the
->>>> compiler barrier is not sufficient to prevent the compiler from
->>>> using one pointer instead of the other.
->>> barrier_data(&b) prevents that.
->>=20
->> I don't think one barrier_data can garantuee preventing this, because =
-right after doing the comparison, the compiler still could do b=3Da.
->>=20
->> In that case you would be guaranteed to use the value in b, but that =
-value is not the value loaded into b originally but rather the value =
-loaded into a, and hence your address dependency goes to the wrong load =
-still.
->=20
-> After barrier_data(&b), *b will be loaded from memory, you mean even =
-if *b is loaded from memory, the address dependency goes to the wrong =
-load still?
 
-Sorry, *b should b.
 
->=20
->>=20
->> However, doing
->>=20
->> barrier_data(&b);
->> if (a =3D=3D b) {
->>  barrier();
->>  foo(*b);
->> }
->>=20
->> might maybe prevent it, because after the address of b is escaped, =
-the compiler might no longer be allowed to just do b=3Da;, but I'm not =
-sure if that is completely correct, since the compiler knows b=3D=3Da =
-and no other thread can be concurrently modifying a or b. Therefore, =
-given that the compiler knows the hardware, it might know that assigning =
-b=3Da would not cause any  race-related issues even if another thread =
-was reading b concurrently.
->>=20
->> Finally, it may be only a combination of barrier_data and making b =
-volatile could be guaranteed to solve the issue, but the code will be =
-very obscure compared to using ptr_eq.
->>=20
->> jonas
+Am 9/30/2024 um 11:27 AM schrieb Alan Huang:
+> 2024年9月30日 17:15，Alan Huang <mmpgouride@gmail.com> 写道：
+>>
+>> 2024年9月30日 16:57，Jonas Oberhauser <jonas.oberhauser@huaweicloud.com> 写道：
+>>>
+>>>
+>>>
+>>> Am 9/29/2024 um 12:26 AM schrieb Alan Huang:
+>>>> 2024年9月28日 23:55，Mathieu Desnoyers <mathieu.desnoyers@efficios.com> wrote：
+>>>>>
+>>>>> The motivation for introducing ptr_eq() is indeed because the
+>>>>> compiler barrier is not sufficient to prevent the compiler from
+>>>>> using one pointer instead of the other.
+>>>> barrier_data(&b) prevents that.
+>>>
+>>> I don't think one barrier_data can garantuee preventing this, because right after doing the comparison, the compiler still could do b=a.
+>>>
+>>> In that case you would be guaranteed to use the value in b, but that value is not the value loaded into b originally but rather the value loaded into a, and hence your address dependency goes to the wrong load still.
+>>
+>> After barrier_data(&b), *b will be loaded from memory, you mean even if *b is loaded from memory, the address dependency goes to the wrong load still?
+> 
+> Sorry, *b should b.
 
+That's exactly what I meant to say. In my understanding, it can happen 
+like this:
+
+a = READ_ONCE(*p);
+...
+b = READ_ONCE(*p);
+if (a == b) {
+    b = a; // inserted by compiler
+
+    barrier_data(&b);
+
+    foo(*b); // compiler definitely use the current value in b
+}
+
+
+
+In the end, the address dependency is from the first load, and the CPU 
+can speculatively (with register renaming, forwarding etc) execute
+
+a = READ_ONCE(*p);
+b2 = a; // speculatively
+tmp = load *b2 // speculatively
+b1 = READ_ONCE(*p);
+if (a == b1) { // confirmed
+    foo(tmp);
+}
+
+
+best wishes,
+   jonas
 

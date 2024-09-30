@@ -1,77 +1,101 @@
-Received: from frasgout12.his.huawei.com (frasgout12.his.huawei.com [14.137.139.154])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D174718E779
-	for <lkmm@lists.linux.dev>; Mon, 30 Sep 2024 13:31:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=14.137.139.154
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15C2619047A;
+	Mon, 30 Sep 2024 13:54:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727703080; cv=none; b=BeEzxNYIl3rVrLSl9MWCbCUzUyX2OuvZcBu+BILF/HEM/NOn2MckgBUz5oqT2sWVLasjdUllAWd5/7tu/CAKr4lnpT/Px59HRJhxX9/wdnf90B3WlVAgHTqEuGWh6v7A94CKMj0ufKx08z2HsQ47cmpaIaegtZjLfwT3aa7ptVc=
+	t=1727704463; cv=none; b=L90F228josf9ktDiJzMWCZ64chJQ+Su7/cSmVxL98wSGnk2gjoH5axA5bvUTTOeJ7MZ0dvD05ubJ2y6NIrPcEuhsGRRh/8Y7GN0ZNaMrtFJ1GeioQKcKE56FmEHPcc3/kCV0s8cr/jnYtLQ+qv/Py+RhJMkaQMKJsjEd7Mcyblk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727703080; c=relaxed/simple;
-	bh=ou2We3HZvCP1FtDuRVsNH3KPbqGBDtnllZdkXqhV1+M=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=ks/GUVqLC5SVhatzr8FAU0oHCC4f9GRQgOAh/WwiUXfDeZsveQlDOptZ6jpooKTWuKzyPjvWX1ViGW2udAwjY8+0pDd45JYLv07EAyuAg2L8VVIZKFnqHKd6ON0zeRLCv+4unRLguG36AFElBuXmTuwCo5xW4O93KE8tYaS3yoI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=huaweicloud.com; spf=pass smtp.mailfrom=huaweicloud.com; arc=none smtp.client-ip=14.137.139.154
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=huaweicloud.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huaweicloud.com
-Received: from mail.maildlp.com (unknown [172.18.186.29])
-	by frasgout12.his.huawei.com (SkyGuard) with ESMTP id 4XHLsR1RGGz9v7JM
-	for <lkmm@lists.linux.dev>; Mon, 30 Sep 2024 21:05:31 +0800 (CST)
-Received: from mail02.huawei.com (unknown [7.182.16.27])
-	by mail.maildlp.com (Postfix) with ESMTP id B024214075E
-	for <lkmm@lists.linux.dev>; Mon, 30 Sep 2024 21:31:10 +0800 (CST)
-Received: from [10.81.209.28] (unknown [10.81.209.28])
-	by APP2 (Coremail) with SMTP id GxC2BwAXesoZqPpmOrrzAQ--.5903S2;
-	Mon, 30 Sep 2024 14:31:10 +0100 (CET)
-Message-ID: <13bc8b46-d391-4f58-b021-481e57d2ac1f@huaweicloud.com>
-Date: Mon, 30 Sep 2024 15:31:02 +0200
+	s=arc-20240116; t=1727704463; c=relaxed/simple;
+	bh=Kb3o7fbCjfsS+L3nJzr7RT2aH+ia/D09v5IrixjDUkg=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=tuijhV8vIY/J3f7wRqMIsk71yS7ri34dGZhYrVEBpxW0rOmFfMtrfQ9vclkpDpUqinrrNdt8FrVJ3RlbgDicjGdTJ82XqTHE6UVFZPzpH3Qp1doBr/cWre4g82hLeRR+OYmY735TdaA3zf/bnHzv6eEN6csoUkIUaqieXYqGgrI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=he6j7o2c; arc=none smtp.client-ip=10.30.226.201
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="he6j7o2c"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6BD4C4CEC7;
+	Mon, 30 Sep 2024 13:54:22 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1727704462;
+	bh=Kb3o7fbCjfsS+L3nJzr7RT2aH+ia/D09v5IrixjDUkg=;
+	h=Date:From:To:Cc:Subject:Reply-To:References:In-Reply-To:From;
+	b=he6j7o2cLX6V6c1gCqDhsPYvCjBaT/5Z5XKivgQoHNlJxlkjPlAVbDQocEzCCtXqE
+	 J4Jz3d+rFTr5iB2qR2Q6ec7OfflGNuFIQefrZs4SLVsQXFo/HwBk+gTbWPbpg5rkV8
+	 0oU59WzJBYiqix2kCZ6syFQuzVecKUMGE9roc/9/V2ftNfC6n5u9blax1MeiPTIiRb
+	 imQ00XX+3zl8EduUE/wn2xgaYFxxyPAe2qfrtEMp0nwF15pZDgXwzO0QgNlm0rJpcV
+	 Mg/V11CbpnTy5GO+KKI8h3YpT3/qO7LFvndMTcfJWqqZtklzpSHxpmP8q1GGm7LTKL
+	 qJ3ekaL/7YnxA==
+Received: by paulmck-ThinkPad-P17-Gen-1.home (Postfix, from userid 1000)
+	id 9868BCE0DB6; Mon, 30 Sep 2024 06:54:22 -0700 (PDT)
+Date: Mon, 30 Sep 2024 06:54:22 -0700
+From: "Paul E. McKenney" <paulmck@kernel.org>
+To: Jonas Oberhauser <jonas.oberhauser@huaweicloud.com>
+Cc: Alan Stern <stern@rowland.harvard.edu>,
+	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	linux-kernel@vger.kernel.org,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
+	Will Deacon <will@kernel.org>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Boqun Feng <boqun.feng@gmail.com>, John Stultz <jstultz@google.com>,
+	Neeraj Upadhyay <Neeraj.Upadhyay@amd.com>,
+	Frederic Weisbecker <frederic@kernel.org>,
+	Joel Fernandes <joel@joelfernandes.org>,
+	Josh Triplett <josh@joshtriplett.org>,
+	Uladzislau Rezki <urezki@gmail.com>,
+	Steven Rostedt <rostedt@goodmis.org>,
+	Lai Jiangshan <jiangshanlai@gmail.com>,
+	Zqiang <qiang.zhang1211@gmail.com>, Ingo Molnar <mingo@redhat.com>,
+	Waiman Long <longman@redhat.com>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Vlastimil Babka <vbabka@suse.cz>, maged.michael@gmail.com,
+	Mateusz Guzik <mjguzik@gmail.com>, Gary Guo <gary@garyguo.net>,
+	rcu@vger.kernel.org, linux-mm@kvack.org, lkmm@lists.linux.dev
+Subject: Re: [PATCH 1/2] compiler.h: Introduce ptr_eq() to preserve address
+ dependency
+Message-ID: <490f7491-5e4f-4c03-89a0-854aff3c7ecf@paulmck-laptop>
+Reply-To: paulmck@kernel.org
+References: <20240928135128.991110-1-mathieu.desnoyers@efficios.com>
+ <20240928135128.991110-2-mathieu.desnoyers@efficios.com>
+ <02c63e79-ec8c-4d6a-9fcf-75f0e67ea242@rowland.harvard.edu>
+ <2091628c-2d96-4492-99d9-0f6a61b08d1d@efficios.com>
+ <d2c87672-af75-4210-bd96-d7f38f2f63ac@rowland.harvard.edu>
+ <d49f5d9f-559d-449b-b330-9e5a57d9b438@efficios.com>
+ <25344f33-b8dc-43fb-a394-529eff03d979@rowland.harvard.edu>
+ <f635f9ce-fef4-4a9e-bee1-70dbc24a82ad@huaweicloud.com>
+ <973ae617-96a8-456a-a805-af3d61270125@paulmck-laptop>
+ <50bd6ecb-c8e3-4043-9040-b2b4ee71fc02@huaweicloud.com>
 Precedence: bulk
 X-Mailing-List: lkmm@lists.linux.dev
 List-Id: <lkmm.lists.linux.dev>
 List-Subscribe: <mailto:lkmm+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:lkmm+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH 1/1] hpref: Hazard Pointers with Reference Counter
-To: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
- Boqun Feng <boqun.feng@gmail.com>, "Paul E. McKenney" <paulmck@kernel.org>
-Cc: lkmm@lists.linux.dev
-References: <20240921164210.256278-1-mathieu.desnoyers@efficios.com>
-From: Jonas Oberhauser <jonas.oberhauser@huaweicloud.com>
-In-Reply-To: <20240921164210.256278-1-mathieu.desnoyers@efficios.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-CM-TRANSID:GxC2BwAXesoZqPpmOrrzAQ--.5903S2
-X-Coremail-Antispam: 1UD129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7v73
-	VFW2AGmfu7bjvjm3AaLaJ3UjIYCTnIWjp_UUU5C7kC6x804xWl14x267AKxVWUJVW8JwAF
-	c2x0x2IEx4CE42xK8VAvwI8IcIk0rVWrJVCq3wAFIxvE14AKwVWUJVWUGwA2ocxC64kIII
-	0Yj41l84x0c7CEw4AK67xGY2AK021l84ACjcxK6xIIjxv20xvE14v26r1j6r1xM28EF7xv
-	wVC0I7IYx2IY6xkF7I0E14v26r1j6r4UM28EF7xvwVC2z280aVAFwI0_Gr0_Cr1l84ACjc
-	xK6I8E87Iv6xkF7I0E14v26r4UJVWxJr1le2I262IYc4CY6c8Ij28IcVAaY2xG8wAqx4xG
-	64xvF2IEw4CE5I8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_Jr0_Jr4lYx0Ex4A2jsIE14v26r
-	1j6r4UMcvjeVCFs4IE7xkEbVWUJVW8JwACjcxG0xvEwIxGrwCF04k20xvY0x0EwIxGrwCF
-	x2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02F40E14v26r1j6r18MI8I3I0E7480Y4vE14
-	v26r106r1rMI8E67AF67kF1VAFwI0_JF0_Jw1lIxkvb40E47kJMIIYrxkI7VAKI48JMIIF
-	0xvE2Ix0cI8IcVAFwI0_Jr0_JF4lIxAIcVC0I7IYx2IY6xkF7I0E14v26r1j6r4UMIIF0x
-	vE42xK8VAvwI8IcIk0rVWUJVWUCwCI42IY6I8E87Iv67AKxVW8JVWxJwCI42IY6I8E87Iv
-	6xkF7I0E14v26r4UJVWxJrUvcSsGvfC2KfnxnUUI43ZEXa7IU5ZJ57UUUUU==
-X-CM-SenderInfo: 5mrqt2oorev25kdx2v3u6k3tpzhluzxrxghudrp/
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <50bd6ecb-c8e3-4043-9040-b2b4ee71fc02@huaweicloud.com>
 
-[dropping a lot of CC]
+On Mon, Sep 30, 2024 at 02:06:12PM +0200, Jonas Oberhauser wrote:
+> 
+> 
+> Am 9/30/2024 um 1:04 PM schrieb Paul E. McKenney:
+> > On Mon, Sep 30, 2024 at 11:42:11AM +0200, Jonas Oberhauser wrote:
+> > > 
+> > > 
+> > > I also currently don't see any major difference between the constant and
+> > > register case. The point is that the address is known before loading into b,
+> > > and hence the compiler + hardware can speculatively load *b before loading
+> > > into b.
+> > 
+> > In theory, true.  In practice, in the register case, you need a little
+> > more bad luck for the compiler to be able to exploit your mistake.
+> 
+> If there's one thing I've never run out of, then it is bad luck with
+> technology.
 
-Am 9/21/2024 um 6:42 PM schrieb Mathieu Desnoyers:
->
-> Porting it to the Linux kernel should be straightforward. 
+Careful!  Someone might try to recruit you as tester.  ;-)
 
-
-Btw, what is the relation between uatomics and LKMM?
-
-Should I assume that they intend to have LKMM semantics modulo whatever 
-is explained here:
-
-https://github.com/urcu/userspace-rcu/blob/master/doc/uatomic-api.md
-
-Because on C11 model, dependencies are generally not considered
-
-   jonas
-
+							Thanx, Paul

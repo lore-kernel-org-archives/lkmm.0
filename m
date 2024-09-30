@@ -1,185 +1,163 @@
-Received: from mail-pf1-f174.google.com (mail-pf1-f174.google.com [209.85.210.174])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from frasgout13.his.huawei.com (frasgout13.his.huawei.com [14.137.139.46])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30C3118A955
-	for <lkmm@lists.linux.dev>; Mon, 30 Sep 2024 10:12:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B729518D629
+	for <lkmm@lists.linux.dev>; Mon, 30 Sep 2024 10:57:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=14.137.139.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727691176; cv=none; b=XagWQDq6gWsq5CnZucQWHU9jSRNkocF1T0g94Vqtba/19Vrmu7Qm8q1veBax+itq/ODWnfOlEPopThrjzsVjwkUYEmpQ4kyp7SJwRU+g05YXK21nAkC6mD5W5lvd+LwmvDWr4BGhPYvdC6/3fXsjjv+okCEa8+UMsJYRCAo2ReU=
+	t=1727693856; cv=none; b=VImlEkfLU7HCOPE9wbEZu4d/QaB8wW/04mZNeo5fHIIYCf+HhbuS2NZ6Ca/Uey5yV9yZed87bEK2w3WNrx0C5071GLxJAgNX2IBC2nlNUigdhJuDvOsXgRFuj4ecbSW8hGQfYJYqcWzSSVdRidQQ1Lu7PEKweyuSeth2Vr7S3mo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727691176; c=relaxed/simple;
-	bh=Iz6FpqvkzvFBZrnexnvWzVFW8uhmotoxGGp3oXUlCk4=;
-	h=Content-Type:Mime-Version:Subject:From:In-Reply-To:Date:Cc:
-	 Message-Id:References:To; b=igS2IMEILwVoTX6Tww1Im4+hxcXtXK+C7lgsAJo2klTf8IUoATbEDm5jvT5ts50bvK4gPv/2Dm8Gb0aiQBRrGPdROsNhm8ckTHe8SYt56D9zu5PBvt9Owy2r9CUKzGK/gsM66yn/6/WvQxi60FvgWhRDfTU23738woVA3VyiiQA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=dC9ei2YJ; arc=none smtp.client-ip=209.85.210.174
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dC9ei2YJ"
-Received: by mail-pf1-f174.google.com with SMTP id d2e1a72fcca58-7191fb54147so2996634b3a.2
-        for <lkmm@lists.linux.dev>; Mon, 30 Sep 2024 03:12:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1727691174; x=1728295974; darn=lists.linux.dev;
-        h=to:references:message-id:content-transfer-encoding:cc:date
-         :in-reply-to:from:subject:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Kg9QbxXqBJRz1Y4pX/no4eFBUpG3N+9Vg2SGSZ259dc=;
-        b=dC9ei2YJKMjeXSMaFNZRskZ8VlpkdtqohoL6EdUotFKUppL9b5mHD77zpnblWMjaHo
-         Vi9xJ8UzwhyYB83NEMah91pBJDGQMvGZ6vdpKTQgqZfOSK2RRoZ1bZKYYmVhPRP4t3VZ
-         LArZ/wG1hoKtTLBW0CwXiaPFNQq4ZiEsl92u4F9z3rHvtQq5bAz2sOiPcTIE0HDOse/B
-         Y5YHNMLidVoiBnM+UmEUXoRnQ0Y0BJte0vXFfwxTFN5hV2Ud/YqnTC9W0Lm74FE7ZWXp
-         mzPYW+v5rr+VtdWdhsHDM5VgrI1feRKhpnaflPUP1k91A4XSiTw6OrfC2J+aA7SwAuXQ
-         Q/6Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1727691174; x=1728295974;
-        h=to:references:message-id:content-transfer-encoding:cc:date
-         :in-reply-to:from:subject:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=Kg9QbxXqBJRz1Y4pX/no4eFBUpG3N+9Vg2SGSZ259dc=;
-        b=dvaJ8De4cNRCfSOORX1kkJflatut02ZDq2jZ9k1JOUyYsukexV8BnyJC6YXbVil/Pr
-         DtMwvBCX7KIyRhAoAGm0XjY4GUAvkIBYQqzogH5Fnmr7ejHlwsGBtXSof3p4DWYMtoHK
-         ZtrZNPex9r+sWcJdTqGLuujMhfBeewphUtEY0cf1rt4EcYj6vaXHEC4QtaViogwmidMi
-         7sJ8OWVyJdRdmh1JttP98XWC9One2ldTzfHolSfQWON7dsxOqTXHPUBNOuNR/Pb/Kr/k
-         svt/bqt7qoC7IjNrTO/J5FFCNt3aMZbfQvVs277FDPJLDwDSFu1688igXtmD8NRY+II8
-         NMAg==
-X-Forwarded-Encrypted: i=1; AJvYcCX24wc8K7s277shwabvgvmZweDQsdaJeTHC6n2noLg3eyHPm/f1pYlMY0vFm8Uu8WWwZ6Xc@lists.linux.dev
-X-Gm-Message-State: AOJu0YyCK6SDXoqmkHMULREtUlriE2owelhZ3CsE8yaHz7ovL49tXbrV
-	zYxsA7Ig+fGps4A5GfkitwJWTCEwNzlM0q/2UNB1UcPt1jSuNESp
-X-Google-Smtp-Source: AGHT+IHd9c7eDxtsDCp4q9aECEurM4CPotCQiS+DrDI11euKt8CbXa3cbC6GEHE9tpc+7Py5J44F5Q==
-X-Received: by 2002:a05:6a00:1304:b0:70d:2e24:af75 with SMTP id d2e1a72fcca58-71b26072fc3mr18591297b3a.24.1727691174483;
-        Mon, 30 Sep 2024 03:12:54 -0700 (PDT)
-Received: from smtpclient.apple ([2402:d0c0:11:86::1])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-71b265181f9sm5877779b3a.133.2024.09.30.03.12.45
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 30 Sep 2024 03:12:54 -0700 (PDT)
-Content-Type: text/plain;
-	charset=utf-8
+	s=arc-20240116; t=1727693856; c=relaxed/simple;
+	bh=HI6S2/shHtwmNGEY6RhLLnKUCTKJY4JtOE5CPXZpqpc=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=lWCk6Lyhxyoi9on0skzK6CtoswKmMHxiGDSjRfw+TU9RfjRuVSC2N7mTVPkyXKErnPmhUP1i4WOSHNFPqx/mtK6o42vfhAOEwwDxWC/Q64k1NM651Ly6jM17Vmg+hHs9LeTbaOTFzUvcv4yN2WAF54uVYwVTp8Oc+fg+Aim4lEo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=huaweicloud.com; spf=pass smtp.mailfrom=huaweicloud.com; arc=none smtp.client-ip=14.137.139.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=huaweicloud.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huaweicloud.com
+Received: from mail.maildlp.com (unknown [172.18.186.51])
+	by frasgout13.his.huawei.com (SkyGuard) with ESMTP id 4XHHZr39zsz9v7NZ
+	for <lkmm@lists.linux.dev>; Mon, 30 Sep 2024 18:37:40 +0800 (CST)
+Received: from mail02.huawei.com (unknown [7.182.16.47])
+	by mail.maildlp.com (Postfix) with ESMTP id 986681402E1
+	for <lkmm@lists.linux.dev>; Mon, 30 Sep 2024 18:57:30 +0800 (CST)
+Received: from huaweicloud.com (unknown [10.206.133.88])
+	by APP1 (Coremail) with SMTP id LxC2BwAHmC8OhPpmdITtAQ--.60189S2;
+	Mon, 30 Sep 2024 11:57:30 +0100 (CET)
+From: Jonas Oberhauser <jonas.oberhauser@huaweicloud.com>
+To: paulmck@kernel.org
+Cc: stern@rowland.harvard.edu,
+	parri.andrea@gmail.com,
+	will@kernel.org,
+	peterz@infradead.org,
+	boqun.feng@gmail.com,
+	npiggin@gmail.com,
+	dhowells@redhat.com,
+	j.alglave@ucl.ac.uk,
+	luc.maranget@inria.fr,
+	akiyks@gmail.com,
+	dlustig@nvidia.com,
+	joel@joelfernandes.org,
+	urezki@gmail.com,
+	quic_neeraju@quicinc.com,
+	frederic@kernel.org,
+	linux-kernel@vger.kernel.org,
+	lkmm@lists.linux.dev,
+	hernan.poncedeleon@huaweicloud.com,
+	Jonas Oberhauser <jonas.oberhauser@huaweicloud.com>
+Subject: [PATCH v4 0/5] tools/memory-model: Define more of LKMM in tools/memory-model
+Date: Mon, 30 Sep 2024 12:57:05 +0200
+Message-Id: <20240930105710.383284-1-jonas.oberhauser@huaweicloud.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: lkmm@lists.linux.dev
 List-Id: <lkmm.lists.linux.dev>
 List-Subscribe: <mailto:lkmm+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:lkmm+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3776.700.51\))
-Subject: Re: [PATCH 1/2] compiler.h: Introduce ptr_eq() to preserve address
- dependency
-From: Alan Huang <mmpgouride@gmail.com>
-In-Reply-To: <c2e5b1ee-eeee-4614-9b42-d6bbf7a67162@huaweicloud.com>
-Date: Mon, 30 Sep 2024 18:12:31 +0800
-Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
- Alan Stern <stern@rowland.harvard.edu>,
- Linus Torvalds <torvalds@linux-foundation.org>,
- LKML <linux-kernel@vger.kernel.org>,
- Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
- Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
- "Paul E. McKenney" <paulmck@kernel.org>,
- Will Deacon <will@kernel.org>,
- Peter Zijlstra <peterz@infradead.org>,
- Boqun Feng <boqun.feng@gmail.com>,
- John Stultz <jstultz@google.com>,
- Neeraj upadhyay <Neeraj.Upadhyay@amd.com>,
- Frederic Weisbecker <frederic@kernel.org>,
- Joel Fernandes <joel@joelfernandes.org>,
- Josh Triplett <josh@joshtriplett.org>,
- "Uladzislau Rezki (Sony)" <urezki@gmail.com>,
- Steven Rostedt <rostedt@goodmis.org>,
- Lai Jiangshan <jiangshanlai@gmail.com>,
- Zqiang <qiang.zhang1211@gmail.com>,
- Ingo Molnar <mingo@redhat.com>,
- Waiman Long <longman@redhat.com>,
- Mark Rutland <mark.rutland@arm.com>,
- Thomas Gleixner <tglx@linutronix.de>,
- Vlastimil Babka <vbabka@suse.cz>,
- maged.michael@gmail.com,
- Mateusz Guzik <mjguzik@gmail.com>,
- Gary Guo <gary@garyguo.net>,
- RCU <rcu@vger.kernel.org>,
- linux-mm@kvack.org,
- lkmm@lists.linux.dev
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <AF8BEE57-2F7A-4BD5-B062-F4C268E8494B@gmail.com>
-References: <20240928135128.991110-1-mathieu.desnoyers@efficios.com>
- <20240928135128.991110-2-mathieu.desnoyers@efficios.com>
- <02c63e79-ec8c-4d6a-9fcf-75f0e67ea242@rowland.harvard.edu>
- <2091628c-2d96-4492-99d9-0f6a61b08d1d@efficios.com>
- <d2c87672-af75-4210-bd96-d7f38f2f63ac@rowland.harvard.edu>
- <d49f5d9f-559d-449b-b330-9e5a57d9b438@efficios.com>
- <D31AF4E7-B9D5-4D2F-A4B9-1E12B5E69549@gmail.com>
- <8d20cf79-9fa5-4ced-aa91-232ccd545b59@huaweicloud.com>
- <EEAE4623-DCD7-4BBE-8E06-7F6FF6E3070B@gmail.com>
- <E2551572-494D-46A0-A1D5-DF91DDB8B9F9@gmail.com>
- <c2e5b1ee-eeee-4614-9b42-d6bbf7a67162@huaweicloud.com>
-To: Jonas Oberhauser <jonas.oberhauser@huaweicloud.com>
-X-Mailer: Apple Mail (2.3776.700.51)
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID:LxC2BwAHmC8OhPpmdITtAQ--.60189S2
+X-Coremail-Antispam: 1UD129KBjvJXoWxWw45urW3Xr4xWrW3tF4xJFb_yoWrXryDpr
+	Z5G395Kw4qqr9Ivw48Wan7ZFyfCa1fGw47KFn7Kwn8u3W5WFy0yryxKa1Yvr9rurW8XayU
+	ZF4jqr1kuw1kArJanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+	9KBjDU0xBIdaVrnRJUUU9F14x267AKxVW5JVWrJwAFc2x0x2IEx4CE42xK8VAvwI8IcIk0
+	rVWrJVCq3wAFIxvE14AKwVWUJVWUGwA2ocxC64kIII0Yj41l84x0c7CEw4AK67xGY2AK02
+	1l84ACjcxK6xIIjxv20xvE14v26r1j6r1xM28EF7xvwVC0I7IYx2IY6xkF7I0E14v26r4j
+	6F4UM28EF7xvwVC2z280aVAFwI0_Gr0_Cr1l84ACjcxK6I8E87Iv6xkF7I0E14v26r4UJV
+	WxJr1le2I262IYc4CY6c8Ij28IcVAaY2xG8wAqx4xG64xvF2IEw4CE5I8CrVC2j2WlYx0E
+	2Ix0cI8IcVAFwI0_Jr0_Jr4lYx0Ex4A2jsIE14v26r1j6r4UMcvjeVCFs4IE7xkEbVWUJV
+	W8JwACjcxG0xvY0x0EwIxGrwACjI8F5VA0II8E6IAqYI8I648v4I1lFIxGxcIEc7CjxVA2
+	Y2ka0xkIwI1lc7CjxVAaw2AFwI0_GFv_Wryl42xK82IYc2Ij64vIr41l4I8I3I0E4IkC6x
+	0Yz7v_Jr0_Gr1lx2IqxVAqx4xG67AKxVWUJVWUGwC20s026x8GjcxK67AKxVWUGVWUWwC2
+	zVAF1VAY17CE14v26r4a6rW5MIIYrxkI7VAKI48JMIIF0xvE2Ix0cI8IcVAFwI0_Jr0_JF
+	4lIxAIcVC0I7IYx2IY6xkF7I0E14v26r4j6F4UMIIF0xvE42xK8VAvwI8IcIk0rVWUJVWU
+	CwCI42IY6I8E87Iv67AKxVWUJVW8JwCI42IY6I8E87Iv6xkF7I0E14v26r4UJVWxJrUvcS
+	sGvfC2KfnxnUUI43ZEXa7sRidbbtUUUUU==
+X-CM-SenderInfo: 5mrqt2oorev25kdx2v3u6k3tpzhluzxrxghudrp/
 
-On Sep 30, 2024, at 17:33, Jonas Oberhauser =
-<jonas.oberhauser@huaweicloud.com> wrote:
->=20
->=20
->=20
-> Am 9/30/2024 um 11:27 AM schrieb Alan Huang:
->> 2024=E5=B9=B49=E6=9C=8830=E6=97=A5 17:15=EF=BC=8CAlan Huang =
-<mmpgouride@gmail.com> =E5=86=99=E9=81=93=EF=BC=9A
->>>=20
->>> 2024=E5=B9=B49=E6=9C=8830=E6=97=A5 16:57=EF=BC=8CJonas Oberhauser =
-<jonas.oberhauser@huaweicloud.com> =E5=86=99=E9=81=93=EF=BC=9A
->>>>=20
->>>>=20
->>>>=20
->>>> Am 9/29/2024 um 12:26 AM schrieb Alan Huang:
->>>>> 2024=E5=B9=B49=E6=9C=8828=E6=97=A5 23:55=EF=BC=8CMathieu Desnoyers =
-<mathieu.desnoyers@efficios.com> wrote=EF=BC=9A
->>>>>>=20
->>>>>> The motivation for introducing ptr_eq() is indeed because the
->>>>>> compiler barrier is not sufficient to prevent the compiler from
->>>>>> using one pointer instead of the other.
->>>>> barrier_data(&b) prevents that.
->>>>=20
->>>> I don't think one barrier_data can garantuee preventing this, =
-because right after doing the comparison, the compiler still could do =
-b=3Da.
->>>>=20
->>>> In that case you would be guaranteed to use the value in b, but =
-that value is not the value loaded into b originally but rather the =
-value loaded into a, and hence your address dependency goes to the wrong =
-load still.
->>>=20
->>> After barrier_data(&b), *b will be loaded from memory, you mean even =
-if *b is loaded from memory, the address dependency goes to the wrong =
-load still?
->> Sorry, *b should b.
->=20
-> That's exactly what I meant to say. In my understanding, it can happen =
-like this:
->=20
-> a =3D READ_ONCE(*p);
-> ...
-> b =3D READ_ONCE(*p);
-> if (a =3D=3D b) {
->   b =3D a; // inserted by compiler
->=20
->   barrier_data(&b);
->=20
->   foo(*b); // compiler definitely use the current value in b
-> }
->=20
->=20
->=20
-> In the end, the address dependency is from the first load, and the CPU =
-can speculatively (with register renaming, forwarding etc) execute
->=20
-> a =3D READ_ONCE(*p);
-> b2 =3D a; // speculatively
-> tmp =3D load *b2 // speculatively
-> b1 =3D READ_ONCE(*p);
-> if (a =3D=3D b1) { // confirmed
->   foo(tmp);
-> }
+Currently, the effect of several tag on operations is defined only in
+the herd7 tool's OCaml code as syntax transformations, while the effect
+of all other tags is defined in tools/memory-model.
+This asymmetry means that two seemingly analogous definitions in 
+tools/memory-model behave quite differently because the generated
+representation is sometimes modified by hardcoded behavior in herd7.
 
-I get it now, thanks for the explanation.
+It also makes it hard to see that the behavior of the formalization 
+matches the intuition described in explanation.txt without delving into
+the implementation of herd7.
 
->=20
->=20
-> best wishes,
->  jonas
->=20
+Furthermore, this hardcoded behavior is hard to maintain inside herd7 and
+other tools implementing WMM, and has caused several bugs and confusions
+with the tool maintainers, e.g.:
+
+  https://github.com/MPI-SWS/genmc/issues/22
+  https://github.com/herd/herdtools7/issues/384#issuecomment-1132859904
+  https://github.com/hernanponcedeleon/Dat3M/issues/254
+
+It also means that potential future extensions of LKMM with new tags may
+not work without changing internals of the herd7 tool.
+
+In this patch series, we first emulate the effect of herd7 transformations
+in tools/memory-model through explicit rules in .cat and .bell files that
+reference the transformed tags.
+These transformations do not have any immediate effect with the current
+herd7 implementation, because they apply after the syntax transformations
+have already modified those tags.
+
+In a second step, we then distinguish between syntactic tags (that are
+placed by the programmer on operations, e.g., an 'ACQUIRE tag on both the
+read and write of an xchg_acquire() operation) and sets of events (that
+would be defined after the (emulated) transformations, e.g., an Acquire
+set that includes only on the read of the xchg_acquire(), but "has been
+removed" from the write).
+
+This second step (comprising patches 4 and 5) is incompatible with the
+current herd7 implementation, since herd7 uses hardcoded tag names to decide
+what to do with LKMM; therefore, the newly introduced syntactic tags will be
+ignored or processed incorrectly by herd7.
+
+
+Have fun,
+  jonas
+
+
+Changes from v1 to v2:
+   - addressed several spelling/style issues pointed out by Alan
+   - simplified the definition of Marked accesses based on a
+      suggestion by Alan
+
+Changes from v2 to v3:
+  - addressed imprecise comment pointed out by Boqun
+  - addressed the backwards compatibility issue pointed out by Akira
+    with help of Hernan: improved version compatibility by adding
+    an error message on older versions of herd and relying on a new
+    flag -lkmmv1 to select the version
+  - integrated recent patches, like the herd representation table
+    and primitives like atomic_add_unless or atomic_and_not
+
+Changes from v3 to v4:
+  - removed a litmus test (submitted to Paul's larger test repo instead)
+  - fixed several formatting/naming issues pointed out by Akira
+  - updated the reference herd version number in memory-model/README.md.
+    *Note*: this may need to be retouched after herd is updated.
+    I also did not update the table under klitmus7 compatibility, which
+    I took to refer only to klitmus7, although its header is "herdtools7"
+
+
+
+Jonas Oberhauser (5):
+  tools/memory-model: Legitimize current use of tags in LKMM macros
+  tools/memory-model: Define applicable tags on operation in tools/...
+  tools/memory-model: Define effect of Mb tags on RMWs in tools/...
+  tools/memory-model: Switch to softcoded herd7 tags
+  tools/memory-model: Distinguish between syntactic and semantic tags
+
+ .../Documentation/herd-representation.txt     |  27 +--
+ tools/memory-model/README                     |   2 +-
+ tools/memory-model/linux-kernel.bell          |  33 ++-
+ tools/memory-model/linux-kernel.cat           |  10 +
+ tools/memory-model/linux-kernel.cfg           |   1 +
+ tools/memory-model/linux-kernel.def           | 196 +++++++++---------
+ 6 files changed, 150 insertions(+), 119 deletions(-)
+
+-- 
+2.34.1
 

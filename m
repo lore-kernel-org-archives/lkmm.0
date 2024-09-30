@@ -1,28 +1,28 @@
 Received: from frasgout11.his.huawei.com (frasgout11.his.huawei.com [14.137.139.23])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E72D18D62F
-	for <lkmm@lists.linux.dev>; Mon, 30 Sep 2024 10:57:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02DBD18E343
+	for <lkmm@lists.linux.dev>; Mon, 30 Sep 2024 10:57:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=14.137.139.23
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727693866; cv=none; b=awhevrXQhyiCM0ddQdGBvDvcpgK9zKRsBDqQTEbEW7sIezkDlHthYrYXZBPzJc9e1t50y3qwFgyKnUYv7UgAinshzGt/DO5O00G00P1ZN46DymDXXCUjI+kaEWnU8Z85FjPPA9A2kIkimk4kq6Yu8Z6G1NOaPySwOIIY1xEDXM0=
+	t=1727693879; cv=none; b=hwxK9WWx1KYIcgl6iSSjmT+oVvS3k+nsnz2vZnK4G3k8x8c4wOoASOtJeatNt2ZYgeLA83j76M6MLk0h1fOAUe09gyqRrO/m0GS+gLdD29LUZIGOFHpKEBdlnReBHERKS2VeJ+4tKqMWyoZDGUQBVWP2lr2UohY+5WHqKaEFR7U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727693866; c=relaxed/simple;
-	bh=AuthoQ2SxkhYYlaXRjMt5sLm3Is9Iy5TFs8uQ/j6sJk=;
+	s=arc-20240116; t=1727693879; c=relaxed/simple;
+	bh=n7vHJunraoWpFYOQuQkGDN97hPkUyRPMLDP5Ffnl8Rs=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=jJ3PjFBFemgr+YWlT2aO2LBZxEBWclMZ5D8A8chk8KdxQAZBYKp8piU/6ppL/UJ1Qf0P4JXQlr+dY8I7/960EJRx4vG23bhj5gZcNiyibCZsSAvO2Wj2f57WMs74iXbu6EK1g3KDt4nQlacy9mdG5vBSwESY/uknO7lVkhHzMXc=
+	 MIME-Version; b=dP9KnpHS7/hiFmkYblAjz6e+lhFUnq9sl7grMCwmlFXFUE0DPAz8Psg2+tplETuZyDtV/OAdNz9Zbfyhs5sUHTBvcKqv2Aa+NXPkfdxxqFy/s1zH/MBwDIAHSha5uUogYt/nhTbIDqs6HUrmbsrpGUDpGuTHHRhkVERwL12WK6I=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=huaweicloud.com; spf=pass smtp.mailfrom=huaweicloud.com; arc=none smtp.client-ip=14.137.139.23
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=huaweicloud.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huaweicloud.com
-Received: from mail.maildlp.com (unknown [172.18.186.29])
-	by frasgout11.his.huawei.com (SkyGuard) with ESMTP id 4XHHb06YQcz9v7Hv
-	for <lkmm@lists.linux.dev>; Mon, 30 Sep 2024 18:37:48 +0800 (CST)
+Received: from mail.maildlp.com (unknown [172.18.186.51])
+	by frasgout11.his.huawei.com (SkyGuard) with ESMTP id 4XHHbG69THz9v7Hk
+	for <lkmm@lists.linux.dev>; Mon, 30 Sep 2024 18:38:02 +0800 (CST)
 Received: from mail02.huawei.com (unknown [7.182.16.47])
-	by mail.maildlp.com (Postfix) with ESMTP id 71052140381
-	for <lkmm@lists.linux.dev>; Mon, 30 Sep 2024 18:57:40 +0800 (CST)
+	by mail.maildlp.com (Postfix) with ESMTP id 4B3F3140451
+	for <lkmm@lists.linux.dev>; Mon, 30 Sep 2024 18:57:50 +0800 (CST)
 Received: from huaweicloud.com (unknown [10.206.133.88])
-	by APP1 (Coremail) with SMTP id LxC2BwAHmC8OhPpmdITtAQ--.60189S3;
-	Mon, 30 Sep 2024 11:57:39 +0100 (CET)
+	by APP1 (Coremail) with SMTP id LxC2BwAHmC8OhPpmdITtAQ--.60189S4;
+	Mon, 30 Sep 2024 11:57:49 +0100 (CET)
 From: Jonas Oberhauser <jonas.oberhauser@huaweicloud.com>
 To: paulmck@kernel.org
 Cc: stern@rowland.harvard.edu,
@@ -44,9 +44,9 @@ Cc: stern@rowland.harvard.edu,
 	lkmm@lists.linux.dev,
 	hernan.poncedeleon@huaweicloud.com,
 	Jonas Oberhauser <jonas.oberhauser@huaweicloud.com>
-Subject: [PATCH v4 1/5] tools/memory-model: Legitimize current use of tags in LKMM macros
-Date: Mon, 30 Sep 2024 12:57:06 +0200
-Message-Id: <20240930105710.383284-2-jonas.oberhauser@huaweicloud.com>
+Subject: [PATCH v4 2/5] tools/memory-model: Define applicable tags on operation in tools/...
+Date: Mon, 30 Sep 2024 12:57:07 +0200
+Message-Id: <20240930105710.383284-3-jonas.oberhauser@huaweicloud.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240930105710.383284-1-jonas.oberhauser@huaweicloud.com>
 References: <20240930105710.383284-1-jonas.oberhauser@huaweicloud.com>
@@ -57,65 +57,65 @@ List-Subscribe: <mailto:lkmm+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:lkmm+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID:LxC2BwAHmC8OhPpmdITtAQ--.60189S3
-X-Coremail-Antispam: 1UD129KBjvJXoW7CF4xGr45tF4DGr43tF4ruFg_yoW8Ar4kpF
-	ZrCw15GF4UXrZ8uwnrGrWUua4S9a93Jr45Gr9rJa43A34YvrnFy3WDXFnFqFZ3ZrWv9w12
-	qr12qFn2q3WUArJanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
-	9KBjDU0xBIdaVrnRJUUUmmb4IE77IF4wAFF20E14v26rWj6s0DM7CY07I20VC2zVCF04k2
-	6cxKx2IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28IrcIa0xkI8VA2jI8067AKxVWUGw
-	A2048vs2IY020Ec7CjxVAFwI0_Gr0_Xr1l8cAvFVAK0II2c7xJM28CjxkF64kEwVA0rcxS
-	w2x7M28EF7xvwVC0I7IYx2IY67AKxVWUJVWUCwA2z4x0Y4vE2Ix0cI8IcVCY1x0267AKxV
-	W8JVWxJwA2z4x0Y4vEx4A2jsIE14v26r4j6F4UM28EF7xvwVC2z280aVCY1x0267AKxVW8
-	Jr0_Cr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l5I8CrVACY4xI64kE6c02F40Ex7xfMc
-	Ij6xIIjxv20xvE14v26r1j6r18McIj6I8E87Iv67AKxVWUJVW8JwAm72CE4IkC6x0Yz7v_
-	Jr0_Gr1lF7xvr2IYc2Ij64vIr41lF7I21c0EjII2zVCS5cI20VAGYxC7M4IIrI8v6xkF7I
-	0E8cxan2IY04v7MxkF7I0En4kS14v26r4a6rW5MxAIw28IcxkI7VAKI48JMxC20s026xCa
-	FVCjc4AY6r1j6r4UMI8I3I0E5I8CrVAFwI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_Jr
-	Wlx4CE17CEb7AF67AKxVW8ZVWrXwCIc40Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r1j
-	6r1xMIIF0xvE2Ix0cI8IcVCY1x0267AKxVW8JVWxJwCI42IY6xAIw20EY4v20xvaj40_Jr
-	0_JF4lIxAIcVC2z280aVAFwI0_Jr0_Gr1lIxAIcVC2z280aVCY1x0267AKxVW8Jr0_Cr1U
-	YxBIdaVFxhVjvjDU0xZFpf9x0piKsU_UUUUU=
+X-CM-TRANSID:LxC2BwAHmC8OhPpmdITtAQ--.60189S4
+X-Coremail-Antispam: 1UD129KBjvJXoW7WF48tr4xXr45XrWDJFy7ZFb_yoW8WFW8pr
+	WkX3y5Kr17tw1Sv393J34fuFWrWayrGFW5Gr92y3sxZryDJrn2y39Fg3ZxWF9aqry3Gay5
+	Za1jgFyqk3yUArJanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+	9KBjDU0xBIdaVrnRJUUUm214x267AKxVWrJVCq3wAFc2x0x2IEx4CE42xK8VAvwI8IcIk0
+	rVWrJVCq3wAFIxvE14AKwVWUJVWUGwA2048vs2IY020E87I2jVAFwI0_Jryl82xGYIkIc2
+	x26xkF7I0E14v26ryj6s0DM28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48ve4kI8wA2z4x0
+	Y4vE2Ix0cI8IcVAFwI0_Jr0_JF4l84ACjcxK6xIIjxv20xvEc7CjxVAFwI0_Cr0_Gr1UM2
+	8EF7xvwVC2z280aVAFwI0_Gr0_Cr1l84ACjcxK6I8E87Iv6xkF7I0E14v26r4UJVWxJr1l
+	e2I262IYc4CY6c8Ij28IcVAaY2xG8wAqx4xG64xvF2IEw4CE5I8CrVC2j2WlYx0E2Ix0cI
+	8IcVAFwI0_Jr0_Jr4lYx0Ex4A2jsIE14v26r1j6r4UMcvjeVCFs4IE7xkEbVWUJVW8JwAC
+	jcxG0xvY0x0EwIxGrwACjI8F5VA0II8E6IAqYI8I648v4I1lFIxGxcIEc7CjxVA2Y2ka0x
+	kIwI1lc7CjxVAaw2AFwI0_GFv_Wryl42xK82IYc2Ij64vIr41l4I8I3I0E4IkC6x0Yz7v_
+	Jr0_Gr1lx2IqxVAqx4xG67AKxVWUJVWUGwC20s026x8GjcxK67AKxVWUGVWUWwC2zVAF1V
+	AY17CE14v26r4a6rW5MIIYrxkI7VAKI48JMIIF0xvE2Ix0cI8IcVAFwI0_Jr0_JF4lIxAI
+	cVC0I7IYx2IY6xkF7I0E14v26F4j6r4UJwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF4lIx
+	AIcVC2z280aVAFwI0_Jr0_Gr1lIxAIcVC2z280aVCY1x0267AKxVW8Jr0_Cr1UYxBIdaVF
+	xhVjvjDU0xZFpf9x0pRHKZLUUUUU=
 X-CM-SenderInfo: 5mrqt2oorev25kdx2v3u6k3tpzhluzxrxghudrp/
 
-The current macros in linux-kernel.def reference instructions such as
-__xchg{mb} or __cmpxchg{acquire}, which are invalid combinations of tags
-and instructions according to the declarations in linux-kernel.bell.
-This works with current herd7 because herd7 removes these tags anyways
-and does not actually enforce validity of combinations at all.
+Herd7 transforms reads, writes, and read-modify-writes by eliminating
+'acquire tags from writes, 'release tags from reads, and 'acquire,
+'release, and 'mb tags from failed read-modify-writes. We emulate this
+behavior by redefining Acquire, Release, and Mb sets in linux-kernel.bell
+to explicitly exclude those combinations.
 
-If a future herd7 version no longer applies these hardcoded
-transformations, then all currently invalid combinations will actually
-appear on some instruction.
-
-We therefore adjust the declarations to make the resulting combinations
-valid, by adding the 'mb tag to the set of Accesses and allowing all
-Accesses to appear on all read, write, and RMW instructions.
+Herd7 furthermore adds 'noreturn tag to certain reads. Currently herd7
+does not allow specifying the 'noreturn tag manually, but such manual
+declaration (e.g., through a syntax __atomic_op{noreturn}) would add
+invalid 'noreturn tags to writes; in preparation, we already also exclude
+this combination.
 
 Signed-off-by: Jonas Oberhauser <jonas.oberhauser@huaweicloud.com>
 ---
- tools/memory-model/linux-kernel.bell | 9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ tools/memory-model/linux-kernel.bell | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
 diff --git a/tools/memory-model/linux-kernel.bell b/tools/memory-model/linux-kernel.bell
-index ce068700939c..dba6b5b6dee0 100644
+index dba6b5b6dee0..7c9ae48b9437 100644
 --- a/tools/memory-model/linux-kernel.bell
 +++ b/tools/memory-model/linux-kernel.bell
-@@ -16,10 +16,11 @@
- enum Accesses = 'once (*READ_ONCE,WRITE_ONCE*) ||
- 		'release (*smp_store_release*) ||
- 		'acquire (*smp_load_acquire*) ||
--		'noreturn (* R of non-return RMW *)
--instructions R[{'once,'acquire,'noreturn}]
--instructions W[{'once,'release}]
--instructions RMW[{'once,'acquire,'release}]
-+		'noreturn (* R of non-return RMW *) ||
-+		'mb (*xchg(),cmpxchg(),...*)
-+instructions R[Accesses]
-+instructions W[Accesses]
-+instructions RMW[Accesses]
+@@ -36,6 +36,17 @@ enum Barriers = 'wmb (*smp_wmb*) ||
+ 		'after-srcu-read-unlock (*smp_mb__after_srcu_read_unlock*)
+ instructions F[Barriers]
  
- enum Barriers = 'wmb (*smp_wmb*) ||
- 		'rmb (*smp_rmb*) ||
++
++(*
++ * Filter out syntactic annotations that do not provide the corresponding
++ * semantic ordering, such as Acquire on a store or Mb on a failed RMW.
++ *)
++let FailedRMW = RMW \ (domain(rmw) | range(rmw))
++let Acquire = Acquire \ W \ FailedRMW
++let Release = Release \ R \ FailedRMW
++let Mb = Mb \ FailedRMW
++let Noreturn = Noreturn \ W
++
+ (* SRCU *)
+ enum SRCU = 'srcu-lock || 'srcu-unlock || 'sync-srcu
+ instructions SRCU[SRCU]
 -- 
 2.34.1
 

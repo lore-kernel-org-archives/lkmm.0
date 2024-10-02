@@ -1,241 +1,164 @@
-Received: from frasgout12.his.huawei.com (frasgout12.his.huawei.com [14.137.139.154])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f46.google.com (mail-lf1-f46.google.com [209.85.167.46])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 721C71D1739
-	for <lkmm@lists.linux.dev>; Wed,  2 Oct 2024 17:34:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=14.137.139.154
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 582081D172E
+	for <lkmm@lists.linux.dev>; Wed,  2 Oct 2024 17:39:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727890501; cv=none; b=AHRvr3r7iVofF2WUOOwQysyNbM/vHkeO9aTpKWp9smM/MgQcM0Wrf7NHefomlvJx03zNskbaOpIu2sWClHY2ZjGoLaSQLhavmrTwd7BioiTH1jeDGpMn3qEyEtX5uFVOVfWQWqSyR2zvQMWWz8a9ge7Mv0gQS1GLWcDcd91xJeg=
+	t=1727890782; cv=none; b=HKsKTv8H7QGIxnPuYqwf0KSXUyaI9IwTH6Lyxd/E9AUD1p61iwXNZdKZlzhZooQ3UYqG6Q+MjdSO/YKY5WVTUbEyPGeWHEQsOTbm3RtQZ3pV5H0+X4VLmlXeGUSR2aTjKiX2RfOCSg7LYVCLJTZC8qkGK11X2yaveQhHB10AGRg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727890501; c=relaxed/simple;
-	bh=HRBybnWMcqrqYqTMIuFAK4Fhl7228D+6vVrp4wOx3Jk=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=K0Qup7g76IrmPm6yCDIiyVZHP9CZXpgt6pY9gSukB+uQ5gL/4/oBDqA8R2f+crCEHMeSOoduMsZzLyzx1iYHpwqnoJn09tS9p6iTNxqElluJ9eftBjVDlioH/OLtrqoULNhHBciBcxgXE/tjBd/c1AuJl96x+BhdNKf/95xCg68=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=huaweicloud.com; spf=pass smtp.mailfrom=huaweicloud.com; arc=none smtp.client-ip=14.137.139.154
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=huaweicloud.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huaweicloud.com
-Received: from mail.maildlp.com (unknown [172.18.186.51])
-	by frasgout12.his.huawei.com (SkyGuard) with ESMTP id 4XJh9S48sZz9v7JP
-	for <lkmm@lists.linux.dev>; Thu,  3 Oct 2024 01:09:00 +0800 (CST)
-Received: from mail02.huawei.com (unknown [7.182.16.27])
-	by mail.maildlp.com (Postfix) with ESMTP id B8E85140628
-	for <lkmm@lists.linux.dev>; Thu,  3 Oct 2024 01:34:41 +0800 (CST)
-Received: from [10.48.222.239] (unknown [10.48.222.239])
-	by APP2 (Coremail) with SMTP id GxC2BwBH9sYlhP1mo_UXAg--.23081S2;
-	Wed, 02 Oct 2024 18:34:41 +0100 (CET)
-Message-ID: <63236ee7-916a-ef6e-bc6e-051acb3caf95@huaweicloud.com>
-Date: Wed, 2 Oct 2024 19:34:29 +0200
+	s=arc-20240116; t=1727890782; c=relaxed/simple;
+	bh=CiGTgCjOlyk3hZM74g8+7FcOFj9hl0bMj4TBEfGDgLI=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=fjR50BNYbj1txLlMUew+MSkJcFUMfND/EoAx+s1996JR/Jp0d9E06jvFOynYXwX2uqEMv4C/WxRBHLUa2enV5sBuGyhaH5qT9mc1R8K6PDJ7ND6kxP7cFvR45WUaXkA9gdu2eP/yNhDmJjiqVrBBJE5pDHg/UaaGqP8DFeuULqU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux-foundation.org; spf=pass smtp.mailfrom=linuxfoundation.org; dkim=pass (1024-bit key) header.d=linux-foundation.org header.i=@linux-foundation.org header.b=e2QPnx4I; arc=none smtp.client-ip=209.85.167.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux-foundation.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linuxfoundation.org
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=linux-foundation.org header.i=@linux-foundation.org header.b="e2QPnx4I"
+Received: by mail-lf1-f46.google.com with SMTP id 2adb3069b0e04-5398b589032so3566e87.1
+        for <lkmm@lists.linux.dev>; Wed, 02 Oct 2024 10:39:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linux-foundation.org; s=google; t=1727890778; x=1728495578; darn=lists.linux.dev;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=Fcw0AUFxqpg2EROaTPkK5EUAJwDwpjeNdNVYK6kfU4w=;
+        b=e2QPnx4ILCYbNzApm0iyeEoARW0VfEsEgjRfMNOIKapK1iYynUuECQJvyxSKsLx8nY
+         Y6m5mf8JVIYKLmkxWEyQUX7VXTM5XZq/ejeMJYSLDD9dyKcT3LwWUKLSs2vDyJ5IuDD4
+         lhwUPDCyUj5CLeGCNdip3pzGBpa5h26xQCY4Q=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1727890778; x=1728495578;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=Fcw0AUFxqpg2EROaTPkK5EUAJwDwpjeNdNVYK6kfU4w=;
+        b=SQDkH7eAo4vOBssuZnHLvTVlz9ziBCsDTCkwpJMOOFBbqXNSMrlOP5k5Ha98H63Lzv
+         3Z+jv19zGezy0ckMzTTowRIqmvHjJCwc91U0VlfW3SoKt0JE5VY5aGcRHUEDrXRs+F2M
+         e6cSMRIuqiFUw/g2n8GD/24KG2tqShMXQWvUdhXj3tRmxGty33o4RXneH/bOC5AYrxYw
+         7pdxCmt8utJSwFbUxmUmR+KZ7A/HN7BiKjLuFs3IAZxUF6YNV/wxPCE1vvGb1NUMu6Bu
+         1ZhrcNCBQ4y/WSaBKHpTGyvbqjjhOhvvLOZXtS1ywX/rB872jQZzchOAhZGTxUPLZGol
+         cNaw==
+X-Forwarded-Encrypted: i=1; AJvYcCWrO4/xPSgYzSnDCyki2oWPqi6gRm0q0h3ahu2rURHBX4He81+1z3cDTSizhIYqex+5ielD@lists.linux.dev
+X-Gm-Message-State: AOJu0YwjaKlPZZHtogPKkedP6QI1pNGSjfThxM1bT4zSazS2hSCcTsfJ
+	uaVU8UgVkoXj3D7egtANDtjhlStTdmbdUy/XC+ZD+byDwafs9FLw7BCxzQLuHrCG3qmsoKtKsIZ
+	U
+X-Google-Smtp-Source: AGHT+IH6lS699iVUktxtFQsymCtolEi7ex6b2s12acayO0+3d21WwTQLZ5ZHoSEmCX9VfgI7NOx/fA==
+X-Received: by 2002:a05:6512:e8c:b0:536:a695:9414 with SMTP id 2adb3069b0e04-539a065891bmr3601521e87.6.1727890778061;
+        Wed, 02 Oct 2024 10:39:38 -0700 (PDT)
+Received: from mail-lj1-f182.google.com (mail-lj1-f182.google.com. [209.85.208.182])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5389fd5df91sm1988031e87.82.2024.10.02.10.39.33
+        for <lkmm@lists.linux.dev>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 02 Oct 2024 10:39:33 -0700 (PDT)
+Received: by mail-lj1-f182.google.com with SMTP id 38308e7fff4ca-2fabb837ddbso808841fa.1
+        for <lkmm@lists.linux.dev>; Wed, 02 Oct 2024 10:39:33 -0700 (PDT)
+X-Forwarded-Encrypted: i=1; AJvYcCX2DS422iHLnQEHmmhYOoI9BvcwJCnxUbfSIXmSPVkeXhLB2WrAybIUXKZEfd2cWjHV/CLx@lists.linux.dev
+X-Received: by 2002:a2e:a9a5:0:b0:2f3:f1ee:2256 with SMTP id
+ 38308e7fff4ca-2fae10b46a2mr39398791fa.44.1727890772630; Wed, 02 Oct 2024
+ 10:39:32 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: lkmm@lists.linux.dev
 List-Id: <lkmm.lists.linux.dev>
 List-Subscribe: <mailto:lkmm+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:lkmm+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.13.0
-Subject: Re: [PATCH v4 4/5] tools/memory-model: Switch to softcoded herd7 tags
-Content-Language: en-US
-To: Jonas Oberhauser <jonas.oberhauser@huaweicloud.com>, paulmck@kernel.org
-Cc: stern@rowland.harvard.edu, parri.andrea@gmail.com, will@kernel.org,
- peterz@infradead.org, boqun.feng@gmail.com, npiggin@gmail.com,
- dhowells@redhat.com, j.alglave@ucl.ac.uk, luc.maranget@inria.fr,
- akiyks@gmail.com, dlustig@nvidia.com, joel@joelfernandes.org,
- urezki@gmail.com, quic_neeraju@quicinc.com, frederic@kernel.org,
- linux-kernel@vger.kernel.org, lkmm@lists.linux.dev
-References: <20240930105710.383284-1-jonas.oberhauser@huaweicloud.com>
- <20240930105710.383284-5-jonas.oberhauser@huaweicloud.com>
-From: Hernan Ponce de Leon <hernan.poncedeleon@huaweicloud.com>
-In-Reply-To: <20240930105710.383284-5-jonas.oberhauser@huaweicloud.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-CM-TRANSID:GxC2BwBH9sYlhP1mo_UXAg--.23081S2
-X-Coremail-Antispam: 1UD129KBjvJXoW3ArW7WFy8JF43Zr45uw17ZFb_yoW3ZF48pr
-	s3XrZrKr4UXryUC3ykGr4UC3WrWw40y3yUGr1kJ34rZr12krs8A3W8Gr1vqryUJ34Utw48
-	Xr12gFyqkr4UJrJanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
-	9KBjDU0xBIdaVrnRJUUUBY14x267AKxVW5JVWrJwAFc2x0x2IEx4CE42xK8VAvwI8IcIk0
-	rVWrJVCq3wAFIxvE14AKwVWUJVWUGwA2ocxC64kIII0Yj41l84x0c7CEw4AK67xGY2AK02
-	1l84ACjcxK6xIIjxv20xvE14v26r1j6r1xM28EF7xvwVC0I7IYx2IY6xkF7I0E14v26r4j
-	6F4UM28EF7xvwVC2z280aVAFwI0_Gr0_Cr1l84ACjcxK6I8E87Iv6xkF7I0E14v26r4j6r
-	4UJwAS0I0E0xvYzxvE52x082IY62kv0487Mc02F40EFcxC0VAKzVAqx4xG6I80ewAv7VC0
-	I7IYx2IY67AKxVWUJVWUGwAv7VC2z280aVAFwI0_Jr0_Gr1lOx8S6xCaFVCjc4AY6r1j6r
-	4UM4x0Y48IcVAKI48JM4x0x7Aq67IIx4CEVc8vx2IErcIFxwACI402YVCY1x02628vn2kI
-	c2xKxwCYjI0SjxkI62AI1cAE67vIY487MxkF7I0En4kS14v26r4a6rW5MxAIw28IcxkI7V
-	AKI48JMxC20s026xCaFVCjc4AY6r1j6r4UMI8I3I0E5I8CrVAFwI0_Jr0_Jr4lx2IqxVCj
-	r7xvwVAFwI0_JrI_JrWlx4CE17CEb7AF67AKxVW8ZVWrXwCIc40Y0x0EwIxGrwCI42IY6x
-	IIjxv20xvE14v26r1j6r1xMIIF0xvE2Ix0cI8IcVCY1x0267AKxVW8JVWxJwCI42IY6xAI
-	w20EY4v20xvaj40_Jr0_JF4lIxAIcVC2z280aVAFwI0_Jr0_Gr1lIxAIcVC2z280aVCY1x
-	0267AKxVW8JVW8JrUvcSsGvfC2KfnxnUUI43ZEXa7sRidbbtUUUUU==
-X-CM-SenderInfo: xkhu0tnqos00pfhgvzhhrqqx5xdzvxpfor3voofrz/
+References: <20241002010205.1341915-1-mathieu.desnoyers@efficios.com>
+In-Reply-To: <20241002010205.1341915-1-mathieu.desnoyers@efficios.com>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Date: Wed, 2 Oct 2024 10:39:15 -0700
+X-Gmail-Original-Message-ID: <CAHk-=wgztWbA4z85xKob4eS9P=Nt5h4j=HnN+Pc90expskiCRA@mail.gmail.com>
+Message-ID: <CAHk-=wgztWbA4z85xKob4eS9P=Nt5h4j=HnN+Pc90expskiCRA@mail.gmail.com>
+Subject: Re: [RFC PATCH 0/4] sched+mm: Track lazy active mm existence with
+ hazard pointers
+To: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+Cc: Andrew Morton <akpm@linux-foundation.org>, Peter Zijlstra <peterz@infradead.org>, 
+	linux-kernel@vger.kernel.org, Nicholas Piggin <npiggin@gmail.com>, 
+	Michael Ellerman <mpe@ellerman.id.au>, Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
+	Sebastian Andrzej Siewior <bigeasy@linutronix.de>, "Paul E. McKenney" <paulmck@kernel.org>, 
+	Will Deacon <will@kernel.org>, Boqun Feng <boqun.feng@gmail.com>, 
+	Alan Stern <stern@rowland.harvard.edu>, John Stultz <jstultz@google.com>, 
+	Neeraj Upadhyay <Neeraj.Upadhyay@amd.com>, Frederic Weisbecker <frederic@kernel.org>, 
+	Joel Fernandes <joel@joelfernandes.org>, Josh Triplett <josh@joshtriplett.org>, 
+	Uladzislau Rezki <urezki@gmail.com>, Steven Rostedt <rostedt@goodmis.org>, 
+	Lai Jiangshan <jiangshanlai@gmail.com>, Zqiang <qiang.zhang1211@gmail.com>, 
+	Ingo Molnar <mingo@redhat.com>, Waiman Long <longman@redhat.com>, 
+	Mark Rutland <mark.rutland@arm.com>, Thomas Gleixner <tglx@linutronix.de>, 
+	Vlastimil Babka <vbabka@suse.cz>, maged.michael@gmail.com, Mateusz Guzik <mjguzik@gmail.com>, 
+	Jonas Oberhauser <jonas.oberhauser@huaweicloud.com>, rcu@vger.kernel.org, linux-mm@kvack.org, 
+	lkmm@lists.linux.dev
+Content-Type: text/plain; charset="UTF-8"
 
-On 9/30/2024 12:57 PM, Jonas Oberhauser wrote:
-> A new version of herd7 provides a -lkmmv2 switch which overrides the old herd7
-> behavior of simply ignoring any softcoded tags in the .def and .bell files. We
-> port LKMM to this version of herd7 by providing the switch in linux-kernel.cfg
-> and reporting an error if the LKMM is used without this switch.
+On Tue, 1 Oct 2024 at 18:04, Mathieu Desnoyers
+<mathieu.desnoyers@efficios.com> wrote:
+>
+> Hazard pointers appear to be a good fit for replacing refcount based lazy
+> active mm tracking.
 
-The changes required for this patch were already merged to herd7.
+If the mm refcount is this expensive, I suspect we really shouldn't
+use it at all.
 
-> 
-> To preserve the semantics of LKMM, we also softcode the Noreturn tag on atomic
-> RMW which do not return a value and define atomic_add_unless with an Mb tag in
-> linux-kernel.def.
-> 
-> We update the herd-representation.txt accordingly and clarify some of the
-> resulting combinations.
-> 
-> (To be) Signed-off-by: Hernan Ponce de Leon <hernan.poncedeleon@huaweicloud.com>
+The thing is, we don't _need_ to use the mm refcount - the reason the
+lazy-tlb handling uses it is because we already had that refcount and
+it was easy to extend on existing logic, not because it's really
+required any more.
 
-Signed-off-by: Hernan Ponce de Leon <hernan.poncedeleon@huaweicloud.com>
+The lazy-tlb activation is basically "I'm switching to a kernel
+thread, so I'll re-use the TLB state of the previous thread".
 
-> Signed-off-by: Jonas Oberhauser <jonas.oberhauser@huaweicloud.com>
-> ---
->   .../Documentation/herd-representation.txt     | 27 ++++++++++---------
->   tools/memory-model/README                     |  2 +-
->   tools/memory-model/linux-kernel.bell          |  3 +++
->   tools/memory-model/linux-kernel.cfg           |  1 +
->   tools/memory-model/linux-kernel.def           | 18 +++++++------
->   5 files changed, 30 insertions(+), 21 deletions(-)
-> 
-> diff --git a/tools/memory-model/Documentation/herd-representation.txt b/tools/memory-model/Documentation/herd-representation.txt
-> index ed988906f2b7..7ae1ff3d3769 100644
-> --- a/tools/memory-model/Documentation/herd-representation.txt
-> +++ b/tools/memory-model/Documentation/herd-representation.txt
-> @@ -18,6 +18,11 @@
->   #
->   # By convention, a blank line in a cell means "same as the preceding line".
->   #
-> +# Note that the syntactic representation does not always match the sets and
-> +# relations in linux-kernel.cat, due to redefinitions in linux-kernel.bell and
-> +# lock.cat. For example, the po link between LKR and LKW is upgraded to an rmw
-> +# link, and W[acquire] are not included in the Acquire set.
-> +#
->   # Disclaimer.  The table includes representations of "add" and "and" operations;
->   # corresponding/identical representations of "sub", "inc", "dec" and "or", "xor",
->   # "andnot" operations are omitted.
-> @@ -60,14 +65,13 @@
->       ------------------------------------------------------------------------------
->       |       RMW ops w/o return value |                                           |
->       ------------------------------------------------------------------------------
-> -    |                     atomic_add | R*[noreturn] ->rmw W*[once]               |
-> +    |                     atomic_add | R*[noreturn] ->rmw W*[noreturn]           |
->       |                     atomic_and |                                           |
->       |                      spin_lock | LKR ->po LKW                              |
->       ------------------------------------------------------------------------------
->       |        RMW ops w/ return value |                                           |
->       ------------------------------------------------------------------------------
-> -    |              atomic_add_return | F[mb] ->po R*[once]                       |
-> -    |                                |     ->rmw W*[once] ->po F[mb]             |
-> +    |              atomic_add_return | R*[mb] ->rmw W*[mb]                       |
->       |               atomic_fetch_add |                                           |
->       |               atomic_fetch_and |                                           |
->       |                    atomic_xchg |                                           |
-> @@ -79,13 +83,13 @@
->       |            atomic_xchg_relaxed |                                           |
->       |                   xchg_relaxed |                                           |
->       |    atomic_add_negative_relaxed |                                           |
-> -    |      atomic_add_return_acquire | R*[acquire] ->rmw W*[once]                |
-> +    |      atomic_add_return_acquire | R*[acquire] ->rmw W*[acquire]             |
->       |       atomic_fetch_add_acquire |                                           |
->       |       atomic_fetch_and_acquire |                                           |
->       |            atomic_xchg_acquire |                                           |
->       |                   xchg_acquire |                                           |
->       |    atomic_add_negative_acquire |                                           |
-> -    |      atomic_add_return_release | R*[once] ->rmw W*[release]                |
-> +    |      atomic_add_return_release | R*[release] ->rmw W*[release]             |
->       |       atomic_fetch_add_release |                                           |
->       |       atomic_fetch_and_release |                                           |
->       |            atomic_xchg_release |                                           |
-> @@ -94,17 +98,16 @@
->       ------------------------------------------------------------------------------
->       |            Conditional RMW ops |                                           |
->       ------------------------------------------------------------------------------
-> -    |                 atomic_cmpxchg | On success: F[mb] ->po R*[once]           |
-> -    |                                |                 ->rmw W*[once] ->po F[mb] |
-> -    |                                | On failure: R*[once]                      |
-> +    |                 atomic_cmpxchg | On success: R*[mb] ->rmw W*[mb]           |
-> +    |                                | On failure: R*[mb]                        |
->       |                        cmpxchg |                                           |
->       |              atomic_add_unless |                                           |
->       |         atomic_cmpxchg_relaxed | On success: R*[once] ->rmw W*[once]       |
->       |                                | On failure: R*[once]                      |
-> -    |         atomic_cmpxchg_acquire | On success: R*[acquire] ->rmw W*[once]    |
-> -    |                                | On failure: R*[once]                      |
-> -    |         atomic_cmpxchg_release | On success: R*[once] ->rmw W*[release]    |
-> -    |                                | On failure: R*[once]                      |
-> +    |         atomic_cmpxchg_acquire | On success: R*[acquire] ->rmw W*[acquire] |
-> +    |                                | On failure: R*[acquire]                   |
-> +    |         atomic_cmpxchg_release | On success: R*[release] ->rmw W*[release] |
-> +    |                                | On failure: R*[release]                   |
->       |                   spin_trylock | On success: LKR ->po LKW                  |
->       |                                | On failure: LF                            |
->       ------------------------------------------------------------------------------
-> diff --git a/tools/memory-model/README b/tools/memory-model/README
-> index dab38904206a..59bc15edeb8a 100644
-> --- a/tools/memory-model/README
-> +++ b/tools/memory-model/README
-> @@ -20,7 +20,7 @@ that litmus test to be exercised within the Linux kernel.
->   REQUIREMENTS
->   ============
->   
-> -Version 7.52 or higher of the "herd7" and "klitmus7" tools must be
-> +Version 7.58 or higher of the "herd7" and "klitmus7" tools must be
->   downloaded separately:
->   
->     https://github.com/herd/herdtools7
-> diff --git a/tools/memory-model/linux-kernel.bell b/tools/memory-model/linux-kernel.bell
-> index 7c9ae48b9437..8ae47545df97 100644
-> --- a/tools/memory-model/linux-kernel.bell
-> +++ b/tools/memory-model/linux-kernel.bell
-> @@ -94,3 +94,6 @@ let carry-dep = (data ; [~ Srcu-unlock] ; rfi)*
->   let addr = carry-dep ; addr
->   let ctrl = carry-dep ; ctrl
->   let data = carry-dep ; data
-> +
-> +flag ~empty (if "lkmmv2" then 0 else _)
-> +  as this-model-requires-variant-higher-than-lkmmv1
-> diff --git a/tools/memory-model/linux-kernel.cfg b/tools/memory-model/linux-kernel.cfg
-> index 3c8098e99f41..69b04f3aad73 100644
-> --- a/tools/memory-model/linux-kernel.cfg
-> +++ b/tools/memory-model/linux-kernel.cfg
-> @@ -1,6 +1,7 @@
->   macros linux-kernel.def
->   bell linux-kernel.bell
->   model linux-kernel.cat
-> +variant lkmmv2
->   graph columns
->   squished true
->   showevents noregs
-> diff --git a/tools/memory-model/linux-kernel.def b/tools/memory-model/linux-kernel.def
-> index a12b96c547b7..d7279a357cba 100644
-> --- a/tools/memory-model/linux-kernel.def
-> +++ b/tools/memory-model/linux-kernel.def
-> @@ -63,14 +63,14 @@ atomic_set(X,V) { WRITE_ONCE(*X,V); }
->   atomic_read_acquire(X) smp_load_acquire(X)
->   atomic_set_release(X,V) { smp_store_release(X,V); }
->   
-> -atomic_add(V,X) { __atomic_op(X,+,V); }
-> -atomic_sub(V,X) { __atomic_op(X,-,V); }
-> -atomic_and(V,X) { __atomic_op(X,&,V); }
-> -atomic_or(V,X)  { __atomic_op(X,|,V); }
-> -atomic_xor(V,X) { __atomic_op(X,^,V); }
-> -atomic_inc(X)   { __atomic_op(X,+,1); }
-> -atomic_dec(X)   { __atomic_op(X,-,1); }
-> -atomic_andnot(V,X) { __atomic_op(X,&~,V); }
-> +atomic_add(V,X) { __atomic_op{noreturn}(X,+,V); }
-> +atomic_sub(V,X) { __atomic_op{noreturn}(X,-,V); }
-> +atomic_and(V,X) { __atomic_op{noreturn}(X,&,V); }
-> +atomic_or(V,X)  { __atomic_op{noreturn}(X,|,V); }
-> +atomic_xor(V,X) { __atomic_op{noreturn}(X,^,V); }
-> +atomic_inc(X)   { __atomic_op{noreturn}(X,+,1); }
-> +atomic_dec(X)   { __atomic_op{noreturn}(X,-,1); }
-> +atomic_andnot(V,X) { __atomic_op{noreturn}(X,&~,V); }
->   
->   atomic_add_return(V,X) __atomic_op_return{mb}(X,+,V)
->   atomic_add_return_relaxed(V,X) __atomic_op_return{once}(X,+,V)
-> @@ -144,3 +144,5 @@ atomic_fetch_andnot(V,X) __atomic_fetch_op{mb}(X,&~,V)
->   atomic_fetch_andnot_acquire(V,X) __atomic_fetch_op{acquire}(X,&~,V)
->   atomic_fetch_andnot_release(V,X) __atomic_fetch_op{release}(X,&~,V)
->   atomic_fetch_andnot_relaxed(V,X) __atomic_fetch_op{once}(X,&~,V)
-> +
-> +atomic_add_unless(X,V,W) __atomic_add_unless{mb}(X,V,W)
+(And yes, it also has a secondary case of "I'm exiting, so I will turn
+the mm I already have into a lazy one").
 
+But in the actual task switch case, the previous thread hasn't _lost_
+that mm, so we don't actually need to take the refcount at all.
+
+We really just need to make sure to invalidate it before it's torn
+down, but we do that *anyway* as part of TLB flushing.
+
+(The exit case is actually different: we are setting it up to be lost,
+although delayed - and the lazy count is the delay).
+
+The only thing the refcount means is that we don't actually have to be
+as careful when we actually *really* get rid of the MM. We can be a
+bit laissez-faire about things because even if we weren't to
+invalidate the lazy mm, it does have its own refcount, so we don't
+much care.
+
+But in reality, we're actually very careful about the active_mm
+_anyway_, because of a fairly fundamental issue: the TLB shootdown and
+PCID handling that we need to do even when mm's aren't lazy.
+
+So we actually keep track of things like "which CPU's have seen this
+MM state" in all the TLB code.
+
+And even the exit case doesn't actually need the special thing - it
+*does* need the "this CPU is still using this MM", but we have that
+too as part of the TLB code - entirely independently of 'active_mm'.
+
+So in many ways, I'm pretty sure not just the refcount, but all of
+'active_mm', is largely pointless to begin with.
+
+And if the refcount really is this big of a deal:
+
+> nr threads (-t)     speedup
+>    192               +28%
+
+then we should probably just strive to get rid of 'active_mm' altogether.
+
+Look, at least on x86 we ALREADY has a better replacement: it's the
+percpu 'cpu_tlbstate'.
+
+It basically duplicates all we do with active_mm and the whole "keep
+track of old mm state" (the 'loaded_mm' member is basically the true
+'active' mm), except it has some additional fixes:
+
+ - it has some extra housekeeping data that the architecture wants
+(for PCID updates etc)
+
+ - it's actually atomic wrt the low-level code in ways that
+'current->active_mm' isn't
+
+So I think the real issue is that "active_mm" is an old hack from a
+bygone era when we didn't have the (much more involved) full TLB
+tracking.
+
+               Linus

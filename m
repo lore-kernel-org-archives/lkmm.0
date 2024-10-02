@@ -1,180 +1,241 @@
-Received: from mail-io1-f47.google.com (mail-io1-f47.google.com [209.85.166.47])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from frasgout12.his.huawei.com (frasgout12.his.huawei.com [14.137.139.154])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 462671D014D
-	for <lkmm@lists.linux.dev>; Wed,  2 Oct 2024 16:14:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 721C71D1739
+	for <lkmm@lists.linux.dev>; Wed,  2 Oct 2024 17:34:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=14.137.139.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727885651; cv=none; b=Ufs5mKrSWBY3bzooLloefszgqWDPKBD/RopuXqzvTRe8oSoW12MgqfDeEM9LSiIth0bIutNrATOXkIJs3vhoi4yNOHz/sPDisC68SSDT7hOiqbYzo8ItMkYmpWEyrGiEm++0hR4udv/q+yAdbi5eLcCwOCKklikEVCZUIC+VdvU=
+	t=1727890501; cv=none; b=AHRvr3r7iVofF2WUOOwQysyNbM/vHkeO9aTpKWp9smM/MgQcM0Wrf7NHefomlvJx03zNskbaOpIu2sWClHY2ZjGoLaSQLhavmrTwd7BioiTH1jeDGpMn3qEyEtX5uFVOVfWQWqSyR2zvQMWWz8a9ge7Mv0gQS1GLWcDcd91xJeg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727885651; c=relaxed/simple;
-	bh=1pe/EfoDJwpQbKJ/rUv8i+LKR1OAhsFuWY9rb2O950g=;
+	s=arc-20240116; t=1727890501; c=relaxed/simple;
+	bh=HRBybnWMcqrqYqTMIuFAK4Fhl7228D+6vVrp4wOx3Jk=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=t2GKI8+M6K9NigHYurCbRTTc0KP3bhBB7BqAEhrqiRZ33bkZ8eU/HlbYqmQqnQ7KStKyJy5bUPcGumOvE90ranNbs0cgpBfP0ACExBr4Vji9yRTgUi6iFb4n+LwljpYNN4y9tR8Z5ckStO8WmDUwTZGgT7lxfCnbl2tl8/wPpyc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kernel.dk; spf=pass smtp.mailfrom=kernel.dk; dkim=pass (2048-bit key) header.d=kernel-dk.20230601.gappssmtp.com header.i=@kernel-dk.20230601.gappssmtp.com header.b=q7010OUU; arc=none smtp.client-ip=209.85.166.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kernel.dk
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kernel.dk
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel-dk.20230601.gappssmtp.com header.i=@kernel-dk.20230601.gappssmtp.com header.b="q7010OUU"
-Received: by mail-io1-f47.google.com with SMTP id ca18e2360f4ac-82aa3f65864so303057539f.2
-        for <lkmm@lists.linux.dev>; Wed, 02 Oct 2024 09:14:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=kernel-dk.20230601.gappssmtp.com; s=20230601; t=1727885648; x=1728490448; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=suV5K2CDRBsWWxuwwC9iTf44NeTKVBNstqk1svUiD9k=;
-        b=q7010OUUhtNsN+qx6RyuYyI6at/2UFq/eUBHEXbbU1cD782Ksfa/KtjYblHiGSLhYf
-         NeGNeqyJnMuga+aPCVK84Dtzyq8CpWQHO6l5YTCnYwD+Q8hIlz7i8wgI30twhJM0TEFm
-         a1ACstRg28uoKlCwI/tIVDSnBAtvX+jFi2/VrKdfddvncJ5eCd+eHOVlDeYZeXTR7mLx
-         BwxmpC7NZimNCRpfh2Db867PmNakON0x3zM/ZBqDInU6/o6MagR8v8l+OwzsC7WYwapx
-         NUO0JSyTLfuhm4tENGugD3jsNwA2P5NlY6x4EF+VHgyrIscRgt1LYO8yon6odBKYyaua
-         r1Uw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1727885648; x=1728490448;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=suV5K2CDRBsWWxuwwC9iTf44NeTKVBNstqk1svUiD9k=;
-        b=cLLPQk8g70Rpn91wmApgMxq3AR9qMzrjpoGBRiYRyd7qXVkEO+TI/ygIOjBGXBwTWZ
-         PrwxWoxhD9nIK9OwwtKgJRdWwYlaEiniSWcBtUqzOEODCpB1m48omPyRwcbHX6UPcPEr
-         PzuMC5Qpm4EUemDRpXmLBlrvMoitStmzd6V1ryNKEJDeTt9gCaN/qLvDmW9/Z16gNWVw
-         wJm92BAkU7XL4YhTikce4a5ThoRcogUZP3jBt6EVnR/9EpuKrseupjggz5VwnOd1jgo7
-         rcLX/fUjhSrQkVMARvEsYYHqo9b7P3UcO/zxAmW6lKgYKB7vvRUa94PyoLc3Dfo1VSKC
-         xH7A==
-X-Forwarded-Encrypted: i=1; AJvYcCV5QDZMkuu+sYNm2TkkszzVCXZY4CJcRB6NLcB8V3uV6NtwKEC+PR3LPgR6/IeLtfKDnP00@lists.linux.dev
-X-Gm-Message-State: AOJu0YxNtP7cbFyIpLO/h9mhCf9TcA0rLW7yq22KVVpvMNQUB141H0An
-	D6SSKWb7k+BV8QdZV/AC+605gyqBx214M1OQcYt8+p6bp07R47QGIEdieVmoxps=
-X-Google-Smtp-Source: AGHT+IGl9omV9EQTehYn0SrRAnQbJvtu3xuf912k6OEP16tiWclCTW8yLnjvynJbx2lwFE1h7mD5Pw==
-X-Received: by 2002:a05:6e02:1648:b0:39f:5521:2cd4 with SMTP id e9e14a558f8ab-3a365959a2bmr34538815ab.26.1727885648258;
-        Wed, 02 Oct 2024 09:14:08 -0700 (PDT)
-Received: from [192.168.1.116] ([96.43.243.2])
-        by smtp.gmail.com with ESMTPSA id e9e14a558f8ab-3a344d6073esm36800745ab.8.2024.10.02.09.14.05
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 02 Oct 2024 09:14:06 -0700 (PDT)
-Message-ID: <0fd31bb1-6b76-4d27-9365-4dedfc323b2c@kernel.dk>
-Date: Wed, 2 Oct 2024 10:14:05 -0600
+	 In-Reply-To:Content-Type; b=K0Qup7g76IrmPm6yCDIiyVZHP9CZXpgt6pY9gSukB+uQ5gL/4/oBDqA8R2f+crCEHMeSOoduMsZzLyzx1iYHpwqnoJn09tS9p6iTNxqElluJ9eftBjVDlioH/OLtrqoULNhHBciBcxgXE/tjBd/c1AuJl96x+BhdNKf/95xCg68=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=huaweicloud.com; spf=pass smtp.mailfrom=huaweicloud.com; arc=none smtp.client-ip=14.137.139.154
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=huaweicloud.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huaweicloud.com
+Received: from mail.maildlp.com (unknown [172.18.186.51])
+	by frasgout12.his.huawei.com (SkyGuard) with ESMTP id 4XJh9S48sZz9v7JP
+	for <lkmm@lists.linux.dev>; Thu,  3 Oct 2024 01:09:00 +0800 (CST)
+Received: from mail02.huawei.com (unknown [7.182.16.27])
+	by mail.maildlp.com (Postfix) with ESMTP id B8E85140628
+	for <lkmm@lists.linux.dev>; Thu,  3 Oct 2024 01:34:41 +0800 (CST)
+Received: from [10.48.222.239] (unknown [10.48.222.239])
+	by APP2 (Coremail) with SMTP id GxC2BwBH9sYlhP1mo_UXAg--.23081S2;
+	Wed, 02 Oct 2024 18:34:41 +0100 (CET)
+Message-ID: <63236ee7-916a-ef6e-bc6e-051acb3caf95@huaweicloud.com>
+Date: Wed, 2 Oct 2024 19:34:29 +0200
 Precedence: bulk
 X-Mailing-List: lkmm@lists.linux.dev
 List-Id: <lkmm.lists.linux.dev>
 List-Subscribe: <mailto:lkmm+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:lkmm+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH 0/4] sched+mm: Track lazy active mm existence with
- hazard pointers
-To: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
- Matthew Wilcox <willy@infradead.org>
-Cc: paulmck@kernel.org, Linus Torvalds <torvalds@linux-foundation.org>,
- Andrew Morton <akpm@linux-foundation.org>,
- Peter Zijlstra <peterz@infradead.org>, linux-kernel@vger.kernel.org,
- Nicholas Piggin <npiggin@gmail.com>, Michael Ellerman <mpe@ellerman.id.au>,
- Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
- Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
- Will Deacon <will@kernel.org>, Boqun Feng <boqun.feng@gmail.com>,
- Alan Stern <stern@rowland.harvard.edu>, John Stultz <jstultz@google.com>,
- Neeraj Upadhyay <Neeraj.Upadhyay@amd.com>,
- Frederic Weisbecker <frederic@kernel.org>,
- Joel Fernandes <joel@joelfernandes.org>,
- Josh Triplett <josh@joshtriplett.org>, Uladzislau Rezki <urezki@gmail.com>,
- Steven Rostedt <rostedt@goodmis.org>, Lai Jiangshan
- <jiangshanlai@gmail.com>, Zqiang <qiang.zhang1211@gmail.com>,
- Ingo Molnar <mingo@redhat.com>, Waiman Long <longman@redhat.com>,
- Mark Rutland <mark.rutland@arm.com>, Thomas Gleixner <tglx@linutronix.de>,
- Vlastimil Babka <vbabka@suse.cz>, maged.michael@gmail.com,
- Mateusz Guzik <mjguzik@gmail.com>,
- Jonas Oberhauser <jonas.oberhauser@huaweicloud.com>, rcu@vger.kernel.org,
- linux-mm@kvack.org, lkmm@lists.linux.dev
-References: <20241002010205.1341915-1-mathieu.desnoyers@efficios.com>
- <cfcf9c05-c639-4757-a3ac-6504d154cdfe@paulmck-laptop>
- <d412fa7e-6348-4e51-89e8-4c740184cb2f@efficios.com>
- <Zv1n0VeM3ZSVPyyE@casper.infradead.org>
- <d788c6aa-c8b9-41b8-b4fb-ac126a4f053f@efficios.com>
- <8a627fc7-cc62-40e6-ad28-c730d4a8f7d6@efficios.com>
- <579bdbbf-82a7-4330-9a5e-495d89befbac@kernel.dk>
- <f2b6f19e-0dea-4568-b3b0-832cfc950160@efficios.com>
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.13.0
+Subject: Re: [PATCH v4 4/5] tools/memory-model: Switch to softcoded herd7 tags
 Content-Language: en-US
-From: Jens Axboe <axboe@kernel.dk>
-In-Reply-To: <f2b6f19e-0dea-4568-b3b0-832cfc950160@efficios.com>
-Content-Type: text/plain; charset=UTF-8
+To: Jonas Oberhauser <jonas.oberhauser@huaweicloud.com>, paulmck@kernel.org
+Cc: stern@rowland.harvard.edu, parri.andrea@gmail.com, will@kernel.org,
+ peterz@infradead.org, boqun.feng@gmail.com, npiggin@gmail.com,
+ dhowells@redhat.com, j.alglave@ucl.ac.uk, luc.maranget@inria.fr,
+ akiyks@gmail.com, dlustig@nvidia.com, joel@joelfernandes.org,
+ urezki@gmail.com, quic_neeraju@quicinc.com, frederic@kernel.org,
+ linux-kernel@vger.kernel.org, lkmm@lists.linux.dev
+References: <20240930105710.383284-1-jonas.oberhauser@huaweicloud.com>
+ <20240930105710.383284-5-jonas.oberhauser@huaweicloud.com>
+From: Hernan Ponce de Leon <hernan.poncedeleon@huaweicloud.com>
+In-Reply-To: <20240930105710.383284-5-jonas.oberhauser@huaweicloud.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
+X-CM-TRANSID:GxC2BwBH9sYlhP1mo_UXAg--.23081S2
+X-Coremail-Antispam: 1UD129KBjvJXoW3ArW7WFy8JF43Zr45uw17ZFb_yoW3ZF48pr
+	s3XrZrKr4UXryUC3ykGr4UC3WrWw40y3yUGr1kJ34rZr12krs8A3W8Gr1vqryUJ34Utw48
+	Xr12gFyqkr4UJrJanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+	9KBjDU0xBIdaVrnRJUUUBY14x267AKxVW5JVWrJwAFc2x0x2IEx4CE42xK8VAvwI8IcIk0
+	rVWrJVCq3wAFIxvE14AKwVWUJVWUGwA2ocxC64kIII0Yj41l84x0c7CEw4AK67xGY2AK02
+	1l84ACjcxK6xIIjxv20xvE14v26r1j6r1xM28EF7xvwVC0I7IYx2IY6xkF7I0E14v26r4j
+	6F4UM28EF7xvwVC2z280aVAFwI0_Gr0_Cr1l84ACjcxK6I8E87Iv6xkF7I0E14v26r4j6r
+	4UJwAS0I0E0xvYzxvE52x082IY62kv0487Mc02F40EFcxC0VAKzVAqx4xG6I80ewAv7VC0
+	I7IYx2IY67AKxVWUJVWUGwAv7VC2z280aVAFwI0_Jr0_Gr1lOx8S6xCaFVCjc4AY6r1j6r
+	4UM4x0Y48IcVAKI48JM4x0x7Aq67IIx4CEVc8vx2IErcIFxwACI402YVCY1x02628vn2kI
+	c2xKxwCYjI0SjxkI62AI1cAE67vIY487MxkF7I0En4kS14v26r4a6rW5MxAIw28IcxkI7V
+	AKI48JMxC20s026xCaFVCjc4AY6r1j6r4UMI8I3I0E5I8CrVAFwI0_Jr0_Jr4lx2IqxVCj
+	r7xvwVAFwI0_JrI_JrWlx4CE17CEb7AF67AKxVW8ZVWrXwCIc40Y0x0EwIxGrwCI42IY6x
+	IIjxv20xvE14v26r1j6r1xMIIF0xvE2Ix0cI8IcVCY1x0267AKxVW8JVWxJwCI42IY6xAI
+	w20EY4v20xvaj40_Jr0_JF4lIxAIcVC2z280aVAFwI0_Jr0_Gr1lIxAIcVC2z280aVCY1x
+	0267AKxVW8JVW8JrUvcSsGvfC2KfnxnUUI43ZEXa7sRidbbtUUUUU==
+X-CM-SenderInfo: xkhu0tnqos00pfhgvzhhrqqx5xdzvxpfor3voofrz/
 
-On 10/2/24 10:02 AM, Mathieu Desnoyers wrote:
-> On 2024-10-02 17:58, Jens Axboe wrote:
->> On 10/2/24 9:53 AM, Mathieu Desnoyers wrote:
->>> On 2024-10-02 17:36, Mathieu Desnoyers wrote:
->>>> On 2024-10-02 17:33, Matthew Wilcox wrote:
->>>>> On Wed, Oct 02, 2024 at 11:26:27AM -0400, Mathieu Desnoyers wrote:
->>>>>> On 2024-10-02 16:09, Paul E. McKenney wrote:
->>>>>>> On Tue, Oct 01, 2024 at 09:02:01PM -0400, Mathieu Desnoyers wrote:
->>>>>>>> Hazard pointers appear to be a good fit for replacing refcount based lazy
->>>>>>>> active mm tracking.
->>>>>>>>
->>>>>>>> Highlight:
->>>>>>>>
->>>>>>>> will-it-scale context_switch1_threads
->>>>>>>>
->>>>>>>> nr threads (-t)     speedup
->>>>>>>>        24                +3%
->>>>>>>>        48               +12%
->>>>>>>>        96               +21%
->>>>>>>>       192               +28%
->>>>>>>
->>>>>>> Impressive!!!
->>>>>>>
->>>>>>> I have to ask...  Any data for smaller numbers of CPUs?
->>>>>>
->>>>>> Sure, but they are far less exciting ;-)
->>>>>
->>>>> How many CPUs in the system under test?
->>>>
->>>> 2 sockets, 96-core per socket:
->>>>
->>>> CPU(s):                   384
->>>>     On-line CPU(s) list:    0-383
->>>> Vendor ID:                AuthenticAMD
->>>>     Model name:             AMD EPYC 9654 96-Core Processor
->>>>       CPU family:           25
->>>>       Model:                17
->>>>       Thread(s) per core:   2
->>>>       Core(s) per socket:   96
->>>>       Socket(s):            2
->>>>       Stepping:             1
->>>>       Frequency boost:      enabled
->>>>       CPU(s) scaling MHz:   68%
->>>>       CPU max MHz:          3709.0000
->>>>       CPU min MHz:          400.0000
->>>>       BogoMIPS:             4800.00
->>>>
->>>> Note that Jens Axboe got even more impressive speedups testing this
->>>> on his 512-hw-thread EPYC [1] (390% speedup for 192 threads). I've
->>>> noticed I had schedstats and sched debug enabled in my config, so I'll have to re-run my tests.
->>>
->>> A quick re-run of the 128-thread case with schedstats and sched debug
->>> disabled still show around 26% speedup, similar to my prior numbers.
->>>
->>> I'm not sure why Jens has much better speedups on a similar system.
->>>
->>> I'm attaching my config in case someone spots anything obvious. Note
->>> that my BIOS is configured to show 24 NUMA nodes to the kernel (one
->>> NUMA node per core complex).
->>
->> Here's my .config - note it's from the stock kernel run, which is why it
->> still has:
->>
->> CONFIG_MMU_LAZY_TLB_REFCOUNT=y
->>
->> set. Have the same numa configuration as you, just end up with 32 nodes
->> on this box.
+On 9/30/2024 12:57 PM, Jonas Oberhauser wrote:
+> A new version of herd7 provides a -lkmmv2 switch which overrides the old herd7
+> behavior of simply ignoring any softcoded tags in the .def and .bell files. We
+> port LKMM to this version of herd7 by providing the switch in linux-kernel.cfg
+> and reporting an error if the LKMM is used without this switch.
+
+The changes required for this patch were already merged to herd7.
+
 > 
-> Just to make sure: did you use other command line options when starting
-> the test program (other than -t N ?).
+> To preserve the semantics of LKMM, we also softcode the Noreturn tag on atomic
+> RMW which do not return a value and define atomic_add_unless with an Mb tag in
+> linux-kernel.def.
+> 
+> We update the herd-representation.txt accordingly and clarify some of the
+> resulting combinations.
+> 
+> (To be) Signed-off-by: Hernan Ponce de Leon <hernan.poncedeleon@huaweicloud.com>
 
-I did not, this is literally what I ran:
+Signed-off-by: Hernan Ponce de Leon <hernan.poncedeleon@huaweicloud.com>
 
-for i in 24 48 96 192 256 512 1024 2048; do echo $i threads; timeout -s INT -k 30 30 ./context_switch1_threads -t $i; done
+> Signed-off-by: Jonas Oberhauser <jonas.oberhauser@huaweicloud.com>
+> ---
+>   .../Documentation/herd-representation.txt     | 27 ++++++++++---------
+>   tools/memory-model/README                     |  2 +-
+>   tools/memory-model/linux-kernel.bell          |  3 +++
+>   tools/memory-model/linux-kernel.cfg           |  1 +
+>   tools/memory-model/linux-kernel.def           | 18 +++++++------
+>   5 files changed, 30 insertions(+), 21 deletions(-)
+> 
+> diff --git a/tools/memory-model/Documentation/herd-representation.txt b/tools/memory-model/Documentation/herd-representation.txt
+> index ed988906f2b7..7ae1ff3d3769 100644
+> --- a/tools/memory-model/Documentation/herd-representation.txt
+> +++ b/tools/memory-model/Documentation/herd-representation.txt
+> @@ -18,6 +18,11 @@
+>   #
+>   # By convention, a blank line in a cell means "same as the preceding line".
+>   #
+> +# Note that the syntactic representation does not always match the sets and
+> +# relations in linux-kernel.cat, due to redefinitions in linux-kernel.bell and
+> +# lock.cat. For example, the po link between LKR and LKW is upgraded to an rmw
+> +# link, and W[acquire] are not included in the Acquire set.
+> +#
+>   # Disclaimer.  The table includes representations of "add" and "and" operations;
+>   # corresponding/identical representations of "sub", "inc", "dec" and "or", "xor",
+>   # "andnot" operations are omitted.
+> @@ -60,14 +65,13 @@
+>       ------------------------------------------------------------------------------
+>       |       RMW ops w/o return value |                                           |
+>       ------------------------------------------------------------------------------
+> -    |                     atomic_add | R*[noreturn] ->rmw W*[once]               |
+> +    |                     atomic_add | R*[noreturn] ->rmw W*[noreturn]           |
+>       |                     atomic_and |                                           |
+>       |                      spin_lock | LKR ->po LKW                              |
+>       ------------------------------------------------------------------------------
+>       |        RMW ops w/ return value |                                           |
+>       ------------------------------------------------------------------------------
+> -    |              atomic_add_return | F[mb] ->po R*[once]                       |
+> -    |                                |     ->rmw W*[once] ->po F[mb]             |
+> +    |              atomic_add_return | R*[mb] ->rmw W*[mb]                       |
+>       |               atomic_fetch_add |                                           |
+>       |               atomic_fetch_and |                                           |
+>       |                    atomic_xchg |                                           |
+> @@ -79,13 +83,13 @@
+>       |            atomic_xchg_relaxed |                                           |
+>       |                   xchg_relaxed |                                           |
+>       |    atomic_add_negative_relaxed |                                           |
+> -    |      atomic_add_return_acquire | R*[acquire] ->rmw W*[once]                |
+> +    |      atomic_add_return_acquire | R*[acquire] ->rmw W*[acquire]             |
+>       |       atomic_fetch_add_acquire |                                           |
+>       |       atomic_fetch_and_acquire |                                           |
+>       |            atomic_xchg_acquire |                                           |
+>       |                   xchg_acquire |                                           |
+>       |    atomic_add_negative_acquire |                                           |
+> -    |      atomic_add_return_release | R*[once] ->rmw W*[release]                |
+> +    |      atomic_add_return_release | R*[release] ->rmw W*[release]             |
+>       |       atomic_fetch_add_release |                                           |
+>       |       atomic_fetch_and_release |                                           |
+>       |            atomic_xchg_release |                                           |
+> @@ -94,17 +98,16 @@
+>       ------------------------------------------------------------------------------
+>       |            Conditional RMW ops |                                           |
+>       ------------------------------------------------------------------------------
+> -    |                 atomic_cmpxchg | On success: F[mb] ->po R*[once]           |
+> -    |                                |                 ->rmw W*[once] ->po F[mb] |
+> -    |                                | On failure: R*[once]                      |
+> +    |                 atomic_cmpxchg | On success: R*[mb] ->rmw W*[mb]           |
+> +    |                                | On failure: R*[mb]                        |
+>       |                        cmpxchg |                                           |
+>       |              atomic_add_unless |                                           |
+>       |         atomic_cmpxchg_relaxed | On success: R*[once] ->rmw W*[once]       |
+>       |                                | On failure: R*[once]                      |
+> -    |         atomic_cmpxchg_acquire | On success: R*[acquire] ->rmw W*[once]    |
+> -    |                                | On failure: R*[once]                      |
+> -    |         atomic_cmpxchg_release | On success: R*[once] ->rmw W*[release]    |
+> -    |                                | On failure: R*[once]                      |
+> +    |         atomic_cmpxchg_acquire | On success: R*[acquire] ->rmw W*[acquire] |
+> +    |                                | On failure: R*[acquire]                   |
+> +    |         atomic_cmpxchg_release | On success: R*[release] ->rmw W*[release] |
+> +    |                                | On failure: R*[release]                   |
+>       |                   spin_trylock | On success: LKR ->po LKW                  |
+>       |                                | On failure: LF                            |
+>       ------------------------------------------------------------------------------
+> diff --git a/tools/memory-model/README b/tools/memory-model/README
+> index dab38904206a..59bc15edeb8a 100644
+> --- a/tools/memory-model/README
+> +++ b/tools/memory-model/README
+> @@ -20,7 +20,7 @@ that litmus test to be exercised within the Linux kernel.
+>   REQUIREMENTS
+>   ============
+>   
+> -Version 7.52 or higher of the "herd7" and "klitmus7" tools must be
+> +Version 7.58 or higher of the "herd7" and "klitmus7" tools must be
+>   downloaded separately:
+>   
+>     https://github.com/herd/herdtools7
+> diff --git a/tools/memory-model/linux-kernel.bell b/tools/memory-model/linux-kernel.bell
+> index 7c9ae48b9437..8ae47545df97 100644
+> --- a/tools/memory-model/linux-kernel.bell
+> +++ b/tools/memory-model/linux-kernel.bell
+> @@ -94,3 +94,6 @@ let carry-dep = (data ; [~ Srcu-unlock] ; rfi)*
+>   let addr = carry-dep ; addr
+>   let ctrl = carry-dep ; ctrl
+>   let data = carry-dep ; data
+> +
+> +flag ~empty (if "lkmmv2" then 0 else _)
+> +  as this-model-requires-variant-higher-than-lkmmv1
+> diff --git a/tools/memory-model/linux-kernel.cfg b/tools/memory-model/linux-kernel.cfg
+> index 3c8098e99f41..69b04f3aad73 100644
+> --- a/tools/memory-model/linux-kernel.cfg
+> +++ b/tools/memory-model/linux-kernel.cfg
+> @@ -1,6 +1,7 @@
+>   macros linux-kernel.def
+>   bell linux-kernel.bell
+>   model linux-kernel.cat
+> +variant lkmmv2
+>   graph columns
+>   squished true
+>   showevents noregs
+> diff --git a/tools/memory-model/linux-kernel.def b/tools/memory-model/linux-kernel.def
+> index a12b96c547b7..d7279a357cba 100644
+> --- a/tools/memory-model/linux-kernel.def
+> +++ b/tools/memory-model/linux-kernel.def
+> @@ -63,14 +63,14 @@ atomic_set(X,V) { WRITE_ONCE(*X,V); }
+>   atomic_read_acquire(X) smp_load_acquire(X)
+>   atomic_set_release(X,V) { smp_store_release(X,V); }
+>   
+> -atomic_add(V,X) { __atomic_op(X,+,V); }
+> -atomic_sub(V,X) { __atomic_op(X,-,V); }
+> -atomic_and(V,X) { __atomic_op(X,&,V); }
+> -atomic_or(V,X)  { __atomic_op(X,|,V); }
+> -atomic_xor(V,X) { __atomic_op(X,^,V); }
+> -atomic_inc(X)   { __atomic_op(X,+,1); }
+> -atomic_dec(X)   { __atomic_op(X,-,1); }
+> -atomic_andnot(V,X) { __atomic_op(X,&~,V); }
+> +atomic_add(V,X) { __atomic_op{noreturn}(X,+,V); }
+> +atomic_sub(V,X) { __atomic_op{noreturn}(X,-,V); }
+> +atomic_and(V,X) { __atomic_op{noreturn}(X,&,V); }
+> +atomic_or(V,X)  { __atomic_op{noreturn}(X,|,V); }
+> +atomic_xor(V,X) { __atomic_op{noreturn}(X,^,V); }
+> +atomic_inc(X)   { __atomic_op{noreturn}(X,+,1); }
+> +atomic_dec(X)   { __atomic_op{noreturn}(X,-,1); }
+> +atomic_andnot(V,X) { __atomic_op{noreturn}(X,&~,V); }
+>   
+>   atomic_add_return(V,X) __atomic_op_return{mb}(X,+,V)
+>   atomic_add_return_relaxed(V,X) __atomic_op_return{once}(X,+,V)
+> @@ -144,3 +144,5 @@ atomic_fetch_andnot(V,X) __atomic_fetch_op{mb}(X,&~,V)
+>   atomic_fetch_andnot_acquire(V,X) __atomic_fetch_op{acquire}(X,&~,V)
+>   atomic_fetch_andnot_release(V,X) __atomic_fetch_op{release}(X,&~,V)
+>   atomic_fetch_andnot_relaxed(V,X) __atomic_fetch_op{once}(X,&~,V)
+> +
+> +atomic_add_unless(X,V,W) __atomic_add_unless{mb}(X,V,W)
 
-and the numbers I got were very stable between runs and reboots.
-
--- 
-Jens Axboe

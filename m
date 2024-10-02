@@ -1,202 +1,155 @@
-Received: from eu-smtp-delivery-151.mimecast.com (eu-smtp-delivery-151.mimecast.com [185.58.86.151])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCDE219414E
-	for <lkmm@lists.linux.dev>; Wed,  2 Oct 2024 08:14:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.58.86.151
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98BE01D0BB6;
+	Wed,  2 Oct 2024 14:09:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727856855; cv=none; b=TWfPyoZ+5wXdTZLxmhymVRY3x3IQwSKeCC7JZoLNi+qp/Cmn69pygNh0vK36bWw2DWfJFhAkiPRAwMjavVzyApq9LVRF+6qa3+54XOR8LyJFIVJf4z/idtzWYuUhb44zY/v2p2TYqVSlTIlCLMcTbghGSkHeMWID4MIoFa9xCYg=
+	t=1727878189; cv=none; b=Gi3YQDLm7QVRhXdB0rLwd9v2Gb/S+XSHTvgtLrgFtqGiU2IlcjbPPxohxWz6NaA7sXIUi9jADRN6BR5qgeYXTpWI8w/BsoENFGkTUyNVdLmXeStdVo96jpAU5EVz1L1vsd4cbZuM6jRpCQBB5RuKr7/HzNJkVJJRA8PmZY/+sSY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727856855; c=relaxed/simple;
-	bh=8qAcjD5C/YKKipmzwR4wx3up8GfuLOBWdcljyM5kM58=;
-	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
-	 MIME-Version:Content-Type; b=OEuJbxn37uUcWhB7q7hqUViXAQo5aaJsfNSlwRiQNGGerS/DeTxRMknVLukXFVgJnK/1frpX0QVGJD9Ehrhb1Bk4UHQtb4YmBkQe6IUQJ/FxNe7e3ja3WWdDPxoXxXXgQlFosZCctEtyfkoI2akMqB5wMPXvfnJtVIwz3ZVYgTY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ACULAB.COM; spf=pass smtp.mailfrom=aculab.com; arc=none smtp.client-ip=185.58.86.151
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ACULAB.COM
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=aculab.com
-Received: from AcuMS.aculab.com (156.67.243.121 [156.67.243.121]) by
- relay.mimecast.com with ESMTP with both STARTTLS and AUTH (version=TLSv1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384) id
- uk-mta-105-yxIePQGGMR-86E0GIzmtkQ-1; Wed, 02 Oct 2024 09:14:04 +0100
-X-MC-Unique: yxIePQGGMR-86E0GIzmtkQ-1
-Received: from AcuMS.Aculab.com (10.202.163.6) by AcuMS.aculab.com
- (10.202.163.6) with Microsoft SMTP Server (TLS) id 15.0.1497.48; Wed, 2 Oct
- 2024 09:13:15 +0100
-Received: from AcuMS.Aculab.com ([::1]) by AcuMS.aculab.com ([::1]) with mapi
- id 15.00.1497.048; Wed, 2 Oct 2024 09:13:15 +0100
-From: David Laight <David.Laight@ACULAB.COM>
-To: 'Alan Stern' <stern@rowland.harvard.edu>
-CC: Jonas Oberhauser <jonas.oberhauser@huaweicloud.com>, Mathieu Desnoyers
-	<mathieu.desnoyers@efficios.com>, Linus Torvalds
-	<torvalds@linux-foundation.org>, "linux-kernel@vger.kernel.org"
-	<linux-kernel@vger.kernel.org>, Greg Kroah-Hartman
-	<gregkh@linuxfoundation.org>, Sebastian Andrzej Siewior
-	<bigeasy@linutronix.de>, "Paul E. McKenney" <paulmck@kernel.org>, Will Deacon
-	<will@kernel.org>, Peter Zijlstra <peterz@infradead.org>, Boqun Feng
-	<boqun.feng@gmail.com>, John Stultz <jstultz@google.com>, Neeraj Upadhyay
-	<Neeraj.Upadhyay@amd.com>, Frederic Weisbecker <frederic@kernel.org>, "Joel
- Fernandes" <joel@joelfernandes.org>, Josh Triplett <josh@joshtriplett.org>,
-	Uladzislau Rezki <urezki@gmail.com>, Steven Rostedt <rostedt@goodmis.org>,
-	Lai Jiangshan <jiangshanlai@gmail.com>, Zqiang <qiang.zhang1211@gmail.com>,
-	Ingo Molnar <mingo@redhat.com>, Waiman Long <longman@redhat.com>, "Mark
- Rutland" <mark.rutland@arm.com>, Thomas Gleixner <tglx@linutronix.de>,
-	Vlastimil Babka <vbabka@suse.cz>, "maged.michael@gmail.com"
-	<maged.michael@gmail.com>, Mateusz Guzik <mjguzik@gmail.com>, Gary Guo
-	<gary@garyguo.net>, "rcu@vger.kernel.org" <rcu@vger.kernel.org>,
-	"linux-mm@kvack.org" <linux-mm@kvack.org>, "lkmm@lists.linux.dev"
-	<lkmm@lists.linux.dev>
-Subject: RE: [PATCH 1/2] compiler.h: Introduce ptr_eq() to preserve address
- dependency
-Thread-Topic: [PATCH 1/2] compiler.h: Introduce ptr_eq() to preserve address
- dependency
-Thread-Index: AQHbE2njI9qt6nx11kSrjhsE5O+AlrJyIkGggABQqYCAAKZugA==
-Date: Wed, 2 Oct 2024 08:13:15 +0000
-Message-ID: <22638e2fe1274eb0834fa3e43b44184e@AcuMS.aculab.com>
-References: <20240928135128.991110-1-mathieu.desnoyers@efficios.com>
- <20240928135128.991110-2-mathieu.desnoyers@efficios.com>
- <02c63e79-ec8c-4d6a-9fcf-75f0e67ea242@rowland.harvard.edu>
- <9539c551-5c91-42db-8ac1-cff1d6d7c293@huaweicloud.com>
- <2cdda043-1ad9-40cf-a157-0c16a0ffb046@rowland.harvard.edu>
- <5d7d8a59-57f5-4125-95bb-fda9c193b9cf@huaweicloud.com>
- <82e97ad5-17ad-418d-8791-22297acc7af4@rowland.harvard.edu>
- <ea02ce2ce8a348efa8d461f84f976478@AcuMS.aculab.com>
- <2b1caba3-48fa-43b9-bd44-cf60b9a141d7@rowland.harvard.edu>
-In-Reply-To: <2b1caba3-48fa-43b9-bd44-cf60b9a141d7@rowland.harvard.edu>
-Accept-Language: en-GB, en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-ms-exchange-transport-fromentityheader: Hosted
+	s=arc-20240116; t=1727878189; c=relaxed/simple;
+	bh=ztEtpO2kOUfk95Fq1fQfm+HQEaDF0QnfJ03JKTdJUHs=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=pp7XaAfGNzczNGmWZTAeqCs0ZHVtS5HmsHig8ntqaYQFjitnPyxRCp657FUwf6GhfnrQAhc7lIV5OpO3BKCPAea6i8wSHTdTlBSBXL/YZUw49Yofq72ZFJ7b/7U8OoDp7yLvq9iXeO+F9OttjSwZRfVvXywD3jIuW2KZWEigGWY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fW0oa0SL; arc=none smtp.client-ip=10.30.226.201
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fW0oa0SL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20444C4CEC5;
+	Wed,  2 Oct 2024 14:09:49 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1727878189;
+	bh=ztEtpO2kOUfk95Fq1fQfm+HQEaDF0QnfJ03JKTdJUHs=;
+	h=Date:From:To:Cc:Subject:Reply-To:References:In-Reply-To:From;
+	b=fW0oa0SL00BMD5AxbNVSpfHResa4zReH+jYl5W3c4FzobttWTVraba/51xUO3ejUo
+	 fkFz4qihVsDkhKd2fHyWKmWTyh9KPc3gN6iWuQ803xyFDy/l6cfgLoSrsNjhbr6Z1T
+	 2/hTWJkUHLwdkAKzpeptJMdmBSX9s0FdZNzmENdaHc73z8rrgwgO2BPkVJ/7Qxy/lK
+	 IBiKE2h+gP1y8vgzM2DFODO8j8WFhnqZeGAubbIosYVU3YHXotQiXjAcvpBE+UVoxl
+	 MYUICTvuMdBGXfFZPyc9YBh7/jE4Q30Zf9D9J+lJpIKKvkPgfHmE4c1ySbUin8kDaG
+	 VqMotaKRQyVlw==
+Received: by paulmck-ThinkPad-P17-Gen-1.home (Postfix, from userid 1000)
+	id AD341CE0710; Wed,  2 Oct 2024 07:09:48 -0700 (PDT)
+Date: Wed, 2 Oct 2024 07:09:48 -0700
+From: "Paul E. McKenney" <paulmck@kernel.org>
+To: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Peter Zijlstra <peterz@infradead.org>, linux-kernel@vger.kernel.org,
+	Nicholas Piggin <npiggin@gmail.com>,
+	Michael Ellerman <mpe@ellerman.id.au>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
+	Will Deacon <will@kernel.org>, Boqun Feng <boqun.feng@gmail.com>,
+	Alan Stern <stern@rowland.harvard.edu>,
+	John Stultz <jstultz@google.com>,
+	Neeraj Upadhyay <Neeraj.Upadhyay@amd.com>,
+	Frederic Weisbecker <frederic@kernel.org>,
+	Joel Fernandes <joel@joelfernandes.org>,
+	Josh Triplett <josh@joshtriplett.org>,
+	Uladzislau Rezki <urezki@gmail.com>,
+	Steven Rostedt <rostedt@goodmis.org>,
+	Lai Jiangshan <jiangshanlai@gmail.com>,
+	Zqiang <qiang.zhang1211@gmail.com>, Ingo Molnar <mingo@redhat.com>,
+	Waiman Long <longman@redhat.com>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Vlastimil Babka <vbabka@suse.cz>, maged.michael@gmail.com,
+	Mateusz Guzik <mjguzik@gmail.com>,
+	Jonas Oberhauser <jonas.oberhauser@huaweicloud.com>,
+	rcu@vger.kernel.org, linux-mm@kvack.org, lkmm@lists.linux.dev
+Subject: Re: [RFC PATCH 0/4] sched+mm: Track lazy active mm existence with
+ hazard pointers
+Message-ID: <cfcf9c05-c639-4757-a3ac-6504d154cdfe@paulmck-laptop>
+Reply-To: paulmck@kernel.org
+References: <20241002010205.1341915-1-mathieu.desnoyers@efficios.com>
 Precedence: bulk
 X-Mailing-List: lkmm@lists.linux.dev
 List-Id: <lkmm.lists.linux.dev>
 List-Subscribe: <mailto:lkmm+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:lkmm+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-Mimecast-Spam-Score: 0
-X-Mimecast-Originator: aculab.com
-Content-Language: en-US
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20241002010205.1341915-1-mathieu.desnoyers@efficios.com>
 
-From: 'Alan Stern'
-> Sent: 01 October 2024 23:57
->=20
-> On Tue, Oct 01, 2024 at 05:11:05PM +0000, David Laight wrote:
-> > From: Alan Stern
-> > > Sent: 30 September 2024 19:53
-> > >
-> > > On Mon, Sep 30, 2024 at 07:05:06PM +0200, Jonas Oberhauser wrote:
-> > > >
-> > > >
-> > > > Am 9/30/2024 um 6:43 PM schrieb Alan Stern:
-> > > > > On Mon, Sep 30, 2024 at 01:26:53PM +0200, Jonas Oberhauser wrote:
-> > > > > >
-> > > > > >
-> > > > > > Am 9/28/2024 um 4:49 PM schrieb Alan Stern:
-> > > > > >
-> > > > > > I should also point out that it is not enough to prevent the co=
-mpiler from
-> > > > > > using @a instead of @b.
-> > > > > >
-> > > > > > It must also be prevented from assigning @b=3D@a, which it is o=
-ften allowed to
-> > > > > > do after finding @a=3D=3D@b.
-> > > > >
-> > > > > Wouldn't that be a bug?
-> > > >
-> > > > That's why I said that it is often allowed to do it. In your case i=
-t
-> > > > wouldn't, but it is often possible when a and b are non-atomic &
-> > > > non-volatile (and haven't escaped, and I believe sometimes even the=
-n).
-> > > >
-> > > > It happens for example here with GCC 14.1.0 -O3:
-> > > >
-> > > > int fct_hide(void)
-> > > > {
-> > > >     int *a, *b;
-> > > >
-> > > >     do {
-> > > >         a =3D READ_ONCE(p);
-> > > >         asm volatile ("" : : : "memory");
-> > > >         b =3D READ_ONCE(p);
-> > > >     } while (a !=3D b);
-> > > >     OPTIMIZER_HIDE_VAR(b);
-> > > >     return *b;
-> > > > }
-> > > >
-> > > >
-> > > >
-> > > >         ldr     r1, [r2]
-> > > >         ldr     r3, [r2]
-> > > >         cmp     r1, r3
-> > > >         bne     .L6
-> > > >         mov     r3, r1   // nay...
-> > >
-> > > A totally unnecessary instruction, which accomplishes nothing other t=
-han
-> > > to waste time, space, and energy.  But nonetheless, allowed -- I agre=
-e.
-> > >
-> > > The people in charge of GCC's optimizer might like to hear about this=
-,
-> > > if they're not already aware of it...
-> > >
-> > > >         ldr     r0, [r3] // yay!
-> > > >         bx      lr
-> > >
-> > > One could argue that in this example the compiler _has_ used *a inste=
-ad
-> > > of *b.  However, such an argument would have more force if we had
-> > > described what we are talking about more precisely.
-> >
-> > The 'mov r3, r1' has nothing to do with 'a'.
->=20
-> What do you mean by that?  At this point in the program, a is the
-> variable whose value is stored in r1 and b is the variable whose value
-> is stored in r3.  "mov r3, r1" copies the value from r1 into r3 and is
-> therefore equivalent to executing "b =3D a".  (That is why I said one
-> could argue that the "return *b" statement uses the value of *a.)  Thus
-> it very much does have something to do with "a".
+On Tue, Oct 01, 2024 at 09:02:01PM -0400, Mathieu Desnoyers wrote:
+> Hazard pointers appear to be a good fit for replacing refcount based lazy
+> active mm tracking.
+> 
+> Highlight:
+> 
+> will-it-scale context_switch1_threads
+> 
+> nr threads (-t)     speedup
+>     24                +3%
+>     48               +12%
+>     96               +21%
+>    192               +28%
 
-After the cmp and bne r1 and r3 have the same value.
-The compiler tracks that and will use either register later.
-That can never matter.
-Remember the compiler tracks values (in pseudo/internal registers)
-not variables.
+Impressive!!!
 
-> > It is a more general problem that OPTIMISER_HIDE_VAR() pretty much
-> > always ends up allocating a different internal 'register' for the
-> > output and then allocating a separate physical rehgister.
->=20
-> What output are you referring to?  Does OPTIMISER_HIDE_VAR() have an
-> output?  If it does, the source program above ignores it, discarding any
-> returned value.
+I have to ask...  Any data for smaller numbers of CPUs?
 
-Look up OPTIMISER_HIDE_VAR(x) it basically x =3D f(x) where f() is
-the identity operation:
-=09asm ("" : "+r"(x))
-I'll bet that gcc allocates a separate internal/pseudo register
-for the result so wants to do y =3D f(x).
-Probably generating y =3D x; y =3D f(y);
-(The 'mov' might be after the asm, but I think that would get
-optimised away - the listing file might help.)
+							Thanx, Paul
 
-So here the compiler has just decided to reuse the register that
-held the other of a/b for the extra temporary.
-
-=09David
-
->=20
-> > There doesn't seem to be a later optimisation path to remove
-> > 'pointless' register moves.
->=20
-> That would be a good thing to add, then.
->=20
-> Alan
-
--
-Registered Address Lakeside, Bramley Road, Mount Farm, Milton Keynes, MK1 1=
-PT, UK
-Registration No: 1397386 (Wales)
-
+> I'm curious to see what the build bots have to say about this.
+> 
+> This series applies on top of v6.11.1.
+> 
+> Signed-off-by: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+> Cc: Nicholas Piggin <npiggin@gmail.com>
+> Cc: Michael Ellerman <mpe@ellerman.id.au>
+> Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+> Cc: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+> Cc: "Paul E. McKenney" <paulmck@kernel.org>
+> Cc: Will Deacon <will@kernel.org>
+> Cc: Boqun Feng <boqun.feng@gmail.com>
+> Cc: Alan Stern <stern@rowland.harvard.edu>
+> Cc: John Stultz <jstultz@google.com>
+> Cc: Neeraj Upadhyay <Neeraj.Upadhyay@amd.com>
+> Cc: Boqun Feng <boqun.feng@gmail.com>
+> Cc: Frederic Weisbecker <frederic@kernel.org>
+> Cc: Joel Fernandes <joel@joelfernandes.org>
+> Cc: Josh Triplett <josh@joshtriplett.org>
+> Cc: Uladzislau Rezki <urezki@gmail.com>
+> Cc: Steven Rostedt <rostedt@goodmis.org>
+> Cc: Lai Jiangshan <jiangshanlai@gmail.com>
+> Cc: Zqiang <qiang.zhang1211@gmail.com>
+> Cc: Ingo Molnar <mingo@redhat.com>
+> Cc: Waiman Long <longman@redhat.com>
+> Cc: Mark Rutland <mark.rutland@arm.com>
+> Cc: Thomas Gleixner <tglx@linutronix.de>
+> Cc: Vlastimil Babka <vbabka@suse.cz>
+> Cc: maged.michael@gmail.com
+> Cc: Mateusz Guzik <mjguzik@gmail.com>
+> Cc: Jonas Oberhauser <jonas.oberhauser@huaweicloud.com>
+> Cc: rcu@vger.kernel.org
+> Cc: linux-mm@kvack.org
+> Cc: lkmm@lists.linux.dev
+> 
+> Mathieu Desnoyers (4):
+>   compiler.h: Introduce ptr_eq() to preserve address dependency
+>   Documentation: RCU: Refer to ptr_eq()
+>   hp: Implement Hazard Pointers
+>   sched+mm: Use hazard pointers to track lazy active mm existence
+> 
+>  Documentation/RCU/rcu_dereference.rst |  38 ++++++-
+>  Documentation/mm/active_mm.rst        |   9 +-
+>  arch/Kconfig                          |  32 ------
+>  arch/powerpc/Kconfig                  |   1 -
+>  arch/powerpc/mm/book3s64/radix_tlb.c  |  23 +---
+>  include/linux/compiler.h              |  63 +++++++++++
+>  include/linux/hp.h                    | 154 ++++++++++++++++++++++++++
+>  include/linux/mm_types.h              |   3 -
+>  include/linux/sched/mm.h              |  71 +++++-------
+>  kernel/Makefile                       |   2 +-
+>  kernel/exit.c                         |   4 +-
+>  kernel/fork.c                         |  47 ++------
+>  kernel/hp.c                           |  46 ++++++++
+>  kernel/sched/sched.h                  |   8 +-
+>  lib/Kconfig.debug                     |  10 --
+>  15 files changed, 346 insertions(+), 165 deletions(-)
+>  create mode 100644 include/linux/hp.h
+>  create mode 100644 kernel/hp.c
+> 
+> -- 
+> 2.39.2

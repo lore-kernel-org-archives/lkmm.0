@@ -1,69 +1,48 @@
-Received: from mail-qk1-f182.google.com (mail-qk1-f182.google.com [209.85.222.182])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtpout.efficios.com (smtpout.efficios.com [167.114.26.122])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDEB01CDA31
-	for <lkmm@lists.linux.dev>; Tue,  1 Oct 2024 22:57:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F28291FA5
+	for <lkmm@lists.linux.dev>; Wed,  2 Oct 2024 01:04:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=167.114.26.122
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727823441; cv=none; b=u71V8lQerc253Vw9ahmuRz61sw82ntcDtS03ESjnQoLNpPrYgbdl3+RsPu8ywQMlqejSTKiUFhQlYKAxkFMneMsZEWmz0gy8qWVyZhI1V81vn9kIj4Tl76PxLvKlKP7MWn1kH5nNF4uhLY6zq6FlX4ZKwOIycfjabSYy3ekAYCw=
+	t=1727831089; cv=none; b=GWcFWK2r6HjbBP/bLdRrBJOsVLPjvP10QjuBbclscGjBS06hpKaPYJUYBC/C9V/QLWm1iU/EdiftsdsYj74Fypl5J5MKaxJBmCNxF8PkUIbqJM30lBpHWX94T53EfWWh2Cea/dlOwEYZ+YwIy9wLLl9anzVUvNc4oysnjUnAl8U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727823441; c=relaxed/simple;
-	bh=7Ok8CiQ0qQ7Ho86dH0bw0yrBB+LMaKiwyr+0qBoL3p0=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=F+IM3aYAmOJ+RIxfIL2YvDG/I5D9XbzVa7ncnfUjTqxrkIPV2aDB/Qf36WoHScOXO4o5/3mPTA/CGwlqy3Ss+gzFZS9UOGTd5FzDdEHCeyr8TMA/ytdXke2+/AiV6Y93dWDmkBWeTMKmqN0nwhRlaBJdp/eRCVqguC5Xq+M6T24=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=rowland.harvard.edu; spf=fail smtp.mailfrom=g.harvard.edu; dkim=pass (2048-bit key) header.d=rowland.harvard.edu header.i=@rowland.harvard.edu header.b=dJXwCvNQ; arc=none smtp.client-ip=209.85.222.182
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=rowland.harvard.edu
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=g.harvard.edu
+	s=arc-20240116; t=1727831089; c=relaxed/simple;
+	bh=J51FMx4u1uRwSJbEetHZdnjtpXGbFPkERKfeCfiiqus=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=RWRkt10guD7rKQA6a9vJxjpTEY2ApnJWWPKR5r+WUmyPHL0T/OXVdy8JHiUVmqdA+BYiFHzI+cLtWtep+j7a/pTkKUvs8gaeiV6D1Mfzb9YbSOrHBNLO67FM3hzAY6ZOpSpSgX/B5Pr7PAVSzweAYFr8pTVdDl7EXyT1OHdmgjI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=efficios.com; spf=pass smtp.mailfrom=efficios.com; dkim=pass (2048-bit key) header.d=efficios.com header.i=@efficios.com header.b=TGhD7H5X; arc=none smtp.client-ip=167.114.26.122
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=efficios.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=efficios.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=rowland.harvard.edu header.i=@rowland.harvard.edu header.b="dJXwCvNQ"
-Received: by mail-qk1-f182.google.com with SMTP id af79cd13be357-7a9ad8a7c63so610538285a.3
-        for <lkmm@lists.linux.dev>; Tue, 01 Oct 2024 15:57:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=rowland.harvard.edu; s=google; t=1727823439; x=1728428239; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=rspeAAc+JRCDmaTUx2qdwPB8gp+dYPhnD00JvbaW/TA=;
-        b=dJXwCvNQWvOHVqmK5QhaREQozENgDoU8aXvHJIlvee09eUdmWR8LzSM8b7mBzGnPxw
-         WKr8KniG24BgTOELVueoHBMln/3FvYDSApMlYUN1bOwZ8sz+B/vuniEq8puDlXzsP9Ch
-         R4HtmfgFAA/4DdEFX95giP1vuly7bmozBs1EAARjvQYgEpM/Aux8ze6dyp8P9E8hqm57
-         8WYnqOWRkbDX/S/tqCy5pBjvn/EWE6HtDVJn+ist9eBoQ66VCvIM5RPcN5jOBWfz7W5v
-         lO4CkUOzY6ox1ru8NmMY8fOs4V22tdkFsbQwyh/SI8V2r1tjkNu6co6R06IDHUe2X2rT
-         pIJQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1727823439; x=1728428239;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=rspeAAc+JRCDmaTUx2qdwPB8gp+dYPhnD00JvbaW/TA=;
-        b=M/0x/Ut9uci/tIuLvna9HzlmT14L4L0/nBn9zRqIfUziKzdRa9Bxc2toxBRARDgw7H
-         b6rVc0wBF+9JMXAkbDW85JC0AlRe9VC5eDbbBts51D/sY9bx7qZe+sDZB6V0Lg6nVWrW
-         a9eJmEbAAOa9oNHHBFyp6NbQDxny9uolh8wjMfXPiwwOj2MWowBKQLAyET+aLIXIzhh6
-         Z07kTb3ZT3pZMwsHu57X4aL+yPa4WLeo1RL73SEFeQr1QO7LXtTbv8aSqRpcuidNWdxW
-         OsKd+ELJMg0Ytbd6p61JazJqxnGKXmgZqE/2VjIukfYYqXbe60RqPT2tvI4ATA7h2IK6
-         LIzg==
-X-Forwarded-Encrypted: i=1; AJvYcCWXdsOAUSwZpqGn7LOIFBcVF1zMGwJ7exzWHkICWyiBxtRYx7wYz4DYXxFGIPuiuGPePFnF@lists.linux.dev
-X-Gm-Message-State: AOJu0Yy4KDGS74P1zJog6ffCuDwN10UbQp0KPfLP39+d6tY0DDewalNI
-	JV3x/vCfn3QC4wqDEzLyDtys7tGJNoMiKifWvE/frZRhH8NhGvYGokihVPCllQ==
-X-Google-Smtp-Source: AGHT+IGe8hLbudtLqVw4HA3bUOj2VieZ0OvJdesAxdCUKIxBnEyri8YwqF4MHDxHD5sCjFwTNkPfnQ==
-X-Received: by 2002:a05:620a:4490:b0:7a9:ada6:86c9 with SMTP id af79cd13be357-7ae626c541dmr193649085a.26.1727823438802;
-        Tue, 01 Oct 2024 15:57:18 -0700 (PDT)
-Received: from rowland.harvard.edu ([2601:19b:681:fd10::5638])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-7ae3782c6c0sm548321285a.88.2024.10.01.15.57.15
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 01 Oct 2024 15:57:17 -0700 (PDT)
-Date: Tue, 1 Oct 2024 18:57:13 -0400
-From: 'Alan Stern' <stern@rowland.harvard.edu>
-To: David Laight <David.Laight@aculab.com>
-Cc: Jonas Oberhauser <jonas.oberhauser@huaweicloud.com>,
+	dkim=pass (2048-bit key) header.d=efficios.com header.i=@efficios.com header.b="TGhD7H5X"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=efficios.com;
+	s=smtpout1; t=1727831079;
+	bh=J51FMx4u1uRwSJbEetHZdnjtpXGbFPkERKfeCfiiqus=;
+	h=From:To:Cc:Subject:Date:From;
+	b=TGhD7H5XV7sXJ2UOhd0QN1oCgZ4X3l3FJkSwgCDmK2mSObo/ze5XmJ4d8HPy9YAo/
+	 vNyCiu3tAQQyRumTv0VJ8b7L6Q3X+NK6Voe62j22Mh+BlMxyB75hk8bKvUOQnVfBwK
+	 HhRhBBhe17phxfKic1PIy0jpLfY0a5g5TVS72Rcslgj2e2gx6emKYi1ErXgxGL6o/d
+	 h5E1+a94T0qou4+pMkXA6n6vg/aAiummFJKDdwWmZZaZ8JRzdFFphPzFLaqidd33JQ
+	 UQpeY8wou7/5x0/Vm4GcEFMCA9hxmxnXMu1K90cWpCR6BorSYelOZ3Ile+6sXnrq3n
+	 s12Q+UJZ2FBnA==
+Received: from thinkos.internal.efficios.com (unknown [IPv6:2606:6d00:100:4000:cacb:9855:de1f:ded2])
+	by smtpout.efficios.com (Postfix) with ESMTPSA id 4XJGml3JF0zjVM;
+	Tue,  1 Oct 2024 21:04:39 -0400 (EDT)
+From: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+To: Linus Torvalds <torvalds@linux-foundation.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Peter Zijlstra <peterz@infradead.org>
+Cc: linux-kernel@vger.kernel.org,
 	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	"linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+	Nicholas Piggin <npiggin@gmail.com>,
+	Michael Ellerman <mpe@ellerman.id.au>,
 	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
 	"Paul E. McKenney" <paulmck@kernel.org>,
 	Will Deacon <will@kernel.org>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Boqun Feng <boqun.feng@gmail.com>, John Stultz <jstultz@google.com>,
+	Boqun Feng <boqun.feng@gmail.com>,
+	Alan Stern <stern@rowland.harvard.edu>,
+	John Stultz <jstultz@google.com>,
 	Neeraj Upadhyay <Neeraj.Upadhyay@amd.com>,
 	Frederic Weisbecker <frederic@kernel.org>,
 	Joel Fernandes <joel@joelfernandes.org>,
@@ -71,118 +50,102 @@ Cc: Jonas Oberhauser <jonas.oberhauser@huaweicloud.com>,
 	Uladzislau Rezki <urezki@gmail.com>,
 	Steven Rostedt <rostedt@goodmis.org>,
 	Lai Jiangshan <jiangshanlai@gmail.com>,
-	Zqiang <qiang.zhang1211@gmail.com>, Ingo Molnar <mingo@redhat.com>,
+	Zqiang <qiang.zhang1211@gmail.com>,
+	Ingo Molnar <mingo@redhat.com>,
 	Waiman Long <longman@redhat.com>,
 	Mark Rutland <mark.rutland@arm.com>,
 	Thomas Gleixner <tglx@linutronix.de>,
 	Vlastimil Babka <vbabka@suse.cz>,
-	"maged.michael@gmail.com" <maged.michael@gmail.com>,
-	Mateusz Guzik <mjguzik@gmail.com>, Gary Guo <gary@garyguo.net>,
-	"rcu@vger.kernel.org" <rcu@vger.kernel.org>,
-	"linux-mm@kvack.org" <linux-mm@kvack.org>,
-	"lkmm@lists.linux.dev" <lkmm@lists.linux.dev>
-Subject: Re: [PATCH 1/2] compiler.h: Introduce ptr_eq() to preserve address
- dependency
-Message-ID: <2b1caba3-48fa-43b9-bd44-cf60b9a141d7@rowland.harvard.edu>
-References: <20240928135128.991110-1-mathieu.desnoyers@efficios.com>
- <20240928135128.991110-2-mathieu.desnoyers@efficios.com>
- <02c63e79-ec8c-4d6a-9fcf-75f0e67ea242@rowland.harvard.edu>
- <9539c551-5c91-42db-8ac1-cff1d6d7c293@huaweicloud.com>
- <2cdda043-1ad9-40cf-a157-0c16a0ffb046@rowland.harvard.edu>
- <5d7d8a59-57f5-4125-95bb-fda9c193b9cf@huaweicloud.com>
- <82e97ad5-17ad-418d-8791-22297acc7af4@rowland.harvard.edu>
- <ea02ce2ce8a348efa8d461f84f976478@AcuMS.aculab.com>
+	maged.michael@gmail.com,
+	Mateusz Guzik <mjguzik@gmail.com>,
+	Jonas Oberhauser <jonas.oberhauser@huaweicloud.com>,
+	rcu@vger.kernel.org,
+	linux-mm@kvack.org,
+	lkmm@lists.linux.dev
+Subject: [RFC PATCH 0/4] sched+mm: Track lazy active mm existence with hazard pointers
+Date: Tue,  1 Oct 2024 21:02:01 -0400
+Message-Id: <20241002010205.1341915-1-mathieu.desnoyers@efficios.com>
+X-Mailer: git-send-email 2.39.2
 Precedence: bulk
 X-Mailing-List: lkmm@lists.linux.dev
 List-Id: <lkmm.lists.linux.dev>
 List-Subscribe: <mailto:lkmm+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:lkmm+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <ea02ce2ce8a348efa8d461f84f976478@AcuMS.aculab.com>
+Content-Transfer-Encoding: 8bit
 
-On Tue, Oct 01, 2024 at 05:11:05PM +0000, David Laight wrote:
-> From: Alan Stern
-> > Sent: 30 September 2024 19:53
-> > 
-> > On Mon, Sep 30, 2024 at 07:05:06PM +0200, Jonas Oberhauser wrote:
-> > >
-> > >
-> > > Am 9/30/2024 um 6:43 PM schrieb Alan Stern:
-> > > > On Mon, Sep 30, 2024 at 01:26:53PM +0200, Jonas Oberhauser wrote:
-> > > > >
-> > > > >
-> > > > > Am 9/28/2024 um 4:49 PM schrieb Alan Stern:
-> > > > >
-> > > > > I should also point out that it is not enough to prevent the compiler from
-> > > > > using @a instead of @b.
-> > > > >
-> > > > > It must also be prevented from assigning @b=@a, which it is often allowed to
-> > > > > do after finding @a==@b.
-> > > >
-> > > > Wouldn't that be a bug?
-> > >
-> > > That's why I said that it is often allowed to do it. In your case it
-> > > wouldn't, but it is often possible when a and b are non-atomic &
-> > > non-volatile (and haven't escaped, and I believe sometimes even then).
-> > >
-> > > It happens for example here with GCC 14.1.0 -O3:
-> > >
-> > > int fct_hide(void)
-> > > {
-> > >     int *a, *b;
-> > >
-> > >     do {
-> > >         a = READ_ONCE(p);
-> > >         asm volatile ("" : : : "memory");
-> > >         b = READ_ONCE(p);
-> > >     } while (a != b);
-> > >     OPTIMIZER_HIDE_VAR(b);
-> > >     return *b;
-> > > }
-> > >
-> > >
-> > >
-> > >         ldr     r1, [r2]
-> > >         ldr     r3, [r2]
-> > >         cmp     r1, r3
-> > >         bne     .L6
-> > >         mov     r3, r1   // nay...
-> > 
-> > A totally unnecessary instruction, which accomplishes nothing other than
-> > to waste time, space, and energy.  But nonetheless, allowed -- I agree.
-> > 
-> > The people in charge of GCC's optimizer might like to hear about this,
-> > if they're not already aware of it...
-> > 
-> > >         ldr     r0, [r3] // yay!
-> > >         bx      lr
-> > 
-> > One could argue that in this example the compiler _has_ used *a instead
-> > of *b.  However, such an argument would have more force if we had
-> > described what we are talking about more precisely.
-> 
-> The 'mov r3, r1' has nothing to do with 'a'.
+Hazard pointers appear to be a good fit for replacing refcount based lazy
+active mm tracking.
 
-What do you mean by that?  At this point in the program, a is the 
-variable whose value is stored in r1 and b is the variable whose value 
-is stored in r3.  "mov r3, r1" copies the value from r1 into r3 and is 
-therefore equivalent to executing "b = a".  (That is why I said one 
-could argue that the "return *b" statement uses the value of *a.)  Thus 
-it very much does have something to do with "a".
+Highlight:
 
-> It is a more general problem that OPTIMISER_HIDE_VAR() pretty much
-> always ends up allocating a different internal 'register' for the
-> output and then allocating a separate physical rehgister.
+will-it-scale context_switch1_threads
 
-What output are you referring to?  Does OPTIMISER_HIDE_VAR() have an 
-output?  If it does, the source program above ignores it, discarding any 
-returned value.
+nr threads (-t)     speedup
+    24                +3%
+    48               +12%
+    96               +21%
+   192               +28%
 
-> There doesn't seem to be a later optimisation path to remove
-> 'pointless' register moves.
+I'm curious to see what the build bots have to say about this.
 
-That would be a good thing to add, then.
+This series applies on top of v6.11.1.
 
-Alan
+Signed-off-by: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+Cc: Nicholas Piggin <npiggin@gmail.com>
+Cc: Michael Ellerman <mpe@ellerman.id.au>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Cc: "Paul E. McKenney" <paulmck@kernel.org>
+Cc: Will Deacon <will@kernel.org>
+Cc: Boqun Feng <boqun.feng@gmail.com>
+Cc: Alan Stern <stern@rowland.harvard.edu>
+Cc: John Stultz <jstultz@google.com>
+Cc: Neeraj Upadhyay <Neeraj.Upadhyay@amd.com>
+Cc: Boqun Feng <boqun.feng@gmail.com>
+Cc: Frederic Weisbecker <frederic@kernel.org>
+Cc: Joel Fernandes <joel@joelfernandes.org>
+Cc: Josh Triplett <josh@joshtriplett.org>
+Cc: Uladzislau Rezki <urezki@gmail.com>
+Cc: Steven Rostedt <rostedt@goodmis.org>
+Cc: Lai Jiangshan <jiangshanlai@gmail.com>
+Cc: Zqiang <qiang.zhang1211@gmail.com>
+Cc: Ingo Molnar <mingo@redhat.com>
+Cc: Waiman Long <longman@redhat.com>
+Cc: Mark Rutland <mark.rutland@arm.com>
+Cc: Thomas Gleixner <tglx@linutronix.de>
+Cc: Vlastimil Babka <vbabka@suse.cz>
+Cc: maged.michael@gmail.com
+Cc: Mateusz Guzik <mjguzik@gmail.com>
+Cc: Jonas Oberhauser <jonas.oberhauser@huaweicloud.com>
+Cc: rcu@vger.kernel.org
+Cc: linux-mm@kvack.org
+Cc: lkmm@lists.linux.dev
+
+Mathieu Desnoyers (4):
+  compiler.h: Introduce ptr_eq() to preserve address dependency
+  Documentation: RCU: Refer to ptr_eq()
+  hp: Implement Hazard Pointers
+  sched+mm: Use hazard pointers to track lazy active mm existence
+
+ Documentation/RCU/rcu_dereference.rst |  38 ++++++-
+ Documentation/mm/active_mm.rst        |   9 +-
+ arch/Kconfig                          |  32 ------
+ arch/powerpc/Kconfig                  |   1 -
+ arch/powerpc/mm/book3s64/radix_tlb.c  |  23 +---
+ include/linux/compiler.h              |  63 +++++++++++
+ include/linux/hp.h                    | 154 ++++++++++++++++++++++++++
+ include/linux/mm_types.h              |   3 -
+ include/linux/sched/mm.h              |  71 +++++-------
+ kernel/Makefile                       |   2 +-
+ kernel/exit.c                         |   4 +-
+ kernel/fork.c                         |  47 ++------
+ kernel/hp.c                           |  46 ++++++++
+ kernel/sched/sched.h                  |   8 +-
+ lib/Kconfig.debug                     |  10 --
+ 15 files changed, 346 insertions(+), 165 deletions(-)
+ create mode 100644 include/linux/hp.h
+ create mode 100644 kernel/hp.c
+
+-- 
+2.39.2

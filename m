@@ -1,164 +1,221 @@
-Received: from mail-lf1-f46.google.com (mail-lf1-f46.google.com [209.85.167.46])
+Received: from mail-qk1-f181.google.com (mail-qk1-f181.google.com [209.85.222.181])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 582081D172E
-	for <lkmm@lists.linux.dev>; Wed,  2 Oct 2024 17:39:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CF1D23D7
+	for <lkmm@lists.linux.dev>; Thu,  3 Oct 2024 00:08:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727890782; cv=none; b=HKsKTv8H7QGIxnPuYqwf0KSXUyaI9IwTH6Lyxd/E9AUD1p61iwXNZdKZlzhZooQ3UYqG6Q+MjdSO/YKY5WVTUbEyPGeWHEQsOTbm3RtQZ3pV5H0+X4VLmlXeGUSR2aTjKiX2RfOCSg7LYVCLJTZC8qkGK11X2yaveQhHB10AGRg=
+	t=1727914127; cv=none; b=pXxeD5/1uyd8GiQRItOh0EJYhGETcfuN5IJC55M5AnyCj3OvIcEk2P4qqjhrrdSfJgbXVCnl6Bd7QZjpo3pO+O2hLXzx/uLcPVf1yP4EUlQGiDdrZqHigeJEZFwqW2tocCYqe3t6pMSC5LuUXtzjmXQ2j35zmXSI+JZ5awLhiKU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727890782; c=relaxed/simple;
-	bh=CiGTgCjOlyk3hZM74g8+7FcOFj9hl0bMj4TBEfGDgLI=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=fjR50BNYbj1txLlMUew+MSkJcFUMfND/EoAx+s1996JR/Jp0d9E06jvFOynYXwX2uqEMv4C/WxRBHLUa2enV5sBuGyhaH5qT9mc1R8K6PDJ7ND6kxP7cFvR45WUaXkA9gdu2eP/yNhDmJjiqVrBBJE5pDHg/UaaGqP8DFeuULqU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux-foundation.org; spf=pass smtp.mailfrom=linuxfoundation.org; dkim=pass (1024-bit key) header.d=linux-foundation.org header.i=@linux-foundation.org header.b=e2QPnx4I; arc=none smtp.client-ip=209.85.167.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux-foundation.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linuxfoundation.org
+	s=arc-20240116; t=1727914127; c=relaxed/simple;
+	bh=KUrfk+eq3257BUq5EaY4utlmEACyrb2EHZYgj/5cUlI=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=hWejpqL2Rs5GmCGGAFGbRM0eY/LO1g2qCK5ghjAFRkzi9D7+cgz/HREUXIDwDfLLKF20G0oUziFDJFkGNpucEMyF0YPiJdUSKPle7y+mZ7vLu9I9xEZyZLF0EuLbKCXlxwxvFQqon9Q31K5ujvnU7+CqCIJOmpt0pq0Y6pFyxoI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=joelfernandes.org; spf=pass smtp.mailfrom=joelfernandes.org; dkim=pass (1024-bit key) header.d=joelfernandes.org header.i=@joelfernandes.org header.b=FcPJMPyh; arc=none smtp.client-ip=209.85.222.181
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=joelfernandes.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=joelfernandes.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux-foundation.org header.i=@linux-foundation.org header.b="e2QPnx4I"
-Received: by mail-lf1-f46.google.com with SMTP id 2adb3069b0e04-5398b589032so3566e87.1
-        for <lkmm@lists.linux.dev>; Wed, 02 Oct 2024 10:39:39 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=joelfernandes.org header.i=@joelfernandes.org header.b="FcPJMPyh"
+Received: by mail-qk1-f181.google.com with SMTP id af79cd13be357-7a9a23fc16fso35975185a.2
+        for <lkmm@lists.linux.dev>; Wed, 02 Oct 2024 17:08:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linux-foundation.org; s=google; t=1727890778; x=1728495578; darn=lists.linux.dev;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=Fcw0AUFxqpg2EROaTPkK5EUAJwDwpjeNdNVYK6kfU4w=;
-        b=e2QPnx4ILCYbNzApm0iyeEoARW0VfEsEgjRfMNOIKapK1iYynUuECQJvyxSKsLx8nY
-         Y6m5mf8JVIYKLmkxWEyQUX7VXTM5XZq/ejeMJYSLDD9dyKcT3LwWUKLSs2vDyJ5IuDD4
-         lhwUPDCyUj5CLeGCNdip3pzGBpa5h26xQCY4Q=
+        d=joelfernandes.org; s=google; t=1727914124; x=1728518924; darn=lists.linux.dev;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=d3cwmVH4T8IqaLZrJPf4dN6HB0iRJ3ayFzGdEtNHxoA=;
+        b=FcPJMPyhq5Y7DkuOCSJOGdEms8WTSmAr3+EYeLQ5tIgWnwtgOCU0UL7y2z227TaitF
+         HsznbtY5WkMz3S8C4tRGsRL2dG9I0Xijsgf9VjE8tgOegLK3r34IOHZ06ljjIYlmsHaw
+         fu0E8JoarQBIIG2oyD8YM0Ruk5NyDeCYiDotI=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1727890778; x=1728495578;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=Fcw0AUFxqpg2EROaTPkK5EUAJwDwpjeNdNVYK6kfU4w=;
-        b=SQDkH7eAo4vOBssuZnHLvTVlz9ziBCsDTCkwpJMOOFBbqXNSMrlOP5k5Ha98H63Lzv
-         3Z+jv19zGezy0ckMzTTowRIqmvHjJCwc91U0VlfW3SoKt0JE5VY5aGcRHUEDrXRs+F2M
-         e6cSMRIuqiFUw/g2n8GD/24KG2tqShMXQWvUdhXj3tRmxGty33o4RXneH/bOC5AYrxYw
-         7pdxCmt8utJSwFbUxmUmR+KZ7A/HN7BiKjLuFs3IAZxUF6YNV/wxPCE1vvGb1NUMu6Bu
-         1ZhrcNCBQ4y/WSaBKHpTGyvbqjjhOhvvLOZXtS1ywX/rB872jQZzchOAhZGTxUPLZGol
-         cNaw==
-X-Forwarded-Encrypted: i=1; AJvYcCWrO4/xPSgYzSnDCyki2oWPqi6gRm0q0h3ahu2rURHBX4He81+1z3cDTSizhIYqex+5ielD@lists.linux.dev
-X-Gm-Message-State: AOJu0YwjaKlPZZHtogPKkedP6QI1pNGSjfThxM1bT4zSazS2hSCcTsfJ
-	uaVU8UgVkoXj3D7egtANDtjhlStTdmbdUy/XC+ZD+byDwafs9FLw7BCxzQLuHrCG3qmsoKtKsIZ
-	U
-X-Google-Smtp-Source: AGHT+IH6lS699iVUktxtFQsymCtolEi7ex6b2s12acayO0+3d21WwTQLZ5ZHoSEmCX9VfgI7NOx/fA==
-X-Received: by 2002:a05:6512:e8c:b0:536:a695:9414 with SMTP id 2adb3069b0e04-539a065891bmr3601521e87.6.1727890778061;
-        Wed, 02 Oct 2024 10:39:38 -0700 (PDT)
-Received: from mail-lj1-f182.google.com (mail-lj1-f182.google.com. [209.85.208.182])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5389fd5df91sm1988031e87.82.2024.10.02.10.39.33
-        for <lkmm@lists.linux.dev>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 02 Oct 2024 10:39:33 -0700 (PDT)
-Received: by mail-lj1-f182.google.com with SMTP id 38308e7fff4ca-2fabb837ddbso808841fa.1
-        for <lkmm@lists.linux.dev>; Wed, 02 Oct 2024 10:39:33 -0700 (PDT)
-X-Forwarded-Encrypted: i=1; AJvYcCX2DS422iHLnQEHmmhYOoI9BvcwJCnxUbfSIXmSPVkeXhLB2WrAybIUXKZEfd2cWjHV/CLx@lists.linux.dev
-X-Received: by 2002:a2e:a9a5:0:b0:2f3:f1ee:2256 with SMTP id
- 38308e7fff4ca-2fae10b46a2mr39398791fa.44.1727890772630; Wed, 02 Oct 2024
- 10:39:32 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1727914124; x=1728518924;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=d3cwmVH4T8IqaLZrJPf4dN6HB0iRJ3ayFzGdEtNHxoA=;
+        b=TF4h28GWiL5OG3pILhvQf/fYJnXe0Ja7/3MCTNpHiT6VTZHMsc+4hrQ9tNFWa41/XN
+         vgLyJKqiy8QLP6BPVoycINX4Ai0sXPObi/iSAPVFyfJClLh+Qit4uUIJI4h5ze9ozYgh
+         fZ0lnuqRUILMKDMeIv5S2ebJQncDIjIm8lsN8HJ95ytQxCInY9zTLr7Z1rCCQ+isiEvE
+         TLJqrVKeQfTo1Mko6RiVpIpY4LtGT9sChIrU7xhAYOaeMV0mTPvfYbqrsKWOw29y+rwm
+         wOgGpI8XiAI+HMNPKhHXNwk1ni8a+obV/9Crra54oz7cbuxeT3RpwVc56tshXUQPLKqn
+         5hBw==
+X-Forwarded-Encrypted: i=1; AJvYcCXYm7XLNLzL/P6faMb5UTiYMACSgJ8mP6BLM4tJwGtkkZUC4GxgDqlMVOOqwmQ4o2WgTYWl@lists.linux.dev
+X-Gm-Message-State: AOJu0YxFW8kIZDPehLDYJLMBUumeTZuaDtyc4CLYtbSFO/c2CoPK9jlk
+	Id1Nvh2C/NpNnB1IKKS/wINaawRmbKLVBXiqsSNbm8m9tdv8iqNlH5sBQbFTcrE=
+X-Google-Smtp-Source: AGHT+IFyyGM2DUoFUWQ5HNQaWWB8/IaPvClgER78DCcGgoTY7+i7cDT8H5iX51KO9rlUJfwMgd+NTQ==
+X-Received: by 2002:a05:620a:2697:b0:7ac:dd3a:6787 with SMTP id af79cd13be357-7ae62732decmr738226785a.52.1727914124476;
+        Wed, 02 Oct 2024 17:08:44 -0700 (PDT)
+Received: from localhost (129.177.85.34.bc.googleusercontent.com. [34.85.177.129])
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-7ae3783f80bsm669783585a.123.2024.10.02.17.08.43
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 02 Oct 2024 17:08:43 -0700 (PDT)
+Date: Thu, 3 Oct 2024 00:08:43 +0000
+From: Joel Fernandes <joel@joelfernandes.org>
+To: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Peter Zijlstra <peterz@infradead.org>, linux-kernel@vger.kernel.org,
+	Nicholas Piggin <npiggin@gmail.com>,
+	Michael Ellerman <mpe@ellerman.id.au>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
+	"Paul E. McKenney" <paulmck@kernel.org>,
+	Will Deacon <will@kernel.org>, Boqun Feng <boqun.feng@gmail.com>,
+	Alan Stern <stern@rowland.harvard.edu>,
+	John Stultz <jstultz@google.com>,
+	Neeraj Upadhyay <Neeraj.Upadhyay@amd.com>,
+	Frederic Weisbecker <frederic@kernel.org>,
+	Josh Triplett <josh@joshtriplett.org>,
+	Uladzislau Rezki <urezki@gmail.com>,
+	Steven Rostedt <rostedt@goodmis.org>,
+	Lai Jiangshan <jiangshanlai@gmail.com>,
+	Zqiang <qiang.zhang1211@gmail.com>, Ingo Molnar <mingo@redhat.com>,
+	Waiman Long <longman@redhat.com>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Vlastimil Babka <vbabka@suse.cz>, maged.michael@gmail.com,
+	Mateusz Guzik <mjguzik@gmail.com>,
+	Jonas Oberhauser <jonas.oberhauser@huaweicloud.com>,
+	rcu@vger.kernel.org, linux-mm@kvack.org, lkmm@lists.linux.dev,
+	Gary Guo <gary@garyguo.net>, Nikita Popov <github@npopov.com>,
+	llvm@lists.linux.dev
+Subject: Re: [RFC PATCH 1/4] compiler.h: Introduce ptr_eq() to preserve
+ address dependency
+Message-ID: <20241003000843.GA192403@google.com>
+References: <20241002010205.1341915-1-mathieu.desnoyers@efficios.com>
+ <20241002010205.1341915-2-mathieu.desnoyers@efficios.com>
 Precedence: bulk
 X-Mailing-List: lkmm@lists.linux.dev
 List-Id: <lkmm.lists.linux.dev>
 List-Subscribe: <mailto:lkmm+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:lkmm+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20241002010205.1341915-1-mathieu.desnoyers@efficios.com>
-In-Reply-To: <20241002010205.1341915-1-mathieu.desnoyers@efficios.com>
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Date: Wed, 2 Oct 2024 10:39:15 -0700
-X-Gmail-Original-Message-ID: <CAHk-=wgztWbA4z85xKob4eS9P=Nt5h4j=HnN+Pc90expskiCRA@mail.gmail.com>
-Message-ID: <CAHk-=wgztWbA4z85xKob4eS9P=Nt5h4j=HnN+Pc90expskiCRA@mail.gmail.com>
-Subject: Re: [RFC PATCH 0/4] sched+mm: Track lazy active mm existence with
- hazard pointers
-To: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
-Cc: Andrew Morton <akpm@linux-foundation.org>, Peter Zijlstra <peterz@infradead.org>, 
-	linux-kernel@vger.kernel.org, Nicholas Piggin <npiggin@gmail.com>, 
-	Michael Ellerman <mpe@ellerman.id.au>, Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
-	Sebastian Andrzej Siewior <bigeasy@linutronix.de>, "Paul E. McKenney" <paulmck@kernel.org>, 
-	Will Deacon <will@kernel.org>, Boqun Feng <boqun.feng@gmail.com>, 
-	Alan Stern <stern@rowland.harvard.edu>, John Stultz <jstultz@google.com>, 
-	Neeraj Upadhyay <Neeraj.Upadhyay@amd.com>, Frederic Weisbecker <frederic@kernel.org>, 
-	Joel Fernandes <joel@joelfernandes.org>, Josh Triplett <josh@joshtriplett.org>, 
-	Uladzislau Rezki <urezki@gmail.com>, Steven Rostedt <rostedt@goodmis.org>, 
-	Lai Jiangshan <jiangshanlai@gmail.com>, Zqiang <qiang.zhang1211@gmail.com>, 
-	Ingo Molnar <mingo@redhat.com>, Waiman Long <longman@redhat.com>, 
-	Mark Rutland <mark.rutland@arm.com>, Thomas Gleixner <tglx@linutronix.de>, 
-	Vlastimil Babka <vbabka@suse.cz>, maged.michael@gmail.com, Mateusz Guzik <mjguzik@gmail.com>, 
-	Jonas Oberhauser <jonas.oberhauser@huaweicloud.com>, rcu@vger.kernel.org, linux-mm@kvack.org, 
-	lkmm@lists.linux.dev
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20241002010205.1341915-2-mathieu.desnoyers@efficios.com>
 
-On Tue, 1 Oct 2024 at 18:04, Mathieu Desnoyers
-<mathieu.desnoyers@efficios.com> wrote:
->
-> Hazard pointers appear to be a good fit for replacing refcount based lazy
-> active mm tracking.
+On Tue, Oct 01, 2024 at 09:02:02PM -0400, Mathieu Desnoyers wrote:
+> Compiler CSE and SSA GVN optimizations can cause the address dependency
+> of addresses returned by rcu_dereference to be lost when comparing those
+> pointers with either constants or previously loaded pointers.
+> 
+> Introduce ptr_eq() to compare two addresses while preserving the address
+> dependencies for later use of the address. It should be used when
+> comparing an address returned by rcu_dereference().
+> 
+> This is needed to prevent the compiler CSE and SSA GVN optimizations
+> from using @a (or @b) in places where the source refers to @b (or @a)
+> based on the fact that after the comparison, the two are known to be
+> equal, which does not preserve address dependencies and allows the
+> following misordering speculations:
+> 
+> - If @b is a constant, the compiler can issue the loads which depend
+>   on @a before loading @a.
+> - If @b is a register populated by a prior load, weakly-ordered
+>   CPUs can speculate loads which depend on @a before loading @a.
+> 
+> The same logic applies with @a and @b swapped.
+> 
+[...]
+> +/*
+> + * Compare two addresses while preserving the address dependencies for
+> + * later use of the address. It should be used when comparing an address
+> + * returned by rcu_dereference().
+> + *
+> + * This is needed to prevent the compiler CSE and SSA GVN optimizations
+> + * from using @a (or @b) in places where the source refers to @b (or @a)
+> + * based on the fact that after the comparison, the two are known to be
+> + * equal, which does not preserve address dependencies and allows the
+> + * following misordering speculations:
+> + *
+> + * - If @b is a constant, the compiler can issue the loads which depend
+> + *   on @a before loading @a.
+> + * - If @b is a register populated by a prior load, weakly-ordered
+> + *   CPUs can speculate loads which depend on @a before loading @a.
+> + *
+> + * The same logic applies with @a and @b swapped.
+> + *
+> + * Return value: true if pointers are equal, false otherwise.
+> + *
+> + * The compiler barrier() is ineffective at fixing this issue. It does
+> + * not prevent the compiler CSE from losing the address dependency:
+> + *
+> + * int fct_2_volatile_barriers(void)
+> + * {
+> + *     int *a, *b;
+> + *
+> + *     do {
+> + *         a = READ_ONCE(p);
+> + *         asm volatile ("" : : : "memory");
+> + *         b = READ_ONCE(p);
+> + *     } while (a != b);
+> + *     asm volatile ("" : : : "memory");  <-- barrier()
+> + *     return *b;
+> + * }
+> + *
+> + * With gcc 14.2 (arm64):
+> + *
+> + * fct_2_volatile_barriers:
+> + *         adrp    x0, .LANCHOR0
+> + *         add     x0, x0, :lo12:.LANCHOR0
+> + * .L2:
+> + *         ldr     x1, [x0]  <-- x1 populated by first load.
+> + *         ldr     x2, [x0]
+> + *         cmp     x1, x2
+> + *         bne     .L2
+> + *         ldr     w0, [x1]  <-- x1 is used for access which should depend on b.
+> + *         ret
+> + *
 
-If the mm refcount is this expensive, I suspect we really shouldn't
-use it at all.
+I could reproduce this in compiler explorer, but I'm curious what flags are
+you using? For me it does a bunch of usage of the stack for temporary storage
+(still incorrectly returns *a though as you pointed).
 
-The thing is, we don't _need_ to use the mm refcount - the reason the
-lazy-tlb handling uses it is because we already had that refcount and
-it was easy to extend on existing logic, not because it's really
-required any more.
+Interestingly, if I just move the comparison into an an __always_inline__
+function like below, but without the optimizer hide stuff, gcc 14.2 on arm64
+does generate the correct code:
 
-The lazy-tlb activation is basically "I'm switching to a kernel
-thread, so I'll re-use the TLB state of the previous thread".
+static inline __attribute__((__always_inline__)) int ptr_eq(const volatile void *a, const volatile void *b)
+{
+    /* No OPTIMIZER_HIDE_VAR */
+    return a == b;
+}
 
-(And yes, it also has a secondary case of "I'm exiting, so I will turn
-the mm I already have into a lazy one").
+volatile int *p = 0;
 
-But in the actual task switch case, the previous thread hasn't _lost_
-that mm, so we don't actually need to take the refcount at all.
+int fct_2_volatile_barriers()
+{
+    int *a, *b;
 
-We really just need to make sure to invalidate it before it's torn
-down, but we do that *anyway* as part of TLB flushing.
+    do {
+        a = READ_ONCE(p);
+        asm volatile ("" : : : "memory");
+        b = READ_ONCE(p);
+    } while (!ptr_eq(a, b));
+    asm volatile ("" : : : "memory");  // barrier()
+    return *b;
+}
 
-(The exit case is actually different: we are setting it up to be lost,
-although delayed - and the lazy count is the delay).
+But not sure if it fixes the speculation issue you referred to.
 
-The only thing the refcount means is that we don't actually have to be
-as careful when we actually *really* get rid of the MM. We can be a
-bit laissez-faire about things because even if we weren't to
-invalidate the lazy mm, it does have its own refcount, so we don't
-much care.
+Putting back the OPTIMIZER_HIDE_VAR() then just seems to pass the a and b
+stored on the stack through a washing machine:
 
-But in reality, we're actually very careful about the active_mm
-_anyway_, because of a fairly fundamental issue: the TLB shootdown and
-PCID handling that we need to do even when mm's aren't lazy.
+        ldr     x0, [sp, 8]
+        str     x0, [sp, 8]
+        ldr     x0, [sp]
+        str     x0, [sp]
 
-So we actually keep track of things like "which CPU's have seen this
-MM state" in all the TLB code.
+And here I thought the "" in OPTIMIZER_HIDE_VAR was not supposed to generate
+any code but I guess it is still a NOOP.
 
-And even the exit case doesn't actually need the special thing - it
-*does* need the "this CPU is still using this MM", but we have that
-too as part of the TLB code - entirely independently of 'active_mm'.
+Anyway, as such this LGTM since whether OPTIMIZER_HIDE_VAR() used or not, it
+does fix the problem.
 
-So in many ways, I'm pretty sure not just the refcount, but all of
-'active_mm', is largely pointless to begin with.
+Reviewed-by: Joel Fernandes (Google) <joel@joelfernandes.org>
 
-And if the refcount really is this big of a deal:
+thanks,
 
-> nr threads (-t)     speedup
->    192               +28%
+ - Joel
 
-then we should probably just strive to get rid of 'active_mm' altogether.
-
-Look, at least on x86 we ALREADY has a better replacement: it's the
-percpu 'cpu_tlbstate'.
-
-It basically duplicates all we do with active_mm and the whole "keep
-track of old mm state" (the 'loaded_mm' member is basically the true
-'active' mm), except it has some additional fixes:
-
- - it has some extra housekeeping data that the architecture wants
-(for PCID updates etc)
-
- - it's actually atomic wrt the low-level code in ways that
-'current->active_mm' isn't
-
-So I think the real issue is that "active_mm" is an old hack from a
-bygone era when we didn't have the (much more involved) full TLB
-tracking.
-
-               Linus

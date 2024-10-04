@@ -1,34 +1,33 @@
 Received: from smtpout.efficios.com (smtpout.efficios.com [167.114.26.122])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC97F1E260A;
-	Fri,  4 Oct 2024 18:29:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83B4A1E2605
+	for <lkmm@lists.linux.dev>; Fri,  4 Oct 2024 18:29:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=167.114.26.122
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728066586; cv=none; b=Unri1QGMcQKjZn68woX9k4kv9SefCgNLTz/L/+/hNpHXcJKDuj0adnj4bgZMaLkl/djieCf/TxSpvn8LaL8ddr7mrUFqHjSYGB+hTLlF4oJ/CEBxXoms0XHtSWgPYrPzcDZD9uHiLIbd3RPygpEHufIri2RGgUzA+Y7QjMEBp9A=
+	t=1728066587; cv=none; b=Najd+WMmzquQIWm2V7/AnhykZLXgmdgHo9w5ASb0WhnpA3nY1k6J//1W77VaWYCRA2HBooTjLwHMRUC6iO2r+JwO9rByb2noMRjev1D8EqJM8yoqHuc4so5yR0eJe3NrRxrahHbWir14z+K6JaHpIIWy8TGZn6lMfobWK1XRAg8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728066586; c=relaxed/simple;
-	bh=ruHajFuAP+9RCH6285NJzkwm+MUgE21IicKMAn8zEWg=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=gwFpB0IOu/SsY1aDHuYBHwpa/quyLjfZVbRGtFfC93IB258sJcwvbECQ/e5j9M+8cQ7aqEV6QOC7Ehi6sRe5jVNrRlURIFk4zHtUGcOnbyEBRpNeQoRNcxYcP9UUNQj53QBY67NafBp1YrRzILMHKGKvCu5yfqtyP50riBBoKzE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=efficios.com; spf=pass smtp.mailfrom=efficios.com; dkim=pass (2048-bit key) header.d=efficios.com header.i=@efficios.com header.b=GY4zUt2T; arc=none smtp.client-ip=167.114.26.122
+	s=arc-20240116; t=1728066587; c=relaxed/simple;
+	bh=MWud5rJYcp01tmdb0smF8P75Q+GNmRWixrTxRl8zMFk=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=rbAQym5BF2koY1VUoud2Wqv4TQPUozpsyzvZHgZ3ep7BWJrVNmQIqFzFKEOMyqIuS67nAsApvruOOAeOKBE28o7+BBi10iK77+LazKhL6etCgM9CfFwJNfdXNvnRhCcmroBFGgl1NLDuY/7d0XQBneR4wcbhmd1Yz6hn7QQ1gsc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=efficios.com; spf=pass smtp.mailfrom=efficios.com; dkim=pass (2048-bit key) header.d=efficios.com header.i=@efficios.com header.b=VS52UYd6; arc=none smtp.client-ip=167.114.26.122
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=efficios.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=efficios.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=efficios.com header.i=@efficios.com header.b="GY4zUt2T"
+	dkim=pass (2048-bit key) header.d=efficios.com header.i=@efficios.com header.b="VS52UYd6"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=efficios.com;
 	s=smtpout1; t=1728066582;
-	bh=ruHajFuAP+9RCH6285NJzkwm+MUgE21IicKMAn8zEWg=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GY4zUt2TAPM5YfusXMih3fV3IYkWKP/euMtVv+/PxLXdHpNsXgxya95dn+7c+pICP
-	 TpoTwpgWojwhrqN47JfH1uuLyYp0vMw/moy7QhNJmUmXEes6GkKZwj8YBIPPdOzGc4
-	 BvWFvWnu7uUKktoRhbiXX6SvCscRhca9DEuWp4GSkYprAWVw2nrADESHEJMN6SrU8i
-	 TofjfkvbUk0C+uiUrkxROZTRRmYYz4GrhJ8xBdy7djHqB1AYp8Sg8DOZz1eEQm+PvP
-	 FjTvIgbhj27mqs4K8KUeht0xuEIFzqFejkGpvNzMDsIJ13HCSkFoEr7TK7LMgFeW/I
-	 DaiWIjTVWM/Dw==
+	bh=MWud5rJYcp01tmdb0smF8P75Q+GNmRWixrTxRl8zMFk=;
+	h=From:To:Cc:Subject:Date:From;
+	b=VS52UYd6+pQ4D/wAPhBdWsqtEtpep/nQzQlFII7jB0tQjkbxdphiSbOO47RuvZJr5
+	 YoKQkqOk6PPn6iN5nZRaPyW59k2aH2pVMplcLapIJhKo0GeF1q0uU2qsuZh7nxpe3y
+	 7fklJJTiI+F7n4MJvqrALtgx0pn+a9fqvrfcIwZiVJf0CZFirgN6tGC/Kue7bQAG18
+	 pMTIXQ6GiKQhpKcp0qC9687F5LVTmryf7P585gxI9MUzdnM6bvYVNYp8lGHPbgPO9h
+	 lqXRJBJIMftkexbY+fkLFpO5yRRPPKtOR+iGJp3jTyclNd6g14SyTS0wYtIQ2axrKk
+	 pK3SuYKswUsLg==
 Received: from thinkos.internal.efficios.com (96-127-217-162.qc.cable.ebox.net [96.127.217.162])
-	by smtpout.efficios.com (Postfix) with ESMTPSA id 4XKxsf36hmzN8Q;
-	Fri,  4 Oct 2024 14:29:42 -0400 (EDT)
+	by smtpout.efficios.com (Postfix) with ESMTPSA id 4XKxsd5z2nzMpK;
+	Fri,  4 Oct 2024 14:29:41 -0400 (EDT)
 From: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
 To: Boqun Feng <boqun.feng@gmail.com>
 Cc: linux-kernel@vger.kernel.org,
@@ -62,16 +61,11 @@ Cc: linux-kernel@vger.kernel.org,
 	Jonas Oberhauser <jonas.oberhauser@huaweicloud.com>,
 	rcu@vger.kernel.org,
 	linux-mm@kvack.org,
-	lkmm@lists.linux.dev,
-	Gary Guo <gary@garyguo.net>,
-	Nikita Popov <github@npopov.com>,
-	llvm@lists.linux.dev
-Subject: [RFC PATCH v2 1/4] compiler.h: Introduce ptr_eq() to preserve address dependency
-Date: Fri,  4 Oct 2024 14:27:31 -0400
-Message-Id: <20241004182734.1761555-2-mathieu.desnoyers@efficios.com>
+	lkmm@lists.linux.dev
+Subject: [RFC PATCH v2 0/4] sched+mm: Track lazy active mm existence with hazard pointers
+Date: Fri,  4 Oct 2024 14:27:30 -0400
+Message-Id: <20241004182734.1761555-1-mathieu.desnoyers@efficios.com>
 X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20241004182734.1761555-1-mathieu.desnoyers@efficios.com>
-References: <20241004182734.1761555-1-mathieu.desnoyers@efficios.com>
 Precedence: bulk
 X-Mailing-List: lkmm@lists.linux.dev
 List-Id: <lkmm.lists.linux.dev>
@@ -80,45 +74,51 @@ List-Unsubscribe: <mailto:lkmm+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Compiler CSE and SSA GVN optimizations can cause the address dependency
-of addresses returned by rcu_dereference to be lost when comparing those
-pointers with either constants or previously loaded pointers.
+[ Based on recent discussion with Linus, it appears that this series
+  just proves that it's time to get rid of active mm altogether:
 
-Introduce ptr_eq() to compare two addresses while preserving the address
-dependencies for later use of the address. It should be used when
-comparing an address returned by rcu_dereference().
+  https://lore.kernel.org/lkml/CAHk-=wgztWbA4z85xKob4eS9P=Nt5h4j=HnN+Pc90expskiCRA@mail.gmail.com/
 
-This is needed to prevent the compiler CSE and SSA GVN optimizations
-from using @a (or @b) in places where the source refers to @b (or @a)
-based on the fact that after the comparison, the two are known to be
-equal, which does not preserve address dependencies and allows the
-following misordering speculations:
+  I'm posting a v2 fixing minor issues from v1 in case it can be useful
+  to try hazard pointers with other use-cases, or for further
+  benchmarking of active mm tracking impact.
+]
 
-- If @b is a constant, the compiler can issue the loads which depend
-  on @a before loading @a.
-- If @b is a register populated by a prior load, weakly-ordered
-  CPUs can speculate loads which depend on @a before loading @a.
+Hazard pointers appear to be a good fit for replacing refcount based lazy
+active mm tracking.
 
-The same logic applies with @a and @b swapped.
+Highlight:
 
-Suggested-by: Linus Torvalds <torvalds@linux-foundation.org>
-Suggested-by: Boqun Feng <boqun.feng@gmail.com>
+will-it-scale context_switch1_threads
+
+nr threads (-t)     speedup
+     1                -0.2%
+     2                +0.4%
+     3                +0.2%
+     6                +0.6%
+    12                +0.8%
+    24                +3%
+    48               +12%
+    96               +21%
+   192               +28%
+   384                +4%
+   768                -0.6%
+
+This series applies on top of v6.11.1.
+
 Signed-off-by: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
-Reviewed-by: Boqun Feng <boqun.feng@gmail.com>
-Reviewed-by: Joel Fernandes (Google) <joel@joelfernandes.org>
-Tested-by: Joel Fernandes (Google) <joel@joelfernandes.org>
-Acked-by: "Paul E. McKenney" <paulmck@kernel.org>
-Acked-by: Alan Stern <stern@rowland.harvard.edu>
+Cc: Linus Torvalds <torvalds@linux-foundation.org>
+Cc: Andrew Morton <akpm@linux-foundation.org>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Cc: Nicholas Piggin <npiggin@gmail.com>
+Cc: Michael Ellerman <mpe@ellerman.id.au>
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Cc: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
 Cc: "Paul E. McKenney" <paulmck@kernel.org>
 Cc: Will Deacon <will@kernel.org>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Cc: Boqun Feng <boqun.feng@gmail.com>
 Cc: Alan Stern <stern@rowland.harvard.edu>
 Cc: John Stultz <jstultz@google.com>
 Cc: Neeraj Upadhyay <Neeraj.Upadhyay@amd.com>
-Cc: Linus Torvalds <torvalds@linux-foundation.org>
 Cc: Boqun Feng <boqun.feng@gmail.com>
 Cc: Frederic Weisbecker <frederic@kernel.org>
 Cc: Joel Fernandes <joel@joelfernandes.org>
@@ -134,94 +134,35 @@ Cc: Thomas Gleixner <tglx@linutronix.de>
 Cc: Vlastimil Babka <vbabka@suse.cz>
 Cc: maged.michael@gmail.com
 Cc: Mateusz Guzik <mjguzik@gmail.com>
-Cc: Gary Guo <gary@garyguo.net>
 Cc: Jonas Oberhauser <jonas.oberhauser@huaweicloud.com>
 Cc: rcu@vger.kernel.org
 Cc: linux-mm@kvack.org
 Cc: lkmm@lists.linux.dev
-Cc: Nikita Popov <github@npopov.com>
-Cc: llvm@lists.linux.dev
----
-Changes since v0:
-- Include feedback from Alan Stern.
----
- include/linux/compiler.h | 63 ++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 63 insertions(+)
 
-diff --git a/include/linux/compiler.h b/include/linux/compiler.h
-index 2df665fa2964..75a378ae7af1 100644
---- a/include/linux/compiler.h
-+++ b/include/linux/compiler.h
-@@ -186,6 +186,69 @@ void ftrace_likely_update(struct ftrace_likely_data *f, int val,
- 	__asm__ ("" : "=r" (var) : "0" (var))
- #endif
- 
-+/*
-+ * Compare two addresses while preserving the address dependencies for
-+ * later use of the address. It should be used when comparing an address
-+ * returned by rcu_dereference().
-+ *
-+ * This is needed to prevent the compiler CSE and SSA GVN optimizations
-+ * from using @a (or @b) in places where the source refers to @b (or @a)
-+ * based on the fact that after the comparison, the two are known to be
-+ * equal, which does not preserve address dependencies and allows the
-+ * following misordering speculations:
-+ *
-+ * - If @b is a constant, the compiler can issue the loads which depend
-+ *   on @a before loading @a.
-+ * - If @b is a register populated by a prior load, weakly-ordered
-+ *   CPUs can speculate loads which depend on @a before loading @a.
-+ *
-+ * The same logic applies with @a and @b swapped.
-+ *
-+ * Return value: true if pointers are equal, false otherwise.
-+ *
-+ * The compiler barrier() is ineffective at fixing this issue. It does
-+ * not prevent the compiler CSE from losing the address dependency:
-+ *
-+ * int fct_2_volatile_barriers(void)
-+ * {
-+ *     int *a, *b;
-+ *
-+ *     do {
-+ *         a = READ_ONCE(p);
-+ *         asm volatile ("" : : : "memory");
-+ *         b = READ_ONCE(p);
-+ *     } while (a != b);
-+ *     asm volatile ("" : : : "memory");  <-- barrier()
-+ *     return *b;
-+ * }
-+ *
-+ * With gcc 14.2 (arm64):
-+ *
-+ * fct_2_volatile_barriers:
-+ *         adrp    x0, .LANCHOR0
-+ *         add     x0, x0, :lo12:.LANCHOR0
-+ * .L2:
-+ *         ldr     x1, [x0]  <-- x1 populated by first load.
-+ *         ldr     x2, [x0]
-+ *         cmp     x1, x2
-+ *         bne     .L2
-+ *         ldr     w0, [x1]  <-- x1 is used for access which should depend on b.
-+ *         ret
-+ *
-+ * On weakly-ordered architectures, this lets CPU speculation use the
-+ * result from the first load to speculate "ldr w0, [x1]" before
-+ * "ldr x2, [x0]".
-+ * Based on the RCU documentation, the control dependency does not
-+ * prevent the CPU from speculating loads.
-+ */
-+static __always_inline
-+int ptr_eq(const volatile void *a, const volatile void *b)
-+{
-+	OPTIMIZER_HIDE_VAR(a);
-+	OPTIMIZER_HIDE_VAR(b);
-+	return a == b;
-+}
-+
- #define __UNIQUE_ID(prefix) __PASTE(__PASTE(__UNIQUE_ID_, prefix), __COUNTER__)
- 
- /**
+Mathieu Desnoyers (4):
+  compiler.h: Introduce ptr_eq() to preserve address dependency
+  Documentation: RCU: Refer to ptr_eq()
+  hp: Implement Hazard Pointers
+  sched+mm: Use hazard pointers to track lazy active mm existence
+
+ Documentation/RCU/rcu_dereference.rst |  38 ++++++-
+ Documentation/mm/active_mm.rst        |   9 +-
+ arch/Kconfig                          |  32 ------
+ arch/powerpc/Kconfig                  |   1 -
+ arch/powerpc/mm/book3s64/radix_tlb.c  |  23 +---
+ include/linux/compiler.h              |  63 ++++++++++
+ include/linux/hp.h                    | 158 ++++++++++++++++++++++++++
+ include/linux/mm_types.h              |   3 -
+ include/linux/sched/mm.h              |  71 +++++-------
+ kernel/Makefile                       |   2 +-
+ kernel/exit.c                         |   4 +-
+ kernel/fork.c                         |  47 ++------
+ kernel/hp.c                           |  46 ++++++++
+ kernel/sched/sched.h                  |   8 +-
+ lib/Kconfig.debug                     |  10 --
+ 15 files changed, 350 insertions(+), 165 deletions(-)
+ create mode 100644 include/linux/hp.h
+ create mode 100644 kernel/hp.c
+
 -- 
 2.39.2
-

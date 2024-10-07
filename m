@@ -1,48 +1,49 @@
 Received: from desiato.infradead.org (desiato.infradead.org [90.155.92.199])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F07B6FC5;
-	Mon,  7 Oct 2024 07:06:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7DF718A6C3;
+	Mon,  7 Oct 2024 10:40:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=90.155.92.199
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728284811; cv=none; b=B1c2fyxqLdwk0o+P0UCoW2j0jx+G5qvjokKt9lI5Zo2UpqpWjz7M63spR6nL/A9yIKOuspKrvrxRcwRkeODY/Xyucd+hQMBCVlAcyPGIqXdMQ6v7pCcuieRezKscu9rFTXzBetw6B3rOBmF0+2AXirtGkXFm6Wj9uG6R76qhrws=
+	t=1728297656; cv=none; b=ML4uPiKZMkdRLKHrztKBV2DpOK49Q2sj6lD6sMfQ/1BUtNlqWo7yeE46mapKi2iTAAWEciW7dwPysqjUiSLMULopQkBWMRJge3awnXQwnMMaUE2sXgW0v7ktXanEBGgno+bXU3U95RWM+I/CiU5O69YPsisY9Nut0mf/kexpRD8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728284811; c=relaxed/simple;
-	bh=G42xkt2HXDJsEm/1X6zsNTuNdHNDZFtY/2XKj0r1FmA=;
+	s=arc-20240116; t=1728297656; c=relaxed/simple;
+	bh=GjzXmCfS7SaTOwQwOhTPaTKhhXJZhtzbusKDQpKLKTw=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=JnFCqQs1D83awZM/4rr8dgURiQpoJYRELmeZBk2GxTWJd4HcKrWg+ZM/KU7vr6mbdTXhrPXR00ybaH8v6Tk32196Cwyx9KI3BGd3tNCl1zPjNzGVclSZCIsZBk6tW9wsSEeJQbPYpPyyFTXcF3tiICLIoihiHontAIvV/Xr0c98=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=infradead.org; spf=none smtp.mailfrom=infradead.org; dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b=kbZl2yLI; arc=none smtp.client-ip=90.155.92.199
+	 Content-Type:Content-Disposition:In-Reply-To; b=bQo0nTa3QL3HQYguuXY5mm1Y/t9zBRfs5BMGW1YlxUcr1jO0WaskADJ7JkWcnH4fC5UAbQDnpK5s9gDb6lXSeva1Hr2LQ7ZWH4HKq6HKuTEKEox1ZpH7HhtePZd4h3R1foVYP0z0KbnfE+A28hUGS6IE581J75zfZ9xcfm+x6aI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=infradead.org; spf=none smtp.mailfrom=infradead.org; dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b=f+wT0dE8; arc=none smtp.client-ip=90.155.92.199
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=infradead.org
 Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=infradead.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b="kbZl2yLI"
+	dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b="f+wT0dE8"
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
 	d=infradead.org; s=desiato.20200630; h=In-Reply-To:Content-Type:MIME-Version:
 	References:Message-ID:Subject:Cc:To:From:Date:Sender:Reply-To:
 	Content-Transfer-Encoding:Content-ID:Content-Description;
-	bh=WPrGACetzn240lxkdUEDnFIeJe4VvQIHLBhegiGUuD8=; b=kbZl2yLI7r24lQNgu54c9qhvF8
-	lV9ZOhzm0IWhCk97HGiqo6tTyV7M1r7fvKtrXu1ZbtJ5Yz2qzfmYi3XCKDVyY0Y2kzfWwxoi2JjyS
-	f0fedCVjGXq7A0YlId+p5Mn3tgowZ20sS3RxQl1AYPLGzm+VyjLKwqo97s+3U/CnEn5uuX2zgPfMm
-	K/LYc5j5hbgn0nl7Bb8/PvxXhOr61coobajXrXOaV8nd+iE5qtFgUJnsOOnPHJ74sj0bl2Z6ZXIQG
-	A+YMYwyA3kPWNWuL/YAQuxnUeiyhR2N0BIsGE3zyUURj6GVK8ChjWPOyfXLKD6R0YEx4v5u0qs1rN
-	aTNb3RDg==;
+	bh=lwh9tJ35d1c8o+PW9Ww4chBCSD6YYk59hwSaIamIuE4=; b=f+wT0dE8i5aifk3S8szrr3YCCa
+	y1323ZwpG++SyQKdW1lRpczCWQ+77ZXz9kiaoW1v+kOw6peFjjIumnq2ey2wgKdxCI+f6WtrSp3x4
+	HuYKDUuLrErt6hd93izRkawloew7tv6GMpCrWFB9N4FlV7LRsogofTLTpvId/Vwsk4VW9FiTJdIdf
+	AJEPkx6FxaaVoH/bUEfBTqT/osHOtK8IVtIdfs1MDSmQH22gv6GPY84E0IBvCcCauya3KUjdujBtO
+	mgynWr5+dLjvOz7bdkgsU6ZjCqFsp/rzp5hBijTJaCdjwShwM8kbMVf5xtnd2zD2zCidGORjpsEi3
+	kEocGheQ==;
 Received: from j130084.upc-j.chello.nl ([24.132.130.84] helo=noisy.programming.kicks-ass.net)
 	by desiato.infradead.org with esmtpsa (Exim 4.98 #2 (Red Hat Linux))
-	id 1sxhp6-00000004NYw-1PAI;
-	Mon, 07 Oct 2024 07:06:28 +0000
+	id 1sxlAG-00000004PAP-02aA;
+	Mon, 07 Oct 2024 10:40:32 +0000
 Received: by noisy.programming.kicks-ass.net (Postfix, from userid 1000)
-	id 5FF6A30088D; Mon,  7 Oct 2024 09:06:27 +0200 (CEST)
-Date: Mon, 7 Oct 2024 09:06:27 +0200
+	id D4DF030088D; Mon,  7 Oct 2024 12:40:30 +0200 (CEST)
+Date: Mon, 7 Oct 2024 12:40:30 +0200
 From: Peter Zijlstra <peterz@infradead.org>
-To: Linus Torvalds <torvalds@linux-foundation.org>
-Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
+To: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+Cc: Boqun Feng <boqun.feng@gmail.com>, linux-kernel@vger.kernel.org,
+	Linus Torvalds <torvalds@linux-foundation.org>,
 	Andrew Morton <akpm@linux-foundation.org>,
-	linux-kernel@vger.kernel.org, Nicholas Piggin <npiggin@gmail.com>,
+	Nicholas Piggin <npiggin@gmail.com>,
 	Michael Ellerman <mpe@ellerman.id.au>,
 	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
 	"Paul E. McKenney" <paulmck@kernel.org>,
-	Will Deacon <will@kernel.org>, Boqun Feng <boqun.feng@gmail.com>,
+	Will Deacon <will@kernel.org>,
 	Alan Stern <stern@rowland.harvard.edu>,
 	John Stultz <jstultz@google.com>,
 	Neeraj Upadhyay <Neeraj.Upadhyay@amd.com>,
@@ -60,13 +61,12 @@ Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
 	Mateusz Guzik <mjguzik@gmail.com>,
 	Jonas Oberhauser <jonas.oberhauser@huaweicloud.com>,
 	rcu@vger.kernel.org, linux-mm@kvack.org, lkmm@lists.linux.dev
-Subject: Re: [RFC PATCH 0/4] sched+mm: Track lazy active mm existence with
- hazard pointers
-Message-ID: <20241007070627.GC18071@noisy.programming.kicks-ass.net>
-References: <20241002010205.1341915-1-mathieu.desnoyers@efficios.com>
- <CAHk-=wgztWbA4z85xKob4eS9P=Nt5h4j=HnN+Pc90expskiCRA@mail.gmail.com>
- <20241005161537.GB18071@noisy.programming.kicks-ass.net>
- <CAHk-=whvxq3378vOn++=ZiOQc9=4N-3ejUWr+dXEJ5ti43kT6w@mail.gmail.com>
+Subject: Re: [RFC PATCH v2 3/4] hp: Implement Hazard Pointers
+Message-ID: <20241007104030.GB4879@noisy.programming.kicks-ass.net>
+References: <20241004182734.1761555-1-mathieu.desnoyers@efficios.com>
+ <20241004182734.1761555-4-mathieu.desnoyers@efficios.com>
+ <20241005160444.GA18071@noisy.programming.kicks-ass.net>
+ <df28acef-cf35-49fc-8b40-bc105e3f818f@efficios.com>
 Precedence: bulk
 X-Mailing-List: lkmm@lists.linux.dev
 List-Id: <lkmm.lists.linux.dev>
@@ -75,34 +75,131 @@ List-Unsubscribe: <mailto:lkmm+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <CAHk-=whvxq3378vOn++=ZiOQc9=4N-3ejUWr+dXEJ5ti43kT6w@mail.gmail.com>
+In-Reply-To: <df28acef-cf35-49fc-8b40-bc105e3f818f@efficios.com>
 
-On Sat, Oct 05, 2024 at 09:56:24AM -0700, Linus Torvalds wrote:
-> On Sat, 5 Oct 2024 at 09:16, Peter Zijlstra <peterz@infradead.org> wrote:
-> >
-> > On Wed, Oct 02, 2024 at 10:39:15AM -0700, Linus Torvalds wrote:
-> > > So I think the real issue is that "active_mm" is an old hack from a
-> > > bygone era when we didn't have the (much more involved) full TLB
-> > > tracking.
-> >
-> > I still seem to have these patches that neither Andy nor I ever managed
-> > to find time to finish:
-> >
-> >   https://git.kernel.org/pub/scm/linux/kernel/git/peterz/queue.git/log/?h=x86/lazy
-> 
-> Yes, that looks very much like what I had in mind.
-> 
-> In fact, it looks a lot smaller and simpler than what my mental model was.
-> 
-> I was thinking I'd do it by removing "active_mm" entirely from 'struct
-> task_struct', and turn it into a per-cpu variable instead, and then
-> try to massage that into some global new world order. That patch
-> series you point to seems to be much simpler and clearer.
-> 
-> Of course, you also say "never managed to finish", so presumably
-> there's something completely broken in that series, and it doesn't
-> actually work?
+On Sat, Oct 05, 2024 at 02:50:17PM -0400, Mathieu Desnoyers wrote:
+> On 2024-10-05 18:04, Peter Zijlstra wrote:
 
-Last time I tried it, it worked fine. I just didn't get around to
-actually fully thinking it trough and making sure nothing subtle was
-broken etc. Pesky details and such..
+
+> > > +/*
+> > > + * hp_allocate: Allocate a hazard pointer.
+> > > + *
+> > > + * Allocate a hazard pointer slot for @addr. The object existence should
+> > > + * be guaranteed by the caller. Expects to be called from preempt
+> > > + * disable context.
+> > > + *
+> > > + * Returns a hazard pointer context.
+> > 
+> > So you made the WTF'o'meter crack, this here function does not allocate
+> > nothing. Naming is bad. At best this is something like
+> > try-set-hazard-pointer or somesuch.
+> 
+> I went with the naming from the 2004 paper from Maged Michael, but I
+> agree it could be clearer.
+> 
+> I'm tempted to go for "hp_try_post()" and "hp_remove()", basically
+> "posting" the intent to use a pointer (as in on a metaphorical billboard),
+> and removing it when it's done.
+
+For RCU we've taken to using the word: 'publish', no?
+
+
+> > > +/*
+> > > + * hp_dereference_allocate: Dereference and allocate a hazard pointer.
+> > > + *
+> > > + * Returns a hazard pointer context. Expects to be called from preempt
+> > > + * disable context.
+> > > + */
+> > 
+> > More terrible naming. Same as above, but additionally, I would expect a
+> > 'dereference' to actually dereference the pointer and have a return
+> > value of the dereferenced type.
+> 
+> hp_dereference_try_post() ?
+> 
+> > 
+> > This function seems to double check and update the hp_ctx thing. I'm not
+> > at all sure yet wtf this is doing -- and the total lack of comments
+> > aren't helping.
+> 
+> The hp_ctx contains the outputs.
+> 
+> The function loads *addr_p to then try_post it into a HP slot. On success,
+> it re-reads the *addr_p (with address dependency) and if it still matches,
+> use that as output address pointer.
+> 
+> I'm planning to remove hp_ctx, and just have:
+> 
+> /*
+>  * hp_try_post: Try to post a hazard pointer.
+>  *
+>  * Post a hazard pointer slot for @addr. The object existence should
+>  * be guaranteed by the caller. Expects to be called from preempt
+>  * disable context.
+>  *
+>  * Returns true if post succeeds, false otherwise.
+>  */
+> static inline
+> bool hp_try_post(struct hp_domain *hp_domain, void *addr, struct hp_slot **_slot)
+> [...]
+> 
+> /*
+>  * hp_dereference_try_post: Dereference and try to post a hazard pointer.
+>  *
+>  * Returns a hazard pointer context. Expects to be called from preempt
+>  * disable context.
+>  */
+> static inline
+> void *__hp_dereference_try_post(struct hp_domain *hp_domain,
+>                                 void * const * addr_p, struct hp_slot **_slot)
+> [...]
+> 
+> #define hp_dereference_try_post(domain, p, slot_p)              \
+>         ((__typeof__(*(p))) __hp_dereference_try_post(domain, (void * const *) p, slot_p))
+
+This will compile, but do the wrong thing when p is a regular pointer, no?
+
+> 
+> /* Clear the hazard pointer in @slot. */
+> static inline
+> void hp_remove(struct hp_slot *slot)
+> [...]
+
+Differently weird, but better I suppose :-)
+
+
+> > > +void hp_scan(struct hp_slot __percpu *percpu_slots, void *addr,
+> > > +	     void (*retire_cb)(int cpu, struct hp_slot *slot, void *addr))
+> > > +{
+> > > +	int cpu;
+> > > +
+> > > +	/*
+> > > +	 * Store A precedes hp_scan(): it unpublishes addr (sets it to
+> > > +	 * NULL or to a different value), and thus hides it from hazard
+> > > +	 * pointer readers.
+> > > +	 */
+> > > +
+> > > +	if (!addr)
+> > > +		return;
+> > > +	/* Memory ordering: Store A before Load B. */
+> > > +	smp_mb();
+> > > +	/* Scan all CPUs slots. */
+> > > +	for_each_possible_cpu(cpu) {
+> > > +		struct hp_slot *slot = per_cpu_ptr(percpu_slots, cpu);
+> > > +
+> > > +		if (retire_cb && smp_load_acquire(&slot->addr) == addr)	/* Load B */
+> > > +			retire_cb(cpu, slot, addr);
+> > 
+> > Is retirce_cb allowed to cmpxchg the thing?
+> 
+> It could, but we'd need to make sure the slot is not re-used by another
+> hp_try_post() before the current user removes its own post. It would
+> need to synchronize with the current HP user (e.g. with IPI).
+> 
+> I've actually renamed retire_cb to "on_match_cb".
+
+Hmm, I think I see. Would it make sense to pass the expected addr to
+hp_remove() and double check we don't NULL out something unexpected? --
+maybe just for a DEBUG option.
+
+I'm always seeing the NOHZ_FULL guys hating on this :-)

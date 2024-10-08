@@ -1,34 +1,34 @@
 Received: from smtpout.efficios.com (smtpout.efficios.com [167.114.26.122])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD9B41DF97E;
-	Tue,  8 Oct 2024 13:52:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09F921DF985
+	for <lkmm@lists.linux.dev>; Tue,  8 Oct 2024 13:52:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=167.114.26.122
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728395570; cv=none; b=Uvfl0tPCDKBXa45rsL7ViKFt1tyVWObegM7NoVuZrhr5CuD5eg21+L88KzkzVUk0siElkNyigjai59p/bvfZ08eOyBFKW3CwHVLKhEKmCOIdyp+yGMXkUY9ddrSr/Wo03T8ZfzmQh72rJ19s/pcz35V/OzRDNk+1uKVTrl46AUo=
+	t=1728395572; cv=none; b=oh54Wa77QpQzherDOQc2gTquOGc2jRN2Yuegd4BCQ41u8wJxCg/sQQLsedX3f2iLnQpUyqEULIzAv4HJ70RpupzyoX41lOQhACmhrDJ2V3fgk/2CkhB7mHqdV2a9h/FsRC9fXPuNlzisxPjDpEzlEmdysIE/u0aGV30srq+kL2Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728395570; c=relaxed/simple;
-	bh=yje+Nf53ZMDX2ciH9OYWiJcxOcJxvL0v/cML/xD8LJI=;
+	s=arc-20240116; t=1728395572; c=relaxed/simple;
+	bh=8C3q9wj5bRQ4clt4Y8eAd1LZVU6nG7UzyP+UbnjHZww=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=gcLGycvD6kp3LDu1hsiNdU+Z5unuW83aCoaTElsvD76Huv6rSPIcnb5NpkOllRyWbmQ+WmGbXbxqQchi7AgyJZi3/YqceHQBdQ/RjU5BTD3lW4DGoFUxKMl02flQ8OOKbVn2vrarlCN7MZ3nVgQvAErFGw9b5udXyTa6PlNP0Ww=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=efficios.com; spf=pass smtp.mailfrom=efficios.com; dkim=pass (2048-bit key) header.d=efficios.com header.i=@efficios.com header.b=JUhZup11; arc=none smtp.client-ip=167.114.26.122
+	 MIME-Version; b=DyVt2O6kM5XyDcFxVleHi//b43ampjd7eKqEakPRCAupgILU/MTz+Go58vOqTTNn5j2qLDqwDuwFFzAkx1UVRqVXNL0WAfASOhx9bASMPVYtTHFnCx/gzaqR+kSnp2f0qrBu1jSqr4GeYF6aoLLevUw3imkno02C7p7szZ9Dh+Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=efficios.com; spf=pass smtp.mailfrom=efficios.com; dkim=pass (2048-bit key) header.d=efficios.com header.i=@efficios.com header.b=Ug24iPj9; arc=none smtp.client-ip=167.114.26.122
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=efficios.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=efficios.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=efficios.com header.i=@efficios.com header.b="JUhZup11"
+	dkim=pass (2048-bit key) header.d=efficios.com header.i=@efficios.com header.b="Ug24iPj9"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=efficios.com;
-	s=smtpout1; t=1728395562;
-	bh=yje+Nf53ZMDX2ciH9OYWiJcxOcJxvL0v/cML/xD8LJI=;
+	s=smtpout1; t=1728395563;
+	bh=8C3q9wj5bRQ4clt4Y8eAd1LZVU6nG7UzyP+UbnjHZww=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JUhZup11xZUM5lXz8AmFl7eRRRbNdTVJn/MAouIeqyExpdpC7wwzSy9hI/bDD7sTZ
-	 zMS9WBOhOM6injeA4saJAsztMqLPoIHRVPMs9V6IGJ7OLZUFUAbHuGH7I2h3JMmPTM
-	 dKXT7l/hdTnifrGM8Nctf6T/VvE4JryCejgDRtQ4aIiW7NFqaLuyjMnDIEkRXQC2c8
-	 AXZBOW/Lg9c/MmCwqVIp60r7R/DHkbkd9yjFgUEQVD48fYXvqco8rKZLfZNJxTssgk
-	 QctXWViwcxB7jAFx2bZZGRV7318YPgpZOPtHD0kNVZsevNkm7LfIYya52amK3TQzov
-	 ly7soWyCuYxoQ==
+	b=Ug24iPj9L61ex8hFJS2JEoR21qWW5amtYa1PmEJ/WY8vy96wcK9ETL5l5rs2ZI98p
+	 T6QG5Lp874R6Khc2ae3oxs4rXIqJp8L7UpbnSwzWz+4g3oebuAMcJiHocP9HVXyPbf
+	 RkK4PoTg8VHI02xrx7WaSvHiOzSw8R+ESPXPVGGcFystR3EgPNwnMceM5U8BdKyAlt
+	 +YL47jPrJTfar8p1GfYd5lSKj5kKw/Dhws+e5G71Lj3mvX5+mRF8wLNJocWR3H3xLe
+	 s8mgTTpLC5FwKY+YLCyN5eGALx++5yjoMHoiJvvxyOoZ22AdZsyuOgv8ZDYBnXbAdj
+	 BR4PdROwcScKw==
 Received: from thinkos.internal.efficios.com (96-127-217-162.qc.cable.ebox.net [96.127.217.162])
-	by smtpout.efficios.com (Postfix) with ESMTPSA id 4XNHX965gyzLcG;
-	Tue,  8 Oct 2024 09:52:41 -0400 (EDT)
+	by smtpout.efficios.com (Postfix) with ESMTPSA id 4XNHXC0cplzLwX;
+	Tue,  8 Oct 2024 09:52:43 -0400 (EDT)
 From: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
 To: Boqun Feng <boqun.feng@gmail.com>
 Cc: linux-kernel@vger.kernel.org,
@@ -62,13 +62,10 @@ Cc: linux-kernel@vger.kernel.org,
 	Jonas Oberhauser <jonas.oberhauser@huaweicloud.com>,
 	rcu@vger.kernel.org,
 	linux-mm@kvack.org,
-	lkmm@lists.linux.dev,
-	Gary Guo <gary@garyguo.net>,
-	Nikita Popov <github@npopov.com>,
-	llvm@lists.linux.dev
-Subject: [RFC PATCH v3 2/4] Documentation: RCU: Refer to ptr_eq()
-Date: Tue,  8 Oct 2024 09:50:32 -0400
-Message-Id: <20241008135034.1982519-3-mathieu.desnoyers@efficios.com>
+	lkmm@lists.linux.dev
+Subject: [RFC PATCH v3 4/4] sched+mm: Use hazard pointers to track lazy active mm existence
+Date: Tue,  8 Oct 2024 09:50:34 -0400
+Message-Id: <20241008135034.1982519-5-mathieu.desnoyers@efficios.com>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20241008135034.1982519-1-mathieu.desnoyers@efficios.com>
 References: <20241008135034.1982519-1-mathieu.desnoyers@efficios.com>
@@ -80,16 +77,61 @@ List-Unsubscribe: <mailto:lkmm+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Refer to ptr_eq() in the rcu_dereference() documentation.
+Replace lazy active mm existence tracking with hazard pointers. This
+removes the following implementations and their associated config
+options:
 
-ptr_eq() is a mechanism that preserves address dependencies when
-comparing pointers, and should be favored when comparing a pointer
-obtained from rcu_dereference() against another pointer.
+- MMU_LAZY_TLB_REFCOUNT
+- MMU_LAZY_TLB_SHOOTDOWN
+- This removes the call_rcu delayed mm drop for RT.
+
+It leverages the fact that each CPU only ever have at most one single
+lazy active mm. This makes it a very good fit for a hazard pointer
+domain implemented with one hazard pointer slot per CPU.
+
+* Benchmarks:
+
+will-it-scale context_switch1_threads
+
+nr threads (-t)     speedup
+     1                -0.2%
+     2                +0.4%
+     3                +0.2%
+     6                +0.6%
+    12                +0.8%
+    24                +3%
+    48               +12%
+    96               +21%
+   192               +28%
+   384                +4%
+   768                -0.6%
+
+Methodology: Each test is the average of 20 iterations. Use median
+result of 3 test runs.
+
+Test hardware:
+
+CPU(s):                   384
+  On-line CPU(s) list:    0-383
+Vendor ID:                AuthenticAMD
+  Model name:             AMD EPYC 9654 96-Core Processor
+    CPU family:           25
+    Model:                17
+    Thread(s) per core:   2
+    Core(s) per socket:   96
+    Socket(s):            2
+    Stepping:             1
+    Frequency boost:      enabled
+    CPU(s) scaling MHz:   100%
+    CPU max MHz:          3709.0000
+    CPU min MHz:          400.0000
+    BogoMIPS:             4799.75
+
+Memory: 768 GB ram.
 
 Signed-off-by: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
-Acked-by: Alan Stern <stern@rowland.harvard.edu>
-Acked-by: Paul E. McKenney <paulmck@kernel.org>
-Reviewed-by: Joel Fernandes (Google) <joel@joelfernandes.org>
+Cc: Nicholas Piggin <npiggin@gmail.com>
+Cc: Michael Ellerman <mpe@ellerman.id.au>
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Cc: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
 Cc: "Paul E. McKenney" <paulmck@kernel.org>
@@ -100,6 +142,7 @@ Cc: Alan Stern <stern@rowland.harvard.edu>
 Cc: John Stultz <jstultz@google.com>
 Cc: Neeraj Upadhyay <Neeraj.Upadhyay@amd.com>
 Cc: Linus Torvalds <torvalds@linux-foundation.org>
+Cc: Andrew Morton <akpm@linux-foundation.org>
 Cc: Boqun Feng <boqun.feng@gmail.com>
 Cc: Frederic Weisbecker <frederic@kernel.org>
 Cc: Joel Fernandes <joel@joelfernandes.org>
@@ -115,86 +158,379 @@ Cc: Thomas Gleixner <tglx@linutronix.de>
 Cc: Vlastimil Babka <vbabka@suse.cz>
 Cc: maged.michael@gmail.com
 Cc: Mateusz Guzik <mjguzik@gmail.com>
-Cc: Gary Guo <gary@garyguo.net>
 Cc: Jonas Oberhauser <jonas.oberhauser@huaweicloud.com>
 Cc: rcu@vger.kernel.org
 Cc: linux-mm@kvack.org
 Cc: lkmm@lists.linux.dev
-Cc: Nikita Popov <github@npopov.com>
-Cc: llvm@lists.linux.dev
 ---
-Changes since v0:
-- Include feedback from Alan Stern.
+ Documentation/mm/active_mm.rst       |  9 ++--
+ arch/Kconfig                         | 32 -------------
+ arch/powerpc/Kconfig                 |  1 -
+ arch/powerpc/mm/book3s64/radix_tlb.c | 23 +---------
+ include/linux/mm_types.h             |  3 --
+ include/linux/sched/mm.h             | 68 ++++++++++------------------
+ kernel/exit.c                        |  4 +-
+ kernel/fork.c                        | 47 +++++--------------
+ kernel/sched/sched.h                 |  8 +---
+ lib/Kconfig.debug                    | 10 ----
+ 10 files changed, 45 insertions(+), 160 deletions(-)
 
-Changes since v1:
-- Include feedback from Paul E. McKenney.
----
- Documentation/RCU/rcu_dereference.rst | 38 +++++++++++++++++++++++----
- 1 file changed, 33 insertions(+), 5 deletions(-)
-
-diff --git a/Documentation/RCU/rcu_dereference.rst b/Documentation/RCU/rcu_dereference.rst
-index 2524dcdadde2..de6175bf430f 100644
---- a/Documentation/RCU/rcu_dereference.rst
-+++ b/Documentation/RCU/rcu_dereference.rst
-@@ -104,11 +104,12 @@ readers working properly:
- 	after such branches, but can speculate loads, which can again
- 	result in misordering bugs.
+diff --git a/Documentation/mm/active_mm.rst b/Documentation/mm/active_mm.rst
+index d096fc091e23..c225cac49c30 100644
+--- a/Documentation/mm/active_mm.rst
++++ b/Documentation/mm/active_mm.rst
+@@ -2,11 +2,10 @@
+ Active MM
+ =========
  
---	Be very careful about comparing pointers obtained from
--	rcu_dereference() against non-NULL values.  As Linus Torvalds
--	explained, if the two pointers are equal, the compiler could
--	substitute the pointer you are comparing against for the pointer
--	obtained from rcu_dereference().  For example::
-+-	Use operations that preserve address dependencies (such as
-+	"ptr_eq()") to compare pointers obtained from rcu_dereference()
-+	against non-NULL pointers. As Linus Torvalds explained, if the
-+	two pointers are equal, the compiler could substitute the
-+	pointer you are comparing against for the pointer obtained from
-+	rcu_dereference().  For example::
+-Note, the mm_count refcount may no longer include the "lazy" users
+-(running tasks with ->active_mm == mm && ->mm == NULL) on kernels
+-with CONFIG_MMU_LAZY_TLB_REFCOUNT=n. Taking and releasing these lazy
+-references must be done with mmgrab_lazy_tlb() and mmdrop_lazy_tlb()
+-helpers, which abstract this config option.
++Note, the mm_count refcount no longer include the "lazy" users (running
++tasks with ->active_mm == mm && ->mm == NULL) Taking and releasing these
++lazy references must be done with mmgrab_lazy_tlb() and mmdrop_lazy_tlb()
++helpers, which are implemented with hazard pointers.
  
- 		p = rcu_dereference(gp);
- 		if (p == &default_struct)
-@@ -125,6 +126,29 @@ readers working properly:
- 	On ARM and Power hardware, the load from "default_struct.a"
- 	can now be speculated, such that it might happen before the
- 	rcu_dereference().  This could result in bugs due to misordering.
-+	Performing the comparison with "ptr_eq()" ensures the compiler
-+	does not perform such transformation.
-+
-+	If the comparison is against another pointer, the compiler is
-+	allowed to use either pointer for the following accesses, which
-+	loses the address dependency and allows weakly-ordered
-+	architectures such as ARM and PowerPC to speculate the
-+	address-dependent load before rcu_dereference().  For example::
-+
-+		p1 = READ_ONCE(gp);
-+		p2 = rcu_dereference(gp);
-+		if (p1 == p2)  /* BUGGY!!! */
-+			do_default(p2->a);
-+
-+	The compiler can use p1->a rather than p2->a, destroying the
-+	address dependency.  Performing the comparison with "ptr_eq()"
-+	ensures the compiler preserves the address dependencies.
-+	Corrected code::
-+
-+		p1 = READ_ONCE(gp);
-+		p2 = rcu_dereference(gp);
-+		if (ptr_eq(p1, p2))
-+			do_default(p2->a);
+ ::
  
- 	However, comparisons are OK in the following cases:
+diff --git a/arch/Kconfig b/arch/Kconfig
+index 975dd22a2dbd..d4261935f8dc 100644
+--- a/arch/Kconfig
++++ b/arch/Kconfig
+@@ -475,38 +475,6 @@ config ARCH_WANT_IRQS_OFF_ACTIVATE_MM
+ 	  irqs disabled over activate_mm. Architectures that do IPI based TLB
+ 	  shootdowns should enable this.
  
-@@ -204,6 +228,10 @@ readers working properly:
- 		comparison will provide exactly the information that the
- 		compiler needs to deduce the value of the pointer.
+-# Use normal mm refcounting for MMU_LAZY_TLB kernel thread references.
+-# MMU_LAZY_TLB_REFCOUNT=n can improve the scalability of context switching
+-# to/from kernel threads when the same mm is running on a lot of CPUs (a large
+-# multi-threaded application), by reducing contention on the mm refcount.
+-#
+-# This can be disabled if the architecture ensures no CPUs are using an mm as a
+-# "lazy tlb" beyond its final refcount (i.e., by the time __mmdrop frees the mm
+-# or its kernel page tables). This could be arranged by arch_exit_mmap(), or
+-# final exit(2) TLB flush, for example.
+-#
+-# To implement this, an arch *must*:
+-# Ensure the _lazy_tlb variants of mmgrab/mmdrop are used when manipulating
+-# the lazy tlb reference of a kthread's ->active_mm (non-arch code has been
+-# converted already).
+-config MMU_LAZY_TLB_REFCOUNT
+-	def_bool y
+-	depends on !MMU_LAZY_TLB_SHOOTDOWN
+-
+-# This option allows MMU_LAZY_TLB_REFCOUNT=n. It ensures no CPUs are using an
+-# mm as a lazy tlb beyond its last reference count, by shooting down these
+-# users before the mm is deallocated. __mmdrop() first IPIs all CPUs that may
+-# be using the mm as a lazy tlb, so that they may switch themselves to using
+-# init_mm for their active mm. mm_cpumask(mm) is used to determine which CPUs
+-# may be using mm as a lazy tlb mm.
+-#
+-# To implement this, an arch *must*:
+-# - At the time of the final mmdrop of the mm, ensure mm_cpumask(mm) contains
+-#   at least all possible CPUs in which the mm is lazy.
+-# - It must meet the requirements for MMU_LAZY_TLB_REFCOUNT=n (see above).
+-config MMU_LAZY_TLB_SHOOTDOWN
+-	bool
+-
+ config ARCH_HAVE_NMI_SAFE_CMPXCHG
+ 	bool
  
-+	When in doubt, use operations that preserve address dependencies
-+	(such as "ptr_eq()") to compare pointers obtained from
-+	rcu_dereference() against non-NULL pointers.
+diff --git a/arch/powerpc/Kconfig b/arch/powerpc/Kconfig
+index d7b09b064a8a..b1e25e75baab 100644
+--- a/arch/powerpc/Kconfig
++++ b/arch/powerpc/Kconfig
+@@ -291,7 +291,6 @@ config PPC
+ 	select MMU_GATHER_PAGE_SIZE
+ 	select MMU_GATHER_RCU_TABLE_FREE
+ 	select MMU_GATHER_MERGE_VMAS
+-	select MMU_LAZY_TLB_SHOOTDOWN		if PPC_BOOK3S_64
+ 	select MODULES_USE_ELF_RELA
+ 	select NEED_DMA_MAP_STATE		if PPC64 || NOT_COHERENT_CACHE
+ 	select NEED_PER_CPU_EMBED_FIRST_CHUNK	if PPC64
+diff --git a/arch/powerpc/mm/book3s64/radix_tlb.c b/arch/powerpc/mm/book3s64/radix_tlb.c
+index 9e1f6558d026..ff0d4f28cf52 100644
+--- a/arch/powerpc/mm/book3s64/radix_tlb.c
++++ b/arch/powerpc/mm/book3s64/radix_tlb.c
+@@ -1197,28 +1197,7 @@ void radix__tlb_flush(struct mmu_gather *tlb)
+ 	 * See the comment for radix in arch_exit_mmap().
+ 	 */
+ 	if (tlb->fullmm) {
+-		if (IS_ENABLED(CONFIG_MMU_LAZY_TLB_SHOOTDOWN)) {
+-			/*
+-			 * Shootdown based lazy tlb mm refcounting means we
+-			 * have to IPI everyone in the mm_cpumask anyway soon
+-			 * when the mm goes away, so might as well do it as
+-			 * part of the final flush now.
+-			 *
+-			 * If lazy shootdown was improved to reduce IPIs (e.g.,
+-			 * by batching), then it may end up being better to use
+-			 * tlbies here instead.
+-			 */
+-			preempt_disable();
+-
+-			smp_mb(); /* see radix__flush_tlb_mm */
+-			exit_flush_lazy_tlbs(mm);
+-			__flush_all_mm(mm, true);
+-
+-			preempt_enable();
+-		} else {
+-			__flush_all_mm(mm, true);
+-		}
+-
++		__flush_all_mm(mm, true);
+ 	} else if ( (psize = radix_get_mmu_psize(page_size)) == -1) {
+ 		if (!tlb->freed_tables)
+ 			radix__flush_tlb_mm(mm);
+diff --git a/include/linux/mm_types.h b/include/linux/mm_types.h
+index 485424979254..db5f13554485 100644
+--- a/include/linux/mm_types.h
++++ b/include/linux/mm_types.h
+@@ -975,9 +975,6 @@ struct mm_struct {
+ 		atomic_t tlb_flush_batched;
+ #endif
+ 		struct uprobes_state uprobes_state;
+-#ifdef CONFIG_PREEMPT_RT
+-		struct rcu_head delayed_drop;
+-#endif
+ #ifdef CONFIG_HUGETLB_PAGE
+ 		atomic_long_t hugetlb_usage;
+ #endif
+diff --git a/include/linux/sched/mm.h b/include/linux/sched/mm.h
+index 91546493c43d..7b2f0a432f6e 100644
+--- a/include/linux/sched/mm.h
++++ b/include/linux/sched/mm.h
+@@ -9,6 +9,10 @@
+ #include <linux/gfp.h>
+ #include <linux/sync_core.h>
+ #include <linux/sched/coredump.h>
++#include <linux/hazptr.h>
 +
- -	Disable any value-speculation optimizations that your compiler
- 	might provide, especially if you are making use of feedback-based
- 	optimizations that take data collected from prior runs.  Such
++/* Sched lazy mm hazard pointer domain. */
++DECLARE_HAZPTR_DOMAIN(hazptr_domain_sched_lazy_mm);
+ 
+ /*
+  * Routines for handling mm_structs
+@@ -55,61 +59,37 @@ static inline void mmdrop(struct mm_struct *mm)
+ 		__mmdrop(mm);
+ }
+ 
+-#ifdef CONFIG_PREEMPT_RT
+-/*
+- * RCU callback for delayed mm drop. Not strictly RCU, but call_rcu() is
+- * by far the least expensive way to do that.
+- */
+-static inline void __mmdrop_delayed(struct rcu_head *rhp)
+-{
+-	struct mm_struct *mm = container_of(rhp, struct mm_struct, delayed_drop);
+-
+-	__mmdrop(mm);
+-}
+-
+-/*
+- * Invoked from finish_task_switch(). Delegates the heavy lifting on RT
+- * kernels via RCU.
+- */
+-static inline void mmdrop_sched(struct mm_struct *mm)
+-{
+-	/* Provides a full memory barrier. See mmdrop() */
+-	if (atomic_dec_and_test(&mm->mm_count))
+-		call_rcu(&mm->delayed_drop, __mmdrop_delayed);
+-}
+-#else
+-static inline void mmdrop_sched(struct mm_struct *mm)
+-{
+-	mmdrop(mm);
+-}
+-#endif
+-
+ /* Helpers for lazy TLB mm refcounting */
+ static inline void mmgrab_lazy_tlb(struct mm_struct *mm)
+ {
+-	if (IS_ENABLED(CONFIG_MMU_LAZY_TLB_REFCOUNT))
+-		mmgrab(mm);
++	/*
++	 * mmgrab_lazy_tlb must provide a full memory barrier, see the
++	 * membarrier comment finish_task_switch which relies on this.
++	 */
++	smp_mb();
++
++	/*
++	 * The caller guarantees existence of mm. Post a hazard pointer
++	 * to chain this existence guarantee to a hazard pointer.
++	 * There is only a single lazy mm per CPU at any time.
++	 */
++	WARN_ON_ONCE(!hazptr_try_protect(&hazptr_domain_sched_lazy_mm, mm, NULL));
+ }
+ 
+ static inline void mmdrop_lazy_tlb(struct mm_struct *mm)
+ {
+-	if (IS_ENABLED(CONFIG_MMU_LAZY_TLB_REFCOUNT)) {
+-		mmdrop(mm);
+-	} else {
+-		/*
+-		 * mmdrop_lazy_tlb must provide a full memory barrier, see the
+-		 * membarrier comment finish_task_switch which relies on this.
+-		 */
+-		smp_mb();
+-	}
++	/*
++	 * mmdrop_lazy_tlb must provide a full memory barrier, see the
++	 * membarrier comment finish_task_switch which relies on this.
++	 */
++	smp_mb();
++	this_cpu_write(hazptr_domain_sched_lazy_mm.percpu_slots->addr, NULL);
+ }
+ 
+ static inline void mmdrop_lazy_tlb_sched(struct mm_struct *mm)
+ {
+-	if (IS_ENABLED(CONFIG_MMU_LAZY_TLB_REFCOUNT))
+-		mmdrop_sched(mm);
+-	else
+-		smp_mb(); /* see mmdrop_lazy_tlb() above */
++	smp_mb(); /* see mmdrop_lazy_tlb() above */
++	this_cpu_write(hazptr_domain_sched_lazy_mm.percpu_slots->addr, NULL);
+ }
+ 
+ /**
+diff --git a/kernel/exit.c b/kernel/exit.c
+index 7430852a8571..cb4ace06c0f0 100644
+--- a/kernel/exit.c
++++ b/kernel/exit.c
+@@ -545,8 +545,6 @@ static void exit_mm(void)
+ 	if (!mm)
+ 		return;
+ 	mmap_read_lock(mm);
+-	mmgrab_lazy_tlb(mm);
+-	BUG_ON(mm != current->active_mm);
+ 	/* more a memory barrier than a real lock */
+ 	task_lock(current);
+ 	/*
+@@ -561,6 +559,8 @@ static void exit_mm(void)
+ 	 */
+ 	smp_mb__after_spinlock();
+ 	local_irq_disable();
++	mmgrab_lazy_tlb(mm);
++	BUG_ON(mm != current->active_mm);
+ 	current->mm = NULL;
+ 	membarrier_update_current_mm(NULL);
+ 	enter_lazy_tlb(mm, current);
+diff --git a/kernel/fork.c b/kernel/fork.c
+index cc760491f201..0a2e2ab1680a 100644
+--- a/kernel/fork.c
++++ b/kernel/fork.c
+@@ -149,6 +149,9 @@ DEFINE_PER_CPU(unsigned long, process_counts) = 0;
+ 
+ __cacheline_aligned DEFINE_RWLOCK(tasklist_lock);  /* outer */
+ 
++/* Sched lazy mm hazard pointer domain. */
++DEFINE_HAZPTR_DOMAIN(hazptr_domain_sched_lazy_mm);
++
+ #ifdef CONFIG_PROVE_RCU
+ int lockdep_tasklist_lock_is_held(void)
+ {
+@@ -855,50 +858,24 @@ static void do_shoot_lazy_tlb(void *arg)
+ 		WARN_ON_ONCE(current->mm);
+ 		current->active_mm = &init_mm;
+ 		switch_mm(mm, &init_mm, current);
++		this_cpu_write(hazptr_domain_sched_lazy_mm.percpu_slots->addr, NULL);
+ 	}
+ }
+ 
+-static void cleanup_lazy_tlbs(struct mm_struct *mm)
++static void remove_lazy_mm_hp(int cpu, struct hazptr_slot *slot, void *addr)
+ {
+-	if (!IS_ENABLED(CONFIG_MMU_LAZY_TLB_SHOOTDOWN)) {
+-		/*
+-		 * In this case, lazy tlb mms are refounted and would not reach
+-		 * __mmdrop until all CPUs have switched away and mmdrop()ed.
+-		 */
+-		return;
+-	}
++	smp_call_function_single(cpu, do_shoot_lazy_tlb, addr, 1);
++	smp_call_function_single(cpu, do_check_lazy_tlb, addr, 1);
++}
+ 
++static void cleanup_lazy_tlbs(struct mm_struct *mm)
++{
+ 	/*
+-	 * Lazy mm shootdown does not refcount "lazy tlb mm" usage, rather it
+-	 * requires lazy mm users to switch to another mm when the refcount
++	 * Require lazy mm users to switch to another mm when the refcount
+ 	 * drops to zero, before the mm is freed. This requires IPIs here to
+ 	 * switch kernel threads to init_mm.
+-	 *
+-	 * archs that use IPIs to flush TLBs can piggy-back that lazy tlb mm
+-	 * switch with the final userspace teardown TLB flush which leaves the
+-	 * mm lazy on this CPU but no others, reducing the need for additional
+-	 * IPIs here. There are cases where a final IPI is still required here,
+-	 * such as the final mmdrop being performed on a different CPU than the
+-	 * one exiting, or kernel threads using the mm when userspace exits.
+-	 *
+-	 * IPI overheads have not found to be expensive, but they could be
+-	 * reduced in a number of possible ways, for example (roughly
+-	 * increasing order of complexity):
+-	 * - The last lazy reference created by exit_mm() could instead switch
+-	 *   to init_mm, however it's probable this will run on the same CPU
+-	 *   immediately afterwards, so this may not reduce IPIs much.
+-	 * - A batch of mms requiring IPIs could be gathered and freed at once.
+-	 * - CPUs store active_mm where it can be remotely checked without a
+-	 *   lock, to filter out false-positives in the cpumask.
+-	 * - After mm_users or mm_count reaches zero, switching away from the
+-	 *   mm could clear mm_cpumask to reduce some IPIs, perhaps together
+-	 *   with some batching or delaying of the final IPIs.
+-	 * - A delayed freeing and RCU-like quiescing sequence based on mm
+-	 *   switching to avoid IPIs completely.
+ 	 */
+-	on_each_cpu_mask(mm_cpumask(mm), do_shoot_lazy_tlb, (void *)mm, 1);
+-	if (IS_ENABLED(CONFIG_DEBUG_VM_SHOOT_LAZIES))
+-		on_each_cpu(do_check_lazy_tlb, (void *)mm, 1);
++	hazptr_scan(&hazptr_domain_sched_lazy_mm, mm, remove_lazy_mm_hp);
+ }
+ 
+ /*
+diff --git a/kernel/sched/sched.h b/kernel/sched/sched.h
+index 4c36cc680361..d883c2aa3518 100644
+--- a/kernel/sched/sched.h
++++ b/kernel/sched/sched.h
+@@ -3527,12 +3527,8 @@ static inline void switch_mm_cid(struct rq *rq,
+ 	if (!next->mm) {                                // to kernel
+ 		/*
+ 		 * user -> kernel transition does not guarantee a barrier, but
+-		 * we can use the fact that it performs an atomic operation in
+-		 * mmgrab().
+-		 */
+-		if (prev->mm)                           // from user
+-			smp_mb__after_mmgrab();
+-		/*
++		 * we can use the fact that mmgrab() has a full barrier.
++		 *
+ 		 * kernel -> kernel transition does not change rq->curr->mm
+ 		 * state. It stays NULL.
+ 		 */
+diff --git a/lib/Kconfig.debug b/lib/Kconfig.debug
+index a30c03a66172..1cb9dab361c9 100644
+--- a/lib/Kconfig.debug
++++ b/lib/Kconfig.debug
+@@ -803,16 +803,6 @@ config DEBUG_VM
+ 
+ 	  If unsure, say N.
+ 
+-config DEBUG_VM_SHOOT_LAZIES
+-	bool "Debug MMU_LAZY_TLB_SHOOTDOWN implementation"
+-	depends on DEBUG_VM
+-	depends on MMU_LAZY_TLB_SHOOTDOWN
+-	help
+-	  Enable additional IPIs that ensure lazy tlb mm references are removed
+-	  before the mm is freed.
+-
+-	  If unsure, say N.
+-
+ config DEBUG_VM_MAPLE_TREE
+ 	bool "Debug VM maple trees"
+ 	depends on DEBUG_VM
 -- 
 2.39.2
 

@@ -1,42 +1,65 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f54.google.com (mail-ed1-f54.google.com [209.85.208.54])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A983222EED;
-	Thu, 24 Oct 2024 04:25:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A78A176AAD
+	for <lkmm@lists.linux.dev>; Thu, 24 Oct 2024 11:14:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729743941; cv=none; b=KRe+mhyxk92Qw5JKu1y1m/03mBafPy7QRVH2C/jmpD700zttiDh7nhtRCJ9r1TgCRGl1ucYrvgXILCdvJbrnNkdF81U8Yr7qMWGhS/0I9PNZ2w0Plltr4HAWmx0iLVZzThETxo+25hnQHpuuygEOtcAJ+eheMWeYAjwzxO6Qxtk=
+	t=1729768448; cv=none; b=Q2+iDI7RKo8dlK2/hRstJA/3jkpQvXh97IgnoVseWmEnvjx6WD4orXycdsLgXYniY20yFYJYZ3ugHwGUuCJvgnfvUmVR4gQXWX7q1/SZTcylZNMJGyO6Iadd1I4ZHvFDqIzTQen3FDRoXNj++cTInINcGD5n63G0NjSURJt7GBg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729743941; c=relaxed/simple;
-	bh=0MM5LDYxFthhIc4WNzguyAyibX+ea7PYax8n2zwG03A=;
+	s=arc-20240116; t=1729768448; c=relaxed/simple;
+	bh=lony7HcHEUlOAmxn07kOoTMbSPJMvn/r3Jso+FxlXPU=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Cy4gCdJZg+emIk8vcBEQPWx61fCFhbZ4T7k/5OPhbLl+2SK0bJiNmoXiLpyvNTAORivsjEUix2oNm56w30w+KRudi80Eqq5KrrOr3n3TX0tUhbfl1GHLkEuePh+W68iwtmZQ+T/FzW0pfFa6ASd/FMgOS5Jxy3llEZPt8o46Icw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=BLJvND4l; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type:Content-Disposition:In-Reply-To; b=adkblNHq+swKME2B5Zw3TlmSDmY/66b88vQxMtAzYnEBY7kbw1pbTQ6vwjVNsG+Y29UPDVrG3IPZplKRltWJiQyQAFnltxd7l421bFE2i8vH3MqfXOtq+YNnU4lrAsPzPh0S3R40Aa7+Cs2Rv6EcPXBN8KYzmBgqbQ+52SPr8lE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=nEnzO1bd; arc=none smtp.client-ip=209.85.208.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="BLJvND4l"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C25FC4CEC7;
-	Thu, 24 Oct 2024 04:25:41 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1729743941;
-	bh=0MM5LDYxFthhIc4WNzguyAyibX+ea7PYax8n2zwG03A=;
-	h=Date:From:To:Cc:Subject:Reply-To:References:In-Reply-To:From;
-	b=BLJvND4l4EDGi/kP16ESgcNC5YJM6uFvQ4ATrsrWM/EHzNcxNyQ0eUfpkNaWLAe4L
-	 vC1IyZR3yNOt7GDoOrdoNPfDxpNDqaI9gFvZ/B+zRPrmLMYrk4WWd0fWdXngrxs0Hy
-	 rYJ16PEED3qBna5C57LgqnLJXhI/0QgApK+XG3eXxfIChIlXjNDGCijA/5Yb3OifjP
-	 79sj3s1pZoBHlY7vsB7rtEofzFvrCOU5xxb1vWRmgONP2Q+9KT0rjqk5hQHDe6mK6M
-	 UrSUz7HvMQP0rsEDONyG07klOQkmevePOvppln6eNpVx2qDZf3B4lL/TkZEPUozRJ7
-	 rxkadJJZJfn9g==
-Received: by paulmck-ThinkPad-P17-Gen-1.home (Postfix, from userid 1000)
-	id C8813CE0BB1; Wed, 23 Oct 2024 21:25:40 -0700 (PDT)
-Date: Wed, 23 Oct 2024 21:25:40 -0700
-From: "Paul E. McKenney" <paulmck@kernel.org>
-To: Andrea Parri <parri.andrea@gmail.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nEnzO1bd"
+Received: by mail-ed1-f54.google.com with SMTP id 4fb4d7f45d1cf-5c96df52c52so926450a12.1
+        for <lkmm@lists.linux.dev>; Thu, 24 Oct 2024 04:14:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1729768445; x=1730373245; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=EqToYBI47uumi/dFF+fWrS/U9utWn5J0Y7eTU5Cm8IA=;
+        b=nEnzO1bd33b9KWl8MLgewFbwYumLgpXHV/7AYyOn1mVhBO8zVqxWE57nmWnP6f5jOm
+         OLYYCxlGk6lsg7aQ8qSTsHzp+/tMeJ4vVDmJVzDkNbOTRyWnty9DdFC1lA8qaGHWVesc
+         06s/3wVtIm3ZXr2i+l3dJCRitX+dWuWHI2dLH5W47R0Qxz/ka3rJi7N2GQ5CMfs6qLm2
+         MBF7pQf4ZjVNzoEcaXntZHewPZHRp8EyYXuhZVA8DWh9d7AHG2eI/bBBUDl/Ko5YdyyJ
+         V8gaDwxpTjhWRch8eN0AuEb5Wlv1xzO5556W27e4VVgdv9j1Hbne8iOGnDwiKKkArezF
+         IWUA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1729768445; x=1730373245;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=EqToYBI47uumi/dFF+fWrS/U9utWn5J0Y7eTU5Cm8IA=;
+        b=tQddiHKT4fgLsETHGmoa77uVQk2U1G444XaJUy3dDNjtvioyUiFB46SNEgfZsog9yy
+         Z6PcO+voboDSlv56dnxuK4F7SlPDwk1Mrs5vEbMoVImVgQAEVC/DruYj0DhFTx26gXHG
+         tUwtsA/QscBSyu9z5ZtsGYO4xcY4OS86lXOk7ewXMFoqcVm7EeFf1ZGDQ0yJWD/2jCxn
+         cBNdJU6y+m97KUg9hveOUtFB3I6hcwnphJl2pDK+Sf/SpWP+PFnuKjmwLYoR6sdLa0z+
+         9vpkuqn77Xw/PV7pVYwWSZWhbOIldExmczaq6aIAXx9pcJ67SpvlJKR5fW0juNrL/XI9
+         d44A==
+X-Forwarded-Encrypted: i=1; AJvYcCWHDsKou5+3WL39YMNkkoh+roJdCfsIMCn/uxfrOlKLG5Huvsw6QB69hTwxztPFI1AAOO1b@lists.linux.dev
+X-Gm-Message-State: AOJu0YxN6+VkZu0rYn2RoEOVDUvKLNeWSLcF1rbYgZAubOP8caMfZWDe
+	+n3BEdB7g2vrZIYDj1nNP/UJZL6HFvt+1I/95Y6yrJr0cX3+6xDo
+X-Google-Smtp-Source: AGHT+IGCTDa5YSt1JVXSw15FKX85vMm/LPJHRhKpKlIjG4hjhIJxxYz0pGcyAADkEomx7uRX1roMOQ==
+X-Received: by 2002:a17:907:9624:b0:a99:4f40:3e82 with SMTP id a640c23a62f3a-a9abf84cf8cmr609473766b.7.1729768444371;
+        Thu, 24 Oct 2024 04:14:04 -0700 (PDT)
+Received: from andrea ([2a01:5a8:300:22d3:899d:b864:b090:8064])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a9a91573645sm595674966b.182.2024.10.24.04.14.03
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 24 Oct 2024 04:14:04 -0700 (PDT)
+Date: Thu, 24 Oct 2024 14:13:55 +0300
+From: Andrea Parri <parri.andrea@gmail.com>
+To: "Paul E. McKenney" <paulmck@kernel.org>
 Cc: puranjay@kernel.org, bpf@vger.kernel.org, lkmm@lists.linux.dev,
 	linux-kernel@vger.kernel.org
 Subject: Re: Some observations (results) on BPF acquire and release
-Message-ID: <13f60db0-b334-4638-a768-d828ecf7c8d0@paulmck-laptop>
-Reply-To: paulmck@kernel.org
+Message-ID: <Zxor8xosL-XSxnwr@andrea>
 References: <Zxk2wNs4sxEIg-4d@andrea>
+ <13f60db0-b334-4638-a768-d828ecf7c8d0@paulmck-laptop>
 Precedence: bulk
 X-Mailing-List: lkmm@lists.linux.dev
 List-Id: <lkmm.lists.linux.dev>
@@ -45,89 +68,96 @@ List-Unsubscribe: <mailto:lkmm+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <Zxk2wNs4sxEIg-4d@andrea>
+In-Reply-To: <13f60db0-b334-4638-a768-d828ecf7c8d0@paulmck-laptop>
 
-On Wed, Oct 23, 2024 at 08:47:44PM +0300, Andrea Parri wrote:
-> Hi Puranjay and Paul,
+On Wed, Oct 23, 2024 at 09:25:40PM -0700, Paul E. McKenney wrote:
+> On Wed, Oct 23, 2024 at 08:47:44PM +0300, Andrea Parri wrote:
+> > Hi Puranjay and Paul,
+> > 
+> > I'm running some experiment on the (experimental) formalization of BPF
+> > acquire and release available from [1] and wanted to report about some
+> > (initial) observations for discussion and possibly future developments;
+> > apologies in advance for the relatively long email and any repetition.
+> > 
+> > 
+> > A first and probably most important observation is that the (current)
+> > formalization of acquire and release appears to be "too strong": IIUC,
+> > the simplest example/illustration for this is given by the following
+> > 
+> > BPF R+release+fence
+> > {
+> >  0:r2=x; 0:r4=y;
+> >  1:r2=y; 1:r4=x; 1:r6=l;
+> > }
+> >  P0                                 | P1                                         ;
+> >  r1 = 1                             | r1 = 2                                     ;
+> >  *(u32 *)(r2 + 0) = r1              | *(u32 *)(r2 + 0) = r1                      ;
+> >  r3 = 1                             | r5 = atomic_fetch_add((u32 *)(r6 + 0), r5) ;
+> >  store_release((u32 *)(r4 + 0), r3) | r3 = *(u32 *)(r4 + 0)                      ;
+> > exists ([y]=2 /\ 1:r3=0)
+> > 
+> > This "exists" condition is not satisfiable according to the BPF model;
+> > however, if we adopt the "natural"/intended(?) PowerPC implementations
+> > of the synchronization primitives above (aka, with store_release() -->
+> > LWSYNC and atomic_fetch_add() --> SYNC ; [...] ), then we see that the
+> > condition in question becomes (architecturally) satisfiable on PowerPC
+> > (although I'm not aware of actual observations on PowerPC hardware).
 > 
-> I'm running some experiment on the (experimental) formalization of BPF
-> acquire and release available from [1] and wanted to report about some
-> (initial) observations for discussion and possibly future developments;
-> apologies in advance for the relatively long email and any repetition.
+> Yes, you are quite right, for efficient use on PowerPC, we need the BPF
+> memory model to allow the above cycle in the R litmus test.  My bad,
+> as I put too much emphasis on ARM64.
 > 
+> > At first, the previous observation (validated via simulations and later
+> > extended to similar but more complex scenarios ) made me believe that
+> > the BPF formalization of acquire and release could be strictly stronger
+> > than the corresponding LKMM formalization; but that is _not_ the case:
+> > 
+> > The following "exists" condition is satisfiable according to the BPF
+> > model (and it remains satisfiable even if the load_acquire() in P2 is
+> > paired with an additional store_release() in P1).  In contrast, the
+> > corresponding LKMM condition (e.g load_acquire() --> smp_load_acquire()
+> > and atomic_fetch_add() --> smp_mb()) is not satisfiable (in fact, the
+> > same conclusion holds even if the putative smp_load_acquire() in P2 is
+> > "replaced" with an smp_rmb() or with an address dependency).
+> > 
+> > BPF Z6.3+fence+fence+acquire
+> > {
+> >  0:r2=x; 0:r4=y; 0:r6=l;
+> >  1:r2=y; 1:r4=z; 1:r6=m;
+> >  2:r2=z; 2:r4=x;
+> > }
+> >  P0                                         | P1                                         | P2                                 ;
+> >  r1 = 1                                     | r1 = 2                                     | r1 = load_acquire((u32 *)(r2 + 0)) ;
+> >  *(u32 *)(r2 + 0) = r1                      | *(u32 *)(r2 + 0) = r1                      | r3 = *(u32 *)(r4 + 0)              ;
+> >  r5 = atomic_fetch_add((u32 *)(r6 + 0), r5) | r5 = atomic_fetch_add((u32 *)(r6 + 0), r5) |                                    ;
+> >  r3 = 1                                     | r3 = 1                                     |                                    ;
+> >  *(u32 *)(r4 + 0) = r3                      | *(u32 *)(r4 + 0) = r3                      |                                    ;
+> > exists ([y]=2 /\ 2:r1=1 /\ 2:r3=0)
 > 
-> A first and probably most important observation is that the (current)
-> formalization of acquire and release appears to be "too strong": IIUC,
-> the simplest example/illustration for this is given by the following
+> And again agreed, we do want to forbid Z6.3.
 > 
-> BPF R+release+fence
-> {
->  0:r2=x; 0:r4=y;
->  1:r2=y; 1:r4=x; 1:r6=l;
-> }
->  P0                                 | P1                                         ;
->  r1 = 1                             | r1 = 2                                     ;
->  *(u32 *)(r2 + 0) = r1              | *(u32 *)(r2 + 0) = r1                      ;
->  r3 = 1                             | r5 = atomic_fetch_add((u32 *)(r6 + 0), r5) ;
->  store_release((u32 *)(r4 + 0), r3) | r3 = *(u32 *)(r4 + 0)                      ;
-> exists ([y]=2 /\ 1:r3=0)
+> > These remarks show that the proposed BPF formalization of acquire and
+> > release somehow, but substantially, diverged from the corresponding
+> > LKMM formalization.  My guess is that the divergences mentioned above
+> > were not (fully) intentional, or I'm wondering -- why not follow the
+> > latter (the LKMM's) more closely? -  This is probably the first question
+> > I would need to clarify before trying/suggesting modifications to the
+> > present formalizations.  ;-)  Thoughts?
 > 
-> This "exists" condition is not satisfiable according to the BPF model;
-> however, if we adopt the "natural"/intended(?) PowerPC implementations
-> of the synchronization primitives above (aka, with store_release() -->
-> LWSYNC and atomic_fetch_add() --> SYNC ; [...] ), then we see that the
-> condition in question becomes (architecturally) satisfiable on PowerPC
-> (although I'm not aware of actual observations on PowerPC hardware).
+> Thank you for digging into this!
+> 
+> I clearly need to get my validation work going again, but I very much
+> welcome any further help you would be willing to provide.
 
-Yes, you are quite right, for efficient use on PowerPC, we need the BPF
-memory model to allow the above cycle in the R litmus test.  My bad,
-as I put too much emphasis on ARM64.
+Thanks for the confirmation.
 
-> At first, the previous observation (validated via simulations and later
-> extended to similar but more complex scenarios ) made me believe that
-> the BPF formalization of acquire and release could be strictly stronger
-> than the corresponding LKMM formalization; but that is _not_ the case:
-> 
-> The following "exists" condition is satisfiable according to the BPF
-> model (and it remains satisfiable even if the load_acquire() in P2 is
-> paired with an additional store_release() in P1).  In contrast, the
-> corresponding LKMM condition (e.g load_acquire() --> smp_load_acquire()
-> and atomic_fetch_add() --> smp_mb()) is not satisfiable (in fact, the
-> same conclusion holds even if the putative smp_load_acquire() in P2 is
-> "replaced" with an smp_rmb() or with an address dependency).
-> 
-> BPF Z6.3+fence+fence+acquire
-> {
->  0:r2=x; 0:r4=y; 0:r6=l;
->  1:r2=y; 1:r4=z; 1:r6=m;
->  2:r2=z; 2:r4=x;
-> }
->  P0                                         | P1                                         | P2                                 ;
->  r1 = 1                                     | r1 = 2                                     | r1 = load_acquire((u32 *)(r2 + 0)) ;
->  *(u32 *)(r2 + 0) = r1                      | *(u32 *)(r2 + 0) = r1                      | r3 = *(u32 *)(r4 + 0)              ;
->  r5 = atomic_fetch_add((u32 *)(r6 + 0), r5) | r5 = atomic_fetch_add((u32 *)(r6 + 0), r5) |                                    ;
->  r3 = 1                                     | r3 = 1                                     |                                    ;
->  *(u32 *)(r4 + 0) = r3                      | *(u32 *)(r4 + 0) = r3                      |                                    ;
-> exists ([y]=2 /\ 2:r1=1 /\ 2:r3=0)
+The BPF tests above (and other I have) were all hand-written, but I'm
+working towards improving such automation/validation; I won't keep it
+a secret should I find something relevant/interesting.  :-)
 
-And again agreed, we do want to forbid Z6.3.
+But the subset of the LKMM which deals with "strong fences" and Acq &
+Rel (limited to so called marked accesses) seems relatively contained
+/simple:  its analysis could be useful, if not determining, in trying
+to resolve the above issues.
 
-> These remarks show that the proposed BPF formalization of acquire and
-> release somehow, but substantially, diverged from the corresponding
-> LKMM formalization.  My guess is that the divergences mentioned above
-> were not (fully) intentional, or I'm wondering -- why not follow the
-> latter (the LKMM's) more closely? -  This is probably the first question
-> I would need to clarify before trying/suggesting modifications to the
-> present formalizations.  ;-)  Thoughts?
-
-Thank you for digging into this!
-
-I clearly need to get my validation work going again, but I very much
-welcome any further help you would be willing to provide.
-
-							Thanx, Paul
-
->   Andrea
-> 
-> 
-> [1] https://github.com/puranjaymohan/herdtools7/commits/bpf_acquire_release/
+  Andrea

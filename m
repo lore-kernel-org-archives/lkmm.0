@@ -1,127 +1,125 @@
-Received: from frasgout13.his.huawei.com (frasgout13.his.huawei.com [14.137.139.46])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1302B16EC0E
-	for <lkmm@lists.linux.dev>; Fri, 25 Oct 2024 15:00:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=14.137.139.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 081B31CEE98;
+	Fri, 25 Oct 2024 23:26:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729868447; cv=none; b=XmyR3+4cC5NlD07htqQ7IsWjEcxs+z9CGVPqC8hNZXuioc/YDP1CiDBlsXs57z28u7SeTpD5dwBvZAFAMpCWjf3unldq5dmysZgLedTWCy6vX/VNc88xWNuWGZgv37epA1rW2Lh2u3grLak6oIGWNZd9ybNxf+3GO9E/hHc0WTA=
+	t=1729898811; cv=none; b=GR1lxRLMAIOu/mHX1gtgSmhTvyRIwspS+MuAvUj9I7lGkdfwSBCeLq3AtGYqJFgZe179k2bMhZDYKeR8Qv/0A/XnLoxmUHTqCgUlo6L/l8f/07xlfCo7zLnCOvpK7+nvE9VVvRtS3wbx/0VWQJBl15gIEA6WVlfCSoEPCp4ZNhk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729868447; c=relaxed/simple;
-	bh=2f+OeXc7L8hDW3RrfmTk1SvY5JPPYd2ylwQYzahkVKM=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=cP9liqeb2Cqx/sZMGcOY8zqGiyZSquwmmR0KuABOuDo5EsM3v0OSM1VIisHmkQqIBZk7QHPZ27Wk3luLNZxrks5ZdK4lPhGl5iD8EmPFbTSZ0ulzgI6Bn8npdcfGF6UqdqPYlztRB9XXMkzirD1uisJf1NSvj9u5Wc/gFVEJV70=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=huaweicloud.com; spf=pass smtp.mailfrom=huaweicloud.com; arc=none smtp.client-ip=14.137.139.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=huaweicloud.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huaweicloud.com
-Received: from mail.maildlp.com (unknown [172.18.186.51])
-	by frasgout13.his.huawei.com (SkyGuard) with ESMTP id 4XZlnC1Ncjz9v7NX
-	for <lkmm@lists.linux.dev>; Fri, 25 Oct 2024 22:40:15 +0800 (CST)
-Received: from mail02.huawei.com (unknown [7.182.16.47])
-	by mail.maildlp.com (Postfix) with ESMTP id 41A62140B27
-	for <lkmm@lists.linux.dev>; Fri, 25 Oct 2024 23:00:29 +0800 (CST)
-Received: from [10.221.99.159] (unknown [10.221.99.159])
-	by APP1 (Coremail) with SMTP id LxC2BwA3qTmGshtnY2NqAA--.55073S2;
-	Fri, 25 Oct 2024 16:00:28 +0100 (CET)
-Message-ID: <727cbf48-0135-de6b-6d05-a6f8f7b4b853@huaweicloud.com>
-Date: Fri, 25 Oct 2024 17:00:20 +0200
-Precedence: bulk
-X-Mailing-List: lkmm@lists.linux.dev
-List-Id: <lkmm.lists.linux.dev>
-List-Subscribe: <mailto:lkmm+subscribe@lists.linux.dev>
-List-Unsubscribe: <mailto:lkmm+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.13.0
+	s=arc-20240116; t=1729898811; c=relaxed/simple;
+	bh=ZmrVA8wb7NNzPZG85RE1GMlbP3IKNvdOBUIXaz8g1HI=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=bbLvhL+KtkbUKrremdcmwiAJlRrCULQ35jrolax3YH9g8baOnS3qg0BcQi1YKVXyor9gV4p6FaUR31IGNZS7O7WntCgKB1o89t1rvnvmBVaDU2uz+RJnOkaXcLdy3pN455BvAihpnz894X7IvQd4evV9hBJ5t+uMu48i0bHbjKY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=JqXBL4z2; arc=none smtp.client-ip=10.30.226.201
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="JqXBL4z2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F2BFC4CEC3;
+	Fri, 25 Oct 2024 23:26:49 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1729898810;
+	bh=ZmrVA8wb7NNzPZG85RE1GMlbP3IKNvdOBUIXaz8g1HI=;
+	h=Date:From:To:Cc:Subject:Reply-To:References:In-Reply-To:From;
+	b=JqXBL4z21li0sULGs3yYDYnWwEZ98djkKCnN6pdC9o+4A3DZyXPEr3crCWCNjWjyv
+	 50y0/lADjWEIXXOU6KTp9BKOIvIkQVti2huhiC0kkpwtIK6puJox8bAxJtsHUFfiHo
+	 dzXkk/RdqciQaU8HjtpkXFvKKifY8cJ+9hfbpPJ3gARIXAsk1ujAYph04IMcGsfVGL
+	 LENHC0LOF8iQithnXjwK8QZPXHZOWDd2QqxaOvGBOQ2R2jsPFvJ8/eUb8m97ZFUWRf
+	 87WlTEPBaRmvDFNVxweREI9u5HlY/v22IG9JVdy89b8cYquUk+Ercz4sEvfYjXwmMx
+	 Z28ee17neMk5A==
+Received: by paulmck-ThinkPad-P17-Gen-1.home (Postfix, from userid 1000)
+	id 2C00FCE0D99; Fri, 25 Oct 2024 16:26:49 -0700 (PDT)
+Date: Fri, 25 Oct 2024 16:26:49 -0700
+From: "Paul E. McKenney" <paulmck@kernel.org>
+To: Hernan Ponce de Leon <hernan.poncedeleon@huaweicloud.com>
+Cc: Andrea Parri <parri.andrea@gmail.com>, puranjay@kernel.org,
+	bpf@vger.kernel.org, lkmm@lists.linux.dev,
+	linux-kernel@vger.kernel.org
 Subject: Re: Some observations (results) on BPF acquire and release
-Content-Language: en-US
-To: Andrea Parri <parri.andrea@gmail.com>
-Cc: puranjay@kernel.org, paulmck@kernel.org, bpf@vger.kernel.org,
- lkmm@lists.linux.dev, linux-kernel@vger.kernel.org
+Message-ID: <43ecbb1e-7710-45ab-891e-575b6f562794@paulmck-laptop>
+Reply-To: paulmck@kernel.org
 References: <Zxk2wNs4sxEIg-4d@andrea>
  <daa60273-d01a-8fc5-5e26-e8fc9364c1d8@huaweicloud.com>
  <ZxuZ-wGccb3yhBAD@andrea>
  <d8aa61a8-e2fc-7668-9845-81664c9d181f@huaweicloud.com>
  <ZxugzP0yB3zeqKSn@andrea>
  <8360f999-0d64-3b4f-e4b8-8c84f7311af2@huaweicloud.com>
- <Zxuq2Zvpn7ap4ZR5@andrea>
-From: Hernan Ponce de Leon <hernan.poncedeleon@huaweicloud.com>
-In-Reply-To: <Zxuq2Zvpn7ap4ZR5@andrea>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-CM-TRANSID:LxC2BwA3qTmGshtnY2NqAA--.55073S2
-X-Coremail-Antispam: 1UD129KBjvJXoW7AF1UZFW5Xr4ktFWDXw4fZrb_yoW8AF43pF
-	48try3Kr40gr48Z3yxKF48ZF4xKFyfCFW5JFWrJrZrZF90qFn0qFyjvr43GFyag392vwsr
-	ZF10ga4xZF98AaDanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
-	9KBjDU0xBIdaVrnRJUUUkEb4IE77IF4wAFF20E14v26r4j6ryUM7CY07I20VC2zVCF04k2
-	6cxKx2IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4
-	vEj48ve4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Jr0_JF4l84ACjcxK6xIIjxv20xvEc7Cj
-	xVAFwI0_Jr0_Gr1l84ACjcxK6I8E87Iv67AKxVW8JVWxJwA2z4x0Y4vEx4A2jsIEc7CjxV
-	AFwI0_Gr0_Gr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l5I8CrVACY4xI64kE6c02F40E
-	x7xfMcIj6xIIjxv20xvE14v26r1j6r18McIj6I8E87Iv67AKxVW8JVWxJwAm72CE4IkC6x
-	0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lc7I2V7IY0VAS07AlzVAYIcxG8wCY1x0262kKe7AK
-	xVWUAVWUtwCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02F4
-	0E14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_JF0_Jw1l
-	IxkGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7CjxV
-	AFwI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r1j
-	6r4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Gr0_Gr1UYxBIdaVFxhVjvjDU0xZFpf9x07jbcT
-	QUUUUU=
-X-CM-SenderInfo: xkhu0tnqos00pfhgvzhhrqqx5xdzvxpfor3voofrz/
+Precedence: bulk
+X-Mailing-List: lkmm@lists.linux.dev
+List-Id: <lkmm.lists.linux.dev>
+List-Subscribe: <mailto:lkmm+subscribe@lists.linux.dev>
+List-Unsubscribe: <mailto:lkmm+unsubscribe@lists.linux.dev>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <8360f999-0d64-3b4f-e4b8-8c84f7311af2@huaweicloud.com>
 
-On 10/25/2024 4:27 PM, Andrea Parri wrote:
->> I am particularly interested in tests using lwarx and stwcx instructions
->> (this is what I understood would be used if one follows [1] to compile the
->> tests in this thread).
->>
->> I have not yet check the cambridge website, but due to the timeline, I don't
->> expect to find tests with those instructions. The same is true with [2].
->>
->> I have limited experience with diy7, but I remember that it had some
->> limitations to generate RMW instructions, at least for C [3].
+On Fri, Oct 25, 2024 at 03:57:29PM +0200, Hernan Ponce de Leon wrote:
+> On 10/25/2024 3:44 PM, Andrea Parri wrote:
+> > On Fri, Oct 25, 2024 at 03:28:17PM +0200, Hernan Ponce de Leon wrote:
+> > > On 10/25/2024 3:15 PM, Andrea Parri wrote:
+> > > > > > BPF R+release+fence
+> > > > > > {
+> > > > > >     0:r2=x; 0:r4=y;
+> > > > > >     1:r2=y; 1:r4=x; 1:r6=l;
+> > > > > > }
+> > > > > >     P0                                 | P1                                         ;
+> > > > > >     r1 = 1                             | r1 = 2                                     ;
+> > > > > >     *(u32 *)(r2 + 0) = r1              | *(u32 *)(r2 + 0) = r1                      ;
+> > > > > >     r3 = 1                             | r5 = atomic_fetch_add((u32 *)(r6 + 0), r5) ;
+> > > > > >     store_release((u32 *)(r4 + 0), r3) | r3 = *(u32 *)(r4 + 0)                      ;
+> > > > > > exists ([y]=2 /\ 1:r3=0)
+> > > > > > 
+> > > > > > This "exists" condition is not satisfiable according to the BPF model;
+> > > > > > however, if we adopt the "natural"/intended(?) PowerPC implementations
+> > > > > > of the synchronization primitives above (aka, with store_release() -->
+> > > > > > LWSYNC and atomic_fetch_add() --> SYNC ; [...] ), then we see that the
+> > > > > > condition in question becomes (architecturally) satisfiable on PowerPC
+> > > > > > (although I'm not aware of actual observations on PowerPC hardware).
+> > > > > 
+> > > > > Are the resulting PPC tests available somewhere?
+> > > > 
+> > > > My data go back to the LKMM paper, cf. e.g. the R+pooncerelease+fencembonceonce
+> > > > entry at https://diy.inria.fr/linux/hard.html#unseen .
+> > > > 
+> > > >     Andrea
+> > > 
+> > > I guess I understood you wrong. I thought you had manually "compiled" those
+> > > to PPC litmus format (i.e., doing exactly what the JIT compiler would do). I
+> > > can obviously write them manually myself, but I find this painful and error
+> > > prone (I am particularly bad at this task), so I wanted to avoid this if
+> > > someone else had already done it.
+> > 
+> > FWIW, a comprehensive collection of PPC litmus tests could be found at
+> > 
+> >    https://www.cl.cam.ac.uk/~pes20/ppc-supplemental/ppc002.html
+> > 
+> > (just follow the link on the test pattern/variants to see the sources);
+> > be aware the results of those tables date back to the PPC paper though.
+> > 
+> > Alternatively, remind that PPC is well supported by the herdtools7 diy7
+> > generator; I see no reason for having to (re)write such tests manually.
+> > 
+> >    Andrea
 > 
-> Oh, I'm sure there are, though I'd also not consider myself the 'expert'
-> when it comes to diy7 internals.  ;-)  Here's an example use of diy7 /
-> diyone7 generating lwarx and stwcx and reflecting the previous pattern:
+> I am particularly interested in tests using lwarx and stwcx instructions
+> (this is what I understood would be used if one follows [1] to compile the
+> tests in this thread).
 > 
-> $ diyone7 -arch PPC LwSyncdWW Coe SyncdWRPA SyncdRRAP Fre
-> PPC A
-> "LwSyncdWW Coe SyncdWRNaA SyncdRRANa Fre"
-> Generator=diyone7 (version 7.57+1)
-> Prefetch=0:x=F,0:y=W,1:y=F,1:x=T
-> Com=Co Fr
-> Orig=LwSyncdWW Coe SyncdWRNaA SyncdRRANa Fre
-> {
-> 0:r2=x; 0:r4=y;
-> 1:r2=y; 1:r3=z; 1:r6=x;
-> }
->   P0           | P1              ;
->   li r1,1      | li r1,2         ;
->   stw r1,0(r2) | stw r1,0(r2)    ;
->   lwsync       | sync            ;
->   li r3,1      | Loop00:         ;
->   stw r3,0(r4) | lwarx r4,r0,r3  ;
->                | stwcx. r4,r0,r3 ;
->                | bne  Loop00     ;
->                | sync            ;
->                | lwz r5,0(r6)    ;
-> exists ([y]=2 /\ 1:r5=0)
+> I have not yet check the cambridge website, but due to the timeline, I don't
+> expect to find tests with those instructions. The same is true with [2].
+> 
+> I have limited experience with diy7, but I remember that it had some
+> limitations to generate RMW instructions, at least for C [3].
+> 
+> Hernan
+> 
+> [1] https://github.com/torvalds/linux/blob/master/arch/powerpc/net/bpf_jit_comp32.c
+> [2] https://github.com/herd/herdtools7/tree/master/catalogue/herding-cats/ppc/tests/campaign
+> [3] https://github.com/herd/herdtools7/issues/905
 
-That is exactly what I was looking for. Thanks Andrea!
+Please see attached for a tarball of random PPC litmus tests.
 
-Hernan
+You asked for this!  ;-)
 
-> 
-> But again, I'd probably have to defer to proper herdtools7 developers
-> and maintainers for any diy7 bug or misbehavior you'd have to discover.
-> 
->    Andrea
-> 
-> 
->>
->> Hernan
->>
->> [1] https://github.com/torvalds/linux/blob/master/arch/powerpc/net/bpf_jit_comp32.c
->> [2] https://github.com/herd/herdtools7/tree/master/catalogue/herding-cats/ppc/tests/campaign
->> [3] https://github.com/herd/herdtools7/issues/905
->>
+							Thanx, Paul
 

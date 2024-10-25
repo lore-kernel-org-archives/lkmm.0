@@ -1,101 +1,119 @@
-Received: from frasgout12.his.huawei.com (frasgout12.his.huawei.com [14.137.139.154])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f182.google.com (mail-lj1-f182.google.com [209.85.208.182])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8F1E212177
-	for <lkmm@lists.linux.dev>; Fri, 25 Oct 2024 13:28:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=14.137.139.154
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E74B212178
+	for <lkmm@lists.linux.dev>; Fri, 25 Oct 2024 13:44:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729862932; cv=none; b=PxRNQPH0H85Nu8wdoC/dwI2cNeARaw2t9PaP5y6/jMnr9hp95VM7tFkFhy6a8/aL/AZsW7OL+ZBNWx+Zr9Il+3zft4Xa5G2hORoCjZftyD14iEBorSwsIpT9yFvqf5um53JpFdYAXX+clF+pXZ56HJPFtM4P2tpMS4yeUFR/0Yo=
+	t=1729863892; cv=none; b=VzzIA0WtM3db72iTCL40ysF3mJr3rUPv8o6b4jXGc5proL7b+Hj6s/kI32+68T4giYC+TZvA40+6+ENJTXclZ1NlDT/GC3t9RA2p6rRSEfI1mvFzFo29HP+mu28Ryw1E6pBAzXZlI9beyOT/o4XeTIVPmR5Et9wQzTac1KHg+7Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729862932; c=relaxed/simple;
-	bh=rqD8O7ASW2YD34InFNtypxnf2obGHXh6ceZe7cQlsGA=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=o2LXawXNIFFEwpMq/nhE97ZaZoUNpQrtIz9dU5fpOIRppk1uJ9Nv0xXOoSajeLprrfaA7NSRDFB4zpdPCJymKp/lB3n5SyXEcN2jVZJxh96ZzbMqe39WO1uQCk04GcNtzhHiBvByELigu9OEvWrRR6xDRT+Xq6j5MV7DWWhTMZE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=huaweicloud.com; spf=pass smtp.mailfrom=huaweicloud.com; arc=none smtp.client-ip=14.137.139.154
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=huaweicloud.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huaweicloud.com
-Received: from mail.maildlp.com (unknown [172.18.186.29])
-	by frasgout12.his.huawei.com (SkyGuard) with ESMTP id 4XZjc44hkfz9v7JM
-	for <lkmm@lists.linux.dev>; Fri, 25 Oct 2024 21:02:12 +0800 (CST)
-Received: from mail02.huawei.com (unknown [7.182.16.47])
-	by mail.maildlp.com (Postfix) with ESMTP id 36C0B140E92
-	for <lkmm@lists.linux.dev>; Fri, 25 Oct 2024 21:28:29 +0800 (CST)
-Received: from [10.221.99.159] (unknown [10.221.99.159])
-	by APP1 (Coremail) with SMTP id LxC2BwD3aDnznBtnO2VpAA--.54724S2;
-	Fri, 25 Oct 2024 14:28:28 +0100 (CET)
-Message-ID: <d8aa61a8-e2fc-7668-9845-81664c9d181f@huaweicloud.com>
-Date: Fri, 25 Oct 2024 15:28:17 +0200
+	s=arc-20240116; t=1729863892; c=relaxed/simple;
+	bh=CAGdnmzdmoxehVcocaTIzbUj70Qf3mpqjSw3BlHYZLE=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=XzRX/lqpqtATmPdLAYGCWRFbFCM9GqzdbpsjshVjD4SPNNrWne/GYe1aPoE7oRbYNk0vwgPqQdDuiZZ4PxoosSDBSq4DQs1TSlK5TYJzgG385V89R7KOMeBKLYRmnpPOay5XBlkZoi6U31TVmOtgU1s0Qwrx11u4ra4TQiCfqlU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=gVALYTqy; arc=none smtp.client-ip=209.85.208.182
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gVALYTqy"
+Received: by mail-lj1-f182.google.com with SMTP id 38308e7fff4ca-2fb518014b9so16825281fa.3
+        for <lkmm@lists.linux.dev>; Fri, 25 Oct 2024 06:44:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1729863888; x=1730468688; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=4f0K/pz8OIuDj4u41V8cbDxkZ5f+rnJD0V2U71WHUqg=;
+        b=gVALYTqyoOE63x/2wGRAXS/2Yn0PrJCiFHfyROjwhI4eeXdULyMhkfdfth++WfP393
+         dy4J6HXQnLF0P9bK8vvFtzYblcq6D/SkZ/VRM7ThTcHwL45cQGSoRHP8skCOf9Fbide6
+         BVEguS1qBGdJtMancnk+YA2qH1MHT4ysKN31B8Lm36JvoXinx3VVUpaoudRzi9hRj+lN
+         KyqWIK9j4dEGuP5KAKQO4YsQAeJ2EXMxkffprUnRL7PmJIxWjGGyMk46utdsp4JnNnSD
+         rmDaPBnbVeEO1ce+DAHibrQ5dD8pV80Whf65PZRQznWM38cTyMXPLAhKsI0vg8xdFGqY
+         +SgA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1729863888; x=1730468688;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=4f0K/pz8OIuDj4u41V8cbDxkZ5f+rnJD0V2U71WHUqg=;
+        b=uWqg2LQ9ZRk+91QIgEanl2nb2Jogrm+4rHcIy8W9zt1hd2RYFRLwCZ9rCJMtcTVwrn
+         dCeQHOqFXJjetzv7VTUA5XtuMaKgy3zA065HLx8tWUpfZaruoD07+BotLm181fX4RsWg
+         b4fvOyxZ4MG9G8BRRR6Og59cZBrp3QnifBA7rrzrPWmkyVxq42kPO5tVvLsgqvjJ6WbW
+         62iEPF2ZRhNnCQzimAdAQ14v1nF3r/8YPd/ZaxJI/B1rBg0jmgjzuqkYIQSwT5pjRxxT
+         nvJf18nwGjNj5+8plWjWdUwwMOxMiPMik4GLxmNdb7cHXlIGjkeSwU4OrtBulrEfJPOk
+         PDlQ==
+X-Forwarded-Encrypted: i=1; AJvYcCU7+BPQlNNZknC4PvYU64jOSx1Bz0ABHS0E7mIZQSJveA0FMdx+C/nM+QDitOW0EVXwx6Gu@lists.linux.dev
+X-Gm-Message-State: AOJu0YwxitwbckOYf16E+E4HVHJj3cr+0OclDoB3BzCo6/HNbcHbnuxC
+	g4D2XPzHgArqdrTyOlBMhuaHTB4ZGc8yPKJ7uAh0sol/B4/tLpi4M4tT9k9kxV4=
+X-Google-Smtp-Source: AGHT+IGoqZxgt4vnEFXeIWFdTuQwrFVFALq98fDR3NB0uwiegeoRX/yP0fQXW4Mkw5d0K3PQFPgCTA==
+X-Received: by 2002:a2e:4e12:0:b0:2fb:70a0:91e7 with SMTP id 38308e7fff4ca-2fca81d7213mr25486181fa.10.1729863887846;
+        Fri, 25 Oct 2024 06:44:47 -0700 (PDT)
+Received: from andrea ([2a01:5a8:300:22d3:a281:3d89:19cb:ed96])
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-5cbb629f338sm638903a12.35.2024.10.25.06.44.47
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 25 Oct 2024 06:44:47 -0700 (PDT)
+Date: Fri, 25 Oct 2024 16:44:44 +0300
+From: Andrea Parri <parri.andrea@gmail.com>
+To: Hernan Ponce de Leon <hernan.poncedeleon@huaweicloud.com>
+Cc: puranjay@kernel.org, paulmck@kernel.org, bpf@vger.kernel.org,
+	lkmm@lists.linux.dev, linux-kernel@vger.kernel.org
+Subject: Re: Some observations (results) on BPF acquire and release
+Message-ID: <ZxugzP0yB3zeqKSn@andrea>
+References: <Zxk2wNs4sxEIg-4d@andrea>
+ <daa60273-d01a-8fc5-5e26-e8fc9364c1d8@huaweicloud.com>
+ <ZxuZ-wGccb3yhBAD@andrea>
+ <d8aa61a8-e2fc-7668-9845-81664c9d181f@huaweicloud.com>
 Precedence: bulk
 X-Mailing-List: lkmm@lists.linux.dev
 List-Id: <lkmm.lists.linux.dev>
 List-Subscribe: <mailto:lkmm+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:lkmm+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.13.0
-Subject: Re: Some observations (results) on BPF acquire and release
-Content-Language: en-US
-To: Andrea Parri <parri.andrea@gmail.com>
-Cc: puranjay@kernel.org, paulmck@kernel.org, bpf@vger.kernel.org,
- lkmm@lists.linux.dev, linux-kernel@vger.kernel.org
-References: <Zxk2wNs4sxEIg-4d@andrea>
- <daa60273-d01a-8fc5-5e26-e8fc9364c1d8@huaweicloud.com>
- <ZxuZ-wGccb3yhBAD@andrea>
-From: Hernan Ponce de Leon <hernan.poncedeleon@huaweicloud.com>
-In-Reply-To: <ZxuZ-wGccb3yhBAD@andrea>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-CM-TRANSID:LxC2BwD3aDnznBtnO2VpAA--.54724S2
-X-Coremail-Antispam: 1UD129KBjvJXoW7KF1fWw1ktw17Kw4rtFyrZwb_yoW8GryDpF
-	Wvkan8KFn7t3yakrZ2qr13WFs5uF4fAr45XF18Jw47Cwn0kr1ftF4xKF40gFZrJwn2ka10
-	qr1jkFZ3W3WIvrDanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
-	9KBjDU0xBIdaVrnRJUUUkEb4IE77IF4wAFF20E14v26r4j6ryUM7CY07I20VC2zVCF04k2
-	6cxKx2IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4
-	vEj48ve4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Jr0_JF4l84ACjcxK6xIIjxv20xvEc7Cj
-	xVAFwI0_Jr0_Gr1l84ACjcxK6I8E87Iv67AKxVW8JVWxJwA2z4x0Y4vEx4A2jsIEc7CjxV
-	AFwI0_Gr0_Gr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l5I8CrVACY4xI64kE6c02F40E
-	x7xfMcIj6xIIjxv20xvE14v26r1j6r18McIj6I8E87Iv67AKxVWUJVW8JwAm72CE4IkC6x
-	0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lc7I2V7IY0VAS07AlzVAYIcxG8wCY1x0262kKe7AK
-	xVWUAVWUtwCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02F4
-	0E14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_JF0_Jw1l
-	IxkGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7CjxV
-	AFwI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r1j
-	6r4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Gr0_Gr1UYxBIdaVFxhVjvjDU0xZFpf9x07UK2N
-	tUUUUU=
-X-CM-SenderInfo: xkhu0tnqos00pfhgvzhhrqqx5xdzvxpfor3voofrz/
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <d8aa61a8-e2fc-7668-9845-81664c9d181f@huaweicloud.com>
 
-On 10/25/2024 3:15 PM, Andrea Parri wrote:
->>> BPF R+release+fence
->>> {
->>>    0:r2=x; 0:r4=y;
->>>    1:r2=y; 1:r4=x; 1:r6=l;
->>> }
->>>    P0                                 | P1                                         ;
->>>    r1 = 1                             | r1 = 2                                     ;
->>>    *(u32 *)(r2 + 0) = r1              | *(u32 *)(r2 + 0) = r1                      ;
->>>    r3 = 1                             | r5 = atomic_fetch_add((u32 *)(r6 + 0), r5) ;
->>>    store_release((u32 *)(r4 + 0), r3) | r3 = *(u32 *)(r4 + 0)                      ;
->>> exists ([y]=2 /\ 1:r3=0)
->>>
->>> This "exists" condition is not satisfiable according to the BPF model;
->>> however, if we adopt the "natural"/intended(?) PowerPC implementations
->>> of the synchronization primitives above (aka, with store_release() -->
->>> LWSYNC and atomic_fetch_add() --> SYNC ; [...] ), then we see that the
->>> condition in question becomes (architecturally) satisfiable on PowerPC
->>> (although I'm not aware of actual observations on PowerPC hardware).
->>
->> Are the resulting PPC tests available somewhere?
+On Fri, Oct 25, 2024 at 03:28:17PM +0200, Hernan Ponce de Leon wrote:
+> On 10/25/2024 3:15 PM, Andrea Parri wrote:
+> > > > BPF R+release+fence
+> > > > {
+> > > >    0:r2=x; 0:r4=y;
+> > > >    1:r2=y; 1:r4=x; 1:r6=l;
+> > > > }
+> > > >    P0                                 | P1                                         ;
+> > > >    r1 = 1                             | r1 = 2                                     ;
+> > > >    *(u32 *)(r2 + 0) = r1              | *(u32 *)(r2 + 0) = r1                      ;
+> > > >    r3 = 1                             | r5 = atomic_fetch_add((u32 *)(r6 + 0), r5) ;
+> > > >    store_release((u32 *)(r4 + 0), r3) | r3 = *(u32 *)(r4 + 0)                      ;
+> > > > exists ([y]=2 /\ 1:r3=0)
+> > > > 
+> > > > This "exists" condition is not satisfiable according to the BPF model;
+> > > > however, if we adopt the "natural"/intended(?) PowerPC implementations
+> > > > of the synchronization primitives above (aka, with store_release() -->
+> > > > LWSYNC and atomic_fetch_add() --> SYNC ; [...] ), then we see that the
+> > > > condition in question becomes (architecturally) satisfiable on PowerPC
+> > > > (although I'm not aware of actual observations on PowerPC hardware).
+> > > 
+> > > Are the resulting PPC tests available somewhere?
+> > 
+> > My data go back to the LKMM paper, cf. e.g. the R+pooncerelease+fencembonceonce
+> > entry at https://diy.inria.fr/linux/hard.html#unseen .
+> > 
+> >    Andrea
 > 
-> My data go back to the LKMM paper, cf. e.g. the R+pooncerelease+fencembonceonce
-> entry at https://diy.inria.fr/linux/hard.html#unseen .
-> 
->    Andrea
+> I guess I understood you wrong. I thought you had manually "compiled" those
+> to PPC litmus format (i.e., doing exactly what the JIT compiler would do). I
+> can obviously write them manually myself, but I find this painful and error
+> prone (I am particularly bad at this task), so I wanted to avoid this if
+> someone else had already done it.
 
-I guess I understood you wrong. I thought you had manually "compiled" 
-those to PPC litmus format (i.e., doing exactly what the JIT compiler 
-would do). I can obviously write them manually myself, but I find this 
-painful and error prone (I am particularly bad at this task), so I 
-wanted to avoid this if someone else had already done it.
+FWIW, a comprehensive collection of PPC litmus tests could be found at
 
-Hernan
+  https://www.cl.cam.ac.uk/~pes20/ppc-supplemental/ppc002.html
 
+(just follow the link on the test pattern/variants to see the sources);
+be aware the results of those tables date back to the PPC paper though.
+
+Alternatively, remind that PPC is well supported by the herdtools7 diy7
+generator; I see no reason for having to (re)write such tests manually.
+
+  Andrea

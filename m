@@ -1,169 +1,134 @@
-Received: from mail-ej1-f44.google.com (mail-ej1-f44.google.com [209.85.218.44])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from frasgout11.his.huawei.com (frasgout11.his.huawei.com [14.137.139.23])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 979A41F754F
-	for <lkmm@lists.linux.dev>; Fri, 25 Oct 2024 13:56:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 054BE1FB8B9
+	for <lkmm@lists.linux.dev>; Fri, 25 Oct 2024 13:57:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=14.137.139.23
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729864586; cv=none; b=jsph7L3bGZbPHlRi73e6GljGc39elI6A6ZoyKCChEXJhKFSxAUbs1duaGKFMMHZgfzljmAcSRxe97MAkJgvTnZGJ2ha8mGrnzQuUKV4besf0QlQfJmMVNnzLh+DGSkiHrUUC7k/qOzFLknkMmsRYv5BSqrrUr1kCidHFtY0/ckU=
+	t=1729864679; cv=none; b=e/yZ2rfjheyOLfLl9GhuVHevMTnQPuI/ih7BOid32cp2PkYolYFZB8phslHh0NiDRj5HXbFSrBDZk2DJKNVd6V3xWiO7j59XHIpXyTKFpWpJmFhZFhN1b1IyI8A4V46Z9dxPJmCBr7jMh2/nqaXV9OWhgJOAkKuwdPo0fWfgUz0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729864586; c=relaxed/simple;
-	bh=zKEwOFq+EedN6EAwXtsg7YlRMhj47oRVAezZTHhLCuk=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=kdDnOYc7wMjVPpfA0Cvn2qC/19+hVR32hh1w18M8eisgeE7oiwRJhh4o80yaNU29pbFdUJvbM4HorqhTLjqSE0JZZ+9gm+fFfFVGay8QYE80xwOzhWCPTORlff1vK/EOCzcE2N1L0DZZ8aC56RHWxg8p9BR1eL/bU4ScFWDjZyY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=fFozxC5v; arc=none smtp.client-ip=209.85.218.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fFozxC5v"
-Received: by mail-ej1-f44.google.com with SMTP id a640c23a62f3a-a99ebb390a5so593460666b.1
-        for <lkmm@lists.linux.dev>; Fri, 25 Oct 2024 06:56:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1729864582; x=1730469382; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=Ld/lzUpMzz/O/gUyxVTjcgsBVURqpGeoKpNyId9bOgY=;
-        b=fFozxC5vJxH3miGD9ByDzh+KbZPfo31TkwpK2irfwAVnUx8Z22bqn2+ri6oeiChuKz
-         inPlPauqVw6EMxmGH3rcx4I8lc6aUXbeH5JsZn3heLLqpIe8nUdyQTaohf/CIzCB5D3c
-         QrjNjWOe0bW+iidRukm7dgsQqNE78s39PsPfCVmKyeuwFNIa/vjk8IwG5k2nbscZ0liE
-         VHFcxnhpUZDRDUBJ4uwTpvMFVPv5NWbwi7Kvl3chS4q2lmrL/GdEaeo46InRgQaueRNE
-         gCiz4/1O91jDDnsklaLiDi7E0+tZcxX6WFP2/P3X7sC30/79R79F0OcLDZgEY+TRyHN5
-         a7KQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1729864582; x=1730469382;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Ld/lzUpMzz/O/gUyxVTjcgsBVURqpGeoKpNyId9bOgY=;
-        b=utjdURtcw4tZCxeSryNRqEFblmQQPRGV2/xrfdn0fev25dCixG6Spf+k5npcRzYQHY
-         F9dWXIv2MKDBdin23J3sezJpiV06nwG70HdeCNJzywzV+snaTY/nKshLpa8P4SLEhd3m
-         TQnGUnDmQxf9IRCn+9vDHknrTVhrRdkC9XmKH+kJH2/EIWnNBOMuNvaL1wVTs7hn5oXQ
-         5F9Gek0LtldvS0p+nQSpVTADKCs9o6uZX0OGGaO1A0gMaWLQ8d+eSofsZm2t1KWh9jqs
-         A8P9Ez4p0V/+tMzFBaqOHXktYRqKwcS11x48zJ34H7VXHq0I86spNKpm5bxsRJNrT++U
-         jEiA==
-X-Forwarded-Encrypted: i=1; AJvYcCX7dTQLsKvbEZfURc6RBWVkFpOxsHIBg76RphmbtLIfLtYQ936Js//4kr6lV2RY9gb4RY+y@lists.linux.dev
-X-Gm-Message-State: AOJu0Ywl0fj9KXh0WHadJRTwW/aSxhb6gAyBDCCdQJTgQfDCPtCyzvqe
-	+V73ILSTvbP7I+K0IxjT0SVB5GsdIOPOL+vqxdDrqOAy2utvbE59
-X-Google-Smtp-Source: AGHT+IHHBPelfDRmV3ElN7dO5ltfgT7F82NL64uGZgXfpVrJ4bY6gR1Y7aYl4TnBcYL8RwxpvjixVA==
-X-Received: by 2002:a17:907:7ba8:b0:a99:f5d8:726 with SMTP id a640c23a62f3a-a9ad1a02091mr584361666b.23.1729864581671;
-        Fri, 25 Oct 2024 06:56:21 -0700 (PDT)
-Received: from andrea ([2a01:5a8:300:22d3:a281:3d89:19cb:ed96])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a9b1f029559sm73501266b.58.2024.10.25.06.56.20
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 25 Oct 2024 06:56:21 -0700 (PDT)
-Date: Fri, 25 Oct 2024 16:56:17 +0300
-From: Andrea Parri <parri.andrea@gmail.com>
-To: "Paul E. McKenney" <paulmck@kernel.org>
-Cc: puranjay@kernel.org, bpf@vger.kernel.org, lkmm@lists.linux.dev,
-	linux-kernel@vger.kernel.org
-Subject: Re: Some observations (results) on BPF acquire and release
-Message-ID: <ZxujgUwRWLCp6kxF@andrea>
-References: <Zxk2wNs4sxEIg-4d@andrea>
- <13f60db0-b334-4638-a768-d828ecf7c8d0@paulmck-laptop>
- <Zxor8xosL-XSxnwr@andrea>
+	s=arc-20240116; t=1729864679; c=relaxed/simple;
+	bh=wjQPEd1fi5rVEdlc+56+MquhhXXQhQ4HeWzndbeDTnw=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=YG1vMLcNX0zDAtspT7hxHUFRzG8QdvcJjh3C1NU/o+FFCzuRQTuY5KjEgy1CP2++PCQL1B+zkgGkTq3Tt4rNu1xO3irIpZ3HMEgLHEP5pbWSDzzLeaIkBSQNrFwc37UdTHBb+evshEcKOpdK1g1jmLKX147nPB5uWmXBX7gPGhQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=huaweicloud.com; spf=pass smtp.mailfrom=huaweicloud.com; arc=none smtp.client-ip=14.137.139.23
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=huaweicloud.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huaweicloud.com
+Received: from mail.maildlp.com (unknown [172.18.186.51])
+	by frasgout11.his.huawei.com (SkyGuard) with ESMTP id 4XZkNh3Pl7z9v7Hq
+	for <lkmm@lists.linux.dev>; Fri, 25 Oct 2024 21:37:24 +0800 (CST)
+Received: from mail02.huawei.com (unknown [7.182.16.47])
+	by mail.maildlp.com (Postfix) with ESMTP id B6E2C1402DE
+	for <lkmm@lists.linux.dev>; Fri, 25 Oct 2024 21:57:42 +0800 (CST)
+Received: from [10.221.99.159] (unknown [10.221.99.159])
+	by APP1 (Coremail) with SMTP id LxC2BwDHhzjLoxtn5LVpAA--.14069S2;
+	Fri, 25 Oct 2024 14:57:41 +0100 (CET)
+Message-ID: <8360f999-0d64-3b4f-e4b8-8c84f7311af2@huaweicloud.com>
+Date: Fri, 25 Oct 2024 15:57:29 +0200
 Precedence: bulk
 X-Mailing-List: lkmm@lists.linux.dev
 List-Id: <lkmm.lists.linux.dev>
 List-Subscribe: <mailto:lkmm+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:lkmm+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <Zxor8xosL-XSxnwr@andrea>
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.13.0
+Subject: Re: Some observations (results) on BPF acquire and release
+Content-Language: en-US
+To: Andrea Parri <parri.andrea@gmail.com>
+Cc: puranjay@kernel.org, paulmck@kernel.org, bpf@vger.kernel.org,
+ lkmm@lists.linux.dev, linux-kernel@vger.kernel.org
+References: <Zxk2wNs4sxEIg-4d@andrea>
+ <daa60273-d01a-8fc5-5e26-e8fc9364c1d8@huaweicloud.com>
+ <ZxuZ-wGccb3yhBAD@andrea>
+ <d8aa61a8-e2fc-7668-9845-81664c9d181f@huaweicloud.com>
+ <ZxugzP0yB3zeqKSn@andrea>
+From: Hernan Ponce de Leon <hernan.poncedeleon@huaweicloud.com>
+In-Reply-To: <ZxugzP0yB3zeqKSn@andrea>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-CM-TRANSID:LxC2BwDHhzjLoxtn5LVpAA--.14069S2
+X-Coremail-Antispam: 1UD129KBjvJXoWxGF15uF1rAr4UCr1fGFy7GFg_yoW5XF47pa
+	yvka90krs2gay5Wr4Iqr4UuFs2vFZ3JF45XF18JwsrZ3Z0kFnxKF4xtF4YgFy3Grs2yw40
+	vw1jkFZrWFyDAFDanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+	9KBjDU0xBIdaVrnRJUUUvvb4IE77IF4wAFF20E14v26r4j6ryUM7CY07I20VC2zVCF04k2
+	6cxKx2IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4
+	vEj48ve4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Jr0_JF4l84ACjcxK6xIIjxv20xvEc7Cj
+	xVAFwI0_Jr0_Gr1l84ACjcxK6I8E87Iv67AKxVW8JVWxJwA2z4x0Y4vEx4A2jsIEc7CjxV
+	AFwI0_Gr0_Gr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l5I8CrVACY4xI64kE6c02F40E
+	x7xfMcIj6xIIjxv20xvE14v26r1j6r18McIj6I8E87Iv67AKxVW8JVWxJwAm72CE4IkC6x
+	0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lc7I2V7IY0VAS07AlzVAYIcxG8wCY1x0262kKe7AK
+	xVWUAVWUtwCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02F4
+	0E14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_JF0_Jw1l
+	Ixkvb40E47kJMIIYrxkI7VAKI48JMIIF0xvE2Ix0cI8IcVAFwI0_Jr0_JF4lIxAIcVC0I7
+	IYx2IY6xkF7I0E14v26r1j6r4UMIIF0xvE42xK8VAvwI8IcIk0rVWUJVWUCwCI42IY6I8E
+	87Iv67AKxVWUJVW8JwCI42IY6I8E87Iv6xkF7I0E14v26r4j6r4UJbIYCTnIWIevJa73Uj
+	IFyTuYvjxUyuHqUUUUU
+X-CM-SenderInfo: xkhu0tnqos00pfhgvzhhrqqx5xdzvxpfor3voofrz/
 
-> But the subset of the LKMM which deals with "strong fences" and Acq &
-> Rel (limited to so called marked accesses) seems relatively contained
-> /simple:  its analysis could be useful, if not determining, in trying
-> to resolve the above issues.
+On 10/25/2024 3:44 PM, Andrea Parri wrote:
+> On Fri, Oct 25, 2024 at 03:28:17PM +0200, Hernan Ponce de Leon wrote:
+>> On 10/25/2024 3:15 PM, Andrea Parri wrote:
+>>>>> BPF R+release+fence
+>>>>> {
+>>>>>     0:r2=x; 0:r4=y;
+>>>>>     1:r2=y; 1:r4=x; 1:r6=l;
+>>>>> }
+>>>>>     P0                                 | P1                                         ;
+>>>>>     r1 = 1                             | r1 = 2                                     ;
+>>>>>     *(u32 *)(r2 + 0) = r1              | *(u32 *)(r2 + 0) = r1                      ;
+>>>>>     r3 = 1                             | r5 = atomic_fetch_add((u32 *)(r6 + 0), r5) ;
+>>>>>     store_release((u32 *)(r4 + 0), r3) | r3 = *(u32 *)(r4 + 0)                      ;
+>>>>> exists ([y]=2 /\ 1:r3=0)
+>>>>>
+>>>>> This "exists" condition is not satisfiable according to the BPF model;
+>>>>> however, if we adopt the "natural"/intended(?) PowerPC implementations
+>>>>> of the synchronization primitives above (aka, with store_release() -->
+>>>>> LWSYNC and atomic_fetch_add() --> SYNC ; [...] ), then we see that the
+>>>>> condition in question becomes (architecturally) satisfiable on PowerPC
+>>>>> (although I'm not aware of actual observations on PowerPC hardware).
+>>>>
+>>>> Are the resulting PPC tests available somewhere?
+>>>
+>>> My data go back to the LKMM paper, cf. e.g. the R+pooncerelease+fencembonceonce
+>>> entry at https://diy.inria.fr/linux/hard.html#unseen .
+>>>
+>>>     Andrea
+>>
+>> I guess I understood you wrong. I thought you had manually "compiled" those
+>> to PPC litmus format (i.e., doing exactly what the JIT compiler would do). I
+>> can obviously write them manually myself, but I find this painful and error
+>> prone (I am particularly bad at this task), so I wanted to avoid this if
+>> someone else had already done it.
+> 
+> FWIW, a comprehensive collection of PPC litmus tests could be found at
+> 
+>    https://www.cl.cam.ac.uk/~pes20/ppc-supplemental/ppc002.html
+> 
+> (just follow the link on the test pattern/variants to see the sources);
+> be aware the results of those tables date back to the PPC paper though.
+> 
+> Alternatively, remind that PPC is well supported by the herdtools7 diy7
+> generator; I see no reason for having to (re)write such tests manually.
+> 
+>    Andrea
 
-Elaborating on the previous suggestion/comparison with the LKMM, the
-"subset" in question can take the following form (modulo my typos):
+I am particularly interested in tests using lwarx and stwcx instructions 
+(this is what I understood would be used if one follows [1] to compile 
+the tests in this thread).
 
-"LKMM with acquire/release, strong fences, and marked accesses only"
+I have not yet check the cambridge website, but due to the timeline, I 
+don't expect to find tests with those instructions. The same is true 
+with [2].
 
-[...]
+I have limited experience with diy7, but I remember that it had some 
+limitations to generate RMW instructions, at least for C [3].
 
-let acq-po = [Acq] ; po ; [M]
-let po-rel = [M] ; po ; [Rel]
-let strong-fence = [M] ; fencerel(Mb) ; [M]
-let ppo = acq-po | po-rel | strong-fence
+Hernan
 
-let A-cumul(r) = rfe? ; r
-let cumul-fence = A-cumul(strong-fence | po-rel)
-let overwrite = co | fr
-let prop = (overwrite & ext)? ; cumul-fence* ; rfe?
+[1] 
+https://github.com/torvalds/linux/blob/master/arch/powerpc/net/bpf_jit_comp32.c
+[2] 
+https://github.com/herd/herdtools7/tree/master/catalogue/herding-cats/ppc/tests/campaign
+[3] https://github.com/herd/herdtools7/issues/905
 
-let hb = ppo | rfe | ((prop \ id) & int)
-acyclic hb as Hb
-
-let pb = prop ; strong-fence ; hb*
-acyclic pb as Pb
-
-
-For BPF, we'd want to replace acq-po, po-rel and strong-fence with
-load_acquire, store_release and po_amo_fetch respectively:  Unless
-I'm missing something, this should restore the intended behaviors
-for the R and Z6.3 tests discussed earlier.
-
-A couple of other remarks:
-
-- Notice how the above formalization is completely symmetrical wrt.
-  co <-> fr, IOW, co links are considered "on par with" fr links.
-  In particular, the following test is satisfiable in the above
-  formalization, as is the corresponding C test in the LKMM:
-
-BPF 2+2W+release+fence
-{
- 0:r2=x; 0:r4=y;
- 1:r2=y; 1:r4=x; 1:r6=l;
-}
- P0                                 | P1                                         ;
- r1 = 1                             | r1 = 1                                     ;
- *(u32 *)(r2 + 0) = r1              | *(u32 *)(r2 + 0) = r1                      ;
- r3 = 2                             | r5 = atomic_fetch_add((u32 *)(r6 + 0), r5) ;
- store_release((u32 *)(r4 + 0), r3) | r3 = 2                                     ;
-                                    | store_release((u32 *)(r4 + 0), r3)         ;
-exists ([x]=1 /\ [y]=1)
-
-  (On an historical note, this wasn't always the case in the LKMM,
-  cf. e.g. [1], but be alerted that the formalization in [1] is
-  decisively more involved and less intuitive than today's / what
-  the LKMM community has converged to.  ;-) )
-
-- The above formalization merges the so called "Observation" axiom
-  in the "Happens-before" axiom.  In the LKMM, this followed the
-  removal of B-cumulativity for smp_wmb() and smp_store_release()
-  and a consequent "great simplification" of the hb relation: link
-  [2] can provide more details and some examples related to those
-  changes.  For completeness, here is the BPF analogue of test
-  "C-release-acquire-is-B-cumulative.litmus" from that article:
-
-BPF ISA2+release+acquire+acquire
-{
- 0:r2=x; 0:r4=y;
- 1:r2=y; 1:r4=z;
- 2:r2=z; 2:r4=x;
-}
- P0                                 | P1                                 | P2                                 ;
- r1 = 1                             | r1 = load_acquire((u32 *)(r2 + 0)) | r1 = load_acquire((u32 *)(r2 + 0)) ;
- *(u32 *)(r2 + 0) = r1              | r3 = 1                             | r3 = *(u32 *)(r4 + 0)              ;
- r3 = 1                             | *(u32 *)(r4 + 0) = r3              |                                    ;
- store_release((u32 *)(r4 + 0), r3) |                                    |                                    ;
-exists (1:r1=1 /\ 2:r1=1 /\ 2:r3=0)
-
-  The formalization sketched above allows this behavior.  Notice,
-  however, that the behavior is forbidden after "completion" of
-  the release/acquire chain, i.e. by making the store from P1 a
-  store-release (a property also known as A-cumulativy of the
-  release operation).
-
-
-I guess the next question (once clarified the intentions for the R
-and Z6.3 tests seen earlier) is "Does BPF really care about 2+2W
-and B-cumulativity for store-release?"; I mentioned some tradeoff,
-but in the end this is a call for the BPF community.
-
-  Andrea
-
-[1] https://mirrors.edge.kernel.org/pub/linux/kernel/people/paulmck/LWNLinuxMM/StrongModel.html
-[2] https://mirrors.edge.kernel.org/pub/linux/kernel/people/paulmck/LWNLinuxMM/WeakModel.html#Cumulativity

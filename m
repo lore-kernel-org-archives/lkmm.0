@@ -1,110 +1,141 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from frasgout11.his.huawei.com (frasgout11.his.huawei.com [14.137.139.23])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9C991B3937;
-	Thu, 24 Oct 2024 14:42:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FFBE1CC8AB
+	for <lkmm@lists.linux.dev>; Fri, 25 Oct 2024 09:32:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=14.137.139.23
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729780949; cv=none; b=eKVhoXfPwxSJVnxQCLsJVEez93vkouGedGR7Z6dycirGFAbjuesN5BJK5ZlD/G4m2/txi6lC12Q5EW/b3ET/AurqLJnYNDSpNEVwOeUpBhnMN+JhwxI9XYphVrpP4sLpgx5EFcdqTLoc8NhGWHq4IKPMm6GcqHgI2S+z/zE2TvY=
+	t=1729848764; cv=none; b=evAcKONNOT5Bc5LNM2lO2Jg2zkt8UHAYYFz/S6aZ5Q22OB5siR6JVlu8gz0YwGvGuSKouKDQlSjcb2q1oZ6EP+ugG36JR5MHRUzauK6IzdSkUuRUO02P5u090OpPGcdxVEKJfRLhgRkALn8FCyhexFwelMr2hY9NxVmczUqqjpo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729780949; c=relaxed/simple;
-	bh=eKCbwTRUi3K9eoFQ01WUece1BuLYrc4wAZhMVMb0wi0=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=NERqIPZwCRWlXYzwWYkNupyf4VqrZWobXGttqWyaF7we+bOOB8A8G0RYxFDv2ElDrLWn3j4aV90Iuqx83nHMOD4GLI7krlBiCLqfNdV+bPLKLyrtZkveBEWrY6U0BCyC61PxP79yjbVnNneWg+gr0fGd2TJI9yWSw+udAnqail4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=rnTfV4bz; arc=none smtp.client-ip=10.30.226.201
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="rnTfV4bz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A00AC4CEC7;
-	Thu, 24 Oct 2024 14:42:29 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1729780949;
-	bh=eKCbwTRUi3K9eoFQ01WUece1BuLYrc4wAZhMVMb0wi0=;
-	h=Date:From:To:Cc:Subject:Reply-To:References:In-Reply-To:From;
-	b=rnTfV4bzva8dzHglzHybXTXMG1dnOyaUs1nOrfI4BXZGqAsVAqLgBUp5uau1WH7vL
-	 OY0rD8J46B+mBoeiXFRt+RhSMy67m/oXo0vvVpdL1J8WcIj/vNYD9IKZPZsXw6zM9B
-	 t7Z4x1uKCirHcnSFiuCf2QXxL29b3hybcynvZPK7BYZh/CdUP6753LBuuqO+fSB8Z2
-	 DttuBkQzoA2bdCSaG917CR9E6jI5XAXnfMcTDGrW7UvviqI+NCVgs6YmYMPonYD4mg
-	 7++xMC37T7fn4h0qr+7RbfU+T4ITQt4Y5Wq7SURf8SuM84VkRYXgyeLI+qseLhnQhN
-	 ERPuRk2t1OxMA==
-Received: by paulmck-ThinkPad-P17-Gen-1.home (Postfix, from userid 1000)
-	id CA403CE0C56; Thu, 24 Oct 2024 07:42:28 -0700 (PDT)
-Date: Thu, 24 Oct 2024 07:42:28 -0700
-From: "Paul E. McKenney" <paulmck@kernel.org>
-To: Jonas Oberhauser <jonas.oberhauser@huaweicloud.com>
-Cc: Puranjay Mohan <puranjay@kernel.org>,
-	Andrea Parri <parri.andrea@gmail.com>, bpf@vger.kernel.org,
-	lkmm@lists.linux.dev, linux-kernel@vger.kernel.org
-Subject: Re: Some observations (results) on BPF acquire and release
-Message-ID: <7d968f29-63d2-4def-9caa-dae489cea7f3@paulmck-laptop>
-Reply-To: paulmck@kernel.org
-References: <Zxk2wNs4sxEIg-4d@andrea>
- <35bed95a-3203-43a7-972d-f3fd3c7da6f9@huaweicloud.com>
- <mb61pr085bt0g.fsf@kernel.org>
- <ecb585c5-7f56-4249-b525-66d9757a6f2f@huaweicloud.com>
+	s=arc-20240116; t=1729848764; c=relaxed/simple;
+	bh=5yEZPxVzDT4JwSQbgOjUvY10CuQ/wntHADsWddzFNsA=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=J5FFb+lblVaOrWAsDXPpHX4or9fJp9M5BYSz90GcwsvSKiMbStA8e3LZEvC1+eU8WQI3BaSGUtXizi6p3KnFZa8cS9b2mC0VpGmRPemwtsL1MCYRHTRCsgSeWf6eQOXVIGNBad/tD4wRlGUZwlWk929rtCSStkndyp6MT2KAMic=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=huaweicloud.com; spf=pass smtp.mailfrom=huaweicloud.com; arc=none smtp.client-ip=14.137.139.23
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=huaweicloud.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huaweicloud.com
+Received: from mail.maildlp.com (unknown [172.18.186.29])
+	by frasgout11.his.huawei.com (SkyGuard) with ESMTP id 4XZcVk5cZnz9v7Ht
+	for <lkmm@lists.linux.dev>; Fri, 25 Oct 2024 17:12:14 +0800 (CST)
+Received: from mail02.huawei.com (unknown [7.182.16.27])
+	by mail.maildlp.com (Postfix) with ESMTP id CAB1614040D
+	for <lkmm@lists.linux.dev>; Fri, 25 Oct 2024 17:32:32 +0800 (CST)
+Received: from [10.221.99.159] (unknown [10.221.99.159])
+	by APP2 (Coremail) with SMTP id GxC2BwAHcH+qZRtnP95nAA--.54446S2;
+	Fri, 25 Oct 2024 10:32:32 +0100 (CET)
+Message-ID: <daa60273-d01a-8fc5-5e26-e8fc9364c1d8@huaweicloud.com>
+Date: Fri, 25 Oct 2024 11:32:20 +0200
 Precedence: bulk
 X-Mailing-List: lkmm@lists.linux.dev
 List-Id: <lkmm.lists.linux.dev>
 List-Subscribe: <mailto:lkmm+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:lkmm+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <ecb585c5-7f56-4249-b525-66d9757a6f2f@huaweicloud.com>
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.13.0
+From: Hernan Ponce de Leon <hernan.poncedeleon@huaweicloud.com>
+Subject: Re: Some observations (results) on BPF acquire and release
+To: Andrea Parri <parri.andrea@gmail.com>, puranjay@kernel.org,
+ paulmck@kernel.org
+Cc: bpf@vger.kernel.org, lkmm@lists.linux.dev, linux-kernel@vger.kernel.org
+References: <Zxk2wNs4sxEIg-4d@andrea>
+Content-Language: en-US
+In-Reply-To: <Zxk2wNs4sxEIg-4d@andrea>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-CM-TRANSID:GxC2BwAHcH+qZRtnP95nAA--.54446S2
+X-Coremail-Antispam: 1UD129KBjvJXoWxZry8AF1UWFy3ArWxGFW7Arb_yoW5ZryDpF
+	W8Ka98Kas7t3sxCwn7X3yUu3WkuF93Xr45Xr4kGr9xCrn8K3Wkta1xKF4YqrZrWrs2vr10
+	q34UK3srX3Z8Aa7anT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+	9KBjDU0xBIdaVrnRJUUUvqb4IE77IF4wAFF20E14v26r4j6ryUM7CY07I20VC2zVCF04k2
+	6cxKx2IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4
+	vEj48ve4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Jr0_JF4l84ACjcxK6xIIjxv20xvEc7Cj
+	xVAFwI0_Jr0_Gr1l84ACjcxK6I8E87Iv67AKxVW8JVWxJwA2z4x0Y4vEx4A2jsIEc7CjxV
+	AFwI0_Gr0_Gr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l5I8CrVACY4xI64kE6c02F40E
+	x7xfMcIj6xIIjxv20xvE14v26r126r1DMcIj6I8E87Iv67AKxVWUJVW8JwAm72CE4IkC6x
+	0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lc7I2V7IY0VAS07AlzVAYIcxG8wCY1x0262kKe7AK
+	xVWUAVWUtwCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02F4
+	0E14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_JF0_Jw1l
+	Ixkvb40E47kJMIIYrxkI7VAKI48JMIIF0xvE2Ix0cI8IcVAFwI0_Jr0_JF4lIxAIcVC0I7
+	IYx2IY6xkF7I0E14v26r1j6r4UMIIF0xvE42xK8VAvwI8IcIk0rVWUJVWUCwCI42IY6I8E
+	87Iv67AKxVWUJVW8JwCI42IY6I8E87Iv6xkF7I0E14v26r1j6r4UYxBIdaVFxhVjvjDU0x
+	ZFpf9x07brzVbUUUUU=
+X-CM-SenderInfo: xkhu0tnqos00pfhgvzhhrqqx5xdzvxpfor3voofrz/
 
-On Thu, Oct 24, 2024 at 02:21:15PM +0200, Jonas Oberhauser wrote:
+On 10/23/2024 7:47 PM, Andrea Parri wrote:
+> Hi Puranjay and Paul,
+> 
+> I'm running some experiment on the (experimental) formalization of BPF
+> acquire and release available from [1] and wanted to report about some
+> (initial) observations for discussion and possibly future developments;
+> apologies in advance for the relatively long email and any repetition.
 > 
 > 
-> Am 10/24/2024 um 2:11 PM schrieb Puranjay Mohan:
-> > Jonas Oberhauser <jonas.oberhauser@huaweicloud.com> writes:
-> > 
-> > > Am 10/23/2024 um 7:47 PM schrieb Andrea Parri:
-> > > > Hi Puranjay and Paul,
-> > > > 
-> > > > These remarks show that the proposed BPF formalization of acquire and
-> > > > release somehow, but substantially, diverged from the corresponding
-> > > > LKMM formalization.  My guess is that the divergences mentioned above
-> > > > were not (fully) intentional, or I'm wondering -- why not follow the
-> > > > latter (the LKMM's) more closely? -  This is probably the first question
-> > > > I would need to clarify before trying/suggesting modifications to the
-> > > > present formalizations.  ;-)  Thoughts?
-> > > > 
-> > > 
-> > > I'm also curious why the formalization (not just in the semantics but
-> > > also how it is structured) is so completely different from LKMM's.
-> > 
+> A first and probably most important observation is that the (current)
+> formalization of acquire and release appears to be "too strong": IIUC,
+> the simplest example/illustration for this is given by the following
 > 
-> Thanks Puranjay for your response!
+> BPF R+release+fence
+> {
+>   0:r2=x; 0:r4=y;
+>   1:r2=y; 1:r4=x; 1:r6=l;
+> }
+>   P0                                 | P1                                         ;
+>   r1 = 1                             | r1 = 2                                     ;
+>   *(u32 *)(r2 + 0) = r1              | *(u32 *)(r2 + 0) = r1                      ;
+>   r3 = 1                             | r5 = atomic_fetch_add((u32 *)(r6 + 0), r5) ;
+>   store_release((u32 *)(r4 + 0), r3) | r3 = *(u32 *)(r4 + 0)                      ;
+> exists ([y]=2 /\ 1:r3=0)
 > 
-> 
-> > BPF memory model is an instruction level memory model
-> 
-> You mean BPF has no optimizing byte code compiler?
-> Is it guaranteed to stay this way?
-> WASM does JIT optimizations as far as I know, which would bring back a lot
-> of the complexity of software models like LKMM.
+> This "exists" condition is not satisfiable according to the BPF model;
+> however, if we adopt the "natural"/intended(?) PowerPC implementations
+> of the synchronization primitives above (aka, with store_release() -->
+> LWSYNC and atomic_fetch_add() --> SYNC ; [...] ), then we see that the
+> condition in question becomes (architecturally) satisfiable on PowerPC
+> (although I'm not aware of actual observations on PowerPC hardware).
 
-Sadly (at least from a simplicity viewpoint), BPF assembly goes at least
-through compiler backends.  So there will be some issues of this sort.
-We have started on them, but as Puranjay says, there is more to be done.
+Are the resulting PPC tests available somewhere?
 
-							Thanx, Paul
+> 
+> 
+> At first, the previous observation (validated via simulations and later
+> extended to similar but more complex scenarios ) made me believe that
+> the BPF formalization of acquire and release could be strictly stronger
+> than the corresponding LKMM formalization; but that is _not_ the case:
+> 
+> The following "exists" condition is satisfiable according to the BPF
+> model (and it remains satisfiable even if the load_acquire() in P2 is
+> paired with an additional store_release() in P1).  In contrast, the
+> corresponding LKMM condition (e.g load_acquire() --> smp_load_acquire()
+> and atomic_fetch_add() --> smp_mb()) is not satisfiable (in fact, the
+> same conclusion holds even if the putative smp_load_acquire() in P2 is
+> "replaced" with an smp_rmb() or with an address dependency).
+> 
+> BPF Z6.3+fence+fence+acquire
+> {
+>   0:r2=x; 0:r4=y; 0:r6=l;
+>   1:r2=y; 1:r4=z; 1:r6=m;
+>   2:r2=z; 2:r4=x;
+> }
+>   P0                                         | P1                                         | P2                                 ;
+>   r1 = 1                                     | r1 = 2                                     | r1 = load_acquire((u32 *)(r2 + 0)) ;
+>   *(u32 *)(r2 + 0) = r1                      | *(u32 *)(r2 + 0) = r1                      | r3 = *(u32 *)(r4 + 0)              ;
+>   r5 = atomic_fetch_add((u32 *)(r6 + 0), r5) | r5 = atomic_fetch_add((u32 *)(r6 + 0), r5) |                                    ;
+>   r3 = 1                                     | r3 = 1                                     |                                    ;
+>   *(u32 *)(r4 + 0) = r3                      | *(u32 *)(r4 + 0) = r3                      |                                    ;
+> exists ([y]=2 /\ 2:r1=1 /\ 2:r3=0)
+> 
+> 
+> These remarks show that the proposed BPF formalization of acquire and
+> release somehow, but substantially, diverged from the corresponding
+> LKMM formalization.  My guess is that the divergences mentioned above
+> were not (fully) intentional, or I'm wondering -- why not follow the
+> latter (the LKMM's) more closely? -  This is probably the first question
+> I would need to clarify before trying/suggesting modifications to the
+> present formalizations.  ;-)  Thoughts?
+> 
+>    Andrea
+> 
+> 
+> [1] https://github.com/puranjaymohan/herdtools7/commits/bpf_acquire_release/
 
-> > much simpler than LKMM
-> 
-> LKMM has a simple core, roughly like this:
-> 
-> ppo = ... (* all the ppo related rules that are relevant to you -- some
-> fences don't matter and you can just remove them *)
-> prop = (coe | fre) (* remove reflexive closure *) ; ...
-> hb = [Marked] ; (ppo | rfe | prop & int | prop ; strong-sync) ; [Marked]
-> 
-> acyclic hb
-> (* ... also add the atomicity & sc-per-loc axioms *)
-> 
-> If you can exclude compiler optimizations, you can remove the Marked bits.
-> 
-> 
-> Best wishes,
-> 
->   jonas
-> 

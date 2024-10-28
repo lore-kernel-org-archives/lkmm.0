@@ -1,48 +1,48 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 081B31CEE98;
-	Fri, 25 Oct 2024 23:26:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02AA71D54D6;
+	Mon, 28 Oct 2024 20:16:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729898811; cv=none; b=GR1lxRLMAIOu/mHX1gtgSmhTvyRIwspS+MuAvUj9I7lGkdfwSBCeLq3AtGYqJFgZe179k2bMhZDYKeR8Qv/0A/XnLoxmUHTqCgUlo6L/l8f/07xlfCo7zLnCOvpK7+nvE9VVvRtS3wbx/0VWQJBl15gIEA6WVlfCSoEPCp4ZNhk=
+	t=1730146584; cv=none; b=F9CP53LMotNKQmevy69YcLa742sGIQOnMXrjf8oa6kTfTtJuD1m5u8pEY+vroeO0bbKjdKkhD01j/119te589xgvs+qH9AGgI6538LMv4LBansdJKVoxOl/bJUDm7guCxfEe8yrNdOfa9ZRW8YmnKo33EAwlv+RPnslW5KGIAJE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729898811; c=relaxed/simple;
-	bh=ZmrVA8wb7NNzPZG85RE1GMlbP3IKNvdOBUIXaz8g1HI=;
+	s=arc-20240116; t=1730146584; c=relaxed/simple;
+	bh=fjLWvA7i3GcmtkFmThjSrRbvggXCZOWfPXHA2cv34BU=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=bbLvhL+KtkbUKrremdcmwiAJlRrCULQ35jrolax3YH9g8baOnS3qg0BcQi1YKVXyor9gV4p6FaUR31IGNZS7O7WntCgKB1o89t1rvnvmBVaDU2uz+RJnOkaXcLdy3pN455BvAihpnz894X7IvQd4evV9hBJ5t+uMu48i0bHbjKY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=JqXBL4z2; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type:Content-Disposition:In-Reply-To; b=XTV1Irzz+PXucsnfTqQ0TkZMtdeuyyM1eLYTpy0q7viJ8Sg+ODu+rg6oi79FTOpvw4i/B9Fvo5MJHy3NcTDDDsSrLFr3Skh6wE02A+gF7uxLnTzivDyDcH5vRN/zZ6Pwmu0ifYghRm8X+J/PGKXTkwKYwVPyaBpa+WFCzpoJ72U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=OAahoaRF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="JqXBL4z2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F2BFC4CEC3;
-	Fri, 25 Oct 2024 23:26:49 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="OAahoaRF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D69FC4CEC3;
+	Mon, 28 Oct 2024 20:16:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1729898810;
-	bh=ZmrVA8wb7NNzPZG85RE1GMlbP3IKNvdOBUIXaz8g1HI=;
+	s=k20201202; t=1730146583;
+	bh=fjLWvA7i3GcmtkFmThjSrRbvggXCZOWfPXHA2cv34BU=;
 	h=Date:From:To:Cc:Subject:Reply-To:References:In-Reply-To:From;
-	b=JqXBL4z21li0sULGs3yYDYnWwEZ98djkKCnN6pdC9o+4A3DZyXPEr3crCWCNjWjyv
-	 50y0/lADjWEIXXOU6KTp9BKOIvIkQVti2huhiC0kkpwtIK6puJox8bAxJtsHUFfiHo
-	 dzXkk/RdqciQaU8HjtpkXFvKKifY8cJ+9hfbpPJ3gARIXAsk1ujAYph04IMcGsfVGL
-	 LENHC0LOF8iQithnXjwK8QZPXHZOWDd2QqxaOvGBOQ2R2jsPFvJ8/eUb8m97ZFUWRf
-	 87WlTEPBaRmvDFNVxweREI9u5HlY/v22IG9JVdy89b8cYquUk+Ercz4sEvfYjXwmMx
-	 Z28ee17neMk5A==
+	b=OAahoaRFRkKAULaecCkblSYO+GPba2tFO+uq8Bw68fTWiA7dDLcD5Wym7qt44XcHe
+	 RvEaeLb+2o5J7If9eNJ0NHSw3M5wKviodbWGjhtyN3xdydMGWRJu8BzIObgg1BmYMb
+	 71XeZQdO5cr47neFj1kUtX4nu1ypCQzxV1J+AVH1rPrUKtJ6XYTNayC/+AlO3niZ0Q
+	 6DVDxYCuNp69acwWGw2fcYL+HTaKaYMjmIkVpo5F0b+aCS1DoPscatgPgVJDltv5vV
+	 0+GrqeKSRrrgzJ5tJ8N26MXB2wfb+ZcJSz7YAIjUqWFVoPzRxa6jmZrh+ZMjVkxI+O
+	 UZ9wOZ6InmCDg==
 Received: by paulmck-ThinkPad-P17-Gen-1.home (Postfix, from userid 1000)
-	id 2C00FCE0D99; Fri, 25 Oct 2024 16:26:49 -0700 (PDT)
-Date: Fri, 25 Oct 2024 16:26:49 -0700
+	id 1BC86CE0876; Mon, 28 Oct 2024 13:16:23 -0700 (PDT)
+Date: Mon, 28 Oct 2024 13:16:23 -0700
 From: "Paul E. McKenney" <paulmck@kernel.org>
-To: Hernan Ponce de Leon <hernan.poncedeleon@huaweicloud.com>
-Cc: Andrea Parri <parri.andrea@gmail.com>, puranjay@kernel.org,
-	bpf@vger.kernel.org, lkmm@lists.linux.dev,
-	linux-kernel@vger.kernel.org
-Subject: Re: Some observations (results) on BPF acquire and release
-Message-ID: <43ecbb1e-7710-45ab-891e-575b6f562794@paulmck-laptop>
+To: Jonas Oberhauser <jonas.oberhauser@huaweicloud.com>
+Cc: stern@rowland.harvard.edu, parri.andrea@gmail.com, will@kernel.org,
+	peterz@infradead.org, boqun.feng@gmail.com, npiggin@gmail.com,
+	dhowells@redhat.com, j.alglave@ucl.ac.uk, luc.maranget@inria.fr,
+	akiyks@gmail.com, dlustig@nvidia.com, joel@joelfernandes.org,
+	urezki@gmail.com, quic_neeraju@quicinc.com, frederic@kernel.org,
+	linux-kernel@vger.kernel.org, lkmm@lists.linux.dev,
+	hernan.poncedeleon@huaweicloud.com
+Subject: Re: [PATCH v4 0/5] tools/memory-model: Define more of LKMM in
+ tools/memory-model
+Message-ID: <70907739-56b9-4712-a1db-e55161c2a8d6@paulmck-laptop>
 Reply-To: paulmck@kernel.org
-References: <Zxk2wNs4sxEIg-4d@andrea>
- <daa60273-d01a-8fc5-5e26-e8fc9364c1d8@huaweicloud.com>
- <ZxuZ-wGccb3yhBAD@andrea>
- <d8aa61a8-e2fc-7668-9845-81664c9d181f@huaweicloud.com>
- <ZxugzP0yB3zeqKSn@andrea>
- <8360f999-0d64-3b4f-e4b8-8c84f7311af2@huaweicloud.com>
+References: <20240930105710.383284-1-jonas.oberhauser@huaweicloud.com>
 Precedence: bulk
 X-Mailing-List: lkmm@lists.linux.dev
 List-Id: <lkmm.lists.linux.dev>
@@ -51,75 +51,100 @@ List-Unsubscribe: <mailto:lkmm+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <8360f999-0d64-3b4f-e4b8-8c84f7311af2@huaweicloud.com>
+In-Reply-To: <20240930105710.383284-1-jonas.oberhauser@huaweicloud.com>
 
-On Fri, Oct 25, 2024 at 03:57:29PM +0200, Hernan Ponce de Leon wrote:
-> On 10/25/2024 3:44 PM, Andrea Parri wrote:
-> > On Fri, Oct 25, 2024 at 03:28:17PM +0200, Hernan Ponce de Leon wrote:
-> > > On 10/25/2024 3:15 PM, Andrea Parri wrote:
-> > > > > > BPF R+release+fence
-> > > > > > {
-> > > > > >     0:r2=x; 0:r4=y;
-> > > > > >     1:r2=y; 1:r4=x; 1:r6=l;
-> > > > > > }
-> > > > > >     P0                                 | P1                                         ;
-> > > > > >     r1 = 1                             | r1 = 2                                     ;
-> > > > > >     *(u32 *)(r2 + 0) = r1              | *(u32 *)(r2 + 0) = r1                      ;
-> > > > > >     r3 = 1                             | r5 = atomic_fetch_add((u32 *)(r6 + 0), r5) ;
-> > > > > >     store_release((u32 *)(r4 + 0), r3) | r3 = *(u32 *)(r4 + 0)                      ;
-> > > > > > exists ([y]=2 /\ 1:r3=0)
-> > > > > > 
-> > > > > > This "exists" condition is not satisfiable according to the BPF model;
-> > > > > > however, if we adopt the "natural"/intended(?) PowerPC implementations
-> > > > > > of the synchronization primitives above (aka, with store_release() -->
-> > > > > > LWSYNC and atomic_fetch_add() --> SYNC ; [...] ), then we see that the
-> > > > > > condition in question becomes (architecturally) satisfiable on PowerPC
-> > > > > > (although I'm not aware of actual observations on PowerPC hardware).
-> > > > > 
-> > > > > Are the resulting PPC tests available somewhere?
-> > > > 
-> > > > My data go back to the LKMM paper, cf. e.g. the R+pooncerelease+fencembonceonce
-> > > > entry at https://diy.inria.fr/linux/hard.html#unseen .
-> > > > 
-> > > >     Andrea
-> > > 
-> > > I guess I understood you wrong. I thought you had manually "compiled" those
-> > > to PPC litmus format (i.e., doing exactly what the JIT compiler would do). I
-> > > can obviously write them manually myself, but I find this painful and error
-> > > prone (I am particularly bad at this task), so I wanted to avoid this if
-> > > someone else had already done it.
-> > 
-> > FWIW, a comprehensive collection of PPC litmus tests could be found at
-> > 
-> >    https://www.cl.cam.ac.uk/~pes20/ppc-supplemental/ppc002.html
-> > 
-> > (just follow the link on the test pattern/variants to see the sources);
-> > be aware the results of those tables date back to the PPC paper though.
-> > 
-> > Alternatively, remind that PPC is well supported by the herdtools7 diy7
-> > generator; I see no reason for having to (re)write such tests manually.
-> > 
-> >    Andrea
+On Mon, Sep 30, 2024 at 12:57:05PM +0200, Jonas Oberhauser wrote:
+> Currently, the effect of several tag on operations is defined only in
+> the herd7 tool's OCaml code as syntax transformations, while the effect
+> of all other tags is defined in tools/memory-model.
+> This asymmetry means that two seemingly analogous definitions in 
+> tools/memory-model behave quite differently because the generated
+> representation is sometimes modified by hardcoded behavior in herd7.
 > 
-> I am particularly interested in tests using lwarx and stwcx instructions
-> (this is what I understood would be used if one follows [1] to compile the
-> tests in this thread).
+> It also makes it hard to see that the behavior of the formalization 
+> matches the intuition described in explanation.txt without delving into
+> the implementation of herd7.
 > 
-> I have not yet check the cambridge website, but due to the timeline, I don't
-> expect to find tests with those instructions. The same is true with [2].
+> Furthermore, this hardcoded behavior is hard to maintain inside herd7 and
+> other tools implementing WMM, and has caused several bugs and confusions
+> with the tool maintainers, e.g.:
 > 
-> I have limited experience with diy7, but I remember that it had some
-> limitations to generate RMW instructions, at least for C [3].
+>   https://github.com/MPI-SWS/genmc/issues/22
+>   https://github.com/herd/herdtools7/issues/384#issuecomment-1132859904
+>   https://github.com/hernanponcedeleon/Dat3M/issues/254
 > 
-> Hernan
+> It also means that potential future extensions of LKMM with new tags may
+> not work without changing internals of the herd7 tool.
 > 
-> [1] https://github.com/torvalds/linux/blob/master/arch/powerpc/net/bpf_jit_comp32.c
-> [2] https://github.com/herd/herdtools7/tree/master/catalogue/herding-cats/ppc/tests/campaign
-> [3] https://github.com/herd/herdtools7/issues/905
+> In this patch series, we first emulate the effect of herd7 transformations
+> in tools/memory-model through explicit rules in .cat and .bell files that
+> reference the transformed tags.
+> These transformations do not have any immediate effect with the current
+> herd7 implementation, because they apply after the syntax transformations
+> have already modified those tags.
+> 
+> In a second step, we then distinguish between syntactic tags (that are
+> placed by the programmer on operations, e.g., an 'ACQUIRE tag on both the
+> read and write of an xchg_acquire() operation) and sets of events (that
+> would be defined after the (emulated) transformations, e.g., an Acquire
+> set that includes only on the read of the xchg_acquire(), but "has been
+> removed" from the write).
+> 
+> This second step (comprising patches 4 and 5) is incompatible with the
+> current herd7 implementation, since herd7 uses hardcoded tag names to decide
+> what to do with LKMM; therefore, the newly introduced syntactic tags will be
+> ignored or processed incorrectly by herd7.
 
-Please see attached for a tarball of random PPC litmus tests.
+Thank you, Jonas!
 
-You asked for this!  ;-)
+Queued for further review and testing.  This does need at least an ack to
+proceed to mainline (hint to LKMM maintainers).
 
 							Thanx, Paul
 
+> Have fun,
+>   jonas
+> 
+> 
+> Changes from v1 to v2:
+>    - addressed several spelling/style issues pointed out by Alan
+>    - simplified the definition of Marked accesses based on a
+>       suggestion by Alan
+> 
+> Changes from v2 to v3:
+>   - addressed imprecise comment pointed out by Boqun
+>   - addressed the backwards compatibility issue pointed out by Akira
+>     with help of Hernan: improved version compatibility by adding
+>     an error message on older versions of herd and relying on a new
+>     flag -lkmmv1 to select the version
+>   - integrated recent patches, like the herd representation table
+>     and primitives like atomic_add_unless or atomic_and_not
+> 
+> Changes from v3 to v4:
+>   - removed a litmus test (submitted to Paul's larger test repo instead)
+>   - fixed several formatting/naming issues pointed out by Akira
+>   - updated the reference herd version number in memory-model/README.md.
+>     *Note*: this may need to be retouched after herd is updated.
+>     I also did not update the table under klitmus7 compatibility, which
+>     I took to refer only to klitmus7, although its header is "herdtools7"
+> 
+> 
+> 
+> Jonas Oberhauser (5):
+>   tools/memory-model: Legitimize current use of tags in LKMM macros
+>   tools/memory-model: Define applicable tags on operation in tools/...
+>   tools/memory-model: Define effect of Mb tags on RMWs in tools/...
+>   tools/memory-model: Switch to softcoded herd7 tags
+>   tools/memory-model: Distinguish between syntactic and semantic tags
+> 
+>  .../Documentation/herd-representation.txt     |  27 +--
+>  tools/memory-model/README                     |   2 +-
+>  tools/memory-model/linux-kernel.bell          |  33 ++-
+>  tools/memory-model/linux-kernel.cat           |  10 +
+>  tools/memory-model/linux-kernel.cfg           |   1 +
+>  tools/memory-model/linux-kernel.def           | 196 +++++++++---------
+>  6 files changed, 150 insertions(+), 119 deletions(-)
+> 
+> -- 
+> 2.34.1
+> 

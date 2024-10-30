@@ -1,100 +1,91 @@
-Received: from frasgout12.his.huawei.com (frasgout12.his.huawei.com [14.137.139.154])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D82701E3DF7
-	for <lkmm@lists.linux.dev>; Wed, 30 Oct 2024 11:50:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=14.137.139.154
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 087541E260E;
+	Wed, 30 Oct 2024 13:46:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730289051; cv=none; b=YPNqXeoLR+jX1o59cjjfo2ijikzcuLWv3H1LxS/DPDkjq9kUJCjXOAyRMqeT/sc25+1n95w+GOJSmmaAZdkNRX3K7KvhXHLHMOvXFd+TjL9rDyooO1Fvu1OsGZW2sCZmnBEvJFHYkYP0enMn2lU/KWHsyJQvTI5uX/SPNwtMtVw=
+	t=1730296006; cv=none; b=DQyUvbcxoCdOt9g4plafLFgZ6t3ORdh5HNPnwoxVPfBRzzR2oS77ZW2LvorzxRv6SNII28WRagoYszYyRROn8FmnZhNQZSKxtt0lccLZ+b7b7brduuDgNTLzNyZI6Ag12yOMYFLU8nkNAgwhNc6iuFDlyvRurj9dXFz24JSJM8I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730289051; c=relaxed/simple;
-	bh=aqvLgt8FFUE4MsG4eAfhwUHsbyslgXMm4Wym7zn1eOc=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=UuY5hU2gkyzO7n0F7alIapNYCRdne3HzszoUB3W5KMOpB7AIRjj3SzuSuImdhSed8gjvb2wraVweDhFHGiLZQFUQciI6IH/jG8WRNEHENaAEhCDxJZQnU8JnOlJj0GU7/PcEhaafx8afvSmMNsF+uOfbCZfC1SoGTMhLjtWN/Jg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=huaweicloud.com; spf=pass smtp.mailfrom=huaweicloud.com; arc=none smtp.client-ip=14.137.139.154
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=huaweicloud.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huaweicloud.com
-Received: from mail.maildlp.com (unknown [172.18.186.51])
-	by frasgout12.his.huawei.com (SkyGuard) with ESMTP id 4XdlBW0Wysz9v7JM
-	for <lkmm@lists.linux.dev>; Wed, 30 Oct 2024 19:24:03 +0800 (CST)
-Received: from mail02.huawei.com (unknown [7.182.16.47])
-	by mail.maildlp.com (Postfix) with ESMTP id E6E4B1407B1
-	for <lkmm@lists.linux.dev>; Wed, 30 Oct 2024 19:50:33 +0800 (CST)
-Received: from [10.81.211.136] (unknown [10.81.211.136])
-	by APP1 (Coremail) with SMTP id LxC2BwD3aDl+HSJnRP20AA--.14581S2;
-	Wed, 30 Oct 2024 12:50:33 +0100 (CET)
-Message-ID: <ba2b6c1d-4930-4ede-ba21-d7a2fa46e5e1@huaweicloud.com>
-Date: Wed, 30 Oct 2024 12:50:19 +0100
+	s=arc-20240116; t=1730296006; c=relaxed/simple;
+	bh=9RAdJz/7k8+kbmfYLQOk3Fwdes/kT4tbQodLGKPBwkU=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=KvltSt6YIFewFbrkCYvAMXy764Pgbl1pJZwPFH0ayOJa+xGbiKzTnBkTn7ylIjELOKX4HWt3d5nh3EG98gPi39AnlKhlWaT4X8cAQ8QBvvFxGv8VuCZfNPtRLPlRmMufV1kuDg4O+5BPazwMdIIPodQ897wcyVSQQAHjXeYabUI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=M5MagZ+A; arc=none smtp.client-ip=10.30.226.201
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="M5MagZ+A"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7FB84C4CECE;
+	Wed, 30 Oct 2024 13:46:45 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1730296005;
+	bh=9RAdJz/7k8+kbmfYLQOk3Fwdes/kT4tbQodLGKPBwkU=;
+	h=Date:From:To:Cc:Subject:Reply-To:References:In-Reply-To:From;
+	b=M5MagZ+ASPvyfmXvh/0jGeWrCkRMwpj0iqLKsRDkZ/U7SuexvelZEMR9hyme1At16
+	 BCoRCYcwgdXyQLuwB1yRzu29U+jYp26hc8Qb7nYXmwaorI0dtnzRA3wqiP4B9qgYBT
+	 nPhbr3SkplTaVkeLT3qnszsqOff62gviLIKE3hZ3IoewpzOzEfiDP+df68flEtDJtM
+	 HjNJ65juXSBo+JbMa3S+jnF7ZoJE5hXVoakaezXfcGcPoaM6End3NWBypKhD6iugXo
+	 6AJRsvc69YTdpqDhWFGeP3ie10MidwUlSN/U7XOmJCzOFUc0BOwBBkB8BWWbvH0Q1I
+	 Kfg67ZRrFS8Zg==
+Received: by paulmck-ThinkPad-P17-Gen-1.home (Postfix, from userid 1000)
+	id 2ED87CE09DB; Wed, 30 Oct 2024 06:46:45 -0700 (PDT)
+Date: Wed, 30 Oct 2024 06:46:45 -0700
+From: "Paul E. McKenney" <paulmck@kernel.org>
+To: Jonas Oberhauser <jonas.oberhauser@huaweicloud.com>
+Cc: Boqun Feng <boqun.feng@gmail.com>, stern@rowland.harvard.edu,
+	parri.andrea@gmail.com, will@kernel.org, peterz@infradead.org,
+	npiggin@gmail.com, dhowells@redhat.com, j.alglave@ucl.ac.uk,
+	luc.maranget@inria.fr, akiyks@gmail.com, dlustig@nvidia.com,
+	joel@joelfernandes.org, urezki@gmail.com, quic_neeraju@quicinc.com,
+	frederic@kernel.org, linux-kernel@vger.kernel.org,
+	lkmm@lists.linux.dev, hernan.poncedeleon@huaweicloud.com
+Subject: Re: [PATCH v4 4/5] tools/memory-model: Switch to softcoded herd7 tags
+Message-ID: <55719a66-aeb9-4c20-afa6-e46dbb54c22f@paulmck-laptop>
+Reply-To: paulmck@kernel.org
+References: <20240930105710.383284-1-jonas.oberhauser@huaweicloud.com>
+ <20240930105710.383284-5-jonas.oberhauser@huaweicloud.com>
+ <ZyAmlh5GDBsqY0sZ@Boquns-Mac-mini.local>
+ <ba2b6c1d-4930-4ede-ba21-d7a2fa46e5e1@huaweicloud.com>
 Precedence: bulk
 X-Mailing-List: lkmm@lists.linux.dev
 List-Id: <lkmm.lists.linux.dev>
 List-Subscribe: <mailto:lkmm+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:lkmm+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 4/5] tools/memory-model: Switch to softcoded herd7 tags
-To: Boqun Feng <boqun.feng@gmail.com>
-Cc: paulmck@kernel.org, stern@rowland.harvard.edu, parri.andrea@gmail.com,
- will@kernel.org, peterz@infradead.org, npiggin@gmail.com,
- dhowells@redhat.com, j.alglave@ucl.ac.uk, luc.maranget@inria.fr,
- akiyks@gmail.com, dlustig@nvidia.com, joel@joelfernandes.org,
- urezki@gmail.com, quic_neeraju@quicinc.com, frederic@kernel.org,
- linux-kernel@vger.kernel.org, lkmm@lists.linux.dev,
- hernan.poncedeleon@huaweicloud.com
-References: <20240930105710.383284-1-jonas.oberhauser@huaweicloud.com>
- <20240930105710.383284-5-jonas.oberhauser@huaweicloud.com>
- <ZyAmlh5GDBsqY0sZ@Boquns-Mac-mini.local>
-From: Jonas Oberhauser <jonas.oberhauser@huaweicloud.com>
-In-Reply-To: <ZyAmlh5GDBsqY0sZ@Boquns-Mac-mini.local>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-CM-TRANSID:LxC2BwD3aDl+HSJnRP20AA--.14581S2
-X-Coremail-Antispam: 1UD129KBjvdXoW7GrWkuw15ZF4kXFW3ZryxKrg_yoWDJrb_Wa
-	47Aa1xJrn8tr1UK3WDJr1Utry7Jr1UJr1UXr1UXw47Z3s7GF1UJr4UJrs8Zw1UXFs8Gr15
-	Wr1UCryUXr17ujkaLaAFLSUrUUUUjb8apTn2vfkv8UJUUUU8Yxn0WfASr-VFAUDa7-sFnT
-	9fnUUIcSsGvfJTRUUUbVkFF20E14v26ryj6rWUM7CY07I20VC2zVCF04k26cxKx2IYs7xG
-	6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48ve4kI8w
-	A2z4x0Y4vE2Ix0cI8IcVAFwI0_Jr0_JF4l84ACjcxK6xIIjxv20xvEc7CjxVAFwI0_Gr0_
-	Cr1l84ACjcxK6I8E87Iv67AKxVW8JVWxJwA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_Gr0_Gr
-	1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj6xII
-	jxv20xvE14v26r106r15McIj6I8E87Iv67AKxVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_Gr
-	1lF7xvr2IY64vIr41lF7I21c0EjII2zVCS5cI20VAGYxC7M4IIrI8v6xkF7I0E8cxan2IY
-	04v7MxkF7I0En4kS14v26r4a6rW5MxAIw28IcxkI7VAKI48JMxC20s026xCaFVCjc4AY6r
-	1j6r4UMI8I3I0E5I8CrVAFwI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE17CE
-	b7AF67AKxVW8ZVWrXwCIc40Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r1j6r1xMIIF0x
-	vE2Ix0cI8IcVCY1x0267AKxVW8JVWxJwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF4lIxAI
-	cVC2z280aVAFwI0_Jr0_Gr1lIxAIcVC2z280aVCY1x0267AKxVW8JVW8JrUvcSsGvfC2Kf
-	nxnUUI43ZEXa7sRRKZX5UUUUU==
-X-CM-SenderInfo: 5mrqt2oorev25kdx2v3u6k3tpzhluzxrxghudrp/
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <ba2b6c1d-4930-4ede-ba21-d7a2fa46e5e1@huaweicloud.com>
 
-
-
-Am 10/29/2024 um 1:04 AM schrieb Boqun Feng:
->
-> One bit below:
- >
-> On Mon, Sep 30, 2024 at 12:57:09PM +0200, Jonas Oberhauser wrote:
->>       ------------------------------------------------------------------------------
->>       |       RMW ops w/o return value |                                           |
->>       ------------------------------------------------------------------------------
->> -    |                     atomic_add | R*[noreturn] ->rmw W*[once]               |
->> +    |                     atomic_add | R*[noreturn] ->rmw W*[noreturn]           |
+On Wed, Oct 30, 2024 at 12:50:19PM +0100, Jonas Oberhauser wrote:
 > 
-> Not in this patch, but don't you need to update this again to all cap
-> to match your changes in patch #5? ;-)
 > 
+> Am 10/29/2024 um 1:04 AM schrieb Boqun Feng:
+> > 
+> > One bit below:
+> >
+> > On Mon, Sep 30, 2024 at 12:57:09PM +0200, Jonas Oberhauser wrote:
+> > >       ------------------------------------------------------------------------------
+> > >       |       RMW ops w/o return value |                                           |
+> > >       ------------------------------------------------------------------------------
+> > > -    |                     atomic_add | R*[noreturn] ->rmw W*[once]               |
+> > > +    |                     atomic_add | R*[noreturn] ->rmw W*[noreturn]           |
+> > 
+> > Not in this patch, but don't you need to update this again to all cap
+> > to match your changes in patch #5? ;-)
+> > 
+> 
+> Hmmm, probably that is a good idea.
+> I actually had thought about it for some of the other places in the doc that
+> mention the tags, and concluded that we'll just use the semantic tags there.
+> 
+> But in fact, this file is about the syntactic representation in herd, and
+> there is no noreturn semantic tag on the W*, so it wouldn't match it even if
+> it were correct.
+> 
+> So I think this needs to be addressed in 5/5.
 
-Hmmm, probably that is a good idea.
-I actually had thought about it for some of the other places in the doc 
-that mention the tags, and concluded that we'll just use the semantic 
-tags there.
+Thank you for checking!
 
-But in fact, this file is about the syntactic representation in herd, 
-and there is no noreturn semantic tag on the W*, so it wouldn't match it 
-even if it were correct.
+Please send me either a replacement for 5/5 or a patch for me to fold
+into 5/5.
 
-So I think this needs to be addressed in 5/5.
-
-
-   jonas
-
+							Thanx, Paul

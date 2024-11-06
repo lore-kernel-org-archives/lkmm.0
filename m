@@ -1,56 +1,48 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C23C68C11;
-	Wed,  6 Nov 2024 18:00:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4E4520967F;
+	Wed,  6 Nov 2024 19:29:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730916023; cv=none; b=NSlziCJ29r5wqBHnO3teXOyFVwhxCs63dkzYnU8MPLRZP3PAuimujh/dAZLkx77gqnjNR19x12ABb1XcQHeyGBl3uU9H2QSydGu8W3/UHiqccere2bexWnYHdl0xPmiiFDNyz1EVQba1Ve2lBOINW0zaep8wxwhuslgivTunmD8=
+	t=1730921349; cv=none; b=pff40RVqmwHuTN59X0HAZNk1hB6BhYBVx2rJqf2Z/Jh+gjrE5qYRJMR9b52FJNwyQH8Bgy93fz5cEUSqY0agBxTl0QH6P/ZKWArzbtY6BCDaFe+Lyq3UNare2lMqUJPcloLIgEZLbf500RINzWd/BKneZiAFYmtgxoHhWjxFS+Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730916023; c=relaxed/simple;
-	bh=TNtbTlF0vL/sai9wF6/ZuFwSgl6fb2eteHt8ZYvJTTU=;
+	s=arc-20240116; t=1730921349; c=relaxed/simple;
+	bh=T5leTYD/dkVpCaVzX8i1a50e9keqOW3b65QOhthNUj4=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=pM1mDhSym3hZ+OrxMtigrlGkulFS6GAeciSq0pT2yAy1DYF5Pmwbv5M0ygYZhJBT39+Ktki8c1ZKNIESX2ETwzRwXnxPYKg8B+Np7S07aL7PeQ2xI1oGJCIamYkPXVh25/o/vA73X/wXHZDzv2bixmFU++0mKzE30n/qsm/1PoU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=LGEGk2dq; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type:Content-Disposition:In-Reply-To; b=tW/TWLcd41G78gTjoFk/Kr4G1C2yJgN6Cku5dZMpclv4h6LjLLxwDMwWobWbAGhajWRxUCTQGp917GAbzZx+XlsTWRL19mMEiJAExTtvO22eGlzueYOJPREGi9J4DLPCNaRgBbvtveKyFbImWZiiQVoJJMXp8EJq1jpcRHkevEk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=kHApsUtP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="LGEGk2dq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F1B2C4CEC6;
-	Wed,  6 Nov 2024 18:00:23 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="kHApsUtP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67DE0C4CEC6;
+	Wed,  6 Nov 2024 19:29:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1730916023;
-	bh=TNtbTlF0vL/sai9wF6/ZuFwSgl6fb2eteHt8ZYvJTTU=;
+	s=k20201202; t=1730921348;
+	bh=T5leTYD/dkVpCaVzX8i1a50e9keqOW3b65QOhthNUj4=;
 	h=Date:From:To:Cc:Subject:Reply-To:References:In-Reply-To:From;
-	b=LGEGk2dqekar7w1cWdXyGB/MpvNqhkFVZvgO8wvfr4WQjd6YuWZ4saojjxw5465i0
-	 b2Ivb/lcFILFZ/7Tw3Kj8aG+k7azgfNSQpu5dQiA5Q2rN3MKpwLIO/RykTxN5SFY6w
-	 BQmArFHJX2agvPG+HB4/ewAL8rGSCHjhong4aA2vsR/0rFi3443UcmRyOAxTScP283
-	 Qcemuiv7YVUUv5JJXzO029ZJQOZ2m+1gyGR0bRSYCzx+fGYJRAcWYYTtQh0dpoUTrs
-	 Snf6s9ldm978RLAxM8GRHPA/oYSLUAtASNaujj8y0Wt+KMyUI70MXLSfDj9M4kIVuM
-	 5h9DmMb7cxCKw==
+	b=kHApsUtPlcI23m/QP74tSmJusNzeinnX/Jkh5I72aB1e8wPXIfqE5zCUdoq+59+XD
+	 pXU9FBzcDsvD/aB1gN58QhBtuM8EVRwthGsfE9GVna+PcMEYnsyij64ttvEJLMJ+FO
+	 9U7y6wQEoQJrUhAoxWLVk+kjc97Rc5fEhWRm/rVenWnF5Z+FAEbt9BDOlyTbKgnNS3
+	 EomyOvmzMnOFkSAWSXS4JTNEz8TyuBJYsFU4FwILYKNgXwYFVs0+rDpy1zrvSkwupj
+	 cEvyi7/B+2K+LW+LnH9/vEDQ01upGwObADGkL2NNCHX6Qo9K0aDGIejbP5aclXs9m1
+	 q2wHc5ek4xtFQ==
 Received: by paulmck-ThinkPad-P17-Gen-1.home (Postfix, from userid 1000)
-	id 0293BCE09DB; Wed,  6 Nov 2024 10:00:22 -0800 (PST)
-Date: Wed, 6 Nov 2024 10:00:22 -0800
+	id 063B1CE09DB; Wed,  6 Nov 2024 11:29:08 -0800 (PST)
+Date: Wed, 6 Nov 2024 11:29:07 -0800
 From: "Paul E. McKenney" <paulmck@kernel.org>
 To: Jonas Oberhauser <jonas.oberhauser@huaweicloud.com>
-Cc: Boqun Feng <boqun.feng@gmail.com>, stern@rowland.harvard.edu,
-	parri.andrea@gmail.com, will@kernel.org, peterz@infradead.org,
-	npiggin@gmail.com, dhowells@redhat.com, j.alglave@ucl.ac.uk,
-	luc.maranget@inria.fr, akiyks@gmail.com, dlustig@nvidia.com,
-	joel@joelfernandes.org, urezki@gmail.com, quic_neeraju@quicinc.com,
-	frederic@kernel.org, linux-kernel@vger.kernel.org,
-	lkmm@lists.linux.dev, hernan.poncedeleon@huaweicloud.com
-Subject: Re: [PATCH v4 5/5] tools/memory-model: Distinguish between syntactic
- and semantic tags
-Message-ID: <94d8e5f6-db46-463e-ac58-31147cb94508@paulmck-laptop>
+Cc: stern@rowland.harvard.edu, parri.andrea@gmail.com, will@kernel.org,
+	peterz@infradead.org, boqun.feng@gmail.com, npiggin@gmail.com,
+	dhowells@redhat.com, j.alglave@ucl.ac.uk, luc.maranget@inria.fr,
+	akiyks@gmail.com, dlustig@nvidia.com, joel@joelfernandes.org,
+	urezki@gmail.com, quic_neeraju@quicinc.com, frederic@kernel.org,
+	linux-kernel@vger.kernel.org, lkmm@lists.linux.dev,
+	hernan.poncedeleon@huaweicloud.com
+Subject: Re: [PATCH v5] tools/memory-model: Distinguish between syntactic and
+ semantic tags
+Message-ID: <495eccc0-a271-4436-be4a-024895f552e2@paulmck-laptop>
 Reply-To: paulmck@kernel.org
-References: <20240930105710.383284-1-jonas.oberhauser@huaweicloud.com>
- <20240930105710.383284-6-jonas.oberhauser@huaweicloud.com>
- <ZyApMteRMxZbpBta@Boquns-Mac-mini.local>
- <cd97e045-dfa4-4ffe-9df0-f7abeec848e7@paulmck-laptop>
- <3b796ef4-735a-44df-a9b1-671df49fd44e@huaweicloud.com>
- <ZyJEBc1qwFHwQQT2@Boquns-Mac-mini.local>
- <7b755586-79ee-4344-bf50-27ef6e99e7bf@paulmck-laptop>
- <a06ed5e4-37a2-4295-986f-10977878c65b@huaweicloud.com>
- <36c93729-8d3c-4ede-8f5d-3074d6ea7e64@paulmck-laptop>
+References: <20241105164858.218336-1-jonas.oberhauser@huaweicloud.com>
 Precedence: bulk
 X-Mailing-List: lkmm@lists.linux.dev
 List-Id: <lkmm.lists.linux.dev>
@@ -59,100 +51,147 @@ List-Unsubscribe: <mailto:lkmm+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <36c93729-8d3c-4ede-8f5d-3074d6ea7e64@paulmck-laptop>
+In-Reply-To: <20241105164858.218336-1-jonas.oberhauser@huaweicloud.com>
 
-Never mind, I found your patch in my spam folder.  Apologies, and
-I thought that had been fixed.  I will replace the commit with your
-updated patch.
+On Tue, Nov 05, 2024 at 05:48:58PM +0100, Jonas Oberhauser wrote:
+> Not all annotated accesses provide the semantics their syntactic tags
+> would imply. For example, an 'acquire tag on a write does not imply that
+> the write is finally in the Acquire set and provides acquire ordering.
+> 
+> To distinguish in those cases between the syntactic tags and actual
+> sets, we capitalize the former, so 'ACQUIRE tags may be present on both
+> reads and writes, but only reads will appear in the Acquire set.
+> 
+> For tags where the two concepts are the same we do not use specific
+> capitalization to make this distinction.
+> 
+> Reported-by: Boqun Feng <boqun.feng@gmail.com>
+> Signed-off-by: Jonas Oberhauser <jonas.oberhauser@huaweicloud.com>
+
+Applied in place of the earlier non-capitalized commit, thank you!
+
+Though we both forgot to add Boqun's Reviewed-by and Tested-by tags.
+I will do that on the next rebase.
 
 							Thanx, Paul
 
-On Wed, Nov 06, 2024 at 07:04:57AM -0800, Paul E. McKenney wrote:
-> On Wed, Nov 06, 2024 at 11:28:28AM +0100, Jonas Oberhauser wrote:
-> > 
-> > 
-> > Am 11/5/2024 um 9:21 PM schrieb Paul E. McKenney:
-> > > On Wed, Oct 30, 2024 at 07:34:45AM -0700, Boqun Feng wrote:
-> > > > On Wed, Oct 30, 2024 at 12:38:26PM +0100, Jonas Oberhauser wrote:
-> > > > > 
-> > > > > 
-> > > > > Am 10/30/2024 um 12:41 AM schrieb Paul E. McKenney:
-> > > > > > On Mon, Oct 28, 2024 at 05:15:46PM -0700, Boqun Feng wrote:
-> > > > > > > On Mon, Sep 30, 2024 at 12:57:10PM +0200, Jonas Oberhauser wrote:
-> > > > > > > > Not all tags that are always there syntactically also provide semantic
-> > > > > > > > membership in the corresponding set. For example, an 'acquire tag on a
-> > > > > > > 
-> > > > > > > Maybe:
-> > > > > > > 
-> > > > > > > Not all annotated accesses provide the same semantic as their syntactic
-> > > > > > > tags...
-> > > > > > > 
-> > > > > > > ?
-> > > > > > 
-> > > > > > Jonas, are you OK with this change?  If so, I can apply it on my next
-> > > > > > rebase.
-> > > > > > 
-> > > > > 
-> > > > > I'm ok with an extra s after semantics and a minor rephrase:
-> > > > > 
-> > > > > Not all annotated accesses provide the semantics their syntactic
-> > > > > tags would imply
-> > > > > 
-> > > > > What do you think @Boqun ?
-> > > > 
-> > > > Yes, of course! This looks good to me.
-> > > 
-> > > Please see below for what I currently have.  If there are no objections
-> > > in a day or so, I will set up these five commits for the upcoming v6.13
-> > > merge window.
-> > > 
-> > > The additional bit pointed out by Boqun [1] can be addressed by a
-> > > separate commit.
-> > > 
-> > > 							Thanx, Paul
-> > > 
-> > > [1] https://lore.kernel.org/all/ZyAmlh5GDBsqY0sZ@Boquns-Mac-mini.local/
-> > 
-> > I'm confused, did I forget to add the fix to the capitalization issue
-> > discovered by Boqun to the fixed commit? I vividly remember typing git
-> > commit add ...
+> ---
+>  .../Documentation/herd-representation.txt     |  44 ++--
+>  tools/memory-model/linux-kernel.bell          |  22 +-
+>  tools/memory-model/linux-kernel.def           | 198 +++++++++---------
+>  3 files changed, 132 insertions(+), 132 deletions(-)
 > 
-> It is quite possible that I have queued an old version of the patch.
-> Could you please check this commit on -rcu, shown below?
-> 
-> c53d54ed7e40 ("tools/memory-model: Distinguish between syntactic and semantic tags")
-> 
-> If this is the wrong one, please point me to the right one.
-> 
-> 							Thanx, Paul
-> 
-> ------------------------------------------------------------------------
-> 
-> commit c53d54ed7e40255ea0ea66dd121672fd22423326
-> Author: Jonas Oberhauser <jonas.oberhauser@huaweicloud.com>
-> Date:   Mon Sep 30 12:57:10 2024 +0200
-> 
->     tools/memory-model: Distinguish between syntactic and semantic tags
->     
->     Not all annotated accesses provide the semantics their syntactic tags
->     would imply. For example, an 'acquire tag on a write does not imply that
->     the write is finally in the Acquire set and provides acquire ordering.
->     
->     To distinguish in those cases between the syntactic tags and actual
->     sets, we capitalize the former, so 'ACQUIRE tags may be present on both
->     reads and writes, but only reads will appear in the Acquire set.
->     
->     For tags where the two concepts are the same we do not use specific
->     capitalization to make this distinction.
->     
->     Reported-by: Boqun Feng <boqun.feng@gmail.com>
->     Signed-off-by: Jonas Oberhauser <jonas.oberhauser@huaweicloud.com>
->     Signed-off-by: Paul E. McKenney <paulmck@kernel.org>
->     Reviewed-by: Boqun Feng <boqun.feng@gmail.com>
->     Tested-by: Boqun Feng <boqun.feng@gmail.com>
-> 
+> diff --git a/tools/memory-model/Documentation/herd-representation.txt b/tools/memory-model/Documentation/herd-representation.txt
+> index 7ae1ff3d3769..4e19b4f2a476 100644
+> --- a/tools/memory-model/Documentation/herd-representation.txt
+> +++ b/tools/memory-model/Documentation/herd-representation.txt
+> @@ -21,7 +21,7 @@
+>  # Note that the syntactic representation does not always match the sets and
+>  # relations in linux-kernel.cat, due to redefinitions in linux-kernel.bell and
+>  # lock.cat. For example, the po link between LKR and LKW is upgraded to an rmw
+> -# link, and W[acquire] are not included in the Acquire set.
+> +# link, and W[ACQUIRE] are not included in the Acquire set.
+>  #
+>  # Disclaimer.  The table includes representations of "add" and "and" operations;
+>  # corresponding/identical representations of "sub", "inc", "dec" and "or", "xor",
+> @@ -32,16 +32,16 @@
+>      ------------------------------------------------------------------------------
+>      |                    Non-RMW ops |                                           |
+>      ------------------------------------------------------------------------------
+> -    |                      READ_ONCE | R[once]                                   |
+> +    |                      READ_ONCE | R[ONCE]                                   |
+>      |                    atomic_read |                                           |
+> -    |                     WRITE_ONCE | W[once]                                   |
+> +    |                     WRITE_ONCE | W[ONCE]                                   |
+>      |                     atomic_set |                                           |
+> -    |               smp_load_acquire | R[acquire]                                |
+> +    |               smp_load_acquire | R[ACQUIRE]                                |
+>      |            atomic_read_acquire |                                           |
+> -    |              smp_store_release | W[release]                                |
+> +    |              smp_store_release | W[RELEASE]                                |
+>      |             atomic_set_release |                                           |
+> -    |                   smp_store_mb | W[once] ->po F[mb]                        |
+> -    |                         smp_mb | F[mb]                                     |
+> +    |                   smp_store_mb | W[ONCE] ->po F[MB]                        |
+> +    |                         smp_mb | F[MB]                                     |
+>      |                        smp_rmb | F[rmb]                                    |
+>      |                        smp_wmb | F[wmb]                                    |
+>      |          smp_mb__before_atomic | F[before-atomic]                          |
+> @@ -54,8 +54,8 @@
+>      |                  rcu_read_lock | F[rcu-lock]                               |
+>      |                rcu_read_unlock | F[rcu-unlock]                             |
+>      |                synchronize_rcu | F[sync-rcu]                               |
+> -    |                rcu_dereference | R[once]                                   |
+> -    |             rcu_assign_pointer | W[release]                                |
+> +    |                rcu_dereference | R[ONCE]                                   |
+> +    |             rcu_assign_pointer | W[RELEASE]                                |
+>      |                 srcu_read_lock | R[srcu-lock]                              |
+>      |                 srcu_down_read |                                           |
+>      |               srcu_read_unlock | W[srcu-unlock]                            |
+> @@ -65,31 +65,31 @@
+>      ------------------------------------------------------------------------------
+>      |       RMW ops w/o return value |                                           |
+>      ------------------------------------------------------------------------------
+> -    |                     atomic_add | R*[noreturn] ->rmw W*[noreturn]           |
+> +    |                     atomic_add | R*[NORETURN] ->rmw W*[NORETURN]           |
+>      |                     atomic_and |                                           |
+>      |                      spin_lock | LKR ->po LKW                              |
+>      ------------------------------------------------------------------------------
+>      |        RMW ops w/ return value |                                           |
+>      ------------------------------------------------------------------------------
+> -    |              atomic_add_return | R*[mb] ->rmw W*[mb]                       |
+> +    |              atomic_add_return | R*[MB] ->rmw W*[MB]                       |
+>      |               atomic_fetch_add |                                           |
+>      |               atomic_fetch_and |                                           |
+>      |                    atomic_xchg |                                           |
+>      |                           xchg |                                           |
+>      |            atomic_add_negative |                                           |
+> -    |      atomic_add_return_relaxed | R*[once] ->rmw W*[once]                   |
+> +    |      atomic_add_return_relaxed | R*[ONCE] ->rmw W*[ONCE]                   |
+>      |       atomic_fetch_add_relaxed |                                           |
+>      |       atomic_fetch_and_relaxed |                                           |
+>      |            atomic_xchg_relaxed |                                           |
+>      |                   xchg_relaxed |                                           |
+>      |    atomic_add_negative_relaxed |                                           |
+> -    |      atomic_add_return_acquire | R*[acquire] ->rmw W*[acquire]             |
+> +    |      atomic_add_return_acquire | R*[ACQUIRE] ->rmw W*[ACQUIRE]             |
+>      |       atomic_fetch_add_acquire |                                           |
+>      |       atomic_fetch_and_acquire |                                           |
+>      |            atomic_xchg_acquire |                                           |
+>      |                   xchg_acquire |                                           |
+>      |    atomic_add_negative_acquire |                                           |
+> -    |      atomic_add_return_release | R*[release] ->rmw W*[release]             |
+> +    |      atomic_add_return_release | R*[RELEASE] ->rmw W*[RELEASE]             |
+>      |       atomic_fetch_add_release |                                           |
+>      |       atomic_fetch_and_release |                                           |
+>      |            atomic_xchg_release |                                           |
+> @@ -98,16 +98,16 @@
+>      ------------------------------------------------------------------------------
+>      |            Conditional RMW ops |                                           |
+>      ------------------------------------------------------------------------------
+> -    |                 atomic_cmpxchg | On success: R*[mb] ->rmw W*[mb]           |
+> -    |                                | On failure: R*[mb]                        |
+> +    |                 atomic_cmpxchg | On success: R*[MB] ->rmw W*[MB]           |
+> +    |                                | On failure: R*[MB]                        |
+>      |                        cmpxchg |                                           |
+>      |              atomic_add_unless |                                           |
+> -    |         atomic_cmpxchg_relaxed | On success: R*[once] ->rmw W*[once]       |
+> -    |                                | On failure: R*[once]                      |
+> -    |         atomic_cmpxchg_acquire | On success: R*[acquire] ->rmw W*[acquire] |
+> -    |                                | On failure: R*[acquire]                   |
+> -    |         atomic_cmpxchg_release | On success: R*[release] ->rmw W*[release] |
+> -    |                                | On failure: R*[release]                   |
+> +    |         atomic_cmpxchg_relaxed | On success: R*[ONCE] ->rmw W*[ONCE]       |
+> +    |                                | On failure: R*[ONCE]                      |
+> +    |         atomic_cmpxchg_acquire | On success: R*[ACQUIRE] ->rmw W*[ACQUIRE] |
+> +    |                                | On failure: R*[ACQUIRE]                   |
+> +    |         atomic_cmpxchg_release | On success: R*[RELEASE] ->rmw W*[RELEASE] |
+> +    |                                | On failure: R*[RELEASE]                   |
+>      |                   spin_trylock | On success: LKR ->po LKW                  |
+>      |                                | On failure: LF                            |
+>      ------------------------------------------------------------------------------
 > diff --git a/tools/memory-model/linux-kernel.bell b/tools/memory-model/linux-kernel.bell
-> index 8ae47545df978..fe65998002b99 100644
+> index 8ae47545df97..fe65998002b9 100644
 > --- a/tools/memory-model/linux-kernel.bell
 > +++ b/tools/memory-model/linux-kernel.bell
 > @@ -13,18 +13,18 @@
@@ -205,7 +244,7 @@ On Wed, Nov 06, 2024 at 07:04:57AM -0800, Paul E. McKenney wrote:
 >  let Plain = M \ Marked
 >  
 > diff --git a/tools/memory-model/linux-kernel.def b/tools/memory-model/linux-kernel.def
-> index d7279a357cba0..49e402782e49c 100644
+> index d7279a357cba..49e402782e49 100644
 > --- a/tools/memory-model/linux-kernel.def
 > +++ b/tools/memory-model/linux-kernel.def
 > @@ -6,18 +6,18 @@
@@ -428,3 +467,6 @@ On Wed, Nov 06, 2024 at 07:04:57AM -0800, Paul E. McKenney wrote:
 > +atomic_fetch_andnot_relaxed(V,X) __atomic_fetch_op{ONCE}(X,&~,V)
 > +
 > +atomic_add_unless(X,V,W) __atomic_add_unless{MB}(X,V,W)
+> -- 
+> 2.34.1
+> 

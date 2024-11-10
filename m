@@ -1,91 +1,117 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pg1-f175.google.com (mail-pg1-f175.google.com [209.85.215.175])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21E8D233D6E;
-	Fri,  8 Nov 2024 18:35:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1ED0A34CC4
+	for <lkmm@lists.linux.dev>; Sun, 10 Nov 2024 15:18:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731090925; cv=none; b=niWAEdc2Qqh7+i2dloXFTesISCji+/djuXlGFUQeHHM04bTgSInLXm2pIkLBb7iNe9fJlJilOyEhhte7VZganY3Be+jp6Rb1jaYWuu1OWUto6YECfpARRVnM+PwdXF0u4UkjRtWn6gFEgd/9ojwR2ewAs/+aFTvh2R53Ei8ZQyI=
+	t=1731251881; cv=none; b=LOh7xipTnC11g76JfKQr2BpS1XxwFQ69XTIpAf+KgXp3vlwyjBwWSBPlOTJ4W/vbY4l+UbUhP07n/+6K5LFmj3o3kZYJto10P5gUHNqcEzhXG2L/opvcKoXNUXEzFj21GH/GjEFnJEQdhDVks/8cuw0f5GHQgJ556OSGS+Vz1ug=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731090925; c=relaxed/simple;
-	bh=Rcgi0WSaiAvw0zLkHN3rVnCELx/EW6YPS2PAGkjKTEQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=BZsJ4Jii77ao41NH4U1jBawLc4eKD9yYst9cv8GLa8oFEqDpB8mq4SlXx2EsvvbcLEeB9iYBjiNvD/fHuJg6T9oQVozDKGrAEfZq9ZWiFgjXahHlvVovAUARs7QGAzbM5PmEbk/jmNUvKwD7Cejqrgb+TiLYtS5Gl3rysPi4l6M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=KJBDm+xn; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1731251881; c=relaxed/simple;
+	bh=LcTbIpUtuy4Z81nMVmgyPvAqJiaUV/40H3miLAStkxY=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=a19QpBdPW4L7jYutrCD+Esytvf+VNjAyofQ2Au5RtomqMVVsRgc+ybDxzzjJRexAsKbHf2M8q7fsrU0Lk09b1Pad6hBZIbW2HK/LBVhZz9sqgwK9Lob8AO0L3hBLGzw9+UBFGQtPdzry/n01npfYKRPz+44UNeX2QVcmMOjAHpY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=aNNgG01K; arc=none smtp.client-ip=209.85.215.175
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="KJBDm+xn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6437C4CECD;
-	Fri,  8 Nov 2024 18:35:24 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1731090924;
-	bh=Rcgi0WSaiAvw0zLkHN3rVnCELx/EW6YPS2PAGkjKTEQ=;
-	h=Date:From:To:Cc:Subject:Reply-To:References:In-Reply-To:From;
-	b=KJBDm+xnwQ5zNTcsPk1XqrWdxE5gqcYc2SRl/sko1PFjoArtdgZPms8qNUnKUuYlw
-	 XXoLP47HhqoiHH6fABDs2Kh8+47JCc9NJ1InxZKINCvEpHJ20gk5suC/NGmOcBOGGu
-	 wsJ1LiIY+F2Zu0vo4ewIExPkZbrq+V+T1dS6Dos8LKMjOEZIVBfwShg7TbsmuTnKVJ
-	 d7ZDw/+BVOGaWjvA2vj1u7FJ+RHInkc/EYjGP5/CSbMtCWid5JAvUYDSZl3O7c362j
-	 Uqa/QecCQzUKaQ87c2AHME8Z2whdp7JrTZ2LpJOYmo7J/kiFLC2s1wRoRekmZwOCjo
-	 lVw/tCfko9JIw==
-Received: by paulmck-ThinkPad-P17-Gen-1.home (Postfix, from userid 1000)
-	id 52AC2CE09E4; Fri,  8 Nov 2024 10:35:24 -0800 (PST)
-Date: Fri, 8 Nov 2024 10:35:24 -0800
-From: "Paul E. McKenney" <paulmck@kernel.org>
-To: Jonas Oberhauser <jonas.oberhauser@huaweicloud.com>
-Cc: Akira Yokosawa <akiyks@gmail.com>, boqun.feng@gmail.com,
-	dhowells@redhat.com, dlustig@nvidia.com, frederic@kernel.org,
-	hernan.poncedeleon@huaweicloud.com, j.alglave@ucl.ac.uk,
-	joel@joelfernandes.org, linux-kernel@vger.kernel.org,
-	lkmm@lists.linux.dev, luc.maranget@inria.fr, npiggin@gmail.com,
-	parri.andrea@gmail.com, peterz@infradead.org,
-	quic_neeraju@quicinc.com, stern@rowland.harvard.edu,
-	urezki@gmail.com, will@kernel.org
-Subject: Re: [PATCH v4 5/5] tools/memory-model: Distinguish between syntactic
- and semantic tags
-Message-ID: <245e4781-80b2-4e21-b4de-51ffeac9cc39@paulmck-laptop>
-Reply-To: paulmck@kernel.org
-References: <3d72b92a-4935-425c-abd5-ec4631baef2c@huaweicloud.com>
- <46d291da-ddb9-43b9-bd93-b81aacd5e29c@gmail.com>
- <7542399d-87c5-4f1c-9d09-6a6f96d148da@huaweicloud.com>
- <a278c4a9-eae2-491e-8f13-5a87a25dad26@gmail.com>
- <f1d7a295-ad24-41c8-a431-7d6492d51097@huaweicloud.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="aNNgG01K"
+Received: by mail-pg1-f175.google.com with SMTP id 41be03b00d2f7-7ea76a12c32so2765995a12.1
+        for <lkmm@lists.linux.dev>; Sun, 10 Nov 2024 07:18:00 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1731251879; x=1731856679; darn=lists.linux.dev;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:subject:from:user-agent:mime-version:date:message-id:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=VCteRcxFW73jIBTSDNFvUke7Cd4VTBcnPuE7xVCRgco=;
+        b=aNNgG01KzsRyiPrRnRkXX+AUa9PSESr/3Z8QWrqcm683aeSl0B9bhn8Oz7t8vQkfBx
+         dnKBQr+2crRBE3P6EZZyN9Ql0dtSodXErRQzZzDWm+v7LocI0xnUUI3O9U9pPhsTTfBA
+         rD/I2ITB3ycVeMOH3pw/CeSGaFQ8j+/jRodiBJ7qv8qKPwXBPcplZb7ZKvQmtEhvBi16
+         mbl4KyvTR819UnyQNJdf3PhT+zVjczM8+SiI33k9jxIkdXScddbHNn8RF//WcJLODY8f
+         5HcPyIpU1A/kipwy5EhBMlYutQwRgLRdeaPcTdQBnshwI+L8oonW9wzc7UQI+Thwv7Iy
+         bz1w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1731251879; x=1731856679;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:subject:from:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=VCteRcxFW73jIBTSDNFvUke7Cd4VTBcnPuE7xVCRgco=;
+        b=fu0NbXeI+G60VHjHo2IOsyjDiwezre42xAqWT8Or9ls1354yrx7RF8iPkt+DwLEDBj
+         9BK80Ks3X31mfZro0balp2MRJFQyROyxm/Nth6147Dn6khRHxg5t7OQ1H0KFRjVDevZb
+         NOgnUBeMh8ZTUIUtVvGN9MMxKydHJapxGBaLUc70miMjY8QP9QfB3dH65xTov708n0m6
+         UmNzpbdsjmCugxezLXZ2AsdBcejh7g2ea5mb6ANF74PGcYgMNXwW83oSslERJmVrC8EM
+         z7sp8ZkOp709f2mwXE+D0dy1fd1foAazz6W/RY8PSAUqkxocIPxA6NbQY9Jg+z1gZ9oR
+         5+Lg==
+X-Forwarded-Encrypted: i=1; AJvYcCWPLkh13f/peO2d4QV1R6sKLz7vl/1jSjPtIwIeq8LPfRXfL6DEkinyAHnU4GT7Iv0A9OgB@lists.linux.dev
+X-Gm-Message-State: AOJu0Yy9Oy8vDddFYds7HtHRRv2J3GkIHoPTsBYFqn6/3Cmer/4bxRrU
+	9kWwj2aEwA2Q+q2qc1deV82h1wQFe1bGF5E4Y7qCgWyePowqylLV
+X-Google-Smtp-Source: AGHT+IH+vJY8EncW+paA866s5okR7BWgRo7IgGmpsIQm/xAH4m0C9WN1WMzLduMlet1VhARiDQ5F3Q==
+X-Received: by 2002:a17:90b:4ac8:b0:2e2:bd7a:71ea with SMTP id 98e67ed59e1d1-2e9b16558admr12300902a91.8.1731251879435;
+        Sun, 10 Nov 2024 07:17:59 -0800 (PST)
+Received: from [10.0.2.15] (KD106167137155.ppp-bb.dion.ne.jp. [106.167.137.155])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-21177e6a471sm60430325ad.233.2024.11.10.07.17.55
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 10 Nov 2024 07:17:59 -0800 (PST)
+Message-ID: <ab79531a-5b01-49de-874e-718cb59332a2@gmail.com>
+Date: Mon, 11 Nov 2024 00:17:54 +0900
 Precedence: bulk
 X-Mailing-List: lkmm@lists.linux.dev
 List-Id: <lkmm.lists.linux.dev>
 List-Subscribe: <mailto:lkmm+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:lkmm+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <f1d7a295-ad24-41c8-a431-7d6492d51097@huaweicloud.com>
+User-Agent: Mozilla Thunderbird
+From: Akira Yokosawa <akiyks@gmail.com>
+Subject: Re: [PATCH v4 0/5] tools/memory-model: Define more of LKMM in
+ tools/memory-model
+To: paulmck@kernel.org, luc.maranget@inria.fr
+Cc: stern@rowland.harvard.edu, parri.andrea@gmail.com, will@kernel.org,
+ peterz@infradead.org, boqun.feng@gmail.com, npiggin@gmail.com,
+ dhowells@redhat.com, j.alglave@ucl.ac.uk, dlustig@nvidia.com,
+ joel@joelfernandes.org, urezki@gmail.com, quic_neeraju@quicinc.com,
+ frederic@kernel.org, linux-kernel@vger.kernel.org, lkmm@lists.linux.dev,
+ hernan.poncedeleon@huaweicloud.com,
+ Jonas Oberhauser <jonas.oberhauser@huaweicloud.com>,
+ Akira Yokosawa <akiyks@gmail.com>
+References: <20240930105710.383284-1-jonas.oberhauser@huaweicloud.com>
+ <70907739-56b9-4712-a1db-e55161c2a8d6@paulmck-laptop>
+Content-Language: en-US
+In-Reply-To: <70907739-56b9-4712-a1db-e55161c2a8d6@paulmck-laptop>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Fri, Nov 08, 2024 at 12:07:43PM +0100, Jonas Oberhauser wrote:
-> 
-> 
-> Am 11/8/2024 um 11:12 AM schrieb Akira Yokosawa:
-> > On Fri, 8 Nov 2024 10:10:48 +0100, Jonas Oberhauser wrote:
-> > > I hadn't done that before (because I thought I should not add other people's tags
-> > > especially if they hadn't reviewed that specific revision), so we may be missing
-> > > *a lot* of reviewed-by...
-> > > 
-> > 
-> > Section "Using Reported-by:, Tested-by:, Reviewed-by:, Suggested-by: and Fixes:"
-> > of Documentation/process/submitting-patches.rst has this paragraph:
-> > 
-> >    Both Tested-by and Reviewed-by tags, once received on mailing list from tester
-> >    or reviewer, should be added by author to the applicable patches when sending
-> >    next versions.  However if the patch has changed substantially in following
-> >    version, these tags might not be applicable anymore and thus should be removed.
-> >    Usually removal of someone's Tested-by or Reviewed-by tags should be mentioned
-> >    in the patch changelog (after the '---' separator).
-> > 
-> > Does this help you?
-> 
-> Thanks so much, it does. My apologies to everyone whose reviewed-by tag I
-> failed to add :(
-> 
-> I should have read that more document more carefully.
+Hi Paul and Luc,
 
-No worries!  The important part is your changes.  The tags are easy
-to add.  And now you know.  ;-)
+On Mon, 28 Oct 2024 13:16:23 -0700, Paul E. McKenney wrote:
+> On Mon, Sep 30, 2024 at 12:57:05PM +0200, Jonas Oberhauser wrote:
+[...]
+>> This second step (comprising patches 4 and 5) is incompatible with the
+>> current herd7 implementation, since herd7 uses hardcoded tag names to decide
+>> what to do with LKMM; therefore, the newly introduced syntactic tags will be
+>> ignored or processed incorrectly by herd7.
+> 
+> Thank you, Jonas!
+> 
+> Queued for further review and testing.  This does need at least an ack to
+> proceed to mainline (hint to LKMM maintainers).
 
-							Thanx, Paul
+Paul's lkmm.2024.11.09a branch carries these 7 commits:
+
+  1  tools/memory-model: Add atomic_and()/or()/xor() and add_negative
+  2  tools/memory-model: Add atomic_andnot() with its variants
+  3  tools/memory-model: Legitimize current use of tags in LKMM macros
+  4  tools/memory-model: Define applicable tags on operation in tools/...
+  5  tools/memory-model: Define effect of Mb tags on RMWs in tools/...
+  6  tools/memory-model: Switch to softcoded herd7 tags
+  7  tools/memory-model: Distinguish between syntactic and semantic tags
+
+As the first commit is already incompatible with released versions of herd7,
+Paul will have nothing to upstream for v6.13 unless we see a new release of
+herdtoolds7 whose herd7 has those atomic RMW bitwise ops and lkmmv2 variant
+support in time for the upcoming merge window.
+
+Luc, I have no idea of herdtools7's release procedure, but is there any
+chance for us to see such a release of herdtools7, preferably by the end of
+November?
+
+        Thanks, Akira

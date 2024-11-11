@@ -1,110 +1,115 @@
-Received: from mail-ej1-f46.google.com (mail-ej1-f46.google.com [209.85.218.46])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp-out.freemail.hu (fmfe20.freemail.hu [46.107.16.225])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3859713A250
-	for <lkmm@lists.linux.dev>; Mon, 11 Nov 2024 22:01:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48DC918A6B2
+	for <lkmm@lists.linux.dev>; Mon, 11 Nov 2024 23:32:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=46.107.16.225
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731362463; cv=none; b=MxgS2QnAKv9ST/FbRmPqseNin0V1oXoSSWubOGuv2JnaRgQOZj42toDAHbS2/QUzqjJLBAMM64hioi7sr3lhLHCi7G0LgG59+8ycrpMnncjBl+N+T68rinSq50EMCVO0iT0aMMHTD2lFxex/VL4hbujiof0LSaKslzayvvCqirA=
+	t=1731367930; cv=none; b=cCLqQHuyFnW2Q7ZGO6s563BT7qsqgDN8CSBHF93ZQR3np0Cdxz6PFRpI1Ny+N6ot4tPCLt/n8oBoY5W1cms/5DG2c2Rjj4jcQJqeRtz0rWxNjS8PBGVbMervpnbvjvAul0uNVJyHU7hYQestmjHbjMwnotHMfJUKmY0EILyJ7n4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731362463; c=relaxed/simple;
-	bh=o1ZuquSTxhS5616xdtKNJOYl87d15TuDgoYPTqWYoEM=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Ab01TT+ZZDIqnQWEt/6sX6QCJiLmA+XvYBxytmxfcPldYAsvA26l+fnkP7fqtZnKcYnwHcNiAQUFfEG8acpi6mIi13j9iS20x+gERqLvcCulgNVvb7WB0cTnM85jxhx8/J2KMf/He/WDXn32giPii5IyKianqqzN7WUL2ZqM8aU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux-foundation.org; spf=pass smtp.mailfrom=linuxfoundation.org; dkim=pass (1024-bit key) header.d=linux-foundation.org header.i=@linux-foundation.org header.b=P3kOr2Cb; arc=none smtp.client-ip=209.85.218.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux-foundation.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linuxfoundation.org
+	s=arc-20240116; t=1731367930; c=relaxed/simple;
+	bh=PZN8H+nCNm6d6eEGz6KZqWH4rX1zk/SeUw4msKerftI=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=BsJ0BRwOO76zI8JcFrUYClIksZPIbAuP478UafsjPsEnHhU7dSuSIMLp9HWoHK5fCnV7VeWAJ4s2mvUghrQhb2Jsztb9iecRcYiiCHL5/qWyvMpLABB2Xa/2f8feOxfOLsHjTywi+EAnn6Pz5IoDGQWD10QNK59z6o4OE+Iaua4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=freemail.hu; spf=pass smtp.mailfrom=freemail.hu; dkim=fail (2048-bit key) header.d=freemail.hu header.i=@freemail.hu header.b=jHeGS14M reason="signature verification failed"; arc=none smtp.client-ip=46.107.16.225
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=freemail.hu
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=freemail.hu
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux-foundation.org header.i=@linux-foundation.org header.b="P3kOr2Cb"
-Received: by mail-ej1-f46.google.com with SMTP id a640c23a62f3a-a9eb68e0bd1so691998366b.3
-        for <lkmm@lists.linux.dev>; Mon, 11 Nov 2024 14:01:00 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linux-foundation.org; s=google; t=1731362459; x=1731967259; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Nw7jmBqAAuw6PQ4Oic9brWgvBuX8kaVtKrs+xC4V9TI=;
-        b=P3kOr2Cbd1JAMU7186MpphYOdHL+GygkT389ogI2M9ArFfe/VM5zXFOkHz/UPECnVf
-         tdzLrY+ayQRtg2vVIToWs8iSw+zqz/R5MUHexgAYJ7GVHO8JSNgD1uPlhjEYdnOO4DFc
-         72eVUfUgDITjxaH0VcORdbLhPi6a6uCzIsg50=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1731362459; x=1731967259;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=Nw7jmBqAAuw6PQ4Oic9brWgvBuX8kaVtKrs+xC4V9TI=;
-        b=KLAT9muw5Ni2VMizanFtVHtN78UYG5fu78k++KYOvFFQf5SfC+Y8XEPvG3PrfnlyEW
-         hAL/xSIreOGimGyQ49vsKJtEI1yHVO9yamJrS0vVihmjKQyk4qgEC6hzgE2TwQCmO3nm
-         1LB4IWZsB6+uld9KzZf/4tlgCsJshXAWH7GWvFyw1qIdX4cuIYMnM3EKMnh7o/8g22Uc
-         GyCd1AFWtxZ5MKTW2b2D//DWIEyu2EYAVG1wSzUn3Cr5gH2f7K2eYtHBLHbTItICQGuS
-         Yhi7bP8HIznIgNeZ3WmkOnhza4Da6aW0Gl3kSibgBfNAWBODdVSqfmr53tiUi04r0DoH
-         K/4g==
-X-Forwarded-Encrypted: i=1; AJvYcCVgT4U0ISHDm17BG/1Bkwrrzz7HKIu3nAZwOXszyDW6ciP0l+oRoQJ6hhkGDu5MojU/5lSw@lists.linux.dev
-X-Gm-Message-State: AOJu0Yw19tY2U9j+kSm+/l6khlOMyT57QWi8RNgUsbav/3yWFeRZO7Zr
-	gfi4MOuuzoYeRGvuV3mmeZ4ea+7xurYf9/pn0zx4TA5pegjpTH3A009GKAbvLu19LZyuW+CgE2L
-	r4dg=
-X-Google-Smtp-Source: AGHT+IE9oJ0N4sa9TFPRSK9zr99Z1atv7xKihKvFDCOpsd2TXydnlXB5vNBHA2bMhhi3JPSzogrBog==
-X-Received: by 2002:a17:907:a4b:b0:a9a:dfa5:47d2 with SMTP id a640c23a62f3a-a9ef0019726mr1374768666b.59.1731362459432;
-        Mon, 11 Nov 2024 14:00:59 -0800 (PST)
-Received: from mail-ej1-f49.google.com (mail-ej1-f49.google.com. [209.85.218.49])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a9ee0def47esm631125366b.160.2024.11.11.14.00.58
-        for <lkmm@lists.linux.dev>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 11 Nov 2024 14:00:58 -0800 (PST)
-Received: by mail-ej1-f49.google.com with SMTP id a640c23a62f3a-a9eb68e0bd1so691996466b.3
-        for <lkmm@lists.linux.dev>; Mon, 11 Nov 2024 14:00:58 -0800 (PST)
-X-Forwarded-Encrypted: i=1; AJvYcCVQwnzMT15A3eiv+mAqtQJfZ8OfANPjvUTjPaafg6whNkX5rQQ42uxFasijKNIgLiT3zljq@lists.linux.dev
-X-Received: by 2002:a17:907:7e8f:b0:a9a:3c90:60c5 with SMTP id
- a640c23a62f3a-a9eeff38583mr1475828766b.28.1731362458220; Mon, 11 Nov 2024
- 14:00:58 -0800 (PST)
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=freemail.hu header.i=@freemail.hu header.b="jHeGS14M"
+Received: from [192.168.0.16] (catv-178-48-208-49.catv.fixed.vodafone.hu [178.48.208.49])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	(No client certificate requested)
+	by smtp.freemail.hu (Postfix) with ESMTPSA id 4XnQYJ4X6mzC5t;
+	Tue, 12 Nov 2024 00:21:56 +0100 (CET)
+Message-ID: <705daf58-dd30-4935-9864-6489b9b90a35@freemail.hu>
+Date: Tue, 12 Nov 2024 00:21:51 +0100
 Precedence: bulk
 X-Mailing-List: lkmm@lists.linux.dev
 List-Id: <lkmm.lists.linux.dev>
 List-Subscribe: <mailto:lkmm+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:lkmm+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20241111164248.1060-1-egyszeregy@freemail.hu> <69be42c9-331f-4fb5-a6ae-c2932ada0a47@paulmck-laptop>
- <8925322d-1983-4e35-82f9-d8b86d32e6a6@freemail.hu> <1a6342c9-e316-4c78-9a07-84f45cbebb54@paulmck-laptop>
- <ec6e297b-02fb-4f57-9fc1-47751106a7d2@freemail.hu> <5acaaaa0-7c17-4991-aff6-8ea293667654@paulmck-laptop>
- <a42da186-195c-40af-b4ee-0eaf6672cf2c@freemail.hu>
-In-Reply-To: <a42da186-195c-40af-b4ee-0eaf6672cf2c@freemail.hu>
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Date: Mon, 11 Nov 2024 14:00:42 -0800
-X-Gmail-Original-Message-ID: <CAHk-=wiEuh613GjBefTRe-_Eha1X1GoU=1nLt65uccSBC8Ne=A@mail.gmail.com>
-Message-ID: <CAHk-=wiEuh613GjBefTRe-_Eha1X1GoU=1nLt65uccSBC8Ne=A@mail.gmail.com>
+User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH] tools/memory-model: Fix litmus-tests's file names for
  case-insensitive filesystem.
-To: =?UTF-8?Q?Sz=C5=91ke_Benjamin?= <egyszeregy@freemail.hu>
-Cc: paulmck@kernel.org, stern@rowland.harvard.edu, parri.andrea@gmail.com, 
-	will@kernel.org, peterz@infradead.org, boqun.feng@gmail.com, 
-	npiggin@gmail.com, dhowells@redhat.com, j.alglave@ucl.ac.uk, 
-	luc.maranget@inria.fr, akiyks@gmail.com, dlustig@nvidia.com, 
-	joel@joelfernandes.org, linux-kernel@vger.kernel.org, 
-	linux-arch@vger.kernel.org, lkmm@lists.linux.dev
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+To: Linus Torvalds <torvalds@linux-foundation.org>
+Cc: paulmck@kernel.org, stern@rowland.harvard.edu, parri.andrea@gmail.com,
+ will@kernel.org, peterz@infradead.org, boqun.feng@gmail.com,
+ npiggin@gmail.com, dhowells@redhat.com, j.alglave@ucl.ac.uk,
+ luc.maranget@inria.fr, akiyks@gmail.com, dlustig@nvidia.com,
+ joel@joelfernandes.org, linux-kernel@vger.kernel.org,
+ linux-arch@vger.kernel.org, lkmm@lists.linux.dev
+References: <20241111164248.1060-1-egyszeregy@freemail.hu>
+ <69be42c9-331f-4fb5-a6ae-c2932ada0a47@paulmck-laptop>
+ <8925322d-1983-4e35-82f9-d8b86d32e6a6@freemail.hu>
+ <1a6342c9-e316-4c78-9a07-84f45cbebb54@paulmck-laptop>
+ <ec6e297b-02fb-4f57-9fc1-47751106a7d2@freemail.hu>
+ <5acaaaa0-7c17-4991-aff6-8ea293667654@paulmck-laptop>
+ <a42da186-195c-40af-b4ee-0eaf6672cf2c@freemail.hu>
+ <CAHk-=wiEuh613GjBefTRe-_Eha1X1GoU=1nLt65uccSBC8Ne=A@mail.gmail.com>
+Content-Language: hu
+From: =?UTF-8?Q?Sz=C5=91ke_Benjamin?= <egyszeregy@freemail.hu>
+In-Reply-To: <CAHk-=wiEuh613GjBefTRe-_Eha1X1GoU=1nLt65uccSBC8Ne=A@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=simple/relaxed; t=1731367317;
+	s=20181004; d=freemail.hu;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:In-Reply-To:Content-Type:Content-Transfer-Encoding;
+	l=1846; bh=YKWGWpohuX4Fzq7p1VLZ81e0IBXFrbXOkVkl0oiKp58=;
+	b=jHeGS14MPHGxHqJ6u7G+KxtAcAClfSMwnUbsQM5tmT4KOlQce3l21TWCljprC/hO
+	gD9Ajtw5gUOZCRZPH8rz2gY+xIY2CTBl39C2FMj0TEA8hMCIF+L925jI6dDwumps4rn
+	32E3GsNyaymUhW5EGKEtoQBvz0nyXDMCID9rk85LGEy4zTiRGhnagwMmJ4FeyDTkcfZ
+	iIv5enA6C4lKrbyp7neiHsZULlRkPNg4110dGJ251SnA/qO6v8PmMOtaarkS+eN56uv
+	Hf8UK+Fd1u5aBKPE9KGIQqkwmg9ThZpMRz598HI4JR4TU+DC1EkpgnZxsTEj07w7MWb
+	AOm7KdXbBQ==
 
-On Mon, 11 Nov 2024 at 13:15, Sz=C5=91ke Benjamin <egyszeregy@freemail.hu> =
-wrote:
->
-> There is a technical issue in the Linux kernel source tree's file naming/=
-styles
-> in git clone command on case-insensitive filesystem.
+2024. 11. 11. 23:00 keltezéssel, Linus Torvalds írta:
+> On Mon, 11 Nov 2024 at 13:15, Szőke Benjamin <egyszeregy@freemail.hu> wrote:
+>>
+>> There is a technical issue in the Linux kernel source tree's file naming/styles
+>> in git clone command on case-insensitive filesystem.
+> 
+> No.
+> 
+> This is entirely your problem.
+> 
+> The kernel build does not work, and is not intended to work on broken setups.
+> 
+> If you have a case-insensitive filesystem, you get to keep both broken parts.
+> 
+> I actively hate case-insensitive filesystems. It's a broken model in
+> so many ways. I will not lift a finger to try to help that
+> braindamaged setup.
+> 
+> "Here's a nickel, Kid. Go buy yourself a real computer"
+> 
+>               Linus
 
-No.
 
-This is entirely your problem.
+In this patch my goal is to improve Linux kernel codebase to able to edit/coding 
+in any platform, in an IDE which has a modern GUI.
 
-The kernel build does not work, and is not intended to work on broken setup=
-s.
+Chillout, i am not so stupid to compile kernel on this "braindamaged setup", I 
+just like to edit the code and manage it by git commands.
 
-If you have a case-insensitive filesystem, you get to keep both broken part=
-s.
+So, this is a tipical Braindamaged setup in 2024 for Generation of a half of Y 
+(like me), Z and Alpha developers.
 
-I actively hate case-insensitive filesystems. It's a broken model in
-so many ways. I will not lift a finger to try to help that
-braindamaged setup.
+Windows or MacOS system
+- Visual Studio Code for coding
+     - Git for manage kernel source
+     - IntelliSense in coding
+     - Live coding with other developers
 
-"Here's a nickel, Kid. Go buy yourself a real computer"
+Linux remote server
+- Visual Studio Code remote SSH extension/connection for Linux server
+     - Sync kernel workdir with remote Ubuntu/Debian/RHEL Linux server
+     - Remote SSH compile for X86_64, ARM64 etc ...
+     - Download the build result
 
-             Linus
+Instead of Visual Studio Code it can be possible to use JetBrains, Eclipse and 
+so on any other modern IDE. The actual limitation is only, that there is a 
+filename issue in the Linux kernel source with 
+"Z6.0+pooncelock+poonceLock+pombonce.litmus", why git clone is failed to work 
+well in this case-insensitive OSs.

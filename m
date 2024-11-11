@@ -1,106 +1,45 @@
-Received: from mail-qv1-f50.google.com (mail-qv1-f50.google.com [209.85.219.50])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp-out.freemail.hu (fmfe06.freemail.hu [46.107.16.199])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BB34165F1D
-	for <lkmm@lists.linux.dev>; Mon, 11 Nov 2024 21:23:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC23F16DC0E
+	for <lkmm@lists.linux.dev>; Mon, 11 Nov 2024 21:39:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=46.107.16.199
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731360227; cv=none; b=g/UEXusEH4aT21ya2avzITWDm5R3XYOpdKvIzZXZlUNOF+l/YTJKIOdcTaOkhws4LhL7L+uyOumn/pO2uQcxbg8iIMHRF5ehOqtIczIv6F3Zm27d6kDNlG1gFPX+250+dR+AH3AleVB/PkmjlnOy4GgisO4DGsH9zIY1K63jtnE=
+	t=1731361161; cv=none; b=CPGxh8oSp+ORKRvvqiCBdMnw4Aj5P2J9B6OJ64ylAJbg6+rbBFgDNgU/eJh6AVRFagZAoCAGmXsg1D+xQsE/83I5K07f8acTaeheo6pOsJlyNPlLytyH/+GzrY2PlpoXeCj7eL0zeK53i9dtiHgSKmwa/c2bLisgbVgzh2dG9pw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731360227; c=relaxed/simple;
-	bh=tR3ugVURNPnUdfAc/inSHkYJXIyC4Timb6Eya1tPMGQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=RM7xeZOle7u+5HibtIrQpuSmxaC31W8wISUo8Zo4fK8twIcfDOmWIZcBCBzomYRUzrCTHW0HhHkYnFCOfOG42N0sXOk1TMi8dBuXKTVgQG2rdD4L2ncvTjylmHmWfR3/dEXXFFBBVKgqVBcmcFDv2MPc+gmhreFiOR+YucQt+7g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=fEtEwo+D; arc=none smtp.client-ip=209.85.219.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1731361161; c=relaxed/simple;
+	bh=7mtrYbKX1PzvX0aWs2QT3B2Csk5pIZ87YKCO3xMdJCk=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=U+eq+g5S2Cb4ZhqQok/2TYRlpi/0FQ5oiR/2A6akGTvc+BedDwO1NZHw9gZttVSEKb7r0ss0ZrgXRMlL8F2WiAAxJ6L5HZ9Yv76E5uLeso+q/cpXyxke5MjwAjzXGDGpQjhhWWaEJ7HFlwb0N3mOlibrbyDJW7ctRNQejX2mIBc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=freemail.hu; spf=pass smtp.mailfrom=freemail.hu; dkim=fail (2048-bit key) header.d=freemail.hu header.i=@freemail.hu header.b=Mgw4HU9T reason="signature verification failed"; arc=none smtp.client-ip=46.107.16.199
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=freemail.hu
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=freemail.hu
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fEtEwo+D"
-Received: by mail-qv1-f50.google.com with SMTP id 6a1803df08f44-6d18dff41cdso29167266d6.0
-        for <lkmm@lists.linux.dev>; Mon, 11 Nov 2024 13:23:45 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1731360224; x=1731965024; darn=lists.linux.dev;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :feedback-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=7WTh3etYHVX1kIAwWYPPB2h07KISjB/VnFThtU8FCdY=;
-        b=fEtEwo+Dm6jh+vVzhXWmjmdc2Hu3f9j06VDVihzRopJ4t4lKbKbIYbnDW/PLssN1co
-         1ZxWV31F1oo/svmm3k5dzSFIkHbwU89QhtUpzq0IRANV3DIy+W6lapBEBRZYwnmu5L0v
-         Fq4XIifVQdFkFFNsZDDpXSIl5wHIzyBfxlOwjGVFThATlHLEVatzstJUN8v84iXrURlU
-         qU9KK0dlDfi3cGk2wdWG/t8wrvpIkpNCDWJNRVCUbSYKtIubjNgDDemGt/1ynwDXe3sJ
-         ioOpql++aYFLZzwTPGHDGAwqf1IjWtpMn7iQnAFQYFHr2/9gTCARaSQmK91jsMNT0CgL
-         OPxA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1731360224; x=1731965024;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :feedback-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=7WTh3etYHVX1kIAwWYPPB2h07KISjB/VnFThtU8FCdY=;
-        b=ug6qEMEi052RZr2qLlsp+2ExTPcp5b1paS7kZs41/O6D2+7HeAbDZYn4CarHntbS/l
-         Pb6L9wPchBPtIyEiVA2GLV9Ovxr+KOcYsN7qK1UHHRxPtLN+jMMhVz6s7uy3AtjPdl8P
-         E6D2imOee0aI1rPcm+gFTM14MXGzUTM/Us4RpBiZw9fcHSoOi7ai7PAy+/9wDKTxYDbs
-         4qH7pd3FMnFeQfXlrXlMqYyTpFWcvj03FwSZjgpsC6JiQMk1IU3GMW5eajIlKJM7DA4p
-         qPJjSUGj93j0zciyVxjDGLZX6+SDmOAlxNSjo0TSVnJAZoBMcnjMUbb5E3S50dDsqb0q
-         LXgw==
-X-Forwarded-Encrypted: i=1; AJvYcCUJ9Y0qcIUIo/zGiTSDNo28/FupJeSlB/BZkZou045/flignuDpYTpsf6Q0JWwQVeoVxkA8@lists.linux.dev
-X-Gm-Message-State: AOJu0YwoX/tZuYS7DkLnYmrLwmGg6K7/KDdTd/KTOQAv22zTzl3Hrz/l
-	ZD3zXJ5IJ7cRU9VGMb2wzytWnixYz2tl3A4nJYK3ZqkwLtsTdof6
-X-Google-Smtp-Source: AGHT+IEEG6aLyjaDYPw6dRe3Uxi4XpCjGXKAS4XeWN7/G/xShQ3mQ8cTCqI0wW7xz6MD1JLqdRHbZg==
-X-Received: by 2002:a05:6214:5c4a:b0:6d3:5ca6:b3f6 with SMTP id 6a1803df08f44-6d39e1f1f5fmr174864526d6.45.1731360224071;
-        Mon, 11 Nov 2024 13:23:44 -0800 (PST)
-Received: from fauth-a2-smtp.messagingengine.com (fauth-a2-smtp.messagingengine.com. [103.168.172.201])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-6d3961f5940sm64033516d6.49.2024.11.11.13.23.43
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 11 Nov 2024 13:23:43 -0800 (PST)
-Received: from phl-compute-11.internal (phl-compute-11.phl.internal [10.202.2.51])
-	by mailfauth.phl.internal (Postfix) with ESMTP id 1D2021200043;
-	Mon, 11 Nov 2024 16:23:43 -0500 (EST)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-11.internal (MEProxy); Mon, 11 Nov 2024 16:23:43 -0500
-X-ME-Sender: <xms:33UyZ71UU9wIOqEuY-HNOOzFk9ykYa8FwjEX-nSm9ecULG0vGMOPpQ>
-    <xme:33UyZ6H-zvmbPKw2ORdcFGSzSCIBrjb5CFMWND0-ty-Ax0O-22CNX9vY1pcBTGg-M
-    dKVkTH57NuEXjtI2g>
-X-ME-Received: <xmr:33UyZ75os6fe3azB0c3haRL1MB6TZJOmPb79Gm7i7GG8je4msMZOTiURm0gsSA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddruddvgddugeejucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
-    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvve
-    fukfhfgggtugfgjgesthekredttddtudenucfhrhhomhepuehoqhhunhcuhfgvnhhguceo
-    sghoqhhunhdrfhgvnhhgsehgmhgrihhlrdgtohhmqeenucggtffrrghtthgvrhhnpedtud
-    euffeiheeltdefjedtgeejgeefteffjeeglefguefgueffueehueekfedtleenucffohhm
-    rghinheprghpphhlvgdrtghomhdpmhhitghrohhsohhfthdrtghomhdphihouhhtuhgsvg
-    drtghomhdpfhhrvggvuggvshhkthhophdrohhrghdpkhgvrhhnvghlrdhorhhgnecuvehl
-    uhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepsghoqhhunhdomh
-    gvshhmthhprghuthhhphgvrhhsohhnrghlihhthidqieelvdeghedtieegqddujeejkeeh
-    heehvddqsghoqhhunhdrfhgvnhhgpeepghhmrghilhdrtghomhesfhhigihmvgdrnhgrmh
-    gvpdhnsggprhgtphhtthhopedukedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohep
-    vghghihsiigvrhgvghihsehfrhgvvghmrghilhdrhhhupdhrtghpthhtohepphgruhhlmh
-    gtkheskhgvrhhnvghlrdhorhhgpdhrtghpthhtohepshhtvghrnhesrhhofihlrghnugdr
-    hhgrrhhvrghrugdrvgguuhdprhgtphhtthhopehprghrrhhirdgrnhgurhgvrgesghhmrg
-    hilhdrtghomhdprhgtphhtthhopeifihhllheskhgvrhhnvghlrdhorhhgpdhrtghpthht
-    ohepphgvthgvrhiisehinhhfrhgruggvrggurdhorhhgpdhrtghpthhtohepnhhpihhggh
-    hinhesghhmrghilhdrtghomhdprhgtphhtthhopeguhhhofigvlhhlshesrhgvughhrght
-    rdgtohhmpdhrtghpthhtohepjhdrrghlghhlrghvvgesuhgtlhdrrggtrdhukh
-X-ME-Proxy: <xmx:33UyZw25iS9Ci228xSQ1hqdIQxkcdS9U6hABUByefbW5mhhz5SHWng>
-    <xmx:33UyZ-E8JRTEQ4eYoH0YAW78vkWlrHiPk82WedTunpE1c_phq-FJiw>
-    <xmx:33UyZx-u38aucXHFOQ8Tu8asUs1nrXGJIXqfkhFnsy3Fcg7bY36gtQ>
-    <xmx:33UyZ7mO3nybiHPE2q5QEjQdE1gyDNaSIAMc-9t6vopo8LX7prpGLA>
-    <xmx:33UyZ6HHOSgA9v76EY0NyU6FA8xmA5HW4au5CN_vO-6NK05kgsCGh8jd>
-Feedback-ID: iad51458e:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 11 Nov 2024 16:23:42 -0500 (EST)
-Date: Mon, 11 Nov 2024 13:23:41 -0800
-From: Boqun Feng <boqun.feng@gmail.com>
-To: =?iso-8859-1?Q?Sz=22oke?= Benjamin <egyszeregy@freemail.hu>
-Cc: paulmck@kernel.org, stern@rowland.harvard.edu, parri.andrea@gmail.com,
-	will@kernel.org, peterz@infradead.org, npiggin@gmail.com,
-	dhowells@redhat.com, j.alglave@ucl.ac.uk, luc.maranget@inria.fr,
-	akiyks@gmail.com, dlustig@nvidia.com, joel@joelfernandes.org,
-	linux-kernel@vger.kernel.org, linux-arch@vger.kernel.org,
-	lkmm@lists.linux.dev, torvalds@linux-foundation.org
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=freemail.hu header.i=@freemail.hu header.b="Mgw4HU9T"
+Received: from [192.168.0.16] (catv-178-48-208-49.catv.fixed.vodafone.hu [178.48.208.49])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	(No client certificate requested)
+	by smtp.freemail.hu (Postfix) with ESMTPSA id 4XnNGp364BzFLy;
+	Mon, 11 Nov 2024 22:39:14 +0100 (CET)
+Message-ID: <10ffb1e1-163d-4e30-9be3-0f229f3b7492@freemail.hu>
+Date: Mon, 11 Nov 2024 22:39:07 +0100
+Precedence: bulk
+X-Mailing-List: lkmm@lists.linux.dev
+List-Id: <lkmm.lists.linux.dev>
+List-Subscribe: <mailto:lkmm+subscribe@lists.linux.dev>
+List-Unsubscribe: <mailto:lkmm+unsubscribe@lists.linux.dev>
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH] tools/memory-model: Fix litmus-tests's file names for
  case-insensitive filesystem.
-Message-ID: <ZzJ13eM2SNNB3fl7@tardis.local>
+To: Boqun Feng <boqun.feng@gmail.com>
+Cc: paulmck@kernel.org, stern@rowland.harvard.edu, parri.andrea@gmail.com,
+ will@kernel.org, peterz@infradead.org, npiggin@gmail.com,
+ dhowells@redhat.com, j.alglave@ucl.ac.uk, luc.maranget@inria.fr,
+ akiyks@gmail.com, dlustig@nvidia.com, joel@joelfernandes.org,
+ linux-kernel@vger.kernel.org, linux-arch@vger.kernel.org,
+ lkmm@lists.linux.dev, torvalds@linux-foundation.org
 References: <20241111164248.1060-1-egyszeregy@freemail.hu>
  <69be42c9-331f-4fb5-a6ae-c2932ada0a47@paulmck-laptop>
  <8925322d-1983-4e35-82f9-d8b86d32e6a6@freemail.hu>
@@ -108,174 +47,186 @@ References: <20241111164248.1060-1-egyszeregy@freemail.hu>
  <ec6e297b-02fb-4f57-9fc1-47751106a7d2@freemail.hu>
  <5acaaaa0-7c17-4991-aff6-8ea293667654@paulmck-laptop>
  <a42da186-195c-40af-b4ee-0eaf6672cf2c@freemail.hu>
-Precedence: bulk
-X-Mailing-List: lkmm@lists.linux.dev
-List-Id: <lkmm.lists.linux.dev>
-List-Subscribe: <mailto:lkmm+subscribe@lists.linux.dev>
-List-Unsubscribe: <mailto:lkmm+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
+ <ZzJ13eM2SNNB3fl7@tardis.local>
+Content-Language: hu
+From: =?UTF-8?Q?Sz=C5=91ke_Benjamin?= <egyszeregy@freemail.hu>
+In-Reply-To: <ZzJ13eM2SNNB3fl7@tardis.local>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <a42da186-195c-40af-b4ee-0eaf6672cf2c@freemail.hu>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=simple/relaxed; t=1731361155;
+	s=20181004; d=freemail.hu;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:In-Reply-To:Content-Type:Content-Transfer-Encoding;
+	l=8385; bh=GJDf37E7zz9efSWD5z/VGlGxs8Mo0IVFgh397H9UMhE=;
+	b=Mgw4HU9TJA0EG5rSyo4xXvh9c+4YyaQf/o9uyRKetNMB/tc4lB53J5RQ7/AEje9o
+	gs7D4W3NSlrYy9hVnPeqn+oy/A3PBIuJM6FemKsl6tOqo6iweo7QuMfV/xliZ0bBayK
+	I9t+QkolzEnenrJNNiGVwIW1vJ2QdLcVoTZquEtcnetEnel8ZQZexlGHafpIKnUeJgQ
+	xZcDCxNhXHR983XcjfmfBrO1DK789JiT2GyZ702SUoV7mYy1VjBBLdbSkdFqR7nIw9n
+	ijyMRy8bLyPexdo7vNOo17tTV+jXS2HvH+AJkI2ZMEM8WgR2kTXe2hlmDGr5RxcAGHW
+	/m1z2KlptA==
 
-On Mon, Nov 11, 2024 at 10:15:30PM +0100, Sz"oke Benjamin wrote:
-> 2024. 11. 11. 21:29 keltezéssel, Paul E. McKenney írta:
-> > On Mon, Nov 11, 2024 at 08:56:34PM +0100, Sz"oke Benjamin wrote:
-> > > 2024. 11. 11. 20:22 keltezéssel, Paul E. McKenney írta:
-> > > > On Mon, Nov 11, 2024 at 07:52:50PM +0100, Sz"oke Benjamin wrote:
-> > > > > 2024. 11. 11. 17:54 keltezéssel, Paul E. McKenney írta:
-> > > > > > On Mon, Nov 11, 2024 at 05:42:47PM +0100, egyszeregy@freemail.hu wrote:
-> > > > > > > From: Benjamin Sz"oke <egyszeregy@freemail.hu>
-> > > > > > > 
-> > > > > > > The goal is to fix Linux repository for case-insensitive filesystem,
-> > > > > > > to able to clone it and editable on any operating systems.
-> > > > > > > 
-> > > > > > > Rename "Z6.0+pooncelock+poonceLock+pombonce.litmus" to
-> > > > > > > "Z6.0+pooncelock+poonceLock+after_spinlock+pombonce.litmus".
-> > > > > > > 
-> > > > > > > Signed-off-by: Benjamin Sz"oke <egyszeregy@freemail.hu>
-> > > > > > 
-> > > > > > Ummm...  Really?
-> > > > > > 
-> > > > > > Just out of curiosity, which operating-system/filesystem combination are
-> > > > > > you working with?  And why not instead fix that combination to handle
-> > > > > > mixed case?
-> > > > > > 
-> > > > > > 							Thanx, Paul
-> > > > > 
-> > > > > Windows and also MacOS is not case sensitive by default. My goal is to
-> > > > > improve Linux kernel source-tree, to able to develop it in any operating
-> > > > > systems for example via Visual Studio Code extensions/IntelliSense feature
-> > > > > or any similar IDE which is usable in any OS.
-> > > > 
-> > > > Why not simply enable case sensitivity on the file tree in which you
-> > > > are processing Linux-kernel source code?
-> > > > 
-> > > > For MacOS:  https://discussions.apple.com/thread/251191099?sortBy=rank
-> > > > For Windows:  https://learn.microsoft.com/en-us/windows/wsl/case-sensitivity
-> > > > 
-> > > > In some cases it might work better to simply run a Linux VM on top of
-> > > > Windows or MacOS.
-> > > > 
-> > > > They tell me that webservers already do this, so why not also for
-> > > > Linux-kernel source code?
-> > > 
-> > > Why we not solve it as simple as it can in the source code of the Linux
-> > > kernel with renaming? It would be more robust and more durable to fix this
-> > > issue/inconviniant in the source as an overal complete solution. Nobody like
-> > > to figth with configuraition hell of Windows and MacOS, or build up a
-> > > diskspace consumer Virtual Linux with crappy GUI capapilities for coding big
-> > > things.
-> > > 
-> > > Young developers will never be willing to join and contributing in Linux
-> > > kernel in the future if Linux kernel code is not editable in a high-quality,
-> > > easy-to-use IDE for, which is usable in any OS.
-> > 
-> > There are a great number of software projects out there that use mixed
-> > case.  Therefore, can an IDE that does not gracefully handle mixed case
-> > really be said to be either high quality or easy to use?
-> > 
-> > In other words, you have the option of making the IDE handle this.
-> > 
-> > > Need to improve this kind of things and simplify/modernize developing or
-> > > never will be solved the following issues:
-> > > https://www.youtube.com/watch?v=lJLw94pAcBY
-> > 
-> > Sorry, but that video does not support your point.  In fact, the presenter
-> > clearly states that this sort of tooling issue is not a real problem
-> > for the Linux kernel near the middle of that video.
-> > 
-> > 							Thanx, Paul
-> > 
-> > > > > There were some accepted patches which aim this same goal.
-> > > > > https://gitlab.freedesktop.org/drm/kernel/-/commit/231bb9b4c42398db3114c087ba39ba00c4b7ac2c
-> > > > > https://git.kernel.org/pub/scm/linux/kernel/git/vgupta/arc.git/commit/?h=for-curr&id=8bf275d61925cff45568438c73f114e46237ad7e
-> > > > 
-> > > > Fair enough, as it is the maintainer's choice.  Which means that
-> > > > their accepting these case-sensitivity changes does not require other
-> > > > maintainers to do so.
-> > > > 
-> > > > 							Thanx, Paul
-> > > > 
-> > > > > > > ---
-> > > > > > >     tools/memory-model/Documentation/locking.txt                    | 2 +-
-> > > > > > >     tools/memory-model/Documentation/recipes.txt                    | 2 +-
-> > > > > > >     tools/memory-model/litmus-tests/README                          | 2 +-
-> > > > > > >     ...> Z6.0+pooncelock+poonceLock+after_spinlock+pombonce.litmus} | 0
-> > > > > > >     4 files changed, 3 insertions(+), 3 deletions(-)
-> > > > > > >     rename tools/memory-model/litmus-tests/{Z6.0+pooncelock+poonceLock+pombonce.litmus => Z6.0+pooncelock+poonceLock+after_spinlock+pombonce.litmus} (100%)
-> > > > > > > 
-> > > > > > > diff --git a/tools/memory-model/Documentation/locking.txt b/tools/memory-model/Documentation/locking.txt
-> > > > > > > index 65c898c64a93..42bc3efe2015 100644
-> > > > > > > --- a/tools/memory-model/Documentation/locking.txt
-> > > > > > > +++ b/tools/memory-model/Documentation/locking.txt
-> > > > > > > @@ -184,7 +184,7 @@ ordering properties.
-> > > > > > >     Ordering can be extended to CPUs not holding the lock by careful use
-> > > > > > >     of smp_mb__after_spinlock():
-> > > > > > > -	/* See Z6.0+pooncelock+poonceLock+pombonce.litmus. */
-> > > > > > > +	/* See Z6.0+pooncelock+poonceLock+after_spinlock+pombonce.litmus. */
-> > > > > > >     	void CPU0(void)
-> > > > > > >     	{
-> > > > > > >     		spin_lock(&mylock);
-> > > > > > > diff --git a/tools/memory-model/Documentation/recipes.txt b/tools/memory-model/Documentation/recipes.txt
-> > > > > > > index 03f58b11c252..35996eb1b690 100644
-> > > > > > > --- a/tools/memory-model/Documentation/recipes.txt
-> > > > > > > +++ b/tools/memory-model/Documentation/recipes.txt
-> > > > > > > @@ -159,7 +159,7 @@ lock's ordering properties.
-> > > > > > >     Ordering can be extended to CPUs not holding the lock by careful use
-> > > > > > >     of smp_mb__after_spinlock():
-> > > > > > > -	/* See Z6.0+pooncelock+poonceLock+pombonce.litmus. */
-> > > > > > > +	/* See Z6.0+pooncelock+poonceLock+after_spinlock+pombonce.litmus. */
-> > > > > > >     	void CPU0(void)
-> > > > > > >     	{
-> > > > > > >     		spin_lock(&mylock);
-> > > > > > > diff --git a/tools/memory-model/litmus-tests/README b/tools/memory-model/litmus-tests/README
-> > > > > > > index d311a0ff1ae6..e3d451346400 100644
-> > > > > > > --- a/tools/memory-model/litmus-tests/README
-> > > > > > > +++ b/tools/memory-model/litmus-tests/README
-> > > > > > > @@ -149,7 +149,7 @@ Z6.0+pooncelock+pooncelock+pombonce.litmus
-> > > > > > >     	spin_lock() sufficient to make ordering apparent to accesses
-> > > > > > >     	by a process not holding the lock?
-> > > > > > > -Z6.0+pooncelock+poonceLock+pombonce.litmus
-> > > > > > > +Z6.0+pooncelock+poonceLock+after_spinlock+pombonce.litmus
-> > > > > > >     	As above, but with smp_mb__after_spinlock() immediately
-> > > > > > >     	following the spin_lock().
-> > > > > > > diff --git a/tools/memory-model/litmus-tests/Z6.0+pooncelock+poonceLock+pombonce.litmus b/tools/memory-model/litmus-tests/Z6.0+pooncelock+poonceLock+after_spinlock+pombonce.litmus
-> > > > > > > similarity index 100%
-> > > > > > > rename from tools/memory-model/litmus-tests/Z6.0+pooncelock+poonceLock+pombonce.litmus
-> > > > > > > rename to tools/memory-model/litmus-tests/Z6.0+pooncelock+poonceLock+after_spinlock+pombonce.litmus
-> > > > > > > -- 
-> > > > > > > 2.47.0.windows.2
-> > > > > > > 
-> > > > > 
-> > > 
+2024. 11. 11. 22:23 keltezÃ©ssel, Boqun Feng Ã­rta:
+> On Mon, Nov 11, 2024 at 10:15:30PM +0100, Sz"oke Benjamin wrote:
+>> 2024. 11. 11. 21:29 keltezÃ©ssel, Paul E. McKenney Ã­rta:
+>>> On Mon, Nov 11, 2024 at 08:56:34PM +0100, Sz"oke Benjamin wrote:
+>>>> 2024. 11. 11. 20:22 keltezÃ©ssel, Paul E. McKenney Ã­rta:
+>>>>> On Mon, Nov 11, 2024 at 07:52:50PM +0100, Sz"oke Benjamin wrote:
+>>>>>> 2024. 11. 11. 17:54 keltezÃ©ssel, Paul E. McKenney Ã­rta:
+>>>>>>> On Mon, Nov 11, 2024 at 05:42:47PM +0100, egyszeregy@freemail.hu wrote:
+>>>>>>>> From: Benjamin Sz"oke <egyszeregy@freemail.hu>
+>>>>>>>>
+>>>>>>>> The goal is to fix Linux repository for case-insensitive filesystem,
+>>>>>>>> to able to clone it and editable on any operating systems.
+>>>>>>>>
+>>>>>>>> Rename "Z6.0+pooncelock+poonceLock+pombonce.litmus" to
+>>>>>>>> "Z6.0+pooncelock+poonceLock+after_spinlock+pombonce.litmus".
+>>>>>>>>
+>>>>>>>> Signed-off-by: Benjamin Sz"oke <egyszeregy@freemail.hu>
+>>>>>>>
+>>>>>>> Ummm...  Really?
+>>>>>>>
+>>>>>>> Just out of curiosity, which operating-system/filesystem combination are
+>>>>>>> you working with?  And why not instead fix that combination to handle
+>>>>>>> mixed case?
+>>>>>>>
+>>>>>>> 							Thanx, Paul
+>>>>>>
+>>>>>> Windows and also MacOS is not case sensitive by default. My goal is to
+>>>>>> improve Linux kernel source-tree, to able to develop it in any operating
+>>>>>> systems for example via Visual Studio Code extensions/IntelliSense feature
+>>>>>> or any similar IDE which is usable in any OS.
+>>>>>
+>>>>> Why not simply enable case sensitivity on the file tree in which you
+>>>>> are processing Linux-kernel source code?
+>>>>>
+>>>>> For MacOS:  https://discussions.apple.com/thread/251191099?sortBy=rank
+>>>>> For Windows:  https://learn.microsoft.com/en-us/windows/wsl/case-sensitivity
+>>>>>
+>>>>> In some cases it might work better to simply run a Linux VM on top of
+>>>>> Windows or MacOS.
+>>>>>
+>>>>> They tell me that webservers already do this, so why not also for
+>>>>> Linux-kernel source code?
+>>>>
+>>>> Why we not solve it as simple as it can in the source code of the Linux
+>>>> kernel with renaming? It would be more robust and more durable to fix this
+>>>> issue/inconviniant in the source as an overal complete solution. Nobody like
+>>>> to figth with configuraition hell of Windows and MacOS, or build up a
+>>>> diskspace consumer Virtual Linux with crappy GUI capapilities for coding big
+>>>> things.
+>>>>
+>>>> Young developers will never be willing to join and contributing in Linux
+>>>> kernel in the future if Linux kernel code is not editable in a high-quality,
+>>>> easy-to-use IDE for, which is usable in any OS.
+>>>
+>>> There are a great number of software projects out there that use mixed
+>>> case.  Therefore, can an IDE that does not gracefully handle mixed case
+>>> really be said to be either high quality or easy to use?
+>>>
+>>> In other words, you have the option of making the IDE handle this.
+>>>
+>>>> Need to improve this kind of things and simplify/modernize developing or
+>>>> never will be solved the following issues:
+>>>> https://www.youtube.com/watch?v=lJLw94pAcBY
+>>>
+>>> Sorry, but that video does not support your point.  In fact, the presenter
+>>> clearly states that this sort of tooling issue is not a real problem
+>>> for the Linux kernel near the middle of that video.
+>>>
+>>> 							Thanx, Paul
+>>>
+>>>>>> There were some accepted patches which aim this same goal.
+>>>>>> https://gitlab.freedesktop.org/drm/kernel/-/commit/231bb9b4c42398db3114c087ba39ba00c4b7ac2c
+>>>>>> https://git.kernel.org/pub/scm/linux/kernel/git/vgupta/arc.git/commit/?h=for-curr&id=8bf275d61925cff45568438c73f114e46237ad7e
+>>>>>
+>>>>> Fair enough, as it is the maintainer's choice.  Which means that
+>>>>> their accepting these case-sensitivity changes does not require other
+>>>>> maintainers to do so.
+>>>>>
+>>>>> 							Thanx, Paul
+>>>>>
+>>>>>>>> ---
+>>>>>>>>      tools/memory-model/Documentation/locking.txt                    | 2 +-
+>>>>>>>>      tools/memory-model/Documentation/recipes.txt                    | 2 +-
+>>>>>>>>      tools/memory-model/litmus-tests/README                          | 2 +-
+>>>>>>>>      ...> Z6.0+pooncelock+poonceLock+after_spinlock+pombonce.litmus} | 0
+>>>>>>>>      4 files changed, 3 insertions(+), 3 deletions(-)
+>>>>>>>>      rename tools/memory-model/litmus-tests/{Z6.0+pooncelock+poonceLock+pombonce.litmus => Z6.0+pooncelock+poonceLock+after_spinlock+pombonce.litmus} (100%)
+>>>>>>>>
+>>>>>>>> diff --git a/tools/memory-model/Documentation/locking.txt b/tools/memory-model/Documentation/locking.txt
+>>>>>>>> index 65c898c64a93..42bc3efe2015 100644
+>>>>>>>> --- a/tools/memory-model/Documentation/locking.txt
+>>>>>>>> +++ b/tools/memory-model/Documentation/locking.txt
+>>>>>>>> @@ -184,7 +184,7 @@ ordering properties.
+>>>>>>>>      Ordering can be extended to CPUs not holding the lock by careful use
+>>>>>>>>      of smp_mb__after_spinlock():
+>>>>>>>> -	/* See Z6.0+pooncelock+poonceLock+pombonce.litmus. */
+>>>>>>>> +	/* See Z6.0+pooncelock+poonceLock+after_spinlock+pombonce.litmus. */
+>>>>>>>>      	void CPU0(void)
+>>>>>>>>      	{
+>>>>>>>>      		spin_lock(&mylock);
+>>>>>>>> diff --git a/tools/memory-model/Documentation/recipes.txt b/tools/memory-model/Documentation/recipes.txt
+>>>>>>>> index 03f58b11c252..35996eb1b690 100644
+>>>>>>>> --- a/tools/memory-model/Documentation/recipes.txt
+>>>>>>>> +++ b/tools/memory-model/Documentation/recipes.txt
+>>>>>>>> @@ -159,7 +159,7 @@ lock's ordering properties.
+>>>>>>>>      Ordering can be extended to CPUs not holding the lock by careful use
+>>>>>>>>      of smp_mb__after_spinlock():
+>>>>>>>> -	/* See Z6.0+pooncelock+poonceLock+pombonce.litmus. */
+>>>>>>>> +	/* See Z6.0+pooncelock+poonceLock+after_spinlock+pombonce.litmus. */
+>>>>>>>>      	void CPU0(void)
+>>>>>>>>      	{
+>>>>>>>>      		spin_lock(&mylock);
+>>>>>>>> diff --git a/tools/memory-model/litmus-tests/README b/tools/memory-model/litmus-tests/README
+>>>>>>>> index d311a0ff1ae6..e3d451346400 100644
+>>>>>>>> --- a/tools/memory-model/litmus-tests/README
+>>>>>>>> +++ b/tools/memory-model/litmus-tests/README
+>>>>>>>> @@ -149,7 +149,7 @@ Z6.0+pooncelock+pooncelock+pombonce.litmus
+>>>>>>>>      	spin_lock() sufficient to make ordering apparent to accesses
+>>>>>>>>      	by a process not holding the lock?
+>>>>>>>> -Z6.0+pooncelock+poonceLock+pombonce.litmus
+>>>>>>>> +Z6.0+pooncelock+poonceLock+after_spinlock+pombonce.litmus
+>>>>>>>>      	As above, but with smp_mb__after_spinlock() immediately
+>>>>>>>>      	following the spin_lock().
+>>>>>>>> diff --git a/tools/memory-model/litmus-tests/Z6.0+pooncelock+poonceLock+pombonce.litmus b/tools/memory-model/litmus-tests/Z6.0+pooncelock+poonceLock+after_spinlock+pombonce.litmus
+>>>>>>>> similarity index 100%
+>>>>>>>> rename from tools/memory-model/litmus-tests/Z6.0+pooncelock+poonceLock+pombonce.litmus
+>>>>>>>> rename to tools/memory-model/litmus-tests/Z6.0+pooncelock+poonceLock+after_spinlock+pombonce.litmus
+>>>>>>>> -- 
+>>>>>>>> 2.47.0.windows.2
+>>>>>>>>
+>>>>>>
+>>>>
+>>
+>> There is a technical issue in the Linux kernel source tree's file
+>> naming/styles in git clone command on case-insensitive filesystem.
+>>
+>>
+>> warning: the following paths have collided (e.g. case-sensitive paths
+>> on a case-insensitive filesystem) and only one from the same
+>> colliding group is in the working tree:
+>>
+>>    'tools/memory-model/litmus-tests/Z6.0+pooncelock+poonceLock+pombonce.litmus'
+>>    'tools/memory-model/litmus-tests/Z6.0+pooncelock+pooncelock+pombonce.litmus'
+>>
+>>
+>> As you a maintainer, what is your suggestion to fix it in the source code of
+>> the Linux kernel? Please send a real technical suggestion not just how could
+>> it be done in an other way (which is out of the scope now).
+>>
+>> Is my renaming patch correct to solve it? Question is what is the most
 > 
-> There is a technical issue in the Linux kernel source tree's file
-> naming/styles in git clone command on case-insensitive filesystem.
+> No, because once you do a checkout to a commit that previous to your
+> changes, things are going to break again. The real "issue" is git use
+> case-sensitive file names, so unless you can rewrite the whole history,
+> your "solution" goes nowhere.
 > 
+> Regards,
+> Boqun
 > 
-> warning: the following paths have collided (e.g. case-sensitive paths
-> on a case-insensitive filesystem) and only one from the same
-> colliding group is in the working tree:
-> 
->   'tools/memory-model/litmus-tests/Z6.0+pooncelock+poonceLock+pombonce.litmus'
->   'tools/memory-model/litmus-tests/Z6.0+pooncelock+pooncelock+pombonce.litmus'
-> 
-> 
-> As you a maintainer, what is your suggestion to fix it in the source code of
-> the Linux kernel? Please send a real technical suggestion not just how could
-> it be done in an other way (which is out of the scope now).
-> 
-> Is my renaming patch correct to solve it? Question is what is the most
+>> effective and proper fix/solution which can be commited into the Linux
+>> kernel repo to fix it.
 
-No, because once you do a checkout to a commit that previous to your
-changes, things are going to break again. The real "issue" is git use
-case-sensitive file names, so unless you can rewrite the whole history,
-your "solution" goes nowhere.
 
-Regards,
-Boqun
-
-> effective and proper fix/solution which can be commited into the Linux
-> kernel repo to fix it.
+My renaming solution can not fix the old history line, but after this patch in 
+latest master branch there are no any issue anymore, in git cloning. This the 
+bare minimum solution which can fix its "cloning" issue for the future.

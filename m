@@ -1,117 +1,127 @@
-Received: from mail-pg1-f175.google.com (mail-pg1-f175.google.com [209.85.215.175])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp-out.freemail.hu (fmfe38.freemail.hu [46.107.16.243])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1ED0A34CC4
-	for <lkmm@lists.linux.dev>; Sun, 10 Nov 2024 15:18:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 093811A706F
+	for <lkmm@lists.linux.dev>; Mon, 11 Nov 2024 16:53:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=46.107.16.243
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731251881; cv=none; b=LOh7xipTnC11g76JfKQr2BpS1XxwFQ69XTIpAf+KgXp3vlwyjBwWSBPlOTJ4W/vbY4l+UbUhP07n/+6K5LFmj3o3kZYJto10P5gUHNqcEzhXG2L/opvcKoXNUXEzFj21GH/GjEFnJEQdhDVks/8cuw0f5GHQgJ556OSGS+Vz1ug=
+	t=1731343999; cv=none; b=ejNRh03sdaoP84Z411B3wudLHc2K0sGAvdNYqh/yTpxxak2bOIixa/vsFFR5n7iTmeZGy6hhaz0KX8o9DeXjnxzsrMdlq0tug9NpxYKjSQFHe6bLXTTMmMkPmKMolkX9tEl2Evc2Po81kP/n86mX8cLXi3DaTv8xESSOVjgevHc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731251881; c=relaxed/simple;
-	bh=LcTbIpUtuy4Z81nMVmgyPvAqJiaUV/40H3miLAStkxY=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=a19QpBdPW4L7jYutrCD+Esytvf+VNjAyofQ2Au5RtomqMVVsRgc+ybDxzzjJRexAsKbHf2M8q7fsrU0Lk09b1Pad6hBZIbW2HK/LBVhZz9sqgwK9Lob8AO0L3hBLGzw9+UBFGQtPdzry/n01npfYKRPz+44UNeX2QVcmMOjAHpY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=aNNgG01K; arc=none smtp.client-ip=209.85.215.175
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1731343999; c=relaxed/simple;
+	bh=my6kpv51R2cZYX7QWBuaiZ5YJ3cTY+lUC8c8KSMPStY=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=CYe92s+qFsK6t+Kk2PIVE8ju2iBsqbNRxAkoyWkdtNzyhslitV3RCMpRGnzzrHv60VVhTGasYLqu+JJ1sRmLIUQe4qkEgyTRo1SiT9PJHHK5xSK9D2x7y87ZJETltlg5l6YDTzGH5+hbt6C+U4TjOIGkfeliEySc5a6MezfGBMY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=freemail.hu; spf=pass smtp.mailfrom=freemail.hu; dkim=fail (2048-bit key) header.d=freemail.hu header.i=@freemail.hu header.b=g52+/9sB reason="signature verification failed"; arc=none smtp.client-ip=46.107.16.243
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=freemail.hu
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=freemail.hu
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="aNNgG01K"
-Received: by mail-pg1-f175.google.com with SMTP id 41be03b00d2f7-7ea76a12c32so2765995a12.1
-        for <lkmm@lists.linux.dev>; Sun, 10 Nov 2024 07:18:00 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1731251879; x=1731856679; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:subject:from:user-agent:mime-version:date:message-id:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=VCteRcxFW73jIBTSDNFvUke7Cd4VTBcnPuE7xVCRgco=;
-        b=aNNgG01KzsRyiPrRnRkXX+AUa9PSESr/3Z8QWrqcm683aeSl0B9bhn8Oz7t8vQkfBx
-         dnKBQr+2crRBE3P6EZZyN9Ql0dtSodXErRQzZzDWm+v7LocI0xnUUI3O9U9pPhsTTfBA
-         rD/I2ITB3ycVeMOH3pw/CeSGaFQ8j+/jRodiBJ7qv8qKPwXBPcplZb7ZKvQmtEhvBi16
-         mbl4KyvTR819UnyQNJdf3PhT+zVjczM8+SiI33k9jxIkdXScddbHNn8RF//WcJLODY8f
-         5HcPyIpU1A/kipwy5EhBMlYutQwRgLRdeaPcTdQBnshwI+L8oonW9wzc7UQI+Thwv7Iy
-         bz1w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1731251879; x=1731856679;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:subject:from:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=VCteRcxFW73jIBTSDNFvUke7Cd4VTBcnPuE7xVCRgco=;
-        b=fu0NbXeI+G60VHjHo2IOsyjDiwezre42xAqWT8Or9ls1354yrx7RF8iPkt+DwLEDBj
-         9BK80Ks3X31mfZro0balp2MRJFQyROyxm/Nth6147Dn6khRHxg5t7OQ1H0KFRjVDevZb
-         NOgnUBeMh8ZTUIUtVvGN9MMxKydHJapxGBaLUc70miMjY8QP9QfB3dH65xTov708n0m6
-         UmNzpbdsjmCugxezLXZ2AsdBcejh7g2ea5mb6ANF74PGcYgMNXwW83oSslERJmVrC8EM
-         z7sp8ZkOp709f2mwXE+D0dy1fd1foAazz6W/RY8PSAUqkxocIPxA6NbQY9Jg+z1gZ9oR
-         5+Lg==
-X-Forwarded-Encrypted: i=1; AJvYcCWPLkh13f/peO2d4QV1R6sKLz7vl/1jSjPtIwIeq8LPfRXfL6DEkinyAHnU4GT7Iv0A9OgB@lists.linux.dev
-X-Gm-Message-State: AOJu0Yy9Oy8vDddFYds7HtHRRv2J3GkIHoPTsBYFqn6/3Cmer/4bxRrU
-	9kWwj2aEwA2Q+q2qc1deV82h1wQFe1bGF5E4Y7qCgWyePowqylLV
-X-Google-Smtp-Source: AGHT+IH+vJY8EncW+paA866s5okR7BWgRo7IgGmpsIQm/xAH4m0C9WN1WMzLduMlet1VhARiDQ5F3Q==
-X-Received: by 2002:a17:90b:4ac8:b0:2e2:bd7a:71ea with SMTP id 98e67ed59e1d1-2e9b16558admr12300902a91.8.1731251879435;
-        Sun, 10 Nov 2024 07:17:59 -0800 (PST)
-Received: from [10.0.2.15] (KD106167137155.ppp-bb.dion.ne.jp. [106.167.137.155])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-21177e6a471sm60430325ad.233.2024.11.10.07.17.55
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 10 Nov 2024 07:17:59 -0800 (PST)
-Message-ID: <ab79531a-5b01-49de-874e-718cb59332a2@gmail.com>
-Date: Mon, 11 Nov 2024 00:17:54 +0900
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=freemail.hu header.i=@freemail.hu header.b="g52+/9sB"
+Received: from localhost.localdomain (catv-178-48-208-49.catv.fixed.vodafone.hu [178.48.208.49])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	(No client certificate requested)
+	by smtp.freemail.hu (Postfix) with ESMTPSA id 4XnFlH3WNQzRRG;
+	Mon, 11 Nov 2024 17:44:59 +0100 (CET)
+From: egyszeregy@freemail.hu
+To: stern@rowland.harvard.edu,
+	parri.andrea@gmail.com,
+	will@kernel.org,
+	peterz@infradead.org,
+	boqun.feng@gmail.com,
+	npiggin@gmail.com,
+	dhowells@redhat.com,
+	j.alglave@ucl.ac.uk,
+	luc.maranget@inria.fr,
+	paulmck@kernel.org,
+	akiyks@gmail.com,
+	dlustig@nvidia.com,
+	joel@joelfernandes.org,
+	linux-kernel@vger.kernel.org,
+	linux-arch@vger.kernel.org,
+	lkmm@lists.linux.dev
+Cc: =?UTF-8?q?Benjamin=20Sz=C5=91ke?= <egyszeregy@freemail.hu>
+Subject: [PATCH] tools/memory-model: Fix litmus-tests's file names for case-insensitive filesystem.
+Date: Mon, 11 Nov 2024 17:42:47 +0100
+Message-ID: <20241111164248.1060-1-egyszeregy@freemail.hu>
+X-Mailer: git-send-email 2.47.0.windows.2
 Precedence: bulk
 X-Mailing-List: lkmm@lists.linux.dev
 List-Id: <lkmm.lists.linux.dev>
 List-Subscribe: <mailto:lkmm+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:lkmm+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: Akira Yokosawa <akiyks@gmail.com>
-Subject: Re: [PATCH v4 0/5] tools/memory-model: Define more of LKMM in
- tools/memory-model
-To: paulmck@kernel.org, luc.maranget@inria.fr
-Cc: stern@rowland.harvard.edu, parri.andrea@gmail.com, will@kernel.org,
- peterz@infradead.org, boqun.feng@gmail.com, npiggin@gmail.com,
- dhowells@redhat.com, j.alglave@ucl.ac.uk, dlustig@nvidia.com,
- joel@joelfernandes.org, urezki@gmail.com, quic_neeraju@quicinc.com,
- frederic@kernel.org, linux-kernel@vger.kernel.org, lkmm@lists.linux.dev,
- hernan.poncedeleon@huaweicloud.com,
- Jonas Oberhauser <jonas.oberhauser@huaweicloud.com>,
- Akira Yokosawa <akiyks@gmail.com>
-References: <20240930105710.383284-1-jonas.oberhauser@huaweicloud.com>
- <70907739-56b9-4712-a1db-e55161c2a8d6@paulmck-laptop>
-Content-Language: en-US
-In-Reply-To: <70907739-56b9-4712-a1db-e55161c2a8d6@paulmck-laptop>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=simple/relaxed; t=1731343500;
+	s=20181004; d=freemail.hu;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type:Content-Transfer-Encoding;
+	l=2944; bh=cCPkD+u0S/L0jyUmIwbYJI+sFNNB67K8RH+1NXOKewo=;
+	b=g52+/9sB+0+XIfF0eM+kfn7QoNqU6pZ5WWAYlEjZldfna8PP3uR+ZpL+Xq88znJA
+	R1wgMjAtIPHRGoDubremxQyfjfSZ8mrga88kBJ5bPbzkU5MmxSzMjBny1JSq8UJXtmP
+	YIDsuMD6G18niuEtkDOFrzEliBvtT/Zox6vNuEw6SP/JXE/BgoPhxnOXpqI475zwyUZ
+	5jB51etvXr6KBKnqd/PjC5ahZjC7N+f7S8seEzlRGP/WTNyhofonPGc1S5dXzIFwIZK
+	q88zFe8VflFmswH60Tl99g7dD2CA8sR7jjIH/gJe6EHsKhvuCsMrT6p6OvYGmgoW+Rh
+	rc/gAf/c2g==
 
-Hi Paul and Luc,
+From: Benjamin Szőke <egyszeregy@freemail.hu>
 
-On Mon, 28 Oct 2024 13:16:23 -0700, Paul E. McKenney wrote:
-> On Mon, Sep 30, 2024 at 12:57:05PM +0200, Jonas Oberhauser wrote:
-[...]
->> This second step (comprising patches 4 and 5) is incompatible with the
->> current herd7 implementation, since herd7 uses hardcoded tag names to decide
->> what to do with LKMM; therefore, the newly introduced syntactic tags will be
->> ignored or processed incorrectly by herd7.
-> 
-> Thank you, Jonas!
-> 
-> Queued for further review and testing.  This does need at least an ack to
-> proceed to mainline (hint to LKMM maintainers).
+The goal is to fix Linux repository for case-insensitive filesystem,
+to able to clone it and editable on any operating systems.
 
-Paul's lkmm.2024.11.09a branch carries these 7 commits:
+Rename "Z6.0+pooncelock+poonceLock+pombonce.litmus" to
+"Z6.0+pooncelock+poonceLock+after_spinlock+pombonce.litmus".
 
-  1  tools/memory-model: Add atomic_and()/or()/xor() and add_negative
-  2  tools/memory-model: Add atomic_andnot() with its variants
-  3  tools/memory-model: Legitimize current use of tags in LKMM macros
-  4  tools/memory-model: Define applicable tags on operation in tools/...
-  5  tools/memory-model: Define effect of Mb tags on RMWs in tools/...
-  6  tools/memory-model: Switch to softcoded herd7 tags
-  7  tools/memory-model: Distinguish between syntactic and semantic tags
+Signed-off-by: Benjamin Szőke <egyszeregy@freemail.hu>
+---
+ tools/memory-model/Documentation/locking.txt                    | 2 +-
+ tools/memory-model/Documentation/recipes.txt                    | 2 +-
+ tools/memory-model/litmus-tests/README                          | 2 +-
+ ...> Z6.0+pooncelock+poonceLock+after_spinlock+pombonce.litmus} | 0
+ 4 files changed, 3 insertions(+), 3 deletions(-)
+ rename tools/memory-model/litmus-tests/{Z6.0+pooncelock+poonceLock+pombonce.litmus => Z6.0+pooncelock+poonceLock+after_spinlock+pombonce.litmus} (100%)
 
-As the first commit is already incompatible with released versions of herd7,
-Paul will have nothing to upstream for v6.13 unless we see a new release of
-herdtoolds7 whose herd7 has those atomic RMW bitwise ops and lkmmv2 variant
-support in time for the upcoming merge window.
+diff --git a/tools/memory-model/Documentation/locking.txt b/tools/memory-model/Documentation/locking.txt
+index 65c898c64a93..42bc3efe2015 100644
+--- a/tools/memory-model/Documentation/locking.txt
++++ b/tools/memory-model/Documentation/locking.txt
+@@ -184,7 +184,7 @@ ordering properties.
+ Ordering can be extended to CPUs not holding the lock by careful use
+ of smp_mb__after_spinlock():
+ 
+-	/* See Z6.0+pooncelock+poonceLock+pombonce.litmus. */
++	/* See Z6.0+pooncelock+poonceLock+after_spinlock+pombonce.litmus. */
+ 	void CPU0(void)
+ 	{
+ 		spin_lock(&mylock);
+diff --git a/tools/memory-model/Documentation/recipes.txt b/tools/memory-model/Documentation/recipes.txt
+index 03f58b11c252..35996eb1b690 100644
+--- a/tools/memory-model/Documentation/recipes.txt
++++ b/tools/memory-model/Documentation/recipes.txt
+@@ -159,7 +159,7 @@ lock's ordering properties.
+ Ordering can be extended to CPUs not holding the lock by careful use
+ of smp_mb__after_spinlock():
+ 
+-	/* See Z6.0+pooncelock+poonceLock+pombonce.litmus. */
++	/* See Z6.0+pooncelock+poonceLock+after_spinlock+pombonce.litmus. */
+ 	void CPU0(void)
+ 	{
+ 		spin_lock(&mylock);
+diff --git a/tools/memory-model/litmus-tests/README b/tools/memory-model/litmus-tests/README
+index d311a0ff1ae6..e3d451346400 100644
+--- a/tools/memory-model/litmus-tests/README
++++ b/tools/memory-model/litmus-tests/README
+@@ -149,7 +149,7 @@ Z6.0+pooncelock+pooncelock+pombonce.litmus
+ 	spin_lock() sufficient to make ordering apparent to accesses
+ 	by a process not holding the lock?
+ 
+-Z6.0+pooncelock+poonceLock+pombonce.litmus
++Z6.0+pooncelock+poonceLock+after_spinlock+pombonce.litmus
+ 	As above, but with smp_mb__after_spinlock() immediately
+ 	following the spin_lock().
+ 
+diff --git a/tools/memory-model/litmus-tests/Z6.0+pooncelock+poonceLock+pombonce.litmus b/tools/memory-model/litmus-tests/Z6.0+pooncelock+poonceLock+after_spinlock+pombonce.litmus
+similarity index 100%
+rename from tools/memory-model/litmus-tests/Z6.0+pooncelock+poonceLock+pombonce.litmus
+rename to tools/memory-model/litmus-tests/Z6.0+pooncelock+poonceLock+after_spinlock+pombonce.litmus
+-- 
+2.47.0.windows.2
 
-Luc, I have no idea of herdtools7's release procedure, but is there any
-chance for us to see such a release of herdtools7, preferably by the end of
-November?
-
-        Thanks, Akira

@@ -1,70 +1,54 @@
-Received: from mail-wr1-f45.google.com (mail-wr1-f45.google.com [209.85.221.45])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D6E21E521
-	for <lkmm@lists.linux.dev>; Thu, 14 Nov 2024 14:56:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21AD419E99A;
+	Mon, 18 Nov 2024 15:05:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731596177; cv=none; b=oJEG18Yvoug/ggrf2vmWHI7OLiwYnODk3PfVSzRuFlRwoQj34a7T7Tu+jWhtn9WM8vBStfHzmFCMBuF02VVU3Na7UILtZlErV0pkEgYi7P5a8HaycYWLHobah0Uc+xKPOaqrG4cF/ZZIedWQM4+VOwVtKz43Rxbvs79ooSVa3qo=
+	t=1731942306; cv=none; b=ZP6Q1RihIjv9VSQ6PaJ1iZxSvkxJ/YhJUM4A1Wgw4QFr4Xb6k9rm3E1RXtyqj5dA9vy2JFjnuJQYjAl70gUH8FgO8SLfHvNBqFGRHW43jpQBLxJ0Vih3uV3QzQH/ZTSKo2cWMFyZdNTw6wtaLoWStqFVDkReDdz+bePwrG0Dz/g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731596177; c=relaxed/simple;
-	bh=5sOe9ripCxbSEVyi9HSWTx+dlYBbi2HF+KFmFLJmqIY=;
+	s=arc-20240116; t=1731942306; c=relaxed/simple;
+	bh=ZDcq0jZu95v/dsrTv8qsCUckd7K7sRDSvrPeRTOf0dY=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ct3l1RsafEQWMATyzmHSwVDR+AgmbqvmJFroqV3JZDZr2rjUOh4DTY96M5i/6PJ1pnjBiXg1qgbt0HhcyO/+HuwL4gvT+DmX1GXmmvtP/hD5zFl9n2tEu8ybFi2TqFJnjfeqmAXQeUR4fbXgaY11bApltDrP6mJZ8dR6JZGYe7U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=PuxkOBeF; arc=none smtp.client-ip=209.85.221.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	 Content-Type:Content-Disposition:In-Reply-To; b=b4HNbNOVc0sPgYlS0lKciMU/5ksSa3jA3WWJBmuqXbBtY0XiNr+NavmS0zLPtzYVHJnb7jMeLYS9e91hv//qsKSG/LADT9iH0w2kKktKUAdsPqxLvofYfL/uxGRx89H75DQottUkK1y1K1zNMqP/r/iJrpiVoe/jSbxmT4Yjp0E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=BVnYm+p2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PuxkOBeF"
-Received: by mail-wr1-f45.google.com with SMTP id ffacd0b85a97d-37d4b0943c7so486671f8f.1
-        for <lkmm@lists.linux.dev>; Thu, 14 Nov 2024 06:56:15 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1731596174; x=1732200974; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=ypIe2x5wqkPNzyRl0qrW7xKxln38d/rreWFO8HGI778=;
-        b=PuxkOBeFyDlrlmAocEBDLMigzzwx4pwcdh0Hr8374INxU+4fTOZ7iOJhYP8ky0zv06
-         mAy4sWlrM2MKQSUSGY0EB9HItbA3qNruLGmoeHNm58l29kZFPUeBMrjlgYVm8ZNKHTXf
-         guJ7cxhAV9T9hNFAM99gE/lQgAM5r/iqHZTWRa7Ruh8LQvS3gpDsuoXnQe672eYbOuWq
-         jAld2s/qKOhPjMmiJsaVK0XqWkChgwjEyt3Cn34k5P6pWZjT6tQX4S9Q/MP7U1uV/OFt
-         CRxBKL+rv8OBFzv1w/XHvFwAxWn5kBpf+asoymEo1jZmEJS3w4rtU/FnFUc51xzR66eF
-         c5MQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1731596174; x=1732200974;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=ypIe2x5wqkPNzyRl0qrW7xKxln38d/rreWFO8HGI778=;
-        b=dtHQMvCBV4K1gGGwAxWuX6QWUtnpuGLLTGmCqLjZouKKatBb5GO9PsKBQBmALhlSsl
-         Fp4to3DjDUilpUo8AYh0LhE+5wNCPcKQGPoNlXIf+2V9fiznelJYcjGVG0mrQNrDpZuf
-         XE7tUIzl8fAQxNXxYQSvXu0onWhsu8rhA4pu1xDYKn12+mkpoNlSyLWeqCHnizqFERr+
-         neGTWUYYsoKY8KY6UNOH8mDj01OO67NoF5GGDyjVGUDNZF6Rv0PPKY/Keim7355b8MrB
-         qb2xzVUA/JruacfOoL11wEGq94E4lgb9wxVg4AiEgzTFHtYAIIgLYO/ASyXdE28boYx2
-         a1LQ==
-X-Forwarded-Encrypted: i=1; AJvYcCVkfRWx18uNPZR5wF2EBQoYuPypuuBJh/u1KNhwBzAUEiyfDWPadzjTUxZvDGmtSHClZn1a@lists.linux.dev
-X-Gm-Message-State: AOJu0YztRxKxzf3ysnTFixv8VCvXfaSkppCtGUm0MZu0LQfu+orK9SzI
-	9qdDQpK5VueXY1SlYjujuGqLLCnOWd5HIb8+Qw/z1J1UrKArGzfhQe6K8A==
-X-Google-Smtp-Source: AGHT+IGfT3/q3KJg0BmJv0M3JSpyylmNbOkhP3+kI1SDAPayxBKjFLi0azP6rHT0HtymqiHBO+xoLg==
-X-Received: by 2002:a05:6000:1787:b0:37d:5026:f787 with SMTP id ffacd0b85a97d-381f1885612mr21224023f8f.38.1731596173714;
-        Thu, 14 Nov 2024 06:56:13 -0800 (PST)
-Received: from andrea ([149.62.244.44])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3821ada3e7bsm1730816f8f.7.2024.11.14.06.56.12
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 14 Nov 2024 06:56:12 -0800 (PST)
-Date: Thu, 14 Nov 2024 16:56:01 +0200
-From: Andrea Parri <parri.andrea@gmail.com>
-To: Puranjay Mohan <puranjay12@gmail.com>
-Cc: "Paul E. McKenney" <paulmck@kernel.org>, puranjay@kernel.org,
-	bpf@vger.kernel.org, lkmm@lists.linux.dev,
-	linux-kernel@vger.kernel.org
-Subject: Re: Some observations (results) on BPF acquire and release
-Message-ID: <ZzYPgd8rJDG9p6WQ@andrea>
-References: <Zxk2wNs4sxEIg-4d@andrea>
- <13f60db0-b334-4638-a768-d828ecf7c8d0@paulmck-laptop>
- <Zxor8xosL-XSxnwr@andrea>
- <ZxujgUwRWLCp6kxF@andrea>
- <ZzT9NR7mlSZQHzpD@andrea>
- <CANk7y0gdNGM36Er9vq42-YouoGVVQ4gp0yvgVHarm0-NFC2i1w@mail.gmail.com>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="BVnYm+p2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE561C4CECC;
+	Mon, 18 Nov 2024 15:05:05 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1731942305;
+	bh=ZDcq0jZu95v/dsrTv8qsCUckd7K7sRDSvrPeRTOf0dY=;
+	h=Date:From:To:Cc:Subject:Reply-To:References:In-Reply-To:From;
+	b=BVnYm+p2mngY0PG2hVWoYKRBm5R6SGGBHCkdzJoLnxmGP7ma0AuUWnoa6PItJYwFq
+	 /Ocml2QhHs0jnZsoSJnqKtTS4U3KxFMJtAnlbDz3yq4koo5cumLnwS2emiyqex9oFh
+	 u4wykHA9ibN53XGntA1/AQhJdz9GjfmOibV4pGHKLaFo13Zzxzq2LwzbSIErKN2OMW
+	 /TvWQl+hcZz+ux0ZOQYSF3/Irfs7GPNC42gDwYcckNOUrD+4azCMukgfnscz9KF/ze
+	 5sDTyl7vb4AQRyUGYfpn7scu/uCZ5e0eqA2G7z09vrPn+E855jdXn2GiP1wIHgFoOf
+	 VFq9X7DAxJKKQ==
+Received: by paulmck-ThinkPad-P17-Gen-1.home (Postfix, from userid 1000)
+	id 4F5AFCE0DEB; Mon, 18 Nov 2024 07:05:05 -0800 (PST)
+Date: Mon, 18 Nov 2024 07:05:05 -0800
+From: "Paul E. McKenney" <paulmck@kernel.org>
+To: Jonas Oberhauser <jonas.oberhauser@huaweicloud.com>
+Cc: Akira Yokosawa <akiyks@gmail.com>, boqun.feng@gmail.com,
+	dhowells@redhat.com, dlustig@nvidia.com, frederic@kernel.org,
+	hernan.poncedeleon@huaweicloud.com, j.alglave@ucl.ac.uk,
+	joel@joelfernandes.org, linux-kernel@vger.kernel.org,
+	lkmm@lists.linux.dev, luc.maranget@inria.fr, npiggin@gmail.com,
+	parri.andrea@gmail.com, peterz@infradead.org,
+	quic_neeraju@quicinc.com, stern@rowland.harvard.edu,
+	urezki@gmail.com, will@kernel.org
+Subject: Re: [PATCH v4 5/5] tools/memory-model: Distinguish between syntactic
+ and semantic tags
+Message-ID: <02537f27-ac3b-4e2e-80a2-ad57230ac478@paulmck-laptop>
+Reply-To: paulmck@kernel.org
+References: <3d72b92a-4935-425c-abd5-ec4631baef2c@huaweicloud.com>
+ <46d291da-ddb9-43b9-bd93-b81aacd5e29c@gmail.com>
+ <7542399d-87c5-4f1c-9d09-6a6f96d148da@huaweicloud.com>
+ <a278c4a9-eae2-491e-8f13-5a87a25dad26@gmail.com>
+ <f1d7a295-ad24-41c8-a431-7d6492d51097@huaweicloud.com>
+ <245e4781-80b2-4e21-b4de-51ffeac9cc39@paulmck-laptop>
 Precedence: bulk
 X-Mailing-List: lkmm@lists.linux.dev
 List-Id: <lkmm.lists.linux.dev>
@@ -73,30 +57,46 @@ List-Unsubscribe: <mailto:lkmm+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <CANk7y0gdNGM36Er9vq42-YouoGVVQ4gp0yvgVHarm0-NFC2i1w@mail.gmail.com>
+In-Reply-To: <245e4781-80b2-4e21-b4de-51ffeac9cc39@paulmck-laptop>
 
-> I have applied your patches and modified them to add the new tests to
-> kinds.txt and shelf.py
-> now these tests will run with all other tests using 'make cata-bpf-test'
+On Fri, Nov 08, 2024 at 10:35:24AM -0800, Paul E. McKenney wrote:
+> On Fri, Nov 08, 2024 at 12:07:43PM +0100, Jonas Oberhauser wrote:
+> > 
+> > 
+> > Am 11/8/2024 um 11:12 AM schrieb Akira Yokosawa:
+> > > On Fri, 8 Nov 2024 10:10:48 +0100, Jonas Oberhauser wrote:
+> > > > I hadn't done that before (because I thought I should not add other people's tags
+> > > > especially if they hadn't reviewed that specific revision), so we may be missing
+> > > > *a lot* of reviewed-by...
+> > > > 
+> > > 
+> > > Section "Using Reported-by:, Tested-by:, Reviewed-by:, Suggested-by: and Fixes:"
+> > > of Documentation/process/submitting-patches.rst has this paragraph:
+> > > 
+> > >    Both Tested-by and Reviewed-by tags, once received on mailing list from tester
+> > >    or reviewer, should be added by author to the applicable patches when sending
+> > >    next versions.  However if the patch has changed substantially in following
+> > >    version, these tags might not be applicable anymore and thus should be removed.
+> > >    Usually removal of someone's Tested-by or Reviewed-by tags should be mentioned
+> > >    in the patch changelog (after the '---' separator).
+> > > 
+> > > Does this help you?
+> > 
+> > Thanks so much, it does. My apologies to everyone whose reviewed-by tag I
+> > failed to add :(
+> > 
+> > I should have read that more document more carefully.
 > 
-> All 175 tests, including new tests added by you, pass :D
-> 
-> make cata-bpf-test
-> 
-> _build/default/internal/herd_catalogue_regression_test.exe \
->         -j 32 \
->         -herd-timeout 16.0 \
->         -herd-path _build/install/default/bin/herd7 \
->         -libdir-path ./herd/libdir \
->         -kinds-path catalogue/bpf/tests/kinds.txt \
->         -shelf-path catalogue/bpf/shelf.py \
->         test
-> herd7 catalogue bpf tests: OK
-> 
-> 
-> I have pushed it and sent a PR so we can get all this merged to master.
-> https://github.com/herd/herdtools7/pull/1050
+> No worries!  The important part is your changes.  The tags are easy
+> to add.  And now you know.  ;-)
 
-Cool!  Thank you for the follow-up.
+The first three of your patches could go in, but the last two require a
+new herd7 release (for the lkmmv2 flag).  Left to myself, I would hold
+all five until we get a new herd7 release, but if it is important to
+get the first three into the current merge window, please rebase them
+to mainline some time this week.  I would then send a pull request for
+the for next week, the second and final week of the merge window.
 
-  Andrea
+Over to you!
+
+							Thanx, Paul

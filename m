@@ -1,67 +1,68 @@
-Received: from mail-pf1-f174.google.com (mail-pf1-f174.google.com [209.85.210.174])
+Received: from mail-pf1-f179.google.com (mail-pf1-f179.google.com [209.85.210.179])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB9BA1DFDB4
-	for <lkmm@lists.linux.dev>; Mon,  2 Dec 2024 23:21:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9B0822611
+	for <lkmm@lists.linux.dev>; Tue,  3 Dec 2024 02:00:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733181702; cv=none; b=GdwGFaPUojnEwbd436we2y1kJpCjFRpIjq4J0JGd0tP6CuNhPzaC02KYQ4VIE6jFXQ72fyOiEmgJex396F37MroTUsxj4eiFojrdbSV0LjiN9wTxl6J3P7B1Z49dRFsIZLRdI3xySkCjdf8VedsNBdrcR5vdHsfUKzvF1D2Tiyw=
+	t=1733191230; cv=none; b=qd6f6kJcXfQnJzZjnjnKB6KKxmqzfDa040BMxyyyXxMsC+kEJiNUUyjT8uJ+/7Kasnw46rV+zm9rwnnw371xIs2IRLhBBHCgtVaYOdt/xd8qAg7Olv45nrA2SXfBQh+RRY2tZjFRynwHZ3X4QqOLHVoYX9t3XuCFLX9bocWhRlc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733181702; c=relaxed/simple;
-	bh=T0fJkNN8lmu0yQW5xDMaUNuwSNQGFIOPmvlds70OAcE=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=VqAaGkXfLpnBhUvBtzSinnyHB/nrktKCBDktht4T83cGXiGoo/VCz2lPeTuCkbCCbEsZ0SeTHvo0aiszlUWc1B776Mvz1cVh+kY6LZslCqbXlI+EQj+Gy31iuVwlqQnEo1BFeff83WiFD1E+YT5GubA5bLyG2nF6brHtOH1ekdw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=AQ3Pq8+H; arc=none smtp.client-ip=209.85.210.174
+	s=arc-20240116; t=1733191230; c=relaxed/simple;
+	bh=EAkYqHxwoA0R0dcqG7W4lfpOriiOfn2sTkhuAvg1mYg=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=UW4xV4EJckC4a2a/8wiWz6J/N9f7IlT1jFY2YdX849nFc2M51yz2Z8QDcfrWjSXD/Dc7uWG3rddzfHuC2J6CEoWUJQJXar0wQKW37IvpWvW2HsN+5KC+M1PvKq1cvsW98SjGkdaSHijenwEmhxwwYUyNVy7GQ7zIStyUOAYn/is=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=OnDHcf9i; arc=none smtp.client-ip=209.85.210.179
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="AQ3Pq8+H"
-Received: by mail-pf1-f174.google.com with SMTP id d2e1a72fcca58-7251d20e7f2so4854451b3a.0
-        for <lkmm@lists.linux.dev>; Mon, 02 Dec 2024 15:21:39 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OnDHcf9i"
+Received: by mail-pf1-f179.google.com with SMTP id d2e1a72fcca58-724d8422dbaso4134779b3a.0
+        for <lkmm@lists.linux.dev>; Mon, 02 Dec 2024 18:00:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1733181699; x=1733786499; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=LyFnOYNR7/uDCGGXOyxce2KX24RRI2ramvA/qoNn6Mw=;
-        b=AQ3Pq8+H/YaRu9nG30t+k/iVHrypbaoBz0UZZHYFUhyQ2zJw2k/KIlgquBEJGfZRKq
-         aS5MMxtu3snALUToKTWcT0ZpBZVsCpSrmb0FyKP59tZwIbDOF8Z/vFBCOuvMGv/Coc7m
-         Rh4cjVFdaC2QCxgsGnWOd36CtclOIthdYwqbSOxHjelsy1UhPBxO2VmlNIs/jLCFP/96
-         xQ3Eb6BDgb5F7qYrMrYpViMo1ebdFShfZB8dcJ1O8K+lxPqSF1jeBMaxpoLsiGnYutSx
-         LHFbhB/iknZKalhidCnv6NSh3j4OuRMjbQO7ZF233bt+TpRpcHsBmSgBVnF/L/6RorTD
-         9zBQ==
+        d=gmail.com; s=20230601; t=1733191228; x=1733796028; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=ifhyXCPwj2ZS4FThasjY1J6PG/17ZdtDu1I6YUbkxr0=;
+        b=OnDHcf9iqMrRZ+GMS5e6Gy5lR3NQbB3mhKt2/Z/4Y89S4TfTL+edgUrWlEVU/loNrQ
+         DZesb+rGEyeV/Cl8TkOsImXe6ftSI8MGzHJgfANVYF4OD5+jCwUPOgIpXSAp9eWvF6+d
+         ZTlSlBt1mkRJiWSCgM3lQM1MI5CI2L85Qz7Fzkc//FkboQNCOt0QZhgIUCW6kbcJDlqw
+         JF5FPP1Pgt1uyJfnzC2+Uu6k7MNabmpoYI38u3CJ4XgiN6C4MloVKu2siXA87yAxE4ZJ
+         X3FTX5aRTxQa6cnWKHrwsHUfq9muh6vtxUs+cDh+kYTdt1I5VNw/Pw7yV5m7ybfO8B2z
+         E+3A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1733181699; x=1733786499;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=LyFnOYNR7/uDCGGXOyxce2KX24RRI2ramvA/qoNn6Mw=;
-        b=tozLLoo5gp53AhJw8mgBS4RqNlOpsEwcGCT1AM5Xm4jqksXo9q4staWbmVPxUbwPjG
-         7OgQo6IZ4sODKGBajOr18Px8PRjx2mWpNRXMpZP7O8F0sOUeS3p+VQVmz71tIr4eVXIP
-         hT1uB9ec3/2Cd8OK5isZCRJGGo45T0AeumQvdE0tbYbf6vsLTZQuEKG++38OKiTds1YY
-         +gkH1bL6wFOKaQlH3X60XkpfTtD3U1Z3QWQlXMnm9nogdIAlGf0AJGXeEuKFJWa3b9TJ
-         df9dodkz9iNRYqSymHLePORwtKcSrkGJrvI/0dKX1d0mM/Zht6ny/bWwQP1k+5i2+iOI
-         IvYg==
-X-Forwarded-Encrypted: i=1; AJvYcCXLL4Vl0AVw6SCRBzqcf6j5kRr1YSZSnU0QNL11iX94vwaZP04qPfDXJyRlRksWZPmr87n+@lists.linux.dev
-X-Gm-Message-State: AOJu0YziT3Kyn+mo46fke/5Qn2izA+2U97FLF0scUC2l6dNfbTQfjNAN
-	RyArBphKi4YpBYkeCNkHsBfxYUCj3DmKKNaKIhejFuS6FNwpoVeA
-X-Gm-Gg: ASbGncuqigco2t09L44lDEjvwLCUt5XJtZoGKZncN4tHSeQJfPbVIbZfp+HP76CRzcD
-	DQekfK+VY1q+pppUP/kEACu4Bk+vZBIdabOjgmrbGcouHLPpl5mvrDtXbslh84NBiqGE+FrLfWY
-	MBk/j8QCoFp/L4XuwQNUQ0W3oZxYwsyLUD744xLO3RodET0Dsl5R9YNrFB74qYzzxyzaAFkvIfK
-	LSy90YMFJitrRtLDVgL6pRG0gJghuyIDBfMkriciS7B/I1S3bygDmMesfK08h9cZpHOAFUW14h9
-	rVAAiRWz7eoKl4N3/Q==
-X-Google-Smtp-Source: AGHT+IEXS03Fw+wgJGBsVZ94KW7dwGXzAeA8iM26jbTjQebKyiUAt9gwXwClHbNDAS7WWsC0K1AuCw==
-X-Received: by 2002:a05:6a00:39a8:b0:725:3fb5:5595 with SMTP id d2e1a72fcca58-7257fa3a10dmr317747b3a.5.1733181699099;
-        Mon, 02 Dec 2024 15:21:39 -0800 (PST)
-Received: from localhost.localdomain ([240d:0:4a45:1d00:4807:3add:383b:ddbc])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-7254176fdcbsm9098432b3a.70.2024.12.02.15.21.33
-        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Mon, 02 Dec 2024 15:21:38 -0800 (PST)
-From: Kenjiro Nakayama <nakayamakenjiro@gmail.com>
-To: Pablo Neira Ayuso <pablo@netfilter.org>,
+        d=1e100.net; s=20230601; t=1733191228; x=1733796028;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=ifhyXCPwj2ZS4FThasjY1J6PG/17ZdtDu1I6YUbkxr0=;
+        b=t1x8ZImYaXk8FgCWCuIaRGxYu+J3zYCkB4VZLywM63J3FOUNU2d1QS/gPlj78qDOgn
+         F09f3b6IYcl+B15lCUQNYHt6UGGpaHXmZh5tjGx6cFXI8I++roX8LSpD1utcy2Lz+6x6
+         F9J+MIHd+/k7cSesWXbnKDobSbuOUyBLLSUGDxzcR5HG2bWVlabYLrbmhe57EqL7RMTj
+         Un/CfmP52oKIjvD7ZjqrTOq04jYemPG1qTcEhbXSrrFF6OHdvxOnMAU+E/GpAT4YjGCM
+         e8YyXDMZQpprmQNHHWuJv/6KfV6jYAOq8LJ9/r892U04SeELGRFzl8HU19jKXc/1p+VQ
+         clJw==
+X-Forwarded-Encrypted: i=1; AJvYcCXrlMfX0i4597djSH5QhdOX8IeyiZaF/s1F1505HgPQiF14mCM7PjJkeNidpsqa22rqldKg@lists.linux.dev
+X-Gm-Message-State: AOJu0YxEo0d0iDtyx70vFChhRHr4UINDyjf/PgZvsImIxjs3npqMpt8X
+	pDWgHil22Qi8Rfx+ZEVEbSu/XBdVyGViIiPE+1KSJvVm+RPZFT4m
+X-Gm-Gg: ASbGncsuvAPGqdzMUUP0KrXk3bd0VJVTgfGvGofMpMmptVazT1/XRUIwy26EE7iP/QQ
+	6bQA0dp7ixeADZMbDQOO05jtTCAHffGf2dgWqnEL0kq9w/JJ4H2HUHpoGjEAMbcVhO9o+Qx3wQH
+	+BzUIQRvLLrbn2q5VTg7rrLBQTLp3x89ACRAdMp65B6642ADEQ73NNvDy/Qc5ui6JK99sF3tAk1
+	2oaqtyAPhoQUtPw7KFVnqiufpUvIBkpZJaaxuV7WqbAGY9BOqBLEJk=
+X-Google-Smtp-Source: AGHT+IEe0uogUo+ebVsZ0JC4jhKeRE4kCvwTmE8uI2YOgw7JxmzvRPXAWvNj+Oa2WPogiVf++p7dKQ==
+X-Received: by 2002:a17:90b:1b52:b0:2ee:7a4f:9265 with SMTP id 98e67ed59e1d1-2ef012019a9mr1313043a91.15.1733191228010;
+        Mon, 02 Dec 2024 18:00:28 -0800 (PST)
+Received: from fedora ([43.228.180.230])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-2eee1591fbdsm1908976a91.35.2024.12.02.18.00.18
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 02 Dec 2024 18:00:27 -0800 (PST)
+Date: Tue, 3 Dec 2024 02:00:15 +0000
+From: Hangbin Liu <liuhangbin@gmail.com>
+To: Kenjiro Nakayama <nakayamakenjiro@gmail.com>
+Cc: Pablo Neira Ayuso <pablo@netfilter.org>,
 	Jozsef Kadlecsik <kadlec@netfilter.org>,
 	"David S. Miller" <davem@davemloft.net>,
 	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
 	Simon Horman <horms@kernel.org>,
 	Alan Stern <stern@rowland.harvard.edu>,
 	Andrea Parri <parri.andrea@gmail.com>,
@@ -76,51 +77,50 @@ To: Pablo Neira Ayuso <pablo@netfilter.org>,
 	Akira Yokosawa <akiyks@gmail.com>,
 	Daniel Lustig <dlustig@nvidia.com>,
 	Joel Fernandes <joel@joelfernandes.org>,
-	Shuah Khan <shuah@kernel.org>
-Cc: netfilter-devel@vger.kernel.org,
-	coreteam@netfilter.org,
-	linux-kernel@vger.kernel.org,
-	netdev@vger.kernel.org,
-	linux-arch@vger.kernel.org,
-	lkmm@lists.linux.dev,
-	linux-kselftest@vger.kernel.org,
-	Kenjiro Nakayama <nakayamakenjiro@gmail.com>
-Subject: [PATCH] selftests/net: call sendmmsg via udpgso_bench.sh
-Date: Tue,  3 Dec 2024 08:21:29 +0900
-Message-Id: <20241202232129.7139-1-nakayamakenjiro@gmail.com>
-X-Mailer: git-send-email 2.39.3 (Apple Git-146)
+	Shuah Khan <shuah@kernel.org>, netfilter-devel@vger.kernel.org,
+	coreteam@netfilter.org, linux-kernel@vger.kernel.org,
+	netdev@vger.kernel.org, linux-arch@vger.kernel.org,
+	lkmm@lists.linux.dev, linux-kselftest@vger.kernel.org
+Subject: Re: [PATCH] selftests/net: call sendmmsg via udpgso_bench.sh
+Message-ID: <Z05mL1WQHBLRkIw1@fedora>
+References: <20241202232129.7139-1-nakayamakenjiro@gmail.com>
 Precedence: bulk
 X-Mailing-List: lkmm@lists.linux.dev
 List-Id: <lkmm.lists.linux.dev>
 List-Subscribe: <mailto:lkmm+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:lkmm+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20241202232129.7139-1-nakayamakenjiro@gmail.com>
 
-Currently, sendmmsg is implemented in udpgso_bench_tx.c,
-but it is not called by any test script.
+On Tue, Dec 03, 2024 at 08:21:29AM +0900, Kenjiro Nakayama wrote:
+> Currently, sendmmsg is implemented in udpgso_bench_tx.c,
+> but it is not called by any test script.
+> 
+> This patch adds a test for sendmmsg in udpgso_bench.sh.
+> This allows for basic API testing and benchmarking
+> comparisons with GSO.
+> ---
+>  tools/testing/selftests/net/udpgso_bench.sh | 3 +++
+>  1 file changed, 3 insertions(+)
+> 
+> diff --git a/tools/testing/selftests/net/udpgso_bench.sh b/tools/testing/selftests/net/udpgso_bench.sh
+> index 640bc43452fa..88fa1d53ba2b 100755
+> --- a/tools/testing/selftests/net/udpgso_bench.sh
+> +++ b/tools/testing/selftests/net/udpgso_bench.sh
+> @@ -92,6 +92,9 @@ run_udp() {
+>  	echo "udp"
+>  	run_in_netns ${args}
+>  
+> +	echo "udp sendmmsg"
+> +	run_in_netns ${args} -m
+> +
+>  	echo "udp gso"
+>  	run_in_netns ${args} -S 0
+>  
+> -- 
+> 2.39.3 (Apple Git-146)
+> 
 
-This patch adds a test for sendmmsg in udpgso_bench.sh.
-This allows for basic API testing and benchmarking
-comparisons with GSO.
----
- tools/testing/selftests/net/udpgso_bench.sh | 3 +++
- 1 file changed, 3 insertions(+)
-
-diff --git a/tools/testing/selftests/net/udpgso_bench.sh b/tools/testing/selftests/net/udpgso_bench.sh
-index 640bc43452fa..88fa1d53ba2b 100755
---- a/tools/testing/selftests/net/udpgso_bench.sh
-+++ b/tools/testing/selftests/net/udpgso_bench.sh
-@@ -92,6 +92,9 @@ run_udp() {
- 	echo "udp"
- 	run_in_netns ${args}
- 
-+	echo "udp sendmmsg"
-+	run_in_netns ${args} -m
-+
- 	echo "udp gso"
- 	run_in_netns ${args} -S 0
- 
--- 
-2.39.3 (Apple Git-146)
-
+Reviewed-by: Hangbin Liu <liuhangbin@gmail.com>

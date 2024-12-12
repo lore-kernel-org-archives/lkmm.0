@@ -1,153 +1,185 @@
-Received: from smtp-out.freemail.hu (fmfe28.freemail.hu [46.107.16.233])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f53.google.com (mail-wm1-f53.google.com [209.85.128.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2556A1B4245
-	for <lkmm@lists.linux.dev>; Mon,  9 Dec 2024 15:07:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=46.107.16.233
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40EE621146B
+	for <lkmm@lists.linux.dev>; Thu, 12 Dec 2024 10:51:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733756846; cv=none; b=NenbgikvRPCAGGuGvum8pn7URkwVUnHoYMQ/rC35gszYaX7ai2ydJoDeLqB79ugYbGSzV9kZ42+hzObAiZW/KCaDreiTMI0DtQt1JilPEoIOVXX4OlX0HZwlr9I08iOAcfSp1obz8sCFEUqtdVIQpnjJOF9JHVZy0jrNOvRhvfI=
+	t=1734000700; cv=none; b=fhmxj4GPicfPPvpyYKD/De9xspflP3JbRnQqtwnWmP+Zk7ob4vzqmLziZMPUuTMg2aDiNOIpYCXHsYgCSjVa3ZPQ/BHTZNYCrfU/K3OGB/K2WreCq6k1C5a25AmDt/UOXQUo901nffx5yavKEl7IXXflIjGKCw+ro2+xhZ38cYw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733756846; c=relaxed/simple;
-	bh=omwpng1i8gxHWfLCQAszdvv0/rfHLpmaQ3YHCWoyioY=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=PL/q5o9WZ23uhdIytIrW5xAEGqFN5k4tI3QtMOFmo9ZWBzbRN+5pXKNc7/K72jcSU5xgMmY/D4eO9B4UoDu6Aa1GsHufVjUxHXX/aLaCAGhaidrMrnL37bgItvyfRRyTSIkkh/+JQPO5bNwJEF0SJz1YA95rU+mWyDcjtLIHSHM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=freemail.hu; spf=pass smtp.mailfrom=freemail.hu; dkim=fail (2048-bit key) header.d=freemail.hu header.i=@freemail.hu header.b=VRTaDCjC reason="signature verification failed"; arc=none smtp.client-ip=46.107.16.233
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=freemail.hu
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=freemail.hu
+	s=arc-20240116; t=1734000700; c=relaxed/simple;
+	bh=r8PedwbATslMjHn8HdkHK7/SPqYwOBI7VaWxxuig9FE=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=d/FwLafX0gKkBmMQ4pBmAX6tjoStLTlNcY6Sw1u/6g5ECsxDU6ZEH5D/qJfJAet1Hsk0MmBOMoWDXCLHuon24cGFS1k6pRw4blkIE2oYxeLr6oCFX3gDMnSx95ttuCRn5cQIUoav8SbS1DLASdJdGASo6HjlqoNgQk9dIsK4v/U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=Uy5AInZF; arc=none smtp.client-ip=209.85.128.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=freemail.hu header.i=@freemail.hu header.b="VRTaDCjC"
-Received: from localhost.localdomain (catv-178-48-208-49.catv.fixed.vodafone.hu [178.48.208.49])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	by smtp.freemail.hu (Postfix) with ESMTPSA id 4Y6Q770QRXz12YW;
-	Mon, 09 Dec 2024 16:01:38 +0100 (CET)
-From: egyszeregy@freemail.hu
-To: stern@rowland.harvard.edu,
-	parri.andrea@gmail.com,
-	will@kernel.org,
-	peterz@infradead.org,
-	boqun.feng@gmail.com,
-	npiggin@gmail.com,
-	dhowells@redhat.com,
-	j.alglave@ucl.ac.uk,
-	luc.maranget@inria.fr,
-	paulmck@kernel.org,
-	akiyks@gmail.com,
-	dlustig@nvidia.com,
-	joel@joelfernandes.org,
-	linux-kernel@vger.kernel.org,
-	linux-arch@vger.kernel.org,
-	lkmm@lists.linux.dev
-Cc: =?UTF-8?q?Benjamin=20Sz=C5=91ke?= <egyszeregy@freemail.hu>
-Subject: [PATCH] tools/memory-model: Fix litmus-tests's file names.
-Date: Mon,  9 Dec 2024 16:00:44 +0100
-Message-ID: <20241209150044.766-1-egyszeregy@freemail.hu>
-X-Mailer: git-send-email 2.47.1.windows.1
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="Uy5AInZF"
+Received: by mail-wm1-f53.google.com with SMTP id 5b1f17b1804b1-4361dc6322fso2918755e9.3
+        for <lkmm@lists.linux.dev>; Thu, 12 Dec 2024 02:51:37 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20230601; t=1734000695; x=1734605495; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=rtpsjC48mE/nmTjT+Q7/MwVuoD24o44fCuhvsg4pi50=;
+        b=Uy5AInZFgFHdF9eDMby/Mhfg96v93KaC4n/zbpjVoGUt+roriemI/ufPKpO1XcDBxk
+         L92lx9LiZGXrpAWU2ZzSWWy3h2fCs1p3rj8JMjCzqwlONY12mrhGK4ktJ9gnf1ECyj6o
+         sKflDFF7no6cnbPo8mHdMAbGd9DrmYQG6uD3Rk86hVoz0ksPDChXjjqhyfwJ/q7anDXE
+         abk/GTDjeGgRJiSTr9q0RxFKZwpMdh+BtRuyzQFeziVw+DcRu4D2Z7Cp2VjpiMrUWvGm
+         heB04+how5cXybTGtEV7cclZUfuwZxOO0L9SJl05t57t4WeLldwDwCom1GpkDXKsqVzi
+         TmZQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1734000695; x=1734605495;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=rtpsjC48mE/nmTjT+Q7/MwVuoD24o44fCuhvsg4pi50=;
+        b=a/Ju3nfLywm5sQulSq35B5SibEYC9/dVw6LbE9S9Vh3Gv8g4P54H4UHYoABJG47YcL
+         owFyMzuBvIublsFN3N2KA9wl/tDvCuq9/yu8SwUPraK5P2wtcvHvlW5fKngUdOQJbPwV
+         FUEyXuehQNs1VNvdYqMXdbAbDDmgIAddVQOuZEvQgfXB1MHqYcnzVullDxCKGGqdLh3g
+         aLRJ7WtCFuyrYK68ixjbFxz1hMxYGqvBom7OQTE5+D910jejyQJWxs1jgxt46L1nAohz
+         rJL7qq8jXHIgAGh+Z+sUSc0BoS58ovdJf+5CBK34HAhRDQX4hflJAJoMWkcZ78ociYAL
+         15WQ==
+X-Forwarded-Encrypted: i=1; AJvYcCW3X4cAhSepBO3krulTMbM2wl1lBfdVskKEYWKQXOeSnlrzOtCbRA6uOSG4jdDi5uButbu+@lists.linux.dev
+X-Gm-Message-State: AOJu0YyeSEwk6cslXtLkGyX+Iit5/rJqZKcHIg7y0YTSGKgfUWtmko9p
+	OLvYIrNzQLBakhBNHfiLpEvXwFQq1+qMlNLeKBUejV5zWt1SOwd144CengMtH+6HrUHNoEHqFZV
+	wtWzNKU9j9a91+CUF93rjARAyfYRC/vufEuzS
+X-Gm-Gg: ASbGncuUOUul7QP71xNpFykfj7fLVkPLYJbv2HpDKMMYJ+N1mifShgUyBrIq+oH5qWU
+	JZIQtQOdU65mKl9UeLi+NTzc8APD71gN6kBGBG/3SgZ5nYeUnt9VUptzD2gXWgDSc4UQn
+X-Google-Smtp-Source: AGHT+IHyygeSxJyNs1AB/t8h2oWE3zrmWEnc+tMnMhN05YyXp5Tg5F9O0X+SggrM6je5HiwFGxlS9nrxUkLK1wXEwpM=
+X-Received: by 2002:a05:600c:5101:b0:434:a1d3:a331 with SMTP id
+ 5b1f17b1804b1-4361c3e2350mr42431505e9.22.1734000695440; Thu, 12 Dec 2024
+ 02:51:35 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: lkmm@lists.linux.dev
 List-Id: <lkmm.lists.linux.dev>
 List-Subscribe: <mailto:lkmm+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:lkmm+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=simple/relaxed; t=1733756503;
-	s=20181004; d=freemail.hu;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type:Content-Transfer-Encoding;
-	l=4399; bh=VCNo93+SR6kYKMk9U3TzOw7N+/lFY0qfFZtD+RCCluk=;
-	b=VRTaDCjCBaJl6ylXyEA9qtKpXkANb1JYzMWXqk7dPwHzI79AF3o5Od0Az9tfYzNX
-	n04vsH/Y13eWdj8ludVV66BBXcZ/NyRUaUjbzFcvP6Os2DSUVHITqyOYZqz2TpwfWPg
-	vBUFhudDHcVvpOR0svuXkmb3QNoUnZqHe5y064b73y9jgKY8W5kBI1ixzg7PEiV5BMK
-	cez5ZNUmnm8RF1oQk6G4i1Y/oK1lOP3ef4IXmSllXgW5sIptVGF9iHdtl9E4y0qxVp5
-	R0cFq/utEe1JvLSoNXYr/QiN7NnVTQiHHqC+RiQhcfx5poCO2V8G75q2UdwdPEvZwgb
-	hnU4tgmfEQ==
+References: <20241101060237.1185533-1-boqun.feng@gmail.com> <20241101060237.1185533-3-boqun.feng@gmail.com>
+In-Reply-To: <20241101060237.1185533-3-boqun.feng@gmail.com>
+From: Alice Ryhl <aliceryhl@google.com>
+Date: Thu, 12 Dec 2024 11:51:23 +0100
+Message-ID: <CAH5fLghYjcb-mpR_rr2aC_W8rRb6g8jCFxgky7iEqVgmpHjf=Q@mail.gmail.com>
+Subject: Re: [RFC v2 02/13] rust: sync: Add basic atomic operation mapping framework
+To: Boqun Feng <boqun.feng@gmail.com>
+Cc: rust-for-linux@vger.kernel.org, rcu@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, linux-arch@vger.kernel.org, 
+	llvm@lists.linux.dev, lkmm@lists.linux.dev, Miguel Ojeda <ojeda@kernel.org>, 
+	Alex Gaynor <alex.gaynor@gmail.com>, Wedson Almeida Filho <wedsonaf@gmail.com>, Gary Guo <gary@garyguo.net>, 
+	=?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, 
+	Benno Lossin <benno.lossin@proton.me>, Andreas Hindborg <a.hindborg@samsung.com>, 
+	Alan Stern <stern@rowland.harvard.edu>, Andrea Parri <parri.andrea@gmail.com>, 
+	Will Deacon <will@kernel.org>, Peter Zijlstra <peterz@infradead.org>, 
+	Nicholas Piggin <npiggin@gmail.com>, David Howells <dhowells@redhat.com>, 
+	Jade Alglave <j.alglave@ucl.ac.uk>, Luc Maranget <luc.maranget@inria.fr>, 
+	"Paul E. McKenney" <paulmck@kernel.org>, Akira Yokosawa <akiyks@gmail.com>, 
+	Daniel Lustig <dlustig@nvidia.com>, Joel Fernandes <joel@joelfernandes.org>, 
+	Nathan Chancellor <nathan@kernel.org>, Nick Desaulniers <ndesaulniers@google.com>, kent.overstreet@gmail.com, 
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>, elver@google.com, 
+	Mark Rutland <mark.rutland@arm.com>, Thomas Gleixner <tglx@linutronix.de>, 
+	Ingo Molnar <mingo@redhat.com>, Borislav Petkov <bp@alien8.de>, 
+	Dave Hansen <dave.hansen@linux.intel.com>, x86@kernel.org, 
+	"H. Peter Anvin" <hpa@zytor.com>, Catalin Marinas <catalin.marinas@arm.com>, torvalds@linux-foundation.org, 
+	linux-arm-kernel@lists.infradead.org, linux-fsdevel@vger.kernel.org, 
+	Trevor Gross <tmgross@umich.edu>, dakr@redhat.com, 
+	Frederic Weisbecker <frederic@kernel.org>, Neeraj Upadhyay <neeraj.upadhyay@kernel.org>, 
+	Josh Triplett <josh@joshtriplett.org>, Uladzislau Rezki <urezki@gmail.com>, 
+	Steven Rostedt <rostedt@goodmis.org>, Mathieu Desnoyers <mathieu.desnoyers@efficios.com>, 
+	Lai Jiangshan <jiangshanlai@gmail.com>, Zqiang <qiang.zhang1211@gmail.com>, 
+	Paul Walmsley <paul.walmsley@sifive.com>, Palmer Dabbelt <palmer@dabbelt.com>, 
+	Albert Ou <aou@eecs.berkeley.edu>, linux-riscv@lists.infradead.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-From: Benjamin Szőke <egyszeregy@freemail.hu>
+On Fri, Nov 1, 2024 at 7:03=E2=80=AFAM Boqun Feng <boqun.feng@gmail.com> wr=
+ote:
+>
+> Preparation for generic atomic implementation. To unify the
+> ipmlementation of a generic method over `i32` and `i64`, the C side
+> atomic methods need to be grouped so that in a generic method, they can
+> be referred as <type>::<method>, otherwise their parameters and return
+> value are different between `i32` and `i64`, which would require using
+> `transmute()` to unify the type into a `T`.
+>
+> Introduce `AtomicIpml` to represent a basic type in Rust that has the
+> direct mapping to an atomic implementation from C. This trait is sealed,
+> and currently only `i32` and `i64` ipml this.
 
-Makes a greater Hamming distance for name of Z6.0+pooncelock* files.
+There seems to be quite a few instances of "impl" spelled as "ipml" here.
 
-Signed-off-by: Benjamin Szőke <egyszeregy@freemail.hu>
----
- tools/memory-model/Documentation/locking.txt                  | 4 ++--
- tools/memory-model/Documentation/recipes.txt                  | 4 ++--
- tools/memory-model/litmus-tests/README                        | 4 ++--
- ...ncelock+pooncelock+smp_mb__after_spinlock+pombonce.litmus} | 0
- ...s => Z6.0+pooncelock+pooncelock+spin_lock+pombonce.litmus} | 0
- 5 files changed, 6 insertions(+), 6 deletions(-)
- rename tools/memory-model/litmus-tests/{Z6.0+pooncelock+poonceLock+pombonce.litmus => Z6.0+pooncelock+pooncelock+smp_mb__after_spinlock+pombonce.litmus} (100%)
- rename tools/memory-model/litmus-tests/{Z6.0+pooncelock+pooncelock+pombonce.litmus => Z6.0+pooncelock+pooncelock+spin_lock+pombonce.litmus} (100%)
+> Further, different methods are put into different `*Ops` trait groups,
+> and this is for the future when smaller types like `i8`/`i16` are
+> supported but only with a limited set of API (e.g. only set(), load(),
+> xchg() and cmpxchg(), no add() or sub() etc).
+>
+> While the atomic mod is introduced, documentation is also added for
+> memory models and data races.
+>
+> Also bump my role to the maintainer of ATOMIC INFRASTRUCTURE to reflect
+> my responsiblity on the Rust atomic mod.
+>
+> Signed-off-by: Boqun Feng <boqun.feng@gmail.com>
+> ---
+>  MAINTAINERS                    |   4 +-
+>  rust/kernel/sync.rs            |   1 +
+>  rust/kernel/sync/atomic.rs     |  19 ++++
+>  rust/kernel/sync/atomic/ops.rs | 199 +++++++++++++++++++++++++++++++++
+>  4 files changed, 222 insertions(+), 1 deletion(-)
+>  create mode 100644 rust/kernel/sync/atomic.rs
+>  create mode 100644 rust/kernel/sync/atomic/ops.rs
+>
+> diff --git a/MAINTAINERS b/MAINTAINERS
+> index b77f4495dcf4..e09471027a63 100644
+> --- a/MAINTAINERS
+> +++ b/MAINTAINERS
+> @@ -3635,7 +3635,7 @@ F:        drivers/input/touchscreen/atmel_mxt_ts.c
+>  ATOMIC INFRASTRUCTURE
+>  M:     Will Deacon <will@kernel.org>
+>  M:     Peter Zijlstra <peterz@infradead.org>
+> -R:     Boqun Feng <boqun.feng@gmail.com>
+> +M:     Boqun Feng <boqun.feng@gmail.com>
+>  R:     Mark Rutland <mark.rutland@arm.com>
+>  L:     linux-kernel@vger.kernel.org
+>  S:     Maintained
+> @@ -3644,6 +3644,8 @@ F:        arch/*/include/asm/atomic*.h
+>  F:     include/*/atomic*.h
+>  F:     include/linux/refcount.h
+>  F:     scripts/atomic/
+> +F:     rust/kernel/sync/atomic.rs
+> +F:     rust/kernel/sync/atomic/
 
-diff --git a/tools/memory-model/Documentation/locking.txt b/tools/memory-model/Documentation/locking.txt
-index 65c898c64a93..c213aa4a8668 100644
---- a/tools/memory-model/Documentation/locking.txt
-+++ b/tools/memory-model/Documentation/locking.txt
-@@ -151,7 +151,7 @@ Ordering Provided by a Lock to CPUs Not Holding That Lock
- It is not necessarily the case that accesses ordered by locking will be
- seen as ordered by CPUs not holding that lock.  Consider this example:
- 
--	/* See Z6.0+pooncelock+pooncelock+pombonce.litmus. */
-+	/* See Z6.0+pooncelock+pooncelock+spin_lock+pombonce.litmus. */
- 	void CPU0(void)
- 	{
- 		spin_lock(&mylock);
-@@ -184,7 +184,7 @@ ordering properties.
- Ordering can be extended to CPUs not holding the lock by careful use
- of smp_mb__after_spinlock():
- 
--	/* See Z6.0+pooncelock+poonceLock+pombonce.litmus. */
-+	/* See Z6.0+pooncelock+pooncelock+smp_mb__after_spinlock+pombonce.litmus. */
- 	void CPU0(void)
- 	{
- 		spin_lock(&mylock);
-diff --git a/tools/memory-model/Documentation/recipes.txt b/tools/memory-model/Documentation/recipes.txt
-index 03f58b11c252..3c55146e8fe4 100644
---- a/tools/memory-model/Documentation/recipes.txt
-+++ b/tools/memory-model/Documentation/recipes.txt
-@@ -126,7 +126,7 @@ However, it is not necessarily the case that accesses ordered by
- locking will be seen as ordered by CPUs not holding that lock.
- Consider this example:
- 
--	/* See Z6.0+pooncelock+pooncelock+pombonce.litmus. */
-+	/* See Z6.0+pooncelock+pooncelock+spin_lock+pombonce.litmus. */
- 	void CPU0(void)
- 	{
- 		spin_lock(&mylock);
-@@ -159,7 +159,7 @@ lock's ordering properties.
- Ordering can be extended to CPUs not holding the lock by careful use
- of smp_mb__after_spinlock():
- 
--	/* See Z6.0+pooncelock+poonceLock+pombonce.litmus. */
-+	/* See Z6.0+pooncelock+pooncelock+smp_mb__after_spinlock+pombonce.litmus. */
- 	void CPU0(void)
- 	{
- 		spin_lock(&mylock);
-diff --git a/tools/memory-model/litmus-tests/README b/tools/memory-model/litmus-tests/README
-index d311a0ff1ae6..82e5b58b8ac6 100644
---- a/tools/memory-model/litmus-tests/README
-+++ b/tools/memory-model/litmus-tests/README
-@@ -144,12 +144,12 @@ WRC+pooncerelease+fencermbonceonce+Once.litmus
- 	The second is forbidden because smp_store_release() is
- 	A-cumulative in LKMM.
- 
--Z6.0+pooncelock+pooncelock+pombonce.litmus
-+Z6.0+pooncelock+pooncelock+spin_lock+pombonce.litmus
- 	Is the ordering provided by a spin_unlock() and a subsequent
- 	spin_lock() sufficient to make ordering apparent to accesses
- 	by a process not holding the lock?
- 
--Z6.0+pooncelock+poonceLock+pombonce.litmus
-+Z6.0+pooncelock+pooncelock+smp_mb__after_spinlock+pombonce.litmus
- 	As above, but with smp_mb__after_spinlock() immediately
- 	following the spin_lock().
- 
-diff --git a/tools/memory-model/litmus-tests/Z6.0+pooncelock+poonceLock+pombonce.litmus b/tools/memory-model/litmus-tests/Z6.0+pooncelock+pooncelock+smp_mb__after_spinlock+pombonce.litmus
-similarity index 100%
-rename from tools/memory-model/litmus-tests/Z6.0+pooncelock+poonceLock+pombonce.litmus
-rename to tools/memory-model/litmus-tests/Z6.0+pooncelock+pooncelock+smp_mb__after_spinlock+pombonce.litmus
-diff --git a/tools/memory-model/litmus-tests/Z6.0+pooncelock+pooncelock+pombonce.litmus b/tools/memory-model/litmus-tests/Z6.0+pooncelock+pooncelock+spin_lock+pombonce.litmus
-similarity index 100%
-rename from tools/memory-model/litmus-tests/Z6.0+pooncelock+pooncelock+pombonce.litmus
-rename to tools/memory-model/litmus-tests/Z6.0+pooncelock+pooncelock+spin_lock+pombonce.litmus
--- 
-2.43.5
+This is why mod.rs files are superior :)
 
+> @@ -0,0 +1,19 @@
+> +// SPDX-License-Identifier: GPL-2.0
+> +
+> +//! Atomic primitives.
+> +//!
+> +//! These primitives have the same semantics as their C counterparts: an=
+d the precise definitions of
+> +//! semantics can be found at [`LKMM`]. Note that Linux Kernel Memory (C=
+onsistency) Model is the
+> +//! only model for Rust code in kernel, and Rust's own atomics should be=
+ avoided.
+> +//!
+> +//! # Data races
+> +//!
+> +//! [`LKMM`] atomics have different rules regarding data races:
+> +//!
+> +//! - A normal read doesn't data-race with an atomic read.
+
+This was fixed:
+https://github.com/rust-lang/rust/pull/128778
+
+> +mod private {
+> +    /// Sealed trait marker to disable customized impls on atomic implem=
+entation traits.
+> +    pub trait Sealed {}
+> +}
+
+Just make the trait unsafe?
+
+Alice

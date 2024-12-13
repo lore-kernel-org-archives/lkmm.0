@@ -1,57 +1,57 @@
-Received: from mail-wr1-f54.google.com (mail-wr1-f54.google.com [209.85.221.54])
+Received: from mail-wr1-f50.google.com (mail-wr1-f50.google.com [209.85.221.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BACA1E1A3E
-	for <lkmm@lists.linux.dev>; Fri, 13 Dec 2024 14:33:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E2A61DF975
+	for <lkmm@lists.linux.dev>; Fri, 13 Dec 2024 14:37:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734100384; cv=none; b=ZtM1MsyA9zJPVuxHC4u5o2AqTESrIekxJZk2W3BwylW1BS3iNYZZw1GCXToNkhSqxvgE8zksWVDsCcUsWOAC4UHCOc4ZWpIwY0AyFweYkzxIqJmQuopVPX6rGj3E8f3W0JSM2N2qqHtuoBgYesr0T0VK6Gg3vyXRij639zU/wlE=
+	t=1734100649; cv=none; b=dJ7DRRuL5WZfbAida1dMJxTA1HvsdNQTTMFBuQk06fhgB6y86dMrks3OdjD7s/z+A9GWz+moTDMCJPOhAZVNQS9GexZxfDhveBDS1RVbLZunJ/WeE7jLVWjbHkPogWSJPXdfoyhWDHfEiQiwl1Rp49tlL84c7+aWET3oZFeG1SU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734100384; c=relaxed/simple;
-	bh=EuJufx1aFMmSDDvNPI6DU4SHOlqB0i/fifV9p+FF0lU=;
+	s=arc-20240116; t=1734100649; c=relaxed/simple;
+	bh=cSE7YfpxLSVqgzR60SozadvYSPlf/zv5LQnl9qv4L1k=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=P9P5nQa2ZV3BWZDiZ3vW+N66ez0kiAzqyD8iiRbkuNYsrIpf600DoLbPjA6qWkb+I2mnpDwde2fQBlvDzdH4AS+qfaFzSIQ5aKpYjaU4BP+KQCJ6sincMwzs1K/HZpShbiBsCXBI6fPQYL5ff4sygK6ecrBN4zPWDfkrEwJOr/o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=GWHCQTCp; arc=none smtp.client-ip=209.85.221.54
+	 To:Cc:Content-Type; b=JQibWeLNmDaGeeKsyc4hcp6BXqdAo4uJqYvJu42kxbsx8hrF4l66dH4dkZoL4/uGZ8vCM2Kh1W5kUVUv2RHNFtXBYUNNVCUhndxb9LpxM/gU6ESCuCZyeCL9DoDDrBMH2Q9V0fB4zMv9RtKTAgliJf3Mah5fTufx/ptLL+EskOw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=Z7GjKx1W; arc=none smtp.client-ip=209.85.221.50
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="GWHCQTCp"
-Received: by mail-wr1-f54.google.com with SMTP id ffacd0b85a97d-38789e5b6a7so941540f8f.1
-        for <lkmm@lists.linux.dev>; Fri, 13 Dec 2024 06:33:02 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="Z7GjKx1W"
+Received: by mail-wr1-f50.google.com with SMTP id ffacd0b85a97d-3862b40a6e0so1020098f8f.0
+        for <lkmm@lists.linux.dev>; Fri, 13 Dec 2024 06:37:26 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1734100381; x=1734705181; darn=lists.linux.dev;
+        d=google.com; s=20230601; t=1734100645; x=1734705445; darn=lists.linux.dev;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=YS9LGudJur7kGbLspdnTQuWDC+hZFSTpArars9lBeLQ=;
-        b=GWHCQTCp7kOiFOCCoRlknIC/isbtyi+j8dkRWHyc1sDm15OaKMuYJqQnhO9yNA60V9
-         lEYO8G15fHICKG9qkqHnlIBrVC81e7na/8oDyR5p4UqtQLeCLPM8OZKNFyGD4FJgTx/1
-         WaR7KKvvPgyEQ1Szx2o/IP0CU4nMq8tQBPM6X9kECMy0Rqpj5x8RYzDcTT3Lf7KC9sn8
-         KxBShW1voV2ze6uTu853XMB+7r+n+MeUoF2V0xiY+tV9hVoJkDIKNqkIt6o18tBhdvNj
-         Q7U/eiKjT6RF5cdEMMDIfmHocWej/mSN/MlxT0a8L9OHNWuuDdr5SKAnuWsAEWSwFMSW
-         fm5A==
+        bh=2GEPFVvt/WcPx7hwmrvPddq2GA3SILVOBgchd5bamcM=;
+        b=Z7GjKx1WKQzXZye9E+TNySVJskxjQCSfT+6kj+AaB2V0H+N1LgFh6pGRsz5wfqAp1H
+         nH7fKWpyYEUAXd2TYcCQWxYgJqat+FuKuoBEMhXeYDnPBbYlTkA081mlJLyFZO1scn+3
+         7XJ+vsw4QOEV6RTYha6EWFOq47eCsBJfQTTDDvrCeAfxkrEVhtoVpay7Y1SxrnvDr1+7
+         VOM9Vy4zlmRAnzEJJKaaSUNmybR2cpYlt4R+kAgrn5LuHU+Cu0VpQLwZ72Py+ajWnuza
+         IESpYCtNxiSnz9ta8SaXM32Y8rDHt7UwFzhk8BwZ/JWw8RlecLxS/cvs/ZIKHnLtCCgM
+         diUA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1734100381; x=1734705181;
+        d=1e100.net; s=20230601; t=1734100645; x=1734705445;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=YS9LGudJur7kGbLspdnTQuWDC+hZFSTpArars9lBeLQ=;
-        b=RWA9PM55vZJpRROVNan9NeiMhhK8SYCcjdUdSeP+gTaN01vwQNNIlAtP2mVHzpfgnK
-         P7xHezV9IHyuIm+lqGkqMzeh4fe/W0VeMwTIz+Tw0L6/jYYh84oz3N3DxgxtkjNahG4h
-         q1uBmSqIh1ORgWVcmhjudO5VWPTIHsSXeyzxBkqM2vFrUGTL/KTdSGR755EkcmPMLKiB
-         OucprG86O2A/6vgmp413Du3WT7mM+5I1nNXr+js1Fw6ah/o8Bc1t678v1urze3AJE8yH
-         7Nlksuc9iVlpC5y8g5ulRt7b4JBet0UjUy+hulNMpSgLEVlH9MTXt5FRmYI4dwNcZuUd
-         N+6A==
-X-Forwarded-Encrypted: i=1; AJvYcCUz4Aq2iY/yrW+6DzSA+nq0endgxANLdONbp6IbzkMdDsd0xLHGyfHLremhfS5YZKtXbd5Q@lists.linux.dev
-X-Gm-Message-State: AOJu0YyVL4Lx/SK+EcXIGfHCjGA/+6jkPYampmfTaSnr88+vgYaSv2DF
-	bu+v+huy2Z/aHn3FmAKorzzO5F83Kns0caZf72clkh9CuBxGIHVf/QBgaCVzZ0+lExlfWZqMApu
-	h3B2vlmAgRLH1fac8TZZbmnR447kP61VtxC3F
-X-Gm-Gg: ASbGncudoQIDwIfzdWxqzglQuCYBodW8/8IWPS2XLs1cv32iljUc2+FMqGLO7MefB6A
-	E1x/yPF/eIAheBDhwSL8JGB4oMgil3OiPfCwaIl4=
-X-Google-Smtp-Source: AGHT+IGvvc8SEIVkqPspUBW11+fwBIw/V0dhqL0RuVU+1lBeUhFdbOVUzhj6j5lBdtbpP2FKdq6ekBfVUhokO3//J1Y=
-X-Received: by 2002:a05:6000:2ad:b0:385:ee59:44eb with SMTP id
- ffacd0b85a97d-3888e0bd28amr2583040f8f.33.1734100380695; Fri, 13 Dec 2024
- 06:33:00 -0800 (PST)
+        bh=2GEPFVvt/WcPx7hwmrvPddq2GA3SILVOBgchd5bamcM=;
+        b=rDLfd8HCSl4KuJhmZo6ljAfEY1hY9svrbelL6ttHNLHm1D5NRyFnIAUXzga2KDMQOL
+         Ofe5tdUpZMRSMmM6YLFWSTMRKfb6gQuUoeiWJIttkPAUTg0f3BvpGbZ6w6mgtRVRmJ1K
+         MBYK+ZcU0do1XdWsmGKPNPDnljzq/O7MYR0atsTAuKZyzDR6GjUeI2/eqYsAsDRv9XW9
+         1foSCVx2f4Hzulx6AA82QHicnXpdrjsc5MFqUkp1Of0JpuDRdl3rm0aWJMONFzKMbWCj
+         D8TQLOQqZH8G23U1A6/eNI4+1Z3OU2Oue5+qT6ryEnlRi3a3SMwH5BA5zBmMaKMnmoSM
+         eZbQ==
+X-Forwarded-Encrypted: i=1; AJvYcCXz3jhxKa6rABt9Vscf/l4bvymOxO2iIi/juFyyFOJgN0L7V9sFJrBinX9R94jXBgyZry5E@lists.linux.dev
+X-Gm-Message-State: AOJu0YxigZjuyQLKGh4PKAePN7UoGO59K7IYMmIn6majJwHseyrzY+d2
+	ezqlcJRanojJXX+poxky9YjEk6LqJiARoKC2FtW5ZkEYFr1lh9O77AiGcmdZlr6/fEezhvFcTVe
+	p8HllRRhw2KzcLT8XMoaLioRCvYHCUfDYTyRl
+X-Gm-Gg: ASbGncvPrDPnGF9oOBJ+WXdTWHfsdzuUpBClt4CyxW4ZYUAFFYVmDaQVJ/hSniZ4b5H
+	3ybhYPqDtaS22KF6Allw8Hs5+3R6wxO8rI7gjUXg=
+X-Google-Smtp-Source: AGHT+IF5nz9iFwihOnmrHXThptEMDz6uAvc2eauPyTTcPdqXIp7ICHSubzS0ZSdBwH7W3Dcgfoy53emLLyY7/WPXocY=
+X-Received: by 2002:a05:6000:154b:b0:385:f092:e00 with SMTP id
+ ffacd0b85a97d-3889ad32da3mr2133093f8f.50.1734100645390; Fri, 13 Dec 2024
+ 06:37:25 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: lkmm@lists.linux.dev
 List-Id: <lkmm.lists.linux.dev>
@@ -59,13 +59,13 @@ List-Subscribe: <mailto:lkmm+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:lkmm+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 References: <20241101060237.1185533-1-boqun.feng@gmail.com>
- <20241101060237.1185533-5-boqun.feng@gmail.com> <CAH5fLgjhQouU=kqVx7LET2yeWt6sKt-VO5PR5SnQ8doaG4ihuQ@mail.gmail.com>
- <Z1seogLmy5H8-hXn@boqun-archlinux>
-In-Reply-To: <Z1seogLmy5H8-hXn@boqun-archlinux>
+ <20241101060237.1185533-3-boqun.feng@gmail.com> <CAH5fLghYjcb-mpR_rr2aC_W8rRb6g8jCFxgky7iEqVgmpHjf=Q@mail.gmail.com>
+ <Z1sYNOYJPzQmJXn6@boqun-archlinux>
+In-Reply-To: <Z1sYNOYJPzQmJXn6@boqun-archlinux>
 From: Alice Ryhl <aliceryhl@google.com>
-Date: Fri, 13 Dec 2024 15:32:47 +0100
-Message-ID: <CAH5fLgjGg8_s8imOkmPb0yLAMwD1sF1aoBZWkAy-YLNh41zCuw@mail.gmail.com>
-Subject: Re: [RFC v2 04/13] rust: sync: atomic: Add generic atomics
+Date: Fri, 13 Dec 2024 15:37:13 +0100
+Message-ID: <CAH5fLgidmY7FtKLKR-Yxb6U-mQvsyatGRToqSHHRACfTdiAtUA@mail.gmail.com>
+Subject: Re: [RFC v2 02/13] rust: sync: Add basic atomic operation mapping framework
 To: Boqun Feng <boqun.feng@gmail.com>
 Cc: rust-for-linux@vger.kernel.org, rcu@vger.kernel.org, 
 	linux-kernel@vger.kernel.org, linux-arch@vger.kernel.org, 
@@ -96,95 +96,141 @@ Cc: rust-for-linux@vger.kernel.org, rcu@vger.kernel.org,
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Thu, Dec 12, 2024 at 6:34=E2=80=AFPM Boqun Feng <boqun.feng@gmail.com> w=
+On Thu, Dec 12, 2024 at 6:07=E2=80=AFPM Boqun Feng <boqun.feng@gmail.com> w=
 rote:
 >
-> On Thu, Dec 12, 2024 at 11:57:07AM +0100, Alice Ryhl wrote:
-> [...]
-> > > diff --git a/rust/kernel/sync/atomic/generic.rs b/rust/kernel/sync/at=
-omic/generic.rs
-> > > new file mode 100644
-> > > index 000000000000..204da38e2691
-> > > --- /dev/null
-> > > +++ b/rust/kernel/sync/atomic/generic.rs
-> > > @@ -0,0 +1,253 @@
+> On Thu, Dec 12, 2024 at 11:51:23AM +0100, Alice Ryhl wrote:
+> > On Fri, Nov 1, 2024 at 7:03=E2=80=AFAM Boqun Feng <boqun.feng@gmail.com=
+> wrote:
+> > >
+> > > Preparation for generic atomic implementation. To unify the
+> > > ipmlementation of a generic method over `i32` and `i64`, the C side
+> > > atomic methods need to be grouped so that in a generic method, they c=
+an
+> > > be referred as <type>::<method>, otherwise their parameters and retur=
+n
+> > > value are different between `i32` and `i64`, which would require usin=
+g
+> > > `transmute()` to unify the type into a `T`.
+> > >
+> > > Introduce `AtomicIpml` to represent a basic type in Rust that has the
+> > > direct mapping to an atomic implementation from C. This trait is seal=
+ed,
+> > > and currently only `i32` and `i64` ipml this.
+> >
+> > There seems to be quite a few instances of "impl" spelled as "ipml" her=
+e.
+> >
+>
+> Will fix!
+>
+> > > Further, different methods are put into different `*Ops` trait groups=
+,
+> > > and this is for the future when smaller types like `i8`/`i16` are
+> > > supported but only with a limited set of API (e.g. only set(), load()=
+,
+> > > xchg() and cmpxchg(), no add() or sub() etc).
+> > >
+> > > While the atomic mod is introduced, documentation is also added for
+> > > memory models and data races.
+> > >
+> > > Also bump my role to the maintainer of ATOMIC INFRASTRUCTURE to refle=
+ct
+> > > my responsiblity on the Rust atomic mod.
+> > >
+> > > Signed-off-by: Boqun Feng <boqun.feng@gmail.com>
+> > > ---
+> > >  MAINTAINERS                    |   4 +-
+> > >  rust/kernel/sync.rs            |   1 +
+> > >  rust/kernel/sync/atomic.rs     |  19 ++++
+> > >  rust/kernel/sync/atomic/ops.rs | 199 +++++++++++++++++++++++++++++++=
+++
+> > >  4 files changed, 222 insertions(+), 1 deletion(-)
+> > >  create mode 100644 rust/kernel/sync/atomic.rs
+> > >  create mode 100644 rust/kernel/sync/atomic/ops.rs
+> > >
+> > > diff --git a/MAINTAINERS b/MAINTAINERS
+> > > index b77f4495dcf4..e09471027a63 100644
+> > > --- a/MAINTAINERS
+> > > +++ b/MAINTAINERS
+> > > @@ -3635,7 +3635,7 @@ F:        drivers/input/touchscreen/atmel_mxt_t=
+s.c
+> > >  ATOMIC INFRASTRUCTURE
+> > >  M:     Will Deacon <will@kernel.org>
+> > >  M:     Peter Zijlstra <peterz@infradead.org>
+> > > -R:     Boqun Feng <boqun.feng@gmail.com>
+> > > +M:     Boqun Feng <boqun.feng@gmail.com>
+> > >  R:     Mark Rutland <mark.rutland@arm.com>
+> > >  L:     linux-kernel@vger.kernel.org
+> > >  S:     Maintained
+> > > @@ -3644,6 +3644,8 @@ F:        arch/*/include/asm/atomic*.h
+> > >  F:     include/*/atomic*.h
+> > >  F:     include/linux/refcount.h
+> > >  F:     scripts/atomic/
+> > > +F:     rust/kernel/sync/atomic.rs
+> > > +F:     rust/kernel/sync/atomic/
+> >
+> > This is why mod.rs files are superior :)
+> >
+>
+> ;-) Not going to do anything right now, but let me think about this.
+>
+> > > @@ -0,0 +1,19 @@
 > > > +// SPDX-License-Identifier: GPL-2.0
 > > > +
-> > > +//! Generic atomic primitives.
-> > > +
-> > > +use super::ops::*;
-> > > +use super::ordering::*;
-> > > +use crate::types::Opaque;
-> > > +
-> > > +/// A generic atomic variable.
-> > > +///
-> > > +/// `T` must impl [`AllowAtomic`], that is, an [`AtomicImpl`] has to=
- be chosen.
-> > > +///
-> > > +/// # Invariants
-> > > +///
-> > > +/// Doing an atomic operation while holding a reference of [`Self`] =
-won't cause a data race, this
-> > > +/// is guaranteed by the safety requirement of [`Self::from_ptr`] an=
-d the extra safety requirement
-> > > +/// of the usage on pointers returned by [`Self::as_ptr`].
-> > > +#[repr(transparent)]
-> > > +pub struct Atomic<T: AllowAtomic>(Opaque<T>);
-> > > +
-> > > +// SAFETY: `Atomic<T>` is safe to share among execution contexts bec=
-ause all accesses are atomic.
-> > > +unsafe impl<T: AllowAtomic> Sync for Atomic<T> {}
+> > > +//! Atomic primitives.
+> > > +//!
+> > > +//! These primitives have the same semantics as their C counterparts=
+: and the precise definitions of
+> > > +//! semantics can be found at [`LKMM`]. Note that Linux Kernel Memor=
+y (Consistency) Model is the
+> > > +//! only model for Rust code in kernel, and Rust's own atomics shoul=
+d be avoided.
+> > > +//!
+> > > +//! # Data races
+> > > +//!
+> > > +//! [`LKMM`] atomics have different rules regarding data races:
+> > > +//!
+> > > +//! - A normal read doesn't data-race with an atomic read.
 > >
-> > Surely it should also be Send?
+> > This was fixed:
+> > https://github.com/rust-lang/rust/pull/128778
 > >
 >
-> It's `Send` here because `Opaque<T>` is `Send` when `T` is `Send`. And
-> in patch #9, I changed the definition of `AllowAtomic`, which is not a
-> subtrait of `Send` anymore, and an `impl Send` block was added there.
+> Yeah, I was aware of that effort, and good to know it's finally merged.
+> Thanks!
 >
-> > > +/// Atomics that support basic atomic operations.
-> > > +///
-> > > +/// TODO: Unless the `impl` is a `#[repr(transparet)]` new type of a=
-n existing [`AllowAtomic`], the
-> > > +/// impl block should be only done in atomic mod. And currently only=
- basic integer types can
-> > > +/// implement this trait in atomic mod.
-> >
-> > What's up with this TODO? Can't you just write an appropriate safety
-> > requirement?
-> >
+> This will be in 1.83, right? If so, we will still need the above until
+> we bump up the minimal rustc version to 1.83 or beyond. I will handle
+> this properly with the minimal rustc 1.83 (i.e. if this goes in first,
+> will send a follow up patch). I will also mention in the above that this
+> has been changed in 1.83.
 >
-> Because the limited scope of types that allows atomic is an artificial
-> choice, i.e. we want to start with a limited number of types and make
-> forward progress, and the types that we don't want to support atomics
-> for now are not because of safety reasons, but more of a lack of
-> users/motivations. So I don't think this is something we should use
-> safety requirement to describe.
+> This also reminds that I should add that LKMM allows mixed-size atomic
+> accesses (as non data race), I will add that in the version.
 
-I found the wording very confusing. Could you reword it to say
-something about future possibilities?
+This is just documentation. I don't think you need to do any special
+MSRV handling.
 
-> > > +/// # Safety
-> > > +///
-> > > +/// [`Self`] must have the same size and alignment as [`Self::Repr`]=
-.
-> > > +pub unsafe trait AllowAtomic: Sized + Send + Copy {
-> > > +    /// The backing atomic implementation type.
-> > > +    type Repr: AtomicImpl;
-> > > +
-> > > +    /// Converts into a [`Self::Repr`].
-> > > +    fn into_repr(self) -> Self::Repr;
-> > > +
-> > > +    /// Converts from a [`Self::Repr`].
-> > > +    fn from_repr(repr: Self::Repr) -> Self;
+> > > +mod private {
+> > > +    /// Sealed trait marker to disable customized impls on atomic im=
+plementation traits.
+> > > +    pub trait Sealed {}
+> > > +}
 > >
-> > What do you need these methods for?
+> > Just make the trait unsafe?
 > >
 >
-> Converting a `AtomicImpl` value (currently only `i32` and `i64`) to a
-> `AllowAtomic` value without using transmute in `impl` block of
-> `Atomic<T>`. Any better idea?
+> And make the safety requirement of `AtomicImpl` something like:
+>
+>     The type must have the implementation for atomic operations.
+>
+> ? Hmm.. I don't think that's a good safety requirement TBH. Actually the
+> reason that we need to restrict `AtomicImpl` types is more of an
+> iplementation issue (the implementation need to be done if we want to
+> support i8 or i16) rather than safety issue. So a sealed trait is proper
+> here. Does this make sense? Or am I missing something?
 
-You could use transmute?
+Where is the AtomicImpl trait used?
 
 Alice

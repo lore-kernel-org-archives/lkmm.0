@@ -1,112 +1,190 @@
-Received: from smtp-out.freemail.hu (fmfe17.freemail.hu [46.107.16.210])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f54.google.com (mail-wr1-f54.google.com [209.85.221.54])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA0F21DE3AF
-	for <lkmm@lists.linux.dev>; Thu, 12 Dec 2024 23:17:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=46.107.16.210
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BACA1E1A3E
+	for <lkmm@lists.linux.dev>; Fri, 13 Dec 2024 14:33:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734045445; cv=none; b=cDJIF5On5vv02Rqc6Aj2tfetGs3HhOQGoGaYZZz/ptSA+WWZLq06sZRYM9HcOCJ8j+bRIekv1LFpIM5rJYdDiYbhol3VXYTPSC0CjmxlXRGZA8zqagAU9WKf8ywRAaSKM0uILX+ESvCiLTytEMn0v0HWFVH+kxfjVC1/iPMsMK0=
+	t=1734100384; cv=none; b=ZtM1MsyA9zJPVuxHC4u5o2AqTESrIekxJZk2W3BwylW1BS3iNYZZw1GCXToNkhSqxvgE8zksWVDsCcUsWOAC4UHCOc4ZWpIwY0AyFweYkzxIqJmQuopVPX6rGj3E8f3W0JSM2N2qqHtuoBgYesr0T0VK6Gg3vyXRij639zU/wlE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734045445; c=relaxed/simple;
-	bh=QY5/TILGKvX2t96LpmDncFb8f8MyiHmAME6toVPq4B4=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=uJ1aP0pObMWWQrr/+buNebAD4rZhEzlrInWKOZij1RCp4cM7HPR04f/rhOBoWis7A23m0p+9yoZmlS+EusjR93HOmeyWkkjpvHX7IgozucVQITgtkN79qypI1zWaGQjeEmQIrO/m1QRD3leA6LDLA4eaNjVUdr5oMPOopXMcgZQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=freemail.hu; spf=pass smtp.mailfrom=freemail.hu; dkim=fail (2048-bit key) header.d=freemail.hu header.i=@freemail.hu header.b=J7QtnUqN reason="signature verification failed"; arc=none smtp.client-ip=46.107.16.210
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=freemail.hu
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=freemail.hu
+	s=arc-20240116; t=1734100384; c=relaxed/simple;
+	bh=EuJufx1aFMmSDDvNPI6DU4SHOlqB0i/fifV9p+FF0lU=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=P9P5nQa2ZV3BWZDiZ3vW+N66ez0kiAzqyD8iiRbkuNYsrIpf600DoLbPjA6qWkb+I2mnpDwde2fQBlvDzdH4AS+qfaFzSIQ5aKpYjaU4BP+KQCJ6sincMwzs1K/HZpShbiBsCXBI6fPQYL5ff4sygK6ecrBN4zPWDfkrEwJOr/o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=GWHCQTCp; arc=none smtp.client-ip=209.85.221.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=freemail.hu header.i=@freemail.hu header.b="J7QtnUqN"
-Received: from [192.168.0.16] (catv-178-48-208-49.catv.fixed.vodafone.hu [178.48.208.49])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	by smtp.freemail.hu (Postfix) with ESMTPSA id 4Y8SqC0wj1zNDL;
-	Fri, 13 Dec 2024 00:09:59 +0100 (CET)
-Message-ID: <c46da2b3-bb86-4385-bffb-2edea61d79d0@freemail.hu>
-Date: Fri, 13 Dec 2024 00:09:12 +0100
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="GWHCQTCp"
+Received: by mail-wr1-f54.google.com with SMTP id ffacd0b85a97d-38789e5b6a7so941540f8f.1
+        for <lkmm@lists.linux.dev>; Fri, 13 Dec 2024 06:33:02 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20230601; t=1734100381; x=1734705181; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=YS9LGudJur7kGbLspdnTQuWDC+hZFSTpArars9lBeLQ=;
+        b=GWHCQTCp7kOiFOCCoRlknIC/isbtyi+j8dkRWHyc1sDm15OaKMuYJqQnhO9yNA60V9
+         lEYO8G15fHICKG9qkqHnlIBrVC81e7na/8oDyR5p4UqtQLeCLPM8OZKNFyGD4FJgTx/1
+         WaR7KKvvPgyEQ1Szx2o/IP0CU4nMq8tQBPM6X9kECMy0Rqpj5x8RYzDcTT3Lf7KC9sn8
+         KxBShW1voV2ze6uTu853XMB+7r+n+MeUoF2V0xiY+tV9hVoJkDIKNqkIt6o18tBhdvNj
+         Q7U/eiKjT6RF5cdEMMDIfmHocWej/mSN/MlxT0a8L9OHNWuuDdr5SKAnuWsAEWSwFMSW
+         fm5A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1734100381; x=1734705181;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=YS9LGudJur7kGbLspdnTQuWDC+hZFSTpArars9lBeLQ=;
+        b=RWA9PM55vZJpRROVNan9NeiMhhK8SYCcjdUdSeP+gTaN01vwQNNIlAtP2mVHzpfgnK
+         P7xHezV9IHyuIm+lqGkqMzeh4fe/W0VeMwTIz+Tw0L6/jYYh84oz3N3DxgxtkjNahG4h
+         q1uBmSqIh1ORgWVcmhjudO5VWPTIHsSXeyzxBkqM2vFrUGTL/KTdSGR755EkcmPMLKiB
+         OucprG86O2A/6vgmp413Du3WT7mM+5I1nNXr+js1Fw6ah/o8Bc1t678v1urze3AJE8yH
+         7Nlksuc9iVlpC5y8g5ulRt7b4JBet0UjUy+hulNMpSgLEVlH9MTXt5FRmYI4dwNcZuUd
+         N+6A==
+X-Forwarded-Encrypted: i=1; AJvYcCUz4Aq2iY/yrW+6DzSA+nq0endgxANLdONbp6IbzkMdDsd0xLHGyfHLremhfS5YZKtXbd5Q@lists.linux.dev
+X-Gm-Message-State: AOJu0YyVL4Lx/SK+EcXIGfHCjGA/+6jkPYampmfTaSnr88+vgYaSv2DF
+	bu+v+huy2Z/aHn3FmAKorzzO5F83Kns0caZf72clkh9CuBxGIHVf/QBgaCVzZ0+lExlfWZqMApu
+	h3B2vlmAgRLH1fac8TZZbmnR447kP61VtxC3F
+X-Gm-Gg: ASbGncudoQIDwIfzdWxqzglQuCYBodW8/8IWPS2XLs1cv32iljUc2+FMqGLO7MefB6A
+	E1x/yPF/eIAheBDhwSL8JGB4oMgil3OiPfCwaIl4=
+X-Google-Smtp-Source: AGHT+IGvvc8SEIVkqPspUBW11+fwBIw/V0dhqL0RuVU+1lBeUhFdbOVUzhj6j5lBdtbpP2FKdq6ekBfVUhokO3//J1Y=
+X-Received: by 2002:a05:6000:2ad:b0:385:ee59:44eb with SMTP id
+ ffacd0b85a97d-3888e0bd28amr2583040f8f.33.1734100380695; Fri, 13 Dec 2024
+ 06:33:00 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: lkmm@lists.linux.dev
 List-Id: <lkmm.lists.linux.dev>
 List-Subscribe: <mailto:lkmm+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:lkmm+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] tools/memory-model: Fix litmus-tests's file names for
- case-insensitive filesystem.
-To: paulmck@kernel.org, Alan Stern <stern@rowland.harvard.edu>
-Cc: parri.andrea@gmail.com, will@kernel.org, peterz@infradead.org,
- boqun.feng@gmail.com, npiggin@gmail.com, dhowells@redhat.com,
- j.alglave@ucl.ac.uk, luc.maranget@inria.fr, akiyks@gmail.com,
- dlustig@nvidia.com, joel@joelfernandes.org, linux-kernel@vger.kernel.org,
- linux-arch@vger.kernel.org, lkmm@lists.linux.dev
-References: <8925322d-1983-4e35-82f9-d8b86d32e6a6@freemail.hu>
- <1a6342c9-e316-4c78-9a07-84f45cbebb54@paulmck-laptop>
- <ec6e297b-02fb-4f57-9fc1-47751106a7d2@freemail.hu>
- <5acaaaa0-7c17-4991-aff6-8ea293667654@paulmck-laptop>
- <a42da186-195c-40af-b4ee-0eaf6672cf2c@freemail.hu>
- <62634bbe-edd6-4973-a96a-df543f39f240@rowland.harvard.edu>
- <61075efa-8d53-455b-bba3-e88bbf4da0a5@paulmck-laptop>
- <75a5a694-1313-44b1-baff-d72559ac9039@rowland.harvard.edu>
- <de5485b8-6d88-46f6-b982-cdfb3cf80a13@paulmck-laptop>
- <25cee4ed-1115-42d4-8422-ed7f7f4ff389@rowland.harvard.edu>
- <e3a5aa0a-2c8b-4679-9344-64135df63fe1@paulmck-laptop>
-Content-Language: hu
-From: =?UTF-8?Q?Sz=C5=91ke_Benjamin?= <egyszeregy@freemail.hu>
-In-Reply-To: <e3a5aa0a-2c8b-4679-9344-64135df63fe1@paulmck-laptop>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=simple/relaxed; t=1734044999;
-	s=20181004; d=freemail.hu;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:In-Reply-To:Content-Type:Content-Transfer-Encoding;
-	l=1699; bh=uaRvV0C+6MLqpebOkeDFkO1ucsP2gvpZZbpZV30r5RY=;
-	b=J7QtnUqNG4PiMijq07V3BKyszUgxLpzw399DbB4MPUPoZrYIx93QFS8ivMxQF7qc
-	jEHNSmF6sHimBgytsdpYFoSXYIuF9vpE5SxaIHClVTVZeykGIwuxeoQAse4EllIsX3q
-	2Qj7I1MATn8yKZnIxPThtgncIjO+92dviFKITude+xAHwN68sHeSrRd4X5JbivKsWIu
-	zIoPn6cYGHKlhABlkj934+FATO5NlXGW3Zs/82JXH7Di3x0DjeNoJtefVjxNNr622Jw
-	uNbXa7Um4P6LERV/cU3NkN1HIt3b2b1TnNrObMirZvB12mINAeXTYD/cWc8j2dprtwJ
-	cnPOjt6qAQ==
+References: <20241101060237.1185533-1-boqun.feng@gmail.com>
+ <20241101060237.1185533-5-boqun.feng@gmail.com> <CAH5fLgjhQouU=kqVx7LET2yeWt6sKt-VO5PR5SnQ8doaG4ihuQ@mail.gmail.com>
+ <Z1seogLmy5H8-hXn@boqun-archlinux>
+In-Reply-To: <Z1seogLmy5H8-hXn@boqun-archlinux>
+From: Alice Ryhl <aliceryhl@google.com>
+Date: Fri, 13 Dec 2024 15:32:47 +0100
+Message-ID: <CAH5fLgjGg8_s8imOkmPb0yLAMwD1sF1aoBZWkAy-YLNh41zCuw@mail.gmail.com>
+Subject: Re: [RFC v2 04/13] rust: sync: atomic: Add generic atomics
+To: Boqun Feng <boqun.feng@gmail.com>
+Cc: rust-for-linux@vger.kernel.org, rcu@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, linux-arch@vger.kernel.org, 
+	llvm@lists.linux.dev, lkmm@lists.linux.dev, Miguel Ojeda <ojeda@kernel.org>, 
+	Alex Gaynor <alex.gaynor@gmail.com>, Wedson Almeida Filho <wedsonaf@gmail.com>, Gary Guo <gary@garyguo.net>, 
+	=?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, 
+	Benno Lossin <benno.lossin@proton.me>, Andreas Hindborg <a.hindborg@samsung.com>, 
+	Alan Stern <stern@rowland.harvard.edu>, Andrea Parri <parri.andrea@gmail.com>, 
+	Will Deacon <will@kernel.org>, Peter Zijlstra <peterz@infradead.org>, 
+	Nicholas Piggin <npiggin@gmail.com>, David Howells <dhowells@redhat.com>, 
+	Jade Alglave <j.alglave@ucl.ac.uk>, Luc Maranget <luc.maranget@inria.fr>, 
+	"Paul E. McKenney" <paulmck@kernel.org>, Akira Yokosawa <akiyks@gmail.com>, 
+	Daniel Lustig <dlustig@nvidia.com>, Joel Fernandes <joel@joelfernandes.org>, 
+	Nathan Chancellor <nathan@kernel.org>, Nick Desaulniers <ndesaulniers@google.com>, kent.overstreet@gmail.com, 
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>, elver@google.com, 
+	Mark Rutland <mark.rutland@arm.com>, Thomas Gleixner <tglx@linutronix.de>, 
+	Ingo Molnar <mingo@redhat.com>, Borislav Petkov <bp@alien8.de>, 
+	Dave Hansen <dave.hansen@linux.intel.com>, x86@kernel.org, 
+	"H. Peter Anvin" <hpa@zytor.com>, Catalin Marinas <catalin.marinas@arm.com>, torvalds@linux-foundation.org, 
+	linux-arm-kernel@lists.infradead.org, linux-fsdevel@vger.kernel.org, 
+	Trevor Gross <tmgross@umich.edu>, dakr@redhat.com, 
+	Frederic Weisbecker <frederic@kernel.org>, Neeraj Upadhyay <neeraj.upadhyay@kernel.org>, 
+	Josh Triplett <josh@joshtriplett.org>, Uladzislau Rezki <urezki@gmail.com>, 
+	Steven Rostedt <rostedt@goodmis.org>, Mathieu Desnoyers <mathieu.desnoyers@efficios.com>, 
+	Lai Jiangshan <jiangshanlai@gmail.com>, Zqiang <qiang.zhang1211@gmail.com>, 
+	Paul Walmsley <paul.walmsley@sifive.com>, Palmer Dabbelt <palmer@dabbelt.com>, 
+	Albert Ou <aou@eecs.berkeley.edu>, linux-riscv@lists.infradead.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-2024. 11. 12. 22:53 keltezéssel, Paul E. McKenney írta:
-> On Tue, Nov 12, 2024 at 03:20:00PM -0500, Alan Stern wrote:
->> On Tue, Nov 12, 2024 at 10:26:37AM -0800, Paul E. McKenney wrote:
->>> We do have a rule for the filenames in that directory that most of
->>> them follow (I am looking at *you*, "dep+plain.litmus"!).  So we have
->>> a few options:
->>>
->>> 1.	Status quo.  (How boring!!!)
->>>
->>> 2.	Come up with a better rule mapping the litmus-test file
->>> 	contents to the filename, and rename things to follow that rule.
->>> 	(Holy bikeshedding, Batman!)
->>>
->>> 3.	Keep it simple and keep the current rule, but make the
->>> 	combination of spin_lock() and smp_mb__after_spinlock()
->>> 	have a greater Hamming distance from "lock".  Szőke's
->>> 	patch changed only one of the filenames containing "Lock".
->>> 	(Bikeshedding, but narrower scope.)
->>>
->>> 4.	One of the above, but bring the litmus tests not following
->>> 	the rule into compliance.
->>>
->>> 5.	Give up on the idea of the name reflecting the contents of the
->>> 	file, and just number them or something.  (More bikeshedding
->>> 	and a different form of confusion.)
->>>
->>> 6.	#5, but accompanied by some tool or script that allows easy
->>> 	searching of the litmus tests by pattern of interaction.
->>> 	(Easy for *me* to say!)
->>>
->>> 7.	Something else entirely.
->>>
->>> Thoughts?
->>
->> Thumbs up for 3.
-> 
-> Very good!  Any nominations for the lucky replacement for "Lock"?
-> 
-> 							Thanx, Paul
+On Thu, Dec 12, 2024 at 6:34=E2=80=AFPM Boqun Feng <boqun.feng@gmail.com> w=
+rote:
+>
+> On Thu, Dec 12, 2024 at 11:57:07AM +0100, Alice Ryhl wrote:
+> [...]
+> > > diff --git a/rust/kernel/sync/atomic/generic.rs b/rust/kernel/sync/at=
+omic/generic.rs
+> > > new file mode 100644
+> > > index 000000000000..204da38e2691
+> > > --- /dev/null
+> > > +++ b/rust/kernel/sync/atomic/generic.rs
+> > > @@ -0,0 +1,253 @@
+> > > +// SPDX-License-Identifier: GPL-2.0
+> > > +
+> > > +//! Generic atomic primitives.
+> > > +
+> > > +use super::ops::*;
+> > > +use super::ordering::*;
+> > > +use crate::types::Opaque;
+> > > +
+> > > +/// A generic atomic variable.
+> > > +///
+> > > +/// `T` must impl [`AllowAtomic`], that is, an [`AtomicImpl`] has to=
+ be chosen.
+> > > +///
+> > > +/// # Invariants
+> > > +///
+> > > +/// Doing an atomic operation while holding a reference of [`Self`] =
+won't cause a data race, this
+> > > +/// is guaranteed by the safety requirement of [`Self::from_ptr`] an=
+d the extra safety requirement
+> > > +/// of the usage on pointers returned by [`Self::as_ptr`].
+> > > +#[repr(transparent)]
+> > > +pub struct Atomic<T: AllowAtomic>(Opaque<T>);
+> > > +
+> > > +// SAFETY: `Atomic<T>` is safe to share among execution contexts bec=
+ause all accesses are atomic.
+> > > +unsafe impl<T: AllowAtomic> Sync for Atomic<T> {}
+> >
+> > Surely it should also be Send?
+> >
+>
+> It's `Send` here because `Opaque<T>` is `Send` when `T` is `Send`. And
+> in patch #9, I changed the definition of `AllowAtomic`, which is not a
+> subtrait of `Send` anymore, and an `impl Send` block was added there.
+>
+> > > +/// Atomics that support basic atomic operations.
+> > > +///
+> > > +/// TODO: Unless the `impl` is a `#[repr(transparet)]` new type of a=
+n existing [`AllowAtomic`], the
+> > > +/// impl block should be only done in atomic mod. And currently only=
+ basic integer types can
+> > > +/// implement this trait in atomic mod.
+> >
+> > What's up with this TODO? Can't you just write an appropriate safety
+> > requirement?
+> >
+>
+> Because the limited scope of types that allows atomic is an artificial
+> choice, i.e. we want to start with a limited number of types and make
+> forward progress, and the types that we don't want to support atomics
+> for now are not because of safety reasons, but more of a lack of
+> users/motivations. So I don't think this is something we should use
+> safety requirement to describe.
 
-Subject: [PATCH] tools/memory-model: Fix litmus-tests's file names.
-Makes a greater Hamming distance for name of Z6.0+pooncelock* files.
-https://lore.kernel.org/lkml/20241209150044.766-1-egyszeregy@freemail.hu/
+I found the wording very confusing. Could you reword it to say
+something about future possibilities?
 
+> > > +/// # Safety
+> > > +///
+> > > +/// [`Self`] must have the same size and alignment as [`Self::Repr`]=
+.
+> > > +pub unsafe trait AllowAtomic: Sized + Send + Copy {
+> > > +    /// The backing atomic implementation type.
+> > > +    type Repr: AtomicImpl;
+> > > +
+> > > +    /// Converts into a [`Self::Repr`].
+> > > +    fn into_repr(self) -> Self::Repr;
+> > > +
+> > > +    /// Converts from a [`Self::Repr`].
+> > > +    fn from_repr(repr: Self::Repr) -> Self;
+> >
+> > What do you need these methods for?
+> >
+>
+> Converting a `AtomicImpl` value (currently only `i32` and `i64`) to a
+> `AllowAtomic` value without using transmute in `impl` block of
+> `Atomic<T>`. Any better idea?
+
+You could use transmute?
+
+Alice

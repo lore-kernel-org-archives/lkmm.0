@@ -1,229 +1,239 @@
-Received: from mail-qv1-f52.google.com (mail-qv1-f52.google.com [209.85.219.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from frasgout12.his.huawei.com (frasgout12.his.huawei.com [14.137.139.154])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42FAF18DF73;
-	Fri, 13 Dec 2024 20:28:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E11411DF725
+	for <lkmm@lists.linux.dev>; Mon,  6 Jan 2025 21:58:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=14.137.139.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734121731; cv=none; b=JIZhQtm3tZ54b5TJpM9BYdwK9iG9uzr1yUfxJgN7HflQ8XFgVCKRUBzh8CSW6dmxtarXtD4B28Niqq2HWG0oafv4/A5cHnT3Z6hl8rl9hD2j1YUPA+NJrLj3CIMQqJrR62lrjRJ9ZaMToEDGUASXZUQePm5GwDcTc1LmH6Lv/4k=
+	t=1736200724; cv=none; b=e26PiDdwcuX/n9LjCxzxeKhwh2qyRaUkv+VEv8NYxjRy6/wEjBlEDXFNO+bXzlZxwVlvwfl/anAjUkdE9TfEdIkvkumS8WzqFbsROqopxqizHPxkRZVrqs/FPkcI/RiagIapVnQiggKHtntvBs+sklgQscCQuvGjwaQ9HGVeleM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734121731; c=relaxed/simple;
-	bh=5bn8oXNQA2053l7zQok4dmxpsp3aILhYx8v20d7OHts=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=bmnY5jyWKrhPsbc/tErS6mlCVHIjjzosb7zP6IGLZa7Btb2ECqwmyUsqnlH7hdkV9U4Rieh6IGUt0qYylsMlAJONPtBvd69rECF+ZA+8wf10KE9ZuUk7Q3+QnvCbRUVTdWHWLrP8nzF9fr9SS/7mUOM8UWedXEK2QcmHAXSIkaE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ZTGOmBxG; arc=none smtp.client-ip=209.85.219.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZTGOmBxG"
-Received: by mail-qv1-f52.google.com with SMTP id 6a1803df08f44-6d89dc50927so16241206d6.3;
-        Fri, 13 Dec 2024 12:28:49 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1734121729; x=1734726529; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:feedback-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=oy+g6CCR8H9z+qQ9IKAP5iLictR2vzTnBiPMNSCfde4=;
-        b=ZTGOmBxG/O3W5VnIUDXsdxFDpKwXcjJ2IzyYLDePTl5PuqARN5C4JxJjT8hyUdxkc5
-         OEjhICbaUgc7OMPCWmJcksdz3qQM3UeINvsudooZhWc0xqJGj9Sq82Si4JFy76pZyumA
-         GHmBM9sDTXRu4C7EKgoKCTiwvm505Uvr9y40936/HAGpUI9+Z5AwXrM7YUi3GPs/P8Dk
-         xoiVM3BYHP+CSAekLOyA8Qv0z+cuhN9JvD+33mfdklR4Nx79wZZr3H1sVOiYV++XdH/p
-         wV/xgS73pKqT4lBiXMAiF6lC2nmrM6Vc0m+uPeWH5OSwLapV/mdsob9XYzk8uzCUVelm
-         JKmQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1734121729; x=1734726529;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:feedback-id:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=oy+g6CCR8H9z+qQ9IKAP5iLictR2vzTnBiPMNSCfde4=;
-        b=P+7bi9j8ZHOu8B9u+PqTeGalFLaWcwAsCXIyH7OHTYiMphb9OR7694/f/4siY4iMmP
-         F5NzLyhFPgNcTQoVpr7TePw3WUmJic0U3KzI46PRMl1oKxbuvlJkZAENOK0OltwtxnVt
-         9WUzxiqhXwb07vC8UcVovI1Nutti1I1iAotSK4+saw52MvpOkfiQiBM6z7SrvN1TCIIi
-         8cQK9u/IFrr95K61nvhNNlXM8LGv7Hjxu2uIBkN4eAhdyYZf1YNpS3ftKD2yUtp2Smd4
-         USeUMxGJf4MNWp1nUbNAzLctzlodu1b7FakiJCcOqCrzQMi8PzZ4uK4v1wR7gIg7uywx
-         ScXA==
-X-Forwarded-Encrypted: i=1; AJvYcCVf16jhW5VwTbYeQi2QPCyuRX6T+/y/3IdoJCbEjSQjbJ8iTWWi3axFbhkw2RrlnmlO44LGfQ==@lists.linux.dev, AJvYcCW1/8rmP/xOCdNHc1ofzvs/veynWSiJZoRe92cfguIjTuHNeGoI1TTq2zO1rO6y6sOSOyH6@lists.linux.dev
-X-Gm-Message-State: AOJu0YzZgvwGZmNSBXPpgqoB3UrIaRuH5eJo1oE45CPVkcDtGCi1zul1
-	XkW2PEGBU/vZ0eIHRGO7v5MHmlecsZZrTTiJx6y9LcsM5euZmpfZ
-X-Gm-Gg: ASbGncvqku+kj2RcWvf6Ku19VKq+owJzqZFc8XcizAewGWJhlM5KZD2K45xmZp8LI27
-	5IIdzj4rNS8JjA4ZEvSIqRRYf3RBXYM5OynKsBlEsapazIV1XZCboOsjNAY3QKMW9N6AAeb2Ouu
-	6E8r9QVyyI8QqP/BwWRlm9T+7r799EzWvFGbj57gGGljoZk/Cj+bwEueEn828Y9TirArpXfSb0y
-	HQWT00wh8FMcVtE1E7uA7P/uo8mevZl8/aPkaEuffeUsodlrwQigLEzLev/9x5uVTBhCp2+LETm
-	9AIFMt2deMNDhVAAyXwZdK/tB1w4b4h41vttxTuyq6IiAjo=
-X-Google-Smtp-Source: AGHT+IE2tKNH2SwdPs6Zkn1SWo3BZBrlDL+pJUKK8ffETsaGO4d5bvz342opBhZTwO6vfAdVJSMQ5A==
-X-Received: by 2002:ad4:5dcb:0:b0:6d8:e641:da29 with SMTP id 6a1803df08f44-6dc8ca44819mr70587316d6.6.1734121728937;
-        Fri, 13 Dec 2024 12:28:48 -0800 (PST)
-Received: from fauth-a2-smtp.messagingengine.com (fauth-a2-smtp.messagingengine.com. [103.168.172.201])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-6dccd3805e5sm789776d6.114.2024.12.13.12.28.47
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 13 Dec 2024 12:28:48 -0800 (PST)
-Received: from phl-compute-11.internal (phl-compute-11.phl.internal [10.202.2.51])
-	by mailfauth.phl.internal (Postfix) with ESMTP id B8C611200066;
-	Fri, 13 Dec 2024 15:28:47 -0500 (EST)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-11.internal (MEProxy); Fri, 13 Dec 2024 15:28:47 -0500
-X-ME-Sender: <xms:_5hcZ52D0Txfq3afYHx_FbgTtmEk_XFYGdsCxZrFemGViQYgimNBIw>
-    <xme:_5hcZwE0JuQpAx-sNtF1T4lNVXCTxpu8QQK39LNMwvRar7kPxKYKGILxZCLuwVeiw
-    JqiJqyI3iHFHYZ3VA>
-X-ME-Received: <xmr:_5hcZ55iST0Ld5UtgJO19PFmYPPES1IEZQ5fvzsB0A8k-EhTnaQH_VgICyoU>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrkeejgddufeeiucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
-    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
-    htshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddtvden
-    ucfhrhhomhepuehoqhhunhcuhfgvnhhguceosghoqhhunhdrfhgvnhhgsehgmhgrihhlrd
-    gtohhmqeenucggtffrrghtthgvrhhnpefftdeihfeigedtvdeuueffieetvedtgeejuefh
-    hffgudfgfeeggfeftdeigeehvdenucffohhmrghinhepghhithhhuhgsrdgtohhmnecuve
-    hluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepsghoqhhunhdo
-    mhgvshhmthhprghuthhhphgvrhhsohhnrghlihhthidqieelvdeghedtieegqddujeejke
-    ehheehvddqsghoqhhunhdrfhgvnhhgpeepghhmrghilhdrtghomhesfhhigihmvgdrnhgr
-    mhgvpdhnsggprhgtphhtthhopeehjedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtoh
-    eprghlihgtvghrhihhlhesghhoohhglhgvrdgtohhmpdhrtghpthhtoheprhhushhtqdhf
-    ohhrqdhlihhnuhigsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtoheprhgtuh
-    esvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehlihhnuhigqdhkvghrnhgv
-    lhesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehlihhnuhigqdgrrhgthh
-    esvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehllhhvmheslhhishhtshdr
-    lhhinhhugidruggvvhdprhgtphhtthhopehlkhhmmheslhhishhtshdrlhhinhhugidrug
-    gvvhdprhgtphhtthhopehojhgvuggrsehkvghrnhgvlhdrohhrghdprhgtphhtthhopegr
-    lhgvgidrghgrhihnohhrsehgmhgrihhlrdgtohhm
-X-ME-Proxy: <xmx:_5hcZ21dZDlSFPHhJ-hR_xqZ1E0rep-r4WrXiwUQyM1nizooQS9AnA>
-    <xmx:_5hcZ8F5a37Iksgu8azbe4LtJh86oPlDtiIZrtuMnU4PwfLQHgkdaA>
-    <xmx:_5hcZ3_Z-H-jUwynNjV6TS1Q48CIKGofI_-xcmhDLwS-hAy2MJ1wxA>
-    <xmx:_5hcZ5lGDiaKlmxar7Ng2QGY3xkyj4bsqNu3LdLxBbywFujFVq5mLg>
-    <xmx:_5hcZwFSPtMAKsGOW-8Vmvi_oCQ7KHZB-ZN7yeYoB03uVjiO-lIrMZ-I>
-Feedback-ID: iad51458e:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 13 Dec 2024 15:28:45 -0500 (EST)
-Date: Fri, 13 Dec 2024 12:28:45 -0800
-From: Boqun Feng <boqun.feng@gmail.com>
-To: Alice Ryhl <aliceryhl@google.com>
-Cc: rust-for-linux@vger.kernel.org, rcu@vger.kernel.org,
-	linux-kernel@vger.kernel.org, linux-arch@vger.kernel.org,
-	llvm@lists.linux.dev, lkmm@lists.linux.dev,
-	Miguel Ojeda <ojeda@kernel.org>,	Alex Gaynor <alex.gaynor@gmail.com>,
-	Wedson Almeida Filho <wedsonaf@gmail.com>,	Gary Guo <gary@garyguo.net>,
-	=?iso-8859-1?Q?Bj=F6rn?= Roy Baron <bjorn3_gh@protonmail.com>,
-	Benno Lossin <benno.lossin@proton.me>,
-	Andreas Hindborg <a.hindborg@samsung.com>,
-	Alan Stern <stern@rowland.harvard.edu>,
-	Andrea Parri <parri.andrea@gmail.com>,	Will Deacon <will@kernel.org>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Nicholas Piggin <npiggin@gmail.com>,	David Howells <dhowells@redhat.com>,
-	Jade Alglave <j.alglave@ucl.ac.uk>,	Luc Maranget <luc.maranget@inria.fr>,
-	"Paul E. McKenney" <paulmck@kernel.org>,
-	Akira Yokosawa <akiyks@gmail.com>,	Daniel Lustig <dlustig@nvidia.com>,
-	Joel Fernandes <joel@joelfernandes.org>,
-	Nathan Chancellor <nathan@kernel.org>,
-	Nick Desaulniers <ndesaulniers@google.com>,	kent.overstreet@gmail.com,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>, elver@google.com,
-	Mark Rutland <mark.rutland@arm.com>,
-	Thomas Gleixner <tglx@linutronix.de>,	Ingo Molnar <mingo@redhat.com>,
- Borislav Petkov <bp@alien8.de>,
-	Dave Hansen <dave.hansen@linux.intel.com>, x86@kernel.org,
-	"H. Peter Anvin" <hpa@zytor.com>,
-	Catalin Marinas <catalin.marinas@arm.com>,	torvalds@linux-foundation.org,
- linux-arm-kernel@lists.infradead.org,	linux-fsdevel@vger.kernel.org,
- Trevor Gross <tmgross@umich.edu>,	dakr@redhat.com,
- Frederic Weisbecker <frederic@kernel.org>,
-	Neeraj Upadhyay <neeraj.upadhyay@kernel.org>,
-	Josh Triplett <josh@joshtriplett.org>,
-	Uladzislau Rezki <urezki@gmail.com>,
-	Steven Rostedt <rostedt@goodmis.org>,
-	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
-	Lai Jiangshan <jiangshanlai@gmail.com>,
-	Zqiang <qiang.zhang1211@gmail.com>,
-	Paul Walmsley <paul.walmsley@sifive.com>,
-	Palmer Dabbelt <palmer@dabbelt.com>,	Albert Ou <aou@eecs.berkeley.edu>,
- linux-riscv@lists.infradead.org
-Subject: Re: [RFC v2 02/13] rust: sync: Add basic atomic operation mapping
- framework
-Message-ID: <Z1yY_Yr0B6KpWLmJ@tardis.local>
-References: <20241101060237.1185533-1-boqun.feng@gmail.com>
- <20241101060237.1185533-3-boqun.feng@gmail.com>
- <CAH5fLghYjcb-mpR_rr2aC_W8rRb6g8jCFxgky7iEqVgmpHjf=Q@mail.gmail.com>
- <Z1sYNOYJPzQmJXn6@boqun-archlinux>
- <CAH5fLgidmY7FtKLKR-Yxb6U-mQvsyatGRToqSHHRACfTdiAtUA@mail.gmail.com>
+	s=arc-20240116; t=1736200724; c=relaxed/simple;
+	bh=ty5J6/w9vucBelY7qtCoceSmLa3h239wEBd5f7xhoI0=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=UASJOg0/Xmoygto7J+Ci8UcIgLMJqayVt4QTbckfGc7VBbtIziY8zuOojvQcy8WUWEF0HDzoEnIeamenOa/2GRB2pL+ju4jJNYFEkh+34dKPYxSHGCfcLroL8KXIBa6wLijn7SH+k13lur3PWom1plDNkTL/38Gk4vjpUl6FmYg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=huaweicloud.com; spf=pass smtp.mailfrom=huaweicloud.com; arc=none smtp.client-ip=14.137.139.154
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=huaweicloud.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huaweicloud.com
+Received: from mail.maildlp.com (unknown [172.18.186.51])
+	by frasgout12.his.huawei.com (SkyGuard) with ESMTP id 4YRn1V3QWDz9v7JM
+	for <lkmm@lists.linux.dev>; Tue,  7 Jan 2025 05:11:58 +0800 (CST)
+Received: from mail02.huawei.com (unknown [7.182.16.27])
+	by mail.maildlp.com (Postfix) with ESMTP id 17BD5140410
+	for <lkmm@lists.linux.dev>; Tue,  7 Jan 2025 05:40:25 +0800 (CST)
+Received: from huaweicloud.com (unknown [10.206.133.88])
+	by APP2 (Coremail) with SMTP id GxC2BwD3reC6TXxnNigoAA--.22570S2;
+	Mon, 06 Jan 2025 22:40:24 +0100 (CET)
+From: Jonas Oberhauser <jonas.oberhauser@huaweicloud.com>
+To: paulmck@kernel.org
+Cc: stern@rowland.harvard.edu,
+	parri.andrea@gmail.com,
+	will@kernel.org,
+	peterz@infradead.org,
+	boqun.feng@gmail.com,
+	npiggin@gmail.com,
+	dhowells@redhat.com,
+	j.alglave@ucl.ac.uk,
+	luc.maranget@inria.fr,
+	akiyks@gmail.com,
+	dlustig@nvidia.com,
+	joel@joelfernandes.org,
+	urezki@gmail.com,
+	quic_neeraju@quicinc.com,
+	frederic@kernel.org,
+	linux-kernel@vger.kernel.org,
+	lkmm@lists.linux.dev,
+	hernan.poncedeleon@huaweicloud.com,
+	Jonas Oberhauser <jonas.oberhauser@huaweicloud.com>
+Subject: [RFC] tools/memory-model: Rule out OOTA
+Date: Mon,  6 Jan 2025 22:40:03 +0100
+Message-Id: <20250106214003.504664-1-jonas.oberhauser@huaweicloud.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: lkmm@lists.linux.dev
 List-Id: <lkmm.lists.linux.dev>
 List-Subscribe: <mailto:lkmm+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:lkmm+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAH5fLgidmY7FtKLKR-Yxb6U-mQvsyatGRToqSHHRACfTdiAtUA@mail.gmail.com>
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID:GxC2BwD3reC6TXxnNigoAA--.22570S2
+X-Coremail-Antispam: 1UD129KBjvJXoWxKF18KF4xAr13tr15CFyxGrg_yoW7tw18pr
+	Z8Ka45Ka1DZrsavwn7Gws7ZFy8Z3ykJF15GryvkryUuw15W34Fyr1xtry5ZFy3CF4S9ayY
+	qrWYvr98uwn8ZaDanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+	9KBjDU0xBIdaVrnRJUUU9014x267AKxVW5JVWrJwAFc2x0x2IEx4CE42xK8VAvwI8IcIk0
+	rVWrJVCq3wAFIxvE14AKwVWUJVWUGwA2ocxC64kIII0Yj41l84x0c7CEw4AK67xGY2AK02
+	1l84ACjcxK6xIIjxv20xvE14v26r1j6r1xM28EF7xvwVC0I7IYx2IY6xkF7I0E14v26r4j
+	6F4UM28EF7xvwVC2z280aVAFwI0_Gr0_Cr1l84ACjcxK6I8E87Iv6xkF7I0E14v26r4j6r
+	4UJwAS0I0E0xvYzxvE52x082IY62kv0487Mc02F40EFcxC0VAKzVAqx4xG6I80ewAv7VC0
+	I7IYx2IY67AKxVWUJVWUGwAv7VC2z280aVAFwI0_Jr0_Gr1lOx8S6xCaFVCjc4AY6r1j6r
+	4UM4x0Y48IcxkI7VAKI48JM4x0x7Aq67IIx4CEVc8vx2IErcIFxwACI402YVCY1x02628v
+	n2kIc2xKxwCY1x0262kKe7AKxVW8ZVWrXwCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7x
+	kEbVWUJVW8JwC20s026c02F40E14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E
+	67AF67kF1VAFwI0_GFv_WrylIxkGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCw
+	CI42IY6xIIjxv20xvEc7CjxVAFwI0_Gr0_Cr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1x
+	MIIF0xvEx4A2jsIE14v26r1j6r4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Gr0_Gr1UYxBIda
+	VFxhVjvjDU0xZFpf9x0pRHUDLUUUUU=
+X-CM-SenderInfo: 5mrqt2oorev25kdx2v3u6k3tpzhluzxrxghudrp/
 
-On Fri, Dec 13, 2024 at 03:37:13PM +0100, Alice Ryhl wrote:
-[...]
-> > > > @@ -0,0 +1,19 @@
-> > > > +// SPDX-License-Identifier: GPL-2.0
-> > > > +
-> > > > +//! Atomic primitives.
-> > > > +//!
-> > > > +//! These primitives have the same semantics as their C counterparts: and the precise definitions of
-> > > > +//! semantics can be found at [`LKMM`]. Note that Linux Kernel Memory (Consistency) Model is the
-> > > > +//! only model for Rust code in kernel, and Rust's own atomics should be avoided.
-> > > > +//!
-> > > > +//! # Data races
-> > > > +//!
-> > > > +//! [`LKMM`] atomics have different rules regarding data races:
-> > > > +//!
-> > > > +//! - A normal read doesn't data-race with an atomic read.
-> > >
-> > > This was fixed:
-> > > https://github.com/rust-lang/rust/pull/128778
-> > >
-> >
-> > Yeah, I was aware of that effort, and good to know it's finally merged.
-> > Thanks!
-> >
-> > This will be in 1.83, right? If so, we will still need the above until
-> > we bump up the minimal rustc version to 1.83 or beyond. I will handle
-> > this properly with the minimal rustc 1.83 (i.e. if this goes in first,
-> > will send a follow up patch). I will also mention in the above that this
-> > has been changed in 1.83.
-> >
-> > This also reminds that I should add that LKMM allows mixed-size atomic
-> > accesses (as non data race), I will add that in the version.
-> 
-> This is just documentation. I don't think you need to do any special
+The current LKMM allows out-of-thin-air (OOTA), as evidenced in the following
+example shared on this list a few years ago:
 
-The PR also contained miri changes, so the same code will be reported
-differently by miri. That was what I was thinking of. However, now think
-about it, we are not going to use Rust atomics, so this difference
-shouldn't affect us. Therefore I agree, I will drop this.
+  P0(int *a, int *b, int *x, int *y) {
+  	int r1;
 
-> MSRV handling.
-> 
-> > > > +mod private {
-> > > > +    /// Sealed trait marker to disable customized impls on atomic implementation traits.
-> > > > +    pub trait Sealed {}
-> > > > +}
-> > >
-> > > Just make the trait unsafe?
-> > >
-> >
-> > And make the safety requirement of `AtomicImpl` something like:
-> >
-> >     The type must have the implementation for atomic operations.
-> >
-> > ? Hmm.. I don't think that's a good safety requirement TBH. Actually the
-> > reason that we need to restrict `AtomicImpl` types is more of an
-> > iplementation issue (the implementation need to be done if we want to
-> > support i8 or i16) rather than safety issue. So a sealed trait is proper
-> > here. Does this make sense? Or am I missing something?
-> 
-> Where is the AtomicImpl trait used?
-> 
+  	r1 = READ_ONCE(*x);
+  	smp_rmb();
+  	if (r1 == 1) {
+  		*a = *b;
+  	}
+  	smp_wmb();
+  	WRITE_ONCE(*y, 1);
+  }
 
-It's used when `impl`ing an `AllowAtomic` type, `AllowAtomic` has an
-associate type named `Repr` which must be an `AtomicImpl`, i.e. each
-type that has atomic operation support must select the underlying
-implementation types (currently we only have i32 and i64 from C side
-APIs). Using a sealed trait is appropriate in this case, because unless
-you are adding atomic support for different sizes of data, you shouldn't
-impl `AtomicImpl`.
+  P1(int *a, int *b, int *x, int *y) {
+  	int r1;
 
-Regards,
-Boqun
+  	r1 = READ_ONCE(*y);
+  	smp_rmb();
+  	if (r1 == 1) {
+  		*b = *a;
+  	}
+  	smp_wmb();
+  	WRITE_ONCE(*x, 1);
+  }
 
-> Alice
+  exists b=42
+
+The root cause is an interplay between plain accesses and rw-fences, i.e.,
+smp_rmb() and smp_wmb(): while smp_rmb() and smp_wmb() provide sufficient
+ordering for plain accesses to rule out data races, they do not in the current
+formalization generally actually order the plain accesses, allowing, e.g., the
+load and stores to *b to proceed in any order even if P1 reads from P0; and in
+particular, the marked accesses around those plain accesses are also not
+ordered, which causes this OOTA.
+
+In this patch, we choose the rather conservative approach of forcing only the
+order of these marked accesses, specifically, when a marked read r is
+separated from a plain read r' by an smp_rmb() (or r' has an address
+dependency on r or is r'), on which a write w' depends, and w' is either plain
+and seperated by a subsequent write w by an smp_wmb() (or w' is w), then r
+precedes w in ppo.
+
+Furthermore, we do not force any order in cases where r or w could be elided
+due to a store with the same address either being before the read (which would
+allow r to be substituted for the value of the store) or after the write
+(which would allow w to be dropped).
+
+Even though this patch is conservative in this sense, it ensures general
+OOTA-freedom, more specifically, that any execution with no data race will not
+have any cycles of
+
+      (ctrl | addr | data) ; rfe
+
+This definition of OOTA is much weaker than more standard definitions, such as
+requiring that there are no cycles of
+
+      ctrl | addr | data | rf
+
+These definitions work well for syntactic dependencies (hardware models) but not
+semantic dependencies (language models, like LKMM).
+
+We first discuss why the more standard definition does not work well for
+language models like LKMM. For example, consider
+
+    r1 = *a;
+    *b = 1;
+    if (*a == 1)
+      *b = 1;
+    *c = *b;
+
+In the execution where r1 == 1, there is a control dependency from
+the load of *a to the second store to *b, from which the load to *b reads,
+and the store to *c has a data dependency on this load from *b. Nevertheless
+there is no semantic dependency from the load of *a to the store to *c; the
+compiler could easily replace the last line with *c = 1 and move this line to
+the top as follows:
+
+    *c = 1;
+    r1 = *a;
+    *b = 1;
+
+Since there is no order imposed by this sequence of syntactic dependencies
+and reads, syntactic dependencies can not by themselves form an acyclic
+relation.
+
+In turn, there are some sequences of syntactic dependencies and reads that do
+form semantic dependencies, such as
+
+    r1 = *a;
+    *b = 2;
+    if (*a == 1)
+      *b = 1;
+    *c = *b;
+
+Here we would consider that the store to *c has a semantic data dependency on
+the read from *a, given that depending on the result of that read, we store
+either the value 1 or 2 to *c.
+
+Unfortunately, herd7 is currently limited to syntactic dependencies and can
+not distinguish these two programs. As a result, while our patch is intended
+to provide ordering for cases resembling the second program (but not the
+first), with the dependencies considered by the current version of herd7, we
+do not get such an ordering.
+
+There are two more caveats of this patch. The first is that just because
+there are no subsequent writes to the location of a write w (until the next
+compiler barrier), does not imply that the write w can not be elided, e.g.,
+if the location of w does not live until the next barrier (as pointed out
+by Alan Stern a while back).
+
+Unfortunately we can not currently express this in herd7's syntax.
+
+In fact, to avoid OOTA, it would be sufficient to provide order only in
+cases where w is read-from by another thread. But that is a rather unnatural
+formulation.
+
+The last caveat is that while we have done a formal proof that this
+patch excludes OOTA (in all data race free executions), we did so with a
+different formalization of compiler barrier (formalized in this patch as
+w_barrier). I suspect that it may be possible to almost completely switch
+over from w_barrier to the normal definition of barrier, +- the fact that
+a marked write together with po-loc is also a compiler barrier.
+
+But I currently do not have time to investigate this deeply, and I thought
+maybe there are already some comments on the main parts of the patch. The
+epsilons and deltas should be resolvable.
+
+Have fun,
+  jonas
+
+Signed-off-by: Jonas Oberhauser <jonas.oberhauser@huaweicloud.com>
+---
+ tools/memory-model/linux-kernel.cat | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
+
+diff --git a/tools/memory-model/linux-kernel.cat b/tools/memory-model/linux-kernel.cat
+index d7e7bf13c831..180cab56729e 100644
+--- a/tools/memory-model/linux-kernel.cat
++++ b/tools/memory-model/linux-kernel.cat
+@@ -71,6 +71,10 @@ let barrier = fencerel(Barrier | Rmb | Wmb | Mb | Sync-rcu | Sync-srcu |
+ 		Rcu-lock | Rcu-unlock | Srcu-lock | Srcu-unlock) |
+ 	(po ; [Release]) | ([Acquire] ; po)
+ 
++let w_barrier = po? ; [F | Marked] ; po?
++let rmb-plain = [R4rmb] ; po ; [Rmb] ; (po \ (po ; [W] ; (po-loc \ w_barrier))) ; [R4rmb & Plain]
++let plain-wmb = [W & Plain] ; (po \ ((po-loc \ w_barrier) ; po ; [W] ; po)) ; [Wmb] ; po ; [W]
++
+ (**********************************)
+ (* Fundamental coherence ordering *)
+ (**********************************)
+@@ -90,7 +94,7 @@ empty rmw & (fre ; coe) as atomic
+ let dep = addr | data
+ let rwdep = (dep | ctrl) ; [W]
+ let overwrite = co | fr
+-let to-w = rwdep | (overwrite & int) | (addr ; [Plain] ; wmb)
++let to-w = ((addr | rmb-plain)? ; rwdep ; plain-wmb?) | (overwrite & int) | addr ; [Plain] ; wmb
+ let to-r = (addr ; [R]) | (dep ; [Marked] ; rfi)
+ let ppo = to-r | to-w | (fence & int) | (po-unlock-lock-po & int)
+ 
+-- 
+2.34.1
+

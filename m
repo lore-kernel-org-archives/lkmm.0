@@ -1,162 +1,160 @@
-Received: from frasgout11.his.huawei.com (frasgout11.his.huawei.com [14.137.139.23])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qk1-f170.google.com (mail-qk1-f170.google.com [209.85.222.170])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D46A71EF0BC
-	for <lkmm@lists.linux.dev>; Tue,  7 Jan 2025 15:46:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=14.137.139.23
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C6971EE003
+	for <lkmm@lists.linux.dev>; Tue,  7 Jan 2025 16:10:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736264823; cv=none; b=JYdtjnm48B46qDituZa/SElxKjwRrrM7I0jPeeRCEvJ0f59xB7iWfNbkKxpNaoMOmUJFn/C/ld+gHWHQQlS0eJzKONSLXaHceQnQKTPHiYRUwXnCxUzsr5WGIGlLHWVdKvW1WCtod2yUwnSU28yP73O20MJOvlHbEkdGbxs7OdQ=
+	t=1736266206; cv=none; b=aug1TyrLfDqmB+5nNIIg6azM/CiotApeEAfv8MsfZy2a+VbBalW/gUdhGNgiHWk0Ul9QWimNgP73knoQg3qjvPkujYz5VUr+vRcsBIri83naw8ZxXdo0JcdnOm7f71kuVtaOKDp9zKIdxYLUPZzDsT90VgX5dx+RIhX5lD4yhNI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736264823; c=relaxed/simple;
-	bh=ZgUvpLAYr+peAcb50viKmv27heowApjGPo4ML1CK7C4=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=SngTVV/soi+uHJ7QAdRtBZmGBfh5qy4eQcppt7paOuffEzY6CMpyzDtZ442YVNTGmwQJfVMsu8XdljASBvIj+Ytv+m+YdsbxyaO/u/8ojE4Q+SR7yGuhdObYBIAfyFm/76jfaDxU83QFArDw2iTOtQTl4xm+OG+4zt5kqYDaby0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=huaweicloud.com; spf=pass smtp.mailfrom=huaweicloud.com; arc=none smtp.client-ip=14.137.139.23
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=huaweicloud.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huaweicloud.com
-Received: from mail.maildlp.com (unknown [172.18.186.51])
-	by frasgout11.his.huawei.com (SkyGuard) with ESMTP id 4YSFGf0tzhz9v7g1
-	for <lkmm@lists.linux.dev>; Tue,  7 Jan 2025 23:24:58 +0800 (CST)
-Received: from mail02.huawei.com (unknown [7.182.16.47])
-	by mail.maildlp.com (Postfix) with ESMTP id 5A22B140F69
-	for <lkmm@lists.linux.dev>; Tue,  7 Jan 2025 23:46:52 +0800 (CST)
-Received: from [10.206.134.186] (unknown [10.206.134.186])
-	by APP1 (Coremail) with SMTP id LxC2BwB3_kxeTH1nByE0AA--.39543S2;
-	Tue, 07 Jan 2025 16:46:51 +0100 (CET)
-Message-ID: <9df85484-9a31-4682-a053-f3aaf01c0bbb@huaweicloud.com>
-Date: Tue, 7 Jan 2025 16:46:35 +0100
+	s=arc-20240116; t=1736266206; c=relaxed/simple;
+	bh=bDJscXv1RXC2286ZEvBuxPoo00Q6pAo7GSGUN3kp5bU=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=enhChqDDkn6YE7cqCpdxQbhOGzCQrlSYUPjoQ9e+fR4phTMnnbuQJxdugpPLxDmSWXQGg5/nJCwgzgWkNtdGM+vHiC2lotMds/McWWjcy5wkhXT8lkjMMe2OSzBhSGGTKlwx+gEqXW4PZstVcB5W0Q8V8r94TcCiNu3ruNd+/Ak=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=rowland.harvard.edu; spf=fail smtp.mailfrom=g.harvard.edu; dkim=pass (2048-bit key) header.d=rowland.harvard.edu header.i=@rowland.harvard.edu header.b=SJ9Hzrj0; arc=none smtp.client-ip=209.85.222.170
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=rowland.harvard.edu
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=g.harvard.edu
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=rowland.harvard.edu header.i=@rowland.harvard.edu header.b="SJ9Hzrj0"
+Received: by mail-qk1-f170.google.com with SMTP id af79cd13be357-7b6e8814842so1355374885a.0
+        for <lkmm@lists.linux.dev>; Tue, 07 Jan 2025 08:10:04 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=rowland.harvard.edu; s=google; t=1736266203; x=1736871003; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=5LvIDWeluTdCgXCnx0predLJUANZH+mX5VnGU6NYk94=;
+        b=SJ9Hzrj0X9I7n0RhQRVdawuzlM5RskQ9M9UR2UttfqyCCyKVF4bs8Y9xYkBPBMQ6YT
+         9/Z3hQ8tpdBIPINnDHbznbdidkI0RcO0Rso7b8T9cVvmx4+QWL3xmjipt3oNet3LlvEW
+         b9zrAQL2Y/9jJv8wjZxY3EuTa/vojI5YzPNpNREeKP+91i0KogYWEP9eVMrQac+K+Ncr
+         1AHEpRNAuyCnXhwAZRfAqFJlR8gGNR0purHGYbz829VR/3M0BsUDhoc58tkGUMk1Hn9r
+         4rorZ73GwHY6/CpnqrihPtDIfQI7AfjxdzzJfII2LkJGq/+n5glJSpiLpdKtaWirMBHj
+         Kiqw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1736266203; x=1736871003;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=5LvIDWeluTdCgXCnx0predLJUANZH+mX5VnGU6NYk94=;
+        b=YEtSuXtK20dfrNNOvHfuU4kL2CKOiG46QSi80/PJ/XHEBcADJMePov6Y60SOQj+9+v
+         w530nWqKC4AceKNti0qHN7e5pJbCbG5TVTgZJnvfQRsQLMxN226u0KgFDz2W0f8yE0On
+         h+NMxwxmvPyO2INBWeFj+FGYv1KCjFGZP7W4ILndLVlDYIkcaGVTIY9nYqknoFRT82oO
+         /YSkmUbX2sk01NMf8FUZu4tAFlP/8v3Chzun2HNlfJAmrbOMAQHw+Uq2X5W3PrdodH5R
+         t/DavPGdEPdLM9XL+S0HM9VXWgW5n6+C9fCQ2qqTwtJtpQeovNeWOBRxFR+OFhx+MJ5n
+         /CbQ==
+X-Forwarded-Encrypted: i=1; AJvYcCWMyU7jy2Y/evk3X0uS3mhpeLhMTDaRiLf8sYk9ASe56OU8IBZXkYFaeDSeyR+EJRlVALzq@lists.linux.dev
+X-Gm-Message-State: AOJu0YzEql3bfvBjJ0BR6uu+TQKao+616BZq9nWpyFgBcHJaa0AffTqk
+	LkjbHk+EVndaYLuoLMl+eCTm67a4VSXHJzR5ZGuvrWI9L9WRGvgYwS3fisWO0w==
+X-Gm-Gg: ASbGnctJHV272HNpEK+KwTxQ+1urC99gc0p/24oUIBjewg3Ee1EqXkG4BkTvwgebvjZ
+	XTckVDlbc2X44VBF6plpL7Yo6jkD4cBeBwzpN1mohkVX9e7DKiuWsJzaCuFjiVCmrGBL22axaka
+	Huw4c+4GMMH2URE8kl4KZF7+S3AtRUOq2nyDERy8GK+VS5RDFwWsVnitMfco9HmF57mhl971DmZ
+	TNujcg0Mm131PetgguyLD2NLXmoJtH6CnF9zl5oVbwRms+yJfN8XxKBCRHRUxh0WHeUps1zHZE=
+X-Google-Smtp-Source: AGHT+IG+ycHwyLukwgsBXT6niw1ql2jpnYH+aLV9PPiHxlOrb704y6W2dcgu1wdH7ULWrUqyatgdNw==
+X-Received: by 2002:a05:620a:4145:b0:7b6:67a6:5adb with SMTP id af79cd13be357-7b9ba784a1dmr12181682885a.21.1736266202963;
+        Tue, 07 Jan 2025 08:10:02 -0800 (PST)
+Received: from rowland.harvard.edu ([140.247.181.15])
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-7b9ac4ce6aasm1605198685a.117.2025.01.07.08.10.01
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 07 Jan 2025 08:10:02 -0800 (PST)
+Date: Tue, 7 Jan 2025 11:09:55 -0500
+From: Alan Stern <stern@rowland.harvard.edu>
+To: Jonas Oberhauser <jonas.oberhauser@huaweicloud.com>
+Cc: paulmck@kernel.org, parri.andrea@gmail.com, will@kernel.org,
+	peterz@infradead.org, boqun.feng@gmail.com, npiggin@gmail.com,
+	dhowells@redhat.com, j.alglave@ucl.ac.uk, luc.maranget@inria.fr,
+	akiyks@gmail.com, dlustig@nvidia.com, joel@joelfernandes.org,
+	urezki@gmail.com, quic_neeraju@quicinc.com, frederic@kernel.org,
+	linux-kernel@vger.kernel.org, lkmm@lists.linux.dev,
+	hernan.poncedeleon@huaweicloud.com
+Subject: Re: [RFC] tools/memory-model: Rule out OOTA
+Message-ID: <a3bf910f-509a-4ad3-a1cc-4b14ef9b3259@rowland.harvard.edu>
+References: <20250106214003.504664-1-jonas.oberhauser@huaweicloud.com>
 Precedence: bulk
 X-Mailing-List: lkmm@lists.linux.dev
 List-Id: <lkmm.lists.linux.dev>
 List-Subscribe: <mailto:lkmm+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:lkmm+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC] tools/memory-model: Rule out OOTA
-To: paulmck@kernel.org
-Cc: stern@rowland.harvard.edu, parri.andrea@gmail.com, will@kernel.org,
- peterz@infradead.org, boqun.feng@gmail.com, npiggin@gmail.com,
- dhowells@redhat.com, j.alglave@ucl.ac.uk, luc.maranget@inria.fr,
- akiyks@gmail.com, dlustig@nvidia.com, joel@joelfernandes.org,
- urezki@gmail.com, quic_neeraju@quicinc.com, frederic@kernel.org,
- linux-kernel@vger.kernel.org, lkmm@lists.linux.dev,
- hernan.poncedeleon@huaweicloud.com
-References: <20250106214003.504664-1-jonas.oberhauser@huaweicloud.com>
-From: Jonas Oberhauser <jonas.oberhauser@huaweicloud.com>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 In-Reply-To: <20250106214003.504664-1-jonas.oberhauser@huaweicloud.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-CM-TRANSID:LxC2BwB3_kxeTH1nByE0AA--.39543S2
-X-Coremail-Antispam: 1UD129KBjvJXoWxAF18GryxXr1kAr1xZFyftFb_yoW5Zryfpr
-	Zxt343KrZrtr4qv348XwnruFy8uws7Jas8WFy5CryYyw1Yv34fZw1vqas09Fy7Grsaka45
-	KryIgF98Zw1DXFJanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
-	9KBjDU0xBIdaVrnRJUUUvjb4IE77IF4wAFF20E14v26ryj6rWUM7CY07I20VC2zVCF04k2
-	6cxKx2IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4
-	vEj48ve4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Jr0_JF4l84ACjcxK6xIIjxv20xvEc7Cj
-	xVAFwI0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW8JVWxJwA2z4x0Y4vEx4A2jsIEc7CjxV
-	AFwI0_Gr0_Gr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l5I8CrVACY4xI64kE6c02F40E
-	x7xfMcIj6xIIjxv20xvE14v26r1j6r18McIj6I8E87Iv67AKxVWUJVW8JwAm72CE4IkC6x
-	0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lFIxGxcIEc7CjxVA2Y2ka0xkIwI1lc7CjxVAaw2AF
-	wI0_GFv_Wryl42xK82IYc2Ij64vIr41l4I8I3I0E4IkC6x0Yz7v_Jr0_Gr1lx2IqxVAqx4
-	xG67AKxVWUJVWUGwC20s026x8GjcxK67AKxVWUGVWUWwC2zVAF1VAY17CE14v26r4a6rW5
-	MIIYrxkI7VAKI48JMIIF0xvE2Ix0cI8IcVAFwI0_Jr0_JF4lIxAIcVC0I7IYx2IY6xkF7I
-	0E14v26r4j6F4UMIIF0xvE42xK8VAvwI8IcIk0rVWUJVWUCwCI42IY6I8E87Iv67AKxVWU
-	JVW8JwCI42IY6I8E87Iv6xkF7I0E14v26r4j6r4UJbIYCTnIWIevJa73UjIFyTuYvjxUIa
-	0PDUUUU
-X-CM-SenderInfo: 5mrqt2oorev25kdx2v3u6k3tpzhluzxrxghudrp/
 
-
-
-Am 1/6/2025 um 10:40 PM schrieb Jonas Oberhauser:>
-> Signed-off-by: Jonas Oberhauser <jonas.oberhauser@huaweicloud.com>
-> ---
->   tools/memory-model/linux-kernel.cat | 6 +++++-
->   1 file changed, 5 insertions(+), 1 deletion(-)
+On Mon, Jan 06, 2025 at 10:40:03PM +0100, Jonas Oberhauser wrote:
+> The current LKMM allows out-of-thin-air (OOTA), as evidenced in the following
+> example shared on this list a few years ago:
 > 
-> diff --git a/tools/memory-model/linux-kernel.cat b/tools/memory-model/linux-kernel.cat
-> index d7e7bf13c831..180cab56729e 100644
-> --- a/tools/memory-model/linux-kernel.cat
-> +++ b/tools/memory-model/linux-kernel.cat
-> @@ -71,6 +71,10 @@ let barrier = fencerel(Barrier | Rmb | Wmb | Mb | Sync-rcu | Sync-srcu |
->   		Rcu-lock | Rcu-unlock | Srcu-lock | Srcu-unlock) |
->   	(po ; [Release]) | ([Acquire] ; po)
->   
-> +let w_barrier = po? ; [F | Marked] ; po?
-> +let rmb-plain = [R4rmb] ; po ; [Rmb] ; (po \ (po ; [W] ; (po-loc \ w_barrier))) ; [R4rmb & Plain]
-> +let plain-wmb = [W & Plain] ; (po \ ((po-loc \ w_barrier) ; po ; [W] ; po)) ; [Wmb] ; po ; [W]
-> +
->   (**********************************)
->   (* Fundamental coherence ordering *)
->   (**********************************)
-> @@ -90,7 +94,7 @@ empty rmw & (fre ; coe) as atomic
->   let dep = addr | data
->   let rwdep = (dep | ctrl) ; [W]
->   let overwrite = co | fr
-> -let to-w = rwdep | (overwrite & int) | (addr ; [Plain] ; wmb)
-> +let to-w = ((addr | rmb-plain)? ; rwdep ; plain-wmb?) | (overwrite & int) | addr ; [Plain] ; wmb
->   let to-r = (addr ; [R]) | (dep ; [Marked] ; rfi)
->   let ppo = to-r | to-w | (fence & int) | (po-unlock-lock-po & int)
->   
+>   P0(int *a, int *b, int *x, int *y) {
+>   	int r1;
+> 
+>   	r1 = READ_ONCE(*x);
+>   	smp_rmb();
+>   	if (r1 == 1) {
+>   		*a = *b;
+>   	}
+>   	smp_wmb();
+>   	WRITE_ONCE(*y, 1);
+>   }
+> 
+>   P1(int *a, int *b, int *x, int *y) {
+>   	int r1;
+> 
+>   	r1 = READ_ONCE(*y);
+>   	smp_rmb();
+>   	if (r1 == 1) {
+>   		*b = *a;
+>   	}
+>   	smp_wmb();
+>   	WRITE_ONCE(*x, 1);
+>   }
+> 
+>   exists b=42
+> 
+> The root cause is an interplay between plain accesses and rw-fences, i.e.,
+> smp_rmb() and smp_wmb(): while smp_rmb() and smp_wmb() provide sufficient
+> ordering for plain accesses to rule out data races, they do not in the current
+> formalization generally actually order the plain accesses, allowing, e.g., the
+> load and stores to *b to proceed in any order even if P1 reads from P0; and in
+> particular, the marked accesses around those plain accesses are also not
+> ordered, which causes this OOTA.
 
-I will also try to give an intuitive :) :( :) reasoning for why this 
-patch rules out OOTA.
+That's right.  The memory model deliberately tries to avoid placing 
+restrictions on plain accesses, whenever it can.
 
-If we look at an dep ; rfe cycle
+In the example above, for instance, I think it's more interesting to ask
 
-   dep ; rfe ; dep ; rfe ; ...
+	exists 0:r1=1 /\ 1:r1=1
 
+than to concentrate on a and b.
 
-then because of the absence of data races, each rfe is more or less an
+OOTA is a very difficult subject.  It can be approached only by making 
+the memory model take all sorts of compiler optimizations into account, 
+and doing this for all possible optimizations is not feasible.
 
-   w-post-bounded ; rfe ; r-pre-bounded
+(For example, in a presentation to the C++ working group last year, Paul 
+and I didn't try to show how to extend the C++ memory model to exclude 
+OOTA [other than by fiat, as it does now].  Instead we argued that with 
+the existing memory model, no reasonable compiler would ever produce an 
+executable that could exhibit OOTA and so the memory model didn't need 
+to be changed.)
 
-edge.
+> In this patch, we choose the rather conservative approach of forcing only the
+> order of these marked accesses, specifically, when a marked read r is
+> separated from a plain read r' by an smp_rmb() (or r' has an address
+> dependency on r or is r'), on which a write w' depends, and w' is either plain
+> and seperated by a subsequent write w by an smp_wmb() (or w' is w), then r
+> precedes w in ppo.
 
-If we rotate the circle around we turn
+Is this really valid?  In the example above, if there were no other 
+references to a or b in the rest of the program, the compiler could 
+eliminate them entirely.  (Whether the result could count as OOTA is 
+open to question, but that's not the point.)  Is it not possible that a 
+compiler might find other ways to defeat your intentions?
 
-   dep ; w-post-bounded ; rfe ; r-pre-bounded ; dep ; w-post-bounded ; 
-rfe ; r-pre-bounded ; ...
+In any case, my feeling is that memory models for higher languages 
+(i.e., anything above the assembler level) should not try very hard to 
+address the question of OOTA.  And for LKMM, OOTA involving _plain_ 
+accesses is doubly out of bounds.
 
-into
+Your proposed change seems to add a significant complication to the 
+memory model for a not-very-clear benefit.
 
-    rfe ; (r-pre-bounded ; dep ; w-post-bounded) ; rfe ; (r-pre-bounded 
-; dep ; w-post-bounded) ; rfe ; (r-pre-bounded ; ...
-
-
-and ideally, each of these (w-pre-bounded ; dep ; r-post-bounded) would 
-imply happens-before, since then the cycle would be.
-    rfe ; hb+; rfe; hb+ ; ...
-which is acyclic.
-
-However, we do not get hb+ in general, in particular if the bounding is 
-due to rmb/wmb. For all other cases, it is relatively easy to see that 
-we get hb+, e.g., if the bound is due to an smp_mb().
-
-Luckily, in our specific case, we can get hb+ evenfor cases where 
-rmb/wmb bound these accesses, because these accesses related by the dep 
-edges are known to be reading/read-from externally.
-Such an external interaction would be impossible if there were another 
-store to the same location between such an access and the next 
-w_barrier: because of the absence of data races and the lack of 
-w_barriers that would allow synchronization with the outside world, the 
-external event could not "occur between" the access and such a store.
-
-As a result, all pre-bounds caused by a rmb must have the form
-
-[R4rmb] ; po ; [Rmb] ; (po \ (po ; [W] ; (po-loc \ w_barrier))) ; [R4rmb 
-& Plain]
-
-and similar for post-bounds caused by wmb, which means the corresponding
-
-    r-pre-bounded ; dep ; w-post-bounded
-
-edges must be
-
-    rmb-plain ; dep ; plain-wmb
-
-which is in ppo and thus also hb.
-
-Hope that helps clarify the idea...
-
-   jonas
-
+Alan

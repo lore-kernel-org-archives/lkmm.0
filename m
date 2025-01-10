@@ -1,298 +1,275 @@
-Received: from frasgout13.his.huawei.com (frasgout13.his.huawei.com [14.137.139.46])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBEE1209F4C
-	for <lkmm@lists.linux.dev>; Fri, 10 Jan 2025 12:21:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=14.137.139.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBC1921147A;
+	Fri, 10 Jan 2025 14:54:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736511720; cv=none; b=PfjqNlXuXZD8oexghBRHRhSt8Apk5NgPw0PxqMwW3IAFaWkruPr/5hBlnYoF8Jxf4fGGaeyRSD4wG5A05ah08cojtU1mdVfXKUhZgPmnORoOBoCxFzCRRpieB8SIJ1V07ZTZYkvZkvOQdHFvhH2D+Dw0Mg564ook/NcwVKzQCBg=
+	t=1736520880; cv=none; b=A8rT9+U1K+JgQ85I3K0axjXkoeczlDTocLOqmvtBJPnyQ1mKD/Lq3PmiIq5+yzKUvHEbJp0dvyUCBFXIA6aYQEMg9dFT6HK7kNUyrtyYC78OZVxsdm+GrMa+S2UsvGc72Uic1mmmUCdi8l4R97giqZap7ntZPGR7QTct4aRQGHY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736511720; c=relaxed/simple;
-	bh=9mpUIgSxEbGBrJS/J2oW3TOW6sZ3JGlAzBbEgjVRhvc=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=m+kQzX2NvXQumPYyO61OZjNeYcZNiAKxd/yCTDLrCUhWSHN3daVJ/wciswhaXZeuXnHZTfxDZKw2fqggc/p8YO/98gY4t9smz+dqIKgoI0gnp3tA69mtMhbvREw1OTkHpL6RNSLRBweausr3LfaqMETG1EOM6qVtx7XAwwihjII=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=huaweicloud.com; spf=pass smtp.mailfrom=huaweicloud.com; arc=none smtp.client-ip=14.137.139.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=huaweicloud.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huaweicloud.com
-Received: from mail.maildlp.com (unknown [172.18.186.51])
-	by frasgout13.his.huawei.com (SkyGuard) with ESMTP id 4YV0Zj57QGz9v7J5
-	for <lkmm@lists.linux.dev>; Fri, 10 Jan 2025 19:59:57 +0800 (CST)
-Received: from mail02.huawei.com (unknown [7.182.16.47])
-	by mail.maildlp.com (Postfix) with ESMTP id BEE9B140381
-	for <lkmm@lists.linux.dev>; Fri, 10 Jan 2025 20:21:48 +0800 (CST)
-Received: from [10.81.209.26] (unknown [10.81.209.26])
-	by APP1 (Coremail) with SMTP id LxC2BwCXG0rPEIFnXXJgAA--.44457S2;
-	Fri, 10 Jan 2025 13:21:48 +0100 (CET)
-Message-ID: <d7e59f22-12d3-42e5-88d2-e96beafb78c5@huaweicloud.com>
-Date: Fri, 10 Jan 2025 13:21:32 +0100
+	s=arc-20240116; t=1736520880; c=relaxed/simple;
+	bh=0r3cXrIYz46O8SUwFQPxzvq9vD8Prv9AcOqemftlCeI=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=MhMEScAwWnNVY1IZwq5VvCCPc5QkjoGYkCQ7cydWSWWnqJVKZEdigMk8JpCUaVMzOhsa0lzi9/WBHaV4Bbu210Iw2VaJLriiwOsCgJEKx/IlaQiNtmXXcXkR7h26dyMZbvlwJ7k3MUcmc4p8Wy2jRQYKxAkbkoaoKbP9fjOiYoE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=POrqV/bV; arc=none smtp.client-ip=10.30.226.201
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="POrqV/bV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57608C4CED6;
+	Fri, 10 Jan 2025 14:54:40 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1736520880;
+	bh=0r3cXrIYz46O8SUwFQPxzvq9vD8Prv9AcOqemftlCeI=;
+	h=Date:From:To:Cc:Subject:Reply-To:References:In-Reply-To:From;
+	b=POrqV/bV1Jyo/oKeeD5JSaLV7IbuPngGZDL24dXemVXcrhlSGNT7xsCI7rDgQQwaj
+	 4SWpofak/AvZ/LRnb+ogaG1vDokKefUHKH5A0ylhihNfoS/QwWG13HN0vJ48w5ICFX
+	 XEWNRi+OrDbpSX6+pVEQzN71EweXRzGgkuSkij3QKn7bfcISytVxZtscGgr5RywORV
+	 pXEJratwO3BWylVIOJ6kjEudNVndlwAFxwHzqsP0mf4O/78iMKAMGRCN5Pw5i7skwa
+	 jE2BJ22AZ6BPBif+SjJVTfy6k+wPEPbNZt3FdTMYtA61PlZVGvg/n4UF+PphXICgpl
+	 Vk8gIN9b2anaA==
+Received: by paulmck-ThinkPad-P17-Gen-1.home (Postfix, from userid 1000)
+	id 01C6CCE0DCA; Fri, 10 Jan 2025 06:54:40 -0800 (PST)
+Date: Fri, 10 Jan 2025 06:54:39 -0800
+From: "Paul E. McKenney" <paulmck@kernel.org>
+To: Jonas Oberhauser <jonas.oberhauser@huaweicloud.com>
+Cc: Alan Stern <stern@rowland.harvard.edu>, parri.andrea@gmail.com,
+	will@kernel.org, peterz@infradead.org, boqun.feng@gmail.com,
+	npiggin@gmail.com, dhowells@redhat.com, j.alglave@ucl.ac.uk,
+	luc.maranget@inria.fr, akiyks@gmail.com, dlustig@nvidia.com,
+	joel@joelfernandes.org, urezki@gmail.com, quic_neeraju@quicinc.com,
+	frederic@kernel.org, linux-kernel@vger.kernel.org,
+	lkmm@lists.linux.dev, hernan.poncedeleon@huaweicloud.com
+Subject: Re: [RFC] tools/memory-model: Rule out OOTA
+Message-ID: <21ec2b32-69ce-46bf-8d44-06149e71ba6c@paulmck-laptop>
+Reply-To: paulmck@kernel.org
+References: <20250106214003.504664-1-jonas.oberhauser@huaweicloud.com>
+ <a3bf910f-509a-4ad3-a1cc-4b14ef9b3259@rowland.harvard.edu>
+ <68f98254-daf9-4197-a7cb-ef9fca0ef158@paulmck-laptop>
+ <9dec7f8d-16c0-4122-bf03-c16bd616ca15@huaweicloud.com>
+ <9a0dccbb-bfa7-4b33-ac1a-daa9841b609a@paulmck-laptop>
+ <1daba0ea-0dd6-4e67-923e-fd3c1a62b40b@huaweicloud.com>
+ <c27c4210-3d20-42af-a1f7-a49d04828a8e@paulmck-laptop>
+ <cda52bac-1c59-4c56-b5e2-937f2008a768@huaweicloud.com>
 Precedence: bulk
 X-Mailing-List: lkmm@lists.linux.dev
 List-Id: <lkmm.lists.linux.dev>
 List-Subscribe: <mailto:lkmm+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:lkmm+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC] tools/memory-model: Rule out OOTA
-To: Alan Stern <stern@rowland.harvard.edu>
-Cc: paulmck@kernel.org, parri.andrea@gmail.com, will@kernel.org,
- peterz@infradead.org, boqun.feng@gmail.com, npiggin@gmail.com,
- dhowells@redhat.com, j.alglave@ucl.ac.uk, luc.maranget@inria.fr,
- akiyks@gmail.com, dlustig@nvidia.com, joel@joelfernandes.org,
- urezki@gmail.com, quic_neeraju@quicinc.com, frederic@kernel.org,
- linux-kernel@vger.kernel.org, lkmm@lists.linux.dev,
- hernan.poncedeleon@huaweicloud.com
-References: <20250106214003.504664-1-jonas.oberhauser@huaweicloud.com>
- <a3bf910f-509a-4ad3-a1cc-4b14ef9b3259@rowland.harvard.edu>
- <3ca45d97-670f-4c9e-8df8-2304a1de32b9@huaweicloud.com>
- <b43269fd-0d4f-4d43-af88-433583ba73f7@rowland.harvard.edu>
- <06854f97-a671-426e-8c73-78214da8fbf5@huaweicloud.com>
- <83b64af7-03b7-4dd8-900b-c57a65479ba8@rowland.harvard.edu>
- <63a462dd-f182-4868-92b8-f33f2dc266f8@huaweicloud.com>
- <d82053fb-2f8c-4196-85e9-8d5a8f25c391@rowland.harvard.edu>
- <582102b0-ee94-4160-95ec-4d44815cc39e@huaweicloud.com>
- <8306ac43-fb00-4e58-bdeb-81ea9993c262@rowland.harvard.edu>
-From: Jonas Oberhauser <jonas.oberhauser@huaweicloud.com>
-In-Reply-To: <8306ac43-fb00-4e58-bdeb-81ea9993c262@rowland.harvard.edu>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-CM-TRANSID:LxC2BwCXG0rPEIFnXXJgAA--.44457S2
-X-Coremail-Antispam: 1UD129KBjvJXoW3ArykWry7WF1DAFyUAw15CFg_yoWfArWfpF
-	ZxKa47KF1DJrZ2yr1Ivr48X3Za9ws7Jr15Jas5Kr18Zws8Xr1ftFZ7tFyY9a47Crs5ZFWj
-	vFWYqr9xXa4DZaDanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
-	9KBjDU0xBIdaVrnRJUUUvjb4IE77IF4wAFF20E14v26ryj6rWUM7CY07I20VC2zVCF04k2
-	6cxKx2IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4
-	vEj48ve4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Jr0_JF4l84ACjcxK6xIIjxv20xvEc7Cj
-	xVAFwI0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW8JVWxJwA2z4x0Y4vEx4A2jsIEc7CjxV
-	AFwI0_Gr0_Gr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l5I8CrVACY4xI64kE6c02F40E
-	x7xfMcIj6xIIjxv20xvE14v26r1j6r18McIj6I8E87Iv67AKxVWUJVW8JwAm72CE4IkC6x
-	0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lFIxGxcIEc7CjxVA2Y2ka0xkIwI1lc7CjxVAaw2AF
-	wI0_GFv_Wryl42xK82IYc2Ij64vIr41l4I8I3I0E4IkC6x0Yz7v_Jr0_Gr1lx2IqxVAqx4
-	xG67AKxVWUJVWUGwC20s026x8GjcxK67AKxVWUGVWUWwC2zVAF1VAY17CE14v26r4a6rW5
-	MIIYrxkI7VAKI48JMIIF0xvE2Ix0cI8IcVAFwI0_Jr0_JF4lIxAIcVC0I7IYx2IY6xkF7I
-	0E14v26r4j6F4UMIIF0xvE42xK8VAvwI8IcIk0rVWUJVWUCwCI42IY6I8E87Iv67AKxVWU
-	JVW8JwCI42IY6I8E87Iv6xkF7I0E14v26r4j6r4UJbIYCTnIWIevJa73UjIFyTuYvjxUIa
-	0PDUUUU
-X-CM-SenderInfo: 5mrqt2oorev25kdx2v3u6k3tpzhluzxrxghudrp/
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <cda52bac-1c59-4c56-b5e2-937f2008a768@huaweicloud.com>
 
-
-
-Am 1/10/2025 um 4:12 AM schrieb Alan Stern:
-> On Thu, Jan 09, 2025 at 09:09:00PM +0100, Jonas Oberhauser wrote:
+On Thu, Jan 09, 2025 at 07:35:19PM +0100, Jonas Oberhauser wrote:
+> Am 1/9/2025 um 6:54 PM schrieb Paul E. McKenney:
+> > On Wed, Jan 08, 2025 at 08:17:51PM +0100, Jonas Oberhauser wrote:
+> > > 
+> > > 
+> > > Am 1/8/2025 um 7:09 PM schrieb Paul E. McKenney:
+> > > > On Wed, Jan 08, 2025 at 06:39:12PM +0100, Jonas Oberhauser wrote:
+> > > > > 
+> > > > > 
+> > > > > Am 1/7/2025 um 7:47 PM schrieb Paul E. McKenney:
+> > > > > > On Tue, Jan 07, 2025 at 11:09:55AM -0500, Alan Stern wrote:
+> > > > > > 
+> > > > > The patch removes the (actually non-existant) race condition by saying that
+> > > > > a critical section that is protected from having a data race with address
+> > > > > dependency or rmb/wmb (which LKMM already says works for avoiding data
+> > > > > races), is in fact also ordered and therefore has no race condition either.
+> > > > > 
+> > > > > As a side effect :), this happens to fix OOTA in general in LKMM.
+> > > > 
+> > > > Fair point, no data race is flagged.
+> > > > 
+> > > > On the other hand, Documentation/memory-barriers.txt says the following:
+> > > > 
+> > > > ------------------------------------------------------------------------
+> > > > 
+> > > > However, stores are not speculated.  This means that ordering -is- provided
+> > > > for load-store control dependencies, as in the following example:
+> > > > 
+> > > > 	q = READ_ONCE(a);
+> > > > 	if (q) {
+> > > > 		WRITE_ONCE(b, 1);
+> > > > 	}
+> > > > 
+> > > > Control dependencies pair normally with other types of barriers.
+> > > > That said, please note that neither READ_ONCE() nor WRITE_ONCE()
+> > > > are optional! Without the READ_ONCE(), the compiler might combine the
+> > > > load from 'a' with other loads from 'a'.  Without the WRITE_ONCE(),
+> > > > the compiler might combine the store to 'b' with other stores to 'b'.
+> > > > Either can result in highly counterintuitive effects on ordering.
+> > > > 
+> > > > ------------------------------------------------------------------------
+> > > > 
+> > > > If I change the two plain assignments to use WRITE_ONCE() as required
+> > > > by memory-barriers.txt, OOTA is avoided:
+> > > 
+> > > 
+> > > I think this direction of inquiry is a bit misleading. There need not be any
+> > > speculative store at all:
+> > > 
+> > > 
+> > > 
+> > > P0(int *a, int *b, int *x, int *y) {
+> > > 	int r1;
+> > > 	int r2 = 0;
+> > > 	r1 = READ_ONCE(*x);
+> > > 	smp_rmb();
+> > > 	if (r1 == 1) {
+> > > 		r2 = *b;
+> > > 	}
+> > > 	WRITE_ONCE(*a, r2);
+> > > 	smp_wmb();
+> > > 	WRITE_ONCE(*y, 1);
+> > > }
+> > > 
+> > > P1(int *a, int *b, int *x, int *y) {
+> > > 	int r1;
+> > > 
+> > > 	int r2 = 0;
+> > > 
+> > > 	r1 = READ_ONCE(*y);
+> > > 	smp_rmb();
+> > > 	if (r1 == 1) {
+> > > 		r2 = *a;
+> > > 	}
+> > > 	WRITE_ONCE(*b, r2);
+> > > 	smp_wmb();
+> > > 	WRITE_ONCE(*x, 1);
+> > > }
+> > > 
+> > > 
+> > > The reason that the WRITE_ONCE helps in the speculative store case is that
+> > > both its ctrl dependency and the wmb provide ordering, which together
+> > > creates ordering between *x and *y.
+> > 
+> > Ah, and that is because LKMM does not enforce control dependencies past
+> > the end of the "if" statement.  Cute!
+> > 
+> > But memory-barriers.txt requires that the WRITE_ONCE() be within the
+> > "if" statement for control dependencies to exist, so LKMM is in agreement
+> > with memory-barriers.txt in this case.  So again, if we change this,
+> > we need to also change memory-barriers.txt.
+> > [...]
+> > If we want to respect something containing a control dependency to a
+> > WRITE_ONCE() not in the body of the "if" statement, we need to make some
+> > change to memory-barriers.txt.
 > 
->>>> So for example, in
->>>>
->>>>     int a = 1;
->>>>     barrier();
->>>>     a = 2;
->>>>     //...
->>>>
->>>> the compiler does not know how the code inside barrier() accesses memory,
->>>> including volatile memory.
->>>
->>> I would say rather that the compiler does not know that the values
->>> stored in memory are the same before and after the barrier().
->>>
->>> Even the
->>> values of local variables whose addresses have not been exported.
->>
->> No, this is not true. I used to think so too until a short while ago.
->>
->> But if you look at the output of gcc -o3 you will see that it does happily
->> remove `a` in this function.
+> I'm not sure what you denotate by *this* in "if we change this", but just to
+> clarify, I am not thinking of claiming that there were a (semantic) control
+> dependency to WRITE_ONCE(*b, r2) in this example.
 > 
-> Isn't that consistent with what I said?
+> There is however a data dependency from r2 = *a to WRITE_ONCE, and I would
+> say that there is a semantic data (not control) dependency from r1 =
+> READ_ONCE(*y) to WRITE_ONCE(*b, r2), too: depending on the value read from
+> *y, the value stored to *b will be different. The latter would be enough to
+> avoid OOTA according to the mainline LKMM, but currently this semantic
+> dependency is not detected by herd7.
 
+According to LKMM, address and data dependencies must be headed by
+rcu_dereference() or similar.  See Documentation/RCU/rcu_dereference.rst.
 
-Ok, after careful reading, I think there are two assumptions you have 
-that I think are not true, but my example is only inconsistent with 
-exactly one of them being not true, not with both of them being not true:
+Therefore, there is nothing to chain the control dependency with.
 
-1) the barrier only tells the compiler that it may *change* the value of 
-memory locations. I believe it also tells the compiler that it may 
-*read* the value of memory locations.
-2) the barrier also talks about the values of local variables whose 
-addresses have not been exported. I do not believe this is the case.
-
-The second example I put (where a=1 is still emitted) shows your 
-assumption 1) is inconsistent with what gcc currently does.
-
-For what gcc guarantees, the manual says: "add memory to the list of 
-clobbered registers. This will cause GCC to not keep memory values 
-cached in registers across the assembler instruction", i.e., it needs to 
-flush the value from the register to actual memory.
-
-I believe this too is not consistent with your assumption 1), because if 
-the barrier would just modify memory and not read it, there would be no 
-need to flush the value to memory. It would suffice to ensure that the 
-value is not assumed to be the same after the barrier.
-
-With your assumption 1) discharged, the fact that `a=1` still can be 
-removed from before the barrier should show that this guarantee does not 
-hold for all memory locations (only for those that could legally be 
-accessed in the barrier, which are those whose address has been exported).
-
-
-
->>> Question: Can the compiler assume that no other threads access a between
->>> the two stores, on the grounds that this would be a data race?  I'd
->>> guess that it can't make that assumption, but it would be nice to know
->>> for sure.
->>
->> It can not make the assumption if &a has escaped. In that case, barrier()
->> could be so:
->>
->> barrier(){
->>    store_release(OTHER_THREAD_PLEASE_MODIFY,&a);
->>
->>    while (! load_acquire(OTHER_THREAD_IS_DONE));
->> }
->>
->> with another thread doing
->>
->>    while (! load_acquire(OTHER_THREAD_PLEASE_MODIFY)) yield();
->>    *OTHER_THREAD_PLEASE_MODIFY ++;
->>    store_release(OTHER_THREAD_IS_DONE, 1);
+> I currently can not come up with an example where there would be a
+> (semantic) control dependency from a load to a store that is not in the arm
+> of an if statement (or a loop / switch of some form with the branch
+> depending on the load).
 > 
-> Bear in mind that there's a difference between what a compiler _can do_
-> and what gcc _currently does_.
+> I think the control dependency is just a red herring. It is only there to
+> avoid the data race.
 
-Of course. But I am not sure if your comment addresses my comment here, 
-or was intended for another section.
+Well, that red herring needs to have a companion fish to swim with in
+order to enforce ordering, and I am not seeing that companion.
 
+Or am I (yet again!) missing something subtle here?
+
+> In a hypothetical LKMM where reading in a race is not a data race unless the
+> data is used (*1), this would also work:
+
+You lost me on the "(*1)", which might mean that I am misunderstanding
+your text and examples below.
+
+>  	unsigned int r1;
+>  	unsigned int r2 = 0;
+>  	r1 = READ_ONCE(*x);
+>  	smp_rmb();
+>  	r2 = *b;
+
+This load from *b does not head any sort of dependency per LKMM, as noted
+in rcu_dereference.rst.  As that document states, there are too many games
+that compilers are permitted to play with plain C-language loads.
+
+>  	WRITE_ONCE(*a, (~r1 + 1) & r2);
+>  	smp_wmb();
+>  	WRITE_ONCE(*y, 1);
 > 
->>> I think you're giving the compiler too much credit.  The one thing the
->>> compiler is allowed to assume is that the code, as written, does not
->>> contain a data race or other undefined behavior.
->>
->> Apologies, the way I used "assume" is misleading.
->> I should have said that the compiler has to ensure that even if the code of
->> foo() and barrier() were so, that the behavior of the code it generates is
->> the same (w.r.t. observable side effects) as if the program were executed by
->> the abstract machine. Or I should have said that it can *not* assume that
->> the functions are *not* as defined above.
->>
->> Which means that TURN_THE_BREAKS_ON would need to be assigned 1.
->> The only way the compiler can achieve that guarantee (while treating barrier
->> as a black box) is to make sure that the value of `a` before barrier() is 1.
 > 
-> Who says the compiler has to treat barrier() as a black box?  As far as
-> I know, gcc makes no such guarantee.
+> Here in case r1 == 0, the value of r2 is not used, so there is a race but
+> there would not be data race in the hypothetical LKMM.
 
-Note that if it wouldn't, then barrier() would not work. Since the asm 
-instruction is empty, the compiler could figure this out easily and just 
-delete it.
+That plain C-language load from b, if concurrent with any sort of store to
+b, really is a data race.  Sure, a compiler that can prove that r1==0 at
+the WRITE_ONCE() to a might optimize that load away, but the C-language
+definition of data race still applies.
 
-But maybe I should also be more precise about what I mean by black box, 
-namely, that
-1) the asm block has significant side effects,
-2) which include reading and storing to arbitrary (legally known) memory 
-locations in an arbitrary order & control flow
+Ah, I finally see that (*1) is a footnote.
 
-Both of these imply that the compiler can not assume that it does not 
-execute some logic equivalent to what I put above.
-
-
-
-
->> If herd7 would generate edges for semantic dependencies instead of for its
->> version of syntactic dependencies, then rwdep is the answer.
+> This example would also have OOTA under such a hypothetical LKMM, but not
+> with my patch, because in the case where r1 == 1,
+>  READ_ONCE(*x) is seperated by rmb from the load from *b,
+>    upon which the store to *a depends,
+>    which itself is seperated by a wmb from the store to WRITE_ONCE(*y,1)
+> and this would ensure that READ_ONCE(*x) and WRITE_ONCE(*y,1) can not be
+> reordered with each other anymore.
 > 
-> That statement is meaningless (or at least, impossible to implement)
-> because there is no widely agreed-upon formal definition for semantic
-> dependency.
-
-Yes, which also means that a 100% correct end-to-end solution (herd + 
-cat + ... ?) is currently not implementable.
-
-But we can still break the problem into two halves, one which is 100% 
-solved inside the cat file, and one which is the responsibility of herd7 
-and currently not solved (or 100% satisfactorily solvable).
-
-The advantage being that if we read the cat file as a mathematical 
-definition, we can at least on paper argue 100% correctly about code for 
-the cases where we either can figure out on paper what the semantic 
-dependencies are, or where we at least just say "with relation to 
-current compilers, we know what the semantically preserved dependencies 
-are", even if herd7 or other tools lags behind in one or both.
-
-After all, herd7 is just a (useful) automation tool for reasoning about 
-LKMM, which has its limitations (scalability, a specific definition of 
-dependencies, limited C subset...).
-
-
->> Given that we can not define dep inside the cat model, one may as well
->> define it as rwdep;rfe with the intended meaning of the dependencies being
->> the semantic ones; then it is an inaccuracy of herd7 that it does not
->> provide the proper dependencies.
 > 
-> Perhaps so.  LKMM does include other features which the compiler can
-> defeat if the programmer isn't sufficiently careful.
+> (*1= such a definition is not absurd! One needs to allow such races to make
+> sequence locks and other similar datastructures well-defined.)
 
-How many of these are due to herd7's limitations vs. in the cat file?
+I am currently not at all comfortable with the thought of allowing
+plain C-language loads to head any sort of dependency.  I really did put
+that restriction into both memory-barriers.txt and rcu_dereference.rst
+intentionally.  There is the old saying "Discipline = freedom", and
+therefore compilers' lack of discipline surrounding plain C-language
+loads implies a lack of freedom.  ;-)
 
->>> In the paper, I speculated that if a physical execution of a program
->>> matches an abstract execution containing such a non-observed OOTA cycle,
->>> then it also matches another abstract execution in which the cycle
->>> doesn't exist.  I don't know how to prove this conjecture, though.
->>
->> Yes, that also makes sense.
->>
->> Note that this speculation does not hold in the current LKMM though. In the
->> Litmus test I shared in the opening e-mail, where the outcome 0:r1=1 /\
->> 1:r1=1 is only possible with an OOTA (even though the values from the OOTA
->> are never used anywhere).
+> I currently don't know another way than the if-statement to avoid the data
+> race in the program(*2) in the current LKMM, so that's why I rely on it, but
+> at least conceptually it is orthogonal to the problem.
 > 
-> If the fact that the outcome 0:r1=1 /\ 1:r1=1 has occurred is proof that
-> there was OOTA, then the OOTA cycle _is_ observed, albeit indirectly --
-> at least, in the sense that I intended.  (The situation mentioned in the
-> paper is better described as an execution where the compiler has elided
-> all the accesses in the OOTA cycle.)
+> (*2=we can avoid the data race flag in herd by using filter, and only
+> generating the graphs where r1==1 and there is no data race. But that is
+> cheating -- the program is not valid under mainline LKMM.)
 
-I'm not sure that sense makes a lot of sense to me.
-But it does make the proof of your claim totally trivial. If there is no 
-other OOTA-free execution with the same observable behavior, then it is 
-proof that the OOTA happened, so the OOTA was observed.
-So by contraposition any non-observed OOTA has an OOTA-free execution 
-with the same observable behavior.
+Such cheats can be valid in cases where that is how you tell herd7 about
+some restriction that it cannot be told otherwise, but in this case, I
+agree that this cheat is unhelpful.
 
-The sense in which I would define observed is more along the lines of 
-"there is an observable side effect (such as store to volatile location) 
-which has a semantic dependency on a load that reads from one of the 
-stores in the OOTA cycle".
-
-
-
-
+> > > Please do look at the OO
+> TA graph generated by herd7 for this one, it looks
+> > > quite amazing.
+> > 
+> > Given the way this morning is going, I must take your word for it...
 > 
->> With C++'s non-local model I wouldn't be totally surprised if there were
->> similar examples in C++, but given that its ordering definition is a lot
->> more straightforward than LKMM in that it doesn't have all these cases of
->> different barriers like wmb and rmb and corner cases like Noreturn etc., my
->> intuition says that there aren't any.
-> 
-> I'll have to give this some thought.
+> That sounds awful :(
+> Technical issues?
 
-If you do want to prove the claim for the stricter definition of 
-observable OOTA, I would think about looking at the first read r in each 
-thread that reads from an OOTA store w, and see if at least one of them 
-could read from another store.
+Nothing awful, just catching up from tracking down a Linux-kernel RCU
+bug that fought well [1] and from the holidays.
 
-If that is not possible, then my intuition would be that there would be 
-some happens-before relation blocking you from reading from an earlier 
-store than w, in particular, w ->hb r.
+> With any luck, you can test it on arm's herd7 web interface at
+> https://developer.arm.com/herd7 (just don't be like me and type all the code
+> first and then change the drop-down selector to Linux - that will reset the
+> code window...)
 
-If it is not possible on any thread, then you get a bunch of these hb 
-edges much in parallel to the OOTA cycle.
+Ah, I have been running them locally, and didn't have time to chase down
+the herd7 arguments.
 
-Perhaps you can turn that into an hb cycle.
+Which reminds me...  We should decide which of these examples should be
+added to the github litmus archive, perhaps to illustrate the fact that
+plain C-language loads do not head dependency chains.  Thoughts?
 
-This last step doesn't work in LKMM because the hb may be caused by 
-rmb/wmb, which does not extend over the plain accesses in the OOTA cycle 
-to the bounding store to make a bigger hb cycle.
+							Thanx, Paul
 
-But in C++, if you have w ->hb r on each OOTA rfe edge, then you also 
-have r ->hb w' along the OOTA dep edge, and you get an hb cycle.
-
-Best wishes,
-    jonas
-
+[1] https://people.kernel.org/paulmck/hunting-a-tree03-heisenbug

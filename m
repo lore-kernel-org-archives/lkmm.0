@@ -1,83 +1,56 @@
-Received: from mail-qk1-f170.google.com (mail-qk1-f170.google.com [209.85.222.170])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A277F1C5F39
-	for <lkmm@lists.linux.dev>; Mon, 13 Jan 2025 19:43:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3DB71D61A5;
+	Mon, 13 Jan 2025 22:04:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736797387; cv=none; b=Gr3qaxcFxCua9XfsnvkGH1gZ6PEv26xVXumKrhFJ1KjWgcukJs6mF3y6UzLKjTL/Ps1DC+9lvg7opnZEPgpXNKCX2MwI1OqpM1O6BtKupTYnciRdJBk0EtGobvrk4jhXzZErNPbDWHJwIpehF8OEYpzJOSdjyLr8W6jyAZRd26Q=
+	t=1736805899; cv=none; b=HVCyxd6ue60yd8E7mX/Osvto3u4hz8HbPVm+j4AkOhP+loTR2TqcPgURp79mSJBmsSZGPAFH78ivdVzNdQybRVA6hXSSRgoiaTbjyPXwH0dht/BH7OZhNiKf95fuFshpRRVySVB88TisL9W60Y61DtluVkw48+5RO8AN8Y2Rv40=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736797387; c=relaxed/simple;
-	bh=Yefa01fTPSFbKpTlH1HMmQyKobV9FIpFf1pEBi6WsQE=;
+	s=arc-20240116; t=1736805899; c=relaxed/simple;
+	bh=zfohkV2FJxwJTsons2iwungXEd4dld/AshaURc2DHaM=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=P62h/l9951udbc0cVrICblPVETGpjItg7quDflbxkyNjJSW/600AsERhIts+Sfd4abplGgYiZgUDppbq3620e8D1Q80lmPhiHKO/sdY+OUyy7bR0JmYGoq65aCmh4dd7P1SNKxgT0Cy6BrX3ksBsyjm6eKXxvPuCOxGGlSqirdc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=rowland.harvard.edu; spf=fail smtp.mailfrom=g.harvard.edu; dkim=pass (2048-bit key) header.d=rowland.harvard.edu header.i=@rowland.harvard.edu header.b=huZeLvzP; arc=none smtp.client-ip=209.85.222.170
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=rowland.harvard.edu
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=g.harvard.edu
+	 Content-Type:Content-Disposition:In-Reply-To; b=gjzx/eCRYEwDCrz2cwDkO6kFP4VVXURV88q6QkFO7WaNSiHBGfljE0QzVh7lg+j81zzhyQtnEWeTGgiDww94oCvpoph187FXO++tdmuaQ7wkV06C0Ayb4wKuVoCxKH2/WwvsBTGZRXceujE0exQA1OAfUNZvSAfvrLNoXs99jO8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YEvgd4TY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=rowland.harvard.edu header.i=@rowland.harvard.edu header.b="huZeLvzP"
-Received: by mail-qk1-f170.google.com with SMTP id af79cd13be357-7b6f7d7e128so510772085a.1
-        for <lkmm@lists.linux.dev>; Mon, 13 Jan 2025 11:43:05 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=rowland.harvard.edu; s=google; t=1736797384; x=1737402184; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=Yxle0qn2LunxhQfJrGoHu3/Wy8mhOyXkj7YKagl7HtY=;
-        b=huZeLvzPz/jmltaKvV//NCaeeOGThF69mFAj3Haz1pYAWUghZALDilK+VZPcvPz3W+
-         RzSlOpOWcpDmu9AtXRzzgnErFoBA94979ji6DYDpjVnZ/uxLZpgAn9K7xKM36MWlMZWH
-         cc34znGU8J40JdQRayf6s0KrNgIZtqxJxpP75Mb0ksnGS7Mwlp4TTGvf48BWwBb1KtCd
-         PrjwQVYpguv47ZDPxS27kfF9tU+gxTZFjeuxtKQnTAEw04T/Vg5AUDUwAu0NcHAhe/G3
-         azZmN0lKI4HWr75E5hPDEUPAn19yq1927QCoj50s/jWj31VX7PcH2UR7KrsuDoHtjzlT
-         pHFQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1736797384; x=1737402184;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Yxle0qn2LunxhQfJrGoHu3/Wy8mhOyXkj7YKagl7HtY=;
-        b=RO9NrrvyE9hS7jR7LTAH3689+1QKAmwQVy3+3PC73sPdn72mOyAG4I6qMzfq8+B0hN
-         81iFWORzcSyWSFoTU8rsGk3Lj0jR+U+nP7vvLlxQ6+AKSw5V1JZFbZk7iaDYGZT5dVFR
-         gNfwsjq9Fz5wWtel/SnRAjyQ3uNr1NmtYyW1kTTaIUfm25jOhTGqAPU+BI5Kt9mVQVYD
-         WzKGaGM9tvPPtH3B1DlNkDPUs0evyvksT8BY+LEo93ZJDzeF5CZvgcw8UNMXN34gtz4R
-         PoiDGQ8XBTdJzggNaOG870VM5s95zGFmSYGKnMEBDoeOEmRUN2AMb17NiAvGM8ISNpeM
-         cyKg==
-X-Forwarded-Encrypted: i=1; AJvYcCX3DeNINM+tMFZmKxeJYL/Wj6m+VIzhO1M6zBRpq1QKyQJqNPoTwMnDCj0JLRW/979Qi2fa@lists.linux.dev
-X-Gm-Message-State: AOJu0YyHSB38BMT2MvnQJ4gb1l8BIqSy5froMjnlGbpKTOiqCDSe13+T
-	T3pl48m6OFNKzyu/Urvr9R0R8WBtNEeOv/yj/NnMkXrvHQIk08ViL4V+ZnLRdQ==
-X-Gm-Gg: ASbGncvyE5YVUYkPlbcVW8FPg1KmgY/nw1kKWsidCmUTqT1DJDLINYVI5HgrqeVvT88
-	8lfDS7W/H3qQAiGdWXFygB39QcYz/3mK8KQ31MrtDDVQjQrh9eKevL/c4aDruJDk+Jkj8SbKx6C
-	pp6r+do7FKse2z++DkcLfzdrOadGRzw/XDUtWLUXec2qQLloK9lww5zUh+IzESA+x+u3NCHFQSo
-	y/WyaTepikKqpVf9bg5RAc3FVpkJcXkif7UZNOIKNsk1dxnsiDpNYFrAfjodb3OwWGvGUgjWk63
-	KUqBXK2Kz5Aw1dHOVQ9yhOSl7+v2I2x67Wf6AUUpJqY1pk5BzA==
-X-Google-Smtp-Source: AGHT+IHvidcrARw2037HqCB/8kmQwEUKgJJ2qBUrHutCHOk1Nk7AtxJlbcC+4ArLIeLbdyWU6gMhIw==
-X-Received: by 2002:a05:620a:40cc:b0:7b6:d799:1f83 with SMTP id af79cd13be357-7bcf364324cmr1638919685a.3.1736797384442;
-        Mon, 13 Jan 2025 11:43:04 -0800 (PST)
-Received: from rowland.harvard.edu (nat-65-112-8-51.harvard-secure.wrls.harvard.edu. [65.112.8.51])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-7bce351604bsm522368685a.111.2025.01.13.11.43.02
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 13 Jan 2025 11:43:03 -0800 (PST)
-Date: Mon, 13 Jan 2025 14:43:00 -0500
-From: Alan Stern <stern@rowland.harvard.edu>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="YEvgd4TY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B3F3C4CED6;
+	Mon, 13 Jan 2025 22:04:58 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1736805898;
+	bh=zfohkV2FJxwJTsons2iwungXEd4dld/AshaURc2DHaM=;
+	h=Date:From:To:Cc:Subject:Reply-To:References:In-Reply-To:From;
+	b=YEvgd4TY/YNwxCK1mOfp/pQDdBfP0qsAjtGaoadcqowFjekDVB55e1IsGjhz7+WZE
+	 OmBRzHGPNPpN+4A36AEItIAD6GUxCnk49D7vFq9Tcrx6NFpL7exjwgKR0SzGSTgSZW
+	 UTXxijfc6UJ29QvhxD9Z0G/Ck+oQN8SeTg+CQ2LGcG9pJdHQUC4505atWbGScR1fo2
+	 /2keAaLRo1N9v5+7606kt/FNvpQNfE7aJG6W+JaY+8oMp6vZ2UwCYdFkj/aevvcHRE
+	 0ntgkhRopWjUmki5F1+X1hR9glQPAQQoplDgLviMPcZWpFwWxvsWfDxUtxVr3qgm8z
+	 sCPY9b3+z7VfQ==
+Received: by paulmck-ThinkPad-P17-Gen-1.home (Postfix, from userid 1000)
+	id 0E149CE0F13; Mon, 13 Jan 2025 14:04:58 -0800 (PST)
+Date: Mon, 13 Jan 2025 14:04:58 -0800
+From: "Paul E. McKenney" <paulmck@kernel.org>
 To: Jonas Oberhauser <jonas.oberhauser@huaweicloud.com>
-Cc: paulmck@kernel.org, parri.andrea@gmail.com, will@kernel.org,
-	peterz@infradead.org, boqun.feng@gmail.com, npiggin@gmail.com,
-	dhowells@redhat.com, j.alglave@ucl.ac.uk, luc.maranget@inria.fr,
-	akiyks@gmail.com, dlustig@nvidia.com, joel@joelfernandes.org,
-	urezki@gmail.com, quic_neeraju@quicinc.com, frederic@kernel.org,
-	linux-kernel@vger.kernel.org, lkmm@lists.linux.dev,
-	hernan.poncedeleon@huaweicloud.com
+Cc: Alan Stern <stern@rowland.harvard.edu>, parri.andrea@gmail.com,
+	will@kernel.org, peterz@infradead.org, boqun.feng@gmail.com,
+	npiggin@gmail.com, dhowells@redhat.com, j.alglave@ucl.ac.uk,
+	luc.maranget@inria.fr, akiyks@gmail.com, dlustig@nvidia.com,
+	joel@joelfernandes.org, urezki@gmail.com, quic_neeraju@quicinc.com,
+	frederic@kernel.org, linux-kernel@vger.kernel.org,
+	lkmm@lists.linux.dev, hernan.poncedeleon@huaweicloud.com
 Subject: Re: [RFC] tools/memory-model: Rule out OOTA
-Message-ID: <22c28114-145d-4968-a346-75abbc058b84@rowland.harvard.edu>
-References: <83b64af7-03b7-4dd8-900b-c57a65479ba8@rowland.harvard.edu>
- <63a462dd-f182-4868-92b8-f33f2dc266f8@huaweicloud.com>
- <d82053fb-2f8c-4196-85e9-8d5a8f25c391@rowland.harvard.edu>
- <582102b0-ee94-4160-95ec-4d44815cc39e@huaweicloud.com>
- <8306ac43-fb00-4e58-bdeb-81ea9993c262@rowland.harvard.edu>
- <d7e59f22-12d3-42e5-88d2-e96beafb78c5@huaweicloud.com>
- <c2ae9bca-8526-425e-b9b5-135004ad59ad@rowland.harvard.edu>
- <838f7a51-c0f5-4a19-8407-6591426fd4a8@huaweicloud.com>
- <44749eab-90b0-489d-a409-c6a5cc7b8e04@rowland.harvard.edu>
- <0b1a9379-000d-4924-a930-dde5daaf1dd8@huaweicloud.com>
+Message-ID: <1cea1fcd-827c-455e-93b7-f4d606bf4993@paulmck-laptop>
+Reply-To: paulmck@kernel.org
+References: <20250106214003.504664-1-jonas.oberhauser@huaweicloud.com>
+ <a3bf910f-509a-4ad3-a1cc-4b14ef9b3259@rowland.harvard.edu>
+ <68f98254-daf9-4197-a7cb-ef9fca0ef158@paulmck-laptop>
+ <9dec7f8d-16c0-4122-bf03-c16bd616ca15@huaweicloud.com>
+ <9a0dccbb-bfa7-4b33-ac1a-daa9841b609a@paulmck-laptop>
+ <1daba0ea-0dd6-4e67-923e-fd3c1a62b40b@huaweicloud.com>
+ <c27c4210-3d20-42af-a1f7-a49d04828a8e@paulmck-laptop>
+ <cda52bac-1c59-4c56-b5e2-937f2008a768@huaweicloud.com>
+ <21ec2b32-69ce-46bf-8d44-06149e71ba6c@paulmck-laptop>
+ <0c0fcfb7-dbef-426b-ac54-583c85fbba9d@huaweicloud.com>
 Precedence: bulk
 X-Mailing-List: lkmm@lists.linux.dev
 List-Id: <lkmm.lists.linux.dev>
@@ -86,154 +59,309 @@ List-Unsubscribe: <mailto:lkmm+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <0b1a9379-000d-4924-a930-dde5daaf1dd8@huaweicloud.com>
+In-Reply-To: <0c0fcfb7-dbef-426b-ac54-583c85fbba9d@huaweicloud.com>
 
-On Sun, Jan 12, 2025 at 04:55:07PM +0100, Jonas Oberhauser wrote:
+On Fri, Jan 10, 2025 at 05:21:59PM +0100, Jonas Oberhauser wrote:
 > 
 > 
-> Am 1/11/2025 um 10:19 PM schrieb Alan Stern:
-> > On Sat, Jan 11, 2025 at 01:46:21PM +0100, Jonas Oberhauser wrote:
-> >>
-> > > This is under my assumption that if we had let's say gcc's "semantic
-> > > dependencies" or an under-approximation of it (by that I mean allow less
-> > > things to be dependent than gcc can see), that these cases would be
-> > > resolved, in the sense that gcc can not undermine [R & Marked] ; gcc-dep
-> > > where gcc-dep is the dependencies detected by gcc.
+> Am 1/10/2025 um 3:54 PM schrieb Paul E. McKenney:
+> > On Thu, Jan 09, 2025 at 07:35:19PM +0100, Jonas Oberhauser wrote:
+> > > Am 1/9/2025 um 6:54 PM schrieb Paul E. McKenney:
+> > > > On Wed, Jan 08, 2025 at 08:17:51PM +0100, Jonas Oberhauser wrote:
+> > > > > 
+> > > > > 
+> > > > > Am 1/8/2025 um 7:09 PM schrieb Paul E. McKenney:
+> > > > > > If I change the two plain assignments to use WRITE_ONCE() as required
+> > > > > > by memory-barriers.txt, OOTA is avoided:
+> > > > > 
+> > > > > 
+> > > > > I think this direction of inquiry is a bit misleading. There need not be any
+> > > > > speculative store at all:
+> > > > > 
+> > > > > 
+> > > > > 
+> > > > > P0(int *a, int *b, int *x, int *y) {
+> > > > > 	int r1;
+> > > > > 	int r2 = 0;
+> > > > > 	r1 = READ_ONCE(*x);
+> > > > > 	smp_rmb();
+> > > > > 	if (r1 == 1) {
+> > > > > 		r2 = *b;
+> > > > > 	}
+> > > > > 	WRITE_ONCE(*a, r2);
+> > > > > 	smp_wmb();
+> > > > > 	WRITE_ONCE(*y, 1);
+> > > > > }
+> > > > > 
+> > > > > P1(int *a, int *b, int *x, int *y) {
+> > > > > 	int r1;
+> > > > > 
+> > > > > 	int r2 = 0;
+> > > > > 
+> > > > > 	r1 = READ_ONCE(*y);
+> > > > > 	smp_rmb();
+> > > > > 	if (r1 == 1) {
+> > > > > 		r2 = *a;
+> > > > > 	}
+> > > > > 	WRITE_ONCE(*b, r2);
+> > > > > 	smp_wmb();
+> > > > > 	WRITE_ONCE(*x, 1);
+> > > > > }
+> > > > > 
+> > > > > 
+> > > > If we want to respect something containing a control dependency to a
+> > > > WRITE_ONCE() not in the body of the "if" statement, we need to make some
+> > > > change to memory-barriers.txt.
+> > > 
+> > > I'm not sure what you denotate by *this* in "if we change this", but just to
+> > > clarify, I am not thinking of claiming that there were a (semantic) control
+> > > dependency to WRITE_ONCE(*b, r2) in this example.
+> > > 
+> > > There is however a data dependency from r2 = *a to WRITE_ONCE, and I would
+> > > say that there is a semantic data (not control) dependency from r1 =
+> > > READ_ONCE(*y) to WRITE_ONCE(*b, r2), too: depending on the value read from
+> > > *y, the value stored to *b will be different. The latter would be enough to
+> > > avoid OOTA according to the mainline LKMM, but currently this semantic
+> > > dependency is not detected by herd7.
 > > 
-> > That seems circular.  Basically, you're saying the gcc will not break
-> > any dependencies that gcc classifies as not-breakable!
-> 
-> Maybe my formulation is not exactly what I meant to express.
-> I am thinking of examples like this,
-> 
->  r1 = READ_ONCE(*x);
->  *b = r1;
-> 
-> ~~>
-> 
->  r1 = READ_ONCE(*x);
->  if (*b != r1) {
->    *b = r1;
->  }
-> 
-> Here there is clearly a dependency to a store, but gcc might turn it into an
-> independent load (in case *b == r1).
-> 
-> Just because gcc admits that there is a dependency, does not necessarily
-> mean that it will not still undermine the ordering "bestowed upon" that
-> dependency by a memory model in some creative way.
-
-Yes; that's why the LKMM considers only ordering involving marked 
-accesses, unless absolutely necessary.
-
-> The cases that I could think of all still worked for very specific
-> architecture-specific reasons (e.g., x86 has CMOV but all loads provide
-> acquire-ordering, and arm does not have flag-conditional str, etc.)
-> 
-> Or perhaps there is no dependency in case *b == r1. I am not sure.
-> 
-> Another thought that pops up here is that when I last worked on formalizing
-> dependencies, I could not define dependencies as being between one load and
-> one store, a dependency might be between a set of loads and one store. I
-> would have to look up the exact reason, but I think it was because sometimes
-> you need to change more than one value to influence the result, e.g., a && b
-> where both a and b are 0 - just changing one will not make a difference.
-
-Paul and I mentioned exactly this issue in our C++ presentation.  It's 
-in the paper; I had to reformulate the definition of OOTA to take it 
-into account.
-
-> All of these complications make me wonder whether even a relational notion
-> of semantic dependency is good enough.
-
-For handling OOTA, probably not.
-
-> > > I am genuinely asking. Do we have a list of the limitations?
-> > > Maybe it would be good to collect it in the "A WARNING" section of
-> > > explanation.txt if it doesn't exist elsewhere.
+> > According to LKMM, address and data dependencies must be headed by
+> > rcu_dereference() or similar.  See Documentation/RCU/rcu_dereference.rst.
 > > 
-> > There are a few listed already at various spots in explanation.txt --
-> > search for "undermine".  And yes, many or most of these limitations do
-> > arise from LKMM's failure to recognize when a dependency isn't semantic.
-> > Maybe some are also related to undefined behavior, which LKMM is not
-> > aware of.
+> > Therefore, there is nothing to chain the control dependency with.
 > 
-> Thanks. Another point mentioned in that document is the total order of po,
-> whereas C has a more relaxed notion of sequenced-before; this could even
-> affect volatile accesses, e.g. in f(READ_ONCE(*a), g()). where g() calls an
-> rmb and then READ_ONCE(*b), and it is not clear whether there should be a
-> ppo from reading *a to *b in some executions or not.
-
-Hah, yes.  Of course, this isn't a problem for the litmus tests that 
-herd7 will accept, because herd7 doesn't understand user-defined 
-functions.
-
-Even so, we can run across odd things like this:
-
-	r1 = READ_ONCE(*x);
-	if (r1)
-		smp_mb();
-	WRITE_ONCE(*y, 1);
-
-Here the WRITE_ONCE has to be ordered after the READ_ONCE, even when *x 
-is 0, although the memory model isn't aware of that fact.
-
-> For now I am mostly worried about cases where LKMM promises too much, rather
-> than too little. The latter case arises naturally as a trade-off between
-> complexity of the model, algorithmic complexity, and what guarantees are
-> actually needed from the model by real code.
-
-Agreed, promising too much is a worse problem than promising too little.
-
-> By the way, I am currently investigating a formulation of LKMM where there
-> is a separate "propagation order" per thread, prop-order[t], which relates
-> `a` to `b` events iff `a` is "observed" to propagate to t before `b`.
-
-I guess this would depend on what you mean by "observed".  Are there any 
-useful cases of this where b isn't executed by t?  All I can think of is 
-that when the right sort of memory barrier separates a from b, then for 
-all t, a propagates to t before b does -- and this does not depend on t.
-
-> Observation can also include co and fr, not just rf, which might be
-> sufficient to cover those cases. I have a hand-written proof sketch that an
-> order ORD induced by prop-order[t], xb, and some other orders is acyclic,
-> and a Coq proof that executing an operational model in any linearization of
-> ORD is permitted (e.g., does not propagate a store before it is executed, or
-> in violation of co) and has the same rf as the axiomatic execution.
+> Note that herd7 does generate dependencies. And speaking informally, there
+> clearly is a semantic dependency.
 > 
-> So if the proof sketch works out, this might indicate that with such a
-> per-thread propagation order, one can eliminate those cases.
+> Both the original formalization of LKMM and my patch do say that a plain
+> load at the head of a dependency chain does not provide any dependency
+> ordering, i.e.,
 > 
-> But to make the definition work, I had to make xb use prop-order[t] instead
-> of prop in some cases, and the definitions of xb and prop-order[t] are
-> mutually recursive, so it's not a very digestible definition.
-
-These mutually recursive definitions are the bane of memory models.  In 
-fact, that's what drove Will Deacon to impose other-multicopy atomicity 
-on the ARM64 memory model -- doing so allowed him to avoid mutual 
-recursion.
-
-> I think there are two relevant claims here:
-> 1) compilers do not introduce "observed OOTA"
-> 2) For every execution graph with not-observed OOTA, there is another
-> execution with the same observable side effects that does not have OOTA.
+>   [Plain & R] ; dep
 > 
-> While it may be much easier to prove 2) with a more relaxed notion of
-> observed OOTA, 1) sounds much harder. How does the compiler know that there
-> is no indirect way to observe the OOTA?
+> is never part of hb, both in LKMM and in my patch.
+
+Agreed, LKMM does filter the underlying herd7 dependencies.
+
+> By the way, if your concern is the dependency *starting* from the plain
+> load, then we can look at examples where the dependency starts from a marked
+> load:
 > 
-> E.g., in the LKMM example, ignoring the compiler barriers, it might be
-> possible for a compiler to deduce that the plain accesses are never used and
-> delete them, resulting in an OOTA that is observed under the more relaxed
-> setting, violating claim 1).
+> 
+>   r1 = READ_ONCE(*x);
+>   smp_rmb();
+>   if (r1 == 1) {
+>     r2 = READ_ONCE(*a);
+>   }
+>   *b = 1;
+>   smp_wmb();
+>   WRITE_ONCE(*y,1);
+> 
+> This is more or less analogous to the case of the addr ; [Plain] ; wmb case
+> you already have.
 
-A main point of the paper Paul and I wrote for the C++ working group was 
-that the _only_ way OOTA can occur in real-world programs is if all the 
-accesses have been removed by the compiler (assuming the compiler obeys 
-some minimal restrictions).
+This is probably a failure of imagination on my part, but I am not
+seeing how to create another thread that interacts with that store to
+"b" without resulting in a data race.
 
-We did not consider the issue of whether such instances of OOTA could be 
-considered to be "observed".  As I understand it, they would not satisfy 
-your proposed notion of "observed".
+Ignoring that, I am not seeing much in the way of LKMM dependencies
+in that code.
 
-Alan
+> > > I currently can not come up with an example where there would be a
+> > > (semantic) control dependency from a load to a store that is not in the arm
+> > > of an if statement (or a loop / switch of some form with the branch
+> > > depending on the load).
+> > > 
+> > > I think the control dependency is just a red herring. It is only there to
+> > > avoid the data race.
+> > 
+> > Well, that red herring needs to have a companion fish to swim with in
+> > order to enforce ordering, and I am not seeing that companion.
+> > 
+> > Or am I (yet again!) missing something subtle here?
+> 
+> It makes more sense to think about how people do message passing (or
+> seqlock), which might look something like this:
+> 
+>   [READ_ONCE]
+>   rmb
+>   [plain read]
+> 
+> and
+> 
+>   [plain write]
+>   wmb
+>   [WRITE_ONCE]
+> 
+> 
+> Clearly LKMM says that there is some sort of order (not quite happens-before
+> order though) between the READ_ONCE and the plain read, and between the
+> plain write and the WRITE_ONCE. This order is clearly defined in the data
+> race definition, in r-pre-bounded and w-post-bounded.
+> 
+> Now consider
+> 
+>   [READ_ONCE]
+>   rmb
+>   [plain read]
+>   // some code that creates order between the plain accesses
+>   [plain write]
+>   wmb
+>   [WRITE_ONCE]
+> 
+> where for some specific reason we can discern that the compiler can not
+> fully eliminate/move across the barrier either this specific plain read, nor
+> the plain write, nor the ordering between the two.
+> 
+> In this case, is there order between the READ_ONCE and the WRITE_ONCE, or
+> not? Of course, we know current LKMM says no. I would say that in those very
+> specific cases, we do have ordering.
+
+Agreed, for LKMM to deal with seqlock, the read-side critical section
+would need to use READ_ONCE(), which is a bit unnatural.  The C++
+standards committee has been discussing this for some time, as that
+memory model also gives data race in that case.
+
+But it might be better to directly model seqlock than to try to make
+LKMM deal with the underlying atomic operations.
+
+> > > In a hypothetical LKMM where reading in a race is not a data race unless the
+> > > data is used (*1), this would also work:
+> > 
+> > You lost me on the "(*1)", which might mean that I am misunderstanding
+> > your text and examples below.
+> 
+> This was meant to be a footnote :D
+
+My first thought was indirecting through a value-1 pointer without the
+needed casts.  ;-)
+
+> > >   	unsigned int r1;
+> > >   	unsigned int r2 = 0;
+> > >   	r1 = READ_ONCE(*x);
+> > >   	smp_rmb();
+> > >   	r2 = *b;
+> > 
+> > This load from *b does not head any sort of dependency per LKMM, as noted
+> > in rcu_dereference.rst.  As that document states, there are too many games
+> > that compilers are permitted to play with plain C-language loads.
+> > 
+> > >   	WRITE_ONCE(*a, (~r1 + 1) & r2);
+> > >   	smp_wmb();
+> > >   	WRITE_ONCE(*y, 1);
+> > > 
+> > > 
+> > > Here in case r1 == 0, the value of r2 is not used, so there is a race but
+> > > there would not be data race in the hypothetical LKMM.
+> > 
+> > That plain C-language load from b, if concurrent with any sort of store to
+> > b, really is a data race. Sure, a compiler that can prove that r1==0 at
+> > the WRITE_ONCE() to a might optimize that load away, but the C-language
+> > definition of data race still applies.
+> 
+> It is a data race according to C, but so are all races on WRITE_ONCE and
+> READ_ONCE, so we already do not actually care what C says.
+
+The situation with WRITE_ONCE() and READ_ONCE() is debatable.
+The volatile accesses are defined more by folklore than standardese,
+and they do seriously constrain the compiler.  Which is why many people
+don't like volatile much.
+
+> What we care about is what the compiler says (and does).
+> 
+> The reality is that no matter what kind of crazy optimizations the compiler
+> does to the load and to the concurrent store, all that would happen is that
+> the load "returns" some insane value. But that insane value is not used by
+> the remainder of the computation.
+
+Yes, but only as long as your properly constrain what the code in that
+read-side critical section is permitted to do.
+
+> I think the right way to think about it is that a race between a read and a
+> write gives the read an indeterminate value, and a race between two writes
+> produces undefined behavior. I vaguely recall that this is even guaranteed
+> by LLVM.
+> 
+> That is why sequence locks work, after all. In our internal memory model we
+> have relaxed the definition accordingly and there are a bunch of internally
+> used datastructures that can only be verified because of the relaxation.
+
+Again, it is likely best to model sequence locking directly.
+
+> > I am currently not at all comfortable with the thought of allowing
+> > plain C-language loads to head any sort of dependency.  I really did put
+> > that restriction into both memory-barriers.txt and rcu_dereference.rst
+> > intentionally.  There is the old saying "Discipline = freedom", and
+> > therefore compilers' lack of discipline surrounding plain C-language
+> > loads implies a lack of freedom.  ;-)
+> 
+> Yes, I understand your concern (or more generally, the concern of letting
+> plain accesses play a role in ordering).
+> Obviously, allowing arbitrary plain loads to invoke some kind of ordering
+> because of a dependency is plain (heh) wrong.
+> There are two kinds of potential problems:
+>  - the load or its dependent store may not exist in that location at all
+>  - the dependency may not really exist
+> 
+> The second case is a problem also with marked accesses, and should be
+> handled by herd7 only giving us actual semantic dependencies (whatever those
+> are). It can not be solved in cat. Either way it is a limitation that herd7
+> (and also other tools) currently has and we already live with.
+
+This is easy to say.  Please see this paper (which Alan also referred to)
+for some of the challenges:
+
+https://www.open-std.org/jtc1/sc22/wg21/docs/papers/2024/p3064r2.pdf
+
+Mark Batty and his group have identified more gotchas.  (See the citation
+in the above paper.)
+
+> So the new problem we deal with is to somehow restrict the rule to loads and
+> dependent stores that the compiler for whatever reason will not fully
+> eliminate.
+> 
+> This problem too can not be solved completely inside cat. We can give an
+> approximation, as discussed with Alan (stating that a store would not be
+> elided if it is read by another thread, and a read would not be elided if it
+> reads from another thread and a store that won't be elided depends on it).
+> 
+> This approximation is also limited, e.g., if the addresses of the plain
+> loads and stores have not yet escaped the function, but at least this
+> scenario is currently impossible in herd7 (unlike the fake dependency
+> scenario).
+> 
+> In my mind it would again be better to offload the correct selection of
+> "compiler-un(re)movable plain loads and stores" to the tools. That may again
+> not solve the problem fully, but it at least would mean that any changes to
+> address the imprecision wouldn't need to go through the kernel tree, and
+> IMHO it is easier to say LKMM in the cat files is the model, and the
+> interpretation of the model has some limitations.
+
+Which we currently do via marked accesses.  ;-)
+
+> > We should decide which of these examples should be
+> > added to the github litmus archive, perhaps to illustrate the fact that
+> > plain C-language loads do not head dependency chains.  Thoughts?
+> 
+> I'm not sure that is a good idea, given that running the herd7 tool on the
+> litmus test will clearly show a dependency chain headed by plain loads in
+> the visual graphs (with `doshow rwdep`).
+> 
+> Maybe it makes more sense to say in the docs that they may head syntactic or
+> semantic dependency chains, but because of the common case that the compiler
+> may cruelly optimize things, LKMM does not guarantee ordering based on the
+> dependency chains headed by plain loads. That would be consistent with the
+> tooling.
+
+Well, LKMM and herd7 have different notions of what constitutes a
+dependency, and the LKMM notion is most relevant here.  (And herd7
+needs its broader definition so as to handle a wide variety of
+memory models.)
+
+> > [1] https://people.kernel.org/paulmck/hunting-a-tree03-heisenbug
+> 
+> Fun. Thanks :) Duplication and Devious both start with D.
+
+In reference to the performance and scalability consequences of
+eliminating that duplication, so does Devine!  ;-)
+
+						Thanx, Paul

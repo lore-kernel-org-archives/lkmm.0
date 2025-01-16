@@ -1,49 +1,47 @@
-Received: from frasgout12.his.huawei.com (frasgout12.his.huawei.com [14.137.139.154])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B560441C6A
-	for <lkmm@lists.linux.dev>; Thu, 16 Jan 2025 19:28:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=14.137.139.154
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF7DA2361D1;
+	Thu, 16 Jan 2025 19:31:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737055720; cv=none; b=Lx0sL/gFiwNNxIxT12UEstC1NMLmZsL2ERNPClYPTE5m2DfSdGn8XmTTJtdxLfzuhYPiflSz4XpAsFwneoZpqZ1A6YEbXG+aJ06cedO5jAZ96rRf+Lcn6uCIwj04WLGZTeBSxH1NSB7MQumE45D8mIQI0JyAJJOIQz6Mbci3y3o=
+	t=1737055869; cv=none; b=YQZQRkkqm13pWDJSVB+gKaCbtd2S2Hq4usyaY+NsDMhBMMQc9zd6TZ9c086E0fImImI2vmynvHNNzHJzNitiuUc+IqrrTab85M+wJqTOzsDqSqFVMUno0nHHSv3wUOzIt9JhEYfzW0O6XZU1T6md4kd9jgZkbPcQlidcQvyjvu0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737055720; c=relaxed/simple;
-	bh=vZFQT3T4hLWjDCv4TeqOknh7lnWlt2gnKzJzlAw78LU=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=cmflJqo7kA6Ap1fF5YJByPblZ4hQm7AMvyXKMt/O4Oc0RLSG8LfJplN2/G+stj7LKq179f5B3ddE92k+/sjw0ILFG/5uRfsEe5eMKfamkrkBzYvL/5FzhhXBHfqA8sUFTEA86rQHChsvscEVfpUM8/VBLFnuFxWmSfq3TaNlLUk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=huaweicloud.com; spf=pass smtp.mailfrom=huaweicloud.com; arc=none smtp.client-ip=14.137.139.154
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=huaweicloud.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huaweicloud.com
-Received: from mail.maildlp.com (unknown [172.18.186.29])
-	by frasgout12.his.huawei.com (SkyGuard) with ESMTP id 4YYscF0TSSz9v7JN
-	for <lkmm@lists.linux.dev>; Fri, 17 Jan 2025 02:59:41 +0800 (CST)
-Received: from mail02.huawei.com (unknown [7.182.16.27])
-	by mail.maildlp.com (Postfix) with ESMTP id B81F01407AB
-	for <lkmm@lists.linux.dev>; Fri, 17 Jan 2025 03:28:23 +0800 (CST)
-Received: from [10.45.144.192] (unknown [10.45.144.192])
-	by APP2 (Coremail) with SMTP id GxC2BwDHfeDJXYln_TjAAA--.15156S2;
-	Thu, 16 Jan 2025 20:28:22 +0100 (CET)
-Message-ID: <446d6a64-7ee4-494a-bbfe-dbfdb6959f9c@huaweicloud.com>
-Date: Thu, 16 Jan 2025 20:28:06 +0100
-Precedence: bulk
-X-Mailing-List: lkmm@lists.linux.dev
-List-Id: <lkmm.lists.linux.dev>
-List-Subscribe: <mailto:lkmm+subscribe@lists.linux.dev>
-List-Unsubscribe: <mailto:lkmm+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC] tools/memory-model: Rule out OOTA
-To: paulmck@kernel.org
+	s=arc-20240116; t=1737055869; c=relaxed/simple;
+	bh=I7F7bBo7XYgd1B6NKQQzcha0/K7hLHjyAcib1ZGs5Pc=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=s+WnN4c7THurmNOfUS+tdpQJqO/uem4dD9uKMgkfvDa4DhxYkF70a7DMHTGjBqfsd0Su1DBwFNNUSJg2X9l8EO5C1pC78txMs/eDC65TrRhBCWYkHGf1vmwI1DTz3omNX9AoByvlBJRq5OiN+gtUMlvYMQohELT/X4bGnlEhjP0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ngNVlbO/; arc=none smtp.client-ip=10.30.226.201
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ngNVlbO/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 426F6C4CED6;
+	Thu, 16 Jan 2025 19:31:09 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1737055869;
+	bh=I7F7bBo7XYgd1B6NKQQzcha0/K7hLHjyAcib1ZGs5Pc=;
+	h=Date:From:To:Cc:Subject:Reply-To:References:In-Reply-To:From;
+	b=ngNVlbO/v3OcJBZq699MGqHzVBjG3S6Tuv20r0TKIco/FXZgmj5IW6YVicMSa6mDZ
+	 4ytG2dWYMe126AMHNftMcrER7CAPYCNEV9fXekkVtSHISZ00DT6IgGiTtd9O0iftYC
+	 Uw73yRWAAswoamc3Dldkr2TlcIuTX+BwTAaNqZiwJ05Pq60Jt7arLqFPo6wYiur0VS
+	 2YIIydwMOATOZXWFXjVTeT/KxwkEanweDUVwyFx6BL3jL58gLrYjzvpc/pfs2sHexF
+	 zrsxu102ENWG0DckMQzI5NRNpMsMlLTUseLEXEebGVGsQVyDI4WUjh3lJDPvHxu3jT
+	 pswnZHtAdSdKQ==
+Received: by paulmck-ThinkPad-P17-Gen-1.home (Postfix, from userid 1000)
+	id DF12ACE0B6D; Thu, 16 Jan 2025 11:31:08 -0800 (PST)
+Date: Thu, 16 Jan 2025 11:31:08 -0800
+From: "Paul E. McKenney" <paulmck@kernel.org>
+To: Jonas Oberhauser <jonas.oberhauser@huaweicloud.com>
 Cc: Alan Stern <stern@rowland.harvard.edu>, parri.andrea@gmail.com,
- will@kernel.org, peterz@infradead.org, boqun.feng@gmail.com,
- npiggin@gmail.com, dhowells@redhat.com, j.alglave@ucl.ac.uk,
- luc.maranget@inria.fr, akiyks@gmail.com, dlustig@nvidia.com,
- joel@joelfernandes.org, urezki@gmail.com, quic_neeraju@quicinc.com,
- frederic@kernel.org, linux-kernel@vger.kernel.org, lkmm@lists.linux.dev,
- hernan.poncedeleon@huaweicloud.com
-References: <a3bf910f-509a-4ad3-a1cc-4b14ef9b3259@rowland.harvard.edu>
- <68f98254-daf9-4197-a7cb-ef9fca0ef158@paulmck-laptop>
- <9dec7f8d-16c0-4122-bf03-c16bd616ca15@huaweicloud.com>
+	will@kernel.org, peterz@infradead.org, boqun.feng@gmail.com,
+	npiggin@gmail.com, dhowells@redhat.com, j.alglave@ucl.ac.uk,
+	luc.maranget@inria.fr, akiyks@gmail.com, dlustig@nvidia.com,
+	joel@joelfernandes.org, urezki@gmail.com, quic_neeraju@quicinc.com,
+	frederic@kernel.org, linux-kernel@vger.kernel.org,
+	lkmm@lists.linux.dev, hernan.poncedeleon@huaweicloud.com
+Subject: Re: [RFC] tools/memory-model: Rule out OOTA
+Message-ID: <efe79e99-b757-4612-9a65-f453d7f857c7@paulmck-laptop>
+Reply-To: paulmck@kernel.org
+References: <9dec7f8d-16c0-4122-bf03-c16bd616ca15@huaweicloud.com>
  <9a0dccbb-bfa7-4b33-ac1a-daa9841b609a@paulmck-laptop>
  <1daba0ea-0dd6-4e67-923e-fd3c1a62b40b@huaweicloud.com>
  <c27c4210-3d20-42af-a1f7-a49d04828a8e@paulmck-laptop>
@@ -52,62 +50,130 @@ References: <a3bf910f-509a-4ad3-a1cc-4b14ef9b3259@rowland.harvard.edu>
  <0c0fcfb7-dbef-426b-ac54-583c85fbba9d@huaweicloud.com>
  <1cea1fcd-827c-455e-93b7-f4d606bf4993@paulmck-laptop>
  <3b3a7c1a-c40f-4a98-b328-bb4327876606@paulmck-laptop>
-From: Jonas Oberhauser <jonas.oberhauser@huaweicloud.com>
-In-Reply-To: <3b3a7c1a-c40f-4a98-b328-bb4327876606@paulmck-laptop>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-CM-TRANSID:GxC2BwDHfeDJXYln_TjAAA--.15156S2
-X-Coremail-Antispam: 1UD129KBjvdXoWrtr15uw15Wr4DXFWxJr4rGrg_yoWkJrc_uF
-	4kCws7Aw1UWr1ag3W5GFs8Gw4xAa98uFy7Cay0qr4jqryjvryUXFZrArWqy3Z7Ka90gw1D
-	Gryavw1rJwnI9jkaLaAFLSUrUUUUjb8apTn2vfkv8UJUUUU8Yxn0WfASr-VFAUDa7-sFnT
-	9fnUUIcSsGvfJTRUUUbskYFVCjjxCrM7AC8VAFwI0_Xr0_Wr1l1xkIjI8I6I8E6xAIw20E
-	Y4v20xvaj40_Wr0E3s1l1IIY67AEw4v_Jr0_Jr4l8cAvFVAK0II2c7xJM28CjxkF64kEwV
-	A0rcxSw2x7M28EF7xvwVC0I7IYx2IY67AKxVWUJVWUCwA2z4x0Y4vE2Ix0cI8IcVCY1x02
-	67AKxVW8JVWxJwA2z4x0Y4vEx4A2jsIE14v26r4j6F4UM28EF7xvwVC2z280aVCY1x0267
-	AKxVW8JVW8Jr1le2I262IYc4CY6c8Ij28IcVAaY2xG8wAqx4xG64xvF2IEw4CE5I8CrVC2
-	j2WlYx0E2Ix0cI8IcVAFwI0_Jr0_Jr4lYx0Ex4A2jsIE14v26r1j6r4UMcvjeVCFs4IE7x
-	kEbVWUJVW8JwACjcxG0xvEwIxGrwACI402YVCY1x02628vn2kIc2xKxwCY1x0262kKe7AK
-	xVW8ZVWrXwCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02F4
-	0E14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_GFv_Wryl
-	Ixkvb40E47kJMIIYrxkI7VAKI48JMIIF0xvE2Ix0cI8IcVAFwI0_Jr0_JF4lIxAIcVC0I7
-	IYx2IY6xkF7I0E14v26r4j6F4UMIIF0xvE42xK8VAvwI8IcIk0rVWUJVWUCwCI42IY6I8E
-	87Iv67AKxVWUJVW8JwCI42IY6I8E87Iv6xkF7I0E14v26r4j6r4UJbIYCTnIWIevJa73Uj
-	IFyTuYvjxU92NtUUUUU
-X-CM-SenderInfo: 5mrqt2oorev25kdx2v3u6k3tpzhluzxrxghudrp/
+ <cbde6574-cf5d-4160-a0fe-46fcafa69eac@huaweicloud.com>
+Precedence: bulk
+X-Mailing-List: lkmm@lists.linux.dev
+List-Id: <lkmm.lists.linux.dev>
+List-Subscribe: <mailto:lkmm+subscribe@lists.linux.dev>
+List-Unsubscribe: <mailto:lkmm+unsubscribe@lists.linux.dev>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <cbde6574-cf5d-4160-a0fe-46fcafa69eac@huaweicloud.com>
 
+On Thu, Jan 16, 2025 at 08:13:28PM +0100, Jonas Oberhauser wrote:
+> Am 1/16/2025 um 7:40 PM schrieb Paul E. McKenney:
+> > On Mon, Jan 13, 2025 at 02:04:58PM -0800, Paul E. McKenney wrote:
+> > > On Fri, Jan 10, 2025 at 05:21:59PM +0100, Jonas Oberhauser wrote:
+> > > > Am 1/10/2025 um 3:54 PM schrieb Paul E. McKenney:
+> > > > > On Thu, Jan 09, 2025 at 07:35:19PM +0100, Jonas Oberhauser wrote:
+> > > > > > Am 1/9/2025 um 6:54 PM schrieb Paul E. McKenney:
+> > > > > > > On Wed, Jan 08, 2025 at 08:17:51PM +0100, Jonas Oberhauser wrote:
+> > 
+> > [ . . . ]
+> > 
+> > > > > > I currently can not come up with an example where there would be a
+> > > > > > (semantic) control dependency from a load to a store that is not in the arm
+> > > > > > of an if statement (or a loop / switch of some form with the branch
+> > > > > > depending on the load).
+> > > > > > 
+> > > > > > I think the control dependency is just a red herring. It is only there to
+> > > > > > avoid the data race.
+> > > > > 
+> > > > > Well, that red herring needs to have a companion fish to swim with in
+> > > > > order to enforce ordering, and I am not seeing that companion.
+> > > > > 
+> > > > > Or am I (yet again!) missing something subtle here?
+> > > > 
+> > > > It makes more sense to think about how people do message passing (or
+> > > > seqlock), which might look something like this:
+> > > > 
+> > > >    [READ_ONCE]
+> > > >    rmb
+> > > >    [plain read]
+> > > > 
+> > > > and
+> > > > 
+> > > >    [plain write]
+> > > >    wmb
+> > > >    [WRITE_ONCE]
+> > > > 
+> > > > 
+> > > > Clearly LKMM says that there is some sort of order (not quite happens-before
+> > > > order though) between the READ_ONCE and the plain read, and between the
+> > > > plain write and the WRITE_ONCE. This order is clearly defined in the data
+> > > > race definition, in r-pre-bounded and w-post-bounded.
+> > > > 
+> > > > Now consider
+> > > > 
+> > > >    [READ_ONCE]
+> > > >    rmb
+> > > >    [plain read]
+> > > >    // some code that creates order between the plain accesses
+> > > >    [plain write]
+> > > >    wmb
+> > > >    [WRITE_ONCE]
+> > > > 
+> > > > where for some specific reason we can discern that the compiler can not
+> > > > fully eliminate/move across the barrier either this specific plain read, nor
+> > > > the plain write, nor the ordering between the two.
+> > > > 
+> > > > In this case, is there order between the READ_ONCE and the WRITE_ONCE, or
+> > > > not? Of course, we know current LKMM says no. I would say that in those very
+> > > > specific cases, we do have ordering.
+> > > 
+> > > Agreed, for LKMM to deal with seqlock, the read-side critical section
+> > > would need to use READ_ONCE(), which is a bit unnatural.  The C++
+> > > standards committee has been discussing this for some time, as that
+> > > memory model also gives data race in that case.
+> > > 
+> > > But it might be better to directly model seqlock than to try to make
+> > > LKMM deal with the underlying atomic operations.
+> > 
+> > Maybe I should give an example approach, perhaps inspiring a better
+> > approach.
+> > 
+> > o	Model reader-writer locks in LKMM, including a relaxed
+> > 	write-lock-held primitive.
+> > 
+> > o	Model sequence locks in terms of reader-writer locks:
+> > 
+> > 	o	The seqlock writer maps to write lock.
+> > 
+> > 	o	The seqlock reader maps to read lock, but with a
+> > 		write-lock-held check.	If the write lock is held at
+> > 		that point, the seqlock tells the caller to retry.
+> > 
+> > 		Please note that the point is simply to exercise
+> > 		the failure path.
+> > 
+> > 	o	If a value is read in the seqlock reader and used
+> > 		across a "you need to retry" indication, that
+> > 		flags a seqlock data race.
+> > 
+> > But is there a better way?
+> > 
+> 
+> You need to be careful with those hb edges. The reader critical section does
+> not have to happen-before the writer critical section, as would with an
+> actual read-write lock.
 
+True, the reader critical section only needs each of its loads to have
+an fr link to all of the stores in the writer critical section.
 
-Am 1/16/2025 um 7:40 PM schrieb Paul E. McKenney:
-> 	o	If a value is read in the seqlock reader and used
-> 		across a "you need to retry" indication, that
-> 		flags a seqlock data race.
+On the other hand, the Linux-kernel implementation of seqcount does use
+smp_rmb() and smp_wmb(), which does provide the message-passing pattern,
+and thus hb, correct?
 
+> I think the solution would have to be along changing the definition of
+> r-post-bounded.
+> The read_enter() function reads from a write_exit() and establishes hb.
+> The read_exit() function also reads from a write_exit(), if the same as the
+> matching read_enter(), then it returns success, otherwise failure.
+> 
+> Reads po-before a successful read_exit() are bounded with regards to
+> subsequent write_enter() on the same lock.
 
-This too is insufficient, you also need to prevent dereferencing or 
-having control dependency inside the seqlock. Otherwise you could 
-derefence a torn pointer and...
+Or are you trying to model the effects of the data races?
 
-At this point your definition of data race becomes pretty much the same 
-as we have.
-
-https://github.com/open-s4c/libvsync/blob/main/vmm/vmm.cat#L150
-
-
-(also this rule should only concern reads that are actually "data-racy" 
-- if the read is synchronized by some other writes, then you can read & 
-use it just fine across the seqlock data race)
-
-I also noticed that in my previous e-mail I had overlooked the reads 
-inside the CS in the failure case, but you are of course right, there 
-needs to be some mechanism to prevent them from being data racy unless 
-abused.
-
-But I am not sure how to formalize that in a way that is simpler than 
-just re-defining data races in general, without adding some special 
-support to herd7 for it.
-
-What do you think?
-
-
-   jonas
-
+							Thanx, Paul

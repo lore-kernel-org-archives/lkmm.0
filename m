@@ -1,47 +1,74 @@
-Received: from frasgout11.his.huawei.com (frasgout11.his.huawei.com [14.137.139.23])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qv1-f47.google.com (mail-qv1-f47.google.com [209.85.219.47])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E077241A1C
-	for <lkmm@lists.linux.dev>; Thu, 16 Jan 2025 20:22:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=14.137.139.23
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B4A11A8F79
+	for <lkmm@lists.linux.dev>; Thu, 16 Jan 2025 23:02:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737058929; cv=none; b=skWullyRoea/owa9GQMXOZtQMh1pocLRHK8Hwi7ONnCWA2VwBcXkyX86qsEW1TEWgOwUWx15ZpMJTQzaKTVQBVxFfFVXrycDos8P8rcOG1Rk1CH+jRZh+oONBZX8sCX9L5YTBwFzVILYSb6X0AeowFcEbU2mrAF3UfWpQvIczoE=
+	t=1737068545; cv=none; b=bqBz1Qr320PL3E2shfSDet6U2C+YMIprKmEF/LXHj0N69VwjUvdSZ3bNvc7Xx4CvwJ8+0DMPYtXJoi/XmOw+/J/7mCeo3bzbLsl8zYWIUD4ouRbvES4TwAwB2z8SOm/gDzlUYS9HkqmYFzZdgFm93aX+K7DWegsfOUw2DRyy8o4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737058929; c=relaxed/simple;
-	bh=rO7jtUpJ8abw8igfm9qDvkqQjbG+7XPcdowO59oEwlg=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=qYcC7meIIwGqh5PWY5xR1ltg6BBXfXTWV8KFsaTz+VwW80V5zDwpSB//BuHjBfkmScPfm5W1ayqEJHJyWtyEYSljSxqV4FgkBN8xEq//1e7w9Y8JOyTrmGsvaH4DMWEmCFSPihXkDFje+ysIlvBh1+y1idPvq9UJzG4XPP1UwCc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=huaweicloud.com; spf=none smtp.mailfrom=huaweicloud.com; arc=none smtp.client-ip=14.137.139.23
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=huaweicloud.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=huaweicloud.com
-Received: from mail.maildlp.com (unknown [172.18.186.51])
-	by frasgout11.his.huawei.com (SkyGuard) with ESMTP id 4YYtxm4Tqqz9v7Vc
-	for <lkmm@lists.linux.dev>; Fri, 17 Jan 2025 03:59:56 +0800 (CST)
-Received: from mail02.huawei.com (unknown [7.182.16.27])
-	by mail.maildlp.com (Postfix) with ESMTP id 5427914039F
-	for <lkmm@lists.linux.dev>; Fri, 17 Jan 2025 04:21:55 +0800 (CST)
-Received: from [10.45.144.192] (unknown [10.45.144.192])
-	by APP2 (Coremail) with SMTP id GxC2BwDnnN9VaolnCcvAAA--.47587S2;
-	Thu, 16 Jan 2025 21:21:54 +0100 (CET)
-Message-ID: <d48e277b-8e5b-471f-98b4-245cb0dede86@huaweicloud.com>
-Date: Thu, 16 Jan 2025 21:21:38 +0100
-Precedence: bulk
-X-Mailing-List: lkmm@lists.linux.dev
-List-Id: <lkmm.lists.linux.dev>
-List-Subscribe: <mailto:lkmm+subscribe@lists.linux.dev>
-List-Unsubscribe: <mailto:lkmm+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
+	s=arc-20240116; t=1737068545; c=relaxed/simple;
+	bh=3/wATh0f8JjnPmGUw1S2OUYR792Z4ImEYMRE/SF+PCk=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=pzO5IX6xoEcF5Nl6uPfW0D7kStIjtkfOVXbey1gGSQcorEbOhCTyajzFRzCU1c4IhQ1WXPnO4P1ZT2rM17yAIw2SGiqQoux86bDs6OGJvpwQer6d+DA+/FKWhL0Hdt9/0BfT7h8yDgM3BI4qCxHUrMkJsDgfYx9adn2yVGwCNkI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=rowland.harvard.edu; spf=fail smtp.mailfrom=g.harvard.edu; dkim=pass (2048-bit key) header.d=rowland.harvard.edu header.i=@rowland.harvard.edu header.b=RT6ajztw; arc=none smtp.client-ip=209.85.219.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=rowland.harvard.edu
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=g.harvard.edu
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=rowland.harvard.edu header.i=@rowland.harvard.edu header.b="RT6ajztw"
+Received: by mail-qv1-f47.google.com with SMTP id 6a1803df08f44-6ddcff5a823so13797716d6.0
+        for <lkmm@lists.linux.dev>; Thu, 16 Jan 2025 15:02:23 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=rowland.harvard.edu; s=google; t=1737068542; x=1737673342; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=qPtN5YCpTGgyKTHJC6P+luqlrUohAKwuhvC0egbSZv0=;
+        b=RT6ajztw+VlPRrejXejoaUfQt3jehaL2thDb+VPBOEpFMrteRvoXBsFo22yvAoefFX
+         hGuzRX5NMI4gL6UVjQP6ZhGoiqzdFd7ys/ntOWz8zqJJ1GI++pKlcMyl+qhLAj0HiqZN
+         xrKSXhzSMSkhwJZeN7YSZqZVw+20Mz3aHg7rcHs+L/oy7ArZQY97OV8BUg+QhdjEWNmR
+         v2B5LwQXHL2cQgYLRQjFmEWCPCiWHLCarvysSTL/0vQDJoNcrUOz8xiy2UMHXey8oUH2
+         nQmE5u/99R4OViJRocaiWFSuMbbYeE29JVxBBdPesvIPsKumvbGhyZfz++FXc2vk/Ltz
+         jj6A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1737068542; x=1737673342;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=qPtN5YCpTGgyKTHJC6P+luqlrUohAKwuhvC0egbSZv0=;
+        b=nz+3CM82KnW8m8PPSR3Zd3HxUbV1ki5DYzkxqvRV+janujTKUp3RRYelyT8OlxZfzc
+         nRBxWNK4yr3voYX+6cr7V6gKIxGWcl3nwlfkyntNFGRQwh3r0EP00HCSU+xq9BA+SX5j
+         4rlWyHUQ7ghf3v7BOSy+FMU8YF++LPf4GF/5zxW41HDUP+Y4S985UInUWNIhvzsqH4kc
+         ZXBrqb26PQp8Iti05gA30wbUjeOhpYKcgbubg/Q+kp+Q/+mlQageqvhG3DVa0WIQUar1
+         /MwgP05ZOsO8aVU9gsTUpXattjoZsVCOCd/fdiohh96+PF6F9LDC1np4S9qVU1PGPRa8
+         GFoA==
+X-Forwarded-Encrypted: i=1; AJvYcCUi/aYbSEjcVNBXwD62C+byzaSR+Tz2z8PmoM3JCuMJRpR3hJr0OIc46VEcMqxXFa+g6Xh7@lists.linux.dev
+X-Gm-Message-State: AOJu0Yxo7PVKcxAwmm26pY1SA6f/tp8LFKtYf0EasycTIaQgRJZoEqQH
+	RCgULS1430W47QHVqQoaJd7havIeEQKz7q09IKIuKsZdiXDeGsWZvuMWg425dQ==
+X-Gm-Gg: ASbGncvkbUuDSZnIX2cUWjlsrN/xw+lvnPB2QMp2Qm2A/ZAf2IudRV0uarWEU8bsnEw
+	LDow6OfktZuPhvY03U7Flc2IL/M00THn0N/87CfA5WYryefpdQeLZcmRjJD7rD23HuMmWQtbNmr
+	SmYuWx7mEp87YpiXknBpKg8kDJ+yKNbXwPmx8d90UZOsEo5EHSD3FvV/+wb4SB25wp5SayvbOLh
+	l+IIzLQ1pIVxKpX6P288+/L5jKedXzu5+1Ep1S/LSnymkWtj/D6SusNiw==
+X-Google-Smtp-Source: AGHT+IGZ++V7sc0bFG9s614g2OtoEML+yUwn1xGTlG2kvc2KM8ON89npnWE+eZ4NgfvbO7v+r4SfoQ==
+X-Received: by 2002:a05:6214:1c8a:b0:6d8:890c:1f08 with SMTP id 6a1803df08f44-6e1b21ba554mr10543816d6.26.1737068542208;
+        Thu, 16 Jan 2025 15:02:22 -0800 (PST)
+Received: from rowland.harvard.edu ([2601:19b:681:fd10::5bb3])
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-6e1afc0f7c3sm5243276d6.28.2025.01.16.15.02.20
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 16 Jan 2025 15:02:21 -0800 (PST)
+Date: Thu, 16 Jan 2025 18:02:18 -0500
+From: Alan Stern <stern@rowland.harvard.edu>
+To: Jonas Oberhauser <jonas.oberhauser@huaweicloud.com>
+Cc: paulmck@kernel.org, parri.andrea@gmail.com, will@kernel.org,
+	peterz@infradead.org, boqun.feng@gmail.com, npiggin@gmail.com,
+	dhowells@redhat.com, j.alglave@ucl.ac.uk, luc.maranget@inria.fr,
+	akiyks@gmail.com, dlustig@nvidia.com, joel@joelfernandes.org,
+	urezki@gmail.com, quic_neeraju@quicinc.com, frederic@kernel.org,
+	linux-kernel@vger.kernel.org, lkmm@lists.linux.dev,
+	hernan.poncedeleon@huaweicloud.com
 Subject: Re: [RFC] tools/memory-model: Rule out OOTA
-To: paulmck@kernel.org
-Cc: Alan Stern <stern@rowland.harvard.edu>, parri.andrea@gmail.com,
- will@kernel.org, peterz@infradead.org, boqun.feng@gmail.com,
- npiggin@gmail.com, dhowells@redhat.com, j.alglave@ucl.ac.uk,
- luc.maranget@inria.fr, akiyks@gmail.com, dlustig@nvidia.com,
- joel@joelfernandes.org, urezki@gmail.com, quic_neeraju@quicinc.com,
- frederic@kernel.org, linux-kernel@vger.kernel.org, lkmm@lists.linux.dev,
- hernan.poncedeleon@huaweicloud.com
-References: <9dec7f8d-16c0-4122-bf03-c16bd616ca15@huaweicloud.com>
+Message-ID: <1668d0b4-4060-4eac-b8b1-46ca0d1dbce9@rowland.harvard.edu>
+References: <68f98254-daf9-4197-a7cb-ef9fca0ef158@paulmck-laptop>
+ <9dec7f8d-16c0-4122-bf03-c16bd616ca15@huaweicloud.com>
  <9a0dccbb-bfa7-4b33-ac1a-daa9841b609a@paulmck-laptop>
  <1daba0ea-0dd6-4e67-923e-fd3c1a62b40b@huaweicloud.com>
  <c27c4210-3d20-42af-a1f7-a49d04828a8e@paulmck-laptop>
@@ -49,189 +76,182 @@ References: <9dec7f8d-16c0-4122-bf03-c16bd616ca15@huaweicloud.com>
  <21ec2b32-69ce-46bf-8d44-06149e71ba6c@paulmck-laptop>
  <0c0fcfb7-dbef-426b-ac54-583c85fbba9d@huaweicloud.com>
  <1cea1fcd-827c-455e-93b7-f4d606bf4993@paulmck-laptop>
- <3b3a7c1a-c40f-4a98-b328-bb4327876606@paulmck-laptop>
- <cbde6574-cf5d-4160-a0fe-46fcafa69eac@huaweicloud.com>
- <efe79e99-b757-4612-9a65-f453d7f857c7@paulmck-laptop>
-From: Jonas Oberhauser <jonas.oberhauser@huaweicloud.com>
-In-Reply-To: <efe79e99-b757-4612-9a65-f453d7f857c7@paulmck-laptop>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-CM-TRANSID:GxC2BwDnnN9VaolnCcvAAA--.47587S2
-X-Coremail-Antispam: 1UD129KBjvJXoW3Ww4DJrW8KrykuFy3JryDtrb_yoWxGF1UpF
-	W5KFWUKr4DJr1fCwn7tw4UJFy0yw18JFy3Xrn8tr4UA3s09F1YkFy3Xr15uFyUCr1Iva1j
-	vrWYy3srAa4DAFJanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
-	9KBjDU0xBIdaVrnRJUUU9Yb4IE77IF4wAFF20E14v26ryj6rWUM7CY07I20VC2zVCF04k2
-	6cxKx2IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4
-	vEj48ve4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Jr0_JF4l84ACjcxK6xIIjxv20xvEc7Cj
-	xVAFwI0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW8JVWxJwA2z4x0Y4vEx4A2jsIEc7CjxV
-	AFwI0_Gr0_Gr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l5I8CrVACY4xI64kE6c02F40E
-	x7xfMcIj6xIIjxv20xvE14v26r1j6r18McIj6I8E87Iv67AKxVWUJVW8JwAm72CE4IkC6x
-	0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lFIxGxcIEc7CjxVA2Y2ka0xkIwI1lc7CjxVAaw2AF
-	wI0_GFv_Wryl42xK82IYc2Ij64vIr41l4I8I3I0E4IkC6x0Yz7v_Jr0_Gr1l4IxYO2xFxV
-	AFwI0_Jrv_JF1lx2IqxVAqx4xG67AKxVWUJVWUGwC20s026x8GjcxK67AKxVWUGVWUWwC2
-	zVAF1VAY17CE14v26r4a6rW5MIIYrxkI7VAKI48JMIIF0xvE2Ix0cI8IcVAFwI0_Jr0_JF
-	4lIxAIcVC0I7IYx2IY6xkF7I0E14v26r4j6F4UMIIF0xvE42xK8VAvwI8IcIk0rVWUJVWU
-	CwCI42IY6I8E87Iv67AKxVWUJVW8JwCI42IY6I8E87Iv6xkF7I0E14v26r4j6r4UJbIYCT
-	nIWIevJa73UjIFyTuYvjxUIa0PDUUUU
-X-CM-SenderInfo: 5mrqt2oorev25kdx2v3u6k3tpzhluzxrxghudrp/
+ <1147ad3e-e3ad-4fa1-9a63-772ba136ea9a@huaweicloud.com>
+Precedence: bulk
+X-Mailing-List: lkmm@lists.linux.dev
+List-Id: <lkmm.lists.linux.dev>
+List-Subscribe: <mailto:lkmm+subscribe@lists.linux.dev>
+List-Unsubscribe: <mailto:lkmm+unsubscribe@lists.linux.dev>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1147ad3e-e3ad-4fa1-9a63-772ba136ea9a@huaweicloud.com>
 
+On Thu, Jan 16, 2025 at 08:08:22PM +0100, Jonas Oberhauser wrote:
+> I'm well aware that an absolute definition of semantic dependencies is not
+> easy to give.
 
+In fact it's undecidable.  No tool is ever going to be able to detect 
+semantic dependencies perfectly.
 
-Am 1/16/2025 um 8:31 PM schrieb Paul E. McKenney:
-> On Thu, Jan 16, 2025 at 08:13:28PM +0100, Jonas Oberhauser wrote:
->> Am 1/16/2025 um 7:40 PM schrieb Paul E. McKenney:
->>> On Mon, Jan 13, 2025 at 02:04:58PM -0800, Paul E. McKenney wrote:
->>>> On Fri, Jan 10, 2025 at 05:21:59PM +0100, Jonas Oberhauser wrote:
->>>>> Am 1/10/2025 um 3:54 PM schrieb Paul E. McKenney:
->>>>>> On Thu, Jan 09, 2025 at 07:35:19PM +0100, Jonas Oberhauser wrote:
->>>>>>> Am 1/9/2025 um 6:54 PM schrieb Paul E. McKenney:
->>>>>>>> On Wed, Jan 08, 2025 at 08:17:51PM +0100, Jonas Oberhauser wrote:
->>>
->>> [ . . . ]
->>>
->>>>>>> I currently can not come up with an example where there would be a
->>>>>>> (semantic) control dependency from a load to a store that is not in the arm
->>>>>>> of an if statement (or a loop / switch of some form with the branch
->>>>>>> depending on the load).
->>>>>>>
->>>>>>> I think the control dependency is just a red herring. It is only there to
->>>>>>> avoid the data race.
->>>>>>
->>>>>> Well, that red herring needs to have a companion fish to swim with in
->>>>>> order to enforce ordering, and I am not seeing that companion.
->>>>>>
->>>>>> Or am I (yet again!) missing something subtle here?
->>>>>
->>>>> It makes more sense to think about how people do message passing (or
->>>>> seqlock), which might look something like this:
->>>>>
->>>>>     [READ_ONCE]
->>>>>     rmb
->>>>>     [plain read]
->>>>>
->>>>> and
->>>>>
->>>>>     [plain write]
->>>>>     wmb
->>>>>     [WRITE_ONCE]
->>>>>
->>>>>
->>>>> Clearly LKMM says that there is some sort of order (not quite happens-before
->>>>> order though) between the READ_ONCE and the plain read, and between the
->>>>> plain write and the WRITE_ONCE. This order is clearly defined in the data
->>>>> race definition, in r-pre-bounded and w-post-bounded.
->>>>>
->>>>> Now consider
->>>>>
->>>>>     [READ_ONCE]
->>>>>     rmb
->>>>>     [plain read]
->>>>>     // some code that creates order between the plain accesses
->>>>>     [plain write]
->>>>>     wmb
->>>>>     [WRITE_ONCE]
->>>>>
->>>>> where for some specific reason we can discern that the compiler can not
->>>>> fully eliminate/move across the barrier either this specific plain read, nor
->>>>> the plain write, nor the ordering between the two.
->>>>>
->>>>> In this case, is there order between the READ_ONCE and the WRITE_ONCE, or
->>>>> not? Of course, we know current LKMM says no. I would say that in those very
->>>>> specific cases, we do have ordering.
->>>>
->>>> Agreed, for LKMM to deal with seqlock, the read-side critical section
->>>> would need to use READ_ONCE(), which is a bit unnatural.  The C++
->>>> standards committee has been discussing this for some time, as that
->>>> memory model also gives data race in that case.
->>>>
->>>> But it might be better to directly model seqlock than to try to make
->>>> LKMM deal with the underlying atomic operations.
->>>
->>> Maybe I should give an example approach, perhaps inspiring a better
->>> approach.
->>>
->>> o	Model reader-writer locks in LKMM, including a relaxed
->>> 	write-lock-held primitive.
->>>
->>> o	Model sequence locks in terms of reader-writer locks:
->>>
->>> 	o	The seqlock writer maps to write lock.
->>>
->>> 	o	The seqlock reader maps to read lock, but with a
->>> 		write-lock-held check.	If the write lock is held at
->>> 		that point, the seqlock tells the caller to retry.
->>>
->>> 		Please note that the point is simply to exercise
->>> 		the failure path.
->>>
->>> 	o	If a value is read in the seqlock reader and used
->>> 		across a "you need to retry" indication, that
->>> 		flags a seqlock data race.
->>>
->>> But is there a better way?
->>>
->>
->> You need to be careful with those hb edges. The reader critical section does
->> not have to happen-before the writer critical section, as would with an
->> actual read-write lock.
+> Btw, I'm re-reading that paper and here are some comments:
+> - I agree with the conclusion that C++ should not try to solve OOTA other
+> than declaring that they do not exist
+> - the definition of OOTA as sdep | rfe is not the right one. You really need
+> sdep ; rfe, because you can have multiple subsequent sdep links that
+> together are not a dependency, e.g.,
 > 
-> True, the reader critical section only needs each of its loads to have
-> an fr link to all of the stores in the writer critical section.
-
-Yes. And importantly, a properly-synchronized fr link!
-Meaning that it does not constitute a data race.
-
-Actually, you only need the proper synchronization, then the fr link 
-follows from the race-coherence axioms.
-
-> On the other hand, the Linux-kernel implementation of seqcount does use
-> smp_rmb() and smp_wmb(), which does provide the message-passing pattern,
-> and thus hb, correct?
-
-Only in one direction, from the last writer CS to the reader CS. But not 
-from the reader CS to the next writer CS :(
-
-The message is passed, but from a data race POV, you are reading 
-something while new data is coming in (from the next write). This 
-fr-race could only be prevented by
-
-    rw-xbstar = fence | *(r-post-bounded ; xbstar ; w-pre-bounded)*
-
-but there is no xbstar :(
-
-Well, one thought is that one could declare xbstar from the read_exit to 
-the write_enter, but just not add any release semantics to read_exit() 
-(like a rw_read_unlock would have). But that sounds really scary because 
-that xbstar definitely does not exist in the implementation, so my 9pm 
-brain is doubtful that this is correct.
-
-
->> I think the solution would have to be along changing the definition of
->> r-post-bounded.
->> The read_enter() function reads from a write_exit() and establishes hb.
->> The read_exit() function also reads from a write_exit(), if the same as the
->> matching read_enter(), then it returns success, otherwise failure.
->>
->> Reads po-before a successful read_exit() are bounded with regards to
->> subsequent write_enter() on the same lock.
+> int * x[] = { &a, &a };
+> int i = b;
+> *x[i] = 1;
 > 
-> Or are you trying to model the effects of the data races?
+> here the semantic address dependency from loading b to loading x[i] and the
+> semantic address dependency from loading x[i] and storing to *x[i] do not
+> together form a semantic dependency anymore, because *x[i] is always a. So
+> this whole code can just become a=1, and with mirrored code you can get
+> a=b=1, which is an sdep | rfe cycle.
 
-No, I had even overlooked the "real data race" in the failure case xP
+We regard sdep as extending from loads (or sets of loads) to stores.  
+(Perhaps the paper doesn't state this explicitly -- it should.)  So an 
+sdep ; sdep sequence is not possible.
 
-I was modelling the properly-synchronized part of the fr, without 
-introducing hb/xbstar from the reader to the next writer - but only for 
-the success case. The failure case also needs some way to avoid the data 
-race (unless it abuses the value). Perhaps by relaxing the definition of 
-data race as we did in VMM, so that the readside CS doesn't become UB 
-until you do something forbidden with the value.
+Nevertheless, it's arguable that in your example there is no semantic 
+dependency from the load of b to the load of x[i].  Given the code 
+shown, a compiler could replace the load of x[i] with the constant value 
+&a, yielding simply *(&a) = 1.
 
-My suggestion for avoiding the data race in success was to extend the 
-notion of rw-xbstar above in some way that provides the necessary 
-protection, e.g. by drawing an "r-post-bounded"-like edge to the 
-write_enter(), which would then "w-pre-bound" (or something similar) the 
-write-side CS.
+There are other examples which do make the point, however.  For example:
 
-Have fun,
-   jonas
+int a = 1, b = 1, c = 2;
+int *x[] = {&a, &b, &c};
 
+int r1 = i;
+if (r1 > 1)
+	r1 = 1;
+int *r2 = x[r1];
+int r3 = *r2;
+q = r3;
+
+Here there is a semantic dependency (if you accept dependencies to 
+loads) from the load of i to the load of x[r1] and from the load of *r2 
+to the store to q.  But overall the value stored to q is always 1, so it 
+doesn't depend on the load from i.
+
+> - I did not like the phrasing that a dependency is a function of one
+> execution, especially in contrast to source code. For a fixed execution,
+> there are no dependencies because all values are fixed. It is the other
+> executions - where you could have read another value - that create the
+> dependencies.
+> 
+> Perhaps it is better to say that it is not a *local* function of source
+> code, i.e., just because the same source code has a dependency in context C
+> does not mean that it has a dependency in context C'.
+
+Of course, what we meant is that whether or not there is a semantic 
+dependency depends on both the source code and the execution.
+
+> In fact I would say a major gotcha of dependencies is that they are not a
+> function of even the set of all permissible (according to the standard)
+> executions.
+> That is because the compiler does not have to make every permissible
+> execution possible, only at least one.
+
+The paper includes examples of this, I believe.
+
+> If the compiler knows that among all executions that it actually makes
+> possible, some value is always 0 - even if there is a permissible execution
+> in which it is not 0 - it can still replace that value with 0. E.g.
+> 
+>   T1 { x = 1; x = 0; }
+>   T2 { T[x] = 1; }
+> 
+>    ~~ merge -- makes executions where T[x] reads x==1 impossible ~>
+> 
+>   T1' { x = 1; x = 0; T[x] = 1; }
+> 
+>    ~~ replace ~>
+> 
+>   T1' { x = 1; x = 0; T[0] = 1; // no more dependency :( }
+> 
+> which defeats any semantic dependency definition that is a function of a
+> single execution.
+
+Our wording could be improved.  We simply want to make the point that 
+the same source code may have a semantic dependency in one execution but 
+not in another.  I guess we should avoid calling it a "function" of the 
+execution, to avoid implying that the execution alone is what matters.
+
+> Of course you avoid this by making it really a function of the compiler +
+> program *and* the execution, and looking at all the other possible (not just
+> permissible) executions.
+> 
+> - On the one hand, that definition makes a lot of sense. On the other hand,
+> at least without the atomics=volatile restriction it would have the downside
+> that a compiler which generates just a single execution for your program can
+> say that there are no dependencies whatsoever and generate all kinds of "out
+> of thin air" behaviors.
+
+That is so.  But a compiler which examines only a single thread at a 
+time cannot afford to generate just a single execution, because it 
+cannot know what values the loads will obtain when the full program 
+runs.
+
+> I am not sure if that gets really resolved by the volatile restrictions you
+> put, but either way those seem far stronger than what one would want.
+
+It does get resolved, because treating atomics as volatile also means 
+that the compiler cannot afford to generate just a single execution.  
+Again, because it cannot know what values the loads will obtain at 
+runtime, since volatile loads can yield any value in a non-benign 
+environment.
+
+> I would say that the approach with volatile is overzealous because it tries
+> to create a "local" order solution to the problem that only requires a
+> "global" ordering solution. Since not every semantic dependency needs to
+> provide order in C++ -- only the cycle of dependencies -- it is totally ok
+> to add too many semantic dependency edges to a program, even those that are
+> not going to be exactly maintained by every compiler, as long as we can
+> ensure that globally, no dependency cycle occurs.
+
+But then how would you characterize semantic dependencies, if you want 
+to allow the definition to include some dependencies that aren't 
+semantic but not so many that you ever create a cycle?  This sounds like 
+an even worse problem than we started with!
+
+> So for example, if we merge  x = y || y = x,  the merge can turn it into
+> x=y=x or y=x=y (and then into an empty program), but not into a cyclic
+> dependency. So even though one side of the dependency may be violated, for
+> sake of OOTA, we could still label both sides as dependent.
+
+They _are_ both semantically dependent (in the original parallel 
+version, I mean).  I don't see what merging has to do with it.
+
+> For LKMM the problem is of course much easier because you have volatiles and
+> compiler barriers. Again you could maybe add incorrect semantic dependencies
+> between accesses, as long as only the really preserved ones will imply
+> ordering.
+
+I'm not particularly concerned about OOTA or semantic dependencies in 
+LKMM.
+
+> So I'm not convinced that for either of the two cases you need to do a
+> compiler-specific definition of dependencies.
+
+For the C++ case, I cannot think of any other way to approach the 
+problem.  Nor do I see anything wrong with a compiler-specific 
+definition, given how nebulous the whole idea is in the first place.
+
+> BTW, for what it's worth, Dat3M in a sense uses the clang dependencies - it
+> first allows the compiler to do its optimizations, and then verifies the
+> llvm-ir (with a more hardware-like dependency definition).
+
+What do you mean by "verifies"?  What property of the llvm-ir does it 
+verify?
+
+> I think something like that can be a good practical solution with fewer
+> problems than other attempts to approximate the solution.
+
+I do not like the idea of tying the definition of OOTA (which needs to 
+apply to every implementation) to a particular clang compiler.
+
+Alan

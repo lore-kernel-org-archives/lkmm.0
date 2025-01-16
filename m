@@ -1,34 +1,34 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3DB71D61A5;
-	Mon, 13 Jan 2025 22:04:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66E774414;
+	Thu, 16 Jan 2025 18:40:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736805899; cv=none; b=HVCyxd6ue60yd8E7mX/Osvto3u4hz8HbPVm+j4AkOhP+loTR2TqcPgURp79mSJBmsSZGPAFH78ivdVzNdQybRVA6hXSSRgoiaTbjyPXwH0dht/BH7OZhNiKf95fuFshpRRVySVB88TisL9W60Y61DtluVkw48+5RO8AN8Y2Rv40=
+	t=1737052859; cv=none; b=LCxN5ED0ncKZozURGF8b/aPjaNu8Nh8fPXKMNYLtIJ88WfaE45MEmIAE4JSFQrh5FkDYsJYS7oPEgBQjGvNFFSkSCgx1TgTQ4fyXrzWiguNGxVNZE3MoGRO04v8tC5Zz9kdC09AbN2yYVGzWT80VY2Les68nUBqOYy/DgmGrVl0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736805899; c=relaxed/simple;
-	bh=zfohkV2FJxwJTsons2iwungXEd4dld/AshaURc2DHaM=;
+	s=arc-20240116; t=1737052859; c=relaxed/simple;
+	bh=5713RVo45+IuPfGoPYDj1BYw/5U/COl46vfTvxvhFI4=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=gjzx/eCRYEwDCrz2cwDkO6kFP4VVXURV88q6QkFO7WaNSiHBGfljE0QzVh7lg+j81zzhyQtnEWeTGgiDww94oCvpoph187FXO++tdmuaQ7wkV06C0Ayb4wKuVoCxKH2/WwvsBTGZRXceujE0exQA1OAfUNZvSAfvrLNoXs99jO8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YEvgd4TY; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type:Content-Disposition:In-Reply-To; b=RlNeJbiaGauFZn7DjsLgc+3Qm07UgSx6R6L8V2txp9S+cqJmjoFsJLu7MTYeoBd7P+mGqbrqpawlxloOj+bh4i5+KaBlGy/PmUOvbd9qggw68nw6HTq+ti07caOM/erlKDVBFSj6J5U1j3+Q+I8ltOaSnl0WCKq1/jJYwwJl5i8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=L2YJ5a2Y; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="YEvgd4TY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B3F3C4CED6;
-	Mon, 13 Jan 2025 22:04:58 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="L2YJ5a2Y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C46D1C4CED6;
+	Thu, 16 Jan 2025 18:40:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1736805898;
-	bh=zfohkV2FJxwJTsons2iwungXEd4dld/AshaURc2DHaM=;
+	s=k20201202; t=1737052858;
+	bh=5713RVo45+IuPfGoPYDj1BYw/5U/COl46vfTvxvhFI4=;
 	h=Date:From:To:Cc:Subject:Reply-To:References:In-Reply-To:From;
-	b=YEvgd4TY/YNwxCK1mOfp/pQDdBfP0qsAjtGaoadcqowFjekDVB55e1IsGjhz7+WZE
-	 OmBRzHGPNPpN+4A36AEItIAD6GUxCnk49D7vFq9Tcrx6NFpL7exjwgKR0SzGSTgSZW
-	 UTXxijfc6UJ29QvhxD9Z0G/Ck+oQN8SeTg+CQ2LGcG9pJdHQUC4505atWbGScR1fo2
-	 /2keAaLRo1N9v5+7606kt/FNvpQNfE7aJG6W+JaY+8oMp6vZ2UwCYdFkj/aevvcHRE
-	 0ntgkhRopWjUmki5F1+X1hR9glQPAQQoplDgLviMPcZWpFwWxvsWfDxUtxVr3qgm8z
-	 sCPY9b3+z7VfQ==
+	b=L2YJ5a2YTIM4Hs0EoetjT2cwQAFakdunSI3xn/7qxDmFRBddCQO1+WUYxJhPeYdgX
+	 riDX3fMU3YTTGeZNF882kIW3f/exm/nDOYRfZIi7NNAIAVX17dK2INF5VbFZBDYVVP
+	 B3oAyWnT26MoDA09TbVcUhuEuc+mnNBH38Pcb4tVk41r+iDtePzjB6Oi4hft8jUAfR
+	 /Dl3ug5sESGSYQfv77L50p9WBAZXaaDbiuB/dc4aLOalHw0houNLN9BLLLoJjqwm+h
+	 zdWDYpxr4iZpP2fC0UDPNmD7oBvq3P+bwK/3R8TygSmrpBptAvLpl4SYQo/Wyc+lTJ
+	 h+fSwTS3tivGQ==
 Received: by paulmck-ThinkPad-P17-Gen-1.home (Postfix, from userid 1000)
-	id 0E149CE0F13; Mon, 13 Jan 2025 14:04:58 -0800 (PST)
-Date: Mon, 13 Jan 2025 14:04:58 -0800
+	id 6D909CE37B1; Thu, 16 Jan 2025 10:40:58 -0800 (PST)
+Date: Thu, 16 Jan 2025 10:40:58 -0800
 From: "Paul E. McKenney" <paulmck@kernel.org>
 To: Jonas Oberhauser <jonas.oberhauser@huaweicloud.com>
 Cc: Alan Stern <stern@rowland.harvard.edu>, parri.andrea@gmail.com,
@@ -39,10 +39,9 @@ Cc: Alan Stern <stern@rowland.harvard.edu>, parri.andrea@gmail.com,
 	frederic@kernel.org, linux-kernel@vger.kernel.org,
 	lkmm@lists.linux.dev, hernan.poncedeleon@huaweicloud.com
 Subject: Re: [RFC] tools/memory-model: Rule out OOTA
-Message-ID: <1cea1fcd-827c-455e-93b7-f4d606bf4993@paulmck-laptop>
+Message-ID: <3b3a7c1a-c40f-4a98-b328-bb4327876606@paulmck-laptop>
 Reply-To: paulmck@kernel.org
-References: <20250106214003.504664-1-jonas.oberhauser@huaweicloud.com>
- <a3bf910f-509a-4ad3-a1cc-4b14ef9b3259@rowland.harvard.edu>
+References: <a3bf910f-509a-4ad3-a1cc-4b14ef9b3259@rowland.harvard.edu>
  <68f98254-daf9-4197-a7cb-ef9fca0ef158@paulmck-laptop>
  <9dec7f8d-16c0-4122-bf03-c16bd616ca15@huaweicloud.com>
  <9a0dccbb-bfa7-4b33-ac1a-daa9841b609a@paulmck-laptop>
@@ -51,6 +50,7 @@ References: <20250106214003.504664-1-jonas.oberhauser@huaweicloud.com>
  <cda52bac-1c59-4c56-b5e2-937f2008a768@huaweicloud.com>
  <21ec2b32-69ce-46bf-8d44-06149e71ba6c@paulmck-laptop>
  <0c0fcfb7-dbef-426b-ac54-583c85fbba9d@huaweicloud.com>
+ <1cea1fcd-827c-455e-93b7-f4d606bf4993@paulmck-laptop>
 Precedence: bulk
 X-Mailing-List: lkmm@lists.linux.dev
 List-Id: <lkmm.lists.linux.dev>
@@ -59,309 +59,96 @@ List-Unsubscribe: <mailto:lkmm+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <0c0fcfb7-dbef-426b-ac54-583c85fbba9d@huaweicloud.com>
+In-Reply-To: <1cea1fcd-827c-455e-93b7-f4d606bf4993@paulmck-laptop>
 
-On Fri, Jan 10, 2025 at 05:21:59PM +0100, Jonas Oberhauser wrote:
-> 
-> 
-> Am 1/10/2025 um 3:54 PM schrieb Paul E. McKenney:
-> > On Thu, Jan 09, 2025 at 07:35:19PM +0100, Jonas Oberhauser wrote:
-> > > Am 1/9/2025 um 6:54 PM schrieb Paul E. McKenney:
-> > > > On Wed, Jan 08, 2025 at 08:17:51PM +0100, Jonas Oberhauser wrote:
-> > > > > 
-> > > > > 
-> > > > > Am 1/8/2025 um 7:09 PM schrieb Paul E. McKenney:
-> > > > > > If I change the two plain assignments to use WRITE_ONCE() as required
-> > > > > > by memory-barriers.txt, OOTA is avoided:
-> > > > > 
-> > > > > 
-> > > > > I think this direction of inquiry is a bit misleading. There need not be any
-> > > > > speculative store at all:
-> > > > > 
-> > > > > 
-> > > > > 
-> > > > > P0(int *a, int *b, int *x, int *y) {
-> > > > > 	int r1;
-> > > > > 	int r2 = 0;
-> > > > > 	r1 = READ_ONCE(*x);
-> > > > > 	smp_rmb();
-> > > > > 	if (r1 == 1) {
-> > > > > 		r2 = *b;
-> > > > > 	}
-> > > > > 	WRITE_ONCE(*a, r2);
-> > > > > 	smp_wmb();
-> > > > > 	WRITE_ONCE(*y, 1);
-> > > > > }
-> > > > > 
-> > > > > P1(int *a, int *b, int *x, int *y) {
-> > > > > 	int r1;
-> > > > > 
-> > > > > 	int r2 = 0;
-> > > > > 
-> > > > > 	r1 = READ_ONCE(*y);
-> > > > > 	smp_rmb();
-> > > > > 	if (r1 == 1) {
-> > > > > 		r2 = *a;
-> > > > > 	}
-> > > > > 	WRITE_ONCE(*b, r2);
-> > > > > 	smp_wmb();
-> > > > > 	WRITE_ONCE(*x, 1);
-> > > > > }
-> > > > > 
-> > > > > 
-> > > > If we want to respect something containing a control dependency to a
-> > > > WRITE_ONCE() not in the body of the "if" statement, we need to make some
-> > > > change to memory-barriers.txt.
+On Mon, Jan 13, 2025 at 02:04:58PM -0800, Paul E. McKenney wrote:
+> On Fri, Jan 10, 2025 at 05:21:59PM +0100, Jonas Oberhauser wrote:
+> > Am 1/10/2025 um 3:54 PM schrieb Paul E. McKenney:
+> > > On Thu, Jan 09, 2025 at 07:35:19PM +0100, Jonas Oberhauser wrote:
+> > > > Am 1/9/2025 um 6:54 PM schrieb Paul E. McKenney:
+> > > > > On Wed, Jan 08, 2025 at 08:17:51PM +0100, Jonas Oberhauser wrote:
+
+[ . . . ]
+
+> > > > I currently can not come up with an example where there would be a
+> > > > (semantic) control dependency from a load to a store that is not in the arm
+> > > > of an if statement (or a loop / switch of some form with the branch
+> > > > depending on the load).
+> > > > 
+> > > > I think the control dependency is just a red herring. It is only there to
+> > > > avoid the data race.
 > > > 
-> > > I'm not sure what you denotate by *this* in "if we change this", but just to
-> > > clarify, I am not thinking of claiming that there were a (semantic) control
-> > > dependency to WRITE_ONCE(*b, r2) in this example.
+> > > Well, that red herring needs to have a companion fish to swim with in
+> > > order to enforce ordering, and I am not seeing that companion.
 > > > 
-> > > There is however a data dependency from r2 = *a to WRITE_ONCE, and I would
-> > > say that there is a semantic data (not control) dependency from r1 =
-> > > READ_ONCE(*y) to WRITE_ONCE(*b, r2), too: depending on the value read from
-> > > *y, the value stored to *b will be different. The latter would be enough to
-> > > avoid OOTA according to the mainline LKMM, but currently this semantic
-> > > dependency is not detected by herd7.
+> > > Or am I (yet again!) missing something subtle here?
 > > 
-> > According to LKMM, address and data dependencies must be headed by
-> > rcu_dereference() or similar.  See Documentation/RCU/rcu_dereference.rst.
+> > It makes more sense to think about how people do message passing (or
+> > seqlock), which might look something like this:
 > > 
-> > Therefore, there is nothing to chain the control dependency with.
-> 
-> Note that herd7 does generate dependencies. And speaking informally, there
-> clearly is a semantic dependency.
-> 
-> Both the original formalization of LKMM and my patch do say that a plain
-> load at the head of a dependency chain does not provide any dependency
-> ordering, i.e.,
-> 
->   [Plain & R] ; dep
-> 
-> is never part of hb, both in LKMM and in my patch.
-
-Agreed, LKMM does filter the underlying herd7 dependencies.
-
-> By the way, if your concern is the dependency *starting* from the plain
-> load, then we can look at examples where the dependency starts from a marked
-> load:
-> 
-> 
->   r1 = READ_ONCE(*x);
->   smp_rmb();
->   if (r1 == 1) {
->     r2 = READ_ONCE(*a);
->   }
->   *b = 1;
->   smp_wmb();
->   WRITE_ONCE(*y,1);
-> 
-> This is more or less analogous to the case of the addr ; [Plain] ; wmb case
-> you already have.
-
-This is probably a failure of imagination on my part, but I am not
-seeing how to create another thread that interacts with that store to
-"b" without resulting in a data race.
-
-Ignoring that, I am not seeing much in the way of LKMM dependencies
-in that code.
-
-> > > I currently can not come up with an example where there would be a
-> > > (semantic) control dependency from a load to a store that is not in the arm
-> > > of an if statement (or a loop / switch of some form with the branch
-> > > depending on the load).
-> > > 
-> > > I think the control dependency is just a red herring. It is only there to
-> > > avoid the data race.
+> >   [READ_ONCE]
+> >   rmb
+> >   [plain read]
 > > 
-> > Well, that red herring needs to have a companion fish to swim with in
-> > order to enforce ordering, and I am not seeing that companion.
+> > and
 > > 
-> > Or am I (yet again!) missing something subtle here?
-> 
-> It makes more sense to think about how people do message passing (or
-> seqlock), which might look something like this:
-> 
->   [READ_ONCE]
->   rmb
->   [plain read]
-> 
-> and
-> 
->   [plain write]
->   wmb
->   [WRITE_ONCE]
-> 
-> 
-> Clearly LKMM says that there is some sort of order (not quite happens-before
-> order though) between the READ_ONCE and the plain read, and between the
-> plain write and the WRITE_ONCE. This order is clearly defined in the data
-> race definition, in r-pre-bounded and w-post-bounded.
-> 
-> Now consider
-> 
->   [READ_ONCE]
->   rmb
->   [plain read]
->   // some code that creates order between the plain accesses
->   [plain write]
->   wmb
->   [WRITE_ONCE]
-> 
-> where for some specific reason we can discern that the compiler can not
-> fully eliminate/move across the barrier either this specific plain read, nor
-> the plain write, nor the ordering between the two.
-> 
-> In this case, is there order between the READ_ONCE and the WRITE_ONCE, or
-> not? Of course, we know current LKMM says no. I would say that in those very
-> specific cases, we do have ordering.
-
-Agreed, for LKMM to deal with seqlock, the read-side critical section
-would need to use READ_ONCE(), which is a bit unnatural.  The C++
-standards committee has been discussing this for some time, as that
-memory model also gives data race in that case.
-
-But it might be better to directly model seqlock than to try to make
-LKMM deal with the underlying atomic operations.
-
-> > > In a hypothetical LKMM where reading in a race is not a data race unless the
-> > > data is used (*1), this would also work:
+> >   [plain write]
+> >   wmb
+> >   [WRITE_ONCE]
 > > 
-> > You lost me on the "(*1)", which might mean that I am misunderstanding
-> > your text and examples below.
-> 
-> This was meant to be a footnote :D
-
-My first thought was indirecting through a value-1 pointer without the
-needed casts.  ;-)
-
-> > >   	unsigned int r1;
-> > >   	unsigned int r2 = 0;
-> > >   	r1 = READ_ONCE(*x);
-> > >   	smp_rmb();
-> > >   	r2 = *b;
 > > 
-> > This load from *b does not head any sort of dependency per LKMM, as noted
-> > in rcu_dereference.rst.  As that document states, there are too many games
-> > that compilers are permitted to play with plain C-language loads.
+> > Clearly LKMM says that there is some sort of order (not quite happens-before
+> > order though) between the READ_ONCE and the plain read, and between the
+> > plain write and the WRITE_ONCE. This order is clearly defined in the data
+> > race definition, in r-pre-bounded and w-post-bounded.
 > > 
-> > >   	WRITE_ONCE(*a, (~r1 + 1) & r2);
-> > >   	smp_wmb();
-> > >   	WRITE_ONCE(*y, 1);
-> > > 
-> > > 
-> > > Here in case r1 == 0, the value of r2 is not used, so there is a race but
-> > > there would not be data race in the hypothetical LKMM.
+> > Now consider
 > > 
-> > That plain C-language load from b, if concurrent with any sort of store to
-> > b, really is a data race. Sure, a compiler that can prove that r1==0 at
-> > the WRITE_ONCE() to a might optimize that load away, but the C-language
-> > definition of data race still applies.
+> >   [READ_ONCE]
+> >   rmb
+> >   [plain read]
+> >   // some code that creates order between the plain accesses
+> >   [plain write]
+> >   wmb
+> >   [WRITE_ONCE]
+> > 
+> > where for some specific reason we can discern that the compiler can not
+> > fully eliminate/move across the barrier either this specific plain read, nor
+> > the plain write, nor the ordering between the two.
+> > 
+> > In this case, is there order between the READ_ONCE and the WRITE_ONCE, or
+> > not? Of course, we know current LKMM says no. I would say that in those very
+> > specific cases, we do have ordering.
 > 
-> It is a data race according to C, but so are all races on WRITE_ONCE and
-> READ_ONCE, so we already do not actually care what C says.
-
-The situation with WRITE_ONCE() and READ_ONCE() is debatable.
-The volatile accesses are defined more by folklore than standardese,
-and they do seriously constrain the compiler.  Which is why many people
-don't like volatile much.
-
-> What we care about is what the compiler says (and does).
+> Agreed, for LKMM to deal with seqlock, the read-side critical section
+> would need to use READ_ONCE(), which is a bit unnatural.  The C++
+> standards committee has been discussing this for some time, as that
+> memory model also gives data race in that case.
 > 
-> The reality is that no matter what kind of crazy optimizations the compiler
-> does to the load and to the concurrent store, all that would happen is that
-> the load "returns" some insane value. But that insane value is not used by
-> the remainder of the computation.
+> But it might be better to directly model seqlock than to try to make
+> LKMM deal with the underlying atomic operations.
 
-Yes, but only as long as your properly constrain what the code in that
-read-side critical section is permitted to do.
+Maybe I should give an example approach, perhaps inspiring a better
+approach.
 
-> I think the right way to think about it is that a race between a read and a
-> write gives the read an indeterminate value, and a race between two writes
-> produces undefined behavior. I vaguely recall that this is even guaranteed
-> by LLVM.
-> 
-> That is why sequence locks work, after all. In our internal memory model we
-> have relaxed the definition accordingly and there are a bunch of internally
-> used datastructures that can only be verified because of the relaxation.
+o	Model reader-writer locks in LKMM, including a relaxed
+	write-lock-held primitive.
 
-Again, it is likely best to model sequence locking directly.
+o	Model sequence locks in terms of reader-writer locks:
 
-> > I am currently not at all comfortable with the thought of allowing
-> > plain C-language loads to head any sort of dependency.  I really did put
-> > that restriction into both memory-barriers.txt and rcu_dereference.rst
-> > intentionally.  There is the old saying "Discipline = freedom", and
-> > therefore compilers' lack of discipline surrounding plain C-language
-> > loads implies a lack of freedom.  ;-)
-> 
-> Yes, I understand your concern (or more generally, the concern of letting
-> plain accesses play a role in ordering).
-> Obviously, allowing arbitrary plain loads to invoke some kind of ordering
-> because of a dependency is plain (heh) wrong.
-> There are two kinds of potential problems:
->  - the load or its dependent store may not exist in that location at all
->  - the dependency may not really exist
-> 
-> The second case is a problem also with marked accesses, and should be
-> handled by herd7 only giving us actual semantic dependencies (whatever those
-> are). It can not be solved in cat. Either way it is a limitation that herd7
-> (and also other tools) currently has and we already live with.
+	o	The seqlock writer maps to write lock.
 
-This is easy to say.  Please see this paper (which Alan also referred to)
-for some of the challenges:
+	o	The seqlock reader maps to read lock, but with a
+		write-lock-held check.	If the write lock is held at
+		that point, the seqlock tells the caller to retry.
 
-https://www.open-std.org/jtc1/sc22/wg21/docs/papers/2024/p3064r2.pdf
+		Please note that the point is simply to exercise
+		the failure path.
 
-Mark Batty and his group have identified more gotchas.  (See the citation
-in the above paper.)
+	o	If a value is read in the seqlock reader and used
+		across a "you need to retry" indication, that
+		flags a seqlock data race.
 
-> So the new problem we deal with is to somehow restrict the rule to loads and
-> dependent stores that the compiler for whatever reason will not fully
-> eliminate.
-> 
-> This problem too can not be solved completely inside cat. We can give an
-> approximation, as discussed with Alan (stating that a store would not be
-> elided if it is read by another thread, and a read would not be elided if it
-> reads from another thread and a store that won't be elided depends on it).
-> 
-> This approximation is also limited, e.g., if the addresses of the plain
-> loads and stores have not yet escaped the function, but at least this
-> scenario is currently impossible in herd7 (unlike the fake dependency
-> scenario).
-> 
-> In my mind it would again be better to offload the correct selection of
-> "compiler-un(re)movable plain loads and stores" to the tools. That may again
-> not solve the problem fully, but it at least would mean that any changes to
-> address the imprecision wouldn't need to go through the kernel tree, and
-> IMHO it is easier to say LKMM in the cat files is the model, and the
-> interpretation of the model has some limitations.
-
-Which we currently do via marked accesses.  ;-)
-
-> > We should decide which of these examples should be
-> > added to the github litmus archive, perhaps to illustrate the fact that
-> > plain C-language loads do not head dependency chains.  Thoughts?
-> 
-> I'm not sure that is a good idea, given that running the herd7 tool on the
-> litmus test will clearly show a dependency chain headed by plain loads in
-> the visual graphs (with `doshow rwdep`).
-> 
-> Maybe it makes more sense to say in the docs that they may head syntactic or
-> semantic dependency chains, but because of the common case that the compiler
-> may cruelly optimize things, LKMM does not guarantee ordering based on the
-> dependency chains headed by plain loads. That would be consistent with the
-> tooling.
-
-Well, LKMM and herd7 have different notions of what constitutes a
-dependency, and the LKMM notion is most relevant here.  (And herd7
-needs its broader definition so as to handle a wide variety of
-memory models.)
-
-> > [1] https://people.kernel.org/paulmck/hunting-a-tree03-heisenbug
-> 
-> Fun. Thanks :) Duplication and Devious both start with D.
-
-In reference to the performance and scalability consequences of
-eliminating that duplication, so does Devine!  ;-)
+But is there a better way?
 
 						Thanx, Paul

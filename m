@@ -1,30 +1,30 @@
-Received: from frasgout12.his.huawei.com (frasgout12.his.huawei.com [14.137.139.154])
+Received: from frasgout11.his.huawei.com (frasgout11.his.huawei.com [14.137.139.23])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3BB146BF
-	for <lkmm@lists.linux.dev>; Fri, 17 Jan 2025 11:29:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=14.137.139.154
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E0291FE472
+	for <lkmm@lists.linux.dev>; Fri, 17 Jan 2025 12:08:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=14.137.139.23
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737113397; cv=none; b=ilFEZVUB2K1dXYyJygiVcRDfVJi+QjU3rMeqMkanHPZZOrF8cQCfOstZUxSaITkZNf3gimQqEHuHJu0CAWzH5wq1duQXR1SBiuvAhrXHBub93xzmy6YGAwHIPWh+YgRzPhv3LXzq0G6NbnDbuxQRcMmKxaX0rNxEudFQxFozpCE=
+	t=1737115737; cv=none; b=CXwEW4qdak/O4LnLLwF8t3182ye2Ze78NZr399kwtahG6AtAr0EnhextexBTYVm7E17u47fU+WBRsUoNl3hpXXORAMc1mMAq6LF5h3VAPiK8iuCJC/UEFVLIIiaeB6ZicXcbuGZPWN3VJhlEjdY9EqDIYWYxGUVMw8gF0czLafU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737113397; c=relaxed/simple;
-	bh=A0mAw7vLqBQxFQtmb9cl4zPOikZy7iqTMgRcfOMHxdM=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=alJ06+kF2X0zUwE8Ga/JGMRBUvvURL2WgugBeJIBIOBSdNNWHGsKMcDbdpH519Gow4SvuhdOfL62qbQT5xJfrBbMJO1qoIOcT92XNLjGBJWETMSlC1fXxWD5PI8cQ2s3VQ9PpLaQ81qCcdOhb6nnEnuILo/qAcqJeRyasATHVQs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=huaweicloud.com; spf=pass smtp.mailfrom=huaweicloud.com; arc=none smtp.client-ip=14.137.139.154
+	s=arc-20240116; t=1737115737; c=relaxed/simple;
+	bh=2+bCuZKwX/q2Bbf7ckEzqlT5XsCI7CqsuFbzazvjpD0=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=MoUgq45/t8bgn+fFPuL0zZQ7iiPxDm/GJHu7kGmnYcWBBy8Jo8vt7ua7yTPhnYBAtpCPx68rkLFjDAxnfH5vKCoCILu8sCAekvMY9It9I1pC23ECG1d14/MCK89AXPywjOPqNVoRrBondrQ4fZgvjN5pVAekgrEF/WbOmWvKv+Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=huaweicloud.com; spf=pass smtp.mailfrom=huaweicloud.com; arc=none smtp.client-ip=14.137.139.23
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=huaweicloud.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huaweicloud.com
-Received: from mail.maildlp.com (unknown [172.18.186.51])
-	by frasgout12.his.huawei.com (SkyGuard) with ESMTP id 4YZGxN6vbLz9v7JN
-	for <lkmm@lists.linux.dev>; Fri, 17 Jan 2025 19:00:56 +0800 (CST)
-Received: from mail02.huawei.com (unknown [7.182.16.47])
-	by mail.maildlp.com (Postfix) with ESMTP id A7D91140123
-	for <lkmm@lists.linux.dev>; Fri, 17 Jan 2025 19:29:50 +0800 (CST)
+Received: from mail.maildlp.com (unknown [172.18.186.29])
+	by frasgout11.his.huawei.com (SkyGuard) with ESMTP id 4YZHy83FH1z9v7Vd
+	for <lkmm@lists.linux.dev>; Fri, 17 Jan 2025 19:46:40 +0800 (CST)
+Received: from mail02.huawei.com (unknown [7.182.16.27])
+	by mail.maildlp.com (Postfix) with ESMTP id 80D031402DB
+	for <lkmm@lists.linux.dev>; Fri, 17 Jan 2025 20:08:42 +0800 (CST)
 Received: from [10.81.204.96] (unknown [10.81.204.96])
-	by APP1 (Coremail) with SMTP id LxC2BwCnekkhP4pnsHvLAA--.52966S2;
-	Fri, 17 Jan 2025 12:29:50 +0100 (CET)
-Message-ID: <e35c40e9-ccc8-43e9-a676-1ea8dd925718@huaweicloud.com>
-Date: Fri, 17 Jan 2025 12:29:34 +0100
+	by APP2 (Coremail) with SMTP id GxC2BwCH7+E8SIpnNtvKAA--.36516S2;
+	Fri, 17 Jan 2025 13:08:41 +0100 (CET)
+Message-ID: <31472b1b-e466-469f-be29-05bba2a3ef52@huaweicloud.com>
+Date: Fri, 17 Jan 2025 13:08:25 +0100
 Precedence: bulk
 X-Mailing-List: lkmm@lists.linux.dev
 List-Id: <lkmm.lists.linux.dev>
@@ -32,17 +32,17 @@ List-Subscribe: <mailto:lkmm+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:lkmm+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
+From: Jonas Oberhauser <jonas.oberhauser@huaweicloud.com>
 Subject: Re: [RFC] tools/memory-model: Rule out OOTA
-To: Alan Stern <stern@rowland.harvard.edu>
-Cc: paulmck@kernel.org, parri.andrea@gmail.com, will@kernel.org,
- peterz@infradead.org, boqun.feng@gmail.com, npiggin@gmail.com,
- dhowells@redhat.com, j.alglave@ucl.ac.uk, luc.maranget@inria.fr,
- akiyks@gmail.com, dlustig@nvidia.com, joel@joelfernandes.org,
- urezki@gmail.com, quic_neeraju@quicinc.com, frederic@kernel.org,
- linux-kernel@vger.kernel.org, lkmm@lists.linux.dev,
+To: paulmck@kernel.org
+Cc: Alan Stern <stern@rowland.harvard.edu>, parri.andrea@gmail.com,
+ will@kernel.org, peterz@infradead.org, boqun.feng@gmail.com,
+ npiggin@gmail.com, dhowells@redhat.com, j.alglave@ucl.ac.uk,
+ luc.maranget@inria.fr, akiyks@gmail.com, dlustig@nvidia.com,
+ joel@joelfernandes.org, urezki@gmail.com, quic_neeraju@quicinc.com,
+ frederic@kernel.org, linux-kernel@vger.kernel.org, lkmm@lists.linux.dev,
  hernan.poncedeleon@huaweicloud.com
-References: <68f98254-daf9-4197-a7cb-ef9fca0ef158@paulmck-laptop>
- <9dec7f8d-16c0-4122-bf03-c16bd616ca15@huaweicloud.com>
+References: <9dec7f8d-16c0-4122-bf03-c16bd616ca15@huaweicloud.com>
  <9a0dccbb-bfa7-4b33-ac1a-daa9841b609a@paulmck-laptop>
  <1daba0ea-0dd6-4e67-923e-fd3c1a62b40b@huaweicloud.com>
  <c27c4210-3d20-42af-a1f7-a49d04828a8e@paulmck-laptop>
@@ -50,16 +50,16 @@ References: <68f98254-daf9-4197-a7cb-ef9fca0ef158@paulmck-laptop>
  <21ec2b32-69ce-46bf-8d44-06149e71ba6c@paulmck-laptop>
  <0c0fcfb7-dbef-426b-ac54-583c85fbba9d@huaweicloud.com>
  <1cea1fcd-827c-455e-93b7-f4d606bf4993@paulmck-laptop>
- <1147ad3e-e3ad-4fa1-9a63-772ba136ea9a@huaweicloud.com>
- <1668d0b4-4060-4eac-b8b1-46ca0d1dbce9@rowland.harvard.edu>
-From: Jonas Oberhauser <jonas.oberhauser@huaweicloud.com>
-In-Reply-To: <1668d0b4-4060-4eac-b8b1-46ca0d1dbce9@rowland.harvard.edu>
+ <3b3a7c1a-c40f-4a98-b328-bb4327876606@paulmck-laptop>
+ <446d6a64-7ee4-494a-bbfe-dbfdb6959f9c@huaweicloud.com>
+ <4411cf20-f889-4fd7-9e03-14744deaaf72@paulmck-laptop>
+In-Reply-To: <4411cf20-f889-4fd7-9e03-14744deaaf72@paulmck-laptop>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-CM-TRANSID:LxC2BwCnekkhP4pnsHvLAA--.52966S2
-X-Coremail-Antispam: 1UD129KBjvJXoWxKrW3Gr47WF43KrWfWFy8Krg_yoWfKw13pF
-	yfKa1jka1DArsakr1Iyw1xXF1Sqw1kCry5JrnI9r18Awn8Xw1xtr13Kw1YvF98Aan7Zryj
-	q390qr9rG3Z3ZaDanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+X-CM-TRANSID:GxC2BwCH7+E8SIpnNtvKAA--.36516S2
+X-Coremail-Antispam: 1UD129KBjvJXoWxXr4rGryDWFWDCr17CFWrAFb_yoW5tw17pF
+	WfKan5KrnrJw4Skwn2qr1xXFy0vr1fJFW5Xrn8GryUAw15uFyYvFWSgF1Y9Fyjkrs293WU
+	trs0qrykAryqvaDanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
 	9KBjDU0xBIdaVrnRJUUUvK14x267AKxVW5JVWrJwAFc2x0x2IEx4CE42xK8VAvwI8IcIk0
 	rVWrJVCq3wAFIxvE14AKwVWUJVWUGwA2ocxC64kIII0Yj41l84x0c7CEw4AK67xGY2AK02
 	1l84ACjcxK6xIIjxv20xvE14v26r1j6r1xM28EF7xvwVC0I7IYx2IY6xkF7I0E14v26r4j
@@ -77,216 +77,100 @@ X-CM-SenderInfo: 5mrqt2oorev25kdx2v3u6k3tpzhluzxrxghudrp/
 
 
 
-Am 1/17/2025 um 12:02 AM schrieb Alan Stern:
-> On Thu, Jan 16, 2025 at 08:08:22PM +0100, Jonas Oberhauser wrote:
->> I'm well aware that an absolute definition of semantic dependencies is not
->> easy to give.
-> 
-> In fact it's undecidable.  No tool is ever going to be able to detect
-> semantic dependencies perfectly.
-
-It depends.
-Firstly, let's consider that the tool only runs on finite (or 
-"finitized") programs.
-Seceondly, your definition depends on the compiler.
-
-So in the sense that we don't know the compiler, it is undecidable.
-But if you fix the compiler, you could still enumerate all executions 
-under that compiler and compute whether that compiler has a dependency 
-or not.
-
-But as I mentioned before, I think you can define semantic dependencies 
-more appropriately because you don't really need to preserve semantic 
-dependencies in C++, and in LKMM (and VMM) you have volatiles that 
-restrict what kind of dependency-eliminations the compiler can do.
-
+Am 1/16/2025 um 8:39 PM schrieb Paul E. McKenney:
+> On Thu, Jan 16, 2025 at 08:28:06PM +0100, Jonas Oberhauser wrote:
 >>
->> int * x[] = { &a, &a };
->> int i = b;
->> *x[i] = 1;
 >>
->> here the semantic address dependency from loading b to loading x[i] and the
->> semantic address dependency from loading x[i] and storing to *x[i] do not
->> together form a semantic dependency anymore, because *x[i] is always a. So
->> this whole code can just become a=1, and with mirrored code you can get
->> a=b=1, which is an sdep | rfe cycle.
+>> Am 1/16/2025 um 7:40 PM schrieb Paul E. McKenney:
+>>> 	o	If a value is read in the seqlock reader and used
+>>> 		across a "you need to retry" indication, that
+>>> 		flags a seqlock data race.
+>>
+>>
+>> This too is insufficient, you also need to prevent dereferencing or having
+>> control dependency inside the seqlock. Otherwise you could derefence a torn
+>> pointer and...
 > 
-> We regard sdep as extending from loads (or sets of loads) to stores.
-> (Perhaps the paper doesn't state this explicitly -- it should.)  So an
-> sdep ; sdep sequence is not possible.
+> True, but isn't that prohibition separable from the underlying
+> implementation?
 
-I see. There is a line in the introduction ("Roughly speaking, there is 
-a semantic dependency from a given load
-to a given store when all other things being equal, a change in the 
-value loaded can
-change the value stored or prevent the store from occurring at all"), 
-but I read it too carelessly and treated it as an implication rather 
-than an iff.
+Yes, but so is the prohibition of using the value after the failed 
+reader_exit().
 
-I suppose at some point you anyways replace the definition of OOTA with 
-a version where only semantic dependencies from loads to a store are 
-considered, so the concern becomes irrelevant then.
+So probably it needs to be added to the specification of what you are 
+allowed to do with values from the read-side critical section.
+
+Actually this was a bug we had in some code once, and I overlooked it 
+because I thought the incorrect data isn't used anyways, right?
+
+Luckily I had put the condition into our cat model already and so the 
+tooling caught the bug before it went out...
 
 
->> - On the one hand, that definition makes a lot of sense. On the other hand,
->> at least without the atomics=volatile restriction it would have the downside
->> that a compiler which generates just a single execution for your program can
->> say that there are no dependencies whatsoever and generate all kinds of "out
->> of thin air" behaviors.
+>> At this point your definition of data race becomes pretty much the same as
+>> we have.
+>>
+>> https://github.com/open-s4c/libvsync/blob/main/vmm/vmm.cat#L150
+>>
+>>
+>> (also this rule should only concern reads that are actually "data-racy" - if
+>> the read is synchronized by some other writes, then you can read & use it
+>> just fine across the seqlock [edit: boundary])
 > 
-> That is so.  But a compiler which examines only a single thread at a
-> time cannot afford to generate just a single execution, because it
-> cannot know what values the loads will obtain when the full program
-> runs.
+> Perhaps LKMM should adopt this or something similar, but what do others
+> think?
+
+I am not sure how many others are still reading this deep into the 
+conversation, maybe best to start a new thread.
+
+
+>> I also noticed that in my previous e-mail I had overlooked the reads inside
+>> the CS in the failure case, but you are of course right, there needs to be
+>> some mechanism to prevent them from being data racy unless abused.
+>>
+>> But I am not sure how to formalize that in a way that is simpler than just
+>> re-defining data races in general, without adding some special support to
+>> herd7 for it.
+>>
+>> What do you think?
 > 
->> I am not sure if that gets really resolved by the volatile restrictions you
->> put, but either way those seem far stronger than what one would want.
-> 
-> It does get resolved, because treating atomics as volatile also means
-> that the compiler cannot afford to generate just a single execution.
-> Again, because it cannot know what values the loads will obtain at
-> runtime, since volatile loads can yield any value in a non-benign
-> environment.
+> I was thinking in terms of identifying reads in critical sections (sort
+> of like LKMM does for RCU read-side critical sections), then identifying
+> any dependencies from those reads that cross a failed reader boundary.
+> If that set is non-empty, flag it.
+
+Yes, the general idea sounds reasonable, but the details have a lot of 
+potential for future improvement.
+
+One tricky part of seqlock besides the data race is that it kind of uses 
+negative message passing - the fact that you have not seen the message 
+means you also have not seen the flag. (And the message in this case is 
+the write_enter(), and the flag is the plain access in the critical 
+section! Fun.)
+
+This makes it hard to formalize in the box of LKMM and make it play well 
+with all the other pieces.
 
 
-Yes. Actually I wonder if you put this "all loads are volatile" 
-restriction, can a globally analysing compiler still have any 
-optimizations that a locally analysing compiler can not?
+Maybe something like avoiding rw data races also under something like prop?
 
-It rather seems the other way, that the locally analysing quasi-volatile 
-compiler can at least to some local optimizations, while the global 
-volatile compiler can not (e.g., x=1; y=x; can not be x=1; y=1; for the 
-global compiler because x is volatile now).
+r-prop-post-bounded ; ((overwrite & ext) ; cumul-fence*) ; 
+w-prop-pre-bounded
 
->> I would say that the approach with volatile is overzealous because it tries
->> to create a "local" order solution to the problem that only requires a
->> "global" ordering solution. Since not every semantic dependency needs to
->> provide order in C++ -- only the cycle of dependencies -- it is totally ok
->> to add too many semantic dependency edges to a program, even those that are
->> not going to be exactly maintained by every compiler, as long as we can
->> ensure that globally, no dependency cycle occurs.
-> 
-> But then how would you characterize semantic dependencies, if you want
-> to allow the definition to include some dependencies that aren't
-> semantic but not so many that you ever create a cycle? 
+for the cases where the pre-bounded write must propagate after the 
+overwriting store, and the post-bounded read executes before and on the 
+same CPU as the overwritten event.
 
-I don't know which definition is correct yet, but the point is that you 
-don't have to avoid making so many dependencies that you would create a 
-cycle. It just forbids the compiler from looking for cycles and 
-optimizing based on the existance of the cycle. (Looking for unused vars 
-and removing those is still allowed, under the informal argument that 
-this simulates an execution where no OOTA happened)
+Then you could argue that if the overwriting write has not propagated to 
+the overwritten event, the pre-bounded write also has not propagated to 
+that event.
 
+ From that you can conclude it also can not have propagated to the 
+post-bounded read.
 
-> This sounds like
-> an even worse problem than we started with!
- >
- >
->> So for example, if we merge  x = y || y = x,  the merge can turn it into
->> x=y=x or y=x=y (and then into an empty program), but not into a cyclic
->> dependency. So even though one side of the dependency may be violated, for
->> sake of OOTA, we could still label both sides as dependent.
-> 
-> They _are_ both semantically dependent (in the original parallel
-> version, I mean).  I don't see what merging has to do with it.
+I'm not sure if the cases where propagation is handled by a strong-fence 
+are already covered by the rw-xbstar rule.
 
-Note that I was considering the case where they are not volatile.
-With a compiler that is not treating them as volatile, which merges the 
-two threads, under your definition, there is no semantic dependency in 
-at least one direction because there is no hardware realization H where 
-you read something else (of course you exclude such compilers, but I 
-think realistically they should be allowed).
-
-My point is that we can say they are semantically dependent for the sake 
-of OOTA, not derive any ordering from these dependencies other than the 
-cyclical one, and therefore allow compilers to one of the two 
-optimizations (make x=y no longer depend on y or make y=x no longer 
-depend on x) but noth make a cycle analysis to remove both dependencies 
-and generate an OOTA value (it can remove both dependencies by leaving x 
-and y unchanged though).
-
-
->> So I'm not convinced that for either of the two cases you need to do a
->> compiler-specific definition of dependencies.
-> 
-> For the C++ case, I cannot think of any other way to approach the
-> problem.  Nor do I see anything wrong with a compiler-specific
-> definition, given how nebulous the whole idea is in the first place.
-> 
->> BTW, for what it's worth, Dat3M in a sense uses the clang dependencies - it
->> first allows the compiler to do its optimizations, and then verifies the
->> llvm-ir (with a more hardware-like dependency definition).
-> 
-> What do you mean by "verifies"?  What property of the llvm-ir does it
-> verify?
-
-Verify that the algorithm, e.g., qspinlock, has no executions that are 
-buggy, e.g., have a data race on the critical section.
-
-It does so for a fixed test case with a small number of threads, i.e., a 
-finite program.
-  >> I think something like that can be a good practical solution with fewer
->> problems than other attempts to approximate the solution.
-> 
-> I do not like the idea of tying the definition of OOTA (which needs to
-> apply to every implementation) to a particular clang compiler.
-
-But that is what you have done, no? Whether something is an sdep depends 
-on the compiler, so compiler A could generate an execution that is OOTA 
-in the sdep definition of compiler B.
-(Of course with the assumption of atomic=volatile, it may just be that 
-we are back to the beginning and all "naive" semantic dependencies are 
-actually semantic dependencies for all compilers).
-
-Anyways what I meant is not about tying the definition of OOTA to one 
-compiler or other. As I mentioned I think it can be fine to define OOTA 
-in the same way for all compilers.
-What I meant is to specialize the memory model to a specific compiler, 
-as long as that is the compiler that is used in reality.
-So long as your code does not depend on the ordering of any semantic 
-dependencies, the verification can be cross platform.
-
-And although...
-
- > I'm not particularly concerned about OOTA or semantic dependencies in
-LKMM.
-
-... there is code that relies on semantic dependencies, e.g. RCU read 
-side CS code. (even if we do not care about OOTA).
-For that code, the semantic dependencies must be guaranteed to create 
-ordering.
-
-So you either need a definition of semantic dependency that
-a) applies in all cases we practically need and
-b) is guaranteed by all compilers
-
-or we need to live with the fact that we do not have a semantic 
-dependency definition that is independent of the compilation (even of 
-the same compiler) and need to do our verification for that specific 
-compilation.
-
-I think for LKMM we could give such a semantic dependency definition 
-because it uses volatile, and verify RCU-read-side code. But we 
-currently do not have one. What I meant to say is that using the actual 
-(whatever compiler you use) optimizations first to remove syntactic 
-dependencies, and then verifying under the assumption of whatever 
-dependencies are left, may be better than trying to approximate 
-dependencies in some way in cat. Given that we want to verify and rely 
-on the code today, not in X years when we all agree on what a 
-compiler-independent definition of semantic dependency is.
-
-I think for C++ consume we could also give one by simply restricting 
-some compiler optimizations for consume loads (and doing whatever needs 
-to be done on alpha). Or just kick it out and not have any dependency 
-ordering except the global OOTA case.
-
-Sorry for the confusion, I think there are so many different 
-combinations/battlefields (OOTA vs just semantic dependencies, 
-volatile/non-volatile atomics, verifying the model vs verifying a piece 
-of code etc.) that it becomes hard for me not to confuse myself, let 
-alone others :))
-
-
-Best wishes,
+Have fun,
    jonas
 

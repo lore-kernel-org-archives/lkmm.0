@@ -1,73 +1,46 @@
-Received: from mail-qt1-f182.google.com (mail-qt1-f182.google.com [209.85.160.182])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from frasgout13.his.huawei.com (frasgout13.his.huawei.com [14.137.139.46])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9C37185B72
-	for <lkmm@lists.linux.dev>; Fri, 17 Jan 2025 20:01:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B208B1F12F4
+	for <lkmm@lists.linux.dev>; Tue, 21 Jan 2025 10:36:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=14.137.139.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737144085; cv=none; b=NMl+8ncbD27p35P9wLTX8b4k0lC+HDI/LA8FYYletMKU1JBMFJG6NzzYSqDOl00c8Z8kFF6vpK7S3m+URRvfiYJ9TXZsFkQxSPadN+MxWIDFkC546fChqbOmzaEqOhML55RIPfJXs7h21CFxC+YpjeSOo9QNHMuR3yBrQWf3JrE=
+	t=1737455784; cv=none; b=AgtJ0NCO8VCYF4XnNkkBIf24np61OW8NDSTg7ppwZb6l2SgjQxlzLaGHzhWi5DUu5iq/6qMCVmvCeQi9LCf/2+QSucyVltNqflFF/NESJi1rJHhITiUGA2irmJlLEGt54MIXJGXLNsHyxjZpbkqO2Ds9K9UGZw8uBIbAw5K/HNU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737144085; c=relaxed/simple;
-	bh=oXN1fd9n5hi5QvPPOcHBnduQ77JbOJu1RtYI9i0iLH0=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=SCAY4L2Ur5ycg09N+UjxZ+jVIwFSAmLrkICvcS122OBAOdhh1X50uJygJDQ0AYIagU/jnil4l7njJsNpBY47OaRuDVT+1PCGcZOgKArVkW5e9F1LltM6IDpkcIbWCau1VzSRAj0BoljN91nPLk65zK9VS/pGP/RHzKgxZZxi4Fc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=rowland.harvard.edu; spf=fail smtp.mailfrom=g.harvard.edu; dkim=pass (2048-bit key) header.d=rowland.harvard.edu header.i=@rowland.harvard.edu header.b=aWMLJvty; arc=none smtp.client-ip=209.85.160.182
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=rowland.harvard.edu
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=g.harvard.edu
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=rowland.harvard.edu header.i=@rowland.harvard.edu header.b="aWMLJvty"
-Received: by mail-qt1-f182.google.com with SMTP id d75a77b69052e-467a1ee7ff2so23148921cf.0
-        for <lkmm@lists.linux.dev>; Fri, 17 Jan 2025 12:01:22 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=rowland.harvard.edu; s=google; t=1737144082; x=1737748882; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=4DsA6UUShtbfKN1DiFsVA+jPdtiFfFsq3KvzJ6Zzwfs=;
-        b=aWMLJvtytLccHRQVWVPISfch5diFSANUzb8bT/8rUmXjd6zVrk4FHmpHummwwwy+Jm
-         kkJFw9GY/2GITQ8ouXd3N1XP5GdalT8yeVlvchqY9ImrM0YjkBAaVLsbPjDEXAHRgkBj
-         CRRROpF/QhGFnUmYNd7ZV2nx40/XA5WTgcNmTl3jjGmjJlw2H+kONF65Sn+H2Yj9Zxly
-         DN0Cbn1x2PY4cq7JiXVHIAPL0vkk0Axnf4Ph4vW9yoLqQiPKGnkgPcIfREE/ijeCvZKy
-         94DkmmCXFB3KsbmrKFKbrHxWnhVsVRCtR8s3A+WDzWED48pK4o6/SiFgBwHInqUS9ssF
-         jsnA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1737144082; x=1737748882;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=4DsA6UUShtbfKN1DiFsVA+jPdtiFfFsq3KvzJ6Zzwfs=;
-        b=CNpajfYyPiTHq22r0Hg8VznCf3gJeB+vZGC9b0sqcYlevTUVdCmnT3bxY3jLksrPoc
-         J4k6FA7oxqlw8OX1Vj8OozGARMsi/ZI1hybOkbBfhDBDLfZXic2VKv2WRyVeQu7Al5kY
-         ZKltP4KLbhCXXWPfauQcNUgjSLSpD1Us3wXiIgDS+6kW2YXuhuvl7Fp9MewIW38HqM8i
-         boUa6XqC9ED3c/vFPOe8RAnIt/AALHzPK7HYcxObEIsqjqxFOfUUaixgc3Wvu+juz4xy
-         5a9cfROEElyvAeAk27DtWQCwZtq7P6eXDctXaO4HkjGUmaltNoMTUUhI0axUV/5pOpcI
-         zgOw==
-X-Forwarded-Encrypted: i=1; AJvYcCVaJ1HQhbxAiCY1oEMvvtLcvqOP62idoSVgGxTVZ8OgrHlOiVMGgI1NVxGfLcA/DwWEKicK@lists.linux.dev
-X-Gm-Message-State: AOJu0YyI22uZzhGHD8Hq/aofq+jbzmNaBEhyfOJwplHfS+sE2CFRDdsB
-	sFZdxGFb2DPrvJNcFRv2fytEyrMe+NHFWFzEPxWr1S/M0ckyYQ2eVxMmP7VCGA==
-X-Gm-Gg: ASbGnctqw7cCMdfkXBr2J4Xx05RWikFWQnINivMmdx0tS8jE0kEWJGJ//cnEpUghzLq
-	4cTjK94tnP62iDzLUeuHLFtrrXyY7nKVJKlQrVyKpa44IhasWncaAt4DuO5B5DQVrgKl/KEIGJa
-	rgElTHBFqgO0AHptVy1Guz0wqx5GpDQRk64fQz8XmJHPHAAUvHFSaspxG8BXW4hL1uM9janpczt
-	TF+8aSoAYaFx4sZTboh81uOwlCIMXFWwRHtxWKjsUx38YwYouwB1H6YurWn9jm64zWCcr/xkbJY
-	yl4ygpCWigLxdTEe2w0l4Trvk26VaQ794r22dtvTl1FT5GuCgA==
-X-Google-Smtp-Source: AGHT+IGgcFPBoAwN5GAaiDm+JMOx37BGUv9bAb3cSdHNbtpIeuQHTef8FVqkeFR8ddiRWlXU7OBPAQ==
-X-Received: by 2002:ac8:5a92:0:b0:46d:d23c:99f5 with SMTP id d75a77b69052e-46e12b56503mr69912941cf.33.1737144080105;
-        Fri, 17 Jan 2025 12:01:20 -0800 (PST)
-Received: from rowland.harvard.edu (nat-65-112-8-51.harvard-secure.wrls.harvard.edu. [65.112.8.51])
-        by smtp.gmail.com with ESMTPSA id d75a77b69052e-46e102ec4acsm14705511cf.13.2025.01.17.12.01.18
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 17 Jan 2025 12:01:18 -0800 (PST)
-Date: Fri, 17 Jan 2025 15:01:16 -0500
-From: Alan Stern <stern@rowland.harvard.edu>
-To: Jonas Oberhauser <jonas.oberhauser@huaweicloud.com>
-Cc: paulmck@kernel.org, parri.andrea@gmail.com, will@kernel.org,
-	peterz@infradead.org, boqun.feng@gmail.com, npiggin@gmail.com,
-	dhowells@redhat.com, j.alglave@ucl.ac.uk, luc.maranget@inria.fr,
-	akiyks@gmail.com, dlustig@nvidia.com, joel@joelfernandes.org,
-	urezki@gmail.com, quic_neeraju@quicinc.com, frederic@kernel.org,
-	linux-kernel@vger.kernel.org, lkmm@lists.linux.dev,
-	hernan.poncedeleon@huaweicloud.com
+	s=arc-20240116; t=1737455784; c=relaxed/simple;
+	bh=4IIgDlco9UFvSMVJCs2CrLd/CvayMFFKTwHuITf+oGo=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=c45nKyFZMHSUD+S7//yWdBW3H6mDnqTC/pnnsMp0zV76y6eKz9CEqSo0/O5wkcSHZ/4FN1vUOx1pVm2tXTmBgUi3CaXlD1COP/r/OyK5bGeEMLeKzzQL8WOiudu8e18oCyFQ/CWolO5H2pajEq7hGgS2xu+SHLNFObyAXARlJ7g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=huaweicloud.com; spf=pass smtp.mailfrom=huaweicloud.com; arc=none smtp.client-ip=14.137.139.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=huaweicloud.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huaweicloud.com
+Received: from mail.maildlp.com (unknown [172.18.186.51])
+	by frasgout13.his.huawei.com (SkyGuard) with ESMTP id 4YcjjW5MY3z9v7JS
+	for <lkmm@lists.linux.dev>; Tue, 21 Jan 2025 18:14:07 +0800 (CST)
+Received: from mail02.huawei.com (unknown [7.182.16.47])
+	by mail.maildlp.com (Postfix) with ESMTP id 6F04014037F
+	for <lkmm@lists.linux.dev>; Tue, 21 Jan 2025 18:36:12 +0800 (CST)
+Received: from [10.48.13.152] (unknown [10.48.13.152])
+	by APP1 (Coremail) with SMTP id LxC2BwA3vUuTeI9nsIcIAQ--.64422S2;
+	Tue, 21 Jan 2025 11:36:11 +0100 (CET)
+Message-ID: <2139f8ce-63fa-4231-864b-500ee2645811@huaweicloud.com>
+Date: Tue, 21 Jan 2025 11:36:01 +0100
+Precedence: bulk
+X-Mailing-List: lkmm@lists.linux.dev
+List-Id: <lkmm.lists.linux.dev>
+List-Subscribe: <mailto:lkmm+subscribe@lists.linux.dev>
+List-Unsubscribe: <mailto:lkmm+unsubscribe@lists.linux.dev>
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
 Subject: Re: [RFC] tools/memory-model: Rule out OOTA
-Message-ID: <96059c09-3993-4f41-b3c2-54fe767c073a@rowland.harvard.edu>
+To: Alan Stern <stern@rowland.harvard.edu>
+Cc: paulmck@kernel.org, parri.andrea@gmail.com, will@kernel.org,
+ peterz@infradead.org, boqun.feng@gmail.com, npiggin@gmail.com,
+ dhowells@redhat.com, j.alglave@ucl.ac.uk, luc.maranget@inria.fr,
+ akiyks@gmail.com, dlustig@nvidia.com, joel@joelfernandes.org,
+ urezki@gmail.com, quic_neeraju@quicinc.com, frederic@kernel.org,
+ linux-kernel@vger.kernel.org, lkmm@lists.linux.dev,
+ hernan.poncedeleon@huaweicloud.com
 References: <9a0dccbb-bfa7-4b33-ac1a-daa9841b609a@paulmck-laptop>
  <1daba0ea-0dd6-4e67-923e-fd3c1a62b40b@huaweicloud.com>
  <c27c4210-3d20-42af-a1f7-a49d04828a8e@paulmck-laptop>
@@ -78,180 +51,266 @@ References: <9a0dccbb-bfa7-4b33-ac1a-daa9841b609a@paulmck-laptop>
  <1147ad3e-e3ad-4fa1-9a63-772ba136ea9a@huaweicloud.com>
  <1668d0b4-4060-4eac-b8b1-46ca0d1dbce9@rowland.harvard.edu>
  <e35c40e9-ccc8-43e9-a676-1ea8dd925718@huaweicloud.com>
-Precedence: bulk
-X-Mailing-List: lkmm@lists.linux.dev
-List-Id: <lkmm.lists.linux.dev>
-List-Subscribe: <mailto:lkmm+subscribe@lists.linux.dev>
-List-Unsubscribe: <mailto:lkmm+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <e35c40e9-ccc8-43e9-a676-1ea8dd925718@huaweicloud.com>
+ <96059c09-3993-4f41-b3c2-54fe767c073a@rowland.harvard.edu>
+From: Jonas Oberhauser <jonas.oberhauser@huaweicloud.com>
+In-Reply-To: <96059c09-3993-4f41-b3c2-54fe767c073a@rowland.harvard.edu>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-CM-TRANSID:LxC2BwA3vUuTeI9nsIcIAQ--.64422S2
+X-Coremail-Antispam: 1UD129KBjvJXoW3KrW8Xry7XryrZr48Jr1xAFb_yoWDWr48pa
+	4fKa12kF4DJFsrCr1Iyw4xWa4Fvwn7AFy5Grn8Gr10ywn8Ww1ftr47KrWY9F9xCr4xZFyj
+	q3yqqr9rG3Z8ZaDanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+	9KBjDU0xBIdaVrnRJUUUvK14x267AKxVW5JVWrJwAFc2x0x2IEx4CE42xK8VAvwI8IcIk0
+	rVWrJVCq3wAFIxvE14AKwVWUJVWUGwA2ocxC64kIII0Yj41l84x0c7CEw4AK67xGY2AK02
+	1l84ACjcxK6xIIjxv20xvE14v26r1j6r1xM28EF7xvwVC0I7IYx2IY6xkF7I0E14v26r4j
+	6F4UM28EF7xvwVC2z280aVAFwI0_Gr0_Cr1l84ACjcxK6I8E87Iv6xkF7I0E14v26r4j6r
+	4UJwAS0I0E0xvYzxvE52x082IY62kv0487Mc02F40EFcxC0VAKzVAqx4xG6I80ewAv7VC0
+	I7IYx2IY67AKxVWUJVWUGwAv7VC2z280aVAFwI0_Jr0_Gr1lOx8S6xCaFVCjc4AY6r1j6r
+	4UM4x0Y48IcVAKI48JM4x0x7Aq67IIx4CEVc8vx2IErcIFxwACI402YVCY1x02628vn2kI
+	c2xKxwCY1x0262kKe7AKxVW8ZVWrXwCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbV
+	WUJVW8JwC20s026c02F40E14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF
+	67kF1VAFwI0_GFv_WrylIxkGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42
+	IY6xIIjxv20xvEc7CjxVAFwI0_Gr0_Cr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF
+	0xvEx4A2jsIE14v26r1j6r4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Gr0_Gr1UYxBIdaVFxh
+	VjvjDU0xZFpf9x0pRHUDLUUUUU=
+X-CM-SenderInfo: 5mrqt2oorev25kdx2v3u6k3tpzhluzxrxghudrp/
 
-On Fri, Jan 17, 2025 at 12:29:34PM +0100, Jonas Oberhauser wrote:
+
+
+Am 1/17/2025 um 9:01 PM schrieb Alan Stern:
+> On Fri, Jan 17, 2025 at 12:29:34PM +0100, Jonas Oberhauser wrote:
+>>
+>>
+>> Am 1/17/2025 um 12:02 AM schrieb Alan Stern:
+>>> On Thu, Jan 16, 2025 at 08:08:22PM +0100, Jonas Oberhauser wrote:
+>>>> I'm well aware that an absolute definition of semantic dependencies is not
+>>>> easy to give.
+>>>
+>>> In fact it's undecidable.  No tool is ever going to be able to detect
+>>> semantic dependencies perfectly.
+>>
+>> It depends.
+>> Firstly, let's consider that the tool only runs on finite (or "finitized")
+>> programs.
 > 
+> A program may be finite; that doesn't mean its executions are.  Programs
+> can go into infinite loops.  Are you saying that the tool would stop
+> verifying executions after (say) a billion steps?  But then it would not
+> be able to detect semantic dependences in programs that run longer.
+
+Yes, what I said is not fully correct. Finite (non-trivial-)loop-free 
+programs, or programs with finite (representative) execution spaces, 
+would have been more correct.
+
+
+
 > 
-> Am 1/17/2025 um 12:02 AM schrieb Alan Stern:
-> > On Thu, Jan 16, 2025 at 08:08:22PM +0100, Jonas Oberhauser wrote:
-> > > I'm well aware that an absolute definition of semantic dependencies is not
-> > > easy to give.
-> > 
-> > In fact it's undecidable.  No tool is ever going to be able to detect
-> > semantic dependencies perfectly.
+>> Seceondly, your definition depends on the compiler.
+>>
+>> So in the sense that we don't know the compiler, it is undecidable.
+>> But if you fix the compiler, you could still enumerate all executions under
+>> that compiler and compute whether that compiler has a dependency or not.
 > 
-> It depends.
-> Firstly, let's consider that the tool only runs on finite (or "finitized")
-> programs.
+> You can't enumerate the executions unless you put an artificial bound on
+> the length of each execution, as noted above.
 
-A program may be finite; that doesn't mean its executions are.  Programs 
-can go into infinite loops.  Are you saying that the tool would stop 
-verifying executions after (say) a billion steps?  But then it would not 
-be able to detect semantic dependences in programs that run longer.
+Note that for many practical cases it is possible to write test cases 
+where the bound is not artificial in the sense that it is at least as 
+large as the bound needed for exhaustive enumeration.
 
-> Seceondly, your definition depends on the compiler.
+
+>> But as I mentioned before, I think you can define semantic dependencies more
+>> appropriately because you don't really need to preserve semantic
+>> dependencies in C++, and in LKMM (and VMM) you have volatiles that restrict
+>> what kind of dependency-eliminations the compiler can do.
 > 
-> So in the sense that we don't know the compiler, it is undecidable.
-> But if you fix the compiler, you could still enumerate all executions under
-> that compiler and compute whether that compiler has a dependency or not.
+> What makes you think this "more appropriate" definition of semantic
+> dependency will be any easier to detect than the original one?
 
-You can't enumerate the executions unless you put an artificial bound on 
-the length of each execution, as noted above.
+For starters, as you mentioned, the compiler has to assume any value is 
+possible.
 
-> But as I mentioned before, I think you can define semantic dependencies more
-> appropriately because you don't really need to preserve semantic
-> dependencies in C++, and in LKMM (and VMM) you have volatiles that restrict
-> what kind of dependency-eliminations the compiler can do.
+Which means that if any other value would lead to a "different 
+behavior", you know you have a semantic dependency. You can detect this 
+in a per-thread manner, independently of the compiler.
 
-What makes you think this "more appropriate" definition of semantic 
-dependency will be any easier to detect than the original one?
+Without the assumption of volatile, even a different value that could 
+actually be generated in another run of the same program does not prove 
+a semantic dependency.
 
-> Yes. Actually I wonder if you put this "all loads are volatile" restriction,
-> can a globally analysing compiler still have any optimizations that a
-> locally analysing compiler can not?
 
-Yes, although whether they are pertinent is open to question.  For 
-example, a globally optimizing compiler may observe that no thread ever 
-reads the value of a particular shared variable and then eliminate that 
-variable.
-
-> It rather seems the other way, that the locally analysing quasi-volatile
-> compiler can at least to some local optimizations, while the global volatile
-> compiler can not (e.g., x=1; y=x; can not be x=1; y=1; for the global
-> compiler because x is volatile now).
-
-In the paper we speculate that it may be sufficient to require globally 
-optimizing compilers to treat atomics as quasi volatile with the added 
-restriction that loads must not be omitted.
-
-> > But then how would you characterize semantic dependencies, if you want
-> > to allow the definition to include some dependencies that aren't
-> > semantic but not so many that you ever create a cycle?
+>> Yes. Actually I wonder if you put this "all loads are volatile" restriction,
+>> can a globally analysing compiler still have any optimizations that a
+>> locally analysing compiler can not?
 > 
-> I don't know which definition is correct yet, but the point is that you
-> don't have to avoid making so many dependencies that you would create a
-> cycle. It just forbids the compiler from looking for cycles and optimizing
-> based on the existance of the cycle. (Looking for unused vars and removing
-> those is still allowed, under the informal argument that this simulates an
-> execution where no OOTA happened)
+> Yes, although whether they are pertinent is open to question.  For
+> example, a globally optimizing compiler may observe that no thread ever
+> reads the value of a particular shared variable and then eliminate that
+> variable.
 
-At the moment, the only underlying ideas we have driving our notions of 
-semantic dependency is that a true semantic dependency should be one 
-which must give rise to order in the machine code.  In turn, this order 
-prevents OOTA cycles from occuring during execution.  That is the 
-essence of the paper.
+Oh, I meant the "all atomic objects is volatile" restriction, not just 
+the loads. In that case, all stores the object - even if never read - 
+still need to be generated.
 
-Can your ideas be fleshed out to a comparable degree?
+Are there still any optimizations?
 
-> > > So for example, if we merge  x = y || y = x,  the merge can turn it into
-> > > x=y=x or y=x=y (and then into an empty program), but not into a cyclic
-> > > dependency. So even though one side of the dependency may be violated, for
-> > > sake of OOTA, we could still label both sides as dependent.
-> > 
-> > They _are_ both semantically dependent (in the original parallel
-> > version, I mean).  I don't see what merging has to do with it.
+>> It rather seems the other way, that the locally analysing quasi-volatile
+>> compiler can at least to some local optimizations, while the global volatile
+>> compiler can not (e.g., x=1; y=x; can not be x=1; y=1; for the global
+>> compiler because x is volatile now).
 > 
-> Note that I was considering the case where they are not volatile.
-> With a compiler that is not treating them as volatile, which merges the two
-> threads, under your definition, there is no semantic dependency in at least
-> one direction because there is no hardware realization H where you read
-> something else (of course you exclude such compilers, but I think
-> realistically they should be allowed).
-> 
-> My point is that we can say they are semantically dependent for the sake of
-> OOTA, not derive any ordering from these dependencies other than the
-> cyclical one, and therefore allow compilers to one of the two optimizations
-> (make x=y no longer depend on y or make y=x no longer depend on x) but noth
-> make a cycle analysis to remove both dependencies and generate an OOTA value
-> (it can remove both dependencies by leaving x and y unchanged though).
+> In the paper we speculate that it may be sufficient to require globally
+> optimizing compilers to treat atomics as quasi volatile with the added
+> restriction that loads must not be omitted.
 
-I don't understand.
+I see.
 
-> > I do not like the idea of tying the definition of OOTA (which needs to
-> > apply to every implementation) to a particular clang compiler.
+>>> But then how would you characterize semantic dependencies, if you want
+>>> to allow the definition to include some dependencies that aren't
+>>> semantic but not so many that you ever create a cycle?
+>>
+>> I don't know which definition is correct yet, but the point is that you
+>> don't have to avoid making so many dependencies that you would create a
+>> cycle. It just forbids the compiler from looking for cycles and optimizing
+>> based on the existance of the cycle. (Looking for unused vars and removing
+>> those is still allowed, under the informal argument that this simulates an
+>> execution where no OOTA happened)
 > 
-> But that is what you have done, no? Whether something is an sdep depends on
-> the compiler, so compiler A could generate an execution that is OOTA in the
-> sdep definition of compiler B.
+> At the moment, the only underlying ideas we have driving our notions of
+> semantic dependency is that a true semantic dependency should be one
+> which must give rise to order in the machine code.  In turn, this order
+> prevents OOTA cycles from occuring during execution.  That is the
+> essence of the paper.
+> 
+> Can your ideas be fleshed out to a comparable degree?
 
-Yes, but this does not tie the definition to _one particular_ compiler.  
-That is, we don't say "This dependency is semantic because of the way 
-GCC 14.2.1 handles it."  Rather, we define for each compiler whether a 
-dependency is semantic for _that_ compiler.
+Well, I certainly have not put as much deep thought into it as you have, 
+so it is certainly more fragile. But my current thoughts are along these 
+lines:
 
-> (Of course with the assumption of atomic=volatile, it may just be that we
-> are back to the beginning and all "naive" semantic dependencies are actually
-> semantic dependencies for all compilers).
-> 
-> Anyways what I meant is not about tying the definition of OOTA to one
-> compiler or other. As I mentioned I think it can be fine to define OOTA in
-> the same way for all compilers.
-> What I meant is to specialize the memory model to a specific compiler, as
-> long as that is the compiler that is used in reality.
-> So long as your code does not depend on the ordering of any semantic
-> dependencies, the verification can be cross platform.
-> 
-> And although...
-> 
-> > I'm not particularly concerned about OOTA or semantic dependencies in
-> LKMM.
-> 
-> ... there is code that relies on semantic dependencies, e.g. RCU read side
-> CS code. (even if we do not care about OOTA).
-> For that code, the semantic dependencies must be guaranteed to create
-> ordering.
-> 
-> So you either need a definition of semantic dependency that
-> a) applies in all cases we practically need and
-> b) is guaranteed by all compilers
-> 
-> or we need to live with the fact that we do not have a semantic dependency
-> definition that is independent of the compilation (even of the same
-> compiler) and need to do our verification for that specific compilation.
+We consider inter-thread semantic dependencies (isdep) based on the set 
+of allowed executions + thread local optimizations + what would be 
+allowed to happen if rfe edges along the dependencies become rfi edges 
+due to merging. So the definition is not compiler-specific.
 
-Add the qualification that the definition should be practical to 
-evaluate, and I agree.
+Those provide order at machine level unless the compiler restricts the 
+set of executions through its choices, especially cross-thread 
+optimizations, and then uses the restricted set of executions (i.e., 
+possible input range) to optimize the execution further.
+I haven't thought deeply about all the different optimizations that are 
+possible there.
 
-> I think for LKMM we could give such a semantic dependency definition because
-> it uses volatile, and verify RCU-read-side code. But we currently do not
-> have one. What I meant to say is that using the actual (whatever compiler
-> you use) optimizations first to remove syntactic dependencies, and then
-> verifying under the assumption of whatever dependencies are left, may be
-> better than trying to approximate dependencies in some way in cat. Given
-> that we want to verify and rely on the code today, not in X years when we
-> all agree on what a compiler-independent definition of semantic dependency
-> is.
+For an example of how it may not provide order, if we have accesses 
+related by isdep;rfe;isdep, then the compiler could merge all the 
+involved threads into one, and the accesses could no longer have any 
+dependency.
+
+So it is important that one can not forbid isdep;rf cycles, the axiom 
+would be that isdep;rf is irreflexive.
+
+
+When merging threads, if in an OOTA execution there is an inter-thread 
+semantic dependency from r in one of the merged threads to w in one of 
+the merged threads, such that r reads from a non-merged thread and w is 
+read by a non-merged thread in the OOTA cycle, then it is still an 
+inter-thread dependency which still preserves the order. This prevents 
+the full cycle even if it some other sub-edges within the merged threads 
+are now no longer dependencies.
+
+But if r is reading from w in the OOTA cycle, then the compiler (which 
+is not allowed to look for the cycle) has to put r before w in the 
+merged po, preventing r from reading w. (it can also omit r by giving it 
+a value that it could legally read in this po, but it still can't get 
+its value from w this way).
+
+E.g.,
+P0 {
+   y = x;
+}
+P1 {
+   z = y;
+}
+... (some way to assign x dependent on z)
+
+would have an inter-thread dependency from the load of x to the store to 
+z. If P0 and P1 are merged, and there are no other accesses to y, then 
+the intra-thread dependency from loading x to store to y etc. are 
+eliminated, but the inter-thread dependency from x to z remains.
+
+
+
+>>>> So for example, if we merge  x = y || y = x,  the merge can turn it into
+>>>> x=y=x or y=x=y (and then into an empty program), but not into a cyclic
+>>>> dependency. So even though one side of the dependency may be violated, for
+>>>> sake of OOTA, we could still label both sides as dependent.
+>>>
+>>> They _are_ both semantically dependent (in the original parallel
+>>> version, I mean).  I don't see what merging has to do with it.
+>>
+>> Note that I was considering the case where they are not volatile.
+>> With a compiler that is not treating them as volatile, which merges the two
+>> threads, under your definition, there is no semantic dependency in at least
+>> one direction because there is no hardware realization H where you read
+>> something else (of course you exclude such compilers, but I think
+>> realistically they should be allowed).
+>>
+>> My point is that we can say they are semantically dependent for the sake of
+>> OOTA, not derive any ordering from these dependencies other than the
+>> cyclical one, and therefore allow compilers to one of the two optimizations
+>> (make x=y no longer depend on y or make y=x no longer depend on x) but not
+>> make a cycle analysis to remove both dependencies and generate an OOTA value
+>> (it can remove both dependencies by leaving x and y unchanged though).
 > 
-> I think for C++ consume we could also give one by simply restricting some
-> compiler optimizations for consume loads (and doing whatever needs to be
-> done on alpha). Or just kick it out and not have any dependency ordering
-> except the global OOTA case.
+> I don't understand.
+
+Does the explanation above help?
+
 > 
-> Sorry for the confusion, I think there are so many different
-> combinations/battlefields (OOTA vs just semantic dependencies,
-> volatile/non-volatile atomics, verifying the model vs verifying a piece of
-> code etc.) that it becomes hard for me not to confuse myself, let alone
-> others :))
+>>> I do not like the idea of tying the definition of OOTA (which needs to
+>>> apply to every implementation) to a particular clang compiler.
+>>
+>> But that is what you have done, no? Whether something is an sdep depends on
+>> the compiler, so compiler A could generate an execution that is OOTA in the
+>> sdep definition of compiler B.
+> 
+> Yes, but this does not tie the definition to _one particular_ compiler.
+> That is, we don't say "This dependency is semantic because of the way
+> GCC 14.2.1 handles it."  Rather, we define for each compiler whether a
+> dependency is semantic for _that_ compiler.
 
-I know what that feels like!
+Yes, but the result is still that every compiler has its own memory 
+model (at least at the point of which graphs are being ruled out as 
+OOTA). So there is no definition of 'G is OOTA', only 'G is OOTA on 
+compiler x'.
 
-Alan
+The example I gave of the tool verifying the program relative to one 
+specific compiler is also not giving a definition of 'G is OOTA', in 
+fact, it does not specify OOTA at all; it simply says ``with compiler x, 
+we get the following "semantic dependencies" and the following graphs...''
+
+And as long as compiler x does not generate OOTA, there will be no OOTA 
+graphs among those.
+
+So it does not solve or tackle the theoretical problem in any way, and 
+can not do cross-compiler verification. But it will already apply the 
+'naive-dependency-breaking optimizations' that you would not see in e.g. 
+herd7.
+
+
+>> So you either need a definition of semantic dependency that
+>> a) applies in all cases we practically need and
+>> b) is guaranteed by all compilers
+>>
+>> or we need to live with the fact that we do not have a semantic dependency
+>> definition that is independent of the compilation (even of the same
+>> compiler) and need to do our verification for that specific compilation.
+> 
+> Add the qualification that the definition should be practical to
+> evaluate, and I agree.
+
+Yes, an important point. And hard to resolve as well.
+
+
+Best wishes,
+   jonas
+

@@ -1,124 +1,92 @@
-Received: from mail-qk1-f173.google.com (mail-qk1-f173.google.com [209.85.222.173])
+Received: from mail-pj1-f44.google.com (mail-pj1-f44.google.com [209.85.216.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED9E2214204
-	for <lkmm@lists.linux.dev>; Wed, 22 Jan 2025 19:11:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFAED21CC40
+	for <lkmm@lists.linux.dev>; Fri, 14 Feb 2025 07:58:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737573092; cv=none; b=Y//shnvO22BB0eaUdpOHHygK6AVads96HXKuLZ8sx4Y4BhebRFh9n9va8xMMuIPZWjF9rcnTQ5duiDDR8RilAgejeTiwJrKN9QuaWS1kILPL/j0T3oLlBnGwd8MXtWNYAl0ocf0NjLJJ3MSGH7D4ILKeksAhNWVhBsf1DPo+x+I=
+	t=1739519931; cv=none; b=jDNq+g5p38CY6APjFlgfmnpXOg5CWueMA3s6yjeqHcAtNMn2UbmcmuJNQPhakck5N8wSctOHfMjbLStRi/Pwpod/xBDQDy0iFFMLP4rldw1JJr/IYqdV5uodSAMQKNb1Z5JF+DhNuhX421P5ZSU0zM3Oo0SqHWkAP+qflbMbWTQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737573092; c=relaxed/simple;
-	bh=Z1yqNPZlOeRExYM4QTHz8AnmHzshpip7umUeC08sWaQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=vFAVS8KFeGkcbHdMPzt/5WiJE8WbjXPr/m+cEvcU7csP/lF7ExVAqrRkpqgUKOob7lcsSNqa6MP1BjSEnkDuVtilr5I2k36uf6f7jJe63L+cAj+j35Ko4N3tRGxHF0JeL3I8v8QLYeGwvYLR8l2/tn6PLVR6ODYcMa5Jjio0cGQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=rowland.harvard.edu; spf=fail smtp.mailfrom=g.harvard.edu; dkim=pass (2048-bit key) header.d=rowland.harvard.edu header.i=@rowland.harvard.edu header.b=PwaoUMSH; arc=none smtp.client-ip=209.85.222.173
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=rowland.harvard.edu
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=g.harvard.edu
+	s=arc-20240116; t=1739519931; c=relaxed/simple;
+	bh=x2KE4P62k1zgXpZx1Q5Zi/VebToU99bs9e7NR2WaBTE=;
+	h=Message-ID:Date:MIME-Version:To:Cc:From:Subject:Content-Type; b=Z9oCPJ/04DP8ahCH174jjauE3Bw+npKQrNzG1R+VJ+9gyUqX18gXEsmlzz+A+EZPZdGqtTayn64hM845N0KUgyp4nMgxomlYjXFNwRyeV1YiMPfxVCEMEyPUDCZingU12rOK0brcFFoZO/Z7FdIkqLN40HTUE2MhPGUKJSIrORc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=anbh0ot6; arc=none smtp.client-ip=209.85.216.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=rowland.harvard.edu header.i=@rowland.harvard.edu header.b="PwaoUMSH"
-Received: by mail-qk1-f173.google.com with SMTP id af79cd13be357-7b7041273ddso2838985a.3
-        for <lkmm@lists.linux.dev>; Wed, 22 Jan 2025 11:11:30 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="anbh0ot6"
+Received: by mail-pj1-f44.google.com with SMTP id 98e67ed59e1d1-2fa2eb7eb45so4665069a91.1
+        for <lkmm@lists.linux.dev>; Thu, 13 Feb 2025 23:58:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=rowland.harvard.edu; s=google; t=1737573090; x=1738177890; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=GMK9+KLD3vkM1I8BSPYO4/dY05c/HFcM+aj2IVm+X2U=;
-        b=PwaoUMSHly1PeXNq/R82rRLnqp8MM/2zsgFkAUVzLFDKBTfOtAGfYao3JJO1xi2igT
-         5tGxW9sM5dQ11x5W6nvag6lFSksqT5wY/RCqe3O6slS7tMsOnoZHlCGgh2ECQqQaRwG/
-         UJwMZo2+TZ2yxGjp6/NHhUuXqjPwTHpWEjsgulcCad6DvwG+SrnqQZU4CYBMU3dKrTqi
-         QtcQgRSgUL/ekhxNIkOM7VjMR43FpTZsHWduKDjur1bVuW5BBqLpO6Uv8Hz78vFNCi0B
-         UITvfxBqwLerSa4DOiUG+2sr5F6p7KTHsZ3bh9YYUTLLe6s1rtq3UxdLa6GdpSBr62Oe
-         IvzA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1737573090; x=1738177890;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+        d=gmail.com; s=20230601; t=1739519929; x=1740124729; darn=lists.linux.dev;
+        h=content-transfer-encoding:subject:from:cc:to:content-language
+         :user-agent:mime-version:date:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=GMK9+KLD3vkM1I8BSPYO4/dY05c/HFcM+aj2IVm+X2U=;
-        b=DDkj949NHP3xPREiPLRwjWUh1pn1+udUFcYf02LTt2FhGgSWjzmhaXr3imQAnCfiN/
-         053IjNhf+7FzUiNPaNfVPTsiKSJJKHbmsmpSQyVJIwPMBj6tax8GXyRZytyrFnJp88+w
-         8tKuOEtrycc/oDx9F+qnJFD9xl2p1G8po/mLZyjbaSF63I4hORQD5o84VHxLoNOw0g0q
-         u/XiEuX8Xnq9Asw6Vnl69u3Cj1sI2+a4vVNeBTOMik+ELjEcUn2wV+zFPycaOb/O+gQv
-         9ZCTJZhcrn40PjGlGNOveyCk9K6JQKdSqYKD28fX1tSPNM/irBbuQykKsPrG8X/2hMnJ
-         Wwxg==
-X-Forwarded-Encrypted: i=1; AJvYcCUlFjNXC2wrKfMGmPqYBdbBpc4ruq/V599CKUqzo2vB/D+A6z6XplW0AEHtx+rmn6vlE0IB@lists.linux.dev
-X-Gm-Message-State: AOJu0YwrzuXaJggSxWoFEfH7Eg1E7ZagCFq23jZf8XuBea03gpo+8c2e
-	pd+fWrwCiyno55t9Z9eKh2ed5GPdRwF8hXs6LAV03q4p+48KaJNGImuw/4hYyw==
-X-Gm-Gg: ASbGncvMoy63uU3x70XYC+L8JrSKDIMoUNimcdsxGXTTea7WV7RLzN5qWliCdRLPHJe
-	hRbpKer44T6RBX2vScZe5Z/ELDBCkuZUgfaWWSfRi7OpWCG78mr7hLlvV4ZF2cqHHpBsivoAX4E
-	d5Hy4Z0baL3seon+YHyHdPVJWOuAlQmM8kfdIpkm9S0MY4KXOqUqkDvYf2DPT+WsJvT5rbNXIp5
-	21zLOud6AwwgT+vn+etgUxdgN6vnUpPexIznU2rHWpMpKxC1kxTOBxtP9oJ3KOltr8I3sX6z4nH
-	6muE7Rv+7H9FnJ2JgN3G6aB3YlmNOWRWZ/swwBqlxNFFo0bmewRcMEYUE5ClIAs=
-X-Google-Smtp-Source: AGHT+IHL5mVDMgQlokSRrg14Grt/a6zCGRAUDF87pLjqVh8P9AlGpiW9ekWgTiH8jWlNxokqwkWomQ==
-X-Received: by 2002:a05:620a:1916:b0:7b6:dc74:829f with SMTP id af79cd13be357-7be6320c0acmr4144838485a.7.1737573089761;
-        Wed, 22 Jan 2025 11:11:29 -0800 (PST)
-Received: from rowland.harvard.edu (nat-65-112-8-51.harvard-secure.wrls.harvard.edu. [65.112.8.51])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-7be61473bd7sm686884985a.23.2025.01.22.11.11.28
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 22 Jan 2025 11:11:29 -0800 (PST)
-Date: Wed, 22 Jan 2025 14:11:26 -0500
-From: Alan Stern <stern@rowland.harvard.edu>
-To: Jonas Oberhauser <jonas.oberhauser@huaweicloud.com>
-Cc: paulmck@kernel.org, parri.andrea@gmail.com, will@kernel.org,
-	peterz@infradead.org, boqun.feng@gmail.com, npiggin@gmail.com,
-	dhowells@redhat.com, j.alglave@ucl.ac.uk, luc.maranget@inria.fr,
-	akiyks@gmail.com, dlustig@nvidia.com, joel@joelfernandes.org,
-	urezki@gmail.com, quic_neeraju@quicinc.com, frederic@kernel.org,
-	linux-kernel@vger.kernel.org, lkmm@lists.linux.dev,
-	hernan.poncedeleon@huaweicloud.com
-Subject: Re: [RFC] tools/memory-model: Rule out OOTA
-Message-ID: <b77902dd-d17f-4e09-ac52-35a6ab1e78e5@rowland.harvard.edu>
-References: <21ec2b32-69ce-46bf-8d44-06149e71ba6c@paulmck-laptop>
- <0c0fcfb7-dbef-426b-ac54-583c85fbba9d@huaweicloud.com>
- <1cea1fcd-827c-455e-93b7-f4d606bf4993@paulmck-laptop>
- <1147ad3e-e3ad-4fa1-9a63-772ba136ea9a@huaweicloud.com>
- <1668d0b4-4060-4eac-b8b1-46ca0d1dbce9@rowland.harvard.edu>
- <e35c40e9-ccc8-43e9-a676-1ea8dd925718@huaweicloud.com>
- <96059c09-3993-4f41-b3c2-54fe767c073a@rowland.harvard.edu>
- <2139f8ce-63fa-4231-864b-500ee2645811@huaweicloud.com>
- <df9de992-fd3d-432b-9758-9fe35cc9b0c4@rowland.harvard.edu>
- <a2057858-fd7c-4458-96fc-0c3f52eae5fb@huaweicloud.com>
+        bh=Pq34ASCSqMBImRf2FTvSA6r3MMYuBcOZbrtGAE63mP0=;
+        b=anbh0ot6quKQcc0UomGWrc3f7ldm06DKJ3eJe/Thbf1IvNeDqffyV6ID+O4KUFtbnP
+         reUc1IA7ZjjHRB/g8gaAVONuRkELdrj410Qoirv+fHuwdhAHfjdUhd/1dMTKbi1wNpmP
+         V+pY2gNtVsiJ01b+E7c3zUAKfz+01m8i3T0NMnwJBMXW7CBKcHn/boNSnAeTQH9d9Qgf
+         I8YRdZtNgFA3GpUtEtYjWqvfVvXwT9fupqxZOY5+JQrllp2von541E0XuJoaDOHOx/0n
+         grDi0HTJyWBA1GX67LmYULYDb4CfY6j5EjSpZdWogjuEBQjEPL8xe9+brpHc3pH7OWvD
+         lUhQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1739519929; x=1740124729;
+        h=content-transfer-encoding:subject:from:cc:to:content-language
+         :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=Pq34ASCSqMBImRf2FTvSA6r3MMYuBcOZbrtGAE63mP0=;
+        b=GDpXAi7cGb4WCzCV9XGqKfTECiW8KCGmKYVxQlAp4kRDZvwUp/ExWBgrUXHOrfmCWL
+         IQMdhVn2lOhezmmxv85tdNJBgI+O8NXaT7KYSJuRz1iMPXEGiM9+ALGUMpKbg3dCdIfM
+         JwR8opdvf1ykUqJ58unzYP79z5mublxpafCTw/c3JvSgT9p4fc0gaANk0ozmtyOr4Rb2
+         41YpirX8gRjvoBTjBqGw2S7rE6BKd8j6H/PeSre5qE+v8KFmw+3AY50XZqa6wZn4k7Hl
+         /6GLmNTMq1NFGlK5DbASzoTvZ84ZMWbWF9dDd35Y/1IUWpEyi2aQTnwSpQaEH/Q4vvR0
+         NzSg==
+X-Gm-Message-State: AOJu0Yz46Rwz51xPsFyTFxL+/IK1ZQsz/TXraPupqOt/S+CFAPRkeN60
+	SAVaoup/8G37a6GxbVWVZmHIq5rlC6OgupvmVREgi6FFdMiL+exM
+X-Gm-Gg: ASbGnctBVu3vQD/5ESBME9CEl1zlnIBsrBiIR1fLPPmxqWLjw/vhMA3N7yHI3cC7pxr
+	yIIEuOtHiKLoqoNVFYX4YwjlfD3JNIT2oq4wq8HXF+T/lrOvLsxG9V8RFRMk3Mtkw4BbSX+QHaB
+	GwQf/6zQuh+JweKh3AXe5ulTchOjUuhGdF/Q8IZJSHq4OdCuSkueu/4rn8hg8xzsLaZCBN50Cwo
+	eQG+KdfAT1kO+si4q5mCNkOilR8l2S8HqPVMNtDvwuObfLqusWuFrcez2x16priexDjY79OEC68
+	joWg9sgC9NtuRrl21OjC2TchZpuOhppV59fO0phMZ1tobQNcBeYqBTcQ3CidBg==
+X-Google-Smtp-Source: AGHT+IHlbKeFxme2qOlqQOVlxkxvWkzC+lJk9FcPYx2itBG/GTjykSu01w2Jh+YflfhG7Zt9Oj90Sw==
+X-Received: by 2002:a05:6a00:400e:b0:728:f21b:ce4c with SMTP id d2e1a72fcca58-7323c8f59b7mr10867447b3a.5.1739519927118;
+        Thu, 13 Feb 2025 23:58:47 -0800 (PST)
+Received: from [10.0.2.15] (KD106167137155.ppp-bb.dion.ne.jp. [106.167.137.155])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-7324fb3a761sm903557b3a.178.2025.02.13.23.58.44
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 13 Feb 2025 23:58:46 -0800 (PST)
+Message-ID: <234b1984-1956-4bfa-9b60-20b28514c8cb@gmail.com>
+Date: Fri, 14 Feb 2025 16:58:36 +0900
 Precedence: bulk
 X-Mailing-List: lkmm@lists.linux.dev
 List-Id: <lkmm.lists.linux.dev>
 List-Subscribe: <mailto:lkmm+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:lkmm+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <a2057858-fd7c-4458-96fc-0c3f52eae5fb@huaweicloud.com>
+User-Agent: Mozilla Thunderbird
+Content-Language: en-US
+To: "Paul E. McKenney" <paulmck@kernel.org>
+Cc: lkmm@lists.linux.dev, Jonas Oberhauser
+ <jonas.oberhauser@huaweicloud.com>,
+ Hernan Ponce de Leon <hernan.poncedeleon@huaweicloud.com>,
+ Hernan Ponce de Leon <zeta96@gmail.com>, Puranjay Mohan
+ <puranjay@kernel.org>, Luc Maranget <luc.maranget@inria.fr>,
+ Akira Yokosawa <akiyks@gmail.com>
+From: Akira Yokosawa <akiyks@gmail.com>
+Subject: herdtools7.7.58 is now available
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Wed, Jan 22, 2025 at 04:46:03AM +0100, Jonas Oberhauser wrote:
-> > > > > Yes. Actually I wonder if you put this "all loads are volatile" restriction,
-> > > > > can a globally analysing compiler still have any optimizations that a
-> > > > > locally analysing compiler can not?
-> > > > 
-> > > > Yes, although whether they are pertinent is open to question.  For
-> > > > example, a globally optimizing compiler may observe that no thread ever
-> > > > reads the value of a particular shared variable and then eliminate that
-> > > > variable.
-> > > 
-> > > Oh, I meant the "all atomic objects is volatile" restriction, not just the
-> > > loads. In that case, all stores the object - even if never read - still need
-> > > to be generated.
-> > > 
-> > > Are there still any optimizations?
-> > 
-> > Perhaps not any that affect shared variable accesses.  In a way, that
-> > was the intention.
-> 
-> Yes, but it becomes a bit strange then to treat the "globally analyzing
-> compiler" as a harder problem. You have made a globally analyzing compiler
-> that can not globally analyze. I understand that makes the argument
-> feasible, but I am not sure if this is how compilers really behave (or at
-> least will still behave in the future).
+Hi Paul,
 
-There's still an important difference.  A globally optimizing compiler 
-is allowed to generate different object code for a thread (containing 
-the same source code) in different programs, depending on the source for 
-the other threads.  A locally analyzing compiler is not allowed to do 
-this; it will always generate the same object code for threads 
-containing the same source code, regardless of what the rest of the 
-program does.
+Thanks to Luc, herdtools7.7.58 is now available [1, 2], which means
+pending LKMM changes by Puranjay, Hernan, and Jonas have become
+ready to go for the next merge window.
 
-Alan
+I'm not sure who will be in charge of sending LKMM pull request for
+v6.15, though.
+
+[1] https://github.com/herd/herdtools7/issues/1155
+[2] https://github.com/herd/herdtools7/releases/tag/7.58
+
+        Thanks, Akira

@@ -1,47 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C795265CA9
-	for <lkmm@lists.linux.dev>; Fri, 14 Feb 2025 14:59:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 438891FCCFD;
+	Thu, 20 Feb 2025 16:13:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739545170; cv=none; b=QGuC50Gxm+lw3T1O4Pj8TiKmT5i7nBZk07FmJF69q40SP56IluHY2/IczcW2hsqCXNyO/lHfjdNvDfpFahD8vk/wCRKgArSSZTdlwS5lpXGV9w2mut3XlNilaLUNDvNY9f/WOEp+WAhJeQrqm1CFbmEzGWzg5LIvBbwJirPaktM=
+	t=1740068034; cv=none; b=KsA5+2/1Wqcy685JW9fjBjncf/5H1caKLbfFHrd6IabdyY38Nw5gju+znoIQRvSDrkCdln59rOD/CpM9bnbqoQxMqDiN+RebcpuHtnewrnEFLvfdkRtqpHMArTx77PzKxgpPq4PMrrV65VbKhIMIqc1OS02j1ipHvLXLYdUpB38=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739545170; c=relaxed/simple;
-	bh=DyWVbcvQhqRRay3nylvG/rIWst3boOWeThwZbHFfAug=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=jeQCPgiQOdfqupUjC3WIj7p+oAEUAWjst99X+klSWaj9wjYjO7rKdmAFZWaRm22ELb1OYsPHr0WlaTK+obQljjlTFBtYn80nUQndLP6eTx2IuDU5poSmL1RwYM7VSajjg+sHHi3E1YFEC+bGMcg56tS5601+a2tWlYRlKNdmI7w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=r0m2Y7yn; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1740068034; c=relaxed/simple;
+	bh=3VSzR5Z8uIuVC+7tweHictjvzbkRlvDxQeYKXDewMeg=;
+	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition; b=l3tQbfDCR3DYCAYomWRicUzT2FsRWozVD2twmGZNdINJiVieFcKI8JcFBWRnzlFm1uAQnlVtYTzayk5sxXNJ4N33hA18+0mdQ4n5hPPWfMK8ftPTtmMewEseHxPmTMA1tRx+nvHvivavK6pGTDOr1y6fyQnokKfKMALX14S1MN8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=uEScfLP3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="r0m2Y7yn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BBFF8C4CED1;
-	Fri, 14 Feb 2025 14:59:29 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="uEScfLP3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3787C4CEE9;
+	Thu, 20 Feb 2025 16:13:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1739545170;
-	bh=DyWVbcvQhqRRay3nylvG/rIWst3boOWeThwZbHFfAug=;
-	h=Date:From:To:Cc:Subject:Reply-To:References:In-Reply-To:From;
-	b=r0m2Y7ynYxObSvH7XNdUlZtp/1h248gupJu8r46Fxj57P8he0kgqcfm9nGLOGhjoR
-	 te2TaszVeRt6ZFU7fGvKs+2W8r02NuJv0wCQiF/7d9FQEJFcHnpnUvPPTE+biLOKiY
-	 MpwJI+hNJbxpR/t7wvBpaGQ3IbYbyOgFgvmg5hcfbklhIAirMfNjo+JACEo1omGzH0
-	 Nr9Om3Oa8NFQgsb/4wHp14VeWtXrahYQH+F8qIaN/Qh/r4wZ2dJT/JGQfhHakA+Ifh
-	 zS3dfIJRzbu24tLr/ydUT73CW98oKATSaGA2P261rYbqm4eqxGHmzEUSiiB4rTNnzk
-	 kHlxZ2S1Il0eg==
+	s=k20201202; t=1740068033;
+	bh=3VSzR5Z8uIuVC+7tweHictjvzbkRlvDxQeYKXDewMeg=;
+	h=Date:From:To:Cc:Subject:Reply-To:From;
+	b=uEScfLP3uSwjd9fRU1v9j/AvFqqzminZLgG0p9yBa6wLV6bdjMQlnCAGn+HA5OcEL
+	 R+hfJICC8Z5b29cwNVCzsviPCi7e/hiZKTKsU4qzJO388ihKrwwng6CPdItTkUIm/O
+	 RvLcEMHHmVerfMhVTxgbAy1GP6cmty+NNQtAJ0Kj9KJZY0ItN4qjtAV8HZT8woZyiU
+	 KaEmE0lKJ0TQe42QSsDlbUZ1r1Ap8Vs2ZyTD+Vc/LMouAyI7RYrVJFaepuSV3Fz+Dx
+	 /+M0MPKnrTllmgE2o4cBy2LeDC1p+0qcUPkIym2UyYNXmFDaXjyB66ACSwEfobpjrJ
+	 N69cfYDriKI7A==
 Received: by paulmck-ThinkPad-P17-Gen-1.home (Postfix, from userid 1000)
-	id 2AAD1CE0928; Fri, 14 Feb 2025 06:59:27 -0800 (PST)
-Date: Fri, 14 Feb 2025 06:59:27 -0800
+	id 4AEB8CE0B34; Thu, 20 Feb 2025 08:13:53 -0800 (PST)
+Date: Thu, 20 Feb 2025 08:13:53 -0800
 From: "Paul E. McKenney" <paulmck@kernel.org>
-To: Akira Yokosawa <akiyks@gmail.com>
-Cc: Jonas Oberhauser <jonas.oberhauser@huaweicloud.com>,
-	Hernan Ponce de Leon <hernan.poncedeleon@huaweicloud.com>,
-	lkmm@lists.linux.dev, Hernan Ponce de Leon <zeta96@gmail.com>,
-	Puranjay Mohan <puranjay@kernel.org>,
-	Luc Maranget <luc.maranget@inria.fr>
-Subject: Re: herdtools7.7.58 is now available
-Message-ID: <cfcec0f8-1af0-4397-b8f5-0a4f072d80f3@paulmck-laptop>
+To: linux-kernel@vger.kernel.org, linux-arch@vger.kernel.org,
+	lkmm@lists.linux.dev, kernel-team@meta.com, mingo@kernel.org
+Cc: stern@rowland.harvard.edu, parri.andrea@gmail.com, will@kernel.org,
+	peterz@infradead.org, boqun.feng@gmail.com, npiggin@gmail.com,
+	dhowells@redhat.com, j.alglave@ucl.ac.uk, luc.maranget@inria.fr,
+	akiyks@gmail.com
+Subject: [PATCH memory-model 0/7] LKMM updates for v6.15
+Message-ID: <8cfb51e3-9726-4285-b8ca-0d0abcacb07e@paulmck-laptop>
 Reply-To: paulmck@kernel.org
-References: <234b1984-1956-4bfa-9b60-20b28514c8cb@gmail.com>
- <e52c415b-7469-41c4-842d-f15e32e1d80b@paulmck-laptop>
- <ec97f28e-31ad-4a45-ac87-fab91e27d4ee@gmail.com>
 Precedence: bulk
 X-Mailing-List: lkmm@lists.linux.dev
 List-Id: <lkmm.lists.linux.dev>
@@ -50,73 +47,42 @@ List-Unsubscribe: <mailto:lkmm+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <ec97f28e-31ad-4a45-ac87-fab91e27d4ee@gmail.com>
 
-On Fri, Feb 14, 2025 at 08:26:02PM +0900, Akira Yokosawa wrote:
-> Paul E. McKenney wrote:
-> > On Fri, Feb 14, 2025 at 04:58:36PM +0900, Akira Yokosawa wrote:
-> >> Hi Paul,
-> >>
-> >> Thanks to Luc, herdtools7.7.58 is now available [1, 2], which means
-> >> pending LKMM changes by Puranjay, Hernan, and Jonas have become
-> >> ready to go for the next merge window.
-> >>
-> >> I'm not sure who will be in charge of sending LKMM pull request for
-> >> v6.15, though.
-> >>
-> >> [1] https://github.com/herd/herdtools7/issues/1155
-> >> [2] https://github.com/herd/herdtools7/releases/tag/7.58
-> > 
-> > That would be me, and thank you for letting me know!
-> > 
-> > Would you like to submit a patch updating the required version of herd7?
-> > One location is tools/memory-model/README,
-> 
-> It is already taken care of by
-> commit c6476bdc49b3 ("tools/memory-model: Switch to softcoded herd7 tags").
+Hello!
 
-Indeed it is, thank you!
+This series celebrates the release of version 7.58 of herd7, which
+permits these commits to head to mainline:
 
-> That said, its Sob chain looks confusing to me (provided its author is Jonas):
-> 
->     Signed-off-by: Hernan Ponce de Leon <hernan.poncedeleon@huaweicloud.com>
->     Signed-off-by: Jonas Oberhauser <jonas.oberhauser@huaweicloud.com>
->     Signed-off-by: Paul E. McKenney <paulmck@kernel.org>
+1.	Add atomic_and()/or()/xor() and add_negative, courtesy of
+	Puranjay Mohan.
 
-Thank you again for checking!
+2.	Add atomic_andnot() with its variants, courtesy of Puranjay Mohan.
 
-This says to me that Hernan wrote the patch, and Jonas took it in and
-sent it out.  If this is the case, I should change git's idea of the
-author to "Hernan Ponce de Leon <hernan.poncedeleon@huaweicloud.com>".
+3.	Legitimize current use of tags in LKMM macros, courtesy of
+	Jonas Oberhauser.
 
-							Thanx, Paul
+4.	Define applicable tags on operation in tools/..., courtesy of
+	Jonas Oberhauser.
 
-> This should be either (Jonas as the author):
-> 
->     Co-developed-by: Hernan Ponce de Leon <hernan.poncedeleon@huaweicloud.com>
->     Signed-off-by: Hernan Ponce de Leon <hernan.poncedeleon@huaweicloud.com>
->     Signed-off-by: Jonas Oberhauser <jonas.oberhauser@huaweicloud.com>
->     Signed-off-by: Paul E. McKenney <paulmck@kernel.org>
->     
-> , (Hernan as the author):
-> 
->     Signed-off-by: Hernan Ponce de Leon <hernan.poncedeleon@huaweicloud.com>
->     Co-developed-by: Jonas Oberhauser <jonas.oberhauser@huaweicloud.com>
->     Signed-off-by: Jonas Oberhauser <jonas.oberhauser@huaweicloud.com>
->     Signed-off-by: Paul E. McKenney <paulmck@kernel.org>
-> 
-> , or (Hernan as the author, Jonas as a submitter):
-> 
->     Signed-off-by: Hernan Ponce de Leon <hernan.poncedeleon@huaweicloud.com>
->     Signed-off-by: Jonas Oberhauser <jonas.oberhauser@huaweicloud.com>
->     Signed-off-by: Paul E. McKenney <paulmck@kernel.org>
-> 
-> Jonas, Hernan, which is the case here?
-> 
->         Thanks, Akira
-> 
-> >                                            and there might be others
-> > (though I hope not).
-> > 
-> > 							Thanx, Paul
-> 
+5.	Define effect of Mb tags on RMWs in tools/..., courtesy of
+	Jonas Oberhauser.
+
+6.	Switch to softcoded herd7 tags, courtesy of Jonas Oberhauser.
+
+7.	Distinguish between syntactic and semantic tags, courtesy of
+	Jonas Oberhauser.
+
+						Thanx, Paul
+
+------------------------------------------------------------------------
+
+ b/tools/memory-model/Documentation/herd-representation.txt |   27 -
+ b/tools/memory-model/README                                |    2 
+ b/tools/memory-model/linux-kernel.bell                     |    9 
+ b/tools/memory-model/linux-kernel.cat                      |   10 
+ b/tools/memory-model/linux-kernel.cfg                      |    1 
+ b/tools/memory-model/linux-kernel.def                      |   21 +
+ tools/memory-model/Documentation/herd-representation.txt   |   44 +-
+ tools/memory-model/linux-kernel.bell                       |   36 +-
+ tools/memory-model/linux-kernel.def                        |  222 ++++++-------
+ 9 files changed, 215 insertions(+), 157 deletions(-)

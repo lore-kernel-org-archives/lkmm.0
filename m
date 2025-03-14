@@ -1,64 +1,64 @@
-Received: from mail-pl1-f174.google.com (mail-pl1-f174.google.com [209.85.214.174])
+Received: from mail-pl1-f177.google.com (mail-pl1-f177.google.com [209.85.214.177])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A10D1F2360
-	for <lkmm@lists.linux.dev>; Fri, 14 Mar 2025 11:18:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3BEA1F5420
+	for <lkmm@lists.linux.dev>; Fri, 14 Mar 2025 11:20:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741951130; cv=none; b=cz1Mgjm7A4GpZu2Y/Y3T9j5D8aKkyuOzvqHfexVbI8D4qVxU5IFRP+DLrnYayiWK7Q/Ml5c/4b9ruNev0Y4Cs9FhY75CRmKTBg5QmJ+hq6n+gTh7vthzR8c9N39YNk+cEOYj8iYVrpovayXlJ2QD8R/3XLp63M4vNWKIsDC0hP0=
+	t=1741951261; cv=none; b=MRvNWHtiE6xncawhO0qhT+/teJodIzRofgEQVg7lLG1VrTtPbc52XtioIrKgyxE6HfMjd9xGsXxzRj+Vxf1/cxj11S1j+o1BhVPDndrOqU778Or9wPQrctDBa7Lj4HRP0453qOuRyITAJVoEYThGOvp64+tF8UrQxmMMuQinDxg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741951130; c=relaxed/simple;
-	bh=wUNvece7g2W/ySVxbYwLL+k7faybV3SJuZ6NjZC2ohM=;
+	s=arc-20240116; t=1741951261; c=relaxed/simple;
+	bh=hDpg3cPvJBrHdJU9q80ibbhvOZO48UsX3/MmT93KAuo=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=phmDHjynMZFdPqL1CR2yS/ijkUvBLkKT0bSknRYPicO0+Y0qj83rpKl05FnfinbqrXJtes1m6oBb5AWNOhhfSJGiq+WQU4cdN3n39nPFTGXZQwgmtJMe4YUWMd6sKcJojYtiwREfUEGA7hxAnPx3RxQfvMXkYE6V1U+b+ojWKmo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=PIfHHlDk; arc=none smtp.client-ip=209.85.214.174
+	 In-Reply-To:Content-Type; b=CxbMr0n3sNYSZ7Txc5RrMBgHQhnDTq/2resDLfQZM2NAKuSEAR7UQbThIjYxnqN8zHGSGwwkpRrJmryyi6kRf8IcE0u7igiECpXvwnkj8piu403ZnpdY4sn0ooExEUt2Gk7n+JIJ6JFxeiRfL/bDuiTBVnRDpkD1NPRZ7MvtBvg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=BrSNTeVq; arc=none smtp.client-ip=209.85.214.177
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PIfHHlDk"
-Received: by mail-pl1-f174.google.com with SMTP id d9443c01a7336-22401f4d35aso38804645ad.2
-        for <lkmm@lists.linux.dev>; Fri, 14 Mar 2025 04:18:48 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BrSNTeVq"
+Received: by mail-pl1-f177.google.com with SMTP id d9443c01a7336-224171d6826so48677995ad.3
+        for <lkmm@lists.linux.dev>; Fri, 14 Mar 2025 04:20:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1741951128; x=1742555928; darn=lists.linux.dev;
+        d=gmail.com; s=20230601; t=1741951259; x=1742556059; darn=lists.linux.dev;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=kW9R55VdBcns+UcpZpXgXQpsXEnyLHj+YVPPMTbQ4FY=;
-        b=PIfHHlDk1w12PdBXpjsJEVeUvGe2HzPKNNvzLd1WF/kc/h7dR+4T5qIopiUFStjeow
-         o31626aJpHLVwDvEUHLJPQtqnkyWbzJwguFLrrgHRsRM2AJkozt1+eLavY3MaZBZav5Q
-         Lj2OzenVehNcgIkn3MeRZN+mjUyqdY1i+j+cQ9/u3NgNPPA1G2y9V7Na3RuKtSrtCGeh
-         vHJFNqWOD19jxlnYR/TVoD6mXkVaVTsR7h3bHqtLK0iyTjPJW5myPdG/7Ft3WGjmjSih
-         eHTL3Z+GISTv/+iC198K2TQv5LtAg2yVHfJwvK4WYooAnP+78ZPtY3Vm0VN0RTIQnISV
-         0nrQ==
+        bh=WCvCasS0JeqwKQShTIHvfUTGynEHpe4G3bIa66DP+aw=;
+        b=BrSNTeVqw6OD+UC6HCI8MLYxxF6PFiHceWC+UFfIy+zuEnUBVENeUslRx7Ib4+kY+V
+         758MlPCL9ZutNCeN432xzL1pePeQCz76+Q+vfQmH753whKEyNQxI3n7gVHZCRGyJfhbL
+         3MT0uYaIzHZRKZKhjJgY7C5ktFqeq8FiE+xMjX0TeB38h9snkOdF4E+DTlKeBLwOUNCH
+         gxfsY/a86MB4Lyor1jVNlnugVVg1btqxiva7uas1kzEYXDr4gMOF80CeAs1Zx0B3/SI1
+         XyG/Q/oCB9But/fkPVEHBXjws2ksV4bLNU2NnOG+ex/LwUni/hTLW/BVEbyHcvc3tu50
+         xnTA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1741951128; x=1742555928;
+        d=1e100.net; s=20230601; t=1741951259; x=1742556059;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=kW9R55VdBcns+UcpZpXgXQpsXEnyLHj+YVPPMTbQ4FY=;
-        b=h7ohPLZRd4KL07pvdZpeHw4C15N0OM3+EtMa1vb5z9mG1yM38ZrpuFdwlE6JKTj/AU
-         eTW0B8DpWRYrmG9yyFeVkkVMzFFtusCICNKYBrttlC93sgSXJWKwfoLtUHzK7dqQfFuz
-         mxfCr/DCbrsDHtRHqaPlOPVZdCd5nEiGFdPclo5cOCed/DWHot7bfdsKkNRn5e3MPhMe
-         HRdmtgvCuJSi2RI2FLfp7ntH6cwr/WwWnZBWlcVdlSBOlY2hwtaPhOpsfDKk9087vg2a
-         Fzloq5+g0G5/ieZyYbF5J1IumrpTYQ/lh5mvmxvFUsR9SXqFX8MwW7cbUkjDUzEWbypO
-         rGIg==
-X-Gm-Message-State: AOJu0YyzZZlOFdgRErOdKBFSkGYFg0KoBD8ZFsszQuc0ZAijc73kJFQD
-	phCc4209VGTpgUHlwdjyk4UjCmGAdZhwIfoBkmU4J6ZIns+NUtI+
-X-Gm-Gg: ASbGnctuIhU7qZ5q1mWijJMFOAbPI82JnHys5wSXbyUHuQbVskVgf8rUu0T65zKEmh5
-	637q1mmYBvupwNXa7g4bxNXMwWvLk2gf6MaEQv+Ryh3Xx9lFtHHc2JSAlTTLbf0drlLAVRbUwXb
-	mDRHQZZzcwbvWa3pTt0c95Q8OLUJE9xTds8npmuewko6TxZEdUvBwk4AfZvCcD5r+bwoavxTCnV
-	HKJ36yL2Uv92gM87n+/PhcutOhdDfcQ3v26YGk1uOW3vijgyaifuObcZvrhPIjP+f/hSAT3rEgg
-	pqQUv08sX3vUSSy0N0tRE77cHh9UEoGc8o0g8CA9cQOkQD1Hjn6WB4JjZ89w+TP7BIqS1Xye3nQ
-	XDcVV96MCgWzMCDU=
-X-Google-Smtp-Source: AGHT+IGr1vxzx2y/FiLuuRs7uguWQayH4sNwiM65yMs7CWYhlgEIleS3rte3d0OQpM/IyiiHzE5VSQ==
-X-Received: by 2002:a17:902:e74c:b0:223:3bf6:7e6a with SMTP id d9443c01a7336-225e0a40bb3mr35665595ad.12.1741951128228;
-        Fri, 14 Mar 2025 04:18:48 -0700 (PDT)
+        bh=WCvCasS0JeqwKQShTIHvfUTGynEHpe4G3bIa66DP+aw=;
+        b=CdrfIXlsngfwDUoivcrI49O8AraGilUp8/Wt/trCKoZYesUAvhlgjWIJtmdGp7ccSZ
+         7GqBPs5gY9/N1N65QyW+V5gm64XhKyPrmufjQRVE+V7bJ+PEYd9WBmz5oR282BavaQUI
+         ndUYFXPyOCcS/IEbjoMi8kEHIgxwfrNzJY06xDI6QsKUi3lm1JQ6jSjl2DNweT+4qvie
+         junZyGthaZRRCCFg1TjCDim4oK2qFKL48oJG2NpNgwKzA4f/tNIcTFgT2bfCTnHgXdL4
+         9QRo/sAcEIu3gYe640Cwdp1e7ckFpZg8qmQ1gMHqNVTGbsvja+LcEFjk+ayMdF4HGcdF
+         PZzg==
+X-Gm-Message-State: AOJu0YxAmVJXielcWa2k9oheuZ6wYTp9vaGnBC2CYSF51wWDYJFFmUct
+	m/1a2Cx5kCwjlT9QiWUgyKjICvFI+YSbq7p2hCcVewPIlU2WTY5z
+X-Gm-Gg: ASbGncsBZTfNedB0krtTKquJO5KvcHON7LSz0Rm0Pd7x3IMo0uGM4OEevAIdQQ/qILw
+	BCvS6DwHa2Y4BVehLl8l3DDC60V/Y4gYmcRiiYR6GP9kyYjcTObhdH46bIL4sN66h5SbSpNKWX5
+	8ZIVjcbXqAYKq0ohZA13SFtmVAfUiPcVfv0+9Zq3fh35JdT8xiYx1PdjbyvaihJIt0QzeDQ4RUb
+	MLwWYKlw+q8hLcWpXQWsgjatTZRnYFldIW38zLE/NsdYO17fjVkX3MB2ADp6gQiVQCqMefRijma
+	huDIjmXfATo6qmiLY/P8Yb/mtZkqnQ8KuRj+Lb9VA8aBgsl5U9MhzQCYLqj+cYuDF5/GpLAQeL/
+	lqEx3lzK4BQmzgoqjm3Of2TLrOw==
+X-Google-Smtp-Source: AGHT+IFXE/l8eU+Egs69shCDq4QAM3fZnrpjTty04tjN4x3OOfrENAKk55eZ1smHlDgJzsPtnenKHg==
+X-Received: by 2002:a17:902:e5cb:b0:21f:7a8b:d675 with SMTP id d9443c01a7336-225e0a62f94mr32849475ad.4.1741951258880;
+        Fri, 14 Mar 2025 04:20:58 -0700 (PDT)
 Received: from [10.0.2.15] (KD106167137155.ppp-bb.dion.ne.jp. [106.167.137.155])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-225c6ba710dsm26785585ad.128.2025.03.14.04.18.46
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-225c688858asm26730935ad.46.2025.03.14.04.20.57
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 14 Mar 2025 04:18:47 -0700 (PDT)
-Message-ID: <cd593ef5-ea52-4b20-aae0-096679cf4c81@gmail.com>
-Date: Fri, 14 Mar 2025 20:12:04 +0900
+        Fri, 14 Mar 2025 04:20:58 -0700 (PDT)
+Message-ID: <e7390d0d-7157-4f9f-b8c9-6011cb6fae45@gmail.com>
+Date: Fri, 14 Mar 2025 20:14:15 +0900
 Precedence: bulk
 X-Mailing-List: lkmm@lists.linux.dev
 List-Id: <lkmm.lists.linux.dev>
@@ -66,7 +66,7 @@ List-Subscribe: <mailto:lkmm+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:lkmm+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: [PATCH 2/4] tools/memory-model: docs/simple.txt: Fix trivial typos
+Subject: [PATCH 3/4] tools/memory-model: docs/ordering: Fix trivial typos
 To: "Paul E. McKenney" <paulmck@kernel.org>
 Cc: lkmm@lists.linux.dev, Andrea Parri <parri.andrea@gmail.com>,
  Boqun Feng <boqun.feng@gmail.com>, Alan Stern <stern@rowland.harvard.edu>,
@@ -78,33 +78,92 @@ In-Reply-To: <c3f8f79d-b815-44ec-908a-7eea36f52b3f@gmail.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
+Fix trivial typos including:
+
+  - Repeated "a call to"
+  - Inconsistent forms of referencing functions of rcu_dereference()
+    and rcu_assign_pointer()
+  - Past tense used in describing normal behavior
+
+and other minor ones.
+
 Signed-off-by: Akira Yokosawa <akiyks@gmail.com>
 ---
- tools/memory-model/Documentation/simple.txt | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ tools/memory-model/Documentation/ordering.txt | 20 +++++++++----------
+ 1 file changed, 10 insertions(+), 10 deletions(-)
 
-diff --git a/tools/memory-model/Documentation/simple.txt b/tools/memory-model/Documentation/simple.txt
-index 21f06c1d1b70..2df148630cdc 100644
---- a/tools/memory-model/Documentation/simple.txt
-+++ b/tools/memory-model/Documentation/simple.txt
-@@ -134,7 +134,7 @@ Packaged primitives: Sequence locking
- Lockless programming is considered by many to be more difficult than
- lock-based programming, but there are a few lockless design patterns that
- have been built out into an API.  One of these APIs is sequence locking.
--Although this APIs can be used in extremely complex ways, there are simple
-+Although this API can be used in extremely complex ways, there are simple
- and effective ways of using it that avoid the need to pay attention to
- memory ordering.
+diff --git a/tools/memory-model/Documentation/ordering.txt b/tools/memory-model/Documentation/ordering.txt
+index 9b0949d3f5ec..96587646d0cc 100644
+--- a/tools/memory-model/Documentation/ordering.txt
++++ b/tools/memory-model/Documentation/ordering.txt
+@@ -223,7 +223,7 @@ The Linux kernel's compiler barrier is barrier().  This primitive
+ prohibits compiler code-motion optimizations that might move memory
+ references across the point in the code containing the barrier(), but
+ does not constrain hardware memory ordering.  For example, this can be
+-used to prevent to compiler from moving code across an infinite loop:
++used to prevent the compiler from moving code across an infinite loop:
  
-@@ -205,7 +205,7 @@ If you want to keep things simple, use the initialization and read-out
- operations from the previous section only when there are no racing
- accesses.  Otherwise, use only fully ordered operations when accessing
- or modifying the variable.  This approach guarantees that code prior
--to a given access to that variable will be seen by all CPUs has having
-+to a given access to that variable will be seen by all CPUs as having
- happened before any code following any later access to that same variable.
+ 	WRITE_ONCE(x, 1);
+ 	while (dontstop)
+@@ -274,7 +274,7 @@ different pieces of the concurrent algorithm.  The variable stored to
+ by the smp_store_release(), in this case "y", will normally be used in
+ an acquire operation in other parts of the concurrent algorithm.
  
- Please note that per-CPU functions are not atomic operations and
+-To see the performance advantages, suppose that the above example read
++To see the performance advantages, suppose that the above example reads
+ from "x" instead of writing to it.  Then an smp_wmb() could not guarantee
+ ordering, and an smp_mb() would be needed instead:
+ 
+@@ -394,17 +394,17 @@ from the value returned by the rcu_dereference() or srcu_dereference()
+ to that subsequent memory access.
+ 
+ A call to rcu_dereference() for a given RCU-protected pointer is
+-usually paired with a call to a call to rcu_assign_pointer() for that
+-same pointer in much the same way that a call to smp_load_acquire() is
+-paired with a call to smp_store_release().  Calls to rcu_dereference()
+-and rcu_assign_pointer are often buried in other APIs, for example,
++usually paired with a call to rcu_assign_pointer() for that same pointer
++in much the same way that a call to smp_load_acquire() is paired with
++a call to smp_store_release().  Calls to rcu_dereference() and
++rcu_assign_pointer() are often buried in other APIs, for example,
+ the RCU list API members defined in include/linux/rculist.h.  For more
+ information, please see the docbook headers in that file, the most
+ recent LWN article on the RCU API (https://lwn.net/Articles/777036/),
+ and of course the material in Documentation/RCU.
+ 
+ If the pointer value is manipulated between the rcu_dereference()
+-that returned it and a later dereference(), please read
++that returned it and a later rcu_dereference(), please read
+ Documentation/RCU/rcu_dereference.rst.  It can also be quite helpful to
+ review uses in the Linux kernel.
+ 
+@@ -457,7 +457,7 @@ described earlier in this document.
+ These operations come in three categories:
+ 
+ o	Marked writes, such as WRITE_ONCE() and atomic_set().  These
+-	primitives required the compiler to emit the corresponding store
++	primitives requires the compiler to emit the corresponding store
+ 	instructions in the expected execution order, thus suppressing
+ 	a number of destructive optimizations.	However, they provide no
+ 	hardware ordering guarantees, and in fact many CPUs will happily
+@@ -465,7 +465,7 @@ o	Marked writes, such as WRITE_ONCE() and atomic_set().  These
+ 	operations, unless these operations are to the same variable.
+ 
+ o	Marked reads, such as READ_ONCE() and atomic_read().  These
+-	primitives required the compiler to emit the corresponding load
++	primitives requires the compiler to emit the corresponding load
+ 	instructions in the expected execution order, thus suppressing
+ 	a number of destructive optimizations.	However, they provide no
+ 	hardware ordering guarantees, and in fact many CPUs will happily
+@@ -506,7 +506,7 @@ of the old value and the new value.
+ 
+ Unmarked C-language accesses are unordered, and are also subject to
+ any number of compiler optimizations, many of which can break your
+-concurrent code.  It is possible to used unmarked C-language accesses for
++concurrent code.  It is possible to use unmarked C-language accesses for
+ shared variables that are subject to concurrent access, but great care
+ is required on an ongoing basis.  The compiler-constraining barrier()
+ primitive can be helpful, as can the various ordering primitives discussed
 -- 
 2.34.1
 

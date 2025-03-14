@@ -1,64 +1,64 @@
-Received: from mail-pl1-f177.google.com (mail-pl1-f177.google.com [209.85.214.177])
+Received: from mail-pj1-f46.google.com (mail-pj1-f46.google.com [209.85.216.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3BEA1F5420
-	for <lkmm@lists.linux.dev>; Fri, 14 Mar 2025 11:20:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51AEB1F30A8
+	for <lkmm@lists.linux.dev>; Fri, 14 Mar 2025 11:22:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741951261; cv=none; b=MRvNWHtiE6xncawhO0qhT+/teJodIzRofgEQVg7lLG1VrTtPbc52XtioIrKgyxE6HfMjd9xGsXxzRj+Vxf1/cxj11S1j+o1BhVPDndrOqU778Or9wPQrctDBa7Lj4HRP0453qOuRyITAJVoEYThGOvp64+tF8UrQxmMMuQinDxg=
+	t=1741951360; cv=none; b=QlFoftNuk+IFrjB4mD1hvnqC4KwIDh8BGD9pDAxTpJZ+gl/6GU9pw3De4yKVEzzIeduhdMua0Rw6f5HArF7/g5H9StpHX9Vk889n98zjtTf3iLaPui/GjEwI+RL8EzLawEAHX7zXMEv52GISr9xXxU/zoI3IpkIskGLxNRN+9vs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741951261; c=relaxed/simple;
-	bh=hDpg3cPvJBrHdJU9q80ibbhvOZO48UsX3/MmT93KAuo=;
+	s=arc-20240116; t=1741951360; c=relaxed/simple;
+	bh=7GbOh1uf5/FsBz6hVCMEOqk9Cs8LRbLKoNWgnC9yxZY=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=CxbMr0n3sNYSZ7Txc5RrMBgHQhnDTq/2resDLfQZM2NAKuSEAR7UQbThIjYxnqN8zHGSGwwkpRrJmryyi6kRf8IcE0u7igiECpXvwnkj8piu403ZnpdY4sn0ooExEUt2Gk7n+JIJ6JFxeiRfL/bDuiTBVnRDpkD1NPRZ7MvtBvg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=BrSNTeVq; arc=none smtp.client-ip=209.85.214.177
+	 In-Reply-To:Content-Type; b=YAxqH/vRCOiWqcpBbVRkcGgjGHbYu+R/L7r7tzUExi3m6Hwg+1WTRNcPNZP0cD5qq6VxNofal59E0aVbBhJGeHbMmeGFyNViFm/zv6hbeCSEgE4yIzM//HbKzKDkCoqN/0nLXu3XLQEKM7Jybka2YELniAGxZAbvhGyOlcNGJNk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=WNDMERse; arc=none smtp.client-ip=209.85.216.46
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BrSNTeVq"
-Received: by mail-pl1-f177.google.com with SMTP id d9443c01a7336-224171d6826so48677995ad.3
-        for <lkmm@lists.linux.dev>; Fri, 14 Mar 2025 04:20:59 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WNDMERse"
+Received: by mail-pj1-f46.google.com with SMTP id 98e67ed59e1d1-2ff799d99dcso4076053a91.1
+        for <lkmm@lists.linux.dev>; Fri, 14 Mar 2025 04:22:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1741951259; x=1742556059; darn=lists.linux.dev;
+        d=gmail.com; s=20230601; t=1741951358; x=1742556158; darn=lists.linux.dev;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=WCvCasS0JeqwKQShTIHvfUTGynEHpe4G3bIa66DP+aw=;
-        b=BrSNTeVqw6OD+UC6HCI8MLYxxF6PFiHceWC+UFfIy+zuEnUBVENeUslRx7Ib4+kY+V
-         758MlPCL9ZutNCeN432xzL1pePeQCz76+Q+vfQmH753whKEyNQxI3n7gVHZCRGyJfhbL
-         3MT0uYaIzHZRKZKhjJgY7C5ktFqeq8FiE+xMjX0TeB38h9snkOdF4E+DTlKeBLwOUNCH
-         gxfsY/a86MB4Lyor1jVNlnugVVg1btqxiva7uas1kzEYXDr4gMOF80CeAs1Zx0B3/SI1
-         XyG/Q/oCB9But/fkPVEHBXjws2ksV4bLNU2NnOG+ex/LwUni/hTLW/BVEbyHcvc3tu50
-         xnTA==
+        bh=OY6tbKZVOZev3QWRR0lESJ3vzq7AhZLN6s1GzeUIO60=;
+        b=WNDMERseBltUUdk/LoOVepa5kwC3k25FuyBmpDQk7ls4ApjvPmDXxgngzBs1oZJVfV
+         AdZ4b8CiK5ngArmTZHaXRNHaAEk/nxSneTGw0icSLpfwAsdAKrRIozI8yPttxj9TanwX
+         GjWJFsT2yUtPyQvczrkJ5aHosIFsDwmN9ZTa/B7jhe/TMPXhcTxi63EeDgVBypj/DjKl
+         TCtncHg025d6fNK9YkwQSutm/je+rPfuRxYKCd0rDy0HQOsxQRsXfYhfP1G4bdNkHLcG
+         qVBBkkqVhmo0/XHO/Z6bo58FN5sf/Z3Zpb6ZJL8urMBKUWaxhySn4USb/nokVkZkBJcW
+         jkwA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1741951259; x=1742556059;
+        d=1e100.net; s=20230601; t=1741951358; x=1742556158;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=WCvCasS0JeqwKQShTIHvfUTGynEHpe4G3bIa66DP+aw=;
-        b=CdrfIXlsngfwDUoivcrI49O8AraGilUp8/Wt/trCKoZYesUAvhlgjWIJtmdGp7ccSZ
-         7GqBPs5gY9/N1N65QyW+V5gm64XhKyPrmufjQRVE+V7bJ+PEYd9WBmz5oR282BavaQUI
-         ndUYFXPyOCcS/IEbjoMi8kEHIgxwfrNzJY06xDI6QsKUi3lm1JQ6jSjl2DNweT+4qvie
-         junZyGthaZRRCCFg1TjCDim4oK2qFKL48oJG2NpNgwKzA4f/tNIcTFgT2bfCTnHgXdL4
-         9QRo/sAcEIu3gYe640Cwdp1e7ckFpZg8qmQ1gMHqNVTGbsvja+LcEFjk+ayMdF4HGcdF
-         PZzg==
-X-Gm-Message-State: AOJu0YxAmVJXielcWa2k9oheuZ6wYTp9vaGnBC2CYSF51wWDYJFFmUct
-	m/1a2Cx5kCwjlT9QiWUgyKjICvFI+YSbq7p2hCcVewPIlU2WTY5z
-X-Gm-Gg: ASbGncsBZTfNedB0krtTKquJO5KvcHON7LSz0Rm0Pd7x3IMo0uGM4OEevAIdQQ/qILw
-	BCvS6DwHa2Y4BVehLl8l3DDC60V/Y4gYmcRiiYR6GP9kyYjcTObhdH46bIL4sN66h5SbSpNKWX5
-	8ZIVjcbXqAYKq0ohZA13SFtmVAfUiPcVfv0+9Zq3fh35JdT8xiYx1PdjbyvaihJIt0QzeDQ4RUb
-	MLwWYKlw+q8hLcWpXQWsgjatTZRnYFldIW38zLE/NsdYO17fjVkX3MB2ADp6gQiVQCqMefRijma
-	huDIjmXfATo6qmiLY/P8Yb/mtZkqnQ8KuRj+Lb9VA8aBgsl5U9MhzQCYLqj+cYuDF5/GpLAQeL/
-	lqEx3lzK4BQmzgoqjm3Of2TLrOw==
-X-Google-Smtp-Source: AGHT+IFXE/l8eU+Egs69shCDq4QAM3fZnrpjTty04tjN4x3OOfrENAKk55eZ1smHlDgJzsPtnenKHg==
-X-Received: by 2002:a17:902:e5cb:b0:21f:7a8b:d675 with SMTP id d9443c01a7336-225e0a62f94mr32849475ad.4.1741951258880;
-        Fri, 14 Mar 2025 04:20:58 -0700 (PDT)
+        bh=OY6tbKZVOZev3QWRR0lESJ3vzq7AhZLN6s1GzeUIO60=;
+        b=Wf2YsJBCsVG7Ovjikg0z6J2HW6GLlfRxYNBr+SpUUkwIyz8rmAubDTFJ7KmHB0XeAQ
+         RhK1iADTIrbhcediSBAA5M6hthWcP2d+ToWgCGsyUH+1/hUdW0QC/9lVirmthdPTlHC6
+         vVakoo3fRWnBYqjzKUTOdzeBPai+ha4WdbpVPY79qm3DFD+OpKGE7xxmibKTZe9kvLKz
+         3bAmh6JxYqHtIcYhPen1bO4S/Qdtpvyciuu37yBLkz6WtwgJ2PA6ByMvvkcGY9qoBbhQ
+         dhBduLzbHAVkTDfLoGjjXwTbTEhH58cyW6PfJygCrn5SHLTIzcY5lQjDEQQXxrksWho7
+         NYmw==
+X-Gm-Message-State: AOJu0YxOK6FO47OfiWvnmpv3Io/K1Qs8dJ7glS+sMpvVGuv2elvvcRlb
+	AqJSUUgVzMt1eKt0eLwnIMhYcxcv4iMmJz2+LaN8YunKCVCsY2+g
+X-Gm-Gg: ASbGnctgGv+COppXfGjCd+dJfr16+ii9YLTR+7XcjFGZVbbL7gpQoNSiVp4RLk9RCvu
+	nX4c7G0Sb9dhBIESH1TFoX/t6tllNQ7b3YJgDqJIRqtpdTcB100KRkEo8NGoBnPH6xGdBw81RXz
+	9hjIkAZpxTpahb5TWtH8sION1K3y3SDKuOtNVXcn0tHdMHd9OzJI/qvpoUEJpdAApMZ/V8o0QGZ
+	yVR6aM6+aVpxFxZTxMRDW1VjprQ3rAk9JlImN9IghJV5wH8qkxDSwZkg5/fWilPx2AdQLalJ1rA
+	uydUB/Prbm0vDHwl9QfVhcZYg2SeeyHL54r60YbxJErsiBG8hBmLk0cMHEtEvu2ogVxEgooT2tg
+	AmTimcIQt6HfHlsU=
+X-Google-Smtp-Source: AGHT+IGQu0SoYs6EO7wdy+mHUS1adVMPnMoBGrciQlEZpJBm6ZzW/W+XGFqvm52zGdQkEqiQlTqygg==
+X-Received: by 2002:a17:90b:5288:b0:2ff:62f3:5b31 with SMTP id 98e67ed59e1d1-30151dc7983mr3071770a91.29.1741951358573;
+        Fri, 14 Mar 2025 04:22:38 -0700 (PDT)
 Received: from [10.0.2.15] (KD106167137155.ppp-bb.dion.ne.jp. [106.167.137.155])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-225c688858asm26730935ad.46.2025.03.14.04.20.57
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-30153532d7asm805120a91.21.2025.03.14.04.22.36
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 14 Mar 2025 04:20:58 -0700 (PDT)
-Message-ID: <e7390d0d-7157-4f9f-b8c9-6011cb6fae45@gmail.com>
-Date: Fri, 14 Mar 2025 20:14:15 +0900
+        Fri, 14 Mar 2025 04:22:38 -0700 (PDT)
+Message-ID: <a003bdb8-fb7c-48b6-aa1e-675af37c1e59@gmail.com>
+Date: Fri, 14 Mar 2025 20:15:54 +0900
 Precedence: bulk
 X-Mailing-List: lkmm@lists.linux.dev
 List-Id: <lkmm.lists.linux.dev>
@@ -66,7 +66,8 @@ List-Subscribe: <mailto:lkmm+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:lkmm+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: [PATCH 3/4] tools/memory-model: docs/ordering: Fix trivial typos
+Subject: [PATCH 4/4] tools/memory-model: docs/references: Remove broken link
+ to imgtec.com
 To: "Paul E. McKenney" <paulmck@kernel.org>
 Cc: lkmm@lists.linux.dev, Andrea Parri <parri.andrea@gmail.com>,
  Boqun Feng <boqun.feng@gmail.com>, Alan Stern <stern@rowland.harvard.edu>,
@@ -78,92 +79,34 @@ In-Reply-To: <c3f8f79d-b815-44ec-908a-7eea36f52b3f@gmail.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-Fix trivial typos including:
-
-  - Repeated "a call to"
-  - Inconsistent forms of referencing functions of rcu_dereference()
-    and rcu_assign_pointer()
-  - Past tense used in describing normal behavior
-
-and other minor ones.
+MIPS documents are not provided at imgtec.com any more.
+Get rid of useless link.
 
 Signed-off-by: Akira Yokosawa <akiyks@gmail.com>
 ---
- tools/memory-model/Documentation/ordering.txt | 20 +++++++++----------
- 1 file changed, 10 insertions(+), 10 deletions(-)
+Currently, a later version of the document is available at:
+https://s3-eu-west-1.amazonaws.com/downloads-mips/documents/MD00087-2B-MIPS64BIS-AFP-6.06.pdf
 
-diff --git a/tools/memory-model/Documentation/ordering.txt b/tools/memory-model/Documentation/ordering.txt
-index 9b0949d3f5ec..96587646d0cc 100644
---- a/tools/memory-model/Documentation/ordering.txt
-+++ b/tools/memory-model/Documentation/ordering.txt
-@@ -223,7 +223,7 @@ The Linux kernel's compiler barrier is barrier().  This primitive
- prohibits compiler code-motion optimizations that might move memory
- references across the point in the code containing the barrier(), but
- does not constrain hardware memory ordering.  For example, this can be
--used to prevent to compiler from moving code across an infinite loop:
-+used to prevent the compiler from moving code across an infinite loop:
+It has a copyright notice of Wave Computing, Inc., but there is no info
+on the entity who maintains it.
+---
+ tools/memory-model/Documentation/references.txt | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
+
+diff --git a/tools/memory-model/Documentation/references.txt b/tools/memory-model/Documentation/references.txt
+index c5fdfd19df24..d691390620b3 100644
+--- a/tools/memory-model/Documentation/references.txt
++++ b/tools/memory-model/Documentation/references.txt
+@@ -46,8 +46,7 @@ o	ARM Ltd. (Ed.). 2014. "ARM Architecture Reference Manual (ARMv8,
  
- 	WRITE_ONCE(x, 1);
- 	while (dontstop)
-@@ -274,7 +274,7 @@ different pieces of the concurrent algorithm.  The variable stored to
- by the smp_store_release(), in this case "y", will normally be used in
- an acquire operation in other parts of the concurrent algorithm.
+ o	Imagination Technologies, LTD. 2015. "MIPS(R) Architecture
+ 	For Programmers, Volume II-A: The MIPS64(R) Instruction,
+-	Set Reference Manual". Imagination Technologies,
+-	LTD. https://imgtec.com/?do-download=4302.
++	Set Reference Manual". Imagination Technologies, LTD.
  
--To see the performance advantages, suppose that the above example read
-+To see the performance advantages, suppose that the above example reads
- from "x" instead of writing to it.  Then an smp_wmb() could not guarantee
- ordering, and an smp_mb() would be needed instead:
- 
-@@ -394,17 +394,17 @@ from the value returned by the rcu_dereference() or srcu_dereference()
- to that subsequent memory access.
- 
- A call to rcu_dereference() for a given RCU-protected pointer is
--usually paired with a call to a call to rcu_assign_pointer() for that
--same pointer in much the same way that a call to smp_load_acquire() is
--paired with a call to smp_store_release().  Calls to rcu_dereference()
--and rcu_assign_pointer are often buried in other APIs, for example,
-+usually paired with a call to rcu_assign_pointer() for that same pointer
-+in much the same way that a call to smp_load_acquire() is paired with
-+a call to smp_store_release().  Calls to rcu_dereference() and
-+rcu_assign_pointer() are often buried in other APIs, for example,
- the RCU list API members defined in include/linux/rculist.h.  For more
- information, please see the docbook headers in that file, the most
- recent LWN article on the RCU API (https://lwn.net/Articles/777036/),
- and of course the material in Documentation/RCU.
- 
- If the pointer value is manipulated between the rcu_dereference()
--that returned it and a later dereference(), please read
-+that returned it and a later rcu_dereference(), please read
- Documentation/RCU/rcu_dereference.rst.  It can also be quite helpful to
- review uses in the Linux kernel.
- 
-@@ -457,7 +457,7 @@ described earlier in this document.
- These operations come in three categories:
- 
- o	Marked writes, such as WRITE_ONCE() and atomic_set().  These
--	primitives required the compiler to emit the corresponding store
-+	primitives requires the compiler to emit the corresponding store
- 	instructions in the expected execution order, thus suppressing
- 	a number of destructive optimizations.	However, they provide no
- 	hardware ordering guarantees, and in fact many CPUs will happily
-@@ -465,7 +465,7 @@ o	Marked writes, such as WRITE_ONCE() and atomic_set().  These
- 	operations, unless these operations are to the same variable.
- 
- o	Marked reads, such as READ_ONCE() and atomic_read().  These
--	primitives required the compiler to emit the corresponding load
-+	primitives requires the compiler to emit the corresponding load
- 	instructions in the expected execution order, thus suppressing
- 	a number of destructive optimizations.	However, they provide no
- 	hardware ordering guarantees, and in fact many CPUs will happily
-@@ -506,7 +506,7 @@ of the old value and the new value.
- 
- Unmarked C-language accesses are unordered, and are also subject to
- any number of compiler optimizations, many of which can break your
--concurrent code.  It is possible to used unmarked C-language accesses for
-+concurrent code.  It is possible to use unmarked C-language accesses for
- shared variables that are subject to concurrent access, but great care
- is required on an ongoing basis.  The compiler-constraining barrier()
- primitive can be helpful, as can the various ordering primitives discussed
+ o	Shaked Flur, Kathryn E. Gray, Christopher Pulte, Susmit
+ 	Sarkar, Ali Sezgin, Luc Maranget, Will Deacon, and Peter
 -- 
 2.34.1
 

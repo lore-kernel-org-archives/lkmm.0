@@ -1,90 +1,63 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D5E71ACED2;
-	Fri, 21 Mar 2025 23:15:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D65518E02A;
+	Tue, 25 Mar 2025 01:58:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742598940; cv=none; b=Vg0e5wcWVB4oTwvj5uXyqAlMvU5MULH1gkq8nWLDRvE8sccNziJ4eqCjqPT0hmh4RovTzVnsx05bEaCsViu44txsCUUTZghnQ9vmBfCWkQLxBqWnU81X91LnLDDJztlTd2Vit42dxGyhZ5igR/r7H2TwT+mroDE91Yes8VGo38M=
+	t=1742867880; cv=none; b=a9bRnYYY962tRVA3vAxDuG/chWz3/BUZukFzp0bGyFZcNr0npXmWePDwTSpA7rux4NMmTBTLemmO+SSR/FgdDdj6i+BlVO0ODZTXNc23GFLIkL/bnlIaQ2GqCtXzxXIKyOWj6SQiZZ9kcutCZx44HAWSO083iep0+xWfILbH1N4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742598940; c=relaxed/simple;
-	bh=4/l0zHJK3QMkErAg/IuioCZM6Qu/eCsO8OfUJsP7z00=;
-	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition; b=rkhlXJDUh0wm7sQwrTEftUKHTsGm+L1LNFXYhUfY/jXGLm1CytAtOxBr+HHb/AG2TsfuMGCejqMwo5kcDCoYDGLV6DMoAJTYrMY7iikXxsZEb3WRPEL7Os2IOvupWYmzYrM6uuMaxvNjE5fjWbR0YXg8aF/jNdWsB1gMyK9/3ds=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bcieY/Y/; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1742867880; c=relaxed/simple;
+	bh=EQhuRSnLDPoPFmB4iFlaftDgrH6HhFnbk1f2sHI1RT8=;
+	h=Subject:From:In-Reply-To:References:Message-Id:Date:To:Cc; b=iViVlRjHIEMfQxrkiGjRB+24GnQw1qVNQobU684nFH30OTtXwn5UG2WILX29vB4Ri4NvUoLIw/0i2voSKO2g1HRaN+BfchkmttrkP0sqOl7VxxrTyoVI/O5QZeOvOQEpPMbCNxx1JpWdOasBOWwrUY4VLR9KFcEpl1J+I+dTrrk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=AM9QfN8b; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bcieY/Y/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A947C4CEE3;
-	Fri, 21 Mar 2025 23:15:39 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="AM9QfN8b"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0059C4CEF1;
+	Tue, 25 Mar 2025 01:57:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1742598939;
-	bh=4/l0zHJK3QMkErAg/IuioCZM6Qu/eCsO8OfUJsP7z00=;
-	h=Date:From:To:Cc:Subject:Reply-To:From;
-	b=bcieY/Y/6M5M+IhOxP6WlyaVD8bCJw8fYIm9eV0ONB/XXRGGWbPzKhP6K3tQW6lg5
-	 t/WdivjP1QGEuctGPlMmB99s8NvVUGaFYszBiqvG05G0YChGm4PYRJBFvCaNfZ8XNz
-	 7rDyJfgk18SrVNAP53nzbGXqCGY6JtYrFkLN1MygQo6Zp5JH8yer4IPMq+Bg0sGucd
-	 Qje5hAiLZReZ9rEH6zOtHJ5uXHq4sPJv1wz4xmmOEELkCTwKQMJ39A0ddPUurRhIzs
-	 QfjD1PW+1Mr3zHhM5IX5NriAtGZT33uFq/kGxZgD0Jt2wgBSiITrGDIGKb5kUYMalK
-	 L8SnHOfvH8p1A==
-Received: by paulmck-ThinkPad-P17-Gen-1.home (Postfix, from userid 1000)
-	id 1EBDBCE0D1D; Fri, 21 Mar 2025 16:15:39 -0700 (PDT)
-Date: Fri, 21 Mar 2025 16:15:39 -0700
-From: "Paul E. McKenney" <paulmck@kernel.org>
-To: torvalds@linux-foundation.org
-Cc: linux-kernel@vger.kernel.org, lkmm@lists.linux.dev, puranjay@kernel.org,
-	jonas.oberhauser@huaweicloud.com, akiyks@gmail.com
-Subject: [GIT PULL] LKMM changes for v6.15
-Message-ID: <dbfe09b5-e5a4-4bf8-96eb-9fb6b98e2fb6@paulmck-laptop>
-Reply-To: paulmck@kernel.org
+	s=k20201202; t=1742867880;
+	bh=EQhuRSnLDPoPFmB4iFlaftDgrH6HhFnbk1f2sHI1RT8=;
+	h=Subject:From:In-Reply-To:References:Date:To:Cc:From;
+	b=AM9QfN8bwyxwdQ8RxLiwcPfIjKqZaL21zpBxSXzQlySCWA0gTHh4uoSFswhMcjBoo
+	 61N8ZQ1R3FbYS5EZri1LiwjrZMo8rMhAU2UNqRLiiAM+gmNCSgFOZOgYnv8+Zycyat
+	 7INIxuRQdIBJn7iAXyfWFNd+74Ayz+2u1Mm0On4e5PxL+CjCOzSD/jXgmwyDZwk7YV
+	 nJpX8bD4VTgLcGmpSgfqj4EHN5bf1w/tU/mJxoJr0QOmF1VkvmCsIgrs8fTri9ir+l
+	 8i43LXwh8pzIClqujoWtOZuBxW8bFIh18tQoUkkE/FPlxlIW81EOz2s6E5lIwLfdG2
+	 u9EaYbkSKxdVw==
+Received: from [10.30.226.235] (localhost [IPv6:::1])
+	by aws-us-west-2-korg-oddjob-rhel9-1.codeaurora.org (Postfix) with ESMTP id 70BAF380DBCD;
+	Tue, 25 Mar 2025 01:58:37 +0000 (UTC)
+Subject: Re: [GIT PULL] LKMM changes for v6.15
+From: pr-tracker-bot@kernel.org
+In-Reply-To: <dbfe09b5-e5a4-4bf8-96eb-9fb6b98e2fb6@paulmck-laptop>
+References: <dbfe09b5-e5a4-4bf8-96eb-9fb6b98e2fb6@paulmck-laptop>
+X-PR-Tracked-List-Id: <linux-kernel.vger.kernel.org>
+X-PR-Tracked-Message-Id: <dbfe09b5-e5a4-4bf8-96eb-9fb6b98e2fb6@paulmck-laptop>
+X-PR-Tracked-Remote: git://git.kernel.org/pub/scm/linux/kernel/git/paulmck/linux-rcu tags/lkmm.2025.03.21a
+X-PR-Tracked-Commit-Id: a2bfbf847c96196d62c9a59bd32e1fdafd1c205c
+X-PR-Merge-Tree: torvalds/linux.git
+X-PR-Merge-Refname: refs/heads/master
+X-PR-Merge-Commit-Id: 72b40807d21cc5d7d8e48bfa860d5d78769dc07a
+Message-Id: <174286791594.53720.15242041260699194736.pr-tracker-bot@kernel.org>
+Date: Tue, 25 Mar 2025 01:58:35 +0000
+To: "Paul E. McKenney" <paulmck@kernel.org>
+Cc: torvalds@linux-foundation.org, linux-kernel@vger.kernel.org, lkmm@lists.linux.dev, puranjay@kernel.org, jonas.oberhauser@huaweicloud.com, akiyks@gmail.com
 Precedence: bulk
 X-Mailing-List: lkmm@lists.linux.dev
 List-Id: <lkmm.lists.linux.dev>
 List-Subscribe: <mailto:lkmm+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:lkmm+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
 
-Hello, Linus,
+The pull request you sent on Fri, 21 Mar 2025 16:15:39 -0700:
 
-When the v6.15 merge window opens, please pull this LKMM update from:
+> git://git.kernel.org/pub/scm/linux/kernel/git/paulmck/linux-rcu tags/lkmm.2025.03.21a
 
-  git://git.kernel.org/pub/scm/linux/kernel/git/paulmck/linux-rcu tags/lkmm.2025.03.21a
-  # HEAD: a2bfbf847c96196d62c9a59bd32e1fdafd1c205c: tools/memory-model: glossary.txt: Fix indents (2025-02-25 10:22:34 -0800)
+has been merged into torvalds/linux.git:
+https://git.kernel.org/torvalds/c/72b40807d21cc5d7d8e48bfa860d5d78769dc07a
 
-----------------------------------------------------------------
-lkmm: Add more atomic operations, rework tags, and update documentation
+Thank you!
 
-Changes
--------
-
-* Adds additional atomic operations (Puranjay Mohan)
-* Makes better use of herd7 tags (Jonas Oberhauser)
-* Updates documentation (Akira Yokosawa)
-
-These changes require v7.58 of the herd7 and klitmus tools, up from v7.52.
-
-----------------------------------------------------------------
-Akira Yokosawa (2):
-      tools/memory-model/README: Fix typo
-      tools/memory-model: glossary.txt: Fix indents
-
-Jonas Oberhauser (5):
-      tools/memory-model: Legitimize current use of tags in LKMM macros
-      tools/memory-model: Define applicable tags on operation in tools/...
-      tools/memory-model: Define effect of Mb tags on RMWs in tools/...
-      tools/memory-model: Switch to softcoded herd7 tags
-      tools/memory-model: Distinguish between syntactic and semantic tags
-
-Puranjay Mohan (2):
-      tools/memory-model: Add atomic_and()/or()/xor() and add_negative
-      tools/memory-model: Add atomic_andnot() with its variants
-
- tools/memory-model/Documentation/glossary.txt      |  32 ++--
- .../Documentation/herd-representation.txt          |  49 +++---
- tools/memory-model/README                          |   4 +-
- tools/memory-model/linux-kernel.bell               |  33 ++--
- tools/memory-model/linux-kernel.cat                |  10 ++
- tools/memory-model/linux-kernel.cfg                |   1 +
- tools/memory-model/linux-kernel.def                | 169 ++++++++++++---------
- 7 files changed, 178 insertions(+), 120 deletions(-)
+-- 
+Deet-doot-dot, I am a bot.
+https://korg.docs.kernel.org/prtracker.html

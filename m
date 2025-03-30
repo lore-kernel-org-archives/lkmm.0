@@ -1,63 +1,68 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from out-178.mta0.migadu.com (out-178.mta0.migadu.com [91.218.175.178])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D65518E02A;
-	Tue, 25 Mar 2025 01:58:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5C23155A25
+	for <lkmm@lists.linux.dev>; Sun, 30 Mar 2025 11:07:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742867880; cv=none; b=a9bRnYYY962tRVA3vAxDuG/chWz3/BUZukFzp0bGyFZcNr0npXmWePDwTSpA7rux4NMmTBTLemmO+SSR/FgdDdj6i+BlVO0ODZTXNc23GFLIkL/bnlIaQ2GqCtXzxXIKyOWj6SQiZZ9kcutCZx44HAWSO083iep0+xWfILbH1N4=
+	t=1743332862; cv=none; b=neVasHKmiq8tLilx/l6cHMdYzy/UJN6aIGo2W4PeO0lsJ+wwVXmZRYKowhEC8wkRWv841e6vcwyrgnBvvjlEplXdwBreXybj+Nxx53XaxiIr9DOJJZ8Gqzuo9BD41dQmoWM2Ksmv4IKkTvzPY89onYnpLDi3SEm6bur9GBz7cuU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742867880; c=relaxed/simple;
-	bh=EQhuRSnLDPoPFmB4iFlaftDgrH6HhFnbk1f2sHI1RT8=;
-	h=Subject:From:In-Reply-To:References:Message-Id:Date:To:Cc; b=iViVlRjHIEMfQxrkiGjRB+24GnQw1qVNQobU684nFH30OTtXwn5UG2WILX29vB4Ri4NvUoLIw/0i2voSKO2g1HRaN+BfchkmttrkP0sqOl7VxxrTyoVI/O5QZeOvOQEpPMbCNxx1JpWdOasBOWwrUY4VLR9KFcEpl1J+I+dTrrk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=AM9QfN8b; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1743332862; c=relaxed/simple;
+	bh=3Nef8ut+MWLHJT9xB9Q9TOJncLb47l7lZyVvuyZOU1I=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:Content-Type; b=IaQnnpbkJ1NFTghA1M30Zt8mzkza20EbfTV2yGd1pe6Ff7si28XOcTcv8kJOpTtdTW41V7jRm3Pf23aAzGKi4+Zk56R5Nrx54r2gzgCoILoxxitbySEM5Eb6tvNybUOSycyVQc70ysqat2Pt0Ttmee5OvO9cGHhURWyd6DJg+PY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iencinas.com; spf=pass smtp.mailfrom=iencinas.com; dkim=pass (2048-bit key) header.d=iencinas.com header.i=@iencinas.com header.b=O5orLCr8; arc=none smtp.client-ip=91.218.175.178
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iencinas.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=iencinas.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="AM9QfN8b"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0059C4CEF1;
-	Tue, 25 Mar 2025 01:57:59 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1742867880;
-	bh=EQhuRSnLDPoPFmB4iFlaftDgrH6HhFnbk1f2sHI1RT8=;
-	h=Subject:From:In-Reply-To:References:Date:To:Cc:From;
-	b=AM9QfN8bwyxwdQ8RxLiwcPfIjKqZaL21zpBxSXzQlySCWA0gTHh4uoSFswhMcjBoo
-	 61N8ZQ1R3FbYS5EZri1LiwjrZMo8rMhAU2UNqRLiiAM+gmNCSgFOZOgYnv8+Zycyat
-	 7INIxuRQdIBJn7iAXyfWFNd+74Ayz+2u1Mm0On4e5PxL+CjCOzSD/jXgmwyDZwk7YV
-	 nJpX8bD4VTgLcGmpSgfqj4EHN5bf1w/tU/mJxoJr0QOmF1VkvmCsIgrs8fTri9ir+l
-	 8i43LXwh8pzIClqujoWtOZuBxW8bFIh18tQoUkkE/FPlxlIW81EOz2s6E5lIwLfdG2
-	 u9EaYbkSKxdVw==
-Received: from [10.30.226.235] (localhost [IPv6:::1])
-	by aws-us-west-2-korg-oddjob-rhel9-1.codeaurora.org (Postfix) with ESMTP id 70BAF380DBCD;
-	Tue, 25 Mar 2025 01:58:37 +0000 (UTC)
-Subject: Re: [GIT PULL] LKMM changes for v6.15
-From: pr-tracker-bot@kernel.org
-In-Reply-To: <dbfe09b5-e5a4-4bf8-96eb-9fb6b98e2fb6@paulmck-laptop>
-References: <dbfe09b5-e5a4-4bf8-96eb-9fb6b98e2fb6@paulmck-laptop>
-X-PR-Tracked-List-Id: <linux-kernel.vger.kernel.org>
-X-PR-Tracked-Message-Id: <dbfe09b5-e5a4-4bf8-96eb-9fb6b98e2fb6@paulmck-laptop>
-X-PR-Tracked-Remote: git://git.kernel.org/pub/scm/linux/kernel/git/paulmck/linux-rcu tags/lkmm.2025.03.21a
-X-PR-Tracked-Commit-Id: a2bfbf847c96196d62c9a59bd32e1fdafd1c205c
-X-PR-Merge-Tree: torvalds/linux.git
-X-PR-Merge-Refname: refs/heads/master
-X-PR-Merge-Commit-Id: 72b40807d21cc5d7d8e48bfa860d5d78769dc07a
-Message-Id: <174286791594.53720.15242041260699194736.pr-tracker-bot@kernel.org>
-Date: Tue, 25 Mar 2025 01:58:35 +0000
-To: "Paul E. McKenney" <paulmck@kernel.org>
-Cc: torvalds@linux-foundation.org, linux-kernel@vger.kernel.org, lkmm@lists.linux.dev, puranjay@kernel.org, jonas.oberhauser@huaweicloud.com, akiyks@gmail.com
+	dkim=pass (2048-bit key) header.d=iencinas.com header.i=@iencinas.com header.b="O5orLCr8"
+Message-ID: <837b4d83-b91f-40d1-995a-aa3c5a925b0b@iencinas.com>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iencinas.com;
+	s=key1; t=1743332848;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding;
+	bh=X7nFE8EaL7ypg1gtpW643ijiaICmuFoCS56xQp9JYe0=;
+	b=O5orLCr8cobR9xnpM3ovlxCYU/c2kLA0uhBsbMiRBDyUjmJq9d9lqrGKy5pgk26hpSQBrO
+	yO/SfSwmzhp2QYFTtfOIXIs8e5yabeT2t/f+le3tRBc4CGGsTqYa+JssXekCC6ghD6ZWDE
+	WojBTmP8N0GvSkpIdiUNWR8iOUh1T7ifd8M8+Dn/lTckiIYCG6j7X1Xb6JBvWTUgHFnWHq
+	yjCN0c26tOW8i4DEc1OKUG4n57xrfn+RfW0Fji8Bi9sXEaR2ugi0rNzKzX1zduUY63xX4f
+	xspiDLLSePsvAuxDpvuZWc4P5eE7wmpnYsu8mi3QKqklGI1d8NnByVwAWzh2Ag==
+Date: Sun, 30 Mar 2025 13:07:23 +0200
 Precedence: bulk
 X-Mailing-List: lkmm@lists.linux.dev
 List-Id: <lkmm.lists.linux.dev>
 List-Subscribe: <mailto:lkmm+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:lkmm+unsubscribe@lists.linux.dev>
+MIME-Version: 1.0
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+From: Ignacio Encinas Rubio <ignacio@iencinas.com>
+Subject: Potential translation of LKMM docs into ReST
+To: lkmm@lists.linux.dev
+Cc: mchehab+huawei@kernel.org, paulmck@kernel.org, joel@joelfernandes.org,
+ Akira Yokosawa <akiyks@gmail.com>, linux-kernel-mentees@lists.linux.dev,
+ peterz@infradead.org, stern@rowland.harvard.edu, corbet@lwn.net,
+ Shuah Khan <skhan@linuxfoundation.org>
+Content-Language: en-US
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Migadu-Flow: FLOW_OUT
 
-The pull request you sent on Fri, 21 Mar 2025 16:15:39 -0700:
+Hello!
 
-> git://git.kernel.org/pub/scm/linux/kernel/git/paulmck/linux-rcu tags/lkmm.2025.03.21a
+There is interest [1] to get the memory model documentation into the 
+built docs. Akira pointed out that this was discussed in the past [2].
 
-has been merged into torvalds/linux.git:
-https://git.kernel.org/torvalds/c/72b40807d21cc5d7d8e48bfa860d5d78769dc07a
+A couple of years have gone by, so I was wondering whether the decision
+to keep plain text documentation still applies. 
 
-Thank you!
+There is an "easy" way [3] to get the plain text documentation into the
+built docs, but I would be happy to work in a conversion into ReST if
+that's what you want :)
 
--- 
-Deet-doot-dot, I am a bot.
-https://korg.docs.kernel.org/prtracker.html
+Ccing people involved in [2]
+
+Thanks!
+
+[1] https://lore.kernel.org/all/87o6y5lvvg.fsf@trenco.lwn.net/
+[2] https://lore.kernel.org/lkml/20190901133530.GL4125@linux.ibm.com/
+[3] https://lore.kernel.org/all/20220927160559.97154-7-corbet@lwn.net/

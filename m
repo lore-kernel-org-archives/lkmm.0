@@ -1,31 +1,41 @@
-Received: from verein.lst.de (verein.lst.de [213.95.11.211])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B5A21FF7DC
-	for <lkmm@lists.linux.dev>; Fri, 16 May 2025 06:34:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=213.95.11.211
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F002A1A5BB7;
+	Mon, 26 May 2025 04:41:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747377294; cv=none; b=qmgbFqJGDnDUArFZYCHl6gLtBnYKTO9cbUfgRDxY2h0s7t9oVm9/bcAeMU4+FAmK+55LWS7jP6uDo/A5CZguaGqCW5QjjSc4DTwLHPse7gV9sAdlX/rCIG800noSDm+vh01VpXPM3GU2E/kGFzuvweb1ABwkkO6pFRxkbcXwB/g=
+	t=1748234498; cv=none; b=Bp7AvJ5fZO5TMA3Si0jOGegnQhXBQkYnywdN4gnppCtieo+Xqm9yO8pc8bOcDBG0MCaqfyYJU1/62FWLrf361Z+XSUdTD8LMhpXojl3v1w2dlKByzIZpmuDBWfHXN/8uYGS9XTyN7eNDhIybd9h6x0DQO38pEVQIyP0eDoBtwP8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747377294; c=relaxed/simple;
-	bh=TKu5/yJLwlz0W5cl8c+lO8cbA5gUEqmahbihBE2G8QM=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ZWW1TSsNKmRdV8Hq5iNyPljZsfRO2YpEkOVviSXK4ULz+7ly6gDlwQ6qElwfXTxk5kj/VytK5bHBfaLv4guk1TR90nNVy3L5hM8xIo2zyE+vZ3VtyjYcRPx6TXrffVswLLzM590ezTw8/WfjFdhpzvUKmzPuQB3bEjfgmmivbbs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lst.de; spf=pass smtp.mailfrom=lst.de; arc=none smtp.client-ip=213.95.11.211
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lst.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=lst.de
-Received: by verein.lst.de (Postfix, from userid 2407)
-	id 9E4B368AA6; Fri, 16 May 2025 08:34:47 +0200 (CEST)
-Date: Fri, 16 May 2025 08:34:47 +0200
-From: Christoph Hellwig <hch@lst.de>
-To: Dave Chinner <david@fromorbit.com>
-Cc: Christoph Hellwig <hch@lst.de>, Carlos Maiolino <cem@kernel.org>,
-	linux-xfs@vger.kernel.org, cen zhang <zzzccc427@gmail.com>,
-	lkmm@lists.linux.dev, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] xfs: mark the i_delayed_blks access in
- xfs_file_release as racy
-Message-ID: <20250516063447.GA14632@lst.de>
-References: <20250513052614.753577-1-hch@lst.de> <aCO7injOF7DFJGY9@dread.disaster.area> <FezVRpM-CK9-HuEp3IpLjF-tP7zIL0rzKfhspjIkdGvS3giuWzM9eeby5_eQjL5_gNG1YC4Zu0snd2lBHnL0xg==@protonmail.internalid> <20250514042946.GA23355@lst.de> <ymjsjb7ich2s5f7tmhslhlnymjmso5o2lsvdoudy3dtbr7vjwk@moxzvvjdh6zl> <20250514130417.GA21064@lst.de> <aCUlXbEg9wuyPEB6@dread.disaster.area>
+	s=arc-20240116; t=1748234498; c=relaxed/simple;
+	bh=Y1XraJq9kE/HXXuiK/BxlucfeSWavk0dpOiPe49xlu4=;
+	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition; b=HaQJWBs8vgGLoWrRn8pcuKPybBqGZQDNu50JIOANHZBEajmIGSHrtjKggrEHMgUH/5GnMqKAMSqH6S8uwPsYSnJyIEuWgsf+IxJ3dgbuRJZNZbiPlNlDN9M3whncCCv8C2n1lwz0UrNSm9kuTcFRHODs/ICPjvVkleL1AKHlCoE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=hx5AEqT/; arc=none smtp.client-ip=10.30.226.201
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="hx5AEqT/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5FFDCC4CEE7;
+	Mon, 26 May 2025 04:41:37 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1748234497;
+	bh=Y1XraJq9kE/HXXuiK/BxlucfeSWavk0dpOiPe49xlu4=;
+	h=Date:From:To:Cc:Subject:Reply-To:From;
+	b=hx5AEqT/jRoHfdnN8vI2gJX2o5yo3/vcXNY9k5Hscc15BhYXJLbQsHZp2ViiWi3/F
+	 J12G/RVJIkONTmTxpQ71AACBkh/NooeOjXS5pncPO7Kydl4bKwAHlNTWnnjG6fqzPP
+	 190/MVibmkrGk7IIaTc/AL8w8jA1Gju8ex1IgBPMK8mZs4RSXFtxyy0Ec2fQ5ND6t9
+	 JhE0FKKOXVkTqWpa4jfuicOv2SLAAFzlbrnOUSXReLX2KsD5QzrtNwZas7SC5vJGYD
+	 k5y+W5jYPibxFiNiw4cQhD2nqX3X6vJjl7QnyHjCXflpUt7Wj4O3/8K9YhPmeL/ON/
+	 0khvub9Ki0/Xg==
+Received: by paulmck-ThinkPad-P17-Gen-1.home (Postfix, from userid 1000)
+	id EFF47CE0854; Sun, 25 May 2025 21:41:36 -0700 (PDT)
+Date: Sun, 25 May 2025 21:41:36 -0700
+From: "Paul E. McKenney" <paulmck@kernel.org>
+To: torvalds@linux-foundation.org
+Cc: linux-kernel@vger.kernel.org, lkmm@lists.linux.dev,
+	kernel-team@meta.com, akiyks@gmail.com, urezki@gmail.com
+Subject: [GIT PULL] LKMM changes for v6.16
+Message-ID: <737fd7ca-57d8-47cc-b6d4-e3e701ffc733@paulmck-laptop>
+Reply-To: paulmck@kernel.org
 Precedence: bulk
 X-Mailing-List: lkmm@lists.linux.dev
 List-Id: <lkmm.lists.linux.dev>
@@ -34,73 +44,38 @@ List-Unsubscribe: <mailto:lkmm+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <aCUlXbEg9wuyPEB6@dread.disaster.area>
-User-Agent: Mutt/1.5.17 (2007-11-01)
 
-On Thu, May 15, 2025 at 09:21:01AM +1000, Dave Chinner wrote:
-> > I'd like to understand that one a bit more.  It might be because the
-> > validator doesn't understand a semaphore used as lock is a lock, but
-> > I'll follow up there.
-> 
-> Even so, it's not a race because at that point in time the object
-> cannot be seen by anything other than the process that is
-> initialising it.
+Hello, Linus,
 
-In the current tree after the folio/vmalloc series b_addr is only
-assigned during buffer allocation.  But I suspect they tested before that
-where b_addr can be set at runtime.  Either way it always happens under
-b_sema because that is initialized to locked just after allocating
-the memory for the buffer.
+When the v6.16 merge window opens, please pull this LKMM update from:
 
-> I'm wary of this, because at this point I suspect that there aren't
-> a lot of people with sufficient time and knowledge to adequately
-> address these issues.
+  git://git.kernel.org/pub/scm/linux/kernel/git/paulmck/linux-rcu.git tags/lkmm.2025.05.25a
+  # HEAD: 5c9e0062989e5d2bd77b75c432b54e8ec7689bc7: tools/memory-model/Documentation: Fix SRCU section in explanation.txt (2025-04-23 12:17:04 -0700)
 
-I'm more than happy to address these, because proper documentation
-of concurrency helps fixing a huge number of bugs, and also really
-helps documenting the code.  I hate having to spend hours trying to
-figure out why something can be safely used lockless or not.
+----------------------------------------------------------------
+lkmm: Update documentation
 
-> We should have learnt this lesson from lockdep - false positive
-> whack-a-mole shut up individual reports but introduced technical
-> debt that had to be addressed later because whack-a-mole didn't
-> address the underlying issues.
+Changes
+-------
 
-I'm not sure who "we" is, but I've always pushed back to hacks just
-to shut up lockdep.  And at the same time I'm immensively grateful
-for having lockdep and can't think of working without it anymore.
+* Cross-references, typos, broken URLs (Akira Yokosawa)
+* Clarify SRCU explanation (Uladzislau Rezki)
 
-> We need functions like xfs_vn_getattr(), the allocation AG selection
-> alogrithms and object initialisation functions to be marked as
-> inherently racy, because they intentionally don't hold locks for any
-> of the accesses they make. kcsan provides:
+----------------------------------------------------------------
+Akira Yokosawa (4):
+      tools/memory-model: docs/README: Update introduction of locking.txt
+      tools/memory-model: docs/simple.txt: Fix trivial typos
+      tools/memory-model: docs/ordering: Fix trivial typos
+      tools/memory-model: docs/references: Remove broken link to imgtec.com
 
-Functions never are racy, specific data access are.  So a function wide
-assignment is just the dumbest thing ever, this already badly failed
-for things like early Java object-level synchronization.
+Uladzislau Rezki (Sony) (1):
+      tools/memory-model/Documentation: Fix SRCU section in explanation.txt
 
-> 
-> For variables like ip->i_delayed_blks, where we intentionally
-> serialise modifications but do not serialise readers, we have:
-> 
-> -	uint64_t                i_delayed_blks; /* count of delay alloc blks */
-> +	uint64_t __data_racy    i_delayed_blks; /* count of delay alloc blks */
-> 
-> This means all accesses to the variable are considered to be racy
-> and kcsan will ignore it and not report it. We can do the same for
-> lip->li_lsn and other variables.
-
-But not all access are racy.  We rely on proper synchronized accesses
-for accounting.  Now for something that has a lot of unsynchronized
-access, adding a wrapper for them might be fine, but for i_delayed_blks
-I don't think we actually have enough for them to bother.
-
-> IOWs, we do not need to spew data_race() wrappers or random
-> READ_ONCE/WRITE_ONCE macros all over the code to silence known false
-> positives.  If we mark the variables and functions we know have racy
-> accesses, these one-line changes will avoid -all- false positives on
-> those variables/from those functions.
-
-And also drop a lot of the actually useful checks. That's exaxctly
-the kind of hack you rant about above.
-
+ tools/memory-model/Documentation/README          |  7 +++++--
+ tools/memory-model/Documentation/explanation.txt |  2 +-
+ tools/memory-model/Documentation/locking.txt     |  5 +++++
+ tools/memory-model/Documentation/ordering.txt    | 22 +++++++++++-----------
+ tools/memory-model/Documentation/recipes.txt     |  4 ++++
+ tools/memory-model/Documentation/references.txt  |  3 +--
+ tools/memory-model/Documentation/simple.txt      |  4 ++--
+ 7 files changed, 29 insertions(+), 18 deletions(-)

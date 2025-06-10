@@ -1,281 +1,146 @@
-Received: from mail-qv1-f47.google.com (mail-qv1-f47.google.com [209.85.219.47])
+Received: from mail-pf1-f181.google.com (mail-pf1-f181.google.com [209.85.210.181])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9337222B8DB
-	for <lkmm@lists.linux.dev>; Mon,  9 Jun 2025 22:46:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 917A3221DAD;
+	Tue, 10 Jun 2025 02:11:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749509209; cv=none; b=WzKvStWmmd3fANJDm6sOTHZwtYI/+2J4d0QwtcHZxQw4UT/F7I3dUowQV5rELv4/2tveZZwTsf9Sc/t5oEpML1NepCGeS8WDMInMO3GzemcikoMmpsG3+rTLc/MuNZOPI0/j2PKtjzOHAzbeYoIaijefRq7JPFrlxvcaBs49FsQ=
+	t=1749521518; cv=none; b=AGbVTZJK7mZ0ZrbN3LRveeJrDrwc7p7g6pyT5qZv2nOzFQRKxp56FRXwT6yK/PmPPedv58g0WVL7bFr3CUB2uA6drK3islCGAll0Rogt3grBHvCJ+SZcUJZnARa2jdjoRxlta0fIGR3kbpMyQL7L3Hz8zW0WxgzzeV+HRCX29T8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749509209; c=relaxed/simple;
-	bh=Anqrl5cWjcAsA5b2G9jSaTOPpHxzWAGMmgi9KYl1kyU=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=luZD7iGML5UvGQFjW7HUlz2SCKt209+pw0DgapUbtXE7IqZEwk9YwxPn7xz+Npkmpjwi6P0n1ZvIjhnJE+cMzr/LhPQjXR5oonkv3pPGPSQbJQD1tdX0fRbr05k2kkR9JTpxgYmfPpoWRT6rLwfOoYXnUo4bAo1R1FWZUvbXsZs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=QlPFJqlU; arc=none smtp.client-ip=209.85.219.47
+	s=arc-20240116; t=1749521518; c=relaxed/simple;
+	bh=tATsaWv8XZP6b8qRxvl/GSsSgoUtYmKnSYOHYbtcquU=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=t53qY4B5WeIN9jBSt7o/URIdbYUSHBYOPCvYb2CkbbuuPnG9TrkpBbUFFVPHswmALw+RpijG1S3IBS0j53ZdMyVA17QoKlcwcdE1wn7MydwmWlxgjdjOlr/OYXSBHQwsuqCQ6VJunilk7OBRPyaCwDXbaY/xr4qOvcBIKApiYvk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=XmhOWcQn; arc=none smtp.client-ip=209.85.210.181
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QlPFJqlU"
-Received: by mail-qv1-f47.google.com with SMTP id 6a1803df08f44-6f8a70fe146so92811396d6.0
-        for <lkmm@lists.linux.dev>; Mon, 09 Jun 2025 15:46:47 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XmhOWcQn"
+Received: by mail-pf1-f181.google.com with SMTP id d2e1a72fcca58-747fc77ba9eso3589485b3a.0;
+        Mon, 09 Jun 2025 19:11:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1749509206; x=1750114006; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:feedback-id:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=aVh/Q3YvKlU1Rq5I19BJ7b1z8f+dcy4cBENHfBypeho=;
-        b=QlPFJqlUDsZuuh3GewDjfjBgKzLfNeb/03gqQLxGhcPCmaa4sXwqQuQi8RsO5c52Sa
-         uVTbbcVg1PSILmJgplcGxlhERmp8tMgm7lGOzdzmQl9l6ggq5teUs8J3UHghjUY00zF8
-         CN4ZS+32ftc5bSVaq1k2GFiXZjpc60C8d1b6KYbEcTo8aBtbc5TJEfNGR1k4PtyN9RYT
-         gmJu1D2A/W1OlsZX+9sITImhM7bUTnkLLS9g+38wBujbH98AABRMP4WWPt4B+cE1OWLa
-         DwCRRarsiMk0Cw5pQCKY7teQtdlQHsw4jBFrUFtNvx48Mhj7iupKXMNnCb30eOFz9KGD
-         R6Yg==
+        d=gmail.com; s=20230601; t=1749521516; x=1750126316; darn=lists.linux.dev;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:subject:from:user-agent:mime-version:date:message-id:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=dOzjjX69zeAqzNGoS/8mD5e48m9h1ILJMbdVXJtaK8k=;
+        b=XmhOWcQnWk7pjXrsv7kY+HQ/WDDsFmcp4i9tglyhoJJhKq8n+sanmhfnj++7FDFw6u
+         iE9KnJXGq4nESSZKxxjSWdizuXU5hy4zqj1fNBZZfKLhGvzBtv05BnYtES7hNgrL1b6a
+         EKluumpF3wudcmTaC0cyftqSkX7sqJePWipPkVvOMMeYuYLrqCrB3hl1oeTuDgZHo9gv
+         mTizMiarTMk/W28tqR/oSn4TNbMUTeKY+P8Vcy5NIOyiNOW8/a4BBuqxWQTZfiwPpcni
+         g7kasMKPaLGB87IfqROCwh3uhat2qXWbc/vHO8EDTo2xUppHSpKvlVBTvG7fzg7RUbQb
+         VaaA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1749509206; x=1750114006;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:feedback-id:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=aVh/Q3YvKlU1Rq5I19BJ7b1z8f+dcy4cBENHfBypeho=;
-        b=oCk3JPRuUQVYJpBmTrntBI0oNrfy8SxGNdwQc7V7wiuShCvxXd/LN3fHuOG7aMXR+1
-         ZTclvo7k4JFu0LlPEAhPf7EUXXfjEuKWSCczh5VVsCLEJTGIl6634Rp+aAoRQauzuyQ7
-         /QIoS0LtqOyRAToitBvTE6NEiFuLbTCqAeFo9wnh6SCwraeY4GkAEokIkztOT0VYmfvQ
-         yyH94Vqm66igIGpHIpc6n8UuOBXm3pATh3k/UuwcDQNo/PygmEng1InNymRCnL5hm5zm
-         vufILUWe0/vKYC4lx8MMs0gKOb0LnZ3omgQaNIx+09ygWTItC96bgzcWA4gXBCW0arUx
-         tRRQ==
-X-Forwarded-Encrypted: i=1; AJvYcCXHkYMUyuPFw7tiCo+kJuVKk4Qav/++Lw3PsJn9JdG35z/22ODFf/q7RoMN+XCZsQyqnFz6@lists.linux.dev
-X-Gm-Message-State: AOJu0YyyNIoN9f9EpIECXiXQW9glvOz3+8yzNssYLDzAnkrtRcrl3qmX
-	wot16m+rmyGZkS8RhAWB+Gz62RGhZfPw9u8zFDq8nNHn49u59gG04MI3
-X-Gm-Gg: ASbGncsvcr7HCotcdgAyst8Cnp1OMcOeRgVYPsNWBtCwNHijrZFSXGUYSL+OyA1XhVJ
-	PTJ6toJpAcPS+Voo+UaUSuUej0kB32R3VpmqF7TKG7x+AZCwgn5VueApir8HExzKaxJBSZkk4XC
-	wyUmYf7hZsLS/4ZwkxwJu/mh6BSf8Vt4OUSPc7CqLr8wRVKlga4rUxsl1Y+2JmnghU+38ygnDNG
-	PiGM0hsnPouCtUxGh45kuBvmHEF/y084Yd+yxe3X5uohQ1z6Hq9Wwo5V6t34VsCaL4Py9Rd4aIz
-	74FYE3kutyWp4jwCYbQX///P0IgptoCjxZuDnVN30WML0Nfm60k0FPEvF3xpRa5pW61ZgLJPy+5
-	zIYzpUVPHNzDZnTZWNUqF4RslIswvRVzprs35m6/d9vZDnEBZQqJo
-X-Google-Smtp-Source: AGHT+IFumn8OwjYXPgXZ16qqTX9xz1gY58UxpowoDVxCsQHRJ60EJ7bd/NwPv4mxtLSYcvshs3G6lQ==
-X-Received: by 2002:a05:6214:268f:b0:6fa:c46c:6f9e with SMTP id 6a1803df08f44-6fb08fd9af0mr224426906d6.5.1749509206360;
-        Mon, 09 Jun 2025 15:46:46 -0700 (PDT)
-Received: from fauth-a2-smtp.messagingengine.com (fauth-a2-smtp.messagingengine.com. [103.168.172.201])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-6fb09ab8479sm57902056d6.20.2025.06.09.15.46.45
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 09 Jun 2025 15:46:45 -0700 (PDT)
-Received: from phl-compute-09.internal (phl-compute-09.phl.internal [10.202.2.49])
-	by mailfauth.phl.internal (Postfix) with ESMTP id 657911200043;
-	Mon,  9 Jun 2025 18:46:45 -0400 (EDT)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-09.internal (MEProxy); Mon, 09 Jun 2025 18:46:45 -0400
-X-ME-Sender: <xms:VWRHaGfeuqfaTsfEhV_LpIrhNyhzWKIiN45quFjZGSHxgsoEeOokVA>
-    <xme:VWRHaANYS-9EPbydHD-sjzoKVt34TxIx4xdw3zOl4XRap0KOk_5WipJtbwYlkDWYH
-    PIlE5V6JBHphOOr-w>
-X-ME-Received: <xmr:VWRHaHiDS0jJsZHUtb43CKAzQVGBTatYnWPpWIa-Rzo0us8VKnuSJGYk2OA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddugdelleduucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
-    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
-    htshculddquddttddmnecujfgurhephffvvefufffkofgjfhgggfestdekredtredttden
-    ucfhrhhomhepuehoqhhunhcuhfgvnhhguceosghoqhhunhdrfhgvnhhgsehgmhgrihhlrd
-    gtohhmqeenucggtffrrghtthgvrhhnpeegleejiedthedvheeggfejveefjeejkefgveff
-    ieeujefhueeigfegueehgeeggfenucevlhhushhtvghrufhiiigvpedunecurfgrrhgrmh
-    epmhgrihhlfhhrohhmpegsohhquhhnodhmvghsmhhtphgruhhthhhpvghrshhonhgrlhhi
-    thihqdeiledvgeehtdeigedqudejjeekheehhedvqdgsohhquhhnrdhfvghngheppehgmh
-    grihhlrdgtohhmsehfihigmhgvrdhnrghmvgdpnhgspghrtghpthhtohepvdeipdhmohgu
-    vgepshhmthhpohhuthdprhgtphhtthhopehlihhnuhigqdhkvghrnhgvlhesvhhgvghrrd
-    hkvghrnhgvlhdrohhrghdprhgtphhtthhopehruhhsthdqfhhorhdqlhhinhhugiesvhhg
-    vghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehlkhhmmheslhhishhtshdrlhhinh
-    hugidruggvvhdprhgtphhtthhopehlihhnuhigqdgrrhgthhesvhhgvghrrdhkvghrnhgv
-    lhdrohhrghdprhgtphhtthhopehojhgvuggrsehkvghrnhgvlhdrohhrghdprhgtphhtth
-    hopegrlhgvgidrghgrhihnohhrsehgmhgrihhlrdgtohhmpdhrtghpthhtohepsghoqhhu
-    nhdrfhgvnhhgsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghgrrhihsehgrghrhihguh
-    hordhnvghtpdhrtghpthhtohepsghjohhrnhefpghghhesphhrohhtohhnmhgrihhlrdgt
-    ohhm
-X-ME-Proxy: <xmx:VWRHaD82yCfh5OywHAYF_VLdNfBB6XPS_yuSEXXKrign0aaeMeYFIA>
-    <xmx:VWRHaCt3U7HVb8WCTNR2JVSZ6u-hf5HicdNfWEzX2o84sGmcxpFGKQ>
-    <xmx:VWRHaKH7JCT23_b6qRlIcAnwlIu9UaEazUyWv6Ujxa6ldBf8VF2IzQ>
-    <xmx:VWRHaBNb26YqM8H4lX32N5KlrCzPiH_P0sfa4azgTtdYAGvFLEZ3SA>
-    <xmx:VWRHaPOlbZcKXJKD4ln61UjpxP5bWNkTnJjEIqs6iMkaUXzysTAYSpwm>
-Feedback-ID: iad51458e:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 9 Jun 2025 18:46:44 -0400 (EDT)
-From: Boqun Feng <boqun.feng@gmail.com>
-To: linux-kernel@vger.kernel.org,
-	rust-for-linux@vger.kernel.org,
-	lkmm@lists.linux.dev,
-	linux-arch@vger.kernel.org
-Cc: Miguel Ojeda <ojeda@kernel.org>,
-	Alex Gaynor <alex.gaynor@gmail.com>,
-	Boqun Feng <boqun.feng@gmail.com>,
-	Gary Guo <gary@garyguo.net>,
-	=?UTF-8?q?Bj=C3=B6rn=20Roy=20Baron?= <bjorn3_gh@protonmail.com>,
-	Benno Lossin <lossin@kernel.org>,
-	Andreas Hindborg <a.hindborg@kernel.org>,
-	Alice Ryhl <aliceryhl@google.com>,
-	Trevor Gross <tmgross@umich.edu>,
-	Danilo Krummrich <dakr@kernel.org>,
-	Will Deacon <will@kernel.org>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Wedson Almeida Filho <wedsonaf@gmail.com>,
-	Viresh Kumar <viresh.kumar@linaro.org>,
-	Lyude Paul <lyude@redhat.com>,
-	Ingo Molnar <mingo@kernel.org>,
-	Mitchell Levy <levymitchell0@gmail.com>,
-	"Paul E. McKenney" <paulmck@kernel.org>,
-	"Greg Kroah-Hartman" <gregkh@linuxfoundation.org>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	"Thomas Gleixner" <tglx@linutronix.de>
-Subject: [PATCH v4 10/10] rust: sync: Add memory barriers
-Date: Mon,  9 Jun 2025 15:46:15 -0700
-Message-Id: <20250609224615.27061-11-boqun.feng@gmail.com>
-X-Mailer: git-send-email 2.39.5 (Apple Git-154)
-In-Reply-To: <20250609224615.27061-1-boqun.feng@gmail.com>
-References: <20250609224615.27061-1-boqun.feng@gmail.com>
+        d=1e100.net; s=20230601; t=1749521516; x=1750126316;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:subject:from:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=dOzjjX69zeAqzNGoS/8mD5e48m9h1ILJMbdVXJtaK8k=;
+        b=Ljr3ccWW1l8Kktoiy68S1Y+qX5dz1zFYcjhBJOWWpctEXxSUvcS+/rA4Tztw9ZVzL1
+         SxXsfPS8cf4HV9T1LqziuqwUZSImDk4ShpSGBDMq3j+QmgyVtFKqDOTUUg2+H5vz8c15
+         s2nXfLJ3Wti6Trq4qZjXT9Xw6StVok7nK3820iY1Z6IFSbkxr17HJpFJnGSIhOOmIiHC
+         q9CO4dPY4MAD8pqkAHHNQo19WfAM80z5077cHZlKwOa5BNjSKA1hxsA9GY0JIfcV0P0b
+         VJZjGdJcAY0Hr6SMGXoflCREmqgErhj6xK7mRxcCxkb91DbgM3LrJcBrUYSeZS1DRmnb
+         NtIQ==
+X-Forwarded-Encrypted: i=1; AJvYcCVZIYWPr29sLZGLW6cjI9iRk+bIECnSXF0czeQMXQ/DK2FG+fLyoZYO6jvIjTpEgw8YvFHLa5I3Ut6xb+tdf5Bg4wsfIQ==@lists.linux.dev, AJvYcCXVZE+PEDYMwEfWukI5TNN9EYuK/X3/fTLBAvhjn9GAOFhCvpYeRAKOdYNnb/1wT+QoWlS3kg==@lists.linux.dev
+X-Gm-Message-State: AOJu0Ywo1aYSQFHerf0HcMV6bG26P6e7uEW/kvsXEk+mI6jqS8JpNPL2
+	CPQLVy90WZ94kWJrOfnuHpbnHW1o1dOUA0tIPpi8QpRVCezYQkE7bTsq
+X-Gm-Gg: ASbGncvqyC+EmbJm8oEEuDl9UgjGLAZcZ93mut4M+G4VNyaX5WAYnhust/CpyDYcs23
+	aa9uSVrN0ICtwzMRjJJCALkSq7qxFFYxgz25WCEusBvRv19vju6hPTHOqG8K+mi62Gut0KGeEit
+	MtALcMBZaQjHM0yXeTjTdDhbhhNKPEpXwxcXHiVEOZo7Ye3GWnsHqrhwGNIAvKIo0GNcB/D0IHs
+	CQT5/bI/VFm21KEqENyzS8IaOXQnJpzrBw8iFVeL5PueLabtekoiSbGXaNJiYjwz0advd4Wvudl
+	HXEbZBprzh5ebqM2sKuT/ASEsv6h282irOcBzioz8eMdpr+3gGvsdxcFJ5UFynL4Iq8OMD/2EGs
+	y7jRSOMosnOyLWfqkO8zR85aW2RRUfrHZK6rdZIxYNfQ=
+X-Google-Smtp-Source: AGHT+IFinisgc3J8oYpqhY/ibzPdRQH5npX4nMOvZpgH24ipzQnojwu27/upFNl/pwypgIaYqctZDA==
+X-Received: by 2002:a05:6a00:9141:b0:748:2b23:308c with SMTP id d2e1a72fcca58-7482b233724mr15790672b3a.14.1749521515721;
+        Mon, 09 Jun 2025 19:11:55 -0700 (PDT)
+Received: from [10.0.2.15] (KD106167137155.ppp-bb.dion.ne.jp. [106.167.137.155])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-7482b0e9a0fsm6382936b3a.155.2025.06.09.19.11.52
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 09 Jun 2025 19:11:55 -0700 (PDT)
+Message-ID: <c1e93b99-21a1-4646-af6c-e05330e1cd3d@gmail.com>
+Date: Tue, 10 Jun 2025 11:11:50 +0900
 Precedence: bulk
 X-Mailing-List: lkmm@lists.linux.dev
 List-Id: <lkmm.lists.linux.dev>
 List-Subscribe: <mailto:lkmm+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:lkmm+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+From: Akira Yokosawa <akiyks@gmail.com>
+Subject: Re: [PATCH] lkmm: docs: Put LKMM documentation into dev-tools book
+To: Jonathan Corbet <corbet@lwn.net>, "Paul E. McKenney" <paulmck@kernel.org>
+Cc: mchehab+huawei@kernel.org, joel@joelfernandes.org,
+ linux-kernel-mentees@lists.linux.dev, peterz@infradead.org,
+ stern@rowland.harvard.edu, Shuah Khan <skhan@linuxfoundation.org>,
+ Ignacio Encinas Rubio <ignacio@iencinas.com>, lkmm@lists.linux.dev,
+ Marco Elver <elver@google.com>, Akira Yokosawa <akiyks@gmail.com>
+References: <837b4d83-b91f-40d1-995a-aa3c5a925b0b@iencinas.com>
+ <015198be-1f23-4fc9-ba58-be7c48550f36@gmail.com>
+ <87ikl48te3.fsf@trenco.lwn.net>
+Content-Language: en-US
+In-Reply-To: <87ikl48te3.fsf@trenco.lwn.net>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-Memory barriers are building blocks for concurrent code, hence provide
-a minimal set of them.
+On Mon, 09 Jun 2025 16:03:32 -0600, Jonathan Corbet wrote:
+> Akira Yokosawa <akiyks@gmail.com> writes:
+> 
+>> Currently, LKMM docs are not included in any of kernel documentation
+>> books.
+>>
+>> Commit e40573a43d16 ("docs: put atomic*.txt and memory-barriers.txt
+>> into the core-api book") covered plain-text docs under Documentation/
+>> by using the "include::" directive along with the ":literal:" option.
+>>
+>> As LKMM docs are not under Documentation/, the same approach would not
+>> work due to the limit of the include:: directive. 
+>>
+>> As a matter of fact, kernel documentation has an extended directive
+>> by the name of "kernel-include::", which has no such limitation.
+>>
+>> Rather than moving LKMM docs around, use the latter with source tree's
+>> abspath passed through via the "SOURCEDIR" variable which is now defined
+>> in Documentation/Makefile, and make them included in the dev-tools book
+>> next to KCSAN.
+> 
+> So this fell through the cracks during my May travel, sorry.
 
-The compiler barrier, barrier(), is implemented in inline asm instead of
-using core::sync::atomic::compiler_fence() because memory models are
-different: kernel's atomics are implemented in inline asm therefore the
-compiler barrier should be implemented in inline asm as well. Also it's
-currently only public to the kernel crate until there's a reasonable
-driver usage.
+Thank you for taking the time!
 
-Signed-off-by: Boqun Feng <boqun.feng@gmail.com>
----
- rust/helpers/barrier.c      | 18 ++++++++++
- rust/helpers/helpers.c      |  1 +
- rust/kernel/sync.rs         |  1 +
- rust/kernel/sync/barrier.rs | 67 +++++++++++++++++++++++++++++++++++++
- 4 files changed, 87 insertions(+)
- create mode 100644 rust/helpers/barrier.c
- create mode 100644 rust/kernel/sync/barrier.rs
+> 
+> I've taken a look at it now ... it adds a vast number of build warnings:
+> 
+> Documentation/networking/netlink_spec/rt_addr.rst:28: WARNING: duplicate label rt-addr-operation-newaddr, other instance in /stuff/k/git/kernel/Documentation/networking/netlink_spec/rt-addr.rst
+> Documentation/networking/netlink_spec/rt_addr.rst:41: WARNING: duplicate label rt-addr-operation-deladdr, other instance in /stuff/k/git/kernel/Documentation/networking/netlink_spec/rt-addr.rst
+> Documentation/networking/netlink_spec/rt_addr.rst:54: WARNING: duplicate label rt-addr-operation-getaddr, other instance in /stuff/k/git/kernel/Documentation/networking/netlink_spec/rt-addr.rst
+> [...]
+> 
+> I haven't had a chance to figure out *why* it would have this particular
+> bizarre effect...
 
-diff --git a/rust/helpers/barrier.c b/rust/helpers/barrier.c
-new file mode 100644
-index 000000000000..cdf28ce8e511
---- /dev/null
-+++ b/rust/helpers/barrier.c
-@@ -0,0 +1,18 @@
-+// SPDX-License-Identifier: GPL-2.0
-+
-+#include <asm/barrier.h>
-+
-+void rust_helper_smp_mb(void)
-+{
-+	smp_mb();
-+}
-+
-+void rust_helper_smp_wmb(void)
-+{
-+	smp_wmb();
-+}
-+
-+void rust_helper_smp_rmb(void)
-+{
-+	smp_rmb();
-+}
-diff --git a/rust/helpers/helpers.c b/rust/helpers/helpers.c
-index 0e7e7b388062..928eca7fbbb4 100644
---- a/rust/helpers/helpers.c
-+++ b/rust/helpers/helpers.c
-@@ -9,6 +9,7 @@
- 
- #include "atomic.c"
- #include "auxiliary.c"
-+#include "barrier.c"
- #include "blk.c"
- #include "bug.c"
- #include "build_assert.c"
-diff --git a/rust/kernel/sync.rs b/rust/kernel/sync.rs
-index b620027e0641..c7c0e552bafe 100644
---- a/rust/kernel/sync.rs
-+++ b/rust/kernel/sync.rs
-@@ -11,6 +11,7 @@
- 
- mod arc;
- pub mod atomic;
-+pub mod barrier;
- mod condvar;
- pub mod lock;
- mod locked_by;
-diff --git a/rust/kernel/sync/barrier.rs b/rust/kernel/sync/barrier.rs
-new file mode 100644
-index 000000000000..36a5c70e6716
---- /dev/null
-+++ b/rust/kernel/sync/barrier.rs
-@@ -0,0 +1,67 @@
-+// SPDX-License-Identifier: GPL-2.0
-+
-+//! Memory barriers.
-+//!
-+//! These primitives have the same semantics as their C counterparts: and the precise definitions of
-+//! semantics can be found at [`LKMM`].
-+//!
-+//! [`LKMM`]: srctree/tools/memory-mode/
-+
-+/// A compiler barrier.
-+///
-+/// An explicic compiler barrier function that prevents the compiler from moving the memory
-+/// accesses either side of it to the other side.
-+pub(crate) fn barrier() {
-+    // By default, Rust inline asms are treated as being able to access any memory or flags, hence
-+    // it suffices as a compiler barrier.
-+    //
-+    // SAFETY: An empty asm block should be safe.
-+    unsafe {
-+        core::arch::asm!("");
-+    }
-+}
-+
-+/// A full memory barrier.
-+///
-+/// A barrier function that prevents both the compiler and the CPU from moving the memory accesses
-+/// either side of it to the other side.
-+pub fn smp_mb() {
-+    if cfg!(CONFIG_SMP) {
-+        // SAFETY: `smp_mb()` is safe to call.
-+        unsafe {
-+            bindings::smp_mb();
-+        }
-+    } else {
-+        barrier();
-+    }
-+}
-+
-+/// A write-write memory barrier.
-+///
-+/// A barrier function that prevents both the compiler and the CPU from moving the memory write
-+/// accesses either side of it to the other side.
-+pub fn smp_wmb() {
-+    if cfg!(CONFIG_SMP) {
-+        // SAFETY: `smp_wmb()` is safe to call.
-+        unsafe {
-+            bindings::smp_wmb();
-+        }
-+    } else {
-+        barrier();
-+    }
-+}
-+
-+/// A read-read memory barrier.
-+///
-+/// A barrier function that prevents both the compiler and the CPU from moving the memory read
-+/// accesses either side of it to the other side.
-+pub fn smp_rmb() {
-+    if cfg!(CONFIG_SMP) {
-+        // SAFETY: `smp_rmb()` is safe to call.
-+        unsafe {
-+            bindings::smp_rmb();
-+        }
-+    } else {
-+        barrier();
-+    }
-+}
--- 
-2.39.5 (Apple Git-154)
+I don't think those new warnings have anything to do with this patch.
 
+This is mentioned by Paolo at:
+  https://lore.kernel.org/495e43ef-ae20-4dda-97c0-cb8ebe97394b@redhat.com/
+
+    My understanding is that this rename triggers rebuild of the related
+    doc, which in turns leads to quite a large number of htmldoc warning,
+    but it's really unharmful/pre-existing issue.
+
+, and Donald said in his reply at:
+  https://lore.kernel.org/CAD4GDZw+Enkd2dA8f7pNxMadwURFd_tHv1sUwkXqFqxsOquHQQ@mail.gmail.com/
+
+    Yes, Documentation/Makefile goes the extra mile to only try deleting a
+    list of .rst files generated from the list of source .yaml files. It
+    would be easier to just delete
+    Documentation/networking/netlink_spec/*.rst which would be able to
+    clean up old generated files in situations like this.
+
+HTH.
+
+BTW, I assumed Paul would take this patch into his lkmm branch for v6.17,
+once all is clear for the new uses of "..kernel-include::" with ":literal:".
+
+Thanks,
+Akira

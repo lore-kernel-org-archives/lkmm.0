@@ -1,243 +1,179 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 332B61A8401;
-	Tue, 10 Jun 2025 09:07:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25FC38633F;
+	Tue, 10 Jun 2025 10:46:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749546443; cv=none; b=rr0wTi8Faswhbc9H/uHHpSMU1/ixq4TI44LH10aeL32nTEOGdDdSuWAQ53048ycLonzee71106EdSnDXjtoIQhdWjbT/vvB3O75wTm5YdpBb8Dgx7z3K/eSqrdstI1t7akvy/1IVLiO/sWv0iU/UDBggQ1B8vSCyayG9PBUolwI=
+	t=1749552385; cv=none; b=njpDuDceRfplE2x8ma/rclsFBW0UFb1dehTHUueL4Ms2zgZeQ6SmlQbDNjbHQMrVFTfMRuGzcbB+dFt0UxZUUA580qR872sn2oyw8GOofzQ8bnZv0H57sFh/LcyK1PjpN8y/6rN44Jvxa1RF58d4FDHOXGcY0HXCWzTm7VYCmzc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749546443; c=relaxed/simple;
-	bh=ZM+zxGI1u4LejkqbNmMVUbYQhbNCdSBHsu5mm84RMCc=;
-	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
-	 References:In-Reply-To; b=gNHd2VrUF3S+2w/yGGPS03fl1zJDVMUy8kk1Juf6nefpjqW7/AulSN19ZmyLLg0gHsYHq8DQVWevqsp9Lnt/d6M3wRZVXZVAD/CU10+3trYayMvSY+jcBo5/YeZXkMBF4WOXD2Le81nkyIkPTZOQMY968It5EfaIDhekj4WLLDk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Se/+7llQ; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1749552385; c=relaxed/simple;
+	bh=F5ZJdtnuqszCHHCZyY87KKWQfWO3tidioj3+glAwUg4=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=gqmY/Zl5mJDeXKWLUE19vwwmCrT0C9G16v90VYclR9Va+mIn5Bz/WEzznT5lFMFo0Cria81dKCgorZitH8LsCh2J+SWFE72JmDWQnkpGhZRrYTasGLM3uPGLiSYm4OLD+TRhodI2uv3cucf3eb3ZX+uiUYvsBE3d/jMGD4/U8G0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jah7FvlS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Se/+7llQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2EE6FC4CEED;
-	Tue, 10 Jun 2025 09:07:18 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jah7FvlS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C280EC4AF0B;
+	Tue, 10 Jun 2025 10:46:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1749546442;
-	bh=ZM+zxGI1u4LejkqbNmMVUbYQhbNCdSBHsu5mm84RMCc=;
-	h=Date:Cc:Subject:From:To:References:In-Reply-To:From;
-	b=Se/+7llQ0ATlcHDQPW8Un4LmPpQBtOpj/S+vklbEe9q30T1FRfq1kbOAC+s/Yw0+o
-	 3O2Cx+K36+7wH3bXy9JJEjMR4Dom12fJqucj6ZiNldNtTC6w3rutuj56gu6jAlvPyi
-	 NNFvrcqM24SVa2Ti/i8yEn4yaUUdWXBTH7N1iZjDwkQr2nCym9uGJOqEFjrYIXx1/z
-	 EfULQVfL+KBj2WNz1VEz+5+K+McvIRcMafcJvGJlhsx8Gu7tejk7f0Zno/eTm7j/7o
-	 j3bPt3hx90SNqy1U2Q/FdAob7qn0pf2LEfoYJZjE02MXKDJ1IrVQhIH1tmYKk3C6jb
-	 kHML1rWytJzDg==
+	s=k20201202; t=1749552384;
+	bh=F5ZJdtnuqszCHHCZyY87KKWQfWO3tidioj3+glAwUg4=;
+	h=From:To:Cc:Subject:Date:From;
+	b=jah7FvlSBOEU1Tx/ubjiTY323LSIJaAKfLNoGWMOFPgT9K7pjiIhXLfNe12oROD1z
+	 JpE7jeV4b9DsUkjACSGM+OTDNRtRawfIyrMAthZDIpzyOSRZ+yGLVZLKttz63e6wzv
+	 wrmsrSv8Ytu3KwLCBoSkxwfPEYpZkmzi7Wqaja7Os6uu0lfivKGXs34JbHIbaVrHQM
+	 cZngmdErsqCRNYLJ/lOi4wfXp6dUonrLhvqGD+/T7kju8mgdgBLKyaqmIwMod97X3L
+	 b+QXZrkCqdVfgLZ9l2cI095eDGMyCIrHw5pZPnjfwl8P5HBsx2Pm2bAp1B+LeANXtj
+	 ZBIzvppriCKcA==
+Received: from mchehab by mail.kernel.org with local (Exim 4.98.2)
+	(envelope-from <mchehab+huawei@kernel.org>)
+	id 1uOwUo-00000003jur-3Qzh;
+	Tue, 10 Jun 2025 12:46:22 +0200
+From: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+To: Linux Doc Mailing List <linux-doc@vger.kernel.org>,
+	"Jonathan Corbet" <corbet@lwn.net>
+Cc: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
+	Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
+	linux-kernel@vger.kernel.org,
+	"Paul E. McKenney" <mchehab+huawei@kernel.org>,
+	joel@joelfernandes.org,
+	linux-kernel-mentees@lists.linux.dev,
+	peterz@infradead.org,
+	stern@rowland.harvard.edu,
+	Shuah Khan <skhan@linuxfoundation.org>,
+	Ignacio Encinas Rubio <ignacio@iencinas.com>,
+	lkmm@lists.linux.dev,
+	Marco Elver <elver@google.com>,
+	Breno Leitao <leitao@debian.org>,
+	Akira Yokosawa <akiyks@gmail.com>,
+	"David S. Miller" <davem@davemloft.net>,
+	Donald Hunter <donald.hunter@gmail.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <mchehab+huawei@kernel.org>,
+	Jan Stancek <jstancek@redhat.com>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Ruben Wauters <rubenru09@aol.com>,
+	Simon Horman <mchehab+huawei@kernel.org>,
+	netdev@vger.kernel.org
+Subject: [PATCH 0/4] Don't generate netlink .rst files inside $(srctree)
+Date: Tue, 10 Jun 2025 12:46:03 +0200
+Message-ID: <cover.1749551140.git.mchehab+huawei@kernel.org>
+X-Mailer: git-send-email 2.49.0
 Precedence: bulk
 X-Mailing-List: lkmm@lists.linux.dev
 List-Id: <lkmm.lists.linux.dev>
 List-Subscribe: <mailto:lkmm+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:lkmm+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Tue, 10 Jun 2025 11:07:16 +0200
-Message-Id: <DAIQG9ALK4QC.2P2C2MC4U9YVX@kernel.org>
-Cc: "Miguel Ojeda" <ojeda@kernel.org>, "Alex Gaynor"
- <alex.gaynor@gmail.com>, "Gary Guo" <gary@garyguo.net>,
- =?utf-8?q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, "Andreas
- Hindborg" <a.hindborg@kernel.org>, "Alice Ryhl" <aliceryhl@google.com>,
- "Trevor Gross" <tmgross@umich.edu>, "Danilo Krummrich" <dakr@kernel.org>,
- "Will Deacon" <will@kernel.org>, "Peter Zijlstra" <peterz@infradead.org>,
- "Mark Rutland" <mark.rutland@arm.com>, "Wedson Almeida Filho"
- <wedsonaf@gmail.com>, "Viresh Kumar" <viresh.kumar@linaro.org>, "Lyude
- Paul" <lyude@redhat.com>, "Ingo Molnar" <mingo@kernel.org>, "Mitchell Levy"
- <levymitchell0@gmail.com>, "Paul E. McKenney" <paulmck@kernel.org>, "Greg
- Kroah-Hartman" <gregkh@linuxfoundation.org>, "Linus Torvalds"
- <torvalds@linux-foundation.org>, "Thomas Gleixner" <tglx@linutronix.de>
-Subject: Re: [PATCH v4 03/10] rust: sync: atomic: Add ordering annotation
- types
-From: "Benno Lossin" <lossin@kernel.org>
-To: "Boqun Feng" <boqun.feng@gmail.com>, <linux-kernel@vger.kernel.org>,
- <rust-for-linux@vger.kernel.org>, <lkmm@lists.linux.dev>,
- <linux-arch@vger.kernel.org>
-X-Mailer: aerc 0.20.1
-References: <20250609224615.27061-1-boqun.feng@gmail.com>
- <20250609224615.27061-4-boqun.feng@gmail.com>
-In-Reply-To: <20250609224615.27061-4-boqun.feng@gmail.com>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+Sender: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 
-On Tue Jun 10, 2025 at 12:46 AM CEST, Boqun Feng wrote:
-> Preparation for atomic primitives. Instead of a suffix like _acquire, a
-> method parameter along with the corresponding generic parameter will be
-> used to specify the ordering of an atomic operations. For example,
-> atomic load() can be defined as:
->
-> 	impl<T: ...> Atomic<T> {
-> 	    pub fn load<O: AcquireOrRelaxed>(&self, _o: O) -> T { ... }
-> 	}
->
-> and acquire users would do:
->
-> 	let r =3D x.load(Acquire);
->
-> relaxed users:
->
-> 	let r =3D x.load(Relaxed);
->
-> doing the following:
->
-> 	let r =3D x.load(Release);
->
-> will cause a compiler error.
->
-> Compared to suffixes, it's easier to tell what ordering variants an
-> operation has, and it also make it easier to unify the implementation of
-> all ordering variants in one method via generic. The `IS_RELAXED` and
-> `ORDER` associate consts are for generic function to pick up the
-> particular implementation specified by an ordering annotation.
->
-> Signed-off-by: Boqun Feng <boqun.feng@gmail.com>
+As discussed at:
+   https://lore.kernel.org/all/20250610101331.62ba466f@foz.lan/
 
-Looks good, I got a few comments on the details below.
+changeset f061c9f7d058 ("Documentation: Document each netlink family")
+added a logic which generates *.rst files inside $(srctree). This is bad when
+O=<BUILDDIR> is used.
 
-> ---
->  rust/kernel/sync/atomic.rs          |  3 +
->  rust/kernel/sync/atomic/ordering.rs | 94 +++++++++++++++++++++++++++++
->  2 files changed, 97 insertions(+)
->  create mode 100644 rust/kernel/sync/atomic/ordering.rs
->
-> diff --git a/rust/kernel/sync/atomic.rs b/rust/kernel/sync/atomic.rs
-> index 65e41dba97b7..9fe5d81fc2a9 100644
-> --- a/rust/kernel/sync/atomic.rs
-> +++ b/rust/kernel/sync/atomic.rs
-> @@ -17,3 +17,6 @@
->  //! [`LKMM`]: srctree/tools/memory-mode/
-> =20
->  pub mod ops;
-> +pub mod ordering;
-> +
-> +pub use ordering::{Acquire, Full, Relaxed, Release};
-> diff --git a/rust/kernel/sync/atomic/ordering.rs b/rust/kernel/sync/atomi=
-c/ordering.rs
-> new file mode 100644
-> index 000000000000..14cda8c5d1b1
-> --- /dev/null
-> +++ b/rust/kernel/sync/atomic/ordering.rs
-> @@ -0,0 +1,94 @@
-> +// SPDX-License-Identifier: GPL-2.0
-> +
-> +//! Memory orderings.
-> +//!
-> +//! The semantics of these orderings follows the [`LKMM`] definitions an=
-d rules.
-> +//!
-> +//! - [`Acquire`] and [`Release`] are similar to their counterpart in Ru=
-st memory model.
-> +//! - [`Full`] means "fully-ordered", that is:
-> +//!   - It provides ordering between all the preceding memory accesses a=
-nd the annotated operation.
-> +//!   - It provides ordering between the annotated operation and all the=
- following memory accesses.
-> +//!   - It provides ordering between all the preceding memory accesses a=
-nd all the fllowing memory
-> +//!     accesses.
-> +//!   - All the orderings are the same strong as a full memory barrier (=
-i.e. `smp_mb()`).
+A recent change renamed the yaml files used by Netlink, revealing a bad
+side effect: as "make cleandocs" don't clean the produced files, symbols 
+appear duplicated for people that don't build the kernel from scratch.
 
-s/strong/strength/ ?
+There are some possible solutions for that. The simplest one, which is what
+this series address, places the build files inside Documentation/output. 
+The changes to do that are simple enough, but has one drawback,
+as it requires a (simple) template file for every netlink family file from
+netlink/specs. The template is simple enough:
 
-> +//! - [`Relaxed`] is similar to the counterpart in Rust memory model, ex=
-cept that dependency
-> +//!   orderings are also honored in [`LKMM`]. Dependency orderings are d=
-escribed in "DEPENDENCY
-> +//!   RELATIONS" in [`LKMM`]'s [`explanation`].
-> +//!
-> +//! [`LKMM`]: srctree/tools/memory-model/
-> +//! [`explanation`]: srctree/tools/memory-model/Documentation/explanatio=
-n.txt
-> +
-> +/// The annotation type for relaxed memory ordering.
-> +pub struct Relaxed;
-> +
-> +/// The annotation type for acquire memory ordering.
-> +pub struct Acquire;
-> +
-> +/// The annotation type for release memory ordering.
-> +pub struct Release;
-> +
-> +/// The annotation type for fully-order memory ordering.
-> +pub struct Full;
+        .. kernel-include:: $BUILDDIR/networking/netlink_spec/<family>.rst
 
-Is this ordering only ever used in combination with itself? (Since you
-don't have a `FullOrAcquire` trait)
+Part of the issue is that sphinx-build only produces html files for sources
+inside the source tree (Documentation/).  Well, such requirement
+is already fulfilled, as we do have one *.yaml file per family inside
+Documentation/netlink, but those aren't currently processed by Sphinx,
+as Documentation/conf.py currently has only:
 
-> +
-> +/// The trait bound for operations that only support relaxed ordering.
-> +pub trait RelaxedOnly: AcquireOrRelaxed + ReleaseOrRelaxed + All {}
-> +
-> +impl RelaxedOnly for Relaxed {}
-> +
-> +/// The trait bound for operations that only support acquire or relaxed =
-ordering.
-> +pub trait AcquireOrRelaxed: All {
-> +    /// Describes whether an ordering is relaxed or not.
-> +    const IS_RELAXED: bool =3D false;
-> +}
-> +
-> +impl AcquireOrRelaxed for Acquire {}
-> +
-> +impl AcquireOrRelaxed for Relaxed {
-> +    const IS_RELAXED: bool =3D true;
-> +}
-> +
-> +/// The trait bound for operations that only support release or relaxed =
-ordering.
-> +pub trait ReleaseOrRelaxed: All {
-> +    /// Describes whether an ordering is relaxed or not.
-> +    const IS_RELAXED: bool =3D false;
-> +}
-> +
-> +impl ReleaseOrRelaxed for Release {}
-> +
-> +impl ReleaseOrRelaxed for Relaxed {
-> +    const IS_RELAXED: bool =3D true;
-> +}
-> +
-> +/// Describes the exact memory ordering of an `impl` [`All`].
-> +pub enum OrderingDesc {
+	source_suffix = ['.rst']
 
-Why not name this `Ordering`?
+To address that, a long term solution is to add '.yaml' to source_suffix
+and add an extension at Documentation/sphinx that parses *.yaml files.
+Something similar to:
 
-> +    /// Relaxed ordering.
-> +    Relaxed,
-> +    /// Acquire ordering.
-> +    Acquire,
-> +    /// Release ordering.
-> +    Release,
-> +    /// Fully-ordered.
-> +    Full,
-> +}
-> +
-> +/// The trait bound for annotating operations that should support all or=
-derings.
-> +pub trait All {
-> +    /// Describes the exact memory ordering.
-> +    const ORDER: OrderingDesc;
+	https://github.com/Jakski/sphinxcontrib-autoyaml
 
-And then here: `ORDERING`.
+This could internally call ynl_gen_rst.py, but some  care is needed, as 
+the yaml extension is also used by devicetree. 
 
----
-Cheers,
-Benno
+Mauro Carvalho Chehab (4):
+  tools: ynl_gen_rst.py: create a top-level reference
+  docs: netlink: netlink-raw.rst: use :ref: instead of :doc:
+  docs: netlink: don't ignore generated rst files
+  docs: netlink: store generated .rst files at Documentation/output
 
-> +}
-> +
-> +impl All for Relaxed {
-> +    const ORDER: OrderingDesc =3D OrderingDesc::Relaxed;
-> +}
-> +
-> +impl All for Acquire {
-> +    const ORDER: OrderingDesc =3D OrderingDesc::Acquire;
-> +}
-> +
-> +impl All for Release {
-> +    const ORDER: OrderingDesc =3D OrderingDesc::Release;
-> +}
-> +
-> +impl All for Full {
-> +    const ORDER: OrderingDesc =3D OrderingDesc::Full;
-> +}
+ Documentation/Makefile                        |  8 +++----
+ .../networking/netlink_spec/.gitignore        |  1 -
+ .../networking/netlink_spec/conntrack.rst     |  3 +++
+ .../networking/netlink_spec/devlink.rst       |  3 +++
+ .../networking/netlink_spec/dpll.rst          |  3 +++
+ .../networking/netlink_spec/ethtool.rst       |  3 +++
+ Documentation/networking/netlink_spec/fou.rst |  3 +++
+ .../networking/netlink_spec/handshake.rst     |  3 +++
+ .../networking/netlink_spec/index.rst         |  6 +++++
+ .../networking/netlink_spec/lockd.rst         |  3 +++
+ .../networking/netlink_spec/mptcp_pm.rst      |  3 +++
+ .../networking/netlink_spec/net_shaper.rst    |  3 +++
+ .../networking/netlink_spec/netdev.rst        |  3 +++
+ .../networking/netlink_spec/nfsd.rst          |  3 +++
+ .../networking/netlink_spec/nftables.rst      |  3 +++
+ .../networking/netlink_spec/nl80211.rst       |  3 +++
+ .../networking/netlink_spec/nlctrl.rst        |  3 +++
+ .../networking/netlink_spec/ovpn.rst          |  3 +++
+ .../networking/netlink_spec/ovs_datapath.rst  |  3 +++
+ .../networking/netlink_spec/ovs_flow.rst      |  3 +++
+ .../networking/netlink_spec/ovs_vport.rst     |  3 +++
+ .../networking/netlink_spec/readme.txt        |  4 ----
+ .../networking/netlink_spec/rt-addr.rst       |  3 +++
+ .../networking/netlink_spec/rt-link.rst       |  3 +++
+ .../networking/netlink_spec/rt-neigh.rst      |  3 +++
+ .../networking/netlink_spec/rt-route.rst      |  3 +++
+ .../networking/netlink_spec/rt-rule.rst       |  3 +++
+ Documentation/networking/netlink_spec/tc.rst  |  3 +++
+ .../networking/netlink_spec/tcp_metrics.rst   |  3 +++
+ .../networking/netlink_spec/team.rst          |  3 +++
+ .../userspace-api/netlink/netlink-raw.rst     |  6 ++---
+ tools/net/ynl/pyynl/ynl_gen_rst.py            | 24 ++++++++++++-------
+ 32 files changed, 107 insertions(+), 20 deletions(-)
+ delete mode 100644 Documentation/networking/netlink_spec/.gitignore
+ create mode 100644 Documentation/networking/netlink_spec/conntrack.rst
+ create mode 100644 Documentation/networking/netlink_spec/devlink.rst
+ create mode 100644 Documentation/networking/netlink_spec/dpll.rst
+ create mode 100644 Documentation/networking/netlink_spec/ethtool.rst
+ create mode 100644 Documentation/networking/netlink_spec/fou.rst
+ create mode 100644 Documentation/networking/netlink_spec/handshake.rst
+ create mode 100644 Documentation/networking/netlink_spec/index.rst
+ create mode 100644 Documentation/networking/netlink_spec/lockd.rst
+ create mode 100644 Documentation/networking/netlink_spec/mptcp_pm.rst
+ create mode 100644 Documentation/networking/netlink_spec/net_shaper.rst
+ create mode 100644 Documentation/networking/netlink_spec/netdev.rst
+ create mode 100644 Documentation/networking/netlink_spec/nfsd.rst
+ create mode 100644 Documentation/networking/netlink_spec/nftables.rst
+ create mode 100644 Documentation/networking/netlink_spec/nl80211.rst
+ create mode 100644 Documentation/networking/netlink_spec/nlctrl.rst
+ create mode 100644 Documentation/networking/netlink_spec/ovpn.rst
+ create mode 100644 Documentation/networking/netlink_spec/ovs_datapath.rst
+ create mode 100644 Documentation/networking/netlink_spec/ovs_flow.rst
+ create mode 100644 Documentation/networking/netlink_spec/ovs_vport.rst
+ delete mode 100644 Documentation/networking/netlink_spec/readme.txt
+ create mode 100644 Documentation/networking/netlink_spec/rt-addr.rst
+ create mode 100644 Documentation/networking/netlink_spec/rt-link.rst
+ create mode 100644 Documentation/networking/netlink_spec/rt-neigh.rst
+ create mode 100644 Documentation/networking/netlink_spec/rt-route.rst
+ create mode 100644 Documentation/networking/netlink_spec/rt-rule.rst
+ create mode 100644 Documentation/networking/netlink_spec/tc.rst
+ create mode 100644 Documentation/networking/netlink_spec/tcp_metrics.rst
+ create mode 100644 Documentation/networking/netlink_spec/team.rst
+
+-- 
+2.49.0
+
 

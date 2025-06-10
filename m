@@ -1,296 +1,156 @@
-Received: from mail-qv1-f49.google.com (mail-qv1-f49.google.com [209.85.219.49])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DB0124DFF4
-	for <lkmm@lists.linux.dev>; Tue, 10 Jun 2025 18:53:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00230238D56;
+	Tue, 10 Jun 2025 20:59:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749581602; cv=none; b=HCHvBrLNh9pKR3ZU55WUL1FFR2MkL2fj2yijNHbmrG4v+9AZQgKQU1kc9VlaN0rdk0BAW4ctbnJKGj9Q5KoUR80O2FzRRu1lDkdRSvticb6RjR35mm1uvcFKW0hPUsmq8xHn8O+Xs7XocGhZfjcu/cazsqK6IH2Tc332v3Yo6IU=
+	t=1749589159; cv=none; b=WbRm8MNiZCerObdfUOY1qZ7cZCj29ouLI0Q2hyhy9TJNqDOTAiARUtvO5GNEtTfP4pAh5VHP+DfhK9ZjJ6TVAKOySYCUKHRWFiB3NJI2ko1XsAX5r9NfHBazQUraieCraVwwmfeWBHlGABkXARhB8Cd++Rxvo0kntfiHtxzM9Ck=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749581602; c=relaxed/simple;
-	bh=2sYXZ0RhTfN6SLKrFXrz5MrrSIww26BY2I8L1m2I4bU=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=nD3pzm4KJfDdL5yF0wmlsmBZvYJxbaP9p9kPC0oXkzNaxN3bT2iy/UxPE09x1oD3d/1NRC9gB89Tn6SeUJCsO6TbrMP0XNzg1r9swbBJmnmoUMt9gqyiwFm5nJbHSHPaAK9759y5fH54qvEWk3ZjFXaSgrP9flKCw7pMYYZmRnk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=cU/QPNq7; arc=none smtp.client-ip=209.85.219.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1749589159; c=relaxed/simple;
+	bh=/V45mCxwZayqDibcRfztftOiwWg6CFuhhRtsIABS/1s=;
+	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=dYHez1Cw5bA1873vBVosnmAkBs45W6+p5/Hgu2W/HkK7WaZ8H0TPtSGgrUaEC8ybjm4dnei9WBiDmWLBS1jXOvW76T3cc/rF8n0XFJTGFvhUwxqjqW2rBa30w4JTULWZR7wITeDYDYowTk4DCIACNz9Xzoz4M/0jVTBf4bw23FA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Ave7stBt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cU/QPNq7"
-Received: by mail-qv1-f49.google.com with SMTP id 6a1803df08f44-6faf66905adso37047196d6.2
-        for <lkmm@lists.linux.dev>; Tue, 10 Jun 2025 11:53:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1749581599; x=1750186399; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:feedback-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=6W4Rd5KefmDkCudiFgqafP7/SrHNUHS7n6T+k5okKnc=;
-        b=cU/QPNq7Ujgl9bl5+djnf2nVS32bB38jqvWt151oL1a6B1AeKspHPPbNMXIMKpcjjg
-         C0xczgHIoL3RkWEtKNubQJf5+rLIsLslQ16cR6z1rqRnjVme86v5VfkncE2OLcF1XnUK
-         aLWPiYh17H1oPA0mdGVV/52S4jPkzZSnDth37KsRCVmHVnMN/t1HWR6Z/UGa+NC7ESBU
-         nTGyM1HRoSDcVMiAFZTW9GhqhvC8U52e9OtkdgKt96lj4CQz3uRXAC3+H2Uhu7w/zpeX
-         SGmji3H6yKU/CL7vxWCiRQh73qcwP+AvanNtHOvVxBZN2lUEhwfGS0GjidZSkJ6KP1M+
-         YegQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1749581599; x=1750186399;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:feedback-id:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=6W4Rd5KefmDkCudiFgqafP7/SrHNUHS7n6T+k5okKnc=;
-        b=CJWjNhCyadaKzaDRhcUnErDGioFIIUR3QgRZISWeWRk3N1gM0vgWppddGcWKPMvNbe
-         4BTa/Qic7MoUrIGCyPg44LjZdU8SEY8E725n2prA9votJAV8Tx5FXX22HLNcCKgciaL2
-         9xLLqOktGN5n44wSflsbXKyhmrVf3NY5S8eZaXCEbPART9Rayq4zxFRBk4azDkjm7tqw
-         zOH1DHJNFjbBDakeMOJ7ZU4YqbxkTHb1emFODlThHQN6LY2+qy8W8B4ccA0rmvOMxEtP
-         oZEl34mzzXj4Z9/6GSrQdMfPR9F5JR4sF+US0n632vm6Nn8nqEGZR7UViRWHs6kdiXAC
-         4pvg==
-X-Forwarded-Encrypted: i=1; AJvYcCXhj9cFwXlBKHrwtbdC0v5o+2RTYYATDvNdZHsm31uWqs5GUCVRqg1VePCBaMigYuKaqIe/@lists.linux.dev
-X-Gm-Message-State: AOJu0YyWNpEPU3nu9uusVBODGArwBH7Lpo5ZX9YfDdUf2lS63zcfhI32
-	3GPBtFm/uSWEBrGrbOpA1zfL6XpvdqxK8MYhUSLofk+7B3/bK2GJyDQq
-X-Gm-Gg: ASbGncvlHlVVPkNBAx5hzRBN6AwsL+7taL5IuMQMyWTZDk0ESGdk2AWJKWa6Ax+uqIt
-	mkIMWu++swjqvKRme5hAWAE2v83Ain5yRzkH+80e6hiuG5Tu/0iw3C+uBgBRQ9jdWig0zcR1zbn
-	w9F1ZV7UpiaTniPkHcTF7YjL3robV64WOWV/fOPVAQUjtLM7du3qCK4H0a0kvgn110/nTI35Oni
-	UgtYKKOzi9aRgUncM5YFygW+3bntgdff/jzpc1nuzRTMNnCDklRlcT8X5YiZssj7KGYYzMK2j2Q
-	zetKMQhnRVUBZhsroDevCCBEJOICoTp/oQ0YU65SIrb2tQD8qKk3lCYJ9+JbNaK9FLBji0K/zRr
-	egpQS7bdbNnddxQz++YB95Xr0sjoQkWo5z3SOoQRgOgsMpg3xmvfj
-X-Google-Smtp-Source: AGHT+IGsLUS3refGq1Aq3PCXL9ovqUJvkRe1R09gDL09foqsyUwG3LBkaN8kqM1V9gKlR8s3k/sTCQ==
-X-Received: by 2002:a05:6214:b6c:b0:6fa:facf:7b7a with SMTP id 6a1803df08f44-6fb2c38f50fmr8109866d6.42.1749581599368;
-        Tue, 10 Jun 2025 11:53:19 -0700 (PDT)
-Received: from fauth-a2-smtp.messagingengine.com (fauth-a2-smtp.messagingengine.com. [103.168.172.201])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-6fb09b1ce43sm70288386d6.76.2025.06.10.11.53.18
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 10 Jun 2025 11:53:19 -0700 (PDT)
-Received: from phl-compute-09.internal (phl-compute-09.phl.internal [10.202.2.49])
-	by mailfauth.phl.internal (Postfix) with ESMTP id 311CC1200043;
-	Tue, 10 Jun 2025 14:53:18 -0400 (EDT)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-09.internal (MEProxy); Tue, 10 Jun 2025 14:53:18 -0400
-X-ME-Sender: <xms:Hn9IaMlf85k4pFlo_VYlAY_4sw5ROkg9KoPHN32aNpVWj1ZUIQNe6Q>
-    <xme:Hn9IaL168BcNnsJ_72SBD7QyVzApEbicmYXCQwaIbn6L5ShSgwn4PTY-s-8qZ8V1v
-    AUnNQP3X99op7N-3A>
-X-ME-Received: <xmr:Hn9IaKpoRkM7YXAXR6o43uIZRd1eSl6CA6QjV2EmN1Xk3mHkB5W7tTOMMfvFDQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddugdduudduvdcutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
-    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
-    hnthhsucdlqddutddtmdenucfjughrpeffhffvvefukfhfgggtuggjsehttdertddttddv
-    necuhfhrohhmpeeuohhquhhnucfhvghnghcuoegsohhquhhnrdhfvghnghesghhmrghilh
-    drtghomheqnecuggftrfgrthhtvghrnhephedugfduffffteeutddvheeuveelvdfhleel
-    ieevtdeguefhgeeuveeiudffiedvnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrg
-    hmpehmrghilhhfrhhomhepsghoqhhunhdomhgvshhmthhprghuthhhphgvrhhsohhnrghl
-    ihhthidqieelvdeghedtieegqddujeejkeehheehvddqsghoqhhunhdrfhgvnhhgpeepgh
-    hmrghilhdrtghomhesfhhigihmvgdrnhgrmhgvpdhnsggprhgtphhtthhopedviedpmhho
-    uggvpehsmhhtphhouhhtpdhrtghpthhtoheplhhoshhsihhnsehkvghrnhgvlhdrohhrgh
-    dprhgtphhtthhopehlihhnuhigqdhkvghrnhgvlhesvhhgvghrrdhkvghrnhgvlhdrohhr
-    ghdprhgtphhtthhopehruhhsthdqfhhorhdqlhhinhhugiesvhhgvghrrdhkvghrnhgvlh
-    drohhrghdprhgtphhtthhopehlkhhmmheslhhishhtshdrlhhinhhugidruggvvhdprhgt
-    phhtthhopehlihhnuhigqdgrrhgthhesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtph
-    htthhopehojhgvuggrsehkvghrnhgvlhdrohhrghdprhgtphhtthhopegrlhgvgidrghgr
-    hihnohhrsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghgrrhihsehgrghrhihguhhord
-    hnvghtpdhrtghpthhtohepsghjohhrnhefpghghhesphhrohhtohhnmhgrihhlrdgtohhm
-X-ME-Proxy: <xmx:Hn9IaIm4nhS9sZ5zcKYViVozQGHMpMBk6D14nRjPuARb8VIxeBHZcQ>
-    <xmx:Hn9IaK1s74nE5ZxtjnS-LdtmtEacS4sL2a42_40WZNdR8HH6yUXx8w>
-    <xmx:Hn9IaPtP94zItOp6ajpj3ELDTm-2mp8ODzHEaRwW6zyNU2joKFXjGQ>
-    <xmx:Hn9IaGUhKg87272SdHQxfN8wIOgUpPXx_JwSvOuZMljYXHGa3M3wmQ>
-    <xmx:Hn9IaN3CvbaGFAy9h2firCIOZAr4WeWhwcdqesmQ3h3p5tJoeH3aiwrB>
-Feedback-ID: iad51458e:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 10 Jun 2025 14:53:17 -0400 (EDT)
-Date: Tue, 10 Jun 2025 11:53:16 -0700
-From: Boqun Feng <boqun.feng@gmail.com>
-To: Benno Lossin <lossin@kernel.org>
-Cc: linux-kernel@vger.kernel.org, rust-for-linux@vger.kernel.org,
-	lkmm@lists.linux.dev, linux-arch@vger.kernel.org,
-	Miguel Ojeda <ojeda@kernel.org>,
-	Alex Gaynor <alex.gaynor@gmail.com>, Gary Guo <gary@garyguo.net>,
-	=?iso-8859-1?Q?Bj=F6rn?= Roy Baron <bjorn3_gh@protonmail.com>,
-	Andreas Hindborg <a.hindborg@kernel.org>,
-	Alice Ryhl <aliceryhl@google.com>, Trevor Gross <tmgross@umich.edu>,
-	Danilo Krummrich <dakr@kernel.org>, Will Deacon <will@kernel.org>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Wedson Almeida Filho <wedsonaf@gmail.com>,
-	Viresh Kumar <viresh.kumar@linaro.org>,
-	Lyude Paul <lyude@redhat.com>, Ingo Molnar <mingo@kernel.org>,
-	Mitchell Levy <levymitchell0@gmail.com>,
-	"Paul E. McKenney" <paulmck@kernel.org>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Thomas Gleixner <tglx@linutronix.de>
-Subject: Re: [PATCH v4 03/10] rust: sync: atomic: Add ordering annotation
- types
-Message-ID: <aEh_HEwSh2w0Ajkq@tardis.local>
-References: <20250609224615.27061-1-boqun.feng@gmail.com>
- <20250609224615.27061-4-boqun.feng@gmail.com>
- <DAIQG9ALK4QC.2P2C2MC4U9YVX@kernel.org>
- <aEhrzxltkdnub_bR@tardis.local>
- <aEhyRhb71dIXzqSu@tardis.local>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Ave7stBt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DFFBFC4CEED;
+	Tue, 10 Jun 2025 20:59:14 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1749589158;
+	bh=/V45mCxwZayqDibcRfztftOiwWg6CFuhhRtsIABS/1s=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+	b=Ave7stBtreimQhaXk4FkhstP7lpIi0w1/H4HpWqBpTc3hzO+E6Y6xrNBuiMauLrWd
+	 ChQesAuKmbLeBV8EaWoAoGJLVe4rb0RoKn9pYXh+jbv/XSTw+hBUQnQ6Br99w/TMWt
+	 tHVbQTf7rfHQuaZo078PTIDcA8/6eozElFlJqTwX12SxoFAvYIgw9KvI1Z4QsPlmXx
+	 fKro8cLre0739FN74yd2hcr/pxZcg1YLAkkTZhmIzgMf1I5Z5m9H93PUT/BVhN/2XO
+	 oBuskkl1SQ8JMAshsFvHRwd0JrMgL0W1IgaU+sgsEeJ+iQPjl0BxrC6XvSKpu/4gak
+	 CWx/zu2iEnh8A==
+Date: Tue, 10 Jun 2025 22:59:11 +0200
+From: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+To: Breno Leitao <leitao@debian.org>
+Cc: Linux Doc Mailing List <linux-doc@vger.kernel.org>, Jonathan Corbet
+ <corbet@lwn.net>, Akira Yokosawa <akiyks@gmail.com>, "David S. Miller"
+ <davem@davemloft.net>, Ignacio Encinas Rubio <ignacio@iencinas.com>, Marco
+ Elver <elver@google.com>, Shuah Khan <skhan@linuxfoundation.org>, Donald
+ Hunter <donald.hunter@gmail.com>, Eric Dumazet <edumazet@google.com>, Jan
+ Stancek <jstancek@redhat.com>, Paolo Abeni <pabeni@redhat.com>, Ruben
+ Wauters <rubenru09@aol.com>, joel@joelfernandes.org,
+ linux-kernel-mentees@lists.linux.dev, linux-kernel@vger.kernel.org,
+ lkmm@lists.linux.dev, netdev@vger.kernel.org, peterz@infradead.org,
+ stern@rowland.harvard.edu
+Subject: Re: [PATCH 4/4] docs: netlink: store generated .rst files at
+ Documentation/output
+Message-ID: <20250610225911.09677024@foz.lan>
+In-Reply-To: <aEhSu56ePZ/QPHUW@gmail.com>
+References: <cover.1749551140.git.mchehab+huawei@kernel.org>
+	<5183ad8aacc1a56e2dce9cc125b62905b93e83ca.1749551140.git.mchehab+huawei@kernel.org>
+	<aEhSu56ePZ/QPHUW@gmail.com>
+X-Mailer: Claws Mail 4.3.1 (GTK 3.24.49; x86_64-redhat-linux-gnu)
 Precedence: bulk
 X-Mailing-List: lkmm@lists.linux.dev
 List-Id: <lkmm.lists.linux.dev>
 List-Subscribe: <mailto:lkmm+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:lkmm+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <aEhyRhb71dIXzqSu@tardis.local>
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 
-On Tue, Jun 10, 2025 at 10:58:30AM -0700, Boqun Feng wrote:
-> On Tue, Jun 10, 2025 at 10:30:55AM -0700, Boqun Feng wrote:
-> [...]
-> > > > +/// Describes the exact memory ordering of an `impl` [`All`].
-> > > > +pub enum OrderingDesc {
-> > > 
-> > > Why not name this `Ordering`?
-> > > 
-> > 
-> > I was trying to avoid having an `Ordering` enum in a `ordering` mod.
-> > Also I want to save the name "Ordering" for the generic type parameter
-> > of an atomic operation, e.g.
-> > 
-> >     pub fn xchg<Ordering: ALL>(..)
-> > 
-> > this enum is more of an internal implementation detail, and users should
-> > not use this enum directly, so I would like to avoid potential
-> > confusion.
-> > 
-> > I have played a few sealed trait tricks on my end, but seems I cannot
-> > achieve:
-> > 
-> > 1) `OrderingDesc` is only accessible in the atomic mod.
-> > 2) `All` is only impl-able in the atomic mod, while it can be used as a
-> > trait bound outside kernel crate.
-> > 
-> > Maybe there is a trick I'm missing?
-> > 
+Hi Breno,
+
+Em Tue, 10 Jun 2025 08:43:55 -0700
+Breno Leitao <leitao@debian.org> escreveu:
+
+> Hello Mauro,
 > 
-> Something like this seems to work:
+> On Tue, Jun 10, 2025 at 12:46:07PM +0200, Mauro Carvalho Chehab wrote:
+> > A better long term solution is to have an extension at
+> > Documentation/sphinx that parses *.yaml files for netlink files,
+> > which could internally be calling ynl_gen_rst.py. Yet, some care
+> > needs to be taken, as yaml extensions are also used inside device
+> > tree.  
 > 
->     pub(super) mod private {
->         /// Describes the exact memory ordering of an `impl` [`All`].
->         pub enum Ordering {
->             /// Relaxed ordering.
->             Relaxed,
->             /// Acquire ordering.
->             Acquire,
->             /// Release ordering.
->             Release,
->             /// Fully-ordered.
->             Full,
->         }
->     
->         pub trait HasOrderingDesc {
->             /// Describes the exact memory ordering.
->             const ORDERING: Ordering;
->         }
->     }
+> In fact, This is very similar to what I did initially in v1. And I was
+> creating a sphinx extension to handle the generation, have a look here:
 > 
->     /// The trait bound for annotating operations that should support all orderings.
->     pub trait All: private::HasOrderingDesc { }
+> https://lore.kernel.org/all/20231103135622.250314-1-leitao@debian.org/
+
+Heh, I liked that ;-) 
+
+Still, I would try to make the template there just a single line, e.g.
+instead of:
+
+	--- /dev/null
+	+++ b/Documentation/networking/netlink_spec/devlink.rst
+	@@ -0,0 +1,9 @@
+	+.. SPDX-License-Identifier: GPL-2.0
+	+
+	+========================================
+	+Family ``devlink`` netlink specification
+	+========================================
+	+
+	+.. contents::
+	+
+	+.. netlink-spec:: devlink.yaml
+
+I would just add:
+
+	.. netlink-spec:: devlink.yaml
+
+-
+
+With regards to the code itself, IMHO the best would be to place
+the yaml conversion code inside a python library (just like we did
+with scripts/lib/kdoc) and keep having a command line program to
+call it, as it is easier to test/debug parser issues via command line.
+
+> During the review, we agree to move out of the sphinx extension.
+> the reasons are the stubs/templates that needs to be created and you are
+> creating here.
 > 
->     impl private::HasOrderingDesc for Relaxed {
->         const ORDERING: private::Ordering = private::Ordering::Relaxed;
->     }
+> So, if we decide to come back to sphinx extension, we can leverage that
+> code from v1 ?!
+
+For me, that's fine. Still, I wonder if are there a way to avoid
+creating a template for every yaml, while still using a Sphinx extension.
+
+As there is an 1:1 mapping between .yaml files and output files, perhaps
+there's a way to teach Sphinx to do the right thing, creating one html
+per file. If so, ideally, the best would be to have an index.rst file similar
+to this:
+
+	.. SPDX-License-Identifier: GPL-2.0
+
+	======================
+	Netlink Specifications
+	======================
+
+	.. netlink-specs:: netlink/specs
+
+which would teach the Sphinx extension to look for *.yaml files 
+inside Documentation/netlink/specs, parsing them, creating one html
+per file and create a TOC here. As there are some Sphinx extensions
+that handle non-ReST formats, maybe this or something similar to
+it could be possible.
+
 > 
-> the trick is to seal the enum and the trait together.
+> > -def generate_main_index_rst(output: str) -> None:
+> > +def generate_main_index_rst(output: str, index_dir: str, ) -> None:  
 > 
-> Regards,
-> Boqun
+> You probably don't need the last , before ).
+
+Sure. 
+
 > 
-> > > > +    /// Relaxed ordering.
-> > > > +    Relaxed,
-> > > > +    /// Acquire ordering.
-> > > > +    Acquire,
-> > > > +    /// Release ordering.
-> > > > +    Release,
-> > > > +    /// Fully-ordered.
-> > > > +    Full,
-> > > > +}
-> > > > +
-> > > > +/// The trait bound for annotating operations that should support all orderings.
-> > > > +pub trait All {
-> > > > +    /// Describes the exact memory ordering.
-> > > > +    const ORDER: OrderingDesc;
-> > > 
-> > > And then here: `ORDERING`.
-> > 
+> Other than that, LGTM.
+> 
+> The question is, are we OK with the templates that need to be created
+> for netlink specs?! 
 
-After a second thought, the following is probably what I will go for:
+If there's no other way, one might have a tool for maintainers to use
+to update templates, but yeah, having one template per each yaml
+is not ideal. I think we need to investigate it better and seek for
+some alternatives to avoid it.
 
-    /// The annotation type for relaxed memory ordering.
-    pub struct Relaxed;
-    
-    /// The annotation type for acquire memory ordering.
-    pub struct Acquire;
-    
-    /// The annotation type for release memory ordering.
-    pub struct Release;
-    
-    /// The annotation type for fully-order memory ordering.
-    pub struct Full;
-
-    /// Describes the exact memory ordering.
-    pub enum OrderingType {
-        /// Relaxed ordering.
-        Relaxed,
-        /// Acquire ordering.
-        Acquire,
-        /// Release ordering.
-        Release,
-        /// Fully-ordered.
-        Full,
-    }
-    
-    mod internal {
-        /// Unit types for ordering annotation.
-        ///
-        /// Sealed trait, can be only implemented inside atomic mod.
-        pub trait OrderingUnit {
-            /// Describes the exact memory ordering.
-            const TYPE: super::OrderingType;
-        }
-    }
-    
-    impl internal::OrderingUnit for Relaxed {
-        const TYPE: OrderingType = OrderingType::Relaxed;
-    }
-    
-    impl internal::OrderingUnit for Acquire {
-        const TYPE: OrderingType = OrderingType::Acquire;
-    }
-    
-    impl internal::OrderingUnit for Release {
-        const TYPE: OrderingType = OrderingType::Release;
-    }
-    
-    impl internal::OrderingUnit for Full {
-        const TYPE: OrderingType = OrderingType::Full;
-    }
-
-That is:
-
-1) Rename "OrderingDesc" into "OrderingType", and make it public.
-2) Provide a sealed trait (`OrderingUnit`) for all the unit types
-   that describe ordering.
-3) Instead of "ORDER" or "ORDERING", name the enum constant "TYPE".
-
-
-An example shows why is probably an xchg() implementation, if I was to
-follow the previous naming suggestion, it will be:
-
-    match Ordering::ORDERING {
-        <some mode path>::Ordering::Relaxed => atomic_xchg_relaxed(...),
-	...
-    }
-
-with the current one, it will be:
-
-    match Ordering::TYPE {
-        // assume we "use ordering::OrderingType"
-        OrderingType::Relaxed => atomic_xchg_relaxed(...),
-	...
-    }
-
-I think this version is much better.
-
-Regards,
-Boqun
-
-> [..]
+Thanks,
+Mauro

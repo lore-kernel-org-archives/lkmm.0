@@ -1,167 +1,243 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2E66280001;
-	Tue, 10 Jun 2025 08:13:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 332B61A8401;
+	Tue, 10 Jun 2025 09:07:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749543217; cv=none; b=F7+BIg95aHSvLbmvU1krk/grmv62RMHrcvJgDdtQ7utuXaSO9yhDiWo9LEycYbLmzvoHJMllWMRm2PT3MsxcKonvmOArZcu5Aqj0U8gSA+BGxVUj/WsLeZroSCwumySEEfQ4ZYcbDPElRea5wbW53vUi6yBXPEJaZiD0LtndJts=
+	t=1749546443; cv=none; b=rr0wTi8Faswhbc9H/uHHpSMU1/ixq4TI44LH10aeL32nTEOGdDdSuWAQ53048ycLonzee71106EdSnDXjtoIQhdWjbT/vvB3O75wTm5YdpBb8Dgx7z3K/eSqrdstI1t7akvy/1IVLiO/sWv0iU/UDBggQ1B8vSCyayG9PBUolwI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749543217; c=relaxed/simple;
-	bh=eZ8mMT4xITCP8zZ4dRjUAj87OD2BsMfsr0rdPnrGSFg=;
-	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=UGp6nwkiX5Du/Ic/m9cMG/lZrpaI22X8Sv6hrSFiCTRF4odFzLXl+h7AxRYgE2isWhqXzU4FAW2LeynEo6n4UoY+bD3N5C2GNv90NI2ES6ntH9A17QugT5UltFZ2S20Haj5daRF8WKAN9rOk6djfNksuTl7yWz2UnsrTLYyvWB0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Gn1SPxVv; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1749546443; c=relaxed/simple;
+	bh=ZM+zxGI1u4LejkqbNmMVUbYQhbNCdSBHsu5mm84RMCc=;
+	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
+	 References:In-Reply-To; b=gNHd2VrUF3S+2w/yGGPS03fl1zJDVMUy8kk1Juf6nefpjqW7/AulSN19ZmyLLg0gHsYHq8DQVWevqsp9Lnt/d6M3wRZVXZVAD/CU10+3trYayMvSY+jcBo5/YeZXkMBF4WOXD2Le81nkyIkPTZOQMY968It5EfaIDhekj4WLLDk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Se/+7llQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Gn1SPxVv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83C34C4CEEF;
-	Tue, 10 Jun 2025 08:13:34 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Se/+7llQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2EE6FC4CEED;
+	Tue, 10 Jun 2025 09:07:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1749543217;
-	bh=eZ8mMT4xITCP8zZ4dRjUAj87OD2BsMfsr0rdPnrGSFg=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-	b=Gn1SPxVvktzcMdbi8bpkcZT5H9uz/TDP1OqNFTHRnrbKlgEVAYi2GzzqbPPIyybZ8
-	 g0vfPzo914HDRK3MTRN+sBGifimDar+idMSG28wV0kSbOd/go97tCRndO0lG58bFL+
-	 WbeT/k/QZqfCaoh/6up9zpqyLu7NvhTYJCTOBvEsSOSyHsjt0qxnBdXp6tJqfYwOY3
-	 vgTYPSzbn9QtePYDQj7wFe4r7HtIQ6ttUxco9aad5t4rtEONrOK54D/NaV1KXvf8k1
-	 jSmMHCkY/O68ynFXnuZMs96skVvy4XZsel1DnmUC/Yk0D4U+H2p9mVZoQIuDz4XkK/
-	 BGDkPhEV55j7w==
-Date: Tue, 10 Jun 2025 10:13:31 +0200
-From: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-To: Akira Yokosawa <akiyks@gmail.com>
-Cc: Jonathan Corbet <corbet@lwn.net>, "Paul E. McKenney"
- <paulmck@kernel.org>, joel@joelfernandes.org,
- linux-kernel-mentees@lists.linux.dev, peterz@infradead.org,
- stern@rowland.harvard.edu, Shuah Khan <skhan@linuxfoundation.org>, Ignacio
- Encinas Rubio <ignacio@iencinas.com>, lkmm@lists.linux.dev, Marco Elver
- <elver@google.com>, Breno Leitao <leitao@debian.org>
-Subject: Re: [PATCH] lkmm: docs: Put LKMM documentation into dev-tools book
-Message-ID: <20250610101331.62ba466f@foz.lan>
-In-Reply-To: <c1e93b99-21a1-4646-af6c-e05330e1cd3d@gmail.com>
-References: <837b4d83-b91f-40d1-995a-aa3c5a925b0b@iencinas.com>
-	<015198be-1f23-4fc9-ba58-be7c48550f36@gmail.com>
-	<87ikl48te3.fsf@trenco.lwn.net>
-	<c1e93b99-21a1-4646-af6c-e05330e1cd3d@gmail.com>
-X-Mailer: Claws Mail 4.3.1 (GTK 3.24.49; x86_64-redhat-linux-gnu)
+	s=k20201202; t=1749546442;
+	bh=ZM+zxGI1u4LejkqbNmMVUbYQhbNCdSBHsu5mm84RMCc=;
+	h=Date:Cc:Subject:From:To:References:In-Reply-To:From;
+	b=Se/+7llQ0ATlcHDQPW8Un4LmPpQBtOpj/S+vklbEe9q30T1FRfq1kbOAC+s/Yw0+o
+	 3O2Cx+K36+7wH3bXy9JJEjMR4Dom12fJqucj6ZiNldNtTC6w3rutuj56gu6jAlvPyi
+	 NNFvrcqM24SVa2Ti/i8yEn4yaUUdWXBTH7N1iZjDwkQr2nCym9uGJOqEFjrYIXx1/z
+	 EfULQVfL+KBj2WNz1VEz+5+K+McvIRcMafcJvGJlhsx8Gu7tejk7f0Zno/eTm7j/7o
+	 j3bPt3hx90SNqy1U2Q/FdAob7qn0pf2LEfoYJZjE02MXKDJ1IrVQhIH1tmYKk3C6jb
+	 kHML1rWytJzDg==
 Precedence: bulk
 X-Mailing-List: lkmm@lists.linux.dev
 List-Id: <lkmm.lists.linux.dev>
 List-Subscribe: <mailto:lkmm+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:lkmm+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Tue, 10 Jun 2025 11:07:16 +0200
+Message-Id: <DAIQG9ALK4QC.2P2C2MC4U9YVX@kernel.org>
+Cc: "Miguel Ojeda" <ojeda@kernel.org>, "Alex Gaynor"
+ <alex.gaynor@gmail.com>, "Gary Guo" <gary@garyguo.net>,
+ =?utf-8?q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, "Andreas
+ Hindborg" <a.hindborg@kernel.org>, "Alice Ryhl" <aliceryhl@google.com>,
+ "Trevor Gross" <tmgross@umich.edu>, "Danilo Krummrich" <dakr@kernel.org>,
+ "Will Deacon" <will@kernel.org>, "Peter Zijlstra" <peterz@infradead.org>,
+ "Mark Rutland" <mark.rutland@arm.com>, "Wedson Almeida Filho"
+ <wedsonaf@gmail.com>, "Viresh Kumar" <viresh.kumar@linaro.org>, "Lyude
+ Paul" <lyude@redhat.com>, "Ingo Molnar" <mingo@kernel.org>, "Mitchell Levy"
+ <levymitchell0@gmail.com>, "Paul E. McKenney" <paulmck@kernel.org>, "Greg
+ Kroah-Hartman" <gregkh@linuxfoundation.org>, "Linus Torvalds"
+ <torvalds@linux-foundation.org>, "Thomas Gleixner" <tglx@linutronix.de>
+Subject: Re: [PATCH v4 03/10] rust: sync: atomic: Add ordering annotation
+ types
+From: "Benno Lossin" <lossin@kernel.org>
+To: "Boqun Feng" <boqun.feng@gmail.com>, <linux-kernel@vger.kernel.org>,
+ <rust-for-linux@vger.kernel.org>, <lkmm@lists.linux.dev>,
+ <linux-arch@vger.kernel.org>
+X-Mailer: aerc 0.20.1
+References: <20250609224615.27061-1-boqun.feng@gmail.com>
+ <20250609224615.27061-4-boqun.feng@gmail.com>
+In-Reply-To: <20250609224615.27061-4-boqun.feng@gmail.com>
 
-Em Tue, 10 Jun 2025 11:11:50 +0900
-Akira Yokosawa <akiyks@gmail.com> escreveu:
+On Tue Jun 10, 2025 at 12:46 AM CEST, Boqun Feng wrote:
+> Preparation for atomic primitives. Instead of a suffix like _acquire, a
+> method parameter along with the corresponding generic parameter will be
+> used to specify the ordering of an atomic operations. For example,
+> atomic load() can be defined as:
+>
+> 	impl<T: ...> Atomic<T> {
+> 	    pub fn load<O: AcquireOrRelaxed>(&self, _o: O) -> T { ... }
+> 	}
+>
+> and acquire users would do:
+>
+> 	let r =3D x.load(Acquire);
+>
+> relaxed users:
+>
+> 	let r =3D x.load(Relaxed);
+>
+> doing the following:
+>
+> 	let r =3D x.load(Release);
+>
+> will cause a compiler error.
+>
+> Compared to suffixes, it's easier to tell what ordering variants an
+> operation has, and it also make it easier to unify the implementation of
+> all ordering variants in one method via generic. The `IS_RELAXED` and
+> `ORDER` associate consts are for generic function to pick up the
+> particular implementation specified by an ordering annotation.
+>
+> Signed-off-by: Boqun Feng <boqun.feng@gmail.com>
 
-> On Mon, 09 Jun 2025 16:03:32 -0600, Jonathan Corbet wrote:
-> > Akira Yokosawa <akiyks@gmail.com> writes:
-> >   
-> >> Currently, LKMM docs are not included in any of kernel documentation
-> >> books.
-> >>
-> >> Commit e40573a43d16 ("docs: put atomic*.txt and memory-barriers.txt
-> >> into the core-api book") covered plain-text docs under Documentation/
-> >> by using the "include::" directive along with the ":literal:" option.
-> >>
-> >> As LKMM docs are not under Documentation/, the same approach would not
-> >> work due to the limit of the include:: directive. 
-> >>
-> >> As a matter of fact, kernel documentation has an extended directive
-> >> by the name of "kernel-include::", which has no such limitation.
-> >>
-> >> Rather than moving LKMM docs around, use the latter with source tree's
-> >> abspath passed through via the "SOURCEDIR" variable which is now defined
-> >> in Documentation/Makefile, and make them included in the dev-tools book
-> >> next to KCSAN.  
-> > 
-> > So this fell through the cracks during my May travel, sorry.  
-> 
-> Thank you for taking the time!
-> 
-> > 
-> > I've taken a look at it now ... it adds a vast number of build warnings:
-> > 
-> > Documentation/networking/netlink_spec/rt_addr.rst:28: WARNING: duplicate label rt-addr-operation-newaddr, other instance in /stuff/k/git/kernel/Documentation/networking/netlink_spec/rt-addr.rst
-> > Documentation/networking/netlink_spec/rt_addr.rst:41: WARNING: duplicate label rt-addr-operation-deladdr, other instance in /stuff/k/git/kernel/Documentation/networking/netlink_spec/rt-addr.rst
-> > Documentation/networking/netlink_spec/rt_addr.rst:54: WARNING: duplicate label rt-addr-operation-getaddr, other instance in /stuff/k/git/kernel/Documentation/networking/netlink_spec/rt-addr.rst
-> > [...]
-> > 
-> > I haven't had a chance to figure out *why* it would have this particular
-> > bizarre effect...  
-> 
-> I don't think those new warnings have anything to do with this patch.
-> 
-> This is mentioned by Paolo at:
->   https://lore.kernel.org/495e43ef-ae20-4dda-97c0-cb8ebe97394b@redhat.com/
-> 
->     My understanding is that this rename triggers rebuild of the related
->     doc, which in turns leads to quite a large number of htmldoc warning,
->     but it's really unharmful/pre-existing issue.
-> 
-> , and Donald said in his reply at:
->   https://lore.kernel.org/CAD4GDZw+Enkd2dA8f7pNxMadwURFd_tHv1sUwkXqFqxsOquHQQ@mail.gmail.com/
-> 
->     Yes, Documentation/Makefile goes the extra mile to only try deleting a
->     list of .rst files generated from the list of source .yaml files. It
->     would be easier to just delete
->     Documentation/networking/netlink_spec/*.rst which would be able to
->     clean up old generated files in situations like this.
-> 
-> HTH.
-> 
-> BTW, I assumed Paul would take this patch into his lkmm branch for v6.17,
-> once all is clear for the new uses of "..kernel-include::" with ":literal:".
+Looks good, I got a few comments on the details below.
 
-IMO, that happens because of the extra step introduced by ynl_gen_rst.py.
+> ---
+>  rust/kernel/sync/atomic.rs          |  3 +
+>  rust/kernel/sync/atomic/ordering.rs | 94 +++++++++++++++++++++++++++++
+>  2 files changed, 97 insertions(+)
+>  create mode 100644 rust/kernel/sync/atomic/ordering.rs
+>
+> diff --git a/rust/kernel/sync/atomic.rs b/rust/kernel/sync/atomic.rs
+> index 65e41dba97b7..9fe5d81fc2a9 100644
+> --- a/rust/kernel/sync/atomic.rs
+> +++ b/rust/kernel/sync/atomic.rs
+> @@ -17,3 +17,6 @@
+>  //! [`LKMM`]: srctree/tools/memory-mode/
+> =20
+>  pub mod ops;
+> +pub mod ordering;
+> +
+> +pub use ordering::{Acquire, Full, Relaxed, Release};
+> diff --git a/rust/kernel/sync/atomic/ordering.rs b/rust/kernel/sync/atomi=
+c/ordering.rs
+> new file mode 100644
+> index 000000000000..14cda8c5d1b1
+> --- /dev/null
+> +++ b/rust/kernel/sync/atomic/ordering.rs
+> @@ -0,0 +1,94 @@
+> +// SPDX-License-Identifier: GPL-2.0
+> +
+> +//! Memory orderings.
+> +//!
+> +//! The semantics of these orderings follows the [`LKMM`] definitions an=
+d rules.
+> +//!
+> +//! - [`Acquire`] and [`Release`] are similar to their counterpart in Ru=
+st memory model.
+> +//! - [`Full`] means "fully-ordered", that is:
+> +//!   - It provides ordering between all the preceding memory accesses a=
+nd the annotated operation.
+> +//!   - It provides ordering between the annotated operation and all the=
+ following memory accesses.
+> +//!   - It provides ordering between all the preceding memory accesses a=
+nd all the fllowing memory
+> +//!     accesses.
+> +//!   - All the orderings are the same strong as a full memory barrier (=
+i.e. `smp_mb()`).
 
-Any file renames and deletes will cause troubles. Btw, with those:
+s/strong/strength/ ?
 
-	YNL_INDEX:=$(srctree)/Documentation/networking/netlink_spec/index.rst
-	YNL_RST_DIR:=$(srctree)/Documentation/networking/netlink_spec
-	YNL_YAML_DIR:=$(srctree)/Documentation/netlink/specs
-	YNL_TOOL:=$(srctree)/tools/net/ynl/pyynl/ynl_gen_rst.py
+> +//! - [`Relaxed`] is similar to the counterpart in Rust memory model, ex=
+cept that dependency
+> +//!   orderings are also honored in [`LKMM`]. Dependency orderings are d=
+escribed in "DEPENDENCY
+> +//!   RELATIONS" in [`LKMM`]'s [`explanation`].
+> +//!
+> +//! [`LKMM`]: srctree/tools/memory-model/
+> +//! [`explanation`]: srctree/tools/memory-model/Documentation/explanatio=
+n.txt
+> +
+> +/// The annotation type for relaxed memory ordering.
+> +pub struct Relaxed;
+> +
+> +/// The annotation type for acquire memory ordering.
+> +pub struct Acquire;
+> +
+> +/// The annotation type for release memory ordering.
+> +pub struct Release;
+> +
+> +/// The annotation type for fully-order memory ordering.
+> +pub struct Full;
 
-	YNL_RST_FILES_TMP := $(patsubst %.yaml,%.rst,$(wildcard $(YNL_YAML_DIR)/*.yaml))
-	YNL_RST_FILES := $(patsubst $(YNL_YAML_DIR)%,$(YNL_RST_DIR)%, $(YNL_RST_FILES_TMP))
+Is this ordering only ever used in combination with itself? (Since you
+don't have a `FullOrAcquire` trait)
 
-$(YNL_INDEX): $(YNL_RST_FILES)
-        $(Q)$(YNL_TOOL) -o $@ -x
+> +
+> +/// The trait bound for operations that only support relaxed ordering.
+> +pub trait RelaxedOnly: AcquireOrRelaxed + ReleaseOrRelaxed + All {}
+> +
+> +impl RelaxedOnly for Relaxed {}
+> +
+> +/// The trait bound for operations that only support acquire or relaxed =
+ordering.
+> +pub trait AcquireOrRelaxed: All {
+> +    /// Describes whether an ordering is relaxed or not.
+> +    const IS_RELAXED: bool =3D false;
+> +}
+> +
+> +impl AcquireOrRelaxed for Acquire {}
+> +
+> +impl AcquireOrRelaxed for Relaxed {
+> +    const IS_RELAXED: bool =3D true;
+> +}
+> +
+> +/// The trait bound for operations that only support release or relaxed =
+ordering.
+> +pub trait ReleaseOrRelaxed: All {
+> +    /// Describes whether an ordering is relaxed or not.
+> +    const IS_RELAXED: bool =3D false;
+> +}
+> +
+> +impl ReleaseOrRelaxed for Release {}
+> +
+> +impl ReleaseOrRelaxed for Relaxed {
+> +    const IS_RELAXED: bool =3D true;
+> +}
+> +
+> +/// Describes the exact memory ordering of an `impl` [`All`].
+> +pub enum OrderingDesc {
 
-$(YNL_RST_DIR)/%.rst: $(YNL_YAML_DIR)/%.yaml $(YNL_TOOL)
-        $(Q)$(YNL_TOOL) -i $< -o $@
+Why not name this `Ordering`?
 
-the produced ReST files aren't placed inside Documentation/output.
-They're placed instead at $(srctree). This can be problematic,
-specially when O= is in place.
+> +    /// Relaxed ordering.
+> +    Relaxed,
+> +    /// Acquire ordering.
+> +    Acquire,
+> +    /// Release ordering.
+> +    Release,
+> +    /// Fully-ordered.
+> +    Full,
+> +}
+> +
+> +/// The trait bound for annotating operations that should support all or=
+derings.
+> +pub trait All {
+> +    /// Describes the exact memory ordering.
+> +    const ORDER: OrderingDesc;
 
-IMO, the right solution would be to write a Sphinx extension that would
-be internally calling ynl_gen_rst.py. This way, there won't be a need to
-store.
-
-There is a second option: do something similar to what we did when
-media uAPI documents got migrated to Sphinx(*). The Makefile part
-is at:
-
-	Documentation/userspace-api/media/Makefile
-
-Where generated ReST files are stored under $(BUILDDIR). We did this before 
-we start writing our own Sphinx extensions. While such approach works,IMO
-a Sphinx extension would be better integrated.
+And then here: `ORDERING`.
 
 ---
+Cheers,
+Benno
 
-(*) the tool there ensures that the entire uAPI headers will be included
-    on media documentation in a way that all symbols will have a
-    cross-reference to uAPI documentation. This way, if one adds a new
-    uAPI without touching docs, warnings will be generated.
+> +}
+> +
+> +impl All for Relaxed {
+> +    const ORDER: OrderingDesc =3D OrderingDesc::Relaxed;
+> +}
+> +
+> +impl All for Acquire {
+> +    const ORDER: OrderingDesc =3D OrderingDesc::Acquire;
+> +}
+> +
+> +impl All for Release {
+> +    const ORDER: OrderingDesc =3D OrderingDesc::Release;
+> +}
+> +
+> +impl All for Full {
+> +    const ORDER: OrderingDesc =3D OrderingDesc::Full;
+> +}
 
-> 
-> Thanks,
-> Akira
-
-
-
-Thanks,
-Mauro

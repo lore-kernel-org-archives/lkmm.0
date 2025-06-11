@@ -1,233 +1,140 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f54.google.com (mail-wm1-f54.google.com [209.85.128.54])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DED582576;
-	Wed, 11 Jun 2025 06:40:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DDB72E610C;
+	Wed, 11 Jun 2025 11:37:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749624025; cv=none; b=eQ+QP8sQ8Jy/Gcbw2VQY9LwMWscs5B67wFjxVxsw/bKN6HsOYQYIlw+I1OxiQVtxv7EwMHH7iMXxtZckRoh+JD+W/Bdm6/+IcN44+mBolv27gt07RSv3jG/l7gTuPACXwNx+RSmcATDW5vI9wjS+1TtL9r1vtuFNoom1bSCwy1M=
+	t=1749641847; cv=none; b=nU1PIcWpMnM6oSeQfAVYRm6N5sqRVzDanXFwuzddnfQU16V2SZVlufxuAMYOcViujywX7Cc91eIN7aPlItS1XWjKM2zxKxEpsYXOiAepv4pmipXSiakePDN/B8vMI7sWFPVujJcpNbS0pHZDb8RAxLZFF0Gi/9c9rL2WJv1jyAU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749624025; c=relaxed/simple;
-	bh=hTZ4O1f+yyRThvIWYmjjaVb+T8UQ4NQFi4XinDUzJbE=;
-	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
-	 References:In-Reply-To; b=hM+oI00exH6WFJY0wl/mjiv5P04/U2Sdqjp+Qxp0DlulIj3Ah26GM7vBbv+S4xsKsBxRp6mIWCHFlHdXbuE8zXRJ5BxiMKJDILNRcXCZLFLLQ7b+QYXo2i0nAbDTC+L7TeNvnq73ZqpBGVPUHoX66l1ZjmMblPc4zR1O95sojms=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ILRmI8cM; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1749641847; c=relaxed/simple;
+	bh=t70ZVM9B9jXNQcg1tWA3G669RPWCqOTJ7o+RRmiouFQ=;
+	h=From:To:Cc:Subject:In-Reply-To:Date:Message-ID:References:
+	 MIME-Version:Content-Type; b=sxMbS9pIOigfEUu5ZIoRlBQJN+ZqkMvSSOUS5KGMt1ovf/HAc+MDaVpCRtfuIzJaAcPVj++X6oVEpdy3oZQWWnEidvSz91eIrnoFsSDZWYOGgPJJRfNtk9D502AId6mNKBI06AnvFBOvl+ZrzmfH05IhI1726mMhGOvv3s/vJUI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=S/2E/bfm; arc=none smtp.client-ip=209.85.128.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ILRmI8cM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 223ADC4CEEE;
-	Wed, 11 Jun 2025 06:40:14 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1749624024;
-	bh=hTZ4O1f+yyRThvIWYmjjaVb+T8UQ4NQFi4XinDUzJbE=;
-	h=Date:Cc:Subject:From:To:References:In-Reply-To:From;
-	b=ILRmI8cMjGf65AqQkb3cOeaQJ7RKZL/N58pNF2ZLJJX+3Ax3r4awDigxs0hghD5r3
-	 uhkNhoF2vij4mRRPvmBqo0thNPUCRenZoMxm81rUCWX5xbYAPU7o61mfX1m/hsbiaz
-	 x1AMORfgUJhPeIKMhjnOaKDS790UZbgpyZLkzKHGQJ4Qqi7d7IDNOjQ3saC3l8tluf
-	 M1+kfWW2fYl57d/dl5uuYjLCSmLa0YZ07XuDbV1AD4YCNCkUUFT81R/bT8O29u6TSc
-	 GDiw69DmrR00OA0VdCZWDPWR2s6uswoRoI+b361lmsObuyKBBwyExO5BPOsa9CyBHk
-	 TB1mD0UZs2OfA==
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="S/2E/bfm"
+Received: by mail-wm1-f54.google.com with SMTP id 5b1f17b1804b1-450ccda1a6eso61153755e9.2;
+        Wed, 11 Jun 2025 04:37:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1749641844; x=1750246644; darn=lists.linux.dev;
+        h=mime-version:user-agent:references:message-id:date:in-reply-to
+         :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=qR6faLEKEsL2HBhlXQ2T+G160lb/jVjJORZfNDkjTgo=;
+        b=S/2E/bfmd3mXUl3OzVYWWsMbraueualltmdERLTy4mNewcqqYAxtscSALdsRCc12sF
+         igovagWfys/crEfWTcQhm5UiHuVFisbQGkaC7RWKSfixyClqYF7xZ3ocfxkvdvFtt9r8
+         GoK2+N8yzMamZI7nDIbD8II2hiUhloIrnLOYuSWhpkcjJWJOCeQmNrmpPXc2gJGEfBJ7
+         HzdR3oEUa6dW10rz6yJG2KvPdLNB3UyiOjGe7y8YBY14po7Xbqaz3yYbIW33NOj8k7bb
+         gcQ2OVtL5eQOxdX57/8iQNGHN9gA2vJn0Iw796XwTkkaNqv73cYBwyKkwuBKc/cBIX/i
+         p4vA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1749641844; x=1750246644;
+        h=mime-version:user-agent:references:message-id:date:in-reply-to
+         :subject:cc:to:from:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=qR6faLEKEsL2HBhlXQ2T+G160lb/jVjJORZfNDkjTgo=;
+        b=Bbccjyyc/Xa0Tsw4pG5lAFQpttVY+fKHwdXULOiuoxrgbP32P2EVTosYtSWUOpJ+M2
+         UykNZF+ua3ScHssajWfFIvyHHyPFM3wxdJprEVPTThTnZxiQOIqyG/XT5Wnu8GifZTWY
+         bcRp52Ib7BukCBVJUcpRzmj7D6419Umjs31uU9WDAbnlp7jR/m4kFmI55MvlRwzznHOr
+         mKvWRHMNqmVQgc6ZD53Ydo8wMfEMVf4Oh9j/t+GFQ6FqJZBvjpl1mhNdLu+byckYO/cN
+         X37XwuSCGZWXI+y8nwd/S2xgyNbWg3mMXQlUygFjEkb/LQPaGQAF2way8T9W9e9n/Mt3
+         TTEg==
+X-Forwarded-Encrypted: i=1; AJvYcCVr00MqE4WJb0+aAPgx60YzghMZqBCF8Rq/SqYwknSKJqrA85+cwOxgrxLCjh0fo2c0Ab5VBbjP+dcmmS+fAeISUsS2hQ==@lists.linux.dev, AJvYcCWuH5yWUdDQwVk/se9S5LnTRpgilqegN8UOtSOYb47b58xlC4xrVoirE92jmCWM2QKxQA1U4g==@lists.linux.dev
+X-Gm-Message-State: AOJu0YwonhxiOdd71tCd+3qAiyaqxDsifI/S6heKiKfXoeh6iPNmuWxy
+	7AY5fVhTugUipVD4FBpsPLVFBEWA0wGNkmcxNDWWCTKEd+8II5oNyqbg
+X-Gm-Gg: ASbGncsZyUA1mXEdFxjGJvRORCMHIgM+uX50LvdGVIUGKd6poZtTQSmjmzUnQA9CnTf
+	6/GMNl6KaTTM8lwE2Vk56OQxAJjVpHKZ3YHa2alquH6oYlZBQZ8cDEezfxujMgyPlMnx9mq7ug3
+	ewGeck62DVl3GeUbS/TzCtYzw4CQmzCOemI3CcV3/ktncBH2Q2g6IMnYQu6PXZPDS/TuGI/HI2c
+	WEAvitbNnEVxzYdZcRNt/X7JkLPM4I3VuBIkwbVAWtckmiRFkNkFxv6TYpbRfFQaaBCSyjNWkJe
+	WzcwJhG6mihPMLpzGI5y4O9uICrri4bseNBzcZ4XKI+cVUfQWs6R1RFK+HQO+uWiKsnyVwGA868
+	=
+X-Google-Smtp-Source: AGHT+IHUSDusP78EOPiscyfG6WpAmC3o9BMOaRGloOtLN/xk/Tr/sY0jXpO68pJur2TvBqN/0kmB+g==
+X-Received: by 2002:a05:600c:4687:b0:453:aca:4d05 with SMTP id 5b1f17b1804b1-4532a2e8b84mr462665e9.31.1749641844216;
+        Wed, 11 Jun 2025 04:37:24 -0700 (PDT)
+Received: from imac ([2a02:8010:60a0:0:acc4:f1bd:6203:c85f])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4532513e758sm18852815e9.5.2025.06.11.04.37.22
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 11 Jun 2025 04:37:23 -0700 (PDT)
+From: Donald Hunter <donald.hunter@gmail.com>
+To: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+Cc: Linux Doc Mailing List <linux-doc@vger.kernel.org>,  "Jonathan Corbet"
+ <corbet@lwn.net>,  "Akira Yokosawa" <akiyks@gmail.com>,  "Breno Leitao"
+ <leitao@debian.org>,  "David S. Miller" <davem@davemloft.net>,  "Ignacio
+ Encinas Rubio" <ignacio@iencinas.com>,  "Marco Elver" <elver@google.com>,
+  "Shuah Khan" <skhan@linuxfoundation.org>,  Eric Dumazet
+ <edumazet@google.com>,  Paolo Abeni <pabeni@redhat.com>,
+  joel@joelfernandes.org,  linux-kernel-mentees@lists.linux.dev,
+  linux-kernel@vger.kernel.org,  lkmm@lists.linux.dev,
+  netdev@vger.kernel.org,  peterz@infradead.org,  stern@rowland.harvard.edu
+Subject: Re: [PATCH 3/4] docs: netlink: don't ignore generated rst files
+In-Reply-To: <1cf12ab4c027cf27decf70a40aafdd0e2f669299.1749551140.git.mchehab+huawei@kernel.org>
+Date: Wed, 11 Jun 2025 11:44:09 +0100
+Message-ID: <m2a56epngm.fsf@gmail.com>
+References: <cover.1749551140.git.mchehab+huawei@kernel.org>
+	<1cf12ab4c027cf27decf70a40aafdd0e2f669299.1749551140.git.mchehab+huawei@kernel.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: lkmm@lists.linux.dev
 List-Id: <lkmm.lists.linux.dev>
 List-Subscribe: <mailto:lkmm+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:lkmm+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Wed, 11 Jun 2025 08:40:12 +0200
-Message-Id: <DAJHY74JP27K.3VV3U3W0A9PCN@kernel.org>
-Cc: <linux-kernel@vger.kernel.org>, <rust-for-linux@vger.kernel.org>,
- <lkmm@lists.linux.dev>, <linux-arch@vger.kernel.org>, "Miguel Ojeda"
- <ojeda@kernel.org>, "Alex Gaynor" <alex.gaynor@gmail.com>, "Gary Guo"
- <gary@garyguo.net>, =?utf-8?q?Bj=C3=B6rn_Roy_Baron?=
- <bjorn3_gh@protonmail.com>, "Andreas Hindborg" <a.hindborg@kernel.org>,
- "Alice Ryhl" <aliceryhl@google.com>, "Trevor Gross" <tmgross@umich.edu>,
- "Danilo Krummrich" <dakr@kernel.org>, "Will Deacon" <will@kernel.org>,
- "Peter Zijlstra" <peterz@infradead.org>, "Mark Rutland"
- <mark.rutland@arm.com>, "Wedson Almeida Filho" <wedsonaf@gmail.com>,
- "Viresh Kumar" <viresh.kumar@linaro.org>, "Lyude Paul" <lyude@redhat.com>,
- "Ingo Molnar" <mingo@kernel.org>, "Mitchell Levy"
- <levymitchell0@gmail.com>, "Paul E. McKenney" <paulmck@kernel.org>, "Greg
- Kroah-Hartman" <gregkh@linuxfoundation.org>, "Linus Torvalds"
- <torvalds@linux-foundation.org>, "Thomas Gleixner" <tglx@linutronix.de>
-Subject: Re: [PATCH v4 03/10] rust: sync: atomic: Add ordering annotation
- types
-From: "Benno Lossin" <lossin@kernel.org>
-To: "Boqun Feng" <boqun.feng@gmail.com>
-X-Mailer: aerc 0.20.1
-References: <20250609224615.27061-1-boqun.feng@gmail.com>
- <20250609224615.27061-4-boqun.feng@gmail.com>
- <DAIQG9ALK4QC.2P2C2MC4U9YVX@kernel.org> <aEhrzxltkdnub_bR@tardis.local>
- <aEhyRhb71dIXzqSu@tardis.local> <aEh_HEwSh2w0Ajkq@tardis.local>
-In-Reply-To: <aEh_HEwSh2w0Ajkq@tardis.local>
+MIME-Version: 1.0
+Content-Type: text/plain
 
-On Tue Jun 10, 2025 at 8:53 PM CEST, Boqun Feng wrote:
-> On Tue, Jun 10, 2025 at 10:58:30AM -0700, Boqun Feng wrote:
->> On Tue, Jun 10, 2025 at 10:30:55AM -0700, Boqun Feng wrote:
->> [...]
->> > > > +/// Describes the exact memory ordering of an `impl` [`All`].
->> > > > +pub enum OrderingDesc {
->> > >=20
->> > > Why not name this `Ordering`?
->> > >=20
->> >=20
->> > I was trying to avoid having an `Ordering` enum in a `ordering` mod.
->> > Also I want to save the name "Ordering" for the generic type parameter
->> > of an atomic operation, e.g.
->> >=20
->> >     pub fn xchg<Ordering: ALL>(..)
->> >=20
->> > this enum is more of an internal implementation detail, and users shou=
-ld
->> > not use this enum directly, so I would like to avoid potential
->> > confusion.
->> >=20
->> > I have played a few sealed trait tricks on my end, but seems I cannot
->> > achieve:
->> >=20
->> > 1) `OrderingDesc` is only accessible in the atomic mod.
->> > 2) `All` is only impl-able in the atomic mod, while it can be used as =
-a
->> > trait bound outside kernel crate.
->> >=20
->> > Maybe there is a trick I'm missing?
->> >=20
->>=20
->> Something like this seems to work:
->>=20
->>     pub(super) mod private {
->>         /// Describes the exact memory ordering of an `impl` [`All`].
->>         pub enum Ordering {
->>             /// Relaxed ordering.
->>             Relaxed,
->>             /// Acquire ordering.
->>             Acquire,
->>             /// Release ordering.
->>             Release,
->>             /// Fully-ordered.
->>             Full,
->>         }
->>    =20
->>         pub trait HasOrderingDesc {
->>             /// Describes the exact memory ordering.
->>             const ORDERING: Ordering;
->>         }
->>     }
->>=20
->>     /// The trait bound for annotating operations that should support al=
-l orderings.
->>     pub trait All: private::HasOrderingDesc { }
->>=20
->>     impl private::HasOrderingDesc for Relaxed {
->>         const ORDERING: private::Ordering =3D private::Ordering::Relaxed=
-;
->>     }
->>=20
->> the trick is to seal the enum and the trait together.
->>=20
->> Regards,
->> Boqun
->>=20
->> > > > +    /// Relaxed ordering.
->> > > > +    Relaxed,
->> > > > +    /// Acquire ordering.
->> > > > +    Acquire,
->> > > > +    /// Release ordering.
->> > > > +    Release,
->> > > > +    /// Fully-ordered.
->> > > > +    Full,
->> > > > +}
->> > > > +
->> > > > +/// The trait bound for annotating operations that should support=
- all orderings.
->> > > > +pub trait All {
->> > > > +    /// Describes the exact memory ordering.
->> > > > +    const ORDER: OrderingDesc;
->> > >=20
->> > > And then here: `ORDERING`.
->> >=20
->
-> After a second thought, the following is probably what I will go for:
->
->     /// The annotation type for relaxed memory ordering.
->     pub struct Relaxed;
->    =20
->     /// The annotation type for acquire memory ordering.
->     pub struct Acquire;
->    =20
->     /// The annotation type for release memory ordering.
->     pub struct Release;
->    =20
->     /// The annotation type for fully-order memory ordering.
->     pub struct Full;
->
->     /// Describes the exact memory ordering.
->     pub enum OrderingType {
->         /// Relaxed ordering.
->         Relaxed,
->         /// Acquire ordering.
->         Acquire,
->         /// Release ordering.
->         Release,
->         /// Fully-ordered.
->         Full,
->     }
->    =20
->     mod internal {
->         /// Unit types for ordering annotation.
->         ///
->         /// Sealed trait, can be only implemented inside atomic mod.
->         pub trait OrderingUnit {
->             /// Describes the exact memory ordering.
->             const TYPE: super::OrderingType;
->         }
->     }
->    =20
->     impl internal::OrderingUnit for Relaxed {
->         const TYPE: OrderingType =3D OrderingType::Relaxed;
->     }
->    =20
->     impl internal::OrderingUnit for Acquire {
->         const TYPE: OrderingType =3D OrderingType::Acquire;
->     }
->    =20
->     impl internal::OrderingUnit for Release {
->         const TYPE: OrderingType =3D OrderingType::Release;
->     }
->    =20
->     impl internal::OrderingUnit for Full {
->         const TYPE: OrderingType =3D OrderingType::Full;
->     }
->
-> That is:
->
-> 1) Rename "OrderingDesc" into "OrderingType", and make it public.
-> 2) Provide a sealed trait (`OrderingUnit`) for all the unit types
->    that describe ordering.
-> 3) Instead of "ORDER" or "ORDERING", name the enum constant "TYPE".
->
->
-> An example shows why is probably an xchg() implementation, if I was to
-> follow the previous naming suggestion, it will be:
->
->     match Ordering::ORDERING {
->         <some mode path>::Ordering::Relaxed =3D> atomic_xchg_relaxed(...)=
-,
-> 	...
->     }
->
-> with the current one, it will be:
->
->     match Ordering::TYPE {
->         // assume we "use ordering::OrderingType"
->         OrderingType::Relaxed =3D> atomic_xchg_relaxed(...),
-> 	...
->     }
->
-> I think this version is much better.
+Mauro Carvalho Chehab <mchehab+huawei@kernel.org> writes:
 
-Agreed :)
+> Currently, the build system generates ReST files inside the
+> source directory. This is not a good idea, specially when
+> we have renames, as make clean won't get rid of them.
 
----
-Cheers,
-Benno
+You're right that it's not a great idea, but it's the least bad option
+with sphinx because it only supports 1 source dir. It doesn't have the
+concept of a generated-sources dir and the alternative is to pollute the
+output dir. See e.g. https://docs.kernel.org/media.h.rst
+
+> As the first step to address the issue, stop ignoring those
+> files. This way, we can see exactly what has been produced
+> at build time inside $(srctree):
+>
+>         Documentation/networking/netlink_spec/conntrack.rst
+>         Documentation/networking/netlink_spec/devlink.rst
+>         Documentation/networking/netlink_spec/dpll.rst
+>         Documentation/networking/netlink_spec/ethtool.rst
+>         Documentation/networking/netlink_spec/fou.rst
+>         Documentation/networking/netlink_spec/handshake.rst
+>         Documentation/networking/netlink_spec/index.rst
+>         Documentation/networking/netlink_spec/lockd.rst
+>         Documentation/networking/netlink_spec/mptcp_pm.rst
+>         Documentation/networking/netlink_spec/net_shaper.rst
+>         Documentation/networking/netlink_spec/netdev.rst
+>         Documentation/networking/netlink_spec/nfsd.rst
+>         Documentation/networking/netlink_spec/nftables.rst
+>         Documentation/networking/netlink_spec/nl80211.rst
+>         Documentation/networking/netlink_spec/nlctrl.rst
+>         Documentation/networking/netlink_spec/ovs_datapath.rst
+>         Documentation/networking/netlink_spec/ovs_flow.rst
+>         Documentation/networking/netlink_spec/ovs_vport.rst
+>         Documentation/networking/netlink_spec/rt_addr.rst
+>         Documentation/networking/netlink_spec/rt_link.rst
+>         Documentation/networking/netlink_spec/rt_neigh.rst
+>         Documentation/networking/netlink_spec/rt_route.rst
+>         Documentation/networking/netlink_spec/rt_rule.rst
+>         Documentation/networking/netlink_spec/tc.rst
+>         Documentation/networking/netlink_spec/tcp_metrics.rst
+>         Documentation/networking/netlink_spec/team.rst
+>
+> Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+> ---
+>  Documentation/networking/netlink_spec/.gitignore | 1 -
+>  1 file changed, 1 deletion(-)
+>  delete mode 100644 Documentation/networking/netlink_spec/.gitignore
+>
+> diff --git a/Documentation/networking/netlink_spec/.gitignore b/Documentation/networking/netlink_spec/.gitignore
+> deleted file mode 100644
+> index 30d85567b592..000000000000
+> --- a/Documentation/networking/netlink_spec/.gitignore
+> +++ /dev/null
+> @@ -1 +0,0 @@
+> -*.rst

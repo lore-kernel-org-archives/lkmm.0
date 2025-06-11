@@ -1,72 +1,233 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA86912D758;
-	Tue, 10 Jun 2025 21:07:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DED582576;
+	Wed, 11 Jun 2025 06:40:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749589647; cv=none; b=Ed4F9hGkZwU3nBh7bt90E0e33MDkBQbdDN4WwZamaFqHk9n9JHZgch2ARKhcQSUWhoGJezEMHMzzGp4n+nnHkEUiwDMxIdYgBrrEifliOwgtvMch7vG1X89hoLwaVhpghwmyDMw6CNcj8dODPdGBMsWvDi0uzOTYS6hX1dnPvPU=
+	t=1749624025; cv=none; b=eQ+QP8sQ8Jy/Gcbw2VQY9LwMWscs5B67wFjxVxsw/bKN6HsOYQYIlw+I1OxiQVtxv7EwMHH7iMXxtZckRoh+JD+W/Bdm6/+IcN44+mBolv27gt07RSv3jG/l7gTuPACXwNx+RSmcATDW5vI9wjS+1TtL9r1vtuFNoom1bSCwy1M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749589647; c=relaxed/simple;
-	bh=te1FdrXugcXRYIBb9LoL9C21gyeVfuv4ldM2Dn6btwM=;
-	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=F6ZMDLf+sDCHdGrtOz1fAkAiL7Zoe4Bbs6Du78r/U6/Ol9bycKeQttWVCzXlM7voTLTNLxIlk9XnPbOCdhtlmxyNAMkAPy8yvRBFa/7kyErznyAb2YBgz+DN44XTR8GjruBVox2qymg4C+a0x+HdemT9EC2XhIORJpEdDKEbgo8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=KbpklLoS; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1749624025; c=relaxed/simple;
+	bh=hTZ4O1f+yyRThvIWYmjjaVb+T8UQ4NQFi4XinDUzJbE=;
+	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
+	 References:In-Reply-To; b=hM+oI00exH6WFJY0wl/mjiv5P04/U2Sdqjp+Qxp0DlulIj3Ah26GM7vBbv+S4xsKsBxRp6mIWCHFlHdXbuE8zXRJ5BxiMKJDILNRcXCZLFLLQ7b+QYXo2i0nAbDTC+L7TeNvnq73ZqpBGVPUHoX66l1ZjmMblPc4zR1O95sojms=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ILRmI8cM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="KbpklLoS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98E0FC4CEED;
-	Tue, 10 Jun 2025 21:07:25 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ILRmI8cM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 223ADC4CEEE;
+	Wed, 11 Jun 2025 06:40:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1749589646;
-	bh=te1FdrXugcXRYIBb9LoL9C21gyeVfuv4ldM2Dn6btwM=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-	b=KbpklLoSTfodJA5IhC/nO8yMbqDmJmNT5/5PyH0f4cDgkQ0QXXHiTBsrVgaZW4LGf
-	 t9igAKwH0C3GglINz0EnseKzRBY1j5P8YvQAi4aJZZHP7tFbUd2RAE2zztgqyoDmpz
-	 gO32U0NpYnk4icx2pxPqh8o597YTzTuQqU/lCffP/Z4WFiwSVBvPOzWlS0i15O9+/R
-	 e7elXqzIRl5VCt6pwz9ccvGWYaWOFoglylnHNossHOJNq04Z5TKRnuy1+K5opXu0gs
-	 G4LHWHTMN8kHcRpXvVFPcRWUpOqo4p5cbRN7HYocsjoDy+CDg118vHw6X4FeZkEs2U
-	 QXQiZeXEuKl/Q==
-Date: Tue, 10 Jun 2025 14:07:24 -0700
-From: Jakub Kicinski <kuba@kernel.org>
-To: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-Cc: Breno Leitao <leitao@debian.org>, Linux Doc Mailing List
- <linux-doc@vger.kernel.org>, Jonathan Corbet <corbet@lwn.net>, Akira
- Yokosawa <akiyks@gmail.com>, "David S. Miller" <davem@davemloft.net>,
- Ignacio Encinas Rubio <ignacio@iencinas.com>, Marco Elver
- <elver@google.com>, Shuah Khan <skhan@linuxfoundation.org>, Donald Hunter
- <donald.hunter@gmail.com>, Eric Dumazet <edumazet@google.com>, Jan Stancek
- <jstancek@redhat.com>, Paolo Abeni <pabeni@redhat.com>, Ruben Wauters
- <rubenru09@aol.com>, joel@joelfernandes.org,
- linux-kernel-mentees@lists.linux.dev, linux-kernel@vger.kernel.org,
- lkmm@lists.linux.dev, netdev@vger.kernel.org, peterz@infradead.org,
- stern@rowland.harvard.edu
-Subject: Re: [PATCH 4/4] docs: netlink: store generated .rst files at
- Documentation/output
-Message-ID: <20250610140724.5f183759@kernel.org>
-In-Reply-To: <20250610225911.09677024@foz.lan>
-References: <cover.1749551140.git.mchehab+huawei@kernel.org>
-	<5183ad8aacc1a56e2dce9cc125b62905b93e83ca.1749551140.git.mchehab+huawei@kernel.org>
-	<aEhSu56ePZ/QPHUW@gmail.com>
-	<20250610225911.09677024@foz.lan>
+	s=k20201202; t=1749624024;
+	bh=hTZ4O1f+yyRThvIWYmjjaVb+T8UQ4NQFi4XinDUzJbE=;
+	h=Date:Cc:Subject:From:To:References:In-Reply-To:From;
+	b=ILRmI8cMjGf65AqQkb3cOeaQJ7RKZL/N58pNF2ZLJJX+3Ax3r4awDigxs0hghD5r3
+	 uhkNhoF2vij4mRRPvmBqo0thNPUCRenZoMxm81rUCWX5xbYAPU7o61mfX1m/hsbiaz
+	 x1AMORfgUJhPeIKMhjnOaKDS790UZbgpyZLkzKHGQJ4Qqi7d7IDNOjQ3saC3l8tluf
+	 M1+kfWW2fYl57d/dl5uuYjLCSmLa0YZ07XuDbV1AD4YCNCkUUFT81R/bT8O29u6TSc
+	 GDiw69DmrR00OA0VdCZWDPWR2s6uswoRoI+b361lmsObuyKBBwyExO5BPOsa9CyBHk
+	 TB1mD0UZs2OfA==
 Precedence: bulk
 X-Mailing-List: lkmm@lists.linux.dev
 List-Id: <lkmm.lists.linux.dev>
 List-Subscribe: <mailto:lkmm+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:lkmm+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Wed, 11 Jun 2025 08:40:12 +0200
+Message-Id: <DAJHY74JP27K.3VV3U3W0A9PCN@kernel.org>
+Cc: <linux-kernel@vger.kernel.org>, <rust-for-linux@vger.kernel.org>,
+ <lkmm@lists.linux.dev>, <linux-arch@vger.kernel.org>, "Miguel Ojeda"
+ <ojeda@kernel.org>, "Alex Gaynor" <alex.gaynor@gmail.com>, "Gary Guo"
+ <gary@garyguo.net>, =?utf-8?q?Bj=C3=B6rn_Roy_Baron?=
+ <bjorn3_gh@protonmail.com>, "Andreas Hindborg" <a.hindborg@kernel.org>,
+ "Alice Ryhl" <aliceryhl@google.com>, "Trevor Gross" <tmgross@umich.edu>,
+ "Danilo Krummrich" <dakr@kernel.org>, "Will Deacon" <will@kernel.org>,
+ "Peter Zijlstra" <peterz@infradead.org>, "Mark Rutland"
+ <mark.rutland@arm.com>, "Wedson Almeida Filho" <wedsonaf@gmail.com>,
+ "Viresh Kumar" <viresh.kumar@linaro.org>, "Lyude Paul" <lyude@redhat.com>,
+ "Ingo Molnar" <mingo@kernel.org>, "Mitchell Levy"
+ <levymitchell0@gmail.com>, "Paul E. McKenney" <paulmck@kernel.org>, "Greg
+ Kroah-Hartman" <gregkh@linuxfoundation.org>, "Linus Torvalds"
+ <torvalds@linux-foundation.org>, "Thomas Gleixner" <tglx@linutronix.de>
+Subject: Re: [PATCH v4 03/10] rust: sync: atomic: Add ordering annotation
+ types
+From: "Benno Lossin" <lossin@kernel.org>
+To: "Boqun Feng" <boqun.feng@gmail.com>
+X-Mailer: aerc 0.20.1
+References: <20250609224615.27061-1-boqun.feng@gmail.com>
+ <20250609224615.27061-4-boqun.feng@gmail.com>
+ <DAIQG9ALK4QC.2P2C2MC4U9YVX@kernel.org> <aEhrzxltkdnub_bR@tardis.local>
+ <aEhyRhb71dIXzqSu@tardis.local> <aEh_HEwSh2w0Ajkq@tardis.local>
+In-Reply-To: <aEh_HEwSh2w0Ajkq@tardis.local>
 
-On Tue, 10 Jun 2025 22:59:11 +0200 Mauro Carvalho Chehab wrote:
-> > The question is, are we OK with the templates that need to be created
-> > for netlink specs?!   
-> 
-> If there's no other way, one might have a tool for maintainers to use
-> to update templates, but yeah, having one template per each yaml
-> is not ideal. I think we need to investigate it better and seek for
-> some alternatives to avoid it.
+On Tue Jun 10, 2025 at 8:53 PM CEST, Boqun Feng wrote:
+> On Tue, Jun 10, 2025 at 10:58:30AM -0700, Boqun Feng wrote:
+>> On Tue, Jun 10, 2025 at 10:30:55AM -0700, Boqun Feng wrote:
+>> [...]
+>> > > > +/// Describes the exact memory ordering of an `impl` [`All`].
+>> > > > +pub enum OrderingDesc {
+>> > >=20
+>> > > Why not name this `Ordering`?
+>> > >=20
+>> >=20
+>> > I was trying to avoid having an `Ordering` enum in a `ordering` mod.
+>> > Also I want to save the name "Ordering" for the generic type parameter
+>> > of an atomic operation, e.g.
+>> >=20
+>> >     pub fn xchg<Ordering: ALL>(..)
+>> >=20
+>> > this enum is more of an internal implementation detail, and users shou=
+ld
+>> > not use this enum directly, so I would like to avoid potential
+>> > confusion.
+>> >=20
+>> > I have played a few sealed trait tricks on my end, but seems I cannot
+>> > achieve:
+>> >=20
+>> > 1) `OrderingDesc` is only accessible in the atomic mod.
+>> > 2) `All` is only impl-able in the atomic mod, while it can be used as =
+a
+>> > trait bound outside kernel crate.
+>> >=20
+>> > Maybe there is a trick I'm missing?
+>> >=20
+>>=20
+>> Something like this seems to work:
+>>=20
+>>     pub(super) mod private {
+>>         /// Describes the exact memory ordering of an `impl` [`All`].
+>>         pub enum Ordering {
+>>             /// Relaxed ordering.
+>>             Relaxed,
+>>             /// Acquire ordering.
+>>             Acquire,
+>>             /// Release ordering.
+>>             Release,
+>>             /// Fully-ordered.
+>>             Full,
+>>         }
+>>    =20
+>>         pub trait HasOrderingDesc {
+>>             /// Describes the exact memory ordering.
+>>             const ORDERING: Ordering;
+>>         }
+>>     }
+>>=20
+>>     /// The trait bound for annotating operations that should support al=
+l orderings.
+>>     pub trait All: private::HasOrderingDesc { }
+>>=20
+>>     impl private::HasOrderingDesc for Relaxed {
+>>         const ORDERING: private::Ordering =3D private::Ordering::Relaxed=
+;
+>>     }
+>>=20
+>> the trick is to seal the enum and the trait together.
+>>=20
+>> Regards,
+>> Boqun
+>>=20
+>> > > > +    /// Relaxed ordering.
+>> > > > +    Relaxed,
+>> > > > +    /// Acquire ordering.
+>> > > > +    Acquire,
+>> > > > +    /// Release ordering.
+>> > > > +    Release,
+>> > > > +    /// Fully-ordered.
+>> > > > +    Full,
+>> > > > +}
+>> > > > +
+>> > > > +/// The trait bound for annotating operations that should support=
+ all orderings.
+>> > > > +pub trait All {
+>> > > > +    /// Describes the exact memory ordering.
+>> > > > +    const ORDER: OrderingDesc;
+>> > >=20
+>> > > And then here: `ORDERING`.
+>> >=20
+>
+> After a second thought, the following is probably what I will go for:
+>
+>     /// The annotation type for relaxed memory ordering.
+>     pub struct Relaxed;
+>    =20
+>     /// The annotation type for acquire memory ordering.
+>     pub struct Acquire;
+>    =20
+>     /// The annotation type for release memory ordering.
+>     pub struct Release;
+>    =20
+>     /// The annotation type for fully-order memory ordering.
+>     pub struct Full;
+>
+>     /// Describes the exact memory ordering.
+>     pub enum OrderingType {
+>         /// Relaxed ordering.
+>         Relaxed,
+>         /// Acquire ordering.
+>         Acquire,
+>         /// Release ordering.
+>         Release,
+>         /// Fully-ordered.
+>         Full,
+>     }
+>    =20
+>     mod internal {
+>         /// Unit types for ordering annotation.
+>         ///
+>         /// Sealed trait, can be only implemented inside atomic mod.
+>         pub trait OrderingUnit {
+>             /// Describes the exact memory ordering.
+>             const TYPE: super::OrderingType;
+>         }
+>     }
+>    =20
+>     impl internal::OrderingUnit for Relaxed {
+>         const TYPE: OrderingType =3D OrderingType::Relaxed;
+>     }
+>    =20
+>     impl internal::OrderingUnit for Acquire {
+>         const TYPE: OrderingType =3D OrderingType::Acquire;
+>     }
+>    =20
+>     impl internal::OrderingUnit for Release {
+>         const TYPE: OrderingType =3D OrderingType::Release;
+>     }
+>    =20
+>     impl internal::OrderingUnit for Full {
+>         const TYPE: OrderingType =3D OrderingType::Full;
+>     }
+>
+> That is:
+>
+> 1) Rename "OrderingDesc" into "OrderingType", and make it public.
+> 2) Provide a sealed trait (`OrderingUnit`) for all the unit types
+>    that describe ordering.
+> 3) Instead of "ORDER" or "ORDERING", name the enum constant "TYPE".
+>
+>
+> An example shows why is probably an xchg() implementation, if I was to
+> follow the previous naming suggestion, it will be:
+>
+>     match Ordering::ORDERING {
+>         <some mode path>::Ordering::Relaxed =3D> atomic_xchg_relaxed(...)=
+,
+> 	...
+>     }
+>
+> with the current one, it will be:
+>
+>     match Ordering::TYPE {
+>         // assume we "use ordering::OrderingType"
+>         OrderingType::Relaxed =3D> atomic_xchg_relaxed(...),
+> 	...
+>     }
+>
+> I think this version is much better.
 
-FWIW we have tools/net/ynl/ynl-regen.sh, it regenerates the C code 
-we have committed in the tree (uAPI headers mostly).
-We could add it there. Which is not to distract from your main
-point that not having the templates would be ideal.
+Agreed :)
+
+---
+Cheers,
+Benno

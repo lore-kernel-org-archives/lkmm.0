@@ -1,51 +1,53 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F23861A5B99;
-	Wed, 11 Jun 2025 16:11:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2F3E1FBCB0;
+	Thu, 12 Jun 2025 10:22:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749658265; cv=none; b=sK/unnk1vNILlkHkvdaca/Ya5kH3GOcImFHOBiKBrsWsE0JQNX/tv2BVxrJ85h0ToYU0FTP1TmFQ7YDMgm76KEeXGFKXslpXZajuycF2pAgNB08o/2dh4FA3ZPx/YtW2Il5U5BBplQgQEqF6qFJt5bXD340lqpdqf/ZujyMICLc=
+	t=1749723737; cv=none; b=Z5QdhXp2UBU7x0FAFH+Lo66n6W+2SoJpik1ZX1U0OLTJW07nDbCG6tZer//GpO+0VEOCPa+MvA3tkR4Liyo9pL4/xDlz4o0H56bEhiBjN98t6NbettD6wRv6tnV2gmkZXWnxOVsZstffzggLifEkX1DZ4e1zG0BwZdX1YWQwyWk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749658265; c=relaxed/simple;
-	bh=dZ8l0HjmwfhJtitEaf6kw6c4ZQY523g8u3AvC2TJ93A=;
+	s=arc-20240116; t=1749723737; c=relaxed/simple;
+	bh=WBpdmufKnBDk9rZeG5lCMO14K4uhYDEUZ+4wHENjVl4=;
 	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=mgaUesONdmHxQPxGjFbRlizKrG+cQZRYFp+gIng/sc1frNcfrhO4AtAIc9J9LvdcbkOOhoJ2c/MPuIe4LYLLNbEK3hobDQ3YASYH5uPS8lxCHuco7w/oysezgQTUWPmJFnKoXqcvt3xSwArBDFNBuQHJ8nfT1c76h4gttUCC9M0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jy6IT4ki; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=qVE7rI7JmQrEYq+Oj5WdVoMgOOsv3gzeqUFBIONPc0V/p7GiK4YR7ZIqwe5qTjcgqwuheDF5Phwimjj9/nyZgtkWzq8yJPRn3c4HU+dzpDDF4tj73DKeMu+srrrzv6V2oshX7zeb4Uo5bqEy2MjQV/VIqeyOTUQ1dQRhjmEC4LU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RWBCFIlN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jy6IT4ki"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 007BEC4CEE3;
-	Wed, 11 Jun 2025 16:10:59 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RWBCFIlN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48742C4CEEA;
+	Thu, 12 Jun 2025 10:22:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1749658264;
-	bh=dZ8l0HjmwfhJtitEaf6kw6c4ZQY523g8u3AvC2TJ93A=;
+	s=k20201202; t=1749723737;
+	bh=WBpdmufKnBDk9rZeG5lCMO14K4uhYDEUZ+4wHENjVl4=;
 	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-	b=jy6IT4kiD2lDYe71W7diDiGt7oL1e/xuNhWSoXCCAtj4caCgRHLRqPdmYvYW0PiRI
-	 JU/i/Csy6gD8wNDGapjxU9VaUk4rfzlXsP7nOW74W1Jeq1gqes+i5e5I3jsafmU3xv
-	 OR4zg1wvmNKL9bItwL/Sz95VxD1D1hxCXh00OkDsfBDfZvLytbwFD8QO/9dImO9tEb
-	 EAC3SYvvn6DuYJ0ueHh8NNuitcZcf2HP1E6QglBZYOh3TI1kMLoOjCgdZ4yZFTg5XJ
-	 GD87oKR3rk08/4zSSO8ZZmL1RbKPuxwuVORjYwDN8svITdJw7XtZnCg7PfNLmzaL0j
-	 XBdqKJN8dmhjA==
-Date: Wed, 11 Jun 2025 18:10:56 +0200
+	b=RWBCFIlNQKFj9pJ/kPjaY9tZO8jJmFM+ZX6ThsGDetlfFRkeHA3FrhJFzU1rTCRY8
+	 4cQxZcOitkCnOSjpb5S1kunsxV1TLClbQv541MxAqzFB3lS7fQSt3y93DXNVoCVKXv
+	 ueiZQVx6Dny8cfx25W18Zu4g2a2CzWYdAqlb7J+pVYJUeopfv2GbmQF2flW7mlc66+
+	 Xn8pHpJDuDDSBDDPkInZbxNj4Y0BxfFkq77wVlomIe1kuZae81quNV5Ue8vhrWe8oQ
+	 bc6RTB2q8ymJsRMLmIHxGo5wrPhulE3FJ7Ld7AJTVLuw+PiEh5z9CZNBiyxrBd76g/
+	 Y1YvMi0T7sOzQ==
+Date: Thu, 12 Jun 2025 12:22:09 +0200
 From: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-To: Donald Hunter <donald.hunter@gmail.com>
-Cc: Linux Doc Mailing List <linux-doc@vger.kernel.org>, "Jonathan Corbet"
- <corbet@lwn.net>, "Akira Yokosawa" <akiyks@gmail.com>, "Breno Leitao"
- <leitao@debian.org>, "David S. Miller" <davem@davemloft.net>, "Ignacio
- Encinas Rubio" <ignacio@iencinas.com>, "Marco Elver" <elver@google.com>,
- "Shuah Khan" <skhan@linuxfoundation.org>, Eric Dumazet
- <edumazet@google.com>, Jan Stancek <jstancek@redhat.com>, Paolo Abeni
- <pabeni@redhat.com>, Ruben Wauters <rubenru09@aol.com>,
- joel@joelfernandes.org, linux-kernel-mentees@lists.linux.dev,
- linux-kernel@vger.kernel.org, lkmm@lists.linux.dev, netdev@vger.kernel.org,
- peterz@infradead.org, stern@rowland.harvard.edu
+To: Breno Leitao <leitao@debian.org>
+Cc: Linux Doc Mailing List <linux-doc@vger.kernel.org>, Jonathan Corbet
+ <corbet@lwn.net>, Akira Yokosawa <akiyks@gmail.com>, "David S. Miller"
+ <davem@davemloft.net>, Ignacio Encinas Rubio <ignacio@iencinas.com>, Marco
+ Elver <elver@google.com>, Shuah Khan <skhan@linuxfoundation.org>, Donald
+ Hunter <donald.hunter@gmail.com>, Eric Dumazet <edumazet@google.com>, Jan
+ Stancek <jstancek@redhat.com>, Paolo Abeni <pabeni@redhat.com>, Ruben
+ Wauters <rubenru09@aol.com>, joel@joelfernandes.org,
+ linux-kernel-mentees@lists.linux.dev, linux-kernel@vger.kernel.org,
+ lkmm@lists.linux.dev, netdev@vger.kernel.org, peterz@infradead.org,
+ stern@rowland.harvard.edu
 Subject: Re: [PATCH 4/4] docs: netlink: store generated .rst files at
  Documentation/output
-Message-ID: <20250611181056.6543e71e@sal.lan>
-In-Reply-To: <m24iwmpl0m.fsf@gmail.com>
+Message-ID: <20250612122209.0f48fbda@foz.lan>
+In-Reply-To: <aEmm4bHxn3+l0vDO@gmail.com>
 References: <cover.1749551140.git.mchehab+huawei@kernel.org>
 	<5183ad8aacc1a56e2dce9cc125b62905b93e83ca.1749551140.git.mchehab+huawei@kernel.org>
-	<m24iwmpl0m.fsf@gmail.com>
+	<aEhSu56ePZ/QPHUW@gmail.com>
+	<20250611174518.5b24bdad@sal.lan>
+	<aEmm4bHxn3+l0vDO@gmail.com>
 X-Mailer: Claws Mail 4.3.1 (GTK 3.24.49; x86_64-redhat-linux-gnu)
 Precedence: bulk
 X-Mailing-List: lkmm@lists.linux.dev
@@ -56,71 +58,79 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
 
-Em Wed, 11 Jun 2025 12:36:57 +0100
-Donald Hunter <donald.hunter@gmail.com> escreveu:
+Hi Breno,
 
-> Mauro Carvalho Chehab <mchehab+huawei@kernel.org> writes:
+Em Wed, 11 Jun 2025 08:55:13 -0700
+Breno Leitao <leitao@debian.org> escreveu:
+
+> Hello Mauro,
 > 
-> > It is not a good practice to store build-generated files
-> > inside $(srctree), as one may be using O=<BUILDDIR> and even
-> > have the Kernel on a read-only directory.
-> >
-> > Change the YAML generation for netlink files to be inside
-> > the documentation output directory.
-> >
-> > This solution is not perfect, though, as sphinx-build only produces
-> > html files only for files inside the source tree. As it is desired
-> > to have one netlink file per family, it means that one template
-> > file is required for every file inside Documentation/netlink/specs.
-> > Such template files are simple enough. All they need is:
-> >
-> > 	# Template for Documentation/netlink/specs/<foo>.yaml
-> > 	.. kernel-include:: $BUILDDIR/networking/netlink_spec/<foo>.rst  
+> On Wed, Jun 11, 2025 at 05:45:18PM +0200, Mauro Carvalho Chehab wrote:
+> > Em Tue, 10 Jun 2025 08:43:55 -0700
+> > Breno Leitao <leitao@debian.org> escreveu:
+> >   
+> > > Hello Mauro,
+> > > 
+> > > On Tue, Jun 10, 2025 at 12:46:07PM +0200, Mauro Carvalho Chehab wrote:  
+> > > > A better long term solution is to have an extension at
+> > > > Documentation/sphinx that parses *.yaml files for netlink files,
+> > > > which could internally be calling ynl_gen_rst.py. Yet, some care
+> > > > needs to be taken, as yaml extensions are also used inside device
+> > > > tree.    
+> > > 
+> > > In fact, This is very similar to what I did initially in v1. And I was
+> > > creating a sphinx extension to handle the generation, have a look here:
+> > > 
+> > > https://lore.kernel.org/all/20231103135622.250314-1-leitao@debian.org/
+> > > 
+> > > During the review, we agree to move out of the sphinx extension.
+> > > the reasons are the stubs/templates that needs to be created and you are
+> > > creating here.
+> > > 
+> > > So, if we decide to come back to sphinx extension, we can leverage that
+> > > code from v1 ?!
+> > >   
+> > > > -def generate_main_index_rst(output: str) -> None:
+> > > > +def generate_main_index_rst(output: str, index_dir: str, ) -> None:    
+> > > 
+> > > You probably don't need the last , before ).
+> > > 
+> > > Other than that, LGTM.
+> > > 
+> > > The question is, are we OK with the templates that need to be created
+> > > for netlink specs?! 
+> > > 
+> > > Thanks for looking at it,
+> > > --breno  
+> > 
+> > Hi Breno,
+> > 
+> > I did here a test creating a completely new repository using
+> > sphinx-quickstart, adding yaml to conf.py with:
+> > 
+> > 	source_suffix = ['.rst', '.yaml']
+> > 
+> > There, I imported your v1 patch from:
+> > 	https://lore.kernel.org/all/20231103135622.250314-1-leitao@debian.org/
+> > 
+> > While your extension seems to require some work, as it has issues
+> > processing the current patch, it *is* creating one html file per each
+> > yaml, without needing any template. All it is needed there is to place
+> > an yaml file somewhere under source/ directory:  
 > 
-> I am not a fan of this approach because it pollutes the
-> Documentation/output dir with source files and the kernel-include
-> directive is a bit of a hacky workaround.
+> Thanks for the tests. It appears that the sphinx extension can function
+> without requiring stubs and templates, right?
 > 
-> > A better long term solution is to have an extension at
-> > Documentation/sphinx that parses *.yaml files for netlink files,
-> > which could internally be calling ynl_gen_rst.py. Yet, some care
-> > needs to be taken, as yaml extensions are also used inside device
-> > tree.  
-> 
-> The extension does seem like a better approach, but as mentioned by
-> Jakub, we'd want to add stub creation to the YNL regen.
-> 
-> The only other approach I can think of to avoid generating files in the
-> source tree or polluting the Documentation/output dir is to stage all of
-> the Documentation/ tree into BUILDDIR before adding generated files
-> there, then running:
-> 
->   sphinx-build BUILDDIR/Documentation BUILDDIR/Documentation/output
+> Given you have your hands dirty with it, and probably more experience
+> than I have with sphinx extensions, would you be willing to take
+> ownership of this extension and submit it? I'd be more than happy
+> to review it.
 
-I did some tests here adding yaml to conf.py:
+Sure. I wrote an extension that will do what it is expected. Yet,
+I opted to have a static index.rst file. I tried to do auto-generation,
+but, at least when using SPHINXDIRS, it didn't work.
 
-	-source_suffix = '.rst'
-	+source_suffix = ['.rst', '.yaml']
-
-Such change made the extension to automatically generate one file per 
-each existing yaml without the need of adding any template. I tested on 
-a brand new tree with just Sphinx + netlink files + Breno's original
-extension (untouched). Such empty tree was generated with 
-sphinx-quickstart (sent a reply to Breno with a patch with all inside
-it).
-
-When applying it to the Kernel, we can do this change at
-Documentation/conf.py, together with:
-
-	-exclude_patterns = ['output']
-	+exclude_patterns = ['output', 'devicetree/bindings/**.yaml']
-
-(glob pattern not tested)
-
-As we don't want DT yaml files to be processed as netlink families.
-
-After such tests, it sounds to me that the Sphinx extension approach 
-may work without requiring templates. Tested here with Sphinx 8.1.3.
-
-Regards,
+I'm sending the patch series in a few.
+ 
+Thanks,
 Mauro

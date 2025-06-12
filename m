@@ -1,95 +1,99 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8238524A047;
-	Thu, 12 Jun 2025 13:41:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC2FF1F16B;
+	Thu, 12 Jun 2025 14:24:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749735701; cv=none; b=m5DTDbgknn+CRKBkhK/8Ta7H05dpV4ko8CrSlJIlsK3vgNfTWHTbXnSshYwuSo9gz0TVXAe9zXcPlIwV3oZuw74cy8y7mmFfVlCRYisMzsch/GwS7wEoqlE87Az8/g7yqewY0tn2c+dRXs2Z0gisRck90RhtP6ArEQoikoks1gc=
+	t=1749738264; cv=none; b=l8vTfBTF2z0ZqsLG3IkYMB6LkGIeWhNAXNJJ9Py0JxVNA2Q9cl82qkr6Xa0lNVJDEo7JxaxzJB6EBN4yTocXMquTD37uGXXZ/hA5Uq5B0VwHwmVCN968+xFtEwc4hVEp6HSD6FNpgt8XW/bigO1bzfhL1YB9PgMwcbDea50wiek=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749735701; c=relaxed/simple;
-	bh=LQToylDvoxpMEuXz7DwhxX+xauKJJgbGi0v6srPoxD4=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=gvHBjIDZ9MMku2ofRj+nqmRgEaJTNl6S2U/v8FAXdB+nifQp/1WYi5ywmnbm++0mjii6wIKCDspGXqHF9UE9UrTbWrYtN87+WnPM21/Ix2wrgjeJYdYxm1E3SiJm1xtjkG9a92PPJ3Daa7Ko/eUZ/VtxMnFeH6Lf1Bp61fFypSc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dQvuw9H0; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1749738264; c=relaxed/simple;
+	bh=nEsTlMah9gnHESH6LtPtgD7WWncfqtpDL9THG9p2xXQ=;
+	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=VcKAQjCgXEd62rLdP6kUohkaNe9SvJUGy7T6QsLNPOm6s6BEuFRAXZMLzUiFlG8hasx1gwqIVfXyJQQnnzIsEBXQBlEK+vWtHZvT6i5pt9RcFUOeqc7Vly7aduTGwKySnjFINrUskq1n0lUVQKGqLIXQFiOswOl5hDKtZ+qixx8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=sO6sgXw3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dQvuw9H0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B7EAC4CEEA;
-	Thu, 12 Jun 2025 13:41:41 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="sO6sgXw3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84867C4CEEA;
+	Thu, 12 Jun 2025 14:24:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1749735701;
-	bh=LQToylDvoxpMEuXz7DwhxX+xauKJJgbGi0v6srPoxD4=;
-	h=From:To:Cc:Subject:Date:From;
-	b=dQvuw9H0vzsylslwFUYwVC1oZcMDYgIa1ZdJynn5hUsmj8pf7lHI2SZhecOaK8dCz
-	 MgkWZYfbniqSj3KJhn4YfAXyOpmgJnB0aYFtTNmFGsNMKzaPCjK+iUorJ7DiHcdM95
-	 LLCnZPxRZvooLPh69Fe6/63eCJoYOP7GSQWG7f3UvpJrx79TRkESplfkgcmvQpWNLs
-	 vsXomq88k8zPEJxTD02OOVlJxNGNgNI3CD2LcNWoWCSpLp/p8HBuzldePWS/0oPJYM
-	 xOxfQmvTSqVFTfc9zTMqIyR8wMlmctsiPvpB0Ij063LtzGdOQsctd8yyopQDJLMgXQ
-	 kuJE+ciVdVmZQ==
-Received: from mchehab by mail.kernel.org with local (Exim 4.98.2)
-	(envelope-from <mchehab+huawei@kernel.org>)
-	id 1uPiBX-000000053px-0HmP;
-	Thu, 12 Jun 2025 15:41:39 +0200
+	s=k20201202; t=1749738264;
+	bh=nEsTlMah9gnHESH6LtPtgD7WWncfqtpDL9THG9p2xXQ=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+	b=sO6sgXw3fo/7aQQ2yyZVu1pNbu3CzmCpSKk4o9R9YUwGlzNMt4Grgr4pBj2bzwe0Z
+	 M/ZOpNw7C3yDcTW2qvXHaQtCTHQTQ7gam9dEsRITXK1LS1p9P/sCd5UQCC3QE35r5h
+	 QGLhf/GOcCZ6jYBaWz1xi2bVoR+53sSXD9YFP5jJ5h+yDHZMXML3kscumnXQ48aRyt
+	 8N3bXnDzvV8VkMDMCDHdMZoOugHZDhNfRzKE6A3qsKKQ4gluICBFoLgYdskdZ4+5yZ
+	 X43al6UXGDdNn++SvXQALgpqhykVaYeyAm5+qy45TV+76zszH9QnR2ADUvpy9xstd4
+	 uI+FcJ1FtXWeQ==
+Date: Thu, 12 Jun 2025 16:24:16 +0200
 From: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-To: Linux Doc Mailing List <linux-doc@vger.kernel.org>,
-	Jonathan Corbet <corbet@lwn.net>
-Cc: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
-	Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
-	linux-kernel@vger.kernel.org,
-	Akira Yokosawa <akiyks@gmail.com>,
-	"David S. Miller" <davem@davemloft.net>,
-	Ignacio Encinas Rubio <ignacio@iencinas.com>,
-	Marco Elver <elver@google.com>,
-	Shuah Khan <skhan@linuxfoundation.org>,
-	Donald Hunter <donald.hunter@gmail.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Jan Stancek <jstancek@redhat.com>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Ruben Wauters <rubenru09@aol.com>,
-	joel@joelfernandes.org,
-	linux-kernel-mentees@lists.linux.dev,
-	lkmm@lists.linux.dev,
-	netdev@vger.kernel.org,
-	peterz@infradead.org,
-	stern@rowland.harvard.edu,
-	Breno Leitao <leitao@debian.org>,
-	Jakub Kicinski <mchehab+huawei@kernel.org>,
-	Simon Horman <mchehab+huawei@kernel.org>
-Subject: [PATCH v2 0/2] Some extra patches for netlink doc generation
-Date: Thu, 12 Jun 2025 15:41:29 +0200
-Message-ID: <cover.1749735022.git.mchehab+huawei@kernel.org>
-X-Mailer: git-send-email 2.49.0
+To: Linux Doc Mailing List <linux-doc@vger.kernel.org>, Jonathan Corbet
+ <corbet@lwn.net>
+Cc: linux-kernel@vger.kernel.org, Akira Yokosawa <akiyks@gmail.com>, "David
+ S. Miller" <davem@davemloft.net>, Ignacio Encinas Rubio
+ <ignacio@iencinas.com>, Marco Elver <elver@google.com>, Shuah Khan
+ <skhan@linuxfoundation.org>, Donald Hunter <donald.hunter@gmail.com>, Eric
+ Dumazet <edumazet@google.com>, Jan Stancek <jstancek@redhat.com>, Paolo
+ Abeni <pabeni@redhat.com>, Ruben Wauters <rubenru09@aol.com>,
+ joel@joelfernandes.org, linux-kernel-mentees@lists.linux.dev,
+ lkmm@lists.linux.dev, netdev@vger.kernel.org, peterz@infradead.org,
+ stern@rowland.harvard.edu, Breno Leitao <leitao@debian.org>
+Subject: Re: [PATCH v2 0/2] Some extra patches for netlink doc generation
+Message-ID: <20250612162416.507c8a12@sal.lan>
+In-Reply-To: <cover.1749735022.git.mchehab+huawei@kernel.org>
+References: <cover.1749735022.git.mchehab+huawei@kernel.org>
+X-Mailer: Claws Mail 4.3.1 (GTK 3.24.49; x86_64-redhat-linux-gnu)
 Precedence: bulk
 X-Mailing-List: lkmm@lists.linux.dev
 List-Id: <lkmm.lists.linux.dev>
 List-Subscribe: <mailto:lkmm+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:lkmm+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Sender: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 
-This patch series comes after:
-	https://lore.kernel.org/linux-doc/cover.1749723671.git.mchehab+huawei@kernel.org/T/#t	
-The first patch is meant to speedup glob time by not adding all yaml to the parser.
+Em Thu, 12 Jun 2025 15:41:29 +0200
+Mauro Carvalho Chehab <mchehab+huawei@kernel.org> escreveu:
 
-The second one adjusts the location of netlink/specs/index.rst.
+> This patch series comes after:
+> 	https://lore.kernel.org/linux-doc/cover.1749723671.git.mchehab+huawei@kernel.org/T/#t	
+> The first patch is meant to speedup glob time by not adding all yaml to the parser.
+> 
+> The second one adjusts the location of netlink/specs/index.rst.
+> 
+> With that, on my AMD Ryzen 9 7900 machine, the time to do a full build after a
+> cleanup is:
+> 
+> real    7m29,196s
+> user    14m21,893s
+> sys     2m28,510s
 
-With that, on my AMD Ryzen 9 7900 machine, the time to do a full build after a
-cleanup is:
+Heh, funny enough, my laptop with i5-10210U CPU @ 1.60GHz builds it faster:
 
-real    7m29,196s
-user    14m21,893s
-sys     2m28,510s
+real	6m2,075s
+user	18m47,334s
+sys	1m24,931s
 
-Mauro Carvalho Chehab (2):
-  docs: conf.py: add include_pattern to speedup
-  docs: uapi: netlink: update netlink specs link
+Both are running Sphinx version 8.1.3 with standard Fedora package. At my
+laptop, this is a bit slower than no using the extension:
 
- Documentation/conf.py                         | 7 +++++--
- Documentation/userspace-api/netlink/index.rst | 2 +-
- Documentation/userspace-api/netlink/specs.rst | 2 +-
- 3 files changed, 7 insertions(+), 4 deletions(-)
+real	5m13,334s
+user	15m56,441s
+sys	1m4,072s
 
--- 
-2.49.0
+but it is a lot cleaner, as, with the original way, there are several
+warnings after make cleandocs:
 
+	Documentation/userspace-api/netlink/netlink-raw.rst: :doc:`rt-link<../../networking/netlink_spec/rt-link>`
+	Documentation/userspace-api/netlink/netlink-raw.rst: :doc:`tc<../../networking/netlink_spec/tc>`
+	Documentation/userspace-api/netlink/netlink-raw.rst: :doc:`tc<../../networking/netlink_spec/tc>`
+	Warning: Documentation/userspace-api/netlink/index.rst references a file that doesn't exist: Documentation/networking/netlink_spec/index.rst
+	Warning: Documentation/userspace-api/netlink/specs.rst references a file that doesn't exist: Documentation/networking/netlink_spec/index.rst
+	Warning: MAINTAINERS references a file that doesn't exist: Documentation/devicetree/bindings/firmware/intel,stratix10-svc.txt
 
+Because they refer to the temp .rst source files generated inside
+the source directory by the yaml conversion script.
+
+Regards,
+Mauro

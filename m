@@ -1,134 +1,200 @@
-Received: from mail-wr1-f43.google.com (mail-wr1-f43.google.com [209.85.221.43])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3CEB2E7623;
-	Fri, 13 Jun 2025 11:55:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55DB2275AE2;
+	Fri, 13 Jun 2025 12:14:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749815753; cv=none; b=KMi2xbyPMQrvpccpkDrackZvycTAk7udcmIjXVgpc8S4CddGFmulkn7k64lvViFufP9VaQRUl6Z9I4aBfJWvBD9dsNm86Zh9kHGZTBNk9P4kEg2HG3wfwnAyMr4K6ZwepBE4US8E7f3p4/1f7uQzmhi2lEMme152S1Mv6JyMGRk=
+	t=1749816843; cv=none; b=aXW1c9HiHtzlyS4tXpQ9MJ/0atGwZxLUlp1vYMlNuOrD257/pc8G4+Y4qVmWTg3eR/whFDUz5rl5e9WWg9N06A+HAT1QIbCNYyaInn97R0G48CjvCgofAguoRvX4z3DX0TvykMDzgJQDRa5EO/CNy68z4XP914KkVhkAdP2ulIg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749815753; c=relaxed/simple;
-	bh=kDHzDpgYMT9BX3ib7Jt5mtCoGJdm2oP5AXFagcKzZpI=;
-	h=From:To:Cc:Subject:In-Reply-To:Date:Message-ID:References:
-	 MIME-Version:Content-Type; b=u7Qr4PurAZM5bBMRni+qJjuWVPNufnCmxZGNurLOGC2NFABAj//4teOvBR6tikQ8huzuewV72tAxaBcFkhaOkVZ6pmcejJC0PLGq5Hai4IlYst/QeXsxlCkUvKXK/qeFphfwwHx0xIUcWQFcQ+pFGr3yzU4THJk6A90fmTO4t18=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=E5Oz+Uzg; arc=none smtp.client-ip=209.85.221.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1749816843; c=relaxed/simple;
+	bh=9n6iNHBCKV0GZHwkyD9XOEtgWinRTZGyTm0zXHbGTj8=;
+	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=WZqw8yd8aCKIoaeRj0fE4KaKnJTKrCSeJ5GvlP39DxLQzpInp4Lbvy2oNoMHx16MsFigaBDhjKadSYMC9TF5cB+YXj5Rta/1SlzDU01CA4Oubrl6J7yHGbGdkEUG9SnHk83tQyVVBgQgr27X6nlluDnmczzvHon7X6q5jYO+aqA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Spvbua0w; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="E5Oz+Uzg"
-Received: by mail-wr1-f43.google.com with SMTP id ffacd0b85a97d-3a365a6804eso1286386f8f.3;
-        Fri, 13 Jun 2025 04:55:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1749815750; x=1750420550; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:user-agent:references
-         :message-id:date:in-reply-to:subject:cc:to:from:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=Hj+Kuj4ajGUXyFsALB4EF9wgie9c+yJaBbr7r88UdqI=;
-        b=E5Oz+UzgwFTy1GuWN3yNlFTA7Xo6LyDs7b7LgapPNZYn+CUsuWJhtgHfw4NvRziV8q
-         n03l7Hy7Xrv3hArYeldpNS5H/eoPoTuBOo6ZHZkAm/Pm7e460rxIUqj+zshf0lncy033
-         q2z+Oq9Xsl0Etj4oFdWiughxcZ61ekchL55rDWM66xrl7o5uvs+YciRVqy3XI7NGWGoB
-         JDDoVBWMShagIn8gEcRilnh9g4SKbIITIEA+FmiiYkLdycNL3kB2A9vssLhTGdQeUIPD
-         n35G9EaxvCp40B2JTwTqjA82ruMRtL67jSQFYksjgEDPYYqYUs+qcjsDL9VEB2eKIfq1
-         gSgA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1749815750; x=1750420550;
-        h=content-transfer-encoding:mime-version:user-agent:references
-         :message-id:date:in-reply-to:subject:cc:to:from:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=Hj+Kuj4ajGUXyFsALB4EF9wgie9c+yJaBbr7r88UdqI=;
-        b=K8fUR+N0OeUCb+JvnLxLEGbyTupoeexhbT6gJMosQws+QBYLbNMYxooUDerHpCEIr6
-         Fij4hply9R/4ktvcH/xfhD0QfYZPbhfVrFh/dIGbkPPjRynGGFcOOjkEcogUrtD9VJTA
-         tRmFQNR2WSmbIG3PGESvfnS0s/swIOMAJh8wLaRwhhjQlJEGwcuEuQqPfsfzUVtJNOBP
-         XLQz3yvIiMjlWXZoikTMCYeh066/2rnpvzkY3nx/iHXbxEl1WLoPyqEo4waaxJc4bHEq
-         ZbwoyIJkXjrMaPlscvhsSl1LVOHXi+iUWOJko7wBRWtUlQ0JA+z686gDBJfqlerbCHLw
-         EjMw==
-X-Forwarded-Encrypted: i=1; AJvYcCWtyEPoHI20XJ047V4eSbdVUgKxelgfuybPEPw/fEqkxvZbi6tCoyofKFkjWG7BMmaGZvID36U/S7zZH1rWs4HhG2bGHA==@lists.linux.dev, AJvYcCX4Qc7hdHwoXXD4xlMzJcFWzWhzxoZ9oDnV1gNHUdjvZL1g0IN4PW1mtTFwAaL2druRk86H9w==@lists.linux.dev
-X-Gm-Message-State: AOJu0YxBcJSSyUVvNbKvuQRtw3ICKip7NSUZmqIMbGE0C2iSUCA6b3hI
-	GRAiDN7Vt72wL/MLdKcoPYM98jJOTMLhxuu/iAbTqpgh/CzDFwWoCWl4
-X-Gm-Gg: ASbGncs0zmWnuAbZxe3nWw1qlOya9BUyTvfvJ7mTi2E/ahn88WQtFogtr/YNYP0aj/5
-	LSeGGwAzPrruv45Sti/PzdagVDPSUqedp+gEiW6dhunujUjymelnC9lMu28vTIikD1SD1RVHPw4
-	QLsAHDHq2nHiaJmRR23O2RFcRd8z9oHJDNFzZQtUXgOEO7d7gCm09zT3eDVwBGPZ12p0sGUpBNG
-	mHZ8EdV/CmbVwhoNsstHFWK7lAn+i8CogVGRguAJ+n/Rdqslu+1WDlCOXjHq/W2qRNsMCPUiezE
-	Tfb8oQ7IcfqQKRsswfN3/0Y0ls7SKzsPTos4Vn3fQQkm14zaFd8q5OoJhrR1n976aIAEjQ2VX+Q
-	=
-X-Google-Smtp-Source: AGHT+IGbaooFKQ20QFU1kZYymRa3Ue0gA9srqwzYyuAtJsiw7seBWEUCQrPm6Zfl385iai6WGcQtdA==
-X-Received: by 2002:a05:6000:1ac6:b0:3a5:2beb:7493 with SMTP id ffacd0b85a97d-3a568656099mr2747920f8f.9.1749815749896;
-        Fri, 13 Jun 2025 04:55:49 -0700 (PDT)
-Received: from imac ([2a02:8010:60a0:0:75e0:f7f7:dffa:561e])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3a568b087f8sm2177157f8f.53.2025.06.13.04.55.46
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 13 Jun 2025 04:55:47 -0700 (PDT)
-From: Donald Hunter <donald.hunter@gmail.com>
-To: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-Cc: Linux Doc Mailing List <linux-doc@vger.kernel.org>,  Jonathan Corbet
- <corbet@lwn.net>,  "Akira Yokosawa" <akiyks@gmail.com>,  "Breno Leitao"
- <leitao@debian.org>,  "David S. Miller" <davem@davemloft.net>,  "Eric
- Dumazet" <edumazet@google.com>,  "Ignacio Encinas Rubio"
- <ignacio@iencinas.com>,  "Jan Stancek" <jstancek@redhat.com>,  "Marco
- Elver" <elver@google.com>,  "Paolo Abeni" <pabeni@redhat.com>,  "Ruben
- Wauters" <rubenru09@aol.com>,  "Shuah Khan" <skhan@linuxfoundation.org>,
-  joel@joelfernandes.org,  linux-kernel-mentees@lists.linux.dev,
-  linux-kernel@vger.kernel.org,  lkmm@lists.linux.dev,
-  netdev@vger.kernel.org,  peterz@infradead.org,  stern@rowland.harvard.edu
-Subject: Re: [PATCH v2 12/12] docs: conf.py: don't handle yaml files outside
- Netlink specs
-In-Reply-To: <d4b8d090ce728fce9ff06557565409539a8b936b.1749723671.git.mchehab+huawei@kernel.org>
-Date: Fri, 13 Jun 2025 12:52:35 +0100
-Message-ID: <m2h60jn9j0.fsf@gmail.com>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Spvbua0w"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D60EFC4CEE3;
+	Fri, 13 Jun 2025 12:13:58 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1749816842;
+	bh=9n6iNHBCKV0GZHwkyD9XOEtgWinRTZGyTm0zXHbGTj8=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+	b=Spvbua0wsLdsGl5pDN19EMUXpC4ap8aSfq/9e9wylKUORzwKiKC/eNMxcHvmlp6iS
+	 HGzt1oOFYFui3i5bzUxJrp4QJLXm4uDqKT917RdGSBgR1P05c7RTu+qApgsEKbGteN
+	 FJrU2V940EcGMDbgH9IWPd3vx4PkgrE9VAeuluvKjPM/F/AuMI0K5DQ60jmRwiN0xl
+	 wHs2vYRwUN/TybSEuzXJwbnt+sThgy8PYj7FxntZjkiftHz15Qohgbyf0e73RsR7Gy
+	 WYq/UkJCSNn2C00jwVkgJITijJk3xwriOK9420MiOmYpFhl8YuHPTibazxW/EVtUnW
+	 xwU1ercHPPxRA==
+Date: Fri, 13 Jun 2025 14:13:55 +0200
+From: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+To: Donald Hunter <donald.hunter@gmail.com>
+Cc: Linux Doc Mailing List <linux-doc@vger.kernel.org>, Jonathan Corbet
+ <corbet@lwn.net>, linux-kernel@vger.kernel.org, Akira Yokosawa
+ <akiyks@gmail.com>, "David S. Miller" <davem@davemloft.net>, Ignacio
+ Encinas Rubio <ignacio@iencinas.com>, Marco Elver <elver@google.com>, Shuah
+ Khan <skhan@linuxfoundation.org>, Eric Dumazet <edumazet@google.com>, Jan
+ Stancek <jstancek@redhat.com>, Paolo Abeni <pabeni@redhat.com>, Ruben
+ Wauters <rubenru09@aol.com>, joel@joelfernandes.org,
+ linux-kernel-mentees@lists.linux.dev, lkmm@lists.linux.dev,
+ netdev@vger.kernel.org, peterz@infradead.org, stern@rowland.harvard.edu,
+ Breno Leitao <leitao@debian.org>
+Subject: Re: [PATCH v2 00/12] Don't generate netlink .rst files inside
+ $(srctree)
+Message-ID: <20250613141355.1bba92fc@foz.lan>
+In-Reply-To: <m27c1foq97.fsf@gmail.com>
 References: <cover.1749723671.git.mchehab+huawei@kernel.org>
-	<d4b8d090ce728fce9ff06557565409539a8b936b.1749723671.git.mchehab+huawei@kernel.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	<m27c1foq97.fsf@gmail.com>
+X-Mailer: Claws Mail 4.3.1 (GTK 3.24.49; x86_64-redhat-linux-gnu)
 Precedence: bulk
 X-Mailing-List: lkmm@lists.linux.dev
 List-Id: <lkmm.lists.linux.dev>
 List-Subscribe: <mailto:lkmm+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:lkmm+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 
-Mauro Carvalho Chehab <mchehab+huawei@kernel.org> writes:
+Em Fri, 13 Jun 2025 12:05:56 +0100
+Donald Hunter <donald.hunter@gmail.com> escreveu:
 
-> The parser_yaml extension already has a logic to prevent
-> handing all yaml documents. However, if we don't also exclude
-> the patterns at conf.py, the build time would increase a lot,
-> and warnings like those would be generated:
->
->     Documentation/netlink/genetlink.yaml: WARNING: o documento n=C3=A3o e=
-st=C3=A1 inclu=C3=ADdo em nenhum toctree
->     Documentation/netlink/genetlink-c.yaml: WARNING: o documento n=C3=A3o=
- est=C3=A1 inclu=C3=ADdo em nenhum toctree
->     Documentation/netlink/genetlink-legacy.yaml: WARNING: o documento n=
-=C3=A3o est=C3=A1 inclu=C3=ADdo em nenhum toctree
->     Documentation/netlink/index.rst: WARNING: o documento n=C3=A3o est=C3=
-=A1 inclu=C3=ADdo em nenhum toctree
->     Documentation/netlink/netlink-raw.yaml: WARNING: o documento n=C3=A3o=
- est=C3=A1 inclu=C3=ADdo em nenhum toctree
->
-> Add some exclusion rules to prevent that.
->
-> Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-> ---
->  Documentation/conf.py | 6 +++++-
->  1 file changed, 5 insertions(+), 1 deletion(-)
->
-> diff --git a/Documentation/conf.py b/Documentation/conf.py
-> index add6ce78dd80..b8668bcaf090 100644
-> --- a/Documentation/conf.py
-> +++ b/Documentation/conf.py
-> @@ -222,7 +222,11 @@ language =3D 'en'
->=20=20
->  # List of patterns, relative to source directory, that match files and
->  # directories to ignore when looking for source files.
-> -exclude_patterns =3D ['output']
-> +exclude_patterns =3D [
-> +	'output',
-> +	'devicetree/bindings/**.yaml',
-> +	'netlink/*.yaml',
-> +]
+> Mauro Carvalho Chehab <mchehab+huawei@kernel.org> writes:
+> 
+> > As discussed at:
+> >    https://lore.kernel.org/all/20250610101331.62ba466f@foz.lan/
+> >
+> > changeset f061c9f7d058 ("Documentation: Document each netlink family")
+> > added a logic which generates *.rst files inside $(srctree). This is bad when
+> > O=<BUILDDIR> is used.
+> >
+> > A recent change renamed the yaml files used by Netlink, revealing a bad
+> > side effect: as "make cleandocs" don't clean the produced files, symbols 
+> > appear duplicated for people that don't build the kernel from scratch.
+> >
+> > There are some possible solutions for that. The simplest one, which is what
+> > this series address, places the build files inside Documentation/output. 
+> > The changes to do that are simple enough, but has one drawback,
+> > as it requires a (simple) template file for every netlink family file from
+> > netlink/specs. The template is simple enough:
+> >
+> >         .. kernel-include:: $BUILDDIR/networking/netlink_spec/<family>.rst  
+> 
+> I think we could skip describing this since it was an approach that has
+> now been dropped.
 
-Please merge this with the earlier patch that changes these lines so
-that the series doesn't contain unnecessary intermediate steps.
+Ok. Will drop on next versions.
 
->  # The reST default role (used for this markup: `text`) to use for all
->  # documents.
+> 
+> > Part of the issue is that sphinx-build only produces html files for sources
+> > inside the source tree (Documentation/). 
+> >
+> > To address that, add an yaml parser extension to Sphinx.
+> >
+> > It should be noticed that this version has one drawback: it increases the
+> > documentation build time. I suspect that the culprit is inside Sphinx
+> > glob logic and the way it handles exclude_patterns. What happens is that
+> > sphinx/project.py uses glob, which, on my own experiences, it is slow
+> > (due to that, I ended implementing my own glob logic for kernel-doc).
+> >
+> > On the plus side, the extension is flexible enough to handle other types
+> > of yaml files, as the actual yaml conversion logic is outside the extension.  
+> 
+> I don't think the extension would handle anything other than the Netlink
+> yaml specs, and I don't think that should be a goal of this patchset.
+
+Not necessarily. We do have already DT yaml files (although there's
+a separate process to handle those outside the tree). Nothing prevents
+we end having more. See, the way Sphinx parser works is that it will cover
+all files with *.yaml extension no matter where it is located within the
+tree. We may end needing to use it for something else as well (*).
+
+(*) at the last Media Summit, we did have some discussions about using
+    either yaml or rst for sensor documentation.
+
+> > With this version, there's no need to add any template file per netlink/spec
+> > file. Yet, the Documentation/netlink/spec.index.rst require updates as
+> > spec files are added/renamed/removed. The already-existing script can
+> > handle it automatically by running:
+> >
+> >             tools/net/ynl/pyynl/ynl_gen_rst.py -x  -v -o Documentation/netlink/specs/index.rst  
+> 
+> I think this can be avoided by using the toctree glob directive in the
+> index, like this:
+> 
+> =============================
+> Netlink Family Specifications
+> =============================
+> 
+> .. toctree::
+>    :maxdepth: 1
+>    :glob:
+> 
+>    *
+> 
+> This would let you have a static index file.
+
+Didn't know about such option. If it works with the parser, it sounds good 
+enough.
+
+> 
+> > ---
+> >
+> > v2:
+> > - Use a Sphinx extension to handle netlink files.
+> >
+> > v1:
+> > - Statically add template files to as networking/netlink_spec/<family>.rst
+> >
+> > Mauro Carvalho Chehab (12):
+> >   tools: ynl_gen_rst.py: create a top-level reference
+> >   docs: netlink: netlink-raw.rst: use :ref: instead of :doc:  
+> 
+> I suggest combining the first 2 patches.
+> 
+> >   docs: netlink: don't ignore generated rst files  
+> 
+> Maybe leave this patch to the end and change the description to be a
+> cleanup of the remants of the old approach.
+
+Ok for me, but I usually prefer keeping one patch per logical change.
+In this case, one patch adding support at the tool; the other one
+improving docs to benefit from the new feature.
+
+> Further comments on specific commits
+> 
+> >   tools: ynl_gen_rst.py: make the index parser more generic
+> >   tools: ynl_gen_rst.py: Split library from command line tool
+> >   scripts: lib: netlink_yml_parser.py: use classes
+> >   tools: ynl_gen_rst.py: do some coding style cleanups
+> >   scripts: netlink_yml_parser.py: improve index.rst generation
+> >   docs: sphinx: add a parser template for yaml files
+> >   docs: sphinx: parser_yaml.py: add Netlink specs parser  
+> 
+> Please combine these 2 patches. The template patch just introduces noise
+> into the series and makes it harder to review.
+
+Ok.
+
+> >   docs: use parser_yaml extension to handle Netlink specs
+> >   docs: conf.py: don't handle yaml files outside Netlink specs
+> >
+> >  .pylintrc                                     |   2 +-
+> >  Documentation/Makefile                        |  17 -
+> >  Documentation/conf.py                         |  17 +-
+> >  Documentation/netlink/specs/index.rst         |  38 ++
+> >  Documentation/networking/index.rst            |   2 +-
+> >  .../networking/netlink_spec/.gitignore        |   1 -
+> >  .../networking/netlink_spec/readme.txt        |   4 -
+> >  Documentation/sphinx/parser_yaml.py           |  80 ++++
+> >  .../userspace-api/netlink/netlink-raw.rst     |   6 +-
+> >  scripts/lib/netlink_yml_parser.py             | 394 ++++++++++++++++++
+> >  tools/net/ynl/pyynl/ynl_gen_rst.py            | 378 +----------------
+> >  11 files changed, 544 insertions(+), 395 deletions(-)
+> >  create mode 100644 Documentation/netlink/specs/index.rst
+> >  delete mode 100644 Documentation/networking/netlink_spec/.gitignore
+> >  delete mode 100644 Documentation/networking/netlink_spec/readme.txt
+> >  create mode 100755 Documentation/sphinx/parser_yaml.py
+> >  create mode 100755 scripts/lib/netlink_yml_parser.py  
+
+Thanks,
+Mauro

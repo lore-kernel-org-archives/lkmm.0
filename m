@@ -1,32 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 700023C26;
-	Fri, 13 Jun 2025 12:30:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA0934A1E;
+	Fri, 13 Jun 2025 12:40:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749817837; cv=none; b=efOnIHmuvv3WSpNPxRmRG5Cw93YC3uH4D6eQLDXuvCB4H822otda3TA8WSD3INpA2ALAeXAiv3NPN9Oh/g9mO1B4zIplDM06cXDhuIb5OrDXFWhfW4pkv5MGjk04GcKHkHNCO37aTG74ONbDqw+cnokNA/0W80Xv3Bkzgt6537g=
+	t=1749818421; cv=none; b=i4VQmkriYMS1pmnsd/Kro+xy83g9TYMk3YIKp+JInyJBj6pPJ8QBdq7j7cXFvgOCoSwug3Focp+yAFSGh1A9dSq4qSs0d0qFL4DgK5rHCRbvhlyfEwMr5179msCifGfPbztHj8ySO16zLjJG+WW4TeoSiTGU1Z4IbYgxPXLN5iU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749817837; c=relaxed/simple;
-	bh=IJX1C2H88d25bNe5hXlRqag8Mz3+ciOE8mS6zl1EXxY=;
+	s=arc-20240116; t=1749818421; c=relaxed/simple;
+	bh=n8uww8W98ephJQVBitTMkEpar+EJEaBk8t8Zr/77i8g=;
 	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=O4xTj7Fc50A3IAzHBYc9PkNPBTYcJd3nE2FaDZThzFu4IVav4WpzZIMFD+YOmUA8FJeDWUxc6uVcMScUwkc+xTakfGbGeG8nqXqHMd4HjzY6uEVadl9Yd5koO0tKiFKJatbMXmt8k/0koJuDCakNbuSVLtHO6HvL3bARJF8DcXI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HHVcayBb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=klyYXU7tIYBh8Xhcm08F/zIW5v8ntxqV7IHXZPkChiDjqMwPHO8yiwHNY51Et4ApGCnCmIrSRBf1x7in3YqbppvdNmXjIxwgpHZl/0YVGL9RnhJY0VdyEBHC5P/fVJO9/pwCE0fkjqa1akrR51dWNg0zatmYuklv5/Hyfk572o0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=uK6jGYiF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HHVcayBb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1AD4FC4CEE3;
-	Fri, 13 Jun 2025 12:30:32 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="uK6jGYiF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C8F9C4CEE3;
+	Fri, 13 Jun 2025 12:40:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1749817837;
-	bh=IJX1C2H88d25bNe5hXlRqag8Mz3+ciOE8mS6zl1EXxY=;
+	s=k20201202; t=1749818421;
+	bh=n8uww8W98ephJQVBitTMkEpar+EJEaBk8t8Zr/77i8g=;
 	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-	b=HHVcayBbqOyNBLQpD0xErm2r6KmC5mjKTRF9konGfLgYKMp1AKzsj0D9XLW33dMpZ
-	 W3e+T4xkqnlJkvwJMUvmLTG6iYL5W1S9c2jNqi3JubRp2FI+VXeHrpQKuy/wSEhTKQ
-	 9H6+WxXJ8BwNDKcT4mh0WkehtDPIjh+oZpXiEUgSucObS8YoVRNKZr8cmRgokWZMem
-	 0PhunEUD0uDq39R4/ObL2VPB/DQSJj1Oy6WiiPjc3McPXh76DFBJqLyG0r5uFyxuyF
-	 ByV0OCMBji2NcKwDf+y8hq6sijchfbMSp61IJkbhndSEEmffu7WAhvGlbKn/VXVSu8
-	 vQNSJMHNvvg6g==
-Date: Fri, 13 Jun 2025 14:30:30 +0200
+	b=uK6jGYiFnRly4K4X48Oi04xh14YvBbkf7irMkqzx1nR9HVAM7ubnr970iwwaIScRU
+	 D+7M9+lyIZm0QyW8Dc+m/NmMDRXwrYRCaSS/O9B13hlpK5C9eeZm6bGAmwQwZzuf44
+	 mWrF5BjbxHhp5LgCrqaenA2lJNtJbg5ySW+15BwZ6iBBZDfz3s1Zlr5sMzsnRvrEW6
+	 Yq3UwBPCeIQw1qBM1J7LL8ga4PmkegKh5ncehT18chKIfQ9BD+7dJq7BSQuOrAOaNT
+	 EDeTcb/WMmRGqm6ts0aZqu4KO8696yEWrg8aOBS5DPqzB0uiTPNFaGFYCdAHM+NE1s
+	 pH3UHMZfbBPSw==
+Date: Fri, 13 Jun 2025 14:40:14 +0200
 From: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 To: Donald Hunter <donald.hunter@gmail.com>
 Cc: Linux Doc Mailing List <linux-doc@vger.kernel.org>, Jonathan Corbet
@@ -39,13 +39,13 @@ Cc: Linux Doc Mailing List <linux-doc@vger.kernel.org>, Jonathan Corbet
  joel@joelfernandes.org, linux-kernel-mentees@lists.linux.dev,
  linux-kernel@vger.kernel.org, lkmm@lists.linux.dev, netdev@vger.kernel.org,
  peterz@infradead.org, stern@rowland.harvard.edu
-Subject: Re: [PATCH v2 12/12] docs: conf.py: don't handle yaml files outside
- Netlink specs
-Message-ID: <20250613143030.3f78f367@foz.lan>
-In-Reply-To: <m2h60jn9j0.fsf@gmail.com>
+Subject: Re: [PATCH v2 06/12] scripts: lib: netlink_yml_parser.py: use
+ classes
+Message-ID: <20250613144014.5ae14ae0@foz.lan>
+In-Reply-To: <m2y0tvnb0e.fsf@gmail.com>
 References: <cover.1749723671.git.mchehab+huawei@kernel.org>
-	<d4b8d090ce728fce9ff06557565409539a8b936b.1749723671.git.mchehab+huawei@kernel.org>
-	<m2h60jn9j0.fsf@gmail.com>
+	<08ac4b3457b99037c7ec91d7a2589d4c820fd63a.1749723671.git.mchehab+huawei@kernel.org>
+	<m2y0tvnb0e.fsf@gmail.com>
 X-Mailer: Claws Mail 4.3.1 (GTK 3.24.49; x86_64-redhat-linux-gnu)
 Precedence: bulk
 X-Mailing-List: lkmm@lists.linux.dev
@@ -53,62 +53,47 @@ List-Id: <lkmm.lists.linux.dev>
 List-Subscribe: <mailto:lkmm+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:lkmm+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 
-Em Fri, 13 Jun 2025 12:52:35 +0100
+Em Fri, 13 Jun 2025 12:20:33 +0100
 Donald Hunter <donald.hunter@gmail.com> escreveu:
 
 > Mauro Carvalho Chehab <mchehab+huawei@kernel.org> writes:
->=20
-> > The parser_yaml extension already has a logic to prevent
-> > handing all yaml documents. However, if we don't also exclude
-> > the patterns at conf.py, the build time would increase a lot,
-> > and warnings like those would be generated:
+> 
+> > As we'll be importing netlink parser into a Sphinx extension,
+> > move all functions and global variables inside two classes:
 > >
-> >     Documentation/netlink/genetlink.yaml: WARNING: o documento n=C3=A3o=
- est=C3=A1 inclu=C3=ADdo em nenhum toctree
-> >     Documentation/netlink/genetlink-c.yaml: WARNING: o documento n=C3=
-=A3o est=C3=A1 inclu=C3=ADdo em nenhum toctree
-> >     Documentation/netlink/genetlink-legacy.yaml: WARNING: o documento n=
-=C3=A3o est=C3=A1 inclu=C3=ADdo em nenhum toctree
-> >     Documentation/netlink/index.rst: WARNING: o documento n=C3=A3o est=
-=C3=A1 inclu=C3=ADdo em nenhum toctree
-> >     Documentation/netlink/netlink-raw.yaml: WARNING: o documento n=C3=
-=A3o est=C3=A1 inclu=C3=ADdo em nenhum toctree
+> > - RstFormatters, containing ReST formatter logic, which are
+> >   YAML independent;
+> > - NetlinkYamlParser: contains the actual parser classes. That's
+> >   the only class that needs to be imported by the script or by
+> >   a Sphinx extension.  
+> 
+> I suggest a third class for the doc generator that is separate from the
+> yaml parsing.
+
+Do you mean moving those two (or three? [*]) methods to a new class?
+
+    def parse_yaml(self, obj: Dict[str, Any]) -> str:
+    def parse_yaml_file(self, filename: str) -> str:
+    def generate_main_index_rst(self, output: str, index_dir: str) -> None:
+
+Also, how should I name it to avoid confusion with NetlinkYamlParser? 
+Maybe YnlParser?
+
+[*] generate_main_index_rst is probably deprecated. eventually
+    we may drop it or keep it just at the command line stript.
+
+> The yaml parsing should really be refactored to reuse
+> tools/net/ynl/pyynl/lib/nlspec.py at some point.
+
+Makes sense, but such change is out of the scope of this series.
+
+> > With that, we won't pollute Sphinx namespace, avoiding any
+> > potential clashes.
 > >
-> > Add some exclusion rules to prevent that.
-> >
-> > Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-> > ---
-> >  Documentation/conf.py | 6 +++++-
-> >  1 file changed, 5 insertions(+), 1 deletion(-)
-> >
-> > diff --git a/Documentation/conf.py b/Documentation/conf.py
-> > index add6ce78dd80..b8668bcaf090 100644
-> > --- a/Documentation/conf.py
-> > +++ b/Documentation/conf.py
-> > @@ -222,7 +222,11 @@ language =3D 'en'
-> > =20
-> >  # List of patterns, relative to source directory, that match files and
-> >  # directories to ignore when looking for source files.
-> > -exclude_patterns =3D ['output']
-> > +exclude_patterns =3D [
-> > +	'output',
-> > +	'devicetree/bindings/**.yaml',
-> > +	'netlink/*.yaml',
-> > +] =20
->=20
-> Please merge this with the earlier patch that changes these lines so
-> that the series doesn't contain unnecessary intermediate steps.
-
-OK.
-
->=20
-> >  # The reST default role (used for this markup: `text`) to use for all
-> >  # documents. =20
-
-
+> > Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>  
 
 Thanks,
 Mauro

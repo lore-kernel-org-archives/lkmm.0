@@ -1,58 +1,58 @@
-Received: from mail-oi1-f177.google.com (mail-oi1-f177.google.com [209.85.167.177])
+Received: from mail-oa1-f53.google.com (mail-oa1-f53.google.com [209.85.160.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF1622D1300;
-	Sat, 14 Jun 2025 13:30:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B93A2E11CC;
+	Sat, 14 Jun 2025 13:34:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749907806; cv=none; b=VS/rmOhp+81wASW2V7lcaaRvx20WhViYylUzrK5jbsG7IPwhvj7qZ4PTF59HeubZuXO7ZBuWkxBNnHRfH7BuvECNfyHi6N6a10wNbwk/t9GXKb/yEAEin5zXu8+60kkQl5XdUfBuVSHH5WEa8akHr5lM1rDdsd88W8gCEOhEJf8=
+	t=1749908055; cv=none; b=hssSHy/Mu9hd6jh5I4ZuSH7Mkaz4Q/F5Opg92WZ/nkJLpHJisbVEHWhVh6JFTL75ktrjQwH+ylhZMAvgQdsNpDZZ3J8W06IcIamK40RhbRRSu7xeIXzRmKP5RDggkRKQdCaMnXIGt+HAk8aiiwF2KstcBF0xaqoAIJHCrUNZjDg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749907806; c=relaxed/simple;
-	bh=a4+RnhGxiQVnAjxqCAjlsrCrgJ9m6DH1744AYL0N99M=;
+	s=arc-20240116; t=1749908055; c=relaxed/simple;
+	bh=GghmQMVIpd5ow4BvOSK9cdhAIcjwLkKs50ouTbuGm3Q=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=QLah13NC1uvYaD1bk40qkw7QvFEf+EOOLSppZFprzbglAdiQGPEUAWvnAKxVQCqD4+Bs0NWMd+hZBiqGWcxnTpwvBYxwZwS7PHhmNocYflpjZEkYfxa0L1btl8DqDzczG4eXp33DCMhb2Y5XSVctFokSUE3WNKtPKludhDq74qU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=KmHLjuqi; arc=none smtp.client-ip=209.85.167.177
+	 To:Cc:Content-Type; b=k3lND8lYxzw26Ge7PsB9bwzpcznDo2xe2ubPn6Pqu3f7vcVclC6+oOBBzrZk+4g/R6fmyKfBWgt/zYuoq+40kyuJcA/t2ML7vTKInB4EM0ZhtgN2UamsV/HvxBl8JfpEWQFAwFLzcP9DhizP7wG8hKvlX6GWL4D66tGiw29C7CQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Lo/3DnwD; arc=none smtp.client-ip=209.85.160.53
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KmHLjuqi"
-Received: by mail-oi1-f177.google.com with SMTP id 5614622812f47-4066a0d0256so1978232b6e.3;
-        Sat, 14 Jun 2025 06:30:04 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Lo/3DnwD"
+Received: by mail-oa1-f53.google.com with SMTP id 586e51a60fabf-2eaad5eb1easo1641828fac.3;
+        Sat, 14 Jun 2025 06:34:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1749907804; x=1750512604; darn=lists.linux.dev;
+        d=gmail.com; s=20230601; t=1749908052; x=1750512852; darn=lists.linux.dev;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=gpxLAeD+HVolSZVyFVghlR1xvl2/NKfSFQXQsuCC2t8=;
-        b=KmHLjuqicdP6/am9iDcWO+2Oxrln2gdQp2E0maOb5s5pWaPtUsm6M7zdXrib/xYdpM
-         mJyh9GMiB7Yz86OtTuY7ctSJ+HbERIVqTjNV5MWKU84ruy9LMRXNezvffxumVay2eRGQ
-         F+myQ2l+oM+4y9Z5LOpynuU6pTsVH23tKTE9vANzc937LE0vlYzoVbJqShI+FoIUDBM/
-         l9M1IaCelkCL/7ImopmY+u4IzTAxRaCzgTqS5+6ngjWyvFTIekLWfDQDmLJdgVZAN6aw
-         07YWd7R/8cv2/kuUGhM8mTDmuPXL5yHHkLntHq9zX6fo+xO4IXqkyf95bW1cEiiaUfTr
-         D29Q==
+        bh=sgT5nC6oJGH1H0WGlHKUUzo9qfMn4+AtCYRD/Jrz6L4=;
+        b=Lo/3DnwD1OpGYfkApSSogeQsRUJ6YuqyPKNjBr3P22tyOP8dCOqggpyMAccGT9op9I
+         W+1HtLu6VDJm45yB+71YD95m0INkO1pPy+PxVGlT+iKOCf9gfjFdqGzfa98BSZy0D9+s
+         VQn7ymnzOX1SkkQTXIiTYLixACKxUVcD5u8GT+d5BanTo7dNR79xzJ+wJAc9CQOqIoef
+         utLh7DHBrMbZEVewa6Lj3GVtzJAx3L4+fIodtMqVKS7mgQP0gKOlfbaZuHKuxHqnELwB
+         raG5tDlJ0S6wr+cAIn91nTV6UiQRNEti7YT5ONx6A0CCbUqxUrenrtp3OL7yclxe2ZJp
+         mYVg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1749907804; x=1750512604;
+        d=1e100.net; s=20230601; t=1749908052; x=1750512852;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=gpxLAeD+HVolSZVyFVghlR1xvl2/NKfSFQXQsuCC2t8=;
-        b=LNJ0VGe8PIyRoDeBkehYhRa3ANm7CCx0Izz0wTzmrAmuIX5Oi54GBKzsFZNAqeBhwZ
-         Xf/YTgoBatRxtJFkPcVzLvJyWpYWkMcZBiQb4gb+tvqJGAinb0JF02snz6Pa0COJ0SzE
-         fQSKp9ppU3bTxeN53afErKWKl7v5Z+7NT65yfBMjX14p6+Ni+LDZDIz0dvdgO0oAQCD2
-         b8tIqXKW+Tu8/Rv8UZ/1i223PNfwlDo2O3cSPCb2t6QO4OSo4Rur0StvA4rc3VwThv0f
-         BUWZp4OaF3Lo5xXsVq0mA+8pYmik21o5uRJ5wgRN4CjV1vl5KJawFcslU51ar6BQiFyN
-         NaRw==
-X-Forwarded-Encrypted: i=1; AJvYcCV7q7P7jYxyET50SiA+GrYyp7JDhSi3rNKr4V1sV52DlsaBxcqID8aUZ5ShV3sox69hb30DPTQ9iJ+E5iAXkGdFAJZFwg==@lists.linux.dev, AJvYcCXEfj/ZqTpcIUk8WsoEKq5VDQVyQK/NMQiotts/ogF+4gp8RVtN54dYSXhgxfEM8/EjNo67vw==@lists.linux.dev
-X-Gm-Message-State: AOJu0Yze8PJFv0F0ZuwlFGZ3MsRrA+XNrEuoh5uizizt0+f8q0ddkGIn
-	gRz6KIronUAvcIRMCLtRgqv3SW33/W5LMt1EVVAJlIGweUOuAHBcRkzyPnDmhTqdVmfNO6eqJul
-	C5970C1EcEo1vzuaYU9QRsono0SRd7Bs=
-X-Gm-Gg: ASbGnctL0A1MuOsY2HWd7uv7pIPjpF7CInQ2DsB8Wy6WSGZyA//7qzYlhr9DgrB0uON
-	tduqIr3UTjSmV7Rpe3aCAxP/BAzaWdbQbx9g8GUdc62WmdFpel94Fi7uAoZVg0pvcVHs1Pfks2u
-	+I0f+CZJMVZbDhGw+S5QnCtfqg+EqRHX5N/njzYvHn7qAbXohEfZIOUGVRGjjGhmuUCY/e/IhdZ
-	w==
-X-Google-Smtp-Source: AGHT+IGTVlBMWe1jUtHr/9UxJLQLB7fTFlDVLqP+v2cbZPfJZOQCuTo318T7Bp2vjunGuEb33YuFW6h9rg9YFZ3d2OQ=
-X-Received: by 2002:a05:6808:1b2c:b0:406:6e31:18a1 with SMTP id
- 5614622812f47-40a7c1b1ea5mr2201254b6e.2.1749907803915; Sat, 14 Jun 2025
- 06:30:03 -0700 (PDT)
+        bh=sgT5nC6oJGH1H0WGlHKUUzo9qfMn4+AtCYRD/Jrz6L4=;
+        b=iFq5hbqsEQAx8llOnHozHumvLT3xMVBDh2NQae2Lx4bPBWjZzH4Dk6Ws/FmlKYlB7m
+         un3eQWStKxg+0nC6DG5a4pOnNv7R5lLSZt7Q7qAGkiHnkh6FIiXLkIbeZoriPjUQDOOt
+         sP8DoHdHt9Jr2va0pxQHjFh/Z6VRYDDmeVcEZomVgFOSpfsHIEoQpnRy5yeaWt6SXZX8
+         eZvmCkCEUfnQjEsDfv2vTjhEGkZeclDFB1uv6jK0wNjHV+IsPDK3NkoWKeu0J7lbWPqB
+         peS2MH22lNWS8CZjKhbK6/xuZvlJj0uKlT9J2fKTpyUrIt1pkcrF115GCC68xl+QfN6j
+         hvCQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUNnh97Chz5EW/8K69gSU6wh9TzL/Gdaqt24vFCwQgryxvCag8ggHbCAIWNHVnJ11gtz1O1EQ==@lists.linux.dev, AJvYcCV5natAK7YHZ2ZVHtIZAoPGWooSsJjETy6/Z7nzqz3vBDrt+RcSfoNxeoeAHmQ50bUtM0hLw3wAEcBRndQkLOloMBa6Sw==@lists.linux.dev
+X-Gm-Message-State: AOJu0YyN1+R64CXPd7h5jovrbaioO9tkMJRTeSc4ZMLxeL4uvv0tiLNh
+	uCdy62ZnFhw5qDM7msLGtiaHef64RAtFJEKeRCG3tHFi6bCHjvE5GMTVRE4avcyBkaPOhieqor7
+	yLZODOWsCifi1ibz0CwS66wYCvnbr2Pg=
+X-Gm-Gg: ASbGnctr0EU6Glp3hOcJRP+C+8DF1uODByCnjpIj0kwWJblY0MLV13TM/hR6MVC12ee
+	bMElgbyN5AWUykixeIyzxa5xc/3j9T9+NHUVDxtHJIB+lzXuyu+PlsIL9TLbUDlJtEHQujL5B+0
+	WujRYWT7G48mXR35L2nEKSB/XZs/Ezp8z9oaKiYwOgszPbahyxotbkMRN6saosP6c8AJpbPdfd+
+	g==
+X-Google-Smtp-Source: AGHT+IH+YQDn5vJWfQK7J2yXhyuCeLrw9tQMapi0P+p2812s3nfq0JAxLR7ypcmPStR4URHIU5eHzQjr8qvlX60VZB8=
+X-Received: by 2002:a05:6870:2249:b0:2a3:832e:5492 with SMTP id
+ 586e51a60fabf-2eaf0b860abmr1914642fac.25.1749908052339; Sat, 14 Jun 2025
+ 06:34:12 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: lkmm@lists.linux.dev
 List-Id: <lkmm.lists.linux.dev>
@@ -60,38 +60,63 @@ List-Subscribe: <mailto:lkmm+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:lkmm+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 References: <cover.1749723671.git.mchehab+huawei@kernel.org>
- <m27c1foq97.fsf@gmail.com> <20250613141355.1bba92fc@foz.lan>
-In-Reply-To: <20250613141355.1bba92fc@foz.lan>
+ <440956b08faee14ed22575bea6c7b022666e5402.1749723671.git.mchehab+huawei@kernel.org>
+ <m234c3opwn.fsf@gmail.com> <20250613141753.565276eb@foz.lan>
+In-Reply-To: <20250613141753.565276eb@foz.lan>
 From: Donald Hunter <donald.hunter@gmail.com>
-Date: Sat, 14 Jun 2025 14:29:52 +0100
-X-Gm-Features: AX0GCFuxx8riQsYcwnktkvT2HBgg8dodkVLgKdtxUeyINtr1KrOWe6fVqRSEbVM
-Message-ID: <CAD4GDZz-hVEWhSP9sGqZH2tGrU9T8cd3aed5hRtMNZcXk2WmNw@mail.gmail.com>
-Subject: Re: [PATCH v2 00/12] Don't generate netlink .rst files inside $(srctree)
+Date: Sat, 14 Jun 2025 14:34:01 +0100
+X-Gm-Features: AX0GCFtPzI3njkXsRRl6HopHPGjjoi0wzH_2Cw73cHghqFsHQjZh1J4BTEKxRQI
+Message-ID: <CAD4GDZwJtrL3uRCXNJ9vdfXAnjL4H5nhSqn3GDSW90Ee22qgGA@mail.gmail.com>
+Subject: Re: [PATCH v2 05/12] tools: ynl_gen_rst.py: Split library from
+ command line tool
 To: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-Cc: Linux Doc Mailing List <linux-doc@vger.kernel.org>, Jonathan Corbet <corbet@lwn.net>, 
-	linux-kernel@vger.kernel.org, Akira Yokosawa <akiyks@gmail.com>, 
-	"David S. Miller" <davem@davemloft.net>, Ignacio Encinas Rubio <ignacio@iencinas.com>, 
-	Marco Elver <elver@google.com>, Shuah Khan <skhan@linuxfoundation.org>, 
-	Eric Dumazet <edumazet@google.com>, Jan Stancek <jstancek@redhat.com>, 
-	Paolo Abeni <pabeni@redhat.com>, Ruben Wauters <rubenru09@aol.com>, joel@joelfernandes.org, 
-	linux-kernel-mentees@lists.linux.dev, lkmm@lists.linux.dev, 
-	netdev@vger.kernel.org, peterz@infradead.org, stern@rowland.harvard.edu, 
-	Breno Leitao <leitao@debian.org>
+Cc: Jonathan Corbet <corbet@lwn.net>, Linux Doc Mailing List <linux-doc@vger.kernel.org>, 
+	Akira Yokosawa <akiyks@gmail.com>, Breno Leitao <leitao@debian.org>, 
+	"David S. Miller" <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>, 
+	Ignacio Encinas Rubio <ignacio@iencinas.com>, Jan Stancek <jstancek@redhat.com>, 
+	Marco Elver <elver@google.com>, Paolo Abeni <pabeni@redhat.com>, Ruben Wauters <rubenru09@aol.com>, 
+	Shuah Khan <skhan@linuxfoundation.org>, joel@joelfernandes.org, 
+	linux-kernel-mentees@lists.linux.dev, linux-kernel@vger.kernel.org, 
+	lkmm@lists.linux.dev, netdev@vger.kernel.org, peterz@infradead.org, 
+	stern@rowland.harvard.edu
 Content-Type: text/plain; charset="UTF-8"
 
-On Fri, 13 Jun 2025 at 13:14, Mauro Carvalho Chehab
+On Fri, 13 Jun 2025 at 13:18, Mauro Carvalho Chehab
 <mchehab+huawei@kernel.org> wrote:
-> >
-> > >   docs: netlink: don't ignore generated rst files
-> >
-> > Maybe leave this patch to the end and change the description to be a
-> > cleanup of the remants of the old approach.
 >
-> Ok for me, but I usually prefer keeping one patch per logical change.
-> In this case, one patch adding support at the tool; the other one
-> improving docs to benefit from the new feature.
+> Em Fri, 13 Jun 2025 12:13:28 +0100
+> Donald Hunter <donald.hunter@gmail.com> escreveu:
+>
+> > Mauro Carvalho Chehab <mchehab+huawei@kernel.org> writes:
+> >
+> > > As we'll be using the Netlink specs parser inside a Sphinx
+> > > extension, move the library part from the command line parser.
+> > >
+> > > No functional changes.
+> > >
+> > > Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+> > > ---
+> > >  scripts/lib/netlink_yml_parser.py  | 391 +++++++++++++++++++++++++++++
+> > >  tools/net/ynl/pyynl/ynl_gen_rst.py | 374 +--------------------------
+> >
+> > I think the library code should be put in tools/net/ynl/pyynl/lib
+> > because it is YNL specific code. Maybe call it rst_generator.py
+>
+> We had a similar discussion before when we switched get_abi and
+> kernel-doc to Python. On that time, we opted to place all shared
+> Python libraries under scripts/lib.
+>
+> From my side, I don't mind having them on a different place,
+> but I prefer to see all Sphinx extensions getting libraries from
+> the same base directory.
 
-My point is that "don't ignore generated rst files" is not a step on
-the way from the old method towards the new method. The new method
-does not involve generating any .rst files so the patch is something
-more like "remove obsolete .gitignore from unused directory".
+It's YNL specific code and I want to refactor it to make use of
+tools/net/ynl/pyynl/lib/nlspec.py so it definitely belongs in
+tools/net/ynl/pyynl/lib.
+
+> Jon,
+>
+> What do you think?
+>
+> Thanks,
+> Mauro

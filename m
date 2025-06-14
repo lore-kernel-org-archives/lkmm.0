@@ -1,105 +1,97 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oi1-f177.google.com (mail-oi1-f177.google.com [209.85.167.177])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC295298275;
-	Sat, 14 Jun 2025 08:56:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF1622D1300;
+	Sat, 14 Jun 2025 13:30:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749891378; cv=none; b=Ze507UYmq8CCtPBC/plKBtp5QmhhDCp5ax+QBhUIfGM7Fp4bLlcJVIL5RFWpQE8HhohQj2Kf9OsVCnGb/xbo6udoMwdIxGGwtYZiArj152GoWo2VISXcmPX5W1Myb7RyN4xe0pse0Kx5O8Rr4MA+cjzVB33DrxcQ9dA9+pE5wXI=
+	t=1749907806; cv=none; b=VS/rmOhp+81wASW2V7lcaaRvx20WhViYylUzrK5jbsG7IPwhvj7qZ4PTF59HeubZuXO7ZBuWkxBNnHRfH7BuvECNfyHi6N6a10wNbwk/t9GXKb/yEAEin5zXu8+60kkQl5XdUfBuVSHH5WEa8akHr5lM1rDdsd88W8gCEOhEJf8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749891378; c=relaxed/simple;
-	bh=qdx5eLFhJs3mwB2br6zWhdyUu0aQq9T5BmAjQqI3pSk=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=T5TifL6uuVG8cjsfOqX2rUDUNrxMgrERQE/VxcV4T9uuKreLPoVBCKOmm4DZhFbWE/EEwk3H9I2d+pOIoCcI84bYtjxpkQ/8LOFlxpFFf2dqL8d8ujLoMTEZ+2HXhcm+shZrVrCoYoxhg2gQByiDnyxT8AGeQdO0aG9/Z4O3ZMQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fRRe4bib; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1749907806; c=relaxed/simple;
+	bh=a4+RnhGxiQVnAjxqCAjlsrCrgJ9m6DH1744AYL0N99M=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=QLah13NC1uvYaD1bk40qkw7QvFEf+EOOLSppZFprzbglAdiQGPEUAWvnAKxVQCqD4+Bs0NWMd+hZBiqGWcxnTpwvBYxwZwS7PHhmNocYflpjZEkYfxa0L1btl8DqDzczG4eXp33DCMhb2Y5XSVctFokSUE3WNKtPKludhDq74qU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=KmHLjuqi; arc=none smtp.client-ip=209.85.167.177
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fRRe4bib"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5BCEBC4CEFF;
-	Sat, 14 Jun 2025 08:56:18 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1749891378;
-	bh=qdx5eLFhJs3mwB2br6zWhdyUu0aQq9T5BmAjQqI3pSk=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fRRe4bibDS/u9thmwGwVWeIq4dGZQmcY2oPfPsgNovEavyhOqG4K4X+ETeimzMBMJ
-	 3oWMiJV/KOsDPul2jDHGT3QRPP5pFGerBigdb+rlkbk6pOmHqP6pm3hfGaTUGcJQDO
-	 ritD40S3MBMOQFsDzG4wG46AKF4dq7gkosgKvPNeABScGoX4/WM5eKXR/qc31WA4Fl
-	 R4o/8Vp2hhZmvlcRGy8uqLaZssbzLVX2ZwFalitHpADQYBHq3tzFMgQUNFWoYJCaQI
-	 gD8J/kVxtCMppRgFWmxYvWeLZdBqpKEOuETM2QewS7R3WVAjuh2ruznm7m7RDuINYF
-	 Ul8r2JOeqbTZw==
-Received: from mchehab by mail.kernel.org with local (Exim 4.98.2)
-	(envelope-from <mchehab+huawei@kernel.org>)
-	id 1uQMgS-000000064bP-2T2X;
-	Sat, 14 Jun 2025 10:56:16 +0200
-From: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-To: Linux Doc Mailing List <linux-doc@vger.kernel.org>,
-	Jonathan Corbet <corbet@lwn.net>
-Cc: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
-	"Akira Yokosawa" <akiyks@gmail.com>,
-	"Breno Leitao" <leitao@debian.org>,
-	"David S. Miller" <davem@davemloft.net>,
-	"Donald Hunter" <donald.hunter@gmail.com>,
-	"Eric Dumazet" <edumazet@google.com>,
-	"Ignacio Encinas Rubio" <ignacio@iencinas.com>,
-	"Jan Stancek" <jstancek@redhat.com>,
-	"Marco Elver" <elver@google.com>,
-	"Mauro Carvalho Chehab" <mchehab+huawei@kernel.org>,
-	"Paolo Abeni" <pabeni@redhat.com>,
-	"Ruben Wauters" <rubenru09@aol.com>,
-	"Shuah Khan" <skhan@linuxfoundation.org>,
-	joel@joelfernandes.org,
-	linux-kernel-mentees@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	lkmm@lists.linux.dev,
-	netdev@vger.kernel.org,
-	peterz@infradead.org,
-	stern@rowland.harvard.edu
-Subject: [PATCH v4 12/14] MAINTAINERS: add maintainers for netlink_yml_parser.py
-Date: Sat, 14 Jun 2025 10:56:06 +0200
-Message-ID: <ba75692b90bf7aa512772ca775fde4c4688d7e03.1749891128.git.mchehab+huawei@kernel.org>
-X-Mailer: git-send-email 2.49.0
-In-Reply-To: <cover.1749891128.git.mchehab+huawei@kernel.org>
-References: <cover.1749891128.git.mchehab+huawei@kernel.org>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KmHLjuqi"
+Received: by mail-oi1-f177.google.com with SMTP id 5614622812f47-4066a0d0256so1978232b6e.3;
+        Sat, 14 Jun 2025 06:30:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1749907804; x=1750512604; darn=lists.linux.dev;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=gpxLAeD+HVolSZVyFVghlR1xvl2/NKfSFQXQsuCC2t8=;
+        b=KmHLjuqicdP6/am9iDcWO+2Oxrln2gdQp2E0maOb5s5pWaPtUsm6M7zdXrib/xYdpM
+         mJyh9GMiB7Yz86OtTuY7ctSJ+HbERIVqTjNV5MWKU84ruy9LMRXNezvffxumVay2eRGQ
+         F+myQ2l+oM+4y9Z5LOpynuU6pTsVH23tKTE9vANzc937LE0vlYzoVbJqShI+FoIUDBM/
+         l9M1IaCelkCL/7ImopmY+u4IzTAxRaCzgTqS5+6ngjWyvFTIekLWfDQDmLJdgVZAN6aw
+         07YWd7R/8cv2/kuUGhM8mTDmuPXL5yHHkLntHq9zX6fo+xO4IXqkyf95bW1cEiiaUfTr
+         D29Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1749907804; x=1750512604;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=gpxLAeD+HVolSZVyFVghlR1xvl2/NKfSFQXQsuCC2t8=;
+        b=LNJ0VGe8PIyRoDeBkehYhRa3ANm7CCx0Izz0wTzmrAmuIX5Oi54GBKzsFZNAqeBhwZ
+         Xf/YTgoBatRxtJFkPcVzLvJyWpYWkMcZBiQb4gb+tvqJGAinb0JF02snz6Pa0COJ0SzE
+         fQSKp9ppU3bTxeN53afErKWKl7v5Z+7NT65yfBMjX14p6+Ni+LDZDIz0dvdgO0oAQCD2
+         b8tIqXKW+Tu8/Rv8UZ/1i223PNfwlDo2O3cSPCb2t6QO4OSo4Rur0StvA4rc3VwThv0f
+         BUWZp4OaF3Lo5xXsVq0mA+8pYmik21o5uRJ5wgRN4CjV1vl5KJawFcslU51ar6BQiFyN
+         NaRw==
+X-Forwarded-Encrypted: i=1; AJvYcCV7q7P7jYxyET50SiA+GrYyp7JDhSi3rNKr4V1sV52DlsaBxcqID8aUZ5ShV3sox69hb30DPTQ9iJ+E5iAXkGdFAJZFwg==@lists.linux.dev, AJvYcCXEfj/ZqTpcIUk8WsoEKq5VDQVyQK/NMQiotts/ogF+4gp8RVtN54dYSXhgxfEM8/EjNo67vw==@lists.linux.dev
+X-Gm-Message-State: AOJu0Yze8PJFv0F0ZuwlFGZ3MsRrA+XNrEuoh5uizizt0+f8q0ddkGIn
+	gRz6KIronUAvcIRMCLtRgqv3SW33/W5LMt1EVVAJlIGweUOuAHBcRkzyPnDmhTqdVmfNO6eqJul
+	C5970C1EcEo1vzuaYU9QRsono0SRd7Bs=
+X-Gm-Gg: ASbGnctL0A1MuOsY2HWd7uv7pIPjpF7CInQ2DsB8Wy6WSGZyA//7qzYlhr9DgrB0uON
+	tduqIr3UTjSmV7Rpe3aCAxP/BAzaWdbQbx9g8GUdc62WmdFpel94Fi7uAoZVg0pvcVHs1Pfks2u
+	+I0f+CZJMVZbDhGw+S5QnCtfqg+EqRHX5N/njzYvHn7qAbXohEfZIOUGVRGjjGhmuUCY/e/IhdZ
+	w==
+X-Google-Smtp-Source: AGHT+IGTVlBMWe1jUtHr/9UxJLQLB7fTFlDVLqP+v2cbZPfJZOQCuTo318T7Bp2vjunGuEb33YuFW6h9rg9YFZ3d2OQ=
+X-Received: by 2002:a05:6808:1b2c:b0:406:6e31:18a1 with SMTP id
+ 5614622812f47-40a7c1b1ea5mr2201254b6e.2.1749907803915; Sat, 14 Jun 2025
+ 06:30:03 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: lkmm@lists.linux.dev
 List-Id: <lkmm.lists.linux.dev>
 List-Subscribe: <mailto:lkmm+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:lkmm+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Sender: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+References: <cover.1749723671.git.mchehab+huawei@kernel.org>
+ <m27c1foq97.fsf@gmail.com> <20250613141355.1bba92fc@foz.lan>
+In-Reply-To: <20250613141355.1bba92fc@foz.lan>
+From: Donald Hunter <donald.hunter@gmail.com>
+Date: Sat, 14 Jun 2025 14:29:52 +0100
+X-Gm-Features: AX0GCFuxx8riQsYcwnktkvT2HBgg8dodkVLgKdtxUeyINtr1KrOWe6fVqRSEbVM
+Message-ID: <CAD4GDZz-hVEWhSP9sGqZH2tGrU9T8cd3aed5hRtMNZcXk2WmNw@mail.gmail.com>
+Subject: Re: [PATCH v2 00/12] Don't generate netlink .rst files inside $(srctree)
+To: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+Cc: Linux Doc Mailing List <linux-doc@vger.kernel.org>, Jonathan Corbet <corbet@lwn.net>, 
+	linux-kernel@vger.kernel.org, Akira Yokosawa <akiyks@gmail.com>, 
+	"David S. Miller" <davem@davemloft.net>, Ignacio Encinas Rubio <ignacio@iencinas.com>, 
+	Marco Elver <elver@google.com>, Shuah Khan <skhan@linuxfoundation.org>, 
+	Eric Dumazet <edumazet@google.com>, Jan Stancek <jstancek@redhat.com>, 
+	Paolo Abeni <pabeni@redhat.com>, Ruben Wauters <rubenru09@aol.com>, joel@joelfernandes.org, 
+	linux-kernel-mentees@lists.linux.dev, lkmm@lists.linux.dev, 
+	netdev@vger.kernel.org, peterz@infradead.org, stern@rowland.harvard.edu, 
+	Breno Leitao <leitao@debian.org>
+Content-Type: text/plain; charset="UTF-8"
 
-The parsing code from tools/net/ynl/pyynl/ynl_gen_rst.py was moved
-to scripts/lib/netlink_yml_parser.py. Its maintainership
-is done by Netlink maintainers. Yet, as it is used by Sphinx
-build system, add it also to linux-doc maintainers, as changes
-there might affect documentation builds. So, linux-docs ML
-should ideally be C/C on changes to it.
+On Fri, 13 Jun 2025 at 13:14, Mauro Carvalho Chehab
+<mchehab+huawei@kernel.org> wrote:
+> >
+> > >   docs: netlink: don't ignore generated rst files
+> >
+> > Maybe leave this patch to the end and change the description to be a
+> > cleanup of the remants of the old approach.
+>
+> Ok for me, but I usually prefer keeping one patch per logical change.
+> In this case, one patch adding support at the tool; the other one
+> improving docs to benefit from the new feature.
 
-Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
----
- MAINTAINERS | 2 ++
- 1 file changed, 2 insertions(+)
-
-diff --git a/MAINTAINERS b/MAINTAINERS
-index a92290fffa16..2c0b13e5d8fc 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -7202,6 +7202,7 @@ F:	scripts/get_abi.py
- F:	scripts/kernel-doc*
- F:	scripts/lib/abi/*
- F:	scripts/lib/kdoc/*
-+F:	scripts/lib/netlink_yml_parser.py
- F:	scripts/sphinx-pre-install
- X:	Documentation/ABI/
- X:	Documentation/admin-guide/media/
-@@ -27314,6 +27315,7 @@ M:	Jakub Kicinski <kuba@kernel.org>
- F:	Documentation/netlink/
- F:	Documentation/userspace-api/netlink/intro-specs.rst
- F:	Documentation/userspace-api/netlink/specs.rst
-+F:	scripts/lib/netlink_yml_parser.py
- F:	tools/net/ynl/
- 
- YEALINK PHONE DRIVER
--- 
-2.49.0
-
+My point is that "don't ignore generated rst files" is not a step on
+the way from the old method towards the new method. The new method
+does not involve generating any .rst files so the patch is something
+more like "remove obsolete .gitignore from unused directory".

@@ -1,72 +1,71 @@
-Received: from mail-oi1-f170.google.com (mail-oi1-f170.google.com [209.85.167.170])
+Received: from mail-ot1-f44.google.com (mail-ot1-f44.google.com [209.85.210.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46B0D2D9EDB;
-	Sat, 14 Jun 2025 14:15:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73B212D9EF9;
+	Sat, 14 Jun 2025 14:22:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749910540; cv=none; b=N6caVxfeH19oK5l+AR4UyxizprPG37c5y/EwgluUmcwpFZDiLHTqSMD3Aidl+4IToCL2Ot/06UNlrgGiaA5huZFOtmcR1SNFSyKxRVVSkJREqDeImu9zgIEKgeWJrm5AGkoQq2M52vhtekUIEr7KXKK1WDM8w2tLNTJwWeHeX6E=
+	t=1749910949; cv=none; b=Kb/5dPYGa6N18WdMdcEeBglQd4208oLv2/cIdaiL3H/Xw9tNftWO3c/C2K6FjF5tuW3BTfBdSvc2ICRsrMRH9/ZlAdRQGjMrSg7XOxm+0VZAasH/Egdcd9ipbW+ctlsS9bCPitgm6fyFeVV5uDu81UZRuxPXsKM8JIYz9+ALgVU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749910540; c=relaxed/simple;
-	bh=DCmUzencsMsnMaFx/4U/i7fCe25jewj1ptzTPHuZXrg=;
+	s=arc-20240116; t=1749910949; c=relaxed/simple;
+	bh=Rg+fgZCwsIUrfRiu8mTCYByi4MeRpBOzpFg5lYgvIBc=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=YIzMJrNJglEahF5+XPMy4259ltS9FVpq05vPXHB17I46sPzG4H/ZETMED6iLLU7ZVJ70q+if9uULvw1+EmOWJAeIpL4MVbSv+hnBw/QCIYAOfzVEtEis9e0bzpi4pdM9mpzRO8kj1cbGFRawwyr22i85GbQZNsnUwZCyFs7V0mY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=NVA2bWda; arc=none smtp.client-ip=209.85.167.170
+	 To:Cc:Content-Type; b=A4z9WyG1aoDDt2F1FtwiBZ6e5CGqOZNy7L2HwKOziDMBtUn+mf/LVTIN4ZwgylRIYHGra1S4xGK5K30eUXcRAOP7D6hUQKwRq7Mwu5eY7Gu7ttK3li/+iEsbrl4IoybRKcfqi8bXQkvoZOEQH76G86d1HQD2Bbc4u1wzmg3ZB1U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=gmRGwFV2; arc=none smtp.client-ip=209.85.210.44
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NVA2bWda"
-Received: by mail-oi1-f170.google.com with SMTP id 5614622812f47-4067ac8f6cdso2072604b6e.2;
-        Sat, 14 Jun 2025 07:15:36 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gmRGwFV2"
+Received: by mail-ot1-f44.google.com with SMTP id 46e09a7af769-73a01a7bee7so954060a34.1;
+        Sat, 14 Jun 2025 07:22:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1749910536; x=1750515336; darn=lists.linux.dev;
+        d=gmail.com; s=20230601; t=1749910947; x=1750515747; darn=lists.linux.dev;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=V212NBLelySDp+6/CyeJaC/8PZkKsYoStFWQx4jyJv0=;
-        b=NVA2bWdaX6bYcWTGMj4g4ZRy4Tad/h34+NvZP1u4M14zpq/b1M35GjF9PYe1Cg5ORE
-         4TWegPlR0wmQBFRfscs/NgBokBGvwBsc+pyg/tV5vrdOMt7o+o78I0xGddxeBqYz6L1E
-         iJ/vzsjMuqYJPsoGZTTu9JLrdMqB0VPjDvggLISAkc+EU7FI2guSeTwqXNPvfFeS7PRl
-         Br+8wp5MbsG+GzgYf1GFPXHD/fRXDdg/lQE07g/PcaJ+eswJu3FD36EkOqc5jN8eClup
-         3ehf1Js4VUl6+2rVxvF/aRZLW1c8THXFEsJnQGlK3l7YrunUnA2unsYLhIO2hnsMWLsQ
-         ZlrA==
+        bh=X3hWngazZR49X9JH2w9golPTcAudBQyhGLqPPLoGo5c=;
+        b=gmRGwFV2YlhSiXXMgK8ca/KsujlkqqOy1C2h3u7zNci+es5rA349lCUcQa1HOjpkY8
+         57f4iJa4qQFedcwB8ZartFFKegI60fYe3ybK8XzrmvdqPVAFXSuoMfjqb/U3H2WTv9Ct
+         am6kD5x+ypEJQLzuZBL1AzDcWE0oUo9+ZlbjqckdnsV1Hf2+SfgVCSFAu5ZZ32qlA89T
+         oy/yain4MWMzXw5LOUisIuonN2U8V3wmzFbuaxPKsl66L0E1boOEqZGHZfif92rl40ij
+         HM05godkuWTh2D/3c9uYQM4ogLOj8jy426DM8Vj72Aiu2pfioNS7g4lIGnxjd3t90X8c
+         nP3A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1749910536; x=1750515336;
+        d=1e100.net; s=20230601; t=1749910947; x=1750515747;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=V212NBLelySDp+6/CyeJaC/8PZkKsYoStFWQx4jyJv0=;
-        b=egoXyGFBUCJ805Aych7XYsXTVjFItw/WrV4ewNrmlG6DxzAFNwioMWH1kxSgHc0Ncr
-         3TPdLcbc/ZPeRpSIKUzTJA8bW9kEwRvg287ptucZI3Rnoz+hiZk3lNk0u1P8mZRVmebN
-         gaskrfN82zJzDpTD2C8b+SBuOFyAP1j2GU33BOAGbKhE+768/5eMx+i21QCP0JtAa24Q
-         bnKAAD57FFbYv+rb9q2j0sVk88F9fPeJaAuqA2wEvr9sl8z5XhcgLZrK7z3d619Y4uzT
-         O3wAcDonmeIKIhyyJkuxxhyVGHltOC0k5VdndjBeCK5zvMLlkCTk0vqJJDRgy3hnM6GF
-         dYYQ==
-X-Forwarded-Encrypted: i=1; AJvYcCVSOXAtT8w8aMwcwiurGxaeh0qsu4tXxO7gE313eEoQldOsJmzGIPtxAVSA5D30rR6UxqD1bellpr5skReqNTFn6P49XQ==@lists.linux.dev, AJvYcCVcdcEuvURPSYijcqlwZIV7TOnUF60283vy33GUhil2kzd1eYs+ZALV8YA+aLm9aXuBGuZOxA==@lists.linux.dev
-X-Gm-Message-State: AOJu0YyxQfodzqcrB1z5yw6dJQDUK+FVUuKFMxIfM9XtNQ/PG+9G8AX6
-	E8GqweAP9VWkQyt0zP4pxFQ7CBkBZd/G7yUr4mXi4k4f3H49Bsm98GtrWR5G61EWL4/D0TgVvO+
-	8D9oYcDl1aw2k9qvcN3z/eAeUcQ8vv3aOjdfL
-X-Gm-Gg: ASbGnctCk3Bjj4qJ11gTCJFLr91CJ/wCRFjRkqlfg7Z9yf+TsUs5GzZCl+vvbb7m+yl
-	fw8hZfVJRNt2bKXdpp3NJD4h9e5hctjZ9JAGkTHLBjvBp5QzPHxGeBxr7m4jQXszyGyh0eq26bw
-	50feH/BvaadHbqMHObEoXA34aNZkOtZx+N3pD24wh8KdJ3HcrQKFhI725kWOJxIF5p1ygixP38O
-	wpDIzay/uof
-X-Google-Smtp-Source: AGHT+IE7Id5T+q892mpAZrQTdRJVM/iBsvIslk9IkOAbJoYWxBoUYMFvgoYdDkNU0o3h51zEcveta5gNqzJQn1eG0z4=
-X-Received: by 2002:a05:6808:211a:b0:404:1898:1a0b with SMTP id
- 5614622812f47-40a7c19e067mr2049349b6e.31.1749910536255; Sat, 14 Jun 2025
- 07:15:36 -0700 (PDT)
+        bh=X3hWngazZR49X9JH2w9golPTcAudBQyhGLqPPLoGo5c=;
+        b=PPaqJUetUkU86mt0OhDA0SlrBdnCbfQELwfsfn+8QShxplccqlpOS8uLw97sMPd6qd
+         RX+p4D3trjeA9As7GtsU7h1lUMovUkyGb9GDAlL99e5D+H53NWDrLR4T5vRa7O111mtI
+         1yDRGWDSw56ULPn20YbEomTfxsSFTgm3pJxexSLU09UfpgKsNRB5A2ul4BgBVnWiuTMw
+         JN+dBV4RYMKS7IUOA/asEBVglQQoWbGRG3BsS/DJKatMUgUrBkSZjLAO2/zDMGJ+6Nx3
+         lxtGr7pdKbnaqCFQULA0s+gZ/ABJ3ZIFIL1cKXGoAFpdu8UUQovT61f7TzBH4n6U/P91
+         IFtw==
+X-Forwarded-Encrypted: i=1; AJvYcCUpdUeNz+lc0aUTak+0JZNbi6mfkX0e75kU+7avsmQPpt9rTxZsRELj420nEnvN+rc4uY2jPIN/k90grTrXTYqRtq26CQ==@lists.linux.dev, AJvYcCWxfCSaVppbQBsTi6/rIOGk0pEANHtJ9gYW9a8fNvYnVoBGjm60ThfZz19EnV7WoGrpzJE+ig==@lists.linux.dev
+X-Gm-Message-State: AOJu0YwZ5zWUyehi/ZfkUN7VgXr5+YFq24rt6eKH4WwCqXWED9HesdJV
+	VU5YKwS2zRmEaN6efA4Wn+QZJYR9pE4nXapVNeR3SOMqHamVPnLNTO2HMXNB37GuakUYqp8r8KS
+	8FKcofxoq1ny95HwXtofRuCnwzxUAUTo=
+X-Gm-Gg: ASbGncvGIGfdgmpT1hr0z13QNtS0oQP8t5FWUMmKFTEmQX3diqr/tlY4h9A2qGsxI6P
+	UzeSg/l75YukoKYh9e2IZqZGpuYMqpRgmyUlzO2baazTi72LJuN9yQry6BXWrmczaOIXUeCwJVB
+	u2A0BiuKBP55URCn/T47lJPowPTyhrkDJ53KCu4e+N9q2kYGOFNomYgEEEHMuFistRuL/3u//xP
+	w==
+X-Google-Smtp-Source: AGHT+IEZSMKfIhF5Wtgl7BPD+RHoz/6+X0THEcMGujucKXpF3oqL7pzaETbvgouujlQgGh81A5s/QdODg0dTieqaME8=
+X-Received: by 2002:a05:6870:3925:b0:2d4:e420:926c with SMTP id
+ 586e51a60fabf-2eaf02c9159mr2147858fac.0.1749910947449; Sat, 14 Jun 2025
+ 07:22:27 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: lkmm@lists.linux.dev
 List-Id: <lkmm.lists.linux.dev>
 List-Subscribe: <mailto:lkmm+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:lkmm+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <cover.1749891128.git.mchehab+huawei@kernel.org> <31466ece9905956c2e1a3d3fc744cfc272df5d88.1749891128.git.mchehab+huawei@kernel.org>
-In-Reply-To: <31466ece9905956c2e1a3d3fc744cfc272df5d88.1749891128.git.mchehab+huawei@kernel.org>
+References: <cover.1749891128.git.mchehab+huawei@kernel.org> <ba75692b90bf7aa512772ca775fde4c4688d7e03.1749891128.git.mchehab+huawei@kernel.org>
+In-Reply-To: <ba75692b90bf7aa512772ca775fde4c4688d7e03.1749891128.git.mchehab+huawei@kernel.org>
 From: Donald Hunter <donald.hunter@gmail.com>
-Date: Sat, 14 Jun 2025 15:15:25 +0100
-X-Gm-Features: AX0GCFu7jgqlSlj61VjuypZSCCHHVOKVJwT6Cqt0Oc5ACuVVfK8OEx-nZWS3V3c
-Message-ID: <CAD4GDZxPTFmKeNqRZBxW1ij6Gy0L3hrbB6q9G6WdFb8h6Zhr=g@mail.gmail.com>
-Subject: Re: [PATCH v4 07/14] tools: ynl_gen_rst.py: move index.rst generator
- to the script
+Date: Sat, 14 Jun 2025 15:22:16 +0100
+X-Gm-Features: AX0GCFtp1S-v0cvoFkINvtULliHiL3lSbK0RuVnxFH7wmNXiGSQZkNSI3JO8tjs
+Message-ID: <CAD4GDZzA5Dj84vobSdxqXdPjskBjuFm7imFkZoSmgjidbCtSYQ@mail.gmail.com>
+Subject: Re: [PATCH v4 12/14] MAINTAINERS: add maintainers for netlink_yml_parser.py
 To: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 Cc: Linux Doc Mailing List <linux-doc@vger.kernel.org>, Jonathan Corbet <corbet@lwn.net>, 
 	Akira Yokosawa <akiyks@gmail.com>, Breno Leitao <leitao@debian.org>, 
@@ -82,17 +81,41 @@ Content-Type: text/plain; charset="UTF-8"
 On Sat, 14 Jun 2025 at 09:56, Mauro Carvalho Chehab
 <mchehab+huawei@kernel.org> wrote:
 >
-> The index.rst generator doesn't really belong to the parsing
-> function. Move it to the command line tool, as it won't be
-> used elsewhere.
->
-> While here, make it more generic, allowing it to handle either
-> .yaml or .rst as input files.
+> The parsing code from tools/net/ynl/pyynl/ynl_gen_rst.py was moved
+> to scripts/lib/netlink_yml_parser.py. Its maintainership
+> is done by Netlink maintainers. Yet, as it is used by Sphinx
+> build system, add it also to linux-doc maintainers, as changes
+> there might affect documentation builds. So, linux-docs ML
+> should ideally be C/C on changes to it.
 
-I think this patch can be dropped from the series, if instead you
-remove the index generation code before refactoring into a library.
+This patch can be dropped from the series when you move the library
+code to tools/net/ynl/pyynl/lib.
 
 > Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 > ---
->  scripts/lib/netlink_yml_parser.py  | 101 ++++++++---------------------
->  tools/net/ynl/pyynl/ynl_gen_rst.py |  28 +++++++-
+>  MAINTAINERS | 2 ++
+>  1 file changed, 2 insertions(+)
+>
+> diff --git a/MAINTAINERS b/MAINTAINERS
+> index a92290fffa16..2c0b13e5d8fc 100644
+> --- a/MAINTAINERS
+> +++ b/MAINTAINERS
+> @@ -7202,6 +7202,7 @@ F:        scripts/get_abi.py
+>  F:     scripts/kernel-doc*
+>  F:     scripts/lib/abi/*
+>  F:     scripts/lib/kdoc/*
+> +F:     scripts/lib/netlink_yml_parser.py
+>  F:     scripts/sphinx-pre-install
+>  X:     Documentation/ABI/
+>  X:     Documentation/admin-guide/media/
+> @@ -27314,6 +27315,7 @@ M:      Jakub Kicinski <kuba@kernel.org>
+>  F:     Documentation/netlink/
+>  F:     Documentation/userspace-api/netlink/intro-specs.rst
+>  F:     Documentation/userspace-api/netlink/specs.rst
+> +F:     scripts/lib/netlink_yml_parser.py
+>  F:     tools/net/ynl/
+>
+>  YEALINK PHONE DRIVER
+> --
+> 2.49.0
+>

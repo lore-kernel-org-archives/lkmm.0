@@ -1,228 +1,125 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qk1-f182.google.com (mail-qk1-f182.google.com [209.85.222.182])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18D05295D8F;
-	Mon, 16 Jun 2025 10:51:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75D292BEFE6
+	for <lkmm@lists.linux.dev>; Mon, 16 Jun 2025 14:11:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750071075; cv=none; b=gikmnZw6IksytBQTSS5leXZXVVIZ0mKZR3WoMMfScBGVbD+UcOOkxVZeQDqweQXKVgtvyhnaIopPFZ86D3lpDOiA1j2HPw8CI9uUgWskOvAiMzmsgqpIfxmaqJQu6pPw1EIxvig6XeR250IgdgtJfcaF6zswLMtTxrdyjUmONaA=
+	t=1750083076; cv=none; b=Ns4IijEV0rrSdNPfJEvBRh5nONvG6OXTx8XZKjJ4IkgTZwpfc7E+o9Y6S+x/IYUgbJRjWXWMw3eJSrAQMkG4aTMVqGdkSw3VJKABlh7YX5Vgj2uUtiAO4i0mrXS7Lx/opD8WlXEP8J8CozXsIEnOPHQZvu18GlJTAslwsOTvJac=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750071075; c=relaxed/simple;
-	bh=WaQAp1hhm2gKAeY2p2nZTgu1+jygTwVGUhSeNAqM2RQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=gCZPgvnLJ1D0MPMVBZNnf28xUrcnOqziQxNfZZqbn0Ts6V4UiCpzcEHDe6TP37DjcKeGlXJ727dJOG3n9i91OWuzsdMgogHr4Oj4AD/ESxHmuEMZ4yVt4b4dB9lB+nEclJrNU1iVIAGeM7+UpTeicU0sZRvPaFUjE4LPWN0lZ4o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=BJUk/Ui9; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1750083076; c=relaxed/simple;
+	bh=zoPlTkoZZmJtHvxgje6uQdW9GgwchQlmybNP8yjwaN8=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=KWYZZ83qmnWWnaYRdNy7dIVKAEbDj7a1dJNneCxYTtn3SWZ8SNgA2QDUSdCtPtRggZgmIjf9Tjr2F2S9INEs4J2Hq4YZpnUElGagThtdJqTmx8YKZffS6GUL1sFmZhocD4H7KGfeWwcOdps74qO/gfr1EoGrMnPVpifpwsYBiow=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=rowland.harvard.edu; spf=fail smtp.mailfrom=g.harvard.edu; dkim=pass (2048-bit key) header.d=rowland.harvard.edu header.i=@rowland.harvard.edu header.b=D+7kXLbh; arc=none smtp.client-ip=209.85.222.182
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=rowland.harvard.edu
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=g.harvard.edu
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="BJUk/Ui9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 744D5C4CEF1;
-	Mon, 16 Jun 2025 10:51:09 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1750071073;
-	bh=WaQAp1hhm2gKAeY2p2nZTgu1+jygTwVGUhSeNAqM2RQ=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-	b=BJUk/Ui9lefM/bDm0RZwP71Ccys+RiIcirvbkyHC2lIfyWHo8zRYLNdFHrIpjdAqO
-	 c93QasgHPhoURjWaivuDm5HgOv8CIV+StPUP/MGmaGb9r6DvV9MiJPo8GjUkIjQU4I
-	 k87jG2OwBsCMEk0QAaNB1A/ryl2t+CWHsVv2ujj79HrEp1Xpifn5AqsJ3zrx1a5THl
-	 PNWJShMVwyk9yo0VTvXPUlt6WlGBZMeW6torR1uYzgbWDyI1pgb2xcFqjg5qwGSxue
-	 ZayjqOhpLfwP9diAiya5uA0TXsTsqetkpdolFrk2DF2P/DOvF3kwftOvUS2IHFzGLZ
-	 l05YHL9Rpgb0w==
-Date: Mon, 16 Jun 2025 12:51:06 +0200
-From: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-To: Jakub Kicinski <kuba@kernel.org>
-Cc: Donald Hunter <donald.hunter@gmail.com>, Jonathan Corbet
- <corbet@lwn.net>, Linux Doc Mailing List <linux-doc@vger.kernel.org>, Akira
- Yokosawa <akiyks@gmail.com>, Breno Leitao <leitao@debian.org>, "David S.
- Miller" <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>, Ignacio
- Encinas Rubio <ignacio@iencinas.com>, Jan Stancek <jstancek@redhat.com>,
- Marco Elver <elver@google.com>, Paolo Abeni <pabeni@redhat.com>, Ruben
- Wauters <rubenru09@aol.com>, Shuah Khan <skhan@linuxfoundation.org>,
- joel@joelfernandes.org, linux-kernel-mentees@lists.linux.dev,
- linux-kernel@vger.kernel.org, lkmm@lists.linux.dev, netdev@vger.kernel.org,
- peterz@infradead.org, stern@rowland.harvard.edu
-Subject: Re: [PATCH v4 12/14] MAINTAINERS: add maintainers for
- netlink_yml_parser.py
-Message-ID: <20250616125106.5d7fd18f@foz.lan>
-In-Reply-To: <20250614124649.2c41407c@kernel.org>
-References: <cover.1749891128.git.mchehab+huawei@kernel.org>
-	<ba75692b90bf7aa512772ca775fde4c4688d7e03.1749891128.git.mchehab+huawei@kernel.org>
-	<CAD4GDZzA5Dj84vobSdxqXdPjskBjuFm7imFkZoSmgjidbCtSYQ@mail.gmail.com>
-	<20250614173235.7374027a@foz.lan>
-	<20250614103700.0be60115@kernel.org>
-	<20250614205609.50e7c3ad@foz.lan>
-	<20250614124649.2c41407c@kernel.org>
-X-Mailer: Claws Mail 4.3.1 (GTK 3.24.49; x86_64-redhat-linux-gnu)
+	dkim=pass (2048-bit key) header.d=rowland.harvard.edu header.i=@rowland.harvard.edu header.b="D+7kXLbh"
+Received: by mail-qk1-f182.google.com with SMTP id af79cd13be357-7c5675dec99so566178785a.0
+        for <lkmm@lists.linux.dev>; Mon, 16 Jun 2025 07:11:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=rowland.harvard.edu; s=google; t=1750083073; x=1750687873; darn=lists.linux.dev;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=OOggq/KPowkbkENDJnGOHpXXvgQx4F56FAixym3bp2M=;
+        b=D+7kXLbhFzmga39VRR49vrr3A5cTs2TFhllB0Fgq3eKVCc6DOkKn96ZntiMaM7ORgV
+         yxaXZIaTIRrD7qqP8hpsF7hl7DvI3+vzy5QlA4R97Nf4iHJtXtqz0cNQvgssSh4DgHvC
+         dxiLA6kN5fLbM5KZiD9+OpZzl+nGVr0TfHkPHehjPguVQ+VI1JZsBicMZmOt+DlgSup5
+         v+mc/19lY139yj+vOaG8xiknWDB7KtGC2MpOCPk5+1istaCGQMigEXRTgTca3itJ/S4J
+         ylQuDFfECimTCcOtffAvVDu6NaJgd1JXahEt3/medjjbSFRJmho4i3QdWuHbcHRskh2J
+         Gf0w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1750083073; x=1750687873;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=OOggq/KPowkbkENDJnGOHpXXvgQx4F56FAixym3bp2M=;
+        b=QBViyXCnu8TP1G4eHkpZ5Omyiw0TvSGIo7yGocAA4bYisQ7S/qdkuAClOh5HM4au4r
+         xz4BPBxFDBhhMz5JE2NeELAL8i5T746xO+rhFZGDkKTLkQxJKhRdPwTcqf+hJzRxQB2S
+         Wo2DKw3wN6Z5psSlLX+kjOhgBDAip3uo15q5CDxH3J/tebFgjVTLyg1h6C6xzlrS7LoY
+         FG2wxDJ25FC4bOpcIzvRHH15tlprHgQi+oHLweI5HkE4sUgOi6JKj59QpG6E+k5yqk3e
+         e0Bpo/Ao1kM5HOK7pf8svHTRpx9ZV23+lDX7ISX0/nzVJJCEHtvKPHqr5rDM8Vi/HK29
+         4CDw==
+X-Forwarded-Encrypted: i=1; AJvYcCUMyuXw4iEIqUlV3VbWpn8QboOnEg/HyOBJluUUikxC78eClq4JCbYmvqz/e/e27fr7SSYp@lists.linux.dev
+X-Gm-Message-State: AOJu0Ywakh4W55bi3u4l9feiTtrANbU82nOk2Mwc3/xls0b2VlbToT1b
+	hA4f/oOv95nYrieHtLCmt5AnHvXTTEKgzrIjr37CmKg1qVcFlVxCKAwaXo5jRtYL6Q==
+X-Gm-Gg: ASbGncuvZIjWdk8aKTYLa4x6zGclQ+ConasPc3JovdlRPCCMhcJfS55s7sShhNplQc1
+	575XKTACvT52MzD7+Kxa+P4lkUWJDYgKorF1HAXZVDqRvZU2dcNX/9Xd6d6QXdWfJcKmK3fpQEZ
+	OC1snhIoSR1uJDBgTicfWNbQSTUsIWDlCkGe8TFOEEcjPYuAFoMGafzLpRPliITaz2DwbKyzJrZ
+	46MX5PGAZf/x3EV09KHczXpNyBTvj3Z4QTBOU236iBFPtlqhs/wf2V5Gh9f5PKA0qhV5Uujg6Ri
+	96QnbePqCPxJq53WtxJthUpuWslikKIORtIVOjaUTnnEPzUaEQ/3wevZI/KPMbo0hLQ0G+/UOUV
+	BY2rr
+X-Google-Smtp-Source: AGHT+IG/Q8oqK3NAs6JYHlzNOnNjSakbP4l5bRaZECFc8nTtdEfQzpzqsQ4tpcjcD5JM5xcRL5wrXQ==
+X-Received: by 2002:a05:620a:390a:b0:7d2:2822:3f79 with SMTP id af79cd13be357-7d3c6c18fcdmr1653377685a.13.1750083073152;
+        Mon, 16 Jun 2025 07:11:13 -0700 (PDT)
+Received: from rowland.harvard.edu ([140.247.181.15])
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-7d3b8dfe347sm530784885a.36.2025.06.16.07.11.11
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 16 Jun 2025 07:11:12 -0700 (PDT)
+Date: Mon, 16 Jun 2025 10:11:10 -0400
+From: Alan Stern <stern@rowland.harvard.edu>
+To: Andrea Parri <parri.andrea@gmail.com>
+Cc: Thomas Haas <t.haas@tu-bs.de>, Peter Zijlstra <peterz@infradead.org>,
+	Will Deacon <will@kernel.org>, Boqun Feng <boqun.feng@gmail.com>,
+	Nicholas Piggin <npiggin@gmail.com>,
+	David Howells <dhowells@redhat.com>,
+	Jade Alglave <j.alglave@ucl.ac.uk>,
+	Luc Maranget <luc.maranget@inria.fr>,
+	"Paul E. McKenney" <paulmck@kernel.org>,
+	Akira Yokosawa <akiyks@gmail.com>,
+	Daniel Lustig <dlustig@nvidia.com>,
+	Joel Fernandes <joelagnelf@nvidia.com>,
+	linux-kernel@vger.kernel.org, linux-arch@vger.kernel.org,
+	lkmm@lists.linux.dev, hernan.poncedeleon@huaweicloud.com,
+	jonas.oberhauser@huaweicloud.com,
+	"r.maseli@tu-bs.de" <r.maseli@tu-bs.de>
+Subject: Re: [RFC] Potential problem in qspinlock due to mixed-size accesses
+Message-ID: <357b3147-22e0-4081-a9ac-524b65251d62@rowland.harvard.edu>
+References: <cb83e3e4-9e22-4457-bf61-5614cc4396ad@tu-bs.de>
+ <20250613075501.GI2273038@noisy.programming.kicks-ass.net>
+ <aEwHufdehlQnBX7g@andrea>
+ <9264df13-36db-4b25-b2c4-7a9701df2f4d@tu-bs.de>
+ <aE-3_mJPjea62anv@andrea>
 Precedence: bulk
 X-Mailing-List: lkmm@lists.linux.dev
 List-Id: <lkmm.lists.linux.dev>
 List-Subscribe: <mailto:lkmm+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:lkmm+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <aE-3_mJPjea62anv@andrea>
 
-Em Sat, 14 Jun 2025 12:46:49 -0700
-Jakub Kicinski <kuba@kernel.org> escreveu:
+On Mon, Jun 16, 2025 at 08:21:50AM +0200, Andrea Parri wrote:
+> > Thanks for the praise. I expected more questioning/discussion and less
+> > immediate acceptance :)
+> 
+> Well, the discussion isn't closed yet.  ;-)
+> 
+> 
+> > Maybe one should also take into consideration a hypothetical extension of
+> > LKMM to MSA.
+> > I think LKMM (and also C11) do not preserve REL->ACQ ordering because this
+> > would disallow their implementation as simple stores/loads on TSO.
+> > That being said, maybe preserving  "rmw;[REL];po;[ACQ]" on the
+> > language-level would be fine and sufficient for qspinlock.
+> 
+> On PPC say, the expression can translate to a sequence "lwsync ; lwarx ;
+> stwcx. ; ... ; lwz ; lwsync", in which the order of the two loads is not
+> necessarily preserved.
+> 
+> MSAs have been on the LKMM TODO list for quite some time.  I'm confident
+> this thread will help to make some progress or at least to reinforce the
+> interest in the topic.
 
-> On Sat, 14 Jun 2025 20:56:09 +0200 Mauro Carvalho Chehab wrote:
-> > > I understand that from the PoV of ease of maintenance of the docs.
-> > > Is it fair to say there is a trade off here between ease of maintenan=
-ce
-> > > for docs maintainers and encouraging people to integrate with kernel
-> > > docs in novel ways?   =20
-> >=20
-> > Placing elsewhere won't make much difference from doc maintainers and
-> > developers. =20
->=20
-> I must be missing your point. Clearly it makes a difference to Donald,
-> who is a maintainer of the docs in question.
+Indeed.  I was surprised to learn that CPUs can sometimes change a 
+32-bit load into two 16-bit loads.
 
-Heh, I was just saying that I missed your point ;-)
+My question is: Do we have enough general knowledge at this point about 
+how the various types of hardware handle mixed-size accesses to come up 
+with a memory model everyone can agree one?
 
-See, you said that "there is a trade off here between ease of maintenance
-for docs maintainers and encouraging people to integrate with kernel
-docs in novel ways".
-
-I can't see how being easy/hard to maintain or even "integrate with
-kernel docs in novel ways" would be affected by the script location.
-
-Whatever it is located, there should be MAINTAINERS entries that would
-point to YAML and network maintainers maintainers:
-
-	$ ./scripts/get_maintainer.pl tools/net/ynl/pyynl/ynl_gen_rst.py --nogit -=
--nogit-blame --nogit-fallback
-	Donald Hunter <donald.hunter@gmail.com> (maintainer:YAML NETLINK (YNL))
-	Jakub Kicinski <kuba@kernel.org> (maintainer:YAML NETLINK (YNL))
-	"David S. Miller" <davem@davemloft.net> (maintainer:NETWORKING [GENERAL])
-	Eric Dumazet <edumazet@google.com> (maintainer:NETWORKING [GENERAL])
-	Paolo Abeni <pabeni@redhat.com> (maintainer:NETWORKING [GENERAL])
-	Simon Horman <horms@kernel.org> (reviewer:NETWORKING [GENERAL])
-	netdev@vger.kernel.org (open list:NETWORKING [GENERAL])
-	linux-kernel@vger.kernel.org (open list)
-	YAML NETLINK (YNL) status: Unknown
-
-	(do they all apply to YNL doc parser?)
-
-Plus having doc ML/Maintainer on it:
-
-	Jonathan Corbet <corbet@lwn.net> (maintainer:DOCUMENTATION)
-	linux-doc@vger.kernel.org (open list:DOCUMENTATION)
-
-So, at least the file called by the Sphinx class should be at the
-linux-doc entry at the maintainers' file.
-
-The rationale is that linux-doc and Jon should be c/c, just in case some=20
-change there might end causing build issues using a version of the toolchain
-that is officially supported, as documented at
-Documentation/process/changes.rst, e.g. currently whatever it there is=20
-expected to be compatible with:
-
-	=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D =3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D  =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D
-	        Program        Minimal version       Command to check the version
-	=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D =3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D  =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D
-	...
-	Sphinx\ [#f1]_         3.4.3            sphinx-build --version
-	...
-	Python (optional)      3.9.x            python3 --version
-	...
-
-
-This is independent if the YNL classes are either at scripts/lib
-or at tools/net/ynl/pyynl/lib.
-
->=20
-> > I'm more interested on having a single place where python libraries
-> > could be placed. =20
->=20
-> Me too, especially for selftests. But it's not clear to me that
-> scripts/ is the right location. I thought purely user space code
-> should live in tools/ and bulk of YNL is for user space.
-
-Several scripts under scripts/ are meant to run outside build
-time. One clear example is:
-
-	$ ./scripts/get_abi.py undefined
-
-That basically checks if the userspace sysfs API is properly
-documented, by reading the macine's sysfs node and comparing
-with the uAPI documentation. Such tool can also used to check if
-the ABI documentation Python classes are working as expected.
-
-So, it is a mix of kernel build time and userspace.
-
-There are also pure userspace tools like those two:
-
-	./scripts/get_dvb_firmware
-	./scripts/extract_xc3028.pl=09
-
-Both extract firmware files from some other OS and write as a
-Linux firmware file to be stored under /lib/firmware. They are
-userspace-only tools.
-
--
-
-=46rom my side, I don't care where Python classes would be placed,
-but I prefer having them on a single common place. It could be:
-
-	/scripts/lib
-	/tools/lib
-	/python/lib
-
-eventually with their own sub-directories on it, like what we have
-today:
-
-	${some_prefix}/kdoc
-	${some_prefix}/abi
-
-In the case of netlink, it could be:
-
-	${some_prefix}/netlink
-
-Yet, IMO, we should not have a different location for userspace
-and non-userspace, as it is very hard to draw the borders on several
-cases, like the ABI toolset.
-
-> > Eventually, some classes might be re-used in the future
-> > by multiple scripts and subsystems, when it makes sense, just like we do
-> > already with Kernel's kAPIs. This also helps when checking what is the
-> > Python's minimal version that are required by the Kernel when updating
-> > it at: =20
->=20
-> I think this is exactly the same point Donald is making, but from YNL
-> perspective. The hope is to share more code between the ReST generator,
-> the existing C generator and Python library. The later two are already
-> based on a shared spec model.
-
-That makes perfect sense to me. Yet, this doesn't preventing having
-a:
-
-	${some_prefix}/ynl
-
-directory where you would place Netlink YNL parsing, where the prefix
-would be either:
-
-	- /scripts/lib
-	- /tools/lib
-	- /python/lib
-	- something else
-
-It may even use some common classes under:
-
-	${some_prefix}/${some_common_prefix}
-
----
-
-Now, seeing your comments, maybe the main point is wheather it is OK to=20
-add userspace libraries to scripts/lib or not. IMO, using "/scripts/lib"
-is OK, no matter if the script is kernel-build related or "pure userspace",
-but if there are no consensus, we could migrate what we have to
-"python/lib" or to some other place.
-
-
-Thanks,
-Mauro
+Alan

@@ -1,193 +1,82 @@
-Received: from frasgout13.his.huawei.com (frasgout13.his.huawei.com [14.137.139.46])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f42.google.com (mail-ej1-f42.google.com [209.85.218.42])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F9471FF60A
-	for <lkmm@lists.linux.dev>; Tue, 17 Jun 2025 08:42:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=14.137.139.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5958C295D95;
+	Tue, 17 Jun 2025 09:49:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750149749; cv=none; b=f6HaFASKw5j8a2aEY6dlO5Qof0IhrFwS2FFqMhUt8o9A0JHYx6/9MkJpX94rj6tsu4Gvx2vVBELD6mandh6BrYrT/U07oUVWT7Oc4A+m8NJ6P/5sZrK9z73XRl0DBdTgm+Fz+YwUfhP5CcIlzB4IY9kRWghVbmimeXoXJ7zEt90=
+	t=1750153780; cv=none; b=fbwcZsroDZNdaxsuI3Z72T4JHsECdC//8uDmwi5c2sl59QKfHKVD5tmQxql5r+X8Hejma3E4oujdTvqGrw5R1WrCMstKHhGDHQiPBLatycDTvIoP5lzMjhHrxOSxsOImo+k3kFmKdPChhFUxpdlMUI/jKlw1xFDKfc3aMsQ/Zek=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750149749; c=relaxed/simple;
-	bh=Hm0JqR8yAVMLgjw8eiD3fPtltOfp/U5Geg0Bn6eH+GQ=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=N+hN5plC147QGF78bx7YhxAW429jkwtpkgoHSvBunB9pxuKlT0cpd0lhIDOgzaajmKkZ2PFVTQIbTlc42YJtMYUVO2r3v+csRjitTO2wZ1fiZkn4kOvmwQ99lpmj5xAD+9qQD7Arl1KUjaLQtHph9X9zQvdIK3a25wsQZdBudwA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=huaweicloud.com; spf=pass smtp.mailfrom=huaweicloud.com; arc=none smtp.client-ip=14.137.139.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=huaweicloud.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huaweicloud.com
-Received: from mail.maildlp.com (unknown [172.18.186.51])
-	by frasgout13.his.huawei.com (SkyGuard) with ESMTPS id 4bM0hN06mBzpV58
-	for <lkmm@lists.linux.dev>; Tue, 17 Jun 2025 16:41:08 +0800 (CST)
-Received: from mail02.huawei.com (unknown [7.182.16.47])
-	by mail.maildlp.com (Postfix) with ESMTP id 0040E140360
-	for <lkmm@lists.linux.dev>; Tue, 17 Jun 2025 16:42:22 +0800 (CST)
-Received: from [10.48.219.48] (unknown [10.48.219.48])
-	by APP1 (Coremail) with SMTP id LxC2BwDXW0pgKlFoEWzoCQ--.57902S2;
-	Tue, 17 Jun 2025 09:42:22 +0100 (CET)
-Message-ID: <2b11f09d-b938-4a8e-8c3a-c39b6fea2b21@huaweicloud.com>
-Date: Tue, 17 Jun 2025 10:42:04 +0200
+	s=arc-20240116; t=1750153780; c=relaxed/simple;
+	bh=DP9DqrgR2bh8NqZ6FizF/KGOAPXqqAR5joYEFv95tPk=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=co0kAiDtRCs8pufvTkomGNo+N8PeaHcv7JsiAgZtmZs4mNODzwvnliZTn5mrss/jn6bPyGI1m2FQKeFVwqvaVtLYAzUMdWfTgfag8PqU/aOCdWxCPZZfVVJsUOZUCZejOL56Me7HzCc+qHlF27Png4F7ztkdR1VENTr+9UDdOK0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=debian.org; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.218.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=debian.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-ej1-f42.google.com with SMTP id a640c23a62f3a-ade48b24c97so862007166b.2;
+        Tue, 17 Jun 2025 02:49:37 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1750153775; x=1750758575;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=WNjpKIWFUO3UwHjqSrvxZH4sVoUp8DK07nEW60sO6KA=;
+        b=lOupGrl9mtwL6A8/1Zwo8oUU4NZiv21zrlAf3VI+ihWd7mRiQgTi83EAKvj7A6v1hP
+         fOXpgcv7JKkmF0C9CBAavgt0vMP6o9p8agrd6CJDxHpJJCRbUoriXTKceLWZ/DXMhptR
+         FHAGDxLf0FGDSzjTgqKTVEZeEAaBglNDRKLVbh4Scr2dogjSKnrCnndXlK2D/KQ4UBwj
+         E5b2zyNByD3cLkzh78LOMC+Pko692dGXWjUgJa6sxP7SX2+b+8VjEWJcDNhFmhLNr9cR
+         tZvQHM/Re8s4vPFnPp+eP2Au7241t7XI3WPK0Fx2yNTnw0Wo4gXpYQ3OchxQdh/A8cD7
+         HA2w==
+X-Forwarded-Encrypted: i=1; AJvYcCVXQFJKYM5xZNlFGoqlKFOO0+qwHafcjUQGd62GbrCrjecrOnnuxW3LSIgxCg1BChnfudPI6pXqrMTtx+2nHe3HFmmwqA==@lists.linux.dev, AJvYcCVoOlvsjE3rirwk9IXUzWsFasw+oGy2Osp3q15bfdc/z1MYSadlTY33fDKBl+whthP2dPEldA==@lists.linux.dev
+X-Gm-Message-State: AOJu0Yzv6MTIcagvzjUo/dgW+h6KegR30A9Y49Pg8sZ50vUWft0MXoUf
+	L2LAPjqm32Q2A5dx5i3pCuAWIT/BDhaMW1+ItGpbErDNcAT3lLKgWSB8eYZjgA==
+X-Gm-Gg: ASbGncuMzg/upz0kPF56/oUTZlAFoKnamIfrsgEQkNYxJ3o1iMLbakzx2VoZhLNHLzb
+	ztYJS1ED4SSLGxegR+dQwIBlu5pWyuOxUPpheRJFfXZ3VM5tI7cVtXNlPprUFpxNxBlny9nXCHO
+	UzsoLVrWpjLEbsRC8zyvyzp7QdtOwk+1Lh1DvkbI3RicfjF9FMhdKesldl11ry8BD6g4yGgyUBI
+	9LKaXGMrqYa28MiUIoBWOXJA5LOg0+tdL+6KRgk/2Hp6LUFTCT1D+izlqqyqurfe0yAqskT5KV1
+	9Xuk0HsIQa0SEV9acTV7uRtBrW5G3XUL6LBCVQUoGs8f+ugWy7O82g==
+X-Google-Smtp-Source: AGHT+IHW9294E3OtqJ+f28GiD9wYZ86H8EQy05fIL/mh1QaSIzEMnsqq5NiG7/2VBActvbbuMbdfRg==
+X-Received: by 2002:a17:907:1c0c:b0:adb:2462:d921 with SMTP id a640c23a62f3a-adfad277532mr1325684366b.5.1750153775307;
+        Tue, 17 Jun 2025 02:49:35 -0700 (PDT)
+Received: from gmail.com ([2a03:2880:30ff:71::])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-adec81c5c5fsm843320666b.63.2025.06.17.02.49.33
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 17 Jun 2025 02:49:34 -0700 (PDT)
+Date: Tue, 17 Jun 2025 02:49:32 -0700
+From: Breno Leitao <leitao@debian.org>
+To: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+Cc: Linux Doc Mailing List <linux-doc@vger.kernel.org>,
+	Jonathan Corbet <corbet@lwn.net>, Akira Yokosawa <akiyks@gmail.com>,
+	"David S. Miller" <davem@davemloft.net>,
+	Donald Hunter <donald.hunter@gmail.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Ignacio Encinas Rubio <ignacio@iencinas.com>,
+	Jan Stancek <jstancek@redhat.com>, Marco Elver <elver@google.com>,
+	Paolo Abeni <pabeni@redhat.com>, Ruben Wauters <rubenru09@aol.com>,
+	Shuah Khan <skhan@linuxfoundation.org>, joel@joelfernandes.org,
+	linux-kernel-mentees@lists.linux.dev, linux-kernel@vger.kernel.org,
+	lkmm@lists.linux.dev, netdev@vger.kernel.org, peterz@infradead.org,
+	stern@rowland.harvard.edu
+Subject: Re: [PATCH v5 09/15] tools: ynl_gen_rst.py: clanup coding style
+Message-ID: <aFE6LIpZsFfy3rRU@gmail.com>
+References: <cover.1750146719.git.mchehab+huawei@kernel.org>
+ <b86d44729cc0d3adfdddc607a432f96f06aaf1be.1750146719.git.mchehab+huawei@kernel.org>
 Precedence: bulk
 X-Mailing-List: lkmm@lists.linux.dev
 List-Id: <lkmm.lists.linux.dev>
 List-Subscribe: <mailto:lkmm+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:lkmm+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC] Potential problem in qspinlock due to mixed-size accesses
-To: Thomas Haas <t.haas@tu-bs.de>, Will Deacon <will@kernel.org>,
- Peter Zijlstra <peterz@infradead.org>
-Cc: Alan Stern <stern@rowland.harvard.edu>,
- Andrea Parri <parri.andrea@gmail.com>, Boqun Feng <boqun.feng@gmail.com>,
- Nicholas Piggin <npiggin@gmail.com>, David Howells <dhowells@redhat.com>,
- Jade Alglave <j.alglave@ucl.ac.uk>, Luc Maranget <luc.maranget@inria.fr>,
- "Paul E. McKenney" <paulmck@kernel.org>, Akira Yokosawa <akiyks@gmail.com>,
- Daniel Lustig <dlustig@nvidia.com>, Joel Fernandes <joelagnelf@nvidia.com>,
- linux-kernel@vger.kernel.org, linux-arch@vger.kernel.org,
- lkmm@lists.linux.dev, jonas.oberhauser@huaweicloud.com,
- "r.maseli@tu-bs.de" <r.maseli@tu-bs.de>
-References: <cb83e3e4-9e22-4457-bf61-5614cc4396ad@tu-bs.de>
- <20250613075501.GI2273038@noisy.programming.kicks-ass.net>
- <20250616142347.GA17781@willie-the-truck>
- <d66d0351-b523-40da-ae47-8b06f37bf3b6@tu-bs.de>
-Content-Language: en-US
-From: Hernan Ponce de Leon <hernan.poncedeleon@huaweicloud.com>
-In-Reply-To: <d66d0351-b523-40da-ae47-8b06f37bf3b6@tu-bs.de>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID:LxC2BwDXW0pgKlFoEWzoCQ--.57902S2
-X-Coremail-Antispam: 1UD129KBjvJXoWxuryUJw1UJw1rZr45AF47Arb_yoWruFW8pF
-	WkKa1UKFZ5AF9Yyw1ktw1vgFyFy3yxJ3Z8Xrn5tFyxArnIyFy2vr4aqr1F9FyUurs7JF10
-	vr18t3sxua4UAFJanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
-	9KBjDU0xBIdaVrnRJUUUvjb4IE77IF4wAFF20E14v26ryj6rWUM7CY07I20VC2zVCF04k2
-	6cxKx2IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4
-	vEj48ve4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Jr0_JF4l84ACjcxK6xIIjxv20xvEc7Cj
-	xVAFwI0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW8JVWxJwA2z4x0Y4vEx4A2jsIEc7CjxV
-	AFwI0_Gr0_Gr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l5I8CrVACY4xI64kE6c02F40E
-	x7xfMcIj6xIIjxv20xvE14v26r1j6r18McIj6I8E87Iv67AKxVWUJVW8JwAm72CE4IkC6x
-	0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lFIxGxcIEc7CjxVA2Y2ka0xkIwI1lc7CjxVAaw2AF
-	wI0_GFv_Wryl42xK82IYc2Ij64vIr41l4I8I3I0E4IkC6x0Yz7v_Jr0_Gr1lx2IqxVAqx4
-	xG67AKxVWUJVWUGwC20s026x8GjcxK67AKxVWUGVWUWwC2zVAF1VAY17CE14v26r4a6rW5
-	MIIYrxkI7VAKI48JMIIF0xvE2Ix0cI8IcVAFwI0_Jr0_JF4lIxAIcVC0I7IYx2IY6xkF7I
-	0E14v26r4j6F4UMIIF0xvE42xK8VAvwI8IcIk0rVWUJVWUCwCI42IY6I8E87Iv67AKxVWU
-	JVW8JwCI42IY6I8E87Iv6xkF7I0E14v26r4j6r4UJbIYCTnIWIevJa73UjIFyTuYvjxUIa
-	0PDUUUU
-X-CM-SenderInfo: xkhu0tnqos00pfhgvzhhrqqx5xdzvxpfor3voofrz/
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <b86d44729cc0d3adfdddc607a432f96f06aaf1be.1750146719.git.mchehab+huawei@kernel.org>
 
-On 6/17/2025 8:19 AM, Thomas Haas wrote:
+On Tue, Jun 17, 2025 at 10:02:06AM +0200, Mauro Carvalho Chehab wrote:
+> Cleanup some coding style issues pointed by pylint and flake8.
 > 
+> No functional changes.
 > 
-> On 16.06.25 16:23, Will Deacon wrote:
->> On Fri, Jun 13, 2025 at 09:55:01AM +0200, Peter Zijlstra wrote:
->>> On Thu, Jun 12, 2025 at 04:55:28PM +0200, Thomas Haas wrote:
->>>> We have been taking a look if mixed-size accesses (MSA) can affect the
->>>> correctness of qspinlock.
->>>> We are focusing on aarch64 which is the only memory model with MSA 
->>>> support
->>>> [1].
->>>> For this we extended the dartagnan [2] tool to support MSA and now it
->>>> reports liveness, synchronization, and mutex issues.
->>>> Notice that we did something similar in the past for LKMM, but we were
->>>> ignoring MSA [3].
->>>>
->>>> The culprit of all these issues is that atomicity of single load
->>>> instructions is not guaranteed in the presence of smaller-sized stores
->>>> (observed on real hardware according to [1] and Fig. 21/22)
->>>> Consider the following pseudo code:
->>>>
->>>>      int16 old = xchg16_rlx(&lock, 42);
->>>>      int32 l = load32_acq(&lock);
->>>>
->>>> Then the hardware can treat the code as (likely due to store- 
->>>> forwarding)
->>>>
->>>>      int16 old = xchg16_rlx(&lock, 42);
->>>>      int16 l1 = load16_acq(&lock);
->>>>      int16 l2 = load16_acq(&lock + 2); // Assuming byte-precise pointer
->>>> arithmetic
->>>>
->>>> and reorder it to
->>>>
->>>>      int16 l2 = load16_acq(&lock + 2);
->>>>      int16 old = xchg16_rlx(&lock, 42);
->>>>      int16 l1 = load16_acq(&lock);
->>>>
->>>> Now another thread can overwrite "lock" in between the first two 
->>>> accesses so
->>>> that the original l (l1 and l2) ends up containing
->>>> parts of a lock value that is older than what the xchg observed.
->>>
->>> Oops :-(
->>>
->>> (snip the excellent details)
->>>
->>>> ### Solutions
->>>>
->>>> The problematic executions rely on the fact that T2 can move half of 
->>>> its
->>>> load operation (1) to before the xchg_tail (3).
->>>> Preventing this reordering solves all issues. Possible solutions are:
->>>>      - make the xchg_tail full-sized (i.e, also touch lock/pending 
->>>> bits).
->>>>        Note that if the kernel is configured with >= 16k cpus, then 
->>>> the tail
->>>> becomes larger than 16 bits and needs to be encoded in parts of the 
->>>> pending
->>>> byte as well.
->>>>        In this case, the kernel makes a full-sized (32-bit) access 
->>>> for the
->>>> xchg. So the above bugs are only present in the < 16k cpus setting.
->>>
->>> Right, but that is the more expensive option for some.
->>>
->>>>      - make the xchg_tail an acquire operation.
->>>>      - make the xchg_tail a release operation (this is an odd 
->>>> solution by
->>>> itself but works for aarch64 because it preserves REL->ACQ 
->>>> ordering). In
->>>> this case, maybe the preceding "smp_wmb()" can be removed.
->>>
->>> I think I prefer this one, it move a barrier, not really adding
->>> additional overhead. Will?
->>
->> I'm half inclined to think that the Arm memory model should be tightened
->> here; I can raise that with Arm and see what they say.
->>
->> Although the cited paper does give examples of store-forwarding from a
->> narrow store to a wider load, the case in qspinlock is further
->> constrained by having the store come from an atomic rmw and the load
->> having acquire semantics. Setting aside the MSA part, that specific case
->> _is_ ordered in the Arm memory model (and C++ release sequences rely on
->> it iirc), so it's fair to say that Arm CPUs don't permit forwarding from
->> an atomic rmw to an acquire load.
->>
->> Given that, I don't see how this is going to occur in practice.
->>
->> Will
-> 
-> You are probably right. The ARM model's atomic-ordered-before relation
-> 
->       let aob = rmw | [range(rmw)]; lrs; [A | Q]
-> 
-> clearly orders the rmw-store with subsequent acquire loads (lrs = local- 
-> read-successor, A = acquire).
-> If we treat this relation (at least the second part) as a "global 
-> ordering" and extend it by "si" (same-instruction), then the problematic 
-> reordering under MSA should be gone.
-> I quickly ran Dartagnan on the MSA litmus tests with this change to the 
-> ARM model and all the tests still pass.
+> Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 
-Even with this change I still get violations (both safety and 
-termination) for qspinlock with dartagnan.
-
-I think the problem is actually with the Internal visibility axiom, 
-because only making that one stronger seems to remove the violations.
-
-Hernan
-
-> 
-> We should definitely ask ARM about this. I did sent an email to Jade 
-> before writing about this issue here, but she was (and still is) busy 
-> and told me to ask at memory-model@arm.com .
-> I will ask them.
-> 
-> 
-
+Reviewed-by: Breno Leitao <leitao@debian.org>

@@ -1,62 +1,62 @@
-Received: from mail-wr1-f54.google.com (mail-wr1-f54.google.com [209.85.221.54])
+Received: from mail-wm1-f44.google.com (mail-wm1-f44.google.com [209.85.128.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FC172ECE81;
-	Tue, 17 Jun 2025 13:00:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0408C2E2651;
+	Tue, 17 Jun 2025 13:00:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750165217; cv=none; b=Mhez88x0wmpWlo8PKxknggyXs4BpKJ5RQ1O6dHrzHsIKdEoPuRk+390tkXx9jCWIiVcY+/OhykxVuJVkC1DhmEN63PKkzo8PQ4dvH7FT2nxyS9+HPopYf8X7kHknk5vkt9K6oFKvkzz7gqnkrnrjPjyq+B8hKrkgspoEMY2ZatU=
+	t=1750165221; cv=none; b=jrNUPSQp+rGspHAgENZH/jpWSuK9g5NSdHVOSOpo4caIULxT8YpL2Msm+9XZnAtK0IGbuBORhEQ9dCDyTADgkiFr4W6y2fDf0VRrMp74Lfqi4AOkWclBEiOhjr5In4xhjsOwVSwsjLlrh26T83k9PL3ZuOiQZ59haJPzBoWduvM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750165217; c=relaxed/simple;
-	bh=pY/Rn21IGkkLCho6oeyaQyXDQlKMPUPwymU60FIcdug=;
+	s=arc-20240116; t=1750165221; c=relaxed/simple;
+	bh=BGmA/bVMJ9ftGI7TvxXUi+QwAR8gKmoQYzQ5tMnoBp4=;
 	h=From:To:Cc:Subject:In-Reply-To:Date:Message-ID:References:
-	 MIME-Version:Content-Type; b=H0dNGValnmK2HU7rLGMmCJBXtdnfkS/tdo/mPQ93TFiJdVLnh+OLNmlfMRmm9b6L//vYzYew585Gm1hNPDCP0j/ng0WeWDQ1hMfoYQPKaVr2c5OCeag8GfAgRFF2CJiKiA7tCuS1Tbu6HaK7zQGotlZGVgRnWWsrHyePBa5B+64=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=UrPN1gHp; arc=none smtp.client-ip=209.85.221.54
+	 MIME-Version:Content-Type; b=knU5svUtRPIb5aeF4dktoDOhUKW3EaE+/A2kCryX1zrP9NAUZztUF6RUs07cLzMRSM9B9CmRyoxFyBdBbNrv21Mcdw7TqbfQRkzemLtUnISc4KP9SOzkbD+mu0/CYwiR+cme3cL+P9rwjRX6eQ6DGuMMvjMm0pm03aSI1FYs8Mk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=KODCWbnI; arc=none smtp.client-ip=209.85.128.44
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="UrPN1gHp"
-Received: by mail-wr1-f54.google.com with SMTP id ffacd0b85a97d-3a36748920cso6678977f8f.2;
-        Tue, 17 Jun 2025 06:00:15 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KODCWbnI"
+Received: by mail-wm1-f44.google.com with SMTP id 5b1f17b1804b1-451d6ade159so47263115e9.1;
+        Tue, 17 Jun 2025 06:00:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1750165213; x=1750770013; darn=lists.linux.dev;
+        d=gmail.com; s=20230601; t=1750165215; x=1750770015; darn=lists.linux.dev;
         h=mime-version:user-agent:references:message-id:date:in-reply-to
          :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=pY/Rn21IGkkLCho6oeyaQyXDQlKMPUPwymU60FIcdug=;
-        b=UrPN1gHp46fAHmREtGn8aEQmJylLdd5r/CUr1KouZ+YitAlYNmdUL9W68W+SAttNYl
-         IR18TkijHL3qEV78exEJrwn8SbOyAz+DYaPZThMqqpX0zX7CAPCpeA72aA6VsPmz4Dl/
-         QyS7reSZ9opRL2owKaQt0b9wopdqfQqnMTjKAtf+hGOfgubc1xhc3w/AjYOvKS4QfuPh
-         UlGzIIXYHMzjs2ENfoFN3hUketqW9nd0ttZRvZ+6YGUXyHxrSB2Niya8WqSEsfuI7MjN
-         gc99VNu1s4rKMbXdSVVBYJFltKQiRADNG9p1POZz4xeLZiJmPz6ZOK5m1P+/5fgAgU3t
-         MYnQ==
+        bh=BGmA/bVMJ9ftGI7TvxXUi+QwAR8gKmoQYzQ5tMnoBp4=;
+        b=KODCWbnIquni6IB7yGazdQeorvjeqK3PEMHkrAYraaiT+ntwpuZ2LU4fEOnXzrLD7B
+         T+yhQ9bp9d+vtpfovSviYesD/TcDTZ4Bq5CvtlzjVJA76GXP0iYTeJBDdnIoviLM3o29
+         4HrxT2ds5GougbINrIAud2c06FkHpqm66XJbV4TkqwP0hu9U/I6zbqLlpWawNJPcyZZ/
+         xailNuiw6P0L2iei/CERq3cingi5h98+ercFshPESQdsPupFwr95NhBAyig/Okkga95G
+         vcdRriCv5R+JlNsqZWZ3iO/p3Gji6Pny2/Cq9OnXyRi1fn/+x0WTHRH+iTt0IDXwzeB0
+         iYaQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1750165213; x=1750770013;
+        d=1e100.net; s=20230601; t=1750165215; x=1750770015;
         h=mime-version:user-agent:references:message-id:date:in-reply-to
          :subject:cc:to:from:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=pY/Rn21IGkkLCho6oeyaQyXDQlKMPUPwymU60FIcdug=;
-        b=TT+xKdTEk49pNcBHrigw+00kQpmEtV2UOhzb9giu8GHKl7EXQXsufwwBfmqayW2oAH
-         a3kPqHhWIK6S5PMs5OJXau6FWbjtMY6pshYQEQrA4jnN6qbN1Qy4hneY0xLuoNxrHrg8
-         WoCvnj8PO2RbyOx6Ps/ZrmAqH3rLQ4CQ1wxqsGKBROXVAG3f1mE09Hoig1Tm8+0YJbjR
-         0Uo5Qz93CxLo7KkibVVff95YCk0l777/gZOU6XaxmzjD2TN2RDbWoHXwqKLSf9RmHMSB
-         8ypQ7vyxO5JJnfd8vw5fjl1GypkGAMdtripeHAwgbAYZri7WOMN3jqblKzKVkkOzYYNL
-         X5lw==
-X-Forwarded-Encrypted: i=1; AJvYcCUnK+MTxEAL9PnLCrDXKOJ3bpAc9DUh5wz1qmWfJlqobPabnlPYktDTDngzaCBUDwY0R/+0zQ==@lists.linux.dev, AJvYcCXFDxKxRH9gsCFsmT/KYr6Iy6WLmz+YeRDMk690vzWfGtZpJPU9Kxe0xqf5xM5wZSdRFiAJjaqOdlshV+EOJz0jhN9Cug==@lists.linux.dev
-X-Gm-Message-State: AOJu0YzFJUdW5VR9IqdIRazXSy0XxtQqyX00TjZstoHxFpEzkIr4sRKD
-	lswzoio0OH2HJyyMehD3Ln5gJmB3zMkiHR/eFiwJwQKS1tnjmYdXs8JD
-X-Gm-Gg: ASbGncsV/TRLo4m69RmYuT04ls9OgelwXAQh0vi5khQWX15L0Jtzzzeb7o92Ufdb2Tl
-	nCG6EyN2JOVhpWLSvo9Nlrd9Wi9UENXOgKBwEJvCnWR5LTzlbaYYi8tGt8hfGpDiWZUfEJLB7QD
-	L86QTsCWZm4fJv1RW2IW7J9vryKrKJJA7KQbF33H7Aq88G4EHgV+PXTZxZMQ3wht3OXdfNZKf6r
-	gE3Lt0oaJ9tEkQZ3Loy3r1GEINMnmj2ChZ/p8LuxRwWywcvuT5NJKwsGW51dbiApXurshMfcCz/
-	TCdPApKOeTnWr7R9xRAqrcW4O7USBibKpgpHsBf/NXjqe7qtPHOrHzwEkvNMytLv/8UxAOMUTso
-	=
-X-Google-Smtp-Source: AGHT+IEq1lPlDoDfyXuJE4pI16oJ7f1H1YE55AHQrvWa6rEEYagyr3SEracSN4OqrLLHRXfD5li3ZA==
-X-Received: by 2002:a05:6000:4387:b0:3a5:2465:c0a4 with SMTP id ffacd0b85a97d-3a572374adbmr10870066f8f.20.1750165213141;
-        Tue, 17 Jun 2025 06:00:13 -0700 (PDT)
+        bh=BGmA/bVMJ9ftGI7TvxXUi+QwAR8gKmoQYzQ5tMnoBp4=;
+        b=N5NIb7tWbg7px9xKvWupySnEhofiCmL79MiLRLsc8Lb6NJFTKuO6GJTUXfVYt+XDiO
+         6kb5hRlL5lrO1DjclklcnhtRpSe2I79CGouRemj0eJ+ceXni+gXrWKUMwxyHF7sdSYdI
+         1LgjzEozaLXZLzA/7fUrO6VB5NWKmjTohKzdq19uOUeGj7zaaGzutR/hPqrb/Xne6UzU
+         60W0EXvjdnnlldxLe1naLMt+qUs5Yn+2bCaZ1X1Xp7Pvk3Mhirl7JQOEwLZelPRQcVjB
+         4n+fHRTgpnufgOrfOZLF1/OxMCEPweoRmTLeyhNZWmm9IjD+2aBrfW31FLvv6Y6+FRAH
+         KRSA==
+X-Forwarded-Encrypted: i=1; AJvYcCUN7nqXCoROyo4EqpvoY5DbYSsQ+Nj3oEkc7+Xc58JEc+0COuC/cw6r7iJTnhn9lkNtI8Vtv+0MVAWsR6TTVJ37lHmmxg==@lists.linux.dev, AJvYcCXUN4yCr9agBhcbTDIHfgKubwNGw/rkSCf93AQKfIQ0Wi3I9qeKOpDpEY5rvz2paEXDyBPePA==@lists.linux.dev
+X-Gm-Message-State: AOJu0YycHkIBMCYiXsKoCJDoXqEhN+p3IjQlxe9Yfrn3WGYKynDrhyyE
+	4EdvicSjKKj1jXgijBazm7HRQzVEZHf9vladhUQ+5YmABxjTPjXFsEMD
+X-Gm-Gg: ASbGnculhabCT+RSvfPg92KpfXnBuUUdCbKzcU8T8ZhrVMLZPCMh4KlbVjs2ojFZGar
+	XxjrS52ftHWXF5QCjrjad2HsTBkYCb8oaMeMQoUReWOr500f8D1msifID8TGwqK212x/C+nWJab
+	D5GeBxzqwg7KwrfsYxa+ZZqLp5jjRrHM0kjGIoiruLz1EIwLgoQCZXwAHMx3gfZ5XwAALHtigzF
+	eMKq+27l8IqwZa+B9DYq8eHD8D2GaBUqC8pCZSouNEWFDw6fvfJOFzhtUu8bzmMamxxUurv+6Gk
+	HN3gcVeNV5rBs8koWOfv9n0A4O7QASvhFHckLgdTS+MA6jqyvYD/CvrFxnQ44y7OLpdYlw5nAdc
+	6KLrD81NU0A==
+X-Google-Smtp-Source: AGHT+IFdwscoFtKDmQDDxuggxEnGBwA789Okb1t+Dl/aRVj/6eU4eWq9IO95AQuPjQQagJ63A6hoHg==
+X-Received: by 2002:a05:600c:1c12:b0:44b:1f5b:8c85 with SMTP id 5b1f17b1804b1-4533caf5e9fmr139557665e9.13.1750165215199;
+        Tue, 17 Jun 2025 06:00:15 -0700 (PDT)
 Received: from imac ([2a02:8010:60a0:0:8931:baa3:a9ed:4f01])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3a568b47198sm13724617f8f.81.2025.06.17.06.00.11
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4532e169d90sm178458845e9.32.2025.06.17.06.00.13
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 17 Jun 2025 06:00:12 -0700 (PDT)
+        Tue, 17 Jun 2025 06:00:14 -0700 (PDT)
 From: Donald Hunter <donald.hunter@gmail.com>
 To: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 Cc: Linux Doc Mailing List <linux-doc@vger.kernel.org>,  Jonathan Corbet
@@ -69,13 +69,12 @@ Cc: Linux Doc Mailing List <linux-doc@vger.kernel.org>,  Jonathan Corbet
   joel@joelfernandes.org,  linux-kernel-mentees@lists.linux.dev,
   linux-kernel@vger.kernel.org,  lkmm@lists.linux.dev,
   netdev@vger.kernel.org,  peterz@infradead.org,  stern@rowland.harvard.edu
-Subject: Re: [PATCH v5 11/15] docs: use parser_yaml extension to handle
- Netlink specs
-In-Reply-To: <f4eecf1c638c0d98369dd16818d5b175e208d138.1750146719.git.mchehab+huawei@kernel.org>
-Date: Tue, 17 Jun 2025 13:45:27 +0100
-Message-ID: <m2y0tqiljs.fsf@gmail.com>
+Subject: Re: [PATCH v5 12/15] docs: uapi: netlink: update netlink specs link
+In-Reply-To: <33f4626404cc92ee3f3aab481a8d163e9b4a0f6c.1750146719.git.mchehab+huawei@kernel.org>
+Date: Tue, 17 Jun 2025 13:46:16 +0100
+Message-ID: <m2tt4eilif.fsf@gmail.com>
 References: <cover.1750146719.git.mchehab+huawei@kernel.org>
-	<f4eecf1c638c0d98369dd16818d5b175e208d138.1750146719.git.mchehab+huawei@kernel.org>
+	<33f4626404cc92ee3f3aab481a8d163e9b4a0f6c.1750146719.git.mchehab+huawei@kernel.org>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: lkmm@lists.linux.dev
@@ -87,14 +86,16 @@ Content-Type: text/plain
 
 Mauro Carvalho Chehab <mchehab+huawei@kernel.org> writes:
 
-> Instead of manually calling ynl_gen_rst.py, use a Sphinx extension.
-> This way, no .rst files would be written to the Kernel source
-> directories.
+> With the recent parser_yaml extension, and the removal of the
+> auto-generated ReST source files, the location of netlink
+> specs changed.
 >
-> We are using here a toctree with :glob: property. This way, there
-> is no need to touch the netlink/specs/index.rst file every time
-> a new Netlink spec is added/renamed/removed.
+> Update uAPI accordingly.
 >
 > Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+
+nit: seems like this could be part of patch 11
+
+Either way,
 
 Reviewed-by: Donald Hunter <donald.hunter@gmail.com>

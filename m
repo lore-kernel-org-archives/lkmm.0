@@ -1,270 +1,139 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f43.google.com (mail-wr1-f43.google.com [209.85.221.43])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C7EE2E7167;
-	Tue, 17 Jun 2025 13:41:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D34DD2EBDEC
+	for <lkmm@lists.linux.dev>; Tue, 17 Jun 2025 14:10:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750167663; cv=none; b=XXRWyTEjwI1n0CIBpTWBvi8HlkPU9y3ids1VCu5FPsvPqeNH1OaNKxddv1kUlVJ5gz0G9IUfBGJfcxZJcBtB6lje8AgzI+ddL39nLTQ4kUJEx5lCAsb7+k5ddC38yFmQ3uw8UE2cwF0FCUjgj0k11GEhC9NnG+K4r2qjUcyPV6A=
+	t=1750169410; cv=none; b=FfNrYrjVafcLFIPh3BnJLyO5ufmIAyVYP3y2kG8hHfbAW67jnlQhCV+swW2x4ep7dFori6POdsOKZoYbJYXS6PXRT+jhwr437LJCAXcyWen1O9ReMxK9WSyHeiVs2t/duXaFwOkLQxJzzWcO3ygZ8xA1aqsWYwPDiAQdH6T0ASg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750167663; c=relaxed/simple;
-	bh=TAVrs0+mXS1jrVvmD693F7sgF44l4EVASYuCqGNwGlY=;
-	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=p2KBm2oXU0vNYYwBMsAzIUArKadhaUMC4qBIkqi2ra4ffKXSxU68yuwfckgX6B5+XjkFaRrpgjR8S/q+SQRBRrJ0c2YdBPpilTo+BeZjiLwnfty6FYl6t7vH6jM1XV1Lufz0Q3x3+WFRvdb2wG83cNdj6fjYkVuLXyj3Iy5tUio=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=kv0V1RLO; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1750169410; c=relaxed/simple;
+	bh=iyMKWm3mSC0FkjcF0R3622r5I8u9Cp5VpdkuiRTVNH4=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=iQHG+4X0A78y/BGHAEiH2MoNY4cWzSMp7ZM54ejlvtAE+TALjffpMzXeK0eIdLm5p7vqAk//0xYCfapEu1yQgtZnuwVQ1ny1m2aK1+j0ZvJ35w7Rd8r7qk3gW/r5x/j9L94uEKTyPf4DqL2nT8R3NrPcGcFuavKemKlT1E9RRYs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=QR1B7xcF; arc=none smtp.client-ip=209.85.221.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="kv0V1RLO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48355C4CEE3;
-	Tue, 17 Jun 2025 13:40:53 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1750167662;
-	bh=TAVrs0+mXS1jrVvmD693F7sgF44l4EVASYuCqGNwGlY=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-	b=kv0V1RLOE7PNwrVm8b7DOS6QKP21Xew66lc2FHDgE3n0gZMwHEc7qxA3lYu2230ur
-	 9vJRgUoF8WCc0heQ9zZUInPzOTM51a9XujdBV3Xyq9QDMfhW3QPTtg83vlL2Ny/lZO
-	 EDJmkxeI5KEza8b94GHhHe8lG5Xk0hFr78uqPRwV62XA/2K0l6TUs0NJ2c/CWth6tm
-	 WR+xs9dyOk4aDkkcAz0fhL4k6HTXqO9Tz9jD0AzM4WXAcBPmoZwNQM5N/12tfsxjkA
-	 n5R5yG0MRAN9QWx7tI/G/MOkQ8kEkQkMnMIkfrgotBaJ6zqn+kk0WpjJ8YlQ7KlgzI
-	 XQXK1/DaftlAQ==
-Date: Tue, 17 Jun 2025 15:40:49 +0200
-From: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-To: Donald Hunter <donald.hunter@gmail.com>
-Cc: Linux Doc Mailing List <linux-doc@vger.kernel.org>, Jonathan Corbet
- <corbet@lwn.net>, "Akira Yokosawa" <akiyks@gmail.com>, "Breno Leitao"
- <leitao@debian.org>, "David S. Miller" <davem@davemloft.net>, "Eric
- Dumazet" <edumazet@google.com>, "Ignacio Encinas Rubio"
- <ignacio@iencinas.com>, "Jan Stancek" <jstancek@redhat.com>, "Marco Elver"
- <elver@google.com>, "Paolo Abeni" <pabeni@redhat.com>, "Ruben Wauters"
- <rubenru09@aol.com>, "Shuah Khan" <skhan@linuxfoundation.org>,
- joel@joelfernandes.org, linux-kernel-mentees@lists.linux.dev,
- linux-kernel@vger.kernel.org, lkmm@lists.linux.dev, netdev@vger.kernel.org,
- peterz@infradead.org, stern@rowland.harvard.edu
-Subject: Re: [PATCH v5 10/15] docs: sphinx: add a parser for yaml files for
- Netlink specs
-Message-ID: <20250617154049.104ef6ff@sal.lan>
-In-Reply-To: <m27c1ak0k9.fsf@gmail.com>
-References: <cover.1750146719.git.mchehab+huawei@kernel.org>
-	<c407d769c9f47083e8f411c13989522e32262562.1750146719.git.mchehab+huawei@kernel.org>
-	<m27c1ak0k9.fsf@gmail.com>
-X-Mailer: Claws Mail 4.3.1 (GTK 3.24.49; x86_64-redhat-linux-gnu)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QR1B7xcF"
+Received: by mail-wr1-f43.google.com with SMTP id ffacd0b85a97d-3a375e72473so3219400f8f.0
+        for <lkmm@lists.linux.dev>; Tue, 17 Jun 2025 07:10:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1750169407; x=1750774207; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=4yIBACmWgX7l966LbMVSZorYkOqXPTghDqN6AWOfmEo=;
+        b=QR1B7xcFKISdnn+LEwwdnVdTymd6oMSWKaaju/pjdhLR4jfzRM9mwyetgH4YCjrXjc
+         gnfhj7IIOF+aG0tRgL/2+lrNTqe8SGkM1vKNt61U7Ak9LS8UCLiFmy8craOWH/1Lwyiv
+         QVSBJ4t7BdhzmkvnV9vCHoaPEzkjAH4krHFxInMUHil4y5+Xm/KJOXRX4KyTF+drqDG0
+         RtyLHKyt2rUTU/PetT/oL/dulejfmmjkyBMH+m9L9NNTfhcBRWgvC1qnODjoRntWeAto
+         +6KatAOSsAu+uc9nAVJaiAbNaZn8m3huGfuHe33KSxpAzeub/9/Ls/K84SBCSc9pLu/H
+         ExNA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1750169407; x=1750774207;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=4yIBACmWgX7l966LbMVSZorYkOqXPTghDqN6AWOfmEo=;
+        b=FdKyb2YApTQ4Ha3SFIIsG/it1Jq2PqKjYbEfk46A4EjoYWr1z5AEkhPAmClkMYK3jE
+         01UMoAS8ZGoWx1dn1eVc72t1BYW8QvEDjapGCZLvHrH1juI5fUtc235eEEPQreagIITm
+         3wh9bC4aTrmqaTnp6UM2ldT0bjCjzS9UMyVlTrT8NuZiwe5rtXCyx1Vx1aUzp7Tf6Ob4
+         fwAQDRF87YZWa3+KyMYwcncKahOdwkuWjZ4uJTOsOgH5r/YfkNvG1ZVGgytznxmAxO9V
+         LlwzuRHhj9vu1zKU8R2nZC3FlpT3yS3hpkyltsel2Kx9SnU8cjO7e567a0nqQG8CuuOM
+         tZxw==
+X-Forwarded-Encrypted: i=1; AJvYcCXCCCTvvIpIGkS+bN3Wqhw7WIPjLkuo8ggSVMAEnN+DiY4WJBQFgoYWigvYbr6agFhZkBSm@lists.linux.dev
+X-Gm-Message-State: AOJu0YwD4LsY/P6dveF8aqjoAiRaOI6SMQIEmfWL7nPEZ1e7WrbpHIo9
+	1lHwCTwWjoHizUulaMXOOcnBFPRcYM08pkt24i3fPUYM5ZuDneYx9QTH
+X-Gm-Gg: ASbGnctz91uPBLEDftevIzy/rE9/XVl3rhKBZ0MBbyWH/tJbqEoful8iY7bXEEgq3jf
+	LSwAwIh5HfBZtwRe7irrzMKahwOtaZr5zgpIyVbEjkPvRSF06A/XgmmD2ZNPdOaUnfejR/lfQuK
+	8JTs4IKPEVPVxsXe2DIRTKKj3z8YneaX19ZI5w7HFsrizrRKTkPL3AxiZtdmoRNnxbuNMQN2Rep
+	t/YtrTCUegz3M+F1Uu/DakxoQpDvaz+98YmT2RUSxEHdD56nEwV6Zm1VqF6bllkEvbYmJqnfiko
+	YQqyh90Tejp25YVP+WNs4hwsFGtehqzRN7dvj7eYm1wy0C+1/ozpYOSsRKus
+X-Google-Smtp-Source: AGHT+IHhV6aPwQ3z4bGt2UdYrL2Uo5IQ2qap/P3r5HVqRrVdq5gQPZ8PvS+O0eqHB3HO/uSvbblRDA==
+X-Received: by 2002:a05:6000:4024:b0:3a4:edf5:b942 with SMTP id ffacd0b85a97d-3a572e586f1mr11172093f8f.57.1750169406549;
+        Tue, 17 Jun 2025 07:10:06 -0700 (PDT)
+Received: from andrea ([217.201.252.229])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3a577e928f7sm10557923f8f.64.2025.06.17.07.10.02
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 17 Jun 2025 07:10:05 -0700 (PDT)
+Date: Tue, 17 Jun 2025 16:09:57 +0200
+From: Andrea Parri <parri.andrea@gmail.com>
+To: Alan Stern <stern@rowland.harvard.edu>
+Cc: Thomas Haas <t.haas@tu-bs.de>, Peter Zijlstra <peterz@infradead.org>,
+	Will Deacon <will@kernel.org>, Boqun Feng <boqun.feng@gmail.com>,
+	Nicholas Piggin <npiggin@gmail.com>,
+	David Howells <dhowells@redhat.com>,
+	Jade Alglave <j.alglave@ucl.ac.uk>,
+	Luc Maranget <luc.maranget@inria.fr>,
+	"Paul E. McKenney" <paulmck@kernel.org>,
+	Akira Yokosawa <akiyks@gmail.com>,
+	Daniel Lustig <dlustig@nvidia.com>,
+	Joel Fernandes <joelagnelf@nvidia.com>,
+	linux-kernel@vger.kernel.org, linux-arch@vger.kernel.org,
+	lkmm@lists.linux.dev, hernan.poncedeleon@huaweicloud.com,
+	jonas.oberhauser@huaweicloud.com,
+	"r.maseli@tu-bs.de" <r.maseli@tu-bs.de>
+Subject: Re: [RFC] Potential problem in qspinlock due to mixed-size accesses
+Message-ID: <aFF3NSJD6PBMAYGY@andrea>
+References: <cb83e3e4-9e22-4457-bf61-5614cc4396ad@tu-bs.de>
+ <20250613075501.GI2273038@noisy.programming.kicks-ass.net>
+ <aEwHufdehlQnBX7g@andrea>
+ <9264df13-36db-4b25-b2c4-7a9701df2f4d@tu-bs.de>
+ <aE-3_mJPjea62anv@andrea>
+ <357b3147-22e0-4081-a9ac-524b65251d62@rowland.harvard.edu>
 Precedence: bulk
 X-Mailing-List: lkmm@lists.linux.dev
 List-Id: <lkmm.lists.linux.dev>
 List-Subscribe: <mailto:lkmm+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:lkmm+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <357b3147-22e0-4081-a9ac-524b65251d62@rowland.harvard.edu>
 
-Em Tue, 17 Jun 2025 13:35:50 +0100
-Donald Hunter <donald.hunter@gmail.com> escreveu:
+> My question is: Do we have enough general knowledge at this point about 
+> how the various types of hardware handle mixed-size accesses to come up 
+> with a memory model everyone can agree one?
 
-> Mauro Carvalho Chehab <mchehab+huawei@kernel.org> writes:
-> 
-> > Add a simple sphinx.Parser to handle yaml files and add the
-> > the code to handle Netlink specs. All other yaml files are
-> > ignored.
-> >
-> > The code was written in a way that parsing yaml for different
-> > subsystems and even for different parts of Netlink are easy.
-> >
-> > All it takes to have a different parser is to add an
-> > import line similar to:
-> >
-> > 	from netlink_yml_parser import YnlDocGenerator
-> >
-> > adding the corresponding parser somewhere at the extension:
-> >
-> > 	netlink_parser = YnlDocGenerator()
-> >
-> > And then add a logic inside parse() to handle different
-> > doc outputs, depending on the file location, similar to:
-> >
-> >         if "/netlink/specs/" in fname:
-> >             msg = self.netlink_parser.parse_yaml_file(fname)
-> >
-> > Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-> > ---
-> >  Documentation/sphinx/parser_yaml.py | 76 +++++++++++++++++++++++++++++
-> >  1 file changed, 76 insertions(+)
-> >  create mode 100755 Documentation/sphinx/parser_yaml.py
-> >
-> > diff --git a/Documentation/sphinx/parser_yaml.py b/Documentation/sphinx/parser_yaml.py
-> > new file mode 100755
-> > index 000000000000..635945e1c5ba
-> > --- /dev/null
-> > +++ b/Documentation/sphinx/parser_yaml.py
-> > @@ -0,0 +1,76 @@
-> > +"""
-> > +Sphinx extension for processing YAML files
-> > +"""
-> > +
-> > +import os
-> > +import re
-> > +import sys
-> > +
-> > +from pprint import pformat
-> > +
-> > +from docutils.parsers.rst import Parser as RSTParser
-> > +from docutils.statemachine import ViewList
-> > +
-> > +from sphinx.util import logging
-> > +from sphinx.parsers import Parser
-> > +
-> > +srctree = os.path.abspath(os.environ["srctree"])
-> > +sys.path.insert(0, os.path.join(srctree, "tools/net/ynl/pyynl"))
-> > +
-> > +from netlink_yml_parser import YnlDocGenerator        # pylint: disable=C0413
-> > +
-> > +logger = logging.getLogger(__name__)
-> > +
-> > +class YamlParser(Parser):
-> > +    """Custom parser for YAML files."""  
-> 
-> Would be good to say that this is a common YAML parser that calls
-> different subsystems, e.g. how you described it in the commit message.
+You know, I can imagine a conversation along the following line if I
+were to turn this question to certain "hardware people":
 
-Makes sense. Will fix at the next version.
+  [Me/LKMM] People, how do you order such and those MSAs?
+   [RTL/DV] What are Linux's uses and requirements?
 
-> 
-> > +
-> > +    # Need at least two elements on this set  
-> 
-> I think you can drop this comment. It's not that it must be two
-> elements, it's that supported needs to be a list and the python syntax
-> to force parsing as a list would be ('item', )
+that is to say that the work mentioned is probably more "interactive"
+and more dynamic than how your question may suggest.  ;)
 
-Ah, ok.
+Said this, I do like to think that we (LKMM supporters and followers)
+have enough knowledge to approach that effort.  It would require some
+changes to herd7 (and klitmus7), starting from teaching the tools the
+new MSAs syntax and how to generate rf, co and other basic relations
+(while monitoring potential non-MSA regressions).  Non-trivial maybe,
+but seems doable.  Suffice it to say that herd7 can't currently parse
+the following C test, but it can run its "lowerings"/assembly against
+a bunch of hardware models and implementations, including arm64, x86,
+powerpc and riscv!  Any volunteers with ocaml expertise interested in
+contributing to the LKMM?  ;)
 
-> > +    supported = ('yaml', 'yml')
-> > +
-> > +    netlink_parser = YnlDocGenerator()
-> > +
-> > +    def do_parse(self, inputstring, document, msg):  
-> 
-> Maybe a better name for this is parse_rst?
+C C-thomas-haas
 
-Ok.
+{
+u32 x;
+u16 *x_lh = x; // herd7 dialect for "... = &x;"
+}
 
-> 
-> > +        """Parse YAML and generate a document tree."""  
-> 
-> Also update comment.
+P0(u32 *x)
+{
+	WRITE_ONCE(*x, 0x10001);
+}
 
-Ok.
+P1(u16 **x_lh, u32 *x)
+{
+	u16 r0;
+	u32 r1;
 
-> > +
-> > +        self.setup_parse(inputstring, document)
-> > +
-> > +        result = ViewList()
-> > +
-> > +        try:
-> > +            # Parse message with RSTParser
-> > +            for i, line in enumerate(msg.split('\n')):
-> > +                result.append(line, document.current_source, i)  
-> 
-> This has the effect of associating line numbers from the generated ReST
-> with the source .yaml file, right? So errors will be reported against
-> the wrong place in the file. Is there any way to show the cause of the
-> error in the intermediate ReST?
+	r0 = xchg_relaxed(*x_lh, 0x2);
+	r1 = smp_load_acquire(x);
+}
 
-Yes, but this will require modifying the parser. I prefer merging this
-series without such change, and then having a separate changeset
-addressing it.
-
-There are two ways we can do that:
-
-1. The parser can add a ReST comment with the line number. This
-   is what it is done by kerneldoc.py Sphinx extension:
-
-	lineoffset = 0
-	line_regex = re.compile(r"^\.\. LINENO ([0-9]+)$")
-        for line in lines:
-            match = line_regex.search(line)
-            if match:
-                lineoffset = int(match.group(1)) - 1 # sphinx counts lines from 0
-            else:
-                doc = str(env.srcdir) + "/" + env.docname + ":" + str(self.lineno)
-                result.append(line, doc + ": " + filename, lineoffset)
-                lineoffset += 1
-
-   I kept the same way after its conversion to Python, as right now,
-   it supports both a Python class and a command lin command. I may
-   eventually clean it up in the future.
-
-2. making the parser return a tuple. At kernel_abi.py, as the parser
-   returns content from multiple files, such tuple is:
-
-		 (rst_output, filename, line_number)
-
-   and the code for it is (cleaned up):
-
-	for msg, f, ln in kernel_abi.doc(show_file=show_file,
-                                         show_symbols=show_symbols,
-                                         filter_path=abi_type):
-
-            lines = statemachine.string2lines(msg, tab_width,
-                                              convert_whitespace=True)
-
-            for line in lines:
-                content.append(line, f, ln - 1) # sphinx counts lines from 0
-
-(2) is cleaner and faster, but (1) is easier to implement on an 
-already-existing code.
-
-> As an example if I modify tc.yaml like this:
-> 
-> diff --git a/Documentation/netlink/specs/tc.yaml b/Documentation/netlink/specs/tc.yaml
-> index 4cc1f6a45001..c36d86d2dc72 100644
-> --- a/Documentation/netlink/specs/tc.yaml
-> +++ b/Documentation/netlink/specs/tc.yaml
-> @@ -4044,7 +4044,9 @@ operations:
->              - chain
->      -
->        name: getchain
-> -      doc: Get / dump tc chain information.
-> +      doc: |
-> +        Get / dump tc chain information.
-> +        .. bogus-directive:: 
->        attribute-set: attrs
->        fixed-header: tcmsg
->        do:
-> 
-> This is the resuting error which will be really hard to track down:
-> 
-> /home/donaldh/net-next/Documentation/netlink/specs/tc.yaml:216: ERROR: Unexpected indentation. [docutils]
-> 
-> > +
-> > +            rst_parser = RSTParser()
-> > +            rst_parser.parse('\n'.join(result), document)
-> > +
-> > +        except Exception as e:
-> > +            document.reporter.error("YAML parsing error: %s" % pformat(e))
-> > +
-> > +        self.finish_parse()
-> > +
-> > +    # Overrides docutils.parsers.Parser. See sphinx.parsers.RSTParser
-> > +    def parse(self, inputstring, document):
-> > +        """Check if a YAML is meant to be parsed."""
-> > +
-> > +        fname = document.current_source
-> > +
-> > +        # Handle netlink yaml specs
-> > +        if "/netlink/specs/" in fname:
-> > +            msg = self.netlink_parser.parse_yaml_file(fname)
-> > +            self.do_parse(inputstring, document, msg)
-> > +
-> > +        # All other yaml files are ignored
-> > +
-> > +def setup(app):
-> > +    """Setup function for the Sphinx extension."""
-> > +
-> > +    # Add YAML parser
-> > +    app.add_source_parser(YamlParser)
-> > +    app.add_source_suffix('.yaml', 'yaml')
-> > +
-> > +    return {
-> > +        'version': '1.0',
-> > +        'parallel_read_safe': True,
-> > +        'parallel_write_safe': True,
-> > +    }  
+exists (1:r0=0x1 /\ 1:r1=0x2)

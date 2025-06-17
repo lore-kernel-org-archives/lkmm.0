@@ -1,403 +1,193 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from frasgout13.his.huawei.com (frasgout13.his.huawei.com [14.137.139.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7FB328FFF3;
-	Tue, 17 Jun 2025 08:02:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F9471FF60A
+	for <lkmm@lists.linux.dev>; Tue, 17 Jun 2025 08:42:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=14.137.139.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750147352; cv=none; b=YU1APOlE2/K1FJ7XiKSjZMCwbvQX+fdjZABM53hW0bDz6OyEeznNzY6tHP0qayyeFCjtqRhoSJ/1U2bSRVu9NKSequBP9kFP2vSuPLe9yghcyBbz8mcxXE+/4jynQtX7UujE/p9aIDPlT/HHlp7vy26hMA3Jag6tJCbXPTja0qA=
+	t=1750149749; cv=none; b=f6HaFASKw5j8a2aEY6dlO5Qof0IhrFwS2FFqMhUt8o9A0JHYx6/9MkJpX94rj6tsu4Gvx2vVBELD6mandh6BrYrT/U07oUVWT7Oc4A+m8NJ6P/5sZrK9z73XRl0DBdTgm+Fz+YwUfhP5CcIlzB4IY9kRWghVbmimeXoXJ7zEt90=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750147352; c=relaxed/simple;
-	bh=iVC0GdftjUz57Jcaq/naOorp34P65m/H+bbrvm2J+Fc=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TtB2esjLvdCaan8lwejD66MFbsRBIo5zzzsQOow0t+WhAHdDd7F6D5m5rySResYC6Boe3d0nn0iVxOdroSK9HnbGXUZ6+Wcc/ELAmD9OA8AmbRVLbuCBXOi3cFbda2EPdLg/WmVqxrzyzEjZuFEBD/pWL60SxDMsalsRt85I908=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=DSmzQ35B; arc=none smtp.client-ip=10.30.226.201
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="DSmzQ35B"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC52BC4CEF6;
-	Tue, 17 Jun 2025 08:02:31 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1750147352;
-	bh=iVC0GdftjUz57Jcaq/naOorp34P65m/H+bbrvm2J+Fc=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DSmzQ35BS+UYLALCVOZIoFHWI8oWmaK3k+xvWA3aTVCQYnqFgZIgTNsokNjFZOqCr
-	 tXpOGcApTGWDatdqlpLcn7MFTagWI4TgdGTjUYdNdB1FPR79DYRNsIwfNPi5KBhc41
-	 9MoQSX4mngTCnHCEgX2BTuQ9Vzp/K8gqiGq+RD74xer2xcDlmOoGlLqomgxVANxCVd
-	 zOtF5fqIN7OLAQfzF2pCV42/VqtG8U5evo2ltCDOthjXOIe8TGo/6QXqo7J/3aR/eN
-	 ppCTf37XxYr73iI3gVKTj1A+DmUbpWyBLJfniMXQFGRI61yK1qfmB6w6JL912jUmFF
-	 +KIXrqaXBiksQ==
-Received: from mchehab by mail.kernel.org with local (Exim 4.98.2)
-	(envelope-from <mchehab+huawei@kernel.org>)
-	id 1uRRH4-00000001vdN-0X8d;
-	Tue, 17 Jun 2025 10:02:30 +0200
-From: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-To: Linux Doc Mailing List <linux-doc@vger.kernel.org>,
-	Jonathan Corbet <corbet@lwn.net>
-Cc: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
-	"Akira Yokosawa" <akiyks@gmail.com>,
-	"Breno Leitao" <leitao@debian.org>,
-	"David S. Miller" <davem@davemloft.net>,
-	"Donald Hunter" <donald.hunter@gmail.com>,
-	"Eric Dumazet" <edumazet@google.com>,
-	"Ignacio Encinas Rubio" <ignacio@iencinas.com>,
-	"Jan Stancek" <jstancek@redhat.com>,
-	"Marco Elver" <elver@google.com>,
-	"Mauro Carvalho Chehab" <mchehab+huawei@kernel.org>,
-	"Paolo Abeni" <pabeni@redhat.com>,
-	"Ruben Wauters" <rubenru09@aol.com>,
-	"Shuah Khan" <skhan@linuxfoundation.org>,
-	Jakub Kicinski <mchehab+huawei@kernel.org>,
-	Simon Horman <mchehab+huawei@kernel.org>,
-	joel@joelfernandes.org,
-	linux-kernel-mentees@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	lkmm@lists.linux.dev,
-	netdev@vger.kernel.org,
-	peterz@infradead.org,
-	stern@rowland.harvard.edu
-Subject: [PATCH v5 09/15] tools: ynl_gen_rst.py: clanup coding style
-Date: Tue, 17 Jun 2025 10:02:06 +0200
-Message-ID: <b86d44729cc0d3adfdddc607a432f96f06aaf1be.1750146719.git.mchehab+huawei@kernel.org>
-X-Mailer: git-send-email 2.49.0
-In-Reply-To: <cover.1750146719.git.mchehab+huawei@kernel.org>
-References: <cover.1750146719.git.mchehab+huawei@kernel.org>
+	s=arc-20240116; t=1750149749; c=relaxed/simple;
+	bh=Hm0JqR8yAVMLgjw8eiD3fPtltOfp/U5Geg0Bn6eH+GQ=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=N+hN5plC147QGF78bx7YhxAW429jkwtpkgoHSvBunB9pxuKlT0cpd0lhIDOgzaajmKkZ2PFVTQIbTlc42YJtMYUVO2r3v+csRjitTO2wZ1fiZkn4kOvmwQ99lpmj5xAD+9qQD7Arl1KUjaLQtHph9X9zQvdIK3a25wsQZdBudwA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=huaweicloud.com; spf=pass smtp.mailfrom=huaweicloud.com; arc=none smtp.client-ip=14.137.139.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=huaweicloud.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huaweicloud.com
+Received: from mail.maildlp.com (unknown [172.18.186.51])
+	by frasgout13.his.huawei.com (SkyGuard) with ESMTPS id 4bM0hN06mBzpV58
+	for <lkmm@lists.linux.dev>; Tue, 17 Jun 2025 16:41:08 +0800 (CST)
+Received: from mail02.huawei.com (unknown [7.182.16.47])
+	by mail.maildlp.com (Postfix) with ESMTP id 0040E140360
+	for <lkmm@lists.linux.dev>; Tue, 17 Jun 2025 16:42:22 +0800 (CST)
+Received: from [10.48.219.48] (unknown [10.48.219.48])
+	by APP1 (Coremail) with SMTP id LxC2BwDXW0pgKlFoEWzoCQ--.57902S2;
+	Tue, 17 Jun 2025 09:42:22 +0100 (CET)
+Message-ID: <2b11f09d-b938-4a8e-8c3a-c39b6fea2b21@huaweicloud.com>
+Date: Tue, 17 Jun 2025 10:42:04 +0200
 Precedence: bulk
 X-Mailing-List: lkmm@lists.linux.dev
 List-Id: <lkmm.lists.linux.dev>
 List-Subscribe: <mailto:lkmm+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:lkmm+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC] Potential problem in qspinlock due to mixed-size accesses
+To: Thomas Haas <t.haas@tu-bs.de>, Will Deacon <will@kernel.org>,
+ Peter Zijlstra <peterz@infradead.org>
+Cc: Alan Stern <stern@rowland.harvard.edu>,
+ Andrea Parri <parri.andrea@gmail.com>, Boqun Feng <boqun.feng@gmail.com>,
+ Nicholas Piggin <npiggin@gmail.com>, David Howells <dhowells@redhat.com>,
+ Jade Alglave <j.alglave@ucl.ac.uk>, Luc Maranget <luc.maranget@inria.fr>,
+ "Paul E. McKenney" <paulmck@kernel.org>, Akira Yokosawa <akiyks@gmail.com>,
+ Daniel Lustig <dlustig@nvidia.com>, Joel Fernandes <joelagnelf@nvidia.com>,
+ linux-kernel@vger.kernel.org, linux-arch@vger.kernel.org,
+ lkmm@lists.linux.dev, jonas.oberhauser@huaweicloud.com,
+ "r.maseli@tu-bs.de" <r.maseli@tu-bs.de>
+References: <cb83e3e4-9e22-4457-bf61-5614cc4396ad@tu-bs.de>
+ <20250613075501.GI2273038@noisy.programming.kicks-ass.net>
+ <20250616142347.GA17781@willie-the-truck>
+ <d66d0351-b523-40da-ae47-8b06f37bf3b6@tu-bs.de>
+Content-Language: en-US
+From: Hernan Ponce de Leon <hernan.poncedeleon@huaweicloud.com>
+In-Reply-To: <d66d0351-b523-40da-ae47-8b06f37bf3b6@tu-bs.de>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Sender: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+X-CM-TRANSID:LxC2BwDXW0pgKlFoEWzoCQ--.57902S2
+X-Coremail-Antispam: 1UD129KBjvJXoWxuryUJw1UJw1rZr45AF47Arb_yoWruFW8pF
+	WkKa1UKFZ5AF9Yyw1ktw1vgFyFy3yxJ3Z8Xrn5tFyxArnIyFy2vr4aqr1F9FyUurs7JF10
+	vr18t3sxua4UAFJanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+	9KBjDU0xBIdaVrnRJUUUvjb4IE77IF4wAFF20E14v26ryj6rWUM7CY07I20VC2zVCF04k2
+	6cxKx2IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4
+	vEj48ve4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Jr0_JF4l84ACjcxK6xIIjxv20xvEc7Cj
+	xVAFwI0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW8JVWxJwA2z4x0Y4vEx4A2jsIEc7CjxV
+	AFwI0_Gr0_Gr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l5I8CrVACY4xI64kE6c02F40E
+	x7xfMcIj6xIIjxv20xvE14v26r1j6r18McIj6I8E87Iv67AKxVWUJVW8JwAm72CE4IkC6x
+	0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lFIxGxcIEc7CjxVA2Y2ka0xkIwI1lc7CjxVAaw2AF
+	wI0_GFv_Wryl42xK82IYc2Ij64vIr41l4I8I3I0E4IkC6x0Yz7v_Jr0_Gr1lx2IqxVAqx4
+	xG67AKxVWUJVWUGwC20s026x8GjcxK67AKxVWUGVWUWwC2zVAF1VAY17CE14v26r4a6rW5
+	MIIYrxkI7VAKI48JMIIF0xvE2Ix0cI8IcVAFwI0_Jr0_JF4lIxAIcVC0I7IYx2IY6xkF7I
+	0E14v26r4j6F4UMIIF0xvE42xK8VAvwI8IcIk0rVWUJVWUCwCI42IY6I8E87Iv67AKxVWU
+	JVW8JwCI42IY6I8E87Iv6xkF7I0E14v26r4j6r4UJbIYCTnIWIevJa73UjIFyTuYvjxUIa
+	0PDUUUU
+X-CM-SenderInfo: xkhu0tnqos00pfhgvzhhrqqx5xdzvxpfor3voofrz/
 
-Cleanup some coding style issues pointed by pylint and flake8.
+On 6/17/2025 8:19 AM, Thomas Haas wrote:
+> 
+> 
+> On 16.06.25 16:23, Will Deacon wrote:
+>> On Fri, Jun 13, 2025 at 09:55:01AM +0200, Peter Zijlstra wrote:
+>>> On Thu, Jun 12, 2025 at 04:55:28PM +0200, Thomas Haas wrote:
+>>>> We have been taking a look if mixed-size accesses (MSA) can affect the
+>>>> correctness of qspinlock.
+>>>> We are focusing on aarch64 which is the only memory model with MSA 
+>>>> support
+>>>> [1].
+>>>> For this we extended the dartagnan [2] tool to support MSA and now it
+>>>> reports liveness, synchronization, and mutex issues.
+>>>> Notice that we did something similar in the past for LKMM, but we were
+>>>> ignoring MSA [3].
+>>>>
+>>>> The culprit of all these issues is that atomicity of single load
+>>>> instructions is not guaranteed in the presence of smaller-sized stores
+>>>> (observed on real hardware according to [1] and Fig. 21/22)
+>>>> Consider the following pseudo code:
+>>>>
+>>>>      int16 old = xchg16_rlx(&lock, 42);
+>>>>      int32 l = load32_acq(&lock);
+>>>>
+>>>> Then the hardware can treat the code as (likely due to store- 
+>>>> forwarding)
+>>>>
+>>>>      int16 old = xchg16_rlx(&lock, 42);
+>>>>      int16 l1 = load16_acq(&lock);
+>>>>      int16 l2 = load16_acq(&lock + 2); // Assuming byte-precise pointer
+>>>> arithmetic
+>>>>
+>>>> and reorder it to
+>>>>
+>>>>      int16 l2 = load16_acq(&lock + 2);
+>>>>      int16 old = xchg16_rlx(&lock, 42);
+>>>>      int16 l1 = load16_acq(&lock);
+>>>>
+>>>> Now another thread can overwrite "lock" in between the first two 
+>>>> accesses so
+>>>> that the original l (l1 and l2) ends up containing
+>>>> parts of a lock value that is older than what the xchg observed.
+>>>
+>>> Oops :-(
+>>>
+>>> (snip the excellent details)
+>>>
+>>>> ### Solutions
+>>>>
+>>>> The problematic executions rely on the fact that T2 can move half of 
+>>>> its
+>>>> load operation (1) to before the xchg_tail (3).
+>>>> Preventing this reordering solves all issues. Possible solutions are:
+>>>>      - make the xchg_tail full-sized (i.e, also touch lock/pending 
+>>>> bits).
+>>>>        Note that if the kernel is configured with >= 16k cpus, then 
+>>>> the tail
+>>>> becomes larger than 16 bits and needs to be encoded in parts of the 
+>>>> pending
+>>>> byte as well.
+>>>>        In this case, the kernel makes a full-sized (32-bit) access 
+>>>> for the
+>>>> xchg. So the above bugs are only present in the < 16k cpus setting.
+>>>
+>>> Right, but that is the more expensive option for some.
+>>>
+>>>>      - make the xchg_tail an acquire operation.
+>>>>      - make the xchg_tail a release operation (this is an odd 
+>>>> solution by
+>>>> itself but works for aarch64 because it preserves REL->ACQ 
+>>>> ordering). In
+>>>> this case, maybe the preceding "smp_wmb()" can be removed.
+>>>
+>>> I think I prefer this one, it move a barrier, not really adding
+>>> additional overhead. Will?
+>>
+>> I'm half inclined to think that the Arm memory model should be tightened
+>> here; I can raise that with Arm and see what they say.
+>>
+>> Although the cited paper does give examples of store-forwarding from a
+>> narrow store to a wider load, the case in qspinlock is further
+>> constrained by having the store come from an atomic rmw and the load
+>> having acquire semantics. Setting aside the MSA part, that specific case
+>> _is_ ordered in the Arm memory model (and C++ release sequences rely on
+>> it iirc), so it's fair to say that Arm CPUs don't permit forwarding from
+>> an atomic rmw to an acquire load.
+>>
+>> Given that, I don't see how this is going to occur in practice.
+>>
+>> Will
+> 
+> You are probably right. The ARM model's atomic-ordered-before relation
+> 
+>       let aob = rmw | [range(rmw)]; lrs; [A | Q]
+> 
+> clearly orders the rmw-store with subsequent acquire loads (lrs = local- 
+> read-successor, A = acquire).
+> If we treat this relation (at least the second part) as a "global 
+> ordering" and extend it by "si" (same-instruction), then the problematic 
+> reordering under MSA should be gone.
+> I quickly ran Dartagnan on the MSA litmus tests with this change to the 
+> ARM model and all the tests still pass.
 
-No functional changes.
+Even with this change I still get violations (both safety and 
+termination) for qspinlock with dartagnan.
 
-Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
----
- tools/net/ynl/pyynl/netlink_yml_parser.py | 75 ++++++++---------------
- tools/net/ynl/pyynl/ynl_gen_rst.py        |  2 +-
- 2 files changed, 27 insertions(+), 50 deletions(-)
+I think the problem is actually with the Internal visibility axiom, 
+because only making that one stronger seems to remove the violations.
 
-diff --git a/tools/net/ynl/pyynl/netlink_yml_parser.py b/tools/net/ynl/pyynl/netlink_yml_parser.py
-index 839e78b39de3..f71360f0ceb7 100755
---- a/tools/net/ynl/pyynl/netlink_yml_parser.py
-+++ b/tools/net/ynl/pyynl/netlink_yml_parser.py
-@@ -18,17 +18,12 @@
- """
- 
- from typing import Any, Dict, List
--import os.path
--import sys
--import argparse
--import logging
- import yaml
- 
- 
--# ==============
--# RST Formatters
--# ==============
- class RstFormatters:
-+    """RST Formatters"""
-+
-     SPACE_PER_LEVEL = 4
- 
-     @staticmethod
-@@ -36,81 +31,67 @@ class RstFormatters:
-         """Return space to format"""
-         return " " * (level * RstFormatters.SPACE_PER_LEVEL)
- 
--
-     @staticmethod
-     def bold(text: str) -> str:
-         """Format bold text"""
-         return f"**{text}**"
- 
--
-     @staticmethod
-     def inline(text: str) -> str:
-         """Format inline text"""
-         return f"``{text}``"
- 
--
-     @staticmethod
-     def sanitize(text: str) -> str:
-         """Remove newlines and multiple spaces"""
-         # This is useful for some fields that are spread across multiple lines
-         return str(text).replace("\n", " ").strip()
- 
--
-     def rst_fields(self, key: str, value: str, level: int = 0) -> str:
-         """Return a RST formatted field"""
-         return self.headroom(level) + f":{key}: {value}"
- 
--
-     def rst_definition(self, key: str, value: Any, level: int = 0) -> str:
-         """Format a single rst definition"""
-         return self.headroom(level) + key + "\n" + self.headroom(level + 1) + str(value)
- 
--
-     def rst_paragraph(self, paragraph: str, level: int = 0) -> str:
-         """Return a formatted paragraph"""
-         return self.headroom(level) + paragraph
- 
--
-     def rst_bullet(self, item: str, level: int = 0) -> str:
-         """Return a formatted a bullet"""
-         return self.headroom(level) + f"- {item}"
- 
--
-     @staticmethod
-     def rst_subsection(title: str) -> str:
-         """Add a sub-section to the document"""
-         return f"{title}\n" + "-" * len(title)
- 
--
-     @staticmethod
-     def rst_subsubsection(title: str) -> str:
-         """Add a sub-sub-section to the document"""
-         return f"{title}\n" + "~" * len(title)
- 
--
-     @staticmethod
-     def rst_section(namespace: str, prefix: str, title: str) -> str:
-         """Add a section to the document"""
-         return f".. _{namespace}-{prefix}-{title}:\n\n{title}\n" + "=" * len(title)
- 
--
-     @staticmethod
-     def rst_subtitle(title: str) -> str:
-         """Add a subtitle to the document"""
-         return "\n" + "-" * len(title) + f"\n{title}\n" + "-" * len(title) + "\n\n"
- 
--
-     @staticmethod
-     def rst_title(title: str) -> str:
-         """Add a title to the document"""
-         return "=" * len(title) + f"\n{title}\n" + "=" * len(title) + "\n\n"
- 
--
-     def rst_list_inline(self, list_: List[str], level: int = 0) -> str:
-         """Format a list using inlines"""
-         return self.headroom(level) + "[" + ", ".join(self.inline(i) for i in list_) + "]"
- 
--
-     @staticmethod
-     def rst_ref(namespace: str, prefix: str, name: str) -> str:
-         """Add a hyperlink to the document"""
-@@ -119,10 +100,9 @@ class RstFormatters:
-                     'nested-attributes': 'attribute-set',
-                     'struct': 'definition'}
-         if prefix in mappings:
--            prefix = mappings[prefix]
-+            prefix = mappings.get(prefix, "")
-         return f":ref:`{namespace}-{prefix}-{name}`"
- 
--
-     def rst_header(self) -> str:
-         """The headers for all the auto generated RST files"""
-         lines = []
-@@ -132,7 +112,6 @@ class RstFormatters:
- 
-         return "\n".join(lines)
- 
--
-     @staticmethod
-     def rst_toctree(maxdepth: int = 2) -> str:
-         """Generate a toctree RST primitive"""
-@@ -143,16 +122,13 @@ class RstFormatters:
- 
-         return "\n".join(lines)
- 
--
-     @staticmethod
-     def rst_label(title: str) -> str:
-         """Return a formatted label"""
-         return f".. _{title}:\n\n"
- 
--# =======
--# Parsers
--# =======
- class YnlDocGenerator:
-+    """YAML Netlink specs Parser"""
- 
-     fmt = RstFormatters()
- 
-@@ -164,7 +140,6 @@ class YnlDocGenerator:
- 
-         return "\n".join(lines)
- 
--
-     def parse_do(self, do_dict: Dict[str, Any], level: int = 0) -> str:
-         """Parse 'do' section and return a formatted string"""
-         lines = []
-@@ -177,16 +152,16 @@ class YnlDocGenerator:
- 
-         return "\n".join(lines)
- 
--
-     def parse_do_attributes(self, attrs: Dict[str, Any], level: int = 0) -> str:
-         """Parse 'attributes' section"""
-         if "attributes" not in attrs:
-             return ""
--        lines = [self.fmt.rst_fields("attributes", self.fmt.rst_list_inline(attrs["attributes"]), level + 1)]
-+        lines = [self.fmt.rst_fields("attributes",
-+                                     self.fmt.rst_list_inline(attrs["attributes"]),
-+                                     level + 1)]
- 
-         return "\n".join(lines)
- 
--
-     def parse_operations(self, operations: List[Dict[str, Any]], namespace: str) -> str:
-         """Parse operations block"""
-         preprocessed = ["name", "doc", "title", "do", "dump", "flags"]
-@@ -194,7 +169,8 @@ class YnlDocGenerator:
-         lines = []
- 
-         for operation in operations:
--            lines.append(self.fmt.rst_section(namespace, 'operation', operation["name"]))
-+            lines.append(self.fmt.rst_section(namespace, 'operation',
-+                                              operation["name"]))
-             lines.append(self.fmt.rst_paragraph(operation["doc"]) + "\n")
- 
-             for key in operation.keys():
-@@ -206,7 +182,8 @@ class YnlDocGenerator:
-                     value = self.fmt.rst_ref(namespace, key, value)
-                 lines.append(self.fmt.rst_fields(key, value, 0))
-             if 'flags' in operation:
--                lines.append(self.fmt.rst_fields('flags', self.fmt.rst_list_inline(operation['flags'])))
-+                lines.append(self.fmt.rst_fields('flags',
-+                                                 self.fmt.rst_list_inline(operation['flags'])))
- 
-             if "do" in operation:
-                 lines.append(self.fmt.rst_paragraph(":do:", 0))
-@@ -220,7 +197,6 @@ class YnlDocGenerator:
- 
-         return "\n".join(lines)
- 
--
-     def parse_entries(self, entries: List[Dict[str, Any]], level: int) -> str:
-         """Parse a list of entries"""
-         ignored = ["pad"]
-@@ -235,17 +211,19 @@ class YnlDocGenerator:
-                 if type_:
-                     field_name += f" ({self.fmt.inline(type_)})"
-                 lines.append(
--                    self.fmt.rst_fields(field_name, self.fmt.sanitize(entry.get("doc", "")), level)
-+                    self.fmt.rst_fields(field_name,
-+                                        self.fmt.sanitize(entry.get("doc", "")),
-+                                        level)
-                 )
-             elif isinstance(entry, list):
-                 lines.append(self.fmt.rst_list_inline(entry, level))
-             else:
--                lines.append(self.fmt.rst_bullet(self.fmt.inline(self.fmt.sanitize(entry)), level))
-+                lines.append(self.fmt.rst_bullet(self.fmt.inline(self.fmt.sanitize(entry)),
-+                                                 level))
- 
-         lines.append("\n")
-         return "\n".join(lines)
- 
--
-     def parse_definitions(self, defs: Dict[str, Any], namespace: str) -> str:
-         """Parse definitions section"""
-         preprocessed = ["name", "entries", "members"]
-@@ -270,7 +248,6 @@ class YnlDocGenerator:
- 
-         return "\n".join(lines)
- 
--
-     def parse_attr_sets(self, entries: List[Dict[str, Any]], namespace: str) -> str:
-         """Parse attribute from attribute-set"""
-         preprocessed = ["name", "type"]
-@@ -279,7 +256,8 @@ class YnlDocGenerator:
-         lines = []
- 
-         for entry in entries:
--            lines.append(self.fmt.rst_section(namespace, 'attribute-set', entry["name"]))
-+            lines.append(self.fmt.rst_section(namespace, 'attribute-set',
-+                                              entry["name"]))
-             for attr in entry["attributes"]:
-                 type_ = attr.get("type")
-                 attr_line = attr["name"]
-@@ -301,13 +279,13 @@ class YnlDocGenerator:
- 
-         return "\n".join(lines)
- 
--
-     def parse_sub_messages(self, entries: List[Dict[str, Any]], namespace: str) -> str:
-         """Parse sub-message definitions"""
-         lines = []
- 
-         for entry in entries:
--            lines.append(self.fmt.rst_section(namespace, 'sub-message', entry["name"]))
-+            lines.append(self.fmt.rst_section(namespace, 'sub-message',
-+                                              entry["name"]))
-             for fmt in entry["formats"]:
-                 value = fmt["value"]
- 
-@@ -315,13 +293,14 @@ class YnlDocGenerator:
-                 for attr in ['fixed-header', 'attribute-set']:
-                     if attr in fmt:
-                         lines.append(self.fmt.rst_fields(attr,
--                                                self.fmt.rst_ref(namespace, attr, fmt[attr]),
--                                                1))
-+                                                         self.fmt.rst_ref(namespace,
-+                                                                          attr,
-+                                                                          fmt[attr]),
-+                                                         1))
-                 lines.append("\n")
- 
-         return "\n".join(lines)
- 
--
-     def parse_yaml(self, obj: Dict[str, Any]) -> str:
-         """Format the whole YAML into a RST string"""
-         lines = []
-@@ -344,7 +323,8 @@ class YnlDocGenerator:
-         # Operations
-         if "operations" in obj:
-             lines.append(self.fmt.rst_subtitle("Operations"))
--            lines.append(self.parse_operations(obj["operations"]["list"], family))
-+            lines.append(self.parse_operations(obj["operations"]["list"],
-+                                               family))
- 
-         # Multicast groups
-         if "mcast-groups" in obj:
-@@ -368,11 +348,9 @@ class YnlDocGenerator:
- 
-         return "\n".join(lines)
- 
--
-     # Main functions
-     # ==============
- 
--
-     def parse_yaml_file(self, filename: str) -> str:
-         """Transform the YAML specified by filename into an RST-formatted string"""
-         with open(filename, "r", encoding="utf-8") as spec_file:
-@@ -381,7 +359,6 @@ class YnlDocGenerator:
- 
-         return content
- 
--
-     def generate_main_index_rst(self, output: str, index_dir: str) -> None:
-         """Generate the `networking_spec/index` content and write to the file"""
-         lines = []
-diff --git a/tools/net/ynl/pyynl/ynl_gen_rst.py b/tools/net/ynl/pyynl/ynl_gen_rst.py
-index 624b0960476e..5d29ce01c60c 100755
---- a/tools/net/ynl/pyynl/ynl_gen_rst.py
-+++ b/tools/net/ynl/pyynl/ynl_gen_rst.py
-@@ -23,7 +23,7 @@ SRC_DIR = os.path.dirname(os.path.realpath(__file__))
- 
- sys.path.insert(0, os.path.join(SRC_DIR, LIB_DIR))
- 
--from netlink_yml_parser import YnlDocGenerator
-+from netlink_yml_parser import YnlDocGenerator        # pylint: disable=C0413
- 
- 
- def parse_arguments() -> argparse.Namespace:
--- 
-2.49.0
+Hernan
+
+> 
+> We should definitely ask ARM about this. I did sent an email to Jade 
+> before writing about this issue here, but she was (and still is) busy 
+> and told me to ask at memory-model@arm.com .
+> I will ask them.
+> 
+> 
 

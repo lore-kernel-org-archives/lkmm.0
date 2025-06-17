@@ -1,251 +1,154 @@
-Received: from mail-ot1-f49.google.com (mail-ot1-f49.google.com [209.85.210.49])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from frasgout13.his.huawei.com (frasgout13.his.huawei.com [14.137.139.46])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09BBA2376E6;
-	Tue, 17 Jun 2025 17:23:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E87F72EAB84
+	for <lkmm@lists.linux.dev>; Tue, 17 Jun 2025 19:00:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=14.137.139.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750181016; cv=none; b=AyvwhN+EFqqhIdLoPlnUun4rJ+Vkb1EZqESSn9a0KVTV7e7W92vx2NYXwsXfsCMBhGfGBtBQReX2+kML5qxgB59zQ0me4Enae4hWHW/rdWxH4Iay1AeHtfxpk21D00jJMxPwZgE7VnNfaYtsPY6OzktnTAtunyYl0twg5dM75jI=
+	t=1750186855; cv=none; b=pSshOnBNamQTKhAcBkXP92XnUVz+IeW5qkRC3VGWYqZcyB8vOl+q+/lmqhGaYzFURnKneWZ7xXfVi4E0MlQChhHl+oiFSg4eezxfHVXAolXUUDmqhXdKFF1CsDr31t3262XjPG9TRnKqPFYsSeYXSjHe38Ox9QZ3reWb9qGORTE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750181016; c=relaxed/simple;
-	bh=Hrcbm7dR2at0MkRPfeNTjwQ82G1ZwMmIaW0GWSsNuu4=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=uqB0VHuxEDkxAZA/kwnusmEUg9qNhc3tbw9NV4zOV9S4tBSZ7FPcEYnTv5fbvRLuyYWjwn2epmhOL73ttIgTKbPDEs6gVLv5gTTfFkQ1ZAw7G3pWVfOephFZ1gYT0owUeVrwk7yoXFws9mtzgVMdS+BDv1wzfqtKcfi6IWBCojs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=C6jiKTMG; arc=none smtp.client-ip=209.85.210.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="C6jiKTMG"
-Received: by mail-ot1-f49.google.com with SMTP id 46e09a7af769-735a8be4ea9so1404608a34.0;
-        Tue, 17 Jun 2025 10:23:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1750181014; x=1750785814; darn=lists.linux.dev;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=Ej9TAlXzgN0LHQcsnKzmV9b6lBqh4sRH5fw58an3btI=;
-        b=C6jiKTMGqP7ylqxpG3+Cd9eLTGp4sHrTv0030E8h370vyj2CX5OdmTqZ6hlGga1t/O
-         ZMD4iaV/CzVbJfS0AQfGhWUXFtLrnW6vaVC1t/Ozo9zrY/iEj/7Aw341RHqaLjws/e9m
-         hVj0H78+XMHqk0lX0BiIJmYk8axog49/XiJcKLEpXVz8mx+eA3AbEjx/C2Y/ETfpn10M
-         5+OH+X5aA5WVsI1G8BGio3E2U5mdwd+UFf8iDrsV3nq/L2xdp4HAqCPa8bM7+FxyLR6c
-         GrRrlpWkXB7+xO2q5hDZRCXoFWkNM1qDgeqvUq92FRIzfHveZuAX89qDIUxMkByECU1R
-         L51Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1750181014; x=1750785814;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=Ej9TAlXzgN0LHQcsnKzmV9b6lBqh4sRH5fw58an3btI=;
-        b=La1/bzPOXKqt0QGjomkfnij2ThOmAMIMJS71yKTC65UYYU3GPoneCBPHsGNueIpVVG
-         gqdjvmSyh5yQ7z2u5MwRT2GCoUEI6h+KBbctxGZYondoQlDXKJA0o56KiU+/4DROY1JJ
-         royuZR/PyNfweqbxP5GMHBBvmKYkpvYk0O9v7e+TFf9wkz2fo15YqS0N85YeKXW6nuyN
-         NDbWTF/czxqRvgjrKy8BRUu4B4sWenFTiFlnjqqaWdqC++TjrDMNIq8uoeQfA4aNWaMv
-         SWe462W1gTAdWmQharv7Vi3E8fybDFVMr/a5j1krz1ahYYPIej/7VX4K3bL7pmitUH4h
-         qaPw==
-X-Forwarded-Encrypted: i=1; AJvYcCUH0M4h52n0tmwU6/hYoFZNKrdVhxU1mOfRTdv07nIaTRVwfMz2V4Fl0bKz8eUQYAbkJYs9rw==@lists.linux.dev, AJvYcCWECULbax1QeM2Uy+1XR8vxeXupNA4iS7hfHKguY9kzwFXbFzaXneO4Zuhjx9vkHeI3p4a9bEojZOVrewguAHH3WOiIgg==@lists.linux.dev
-X-Gm-Message-State: AOJu0YyEO31oK9VKMKIyFlR6223XW+9tK6+MhaesyQj1/ZoQXXdNwH9R
-	RTE1WqELzAfdNPRvEfdR/90dqXajhRyOlJrSvvBSEt/jNemDwiIuNtKzl/6B1GKZ8hQJKxt//1d
-	v9qtFJ2Msv4rwD7ZDnD8VAYX7sDLvzv8=
-X-Gm-Gg: ASbGncvhpzVwrjS/+9kBugMw5DHfvFc7xCDpIxjFDeb3T+Q3Ts+9w0bUplNvlYL/mfJ
-	6h3pnpt91sCvGZac6e7wUGYH8b3L8bCVwO7P4z/95jh0J3pv2s7buskUL9PX4o3FAD2Nnc8JU5B
-	M5x6V4OMXyzD4XlZ5QYzM3PjLzKTHoYCt3r2TIbWPOakKbl3RowKLW9c4KRt/VfUUYjo3u0CT4f
-	A==
-X-Google-Smtp-Source: AGHT+IGHKF0IR41tdCiQQ/QwZTYP3zh1WNnW6OvBJ5ZDaIV3FvSbKqv8iszY6CxnH5G025ZAAXULy+HPrKZVqCHkgAU=
-X-Received: by 2002:a05:6871:e785:b0:2e8:7953:ece7 with SMTP id
- 586e51a60fabf-2eaf08390ecmr8933677fac.24.1750181013728; Tue, 17 Jun 2025
- 10:23:33 -0700 (PDT)
+	s=arc-20240116; t=1750186855; c=relaxed/simple;
+	bh=WUqBtBN4algVDh0/7LhKoZcj1pnT1CAk4lKolOpeYck=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=gsX+dK+zUOrnJ16bLktWSKLeJ9Spux9p5Bh4erKTnd9TNX9tQp9njxd9jVt8EB7n5c9oS6U0jvQzFhTLIXHcqrd7qOreM5QBc6n9AtKCdtJD4jFKsSlnPV58s55mDrJISWwW7N1pkQL6qjk8U0MJLYioTh3OfgcSiKlueCOtmMM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=huaweicloud.com; spf=pass smtp.mailfrom=huaweicloud.com; arc=none smtp.client-ip=14.137.139.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=huaweicloud.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huaweicloud.com
+Received: from mail.maildlp.com (unknown [172.18.186.51])
+	by frasgout13.his.huawei.com (SkyGuard) with ESMTPS id 4bMGPs5cGVzpV8B
+	for <lkmm@lists.linux.dev>; Wed, 18 Jun 2025 02:59:29 +0800 (CST)
+Received: from mail02.huawei.com (unknown [7.182.16.27])
+	by mail.maildlp.com (Postfix) with ESMTP id 45B5D1403D5
+	for <lkmm@lists.linux.dev>; Wed, 18 Jun 2025 03:00:45 +0800 (CST)
+Received: from [10.48.210.222] (unknown [10.48.210.222])
+	by APP2 (Coremail) with SMTP id GxC2BwCnEONQu1FouD7hCQ--.7597S2;
+	Tue, 17 Jun 2025 20:00:44 +0100 (CET)
+Message-ID: <218abf15-b4ed-4d13-9541-aab975bd3835@huaweicloud.com>
+Date: Tue, 17 Jun 2025 21:00:30 +0200
 Precedence: bulk
 X-Mailing-List: lkmm@lists.linux.dev
 List-Id: <lkmm.lists.linux.dev>
 List-Subscribe: <mailto:lkmm+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:lkmm+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <cover.1750146719.git.mchehab+huawei@kernel.org>
- <c407d769c9f47083e8f411c13989522e32262562.1750146719.git.mchehab+huawei@kernel.org>
- <m27c1ak0k9.fsf@gmail.com> <20250617154049.104ef6ff@sal.lan> <20250617180001.46931ba9@sal.lan>
-In-Reply-To: <20250617180001.46931ba9@sal.lan>
-From: Donald Hunter <donald.hunter@gmail.com>
-Date: Tue, 17 Jun 2025 18:23:22 +0100
-X-Gm-Features: Ac12FXxjYAQl11Cjy04pJrUUVKxkLrmxF1LVKWdXWiav8_AOc6p_ww281gT6_58
-Message-ID: <CAD4GDZzWMoxnatNXYbKOphzVZ4NyedD5FtjxF7cgB1ad-wDFWg@mail.gmail.com>
-Subject: Re: [PATCH v5 10/15] docs: sphinx: add a parser for yaml files for
- Netlink specs
-To: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-Cc: Linux Doc Mailing List <linux-doc@vger.kernel.org>, Jonathan Corbet <corbet@lwn.net>, 
-	Akira Yokosawa <akiyks@gmail.com>, Breno Leitao <leitao@debian.org>, 
-	"David S. Miller" <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>, 
-	Ignacio Encinas Rubio <ignacio@iencinas.com>, Jan Stancek <jstancek@redhat.com>, 
-	Marco Elver <elver@google.com>, Paolo Abeni <pabeni@redhat.com>, Ruben Wauters <rubenru09@aol.com>, 
-	Shuah Khan <skhan@linuxfoundation.org>, joel@joelfernandes.org, 
-	linux-kernel-mentees@lists.linux.dev, linux-kernel@vger.kernel.org, 
-	lkmm@lists.linux.dev, netdev@vger.kernel.org, peterz@infradead.org, 
-	stern@rowland.harvard.edu
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC] Potential problem in qspinlock due to mixed-size accesses
+To: Thomas Haas <t.haas@tu-bs.de>, Will Deacon <will@kernel.org>
+Cc: Peter Zijlstra <peterz@infradead.org>,
+ Alan Stern <stern@rowland.harvard.edu>, Andrea Parri
+ <parri.andrea@gmail.com>, Boqun Feng <boqun.feng@gmail.com>,
+ Nicholas Piggin <npiggin@gmail.com>, David Howells <dhowells@redhat.com>,
+ Jade Alglave <j.alglave@ucl.ac.uk>, Luc Maranget <luc.maranget@inria.fr>,
+ "Paul E. McKenney" <paulmck@kernel.org>, Akira Yokosawa <akiyks@gmail.com>,
+ Daniel Lustig <dlustig@nvidia.com>, Joel Fernandes <joelagnelf@nvidia.com>,
+ linux-kernel@vger.kernel.org, linux-arch@vger.kernel.org,
+ lkmm@lists.linux.dev, jonas.oberhauser@huaweicloud.com,
+ "r.maseli@tu-bs.de" <r.maseli@tu-bs.de>
+References: <cb83e3e4-9e22-4457-bf61-5614cc4396ad@tu-bs.de>
+ <20250613075501.GI2273038@noisy.programming.kicks-ass.net>
+ <20250616142347.GA17781@willie-the-truck>
+ <d66d0351-b523-40da-ae47-8b06f37bf3b6@tu-bs.de>
+ <2b11f09d-b938-4a8e-8c3a-c39b6fea2b21@huaweicloud.com>
+ <20250617141704.GB19021@willie-the-truck>
+ <7a20b873-3c26-4a52-b118-c816ede7298d@tu-bs.de>
+Content-Language: en-US
+From: Hernan Ponce de Leon <hernan.poncedeleon@huaweicloud.com>
+In-Reply-To: <7a20b873-3c26-4a52-b118-c816ede7298d@tu-bs.de>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID:GxC2BwCnEONQu1FouD7hCQ--.7597S2
+X-Coremail-Antispam: 1UD129KBjvJXoWxZw47KFy3Aw18ArWrZFWkWFg_yoW5Cr1DpF
+	WrKan8KF4DJF1rGr17tw48XFy5tF1rtFs0qrn8Jr1xAwn09F1Ivr4avF4j9FyUZrs2g34j
+	vryjqa43uFyqya7anT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+	9KBjDU0xBIdaVrnRJUUUvjb4IE77IF4wAFF20E14v26ryj6rWUM7CY07I20VC2zVCF04k2
+	6cxKx2IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4
+	vEj48ve4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Jr0_JF4l84ACjcxK6xIIjxv20xvEc7Cj
+	xVAFwI0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW8JVWxJwA2z4x0Y4vEx4A2jsIEc7CjxV
+	AFwI0_Gr0_Gr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l5I8CrVACY4xI64kE6c02F40E
+	x7xfMcIj6xIIjxv20xvE14v26r1j6r18McIj6I8E87Iv67AKxVWUJVW8JwAm72CE4IkC6x
+	0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lFIxGxcIEc7CjxVA2Y2ka0xkIwI1lc7CjxVAaw2AF
+	wI0_GFv_Wryl42xK82IYc2Ij64vIr41l4I8I3I0E4IkC6x0Yz7v_Jr0_Gr1lx2IqxVAqx4
+	xG67AKxVWUJVWUGwC20s026x8GjcxK67AKxVWUGVWUWwC2zVAF1VAY17CE14v26r4a6rW5
+	MIIYrxkI7VAKI48JMIIF0xvE2Ix0cI8IcVAFwI0_Jr0_JF4lIxAIcVC0I7IYx2IY6xkF7I
+	0E14v26r4j6F4UMIIF0xvE42xK8VAvwI8IcIk0rVWUJVWUCwCI42IY6I8E87Iv67AKxVWU
+	JVW8JwCI42IY6I8E87Iv6xkF7I0E14v26r4j6r4UJbIYCTnIWIevJa73UjIFyTuYvjxUIa
+	0PDUUUU
+X-CM-SenderInfo: xkhu0tnqos00pfhgvzhhrqqx5xdzvxpfor3voofrz/
 
-On Tue, 17 Jun 2025 at 17:00, Mauro Carvalho Chehab
-<mchehab+huawei@kernel.org> wrote:
-> >
-> > (2) is cleaner and faster, but (1) is easier to implement on an
-> > already-existing code.
->
-> The logic below implements (1). This seems to be the easiest way for
-> pyyaml. I will submit as 2 separate patches at the end of the next
-> version.
->
-> Please notice that I didn't check yet for the "quality" of the
-> line numbers. Some tweaks could be needed later on.
+On 6/17/2025 4:23 PM, Thomas Haas wrote:
+> 
+> 
+> On 17.06.25 16:17, Will Deacon wrote:
+>> On Tue, Jun 17, 2025 at 10:42:04AM +0200, Hernan Ponce de Leon wrote:
+>>> On 6/17/2025 8:19 AM, Thomas Haas wrote:
+>>>> On 16.06.25 16:23, Will Deacon wrote:
+>>>>> I'm half inclined to think that the Arm memory model should be 
+>>>>> tightened
+>>>>> here; I can raise that with Arm and see what they say.
+>>>>>
+>>>>> Although the cited paper does give examples of store-forwarding from a
+>>>>> narrow store to a wider load, the case in qspinlock is further
+>>>>> constrained by having the store come from an atomic rmw and the load
+>>>>> having acquire semantics. Setting aside the MSA part, that specific 
+>>>>> case
+>>>>> _is_ ordered in the Arm memory model (and C++ release sequences 
+>>>>> rely on
+>>>>> it iirc), so it's fair to say that Arm CPUs don't permit forwarding 
+>>>>> from
+>>>>> an atomic rmw to an acquire load.
+>>>>>
+>>>>> Given that, I don't see how this is going to occur in practice.
+>>>>
+>>>> You are probably right. The ARM model's atomic-ordered-before relation
+>>>>
+>>>>        let aob = rmw | [range(rmw)]; lrs; [A | Q]
+>>>>
+>>>> clearly orders the rmw-store with subsequent acquire loads (lrs = 
+>>>> local-
+>>>> read-successor, A = acquire).
+>>>> If we treat this relation (at least the second part) as a "global
+>>>> ordering" and extend it by "si" (same-instruction), then the 
+>>>> problematic
+>>>> reordering under MSA should be gone.
+>>>> I quickly ran Dartagnan on the MSA litmus tests with this change to the
+>>>> ARM model and all the tests still pass.
+>>>
+>>> Even with this change I still get violations (both safety and 
+>>> termination)
+>>> for qspinlock with dartagnan.
+>>
+>> Please can you be more specific about the problems you see?
+> 
+> I talked to Hernán personally and it turned out that he used the generic 
+> implementation of smp_cond_acquire (not sure if the name is correct) 
+> which uses a relaxed load followed by a barrier. In that case, replacing 
+> aob by aob;si does not change anything.
+> Indeed, even in the reported problem we used the generic implementation 
+> (I was unaware of this), though it is easy to check that changing the 
+> relaxed load to acquire does not give sufficient orderings.
 
-Thanks for working on this. I suppose we might be able to work on an
-evolution from (1) to (2) in a followup piece of work?
+Yes, my bad. I was using the generic header rather than the aarch64 
+specific one and then the changes to the model were having not effect 
+(as they should).
 
-> Regards,
-> Mauro
->
-> ---
->
-> From 750daebebadcd156b5fe9b516f4fae4bd42b9d2c Mon Sep 17 00:00:00 2001
-> From: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-> Date: Tue, 17 Jun 2025 17:54:03 +0200
-> Subject: [PATCH] docs: parser_yaml.py: add support for line numbers from the
->  parser
->
-> Instead of printing line numbers from the temp converted ReST
-> file, get them from the original source.
->
-> Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
->
-> diff --git a/Documentation/sphinx/parser_yaml.py b/Documentation/sphinx/parser_yaml.py
-> index 635945e1c5ba..15c642fc0bd5 100755
-> --- a/Documentation/sphinx/parser_yaml.py
-> +++ b/Documentation/sphinx/parser_yaml.py
-> @@ -29,6 +29,8 @@ class YamlParser(Parser):
->
->      netlink_parser = YnlDocGenerator()
->
-> +    re_lineno = re.compile(r"\.\. LINENO ([0-9]+)$")
-> +
->      def do_parse(self, inputstring, document, msg):
->          """Parse YAML and generate a document tree."""
->
-> @@ -38,8 +40,14 @@ class YamlParser(Parser):
->
->          try:
->              # Parse message with RSTParser
-> -            for i, line in enumerate(msg.split('\n')):
-> -                result.append(line, document.current_source, i)
-> +            lineoffset = 0;
-> +            for line in msg.split('\n'):
-> +                match = self.re_lineno.match(line)
-> +                if match:
-> +                    lineoffset = int(match.group(1))
-> +                    continue
-> +
-> +                result.append(line, document.current_source, lineoffset)
->
->              rst_parser = RSTParser()
->              rst_parser.parse('\n'.join(result), document)
->
-> From 15c1f9db30f3abdce110e19788d87f9fe1417781 Mon Sep 17 00:00:00 2001
-> From: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-> Date: Tue, 17 Jun 2025 17:28:04 +0200
-> Subject: [PATCH] tools: netlink_yml_parser.py: add line numbers to parsed data
->
-> When something goes wrong, we want Sphinx error to point to the
-> right line number from the original source, not from the
-> processed ReST data.
->
-> Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
->
-> diff --git a/tools/net/ynl/pyynl/netlink_yml_parser.py b/tools/net/ynl/pyynl/netlink_yml_parser.py
-> index 866551726723..a9d8ab6f2639 100755
-> --- a/tools/net/ynl/pyynl/netlink_yml_parser.py
-> +++ b/tools/net/ynl/pyynl/netlink_yml_parser.py
-> @@ -20,6 +20,16 @@
->  from typing import Any, Dict, List
->  import yaml
->
-> +LINE_STR = '__lineno__'
-> +
-> +class NumberedSafeLoader(yaml.SafeLoader):
-> +    """Override the SafeLoader class to add line number to parsed data"""
-> +
-> +    def construct_mapping(self, node):
-> +        mapping = super().construct_mapping(node)
-> +        mapping[LINE_STR] = node.start_mark.line
-> +
-> +        return mapping
->
->  class RstFormatters:
->      """RST Formatters"""
-> @@ -127,6 +137,11 @@ class RstFormatters:
->          """Return a formatted label"""
->          return f".. _{title}:\n\n"
->
-> +    @staticmethod
-> +    def rst_lineno(lineno: int) -> str:
-> +        """Return a lineno comment"""
-> +        return f".. LINENO {lineno}\n"
-> +
->  class YnlDocGenerator:
->      """YAML Netlink specs Parser"""
->
-> @@ -144,6 +159,9 @@ class YnlDocGenerator:
->          """Parse 'do' section and return a formatted string"""
->          lines = []
->          for key in do_dict.keys():
-> +            if key == LINE_STR:
-> +                lines.append(self.fmt.rst_lineno(do_dict[key]))
-> +                continue
->              lines.append(self.fmt.rst_paragraph(self.fmt.bold(key), level + 1))
->              if key in ['request', 'reply']:
->                  lines.append(self.parse_do_attributes(do_dict[key], level + 1) + "\n")
-> @@ -174,6 +192,10 @@ class YnlDocGenerator:
->              lines.append(self.fmt.rst_paragraph(operation["doc"]) + "\n")
->
->              for key in operation.keys():
-> +                if key == LINE_STR:
-> +                    lines.append(self.fmt.rst_lineno(operation[key]))
-> +                    continue
-> +
->                  if key in preprocessed:
->                      # Skip the special fields
->                      continue
-> @@ -233,6 +255,9 @@ class YnlDocGenerator:
->          for definition in defs:
->              lines.append(self.fmt.rst_section(namespace, 'definition', definition["name"]))
->              for k in definition.keys():
-> +                if k == LINE_STR:
-> +                    lines.append(self.fmt.rst_lineno(definition[k]))
-> +                    continue
->                  if k in preprocessed + ignored:
->                      continue
->                  lines.append(self.fmt.rst_fields(k, self.fmt.sanitize(definition[k]), 0))
-> @@ -268,6 +293,9 @@ class YnlDocGenerator:
->                  lines.append(self.fmt.rst_subsubsection(attr_line))
->
->                  for k in attr.keys():
-> +                    if k == LINE_STR:
-> +                        lines.append(self.fmt.rst_lineno(attr[k]))
-> +                        continue
->                      if k in preprocessed + ignored:
->                          continue
->                      if k in linkable:
-> @@ -306,6 +334,8 @@ class YnlDocGenerator:
->          lines = []
->
->          # Main header
-> +        lineno = obj.get('__lineno__', 0)
-> +        lines.append(self.fmt.rst_lineno(lineno))
->
->          family = obj['name']
->
-> @@ -354,7 +384,7 @@ class YnlDocGenerator:
->      def parse_yaml_file(self, filename: str) -> str:
->          """Transform the YAML specified by filename into an RST-formatted string"""
->          with open(filename, "r", encoding="utf-8") as spec_file:
-> -            yaml_data = yaml.safe_load(spec_file)
-> -            content = self.parse_yaml(yaml_data)
-> +            numbered_yaml = yaml.load(spec_file, Loader=NumberedSafeLoader)
-> +            content = self.parse_yaml(numbered_yaml)
->
->          return content
->
+Now I am using the aarch64 specific ones and I can confirm dartagnan 
+still reports the violations with the current model and making the 
+change proposed by Thomas (adding ;si just to the second part seems to 
+be enough) indeed removes all violations.
+
+Hernan
+
+> 
+>>
+>>> I think the problem is actually with the Internal visibility axiom, 
+>>> because
+>>> only making that one stronger seems to remove the violations.
+>>
+>> That sounds surprising to me, as there's nothing particularly weird about
+>> Arm's coherence requirements when compared to other architectures, as far
+>> as I'm aware.
+>>
+> 
+> I agree. The internal visibility axiom is not the issue I think.
+> 
+

@@ -1,54 +1,51 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F03AC214814;
-	Wed, 18 Jun 2025 08:21:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A32B92BDC28;
+	Wed, 18 Jun 2025 11:45:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750234873; cv=none; b=E/jTnzzbieG2QqC2OoPEskDoiTIYlRleJ+/GtnXFJPgQtCxw7xR4l7lromXdjNCpBNZkrKNWQeP6sbiXof77Q2IYqMptp5PeJh3hDJ/v5dxjopv+rhv3vI20OlaWMkxFKBHquahZiz+fACJPZ2n5HBKCRmksNVIJiqxS+3KDdtk=
+	t=1750247106; cv=none; b=H2/ZT3ZfCvkPk3ltVEhjIn1e1lCkCGAlfJlO65NVxMKJa+7LAp0DKNTZO2SWZBum92Rfde3YSo6toLBAKlM/S7XS94CmMxFhmz3n/+gAc5/rjSz6yT2bI5XTO5MFrG1Wlpgx0wd3qGo9uF7kQaCfGglk1GtoSa0hFuknRYIOlrE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750234873; c=relaxed/simple;
-	bh=2jmRDv6D0zcNdU19DqnV2thTGn3pGjWksLXvn5+PggA=;
+	s=arc-20240116; t=1750247106; c=relaxed/simple;
+	bh=4DxwVQzbl8QL94anK1H5LVZzfWgTCdM52+1S4HzI3ts=;
 	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=WIxG1mCQFyYEjQRcfPTg/Dmsa6RMHyVdBKGBdLqQA34ds6IiHpeXVLlbnWJ2JWIRfoHng1StG3vwyqhdIvAe0mYaGfG52b+CNbfL+ZjkWllvNTJn4VnhMtKZ1nrCZsRRGEhPMOJ/EVdOnF/FecOKI8iL2MC49eA2nyshcEWu+pA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=k/8DVKLk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=BLBYNZdrUP9u7E2AwEil64Fts374GF2i+wSVlBh7QulQY7ReJw00bD564L7wTIogLRRC6QOiuudoOnor/NCDWehuctIJ3q9qjqh7YYKPlu+G1brXmUCSW15GNrmAN3kOLLu8yynssx2STiOhYBe9apaJIQVme+TqzXhw0l7Jj4U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=S1by10cV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="k/8DVKLk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0C3DC4CEE7;
-	Wed, 18 Jun 2025 08:21:08 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="S1by10cV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 173A1C4CEE7;
+	Wed, 18 Jun 2025 11:45:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1750234872;
-	bh=2jmRDv6D0zcNdU19DqnV2thTGn3pGjWksLXvn5+PggA=;
+	s=k20201202; t=1750247105;
+	bh=4DxwVQzbl8QL94anK1H5LVZzfWgTCdM52+1S4HzI3ts=;
 	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-	b=k/8DVKLk1jQCHbK1h5bINp41EjysKV48pO7nmzXin8chccf5giyGW2oCA3VuU0giN
-	 GE+ZhpHpRgFhdmQb4oW+ZEPGWmcXzooJXo5+M75ZzRQGSsGWJkUyByTJvgA8tZn4uu
-	 QJmGRRd9Z6dJkj2jAaSkiKF++lcEPaaucfGzCiCuD6md9NQIVlmtEt2eg7D+vSkO20
-	 QEUu9jve94s9HsY7VtopXIwUmkP8mmoF8Fq4Qf39ztPsBUWr8VEWcr9T9yvtz6VLoq
-	 MEXwkiwKj+ODQh0UIlUd033KTyYFAlpqcenVq8DQ3meW7GKSE+FC68bVBqqhECR/e2
-	 jI1ND8WMXcbsA==
-Date: Wed, 18 Jun 2025 10:21:05 +0200
+	b=S1by10cVaTcMICpnEDqlgbOe8aUivg0S0v1Kvhsq0/j8p/YYIShdcKZZP0ShuNsVG
+	 zlylBS9qv53ZCFlKU6W+QmUtC3IOXSThr7eFL5aNvavpWfimK4ADaNcj/ocPXON5LK
+	 cIC5RLpTVbtuRI7JJSerbbGNJJKOphW2jP6WiZVIdi/aLc4+32X6/nBvBseod1AfYd
+	 HcYrKZwe5V2PIxC304RaFkV1sUiww7wmiawn0EAhwcPwJoUoJXzaA69Mt9KwndogXV
+	 ONnbuXkivC2xfUOBS+zg4kf+mPxLGfmdzTR6JecL/Ss3XtCZGs9T8seF+UFOqwVt4V
+	 NhRJ4p3DcJBYA==
+Date: Wed, 18 Jun 2025 13:44:58 +0200
 From: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-To: Donald Hunter <donald.hunter@gmail.com>
+To: Akira Yokosawa <akiyks@gmail.com>
 Cc: Linux Doc Mailing List <linux-doc@vger.kernel.org>, Jonathan Corbet
- <corbet@lwn.net>, Akira Yokosawa <akiyks@gmail.com>, Breno Leitao
- <leitao@debian.org>, "David S. Miller" <davem@davemloft.net>, Eric Dumazet
- <edumazet@google.com>, Ignacio Encinas Rubio <ignacio@iencinas.com>, Jan
- Stancek <jstancek@redhat.com>, Marco Elver <elver@google.com>, Paolo Abeni
- <pabeni@redhat.com>, Ruben Wauters <rubenru09@aol.com>, Shuah Khan
- <skhan@linuxfoundation.org>, joel@joelfernandes.org,
- linux-kernel-mentees@lists.linux.dev, linux-kernel@vger.kernel.org,
- lkmm@lists.linux.dev, netdev@vger.kernel.org, peterz@infradead.org,
- stern@rowland.harvard.edu
-Subject: Re: [PATCH v5 10/15] docs: sphinx: add a parser for yaml files for
- Netlink specs
-Message-ID: <20250618102105.66ce01f0@foz.lan>
-In-Reply-To: <CAD4GDZzWMoxnatNXYbKOphzVZ4NyedD5FtjxF7cgB1ad-wDFWg@mail.gmail.com>
+ <corbet@lwn.net>, Breno Leitao <leitao@debian.org>, "David S. Miller"
+ <davem@davemloft.net>, Donald Hunter <donald.hunter@gmail.com>, Eric
+ Dumazet <edumazet@google.com>, Ignacio Encinas Rubio
+ <ignacio@iencinas.com>, Jan Stancek <jstancek@redhat.com>, Marco Elver
+ <elver@google.com>, Paolo Abeni <pabeni@redhat.com>, Ruben Wauters
+ <rubenru09@aol.com>, Shuah Khan <skhan@linuxfoundation.org>,
+ joel@joelfernandes.org, linux-kernel-mentees@lists.linux.dev,
+ linux-kernel@vger.kernel.org, lkmm@lists.linux.dev, netdev@vger.kernel.org,
+ peterz@infradead.org, stern@rowland.harvard.edu
+Subject: Re: [PATCH v5 01/15] docs: conf.py: properly handle include and
+ exclude patterns
+Message-ID: <20250618134458.10ee8412@foz.lan>
+In-Reply-To: <1adba2c6-e4c3-4da2-874e-a304a1fdfd25@gmail.com>
 References: <cover.1750146719.git.mchehab+huawei@kernel.org>
-	<c407d769c9f47083e8f411c13989522e32262562.1750146719.git.mchehab+huawei@kernel.org>
-	<m27c1ak0k9.fsf@gmail.com>
-	<20250617154049.104ef6ff@sal.lan>
-	<20250617180001.46931ba9@sal.lan>
-	<CAD4GDZzWMoxnatNXYbKOphzVZ4NyedD5FtjxF7cgB1ad-wDFWg@mail.gmail.com>
+	<cca10f879998c8f0ea78658bf9eabf94beb0af2b.1750146719.git.mchehab+huawei@kernel.org>
+	<1adba2c6-e4c3-4da2-874e-a304a1fdfd25@gmail.com>
 X-Mailer: Claws Mail 4.3.1 (GTK 3.24.49; x86_64-redhat-linux-gnu)
 Precedence: bulk
 X-Mailing-List: lkmm@lists.linux.dev
@@ -59,40 +56,100 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
 
-Em Tue, 17 Jun 2025 18:23:22 +0100
-Donald Hunter <donald.hunter@gmail.com> escreveu:
+Hi Akira,
 
-> On Tue, 17 Jun 2025 at 17:00, Mauro Carvalho Chehab
-> <mchehab+huawei@kernel.org> wrote:
-> > >
-> > > (2) is cleaner and faster, but (1) is easier to implement on an
-> > > already-existing code.  
-> >
-> > The logic below implements (1). This seems to be the easiest way for
-> > pyyaml. I will submit as 2 separate patches at the end of the next
-> > version.
-> >
-> > Please notice that I didn't check yet for the "quality" of the
-> > line numbers. Some tweaks could be needed later on.  
+Em Wed, 18 Jun 2025 11:42:14 +0900
+Akira Yokosawa <akiyks@gmail.com> escreveu:
+
+> Hi Mauro,
 > 
-> Thanks for working on this. I suppose we might be able to work on an
-> evolution from (1) to (2) in a followup piece of work?
+> A comment on compatibility with earlier Sphinx.
+> 
+> On Tue, 17 Jun 2025 10:01:58 +0200, Mauro Carvalho Chehab wrote:
+> > When one does:
+> > 	make SPHINXDIRS="foo" htmldocs
+> > 
+> > All patterns would be relative to Documentation/foo, which
+> > causes the include/exclude patterns like:
+> > 
+> > 	include_patterns = [
+> > 		...
+> > 		f'foo/*.{ext}',
+> > 	]
+> > 
+> > to break. This is not what it is expected. Address it by
+> > adding a logic to dynamically adjust the pattern when
+> > SPHINXDIRS is used.
+> > 
+> > That allows adding parsers for other file types.
+> > 
+> > Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+> > ---
+> >  Documentation/conf.py | 52 +++++++++++++++++++++++++++++++++++++++----
+> >  1 file changed, 48 insertions(+), 4 deletions(-)
+> > 
+> > diff --git a/Documentation/conf.py b/Documentation/conf.py
+> > index 12de52a2b17e..e887c1b786a4 100644
+> > --- a/Documentation/conf.py
+> > +++ b/Documentation/conf.py
+> > @@ -17,6 +17,54 @@ import os
+> >  import sphinx
+> >  import shutil
+> >  
+> > +# Location of Documentation/ directory
+> > +doctree = os.path.abspath('.')
+> > +
+> > +# List of patterns that don't contain directory names, in glob format.
+> > +include_patterns = ['**.rst']
+> > +exclude_patterns = []
+> > +  
+> 
+> Where "exclude_patterns" has been with us ever since Sphinx 1.0,
+> "include_patterns" was added fairly recently in Sphinx 5.1 [1].
+> 
+> [1]: https://www.sphinx-doc.org/en/master/usage/configuration.html#confval-include_patterns
+> 
+> So, this breaks earlier Sphinx versions.
 
-Yes, it shouldn't be hard for you to migrate to (2) in the future. 
+Heh, testing against old versions is harder with python 3.13 (Fedora
+42 default), as one library used by older Sphinx versions were dropped.
 
-Currently, the parser is stateless, but, as there's now a class,
-IMO the best would be to store the lines as an array of tuples
-inside the YnlDocGenerator class, like this:
+I found a way to make it backward compatible up to 3.4.3, with a
+backward-compatible logic at conf.py. I'll send the new version in a few.
 
-	self.lines = [
-		(line_number1, message_string1),
-		(line_number2, message_string2),
-		(line_number3, message_string3),
-		(line_number4, message_string4),
-		...
-	]
+> Also, after applying all of v5 on top of docs-next, I see these new
+> warnings with Sphinx 7.2.6 (of Ubuntu 24.04):
+> 
+> /<srcdir>/Documentation/output/ca.h.rst: WARNING: document isn't included in any toctree
+> /<srcdir>/Documentation/output/cec.h.rst: WARNING: document isn't included in any toctree
+> /<srcdir>/Documentation/output/dmx.h.rst: WARNING: document isn't included in any toctree
+> /<srcdir>/Documentation/output/frontend.h.rst: WARNING: document isn't included in any toctree
+> /<srcdir>/Documentation/output/lirc.h.rst: WARNING: document isn't included in any toctree
+> /<srcdir>/Documentation/output/media.h.rst: WARNING: document isn't included in any toctree
+> /<srcdir>/Documentation/output/net.h.rst: WARNING: document isn't included in any toctree
+> /<srcdir>/Documentation/output/videodev2.h.rst: WARNING: document isn't included in any toctree
 
-This way, the parse_yaml_file() method would just return self.lines.
+We should likely use a Sphinx extension for those as well. Building those
+are also made via some Makefile tricks that predates the time we start
+adding our own extensions at the tree.
 
-Thanks,
+> Sphinx 7.3.7 and later are free of them.  I have no idea which change in
+> Sphinx 7.3 got rid of them.
+> 
+> Now that the parallel build performance regression has be resolved in
+> Sphinx 7.4, I don't think there is much demand for keeping Sphinx versions
+> compatible.
+> These build errors and extra warnings would encourage people to upgrade
+> there Sphinx.  So I'm not going to nack this.
+> 
+> Of course, getting rid of above warnings with < Sphinx 7.3 would be ideal.
+
+I'm all for using newer versions, but we need to check what LTS distros
+are using those days.
+
+On my machine, with -jauto, 3.4.3 is taking 11 minutes to build, which
+is twice the time of 8.2.3. IMO, this is a very good reason for people
+stop using legacy versions when possible :-)
+
+Regards,
 Mauro

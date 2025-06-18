@@ -1,51 +1,54 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EA671FF7B3;
-	Wed, 18 Jun 2025 06:59:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F03AC214814;
+	Wed, 18 Jun 2025 08:21:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750229992; cv=none; b=cM6BAVpdsLxOpCdWhvS+4OJbGxzcCnT9QZyb1jWB4UAO7dT+dMTBZCu30uhYQF+8oUf5fk71GeBNpBc8XMNRy7HgaQiASYMJWYYuUEEoglb4ud23kKPu9gh9RpTbyHMSeuYwHZgNRAt196LX7oXBl5MHydjX3PN0rtM+mCDKSIg=
+	t=1750234873; cv=none; b=E/jTnzzbieG2QqC2OoPEskDoiTIYlRleJ+/GtnXFJPgQtCxw7xR4l7lromXdjNCpBNZkrKNWQeP6sbiXof77Q2IYqMptp5PeJh3hDJ/v5dxjopv+rhv3vI20OlaWMkxFKBHquahZiz+fACJPZ2n5HBKCRmksNVIJiqxS+3KDdtk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750229992; c=relaxed/simple;
-	bh=OhHcdfVoijsiepONmPCsYtD9gB53gFZoE4YRYNkxUbU=;
+	s=arc-20240116; t=1750234873; c=relaxed/simple;
+	bh=2jmRDv6D0zcNdU19DqnV2thTGn3pGjWksLXvn5+PggA=;
 	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=SRE1mJGEHE+djtxoiJjiHYBcV1LlnikoKb+/BGqkBq4mji1pl72gxBtm6PQ4SHTLhVkM6o9B8pxqyzrcS6mbk3rZ0z9OvBijLG1CeGis1O+NsoJ97y3Ua3y3YQaOqYHoSN+kpbc+H22McM1fHcVuGf4RKLXJa1BhBfF/CYiNVXI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=MDHLaRNy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=WIxG1mCQFyYEjQRcfPTg/Dmsa6RMHyVdBKGBdLqQA34ds6IiHpeXVLlbnWJ2JWIRfoHng1StG3vwyqhdIvAe0mYaGfG52b+CNbfL+ZjkWllvNTJn4VnhMtKZ1nrCZsRRGEhPMOJ/EVdOnF/FecOKI8iL2MC49eA2nyshcEWu+pA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=k/8DVKLk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="MDHLaRNy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DFC6BC4CEE7;
-	Wed, 18 Jun 2025 06:59:47 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="k/8DVKLk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0C3DC4CEE7;
+	Wed, 18 Jun 2025 08:21:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1750229991;
-	bh=OhHcdfVoijsiepONmPCsYtD9gB53gFZoE4YRYNkxUbU=;
+	s=k20201202; t=1750234872;
+	bh=2jmRDv6D0zcNdU19DqnV2thTGn3pGjWksLXvn5+PggA=;
 	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-	b=MDHLaRNyUKCEWaqBYJKIhN5Z4nDFPqaVzVNvBpj3xBafcsT1z7+Tv552hXQgjKkDg
-	 XK1gyAQH0jvVP2Nefwi6Oog9YzxB8T8d8goxyyn1JjzfCpsPeztmgGtdNhidioySVV
-	 5Ox+948AlMrY22nGOjYpDim2s+1SuntGDJzuZbqTc193zZmmt5LotnPkgO5U18JwYq
-	 W9MYRz52PINXfUqALl2ibprDN2Mwo3C5DlPjdq/7oVZSGb+y7eTl4lYk8iR9sURWSd
-	 Z41ly2bjhcTy/5MJG/cLPhvqvogiBY64gnPXoAiF8WMd3upwpNg2Y4IWX/A1nupWYP
-	 H3gqayExhZoxg==
-Date: Wed, 18 Jun 2025 08:59:45 +0200
+	b=k/8DVKLk1jQCHbK1h5bINp41EjysKV48pO7nmzXin8chccf5giyGW2oCA3VuU0giN
+	 GE+ZhpHpRgFhdmQb4oW+ZEPGWmcXzooJXo5+M75ZzRQGSsGWJkUyByTJvgA8tZn4uu
+	 QJmGRRd9Z6dJkj2jAaSkiKF++lcEPaaucfGzCiCuD6md9NQIVlmtEt2eg7D+vSkO20
+	 QEUu9jve94s9HsY7VtopXIwUmkP8mmoF8Fq4Qf39ztPsBUWr8VEWcr9T9yvtz6VLoq
+	 MEXwkiwKj+ODQh0UIlUd033KTyYFAlpqcenVq8DQ3meW7GKSE+FC68bVBqqhECR/e2
+	 jI1ND8WMXcbsA==
+Date: Wed, 18 Jun 2025 10:21:05 +0200
 From: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 To: Donald Hunter <donald.hunter@gmail.com>
 Cc: Linux Doc Mailing List <linux-doc@vger.kernel.org>, Jonathan Corbet
- <corbet@lwn.net>, "Akira Yokosawa" <akiyks@gmail.com>, "Breno Leitao"
- <leitao@debian.org>, "David S. Miller" <davem@davemloft.net>, "Eric
- Dumazet" <edumazet@google.com>, "Ignacio Encinas Rubio"
- <ignacio@iencinas.com>, "Jan Stancek" <jstancek@redhat.com>, "Marco Elver"
- <elver@google.com>, "Paolo Abeni" <pabeni@redhat.com>, "Ruben Wauters"
- <rubenru09@aol.com>, "Shuah Khan" <skhan@linuxfoundation.org>,
- joel@joelfernandes.org, linux-kernel-mentees@lists.linux.dev,
- linux-kernel@vger.kernel.org, lkmm@lists.linux.dev, netdev@vger.kernel.org,
- peterz@infradead.org, stern@rowland.harvard.edu
-Subject: Re: [PATCH v5 01/15] docs: conf.py: properly handle include and
- exclude patterns
-Message-ID: <20250618085945.2876f6a1@foz.lan>
-In-Reply-To: <m21prilkkx.fsf@gmail.com>
+ <corbet@lwn.net>, Akira Yokosawa <akiyks@gmail.com>, Breno Leitao
+ <leitao@debian.org>, "David S. Miller" <davem@davemloft.net>, Eric Dumazet
+ <edumazet@google.com>, Ignacio Encinas Rubio <ignacio@iencinas.com>, Jan
+ Stancek <jstancek@redhat.com>, Marco Elver <elver@google.com>, Paolo Abeni
+ <pabeni@redhat.com>, Ruben Wauters <rubenru09@aol.com>, Shuah Khan
+ <skhan@linuxfoundation.org>, joel@joelfernandes.org,
+ linux-kernel-mentees@lists.linux.dev, linux-kernel@vger.kernel.org,
+ lkmm@lists.linux.dev, netdev@vger.kernel.org, peterz@infradead.org,
+ stern@rowland.harvard.edu
+Subject: Re: [PATCH v5 10/15] docs: sphinx: add a parser for yaml files for
+ Netlink specs
+Message-ID: <20250618102105.66ce01f0@foz.lan>
+In-Reply-To: <CAD4GDZzWMoxnatNXYbKOphzVZ4NyedD5FtjxF7cgB1ad-wDFWg@mail.gmail.com>
 References: <cover.1750146719.git.mchehab+huawei@kernel.org>
-	<cca10f879998c8f0ea78658bf9eabf94beb0af2b.1750146719.git.mchehab+huawei@kernel.org>
-	<m21prilkkx.fsf@gmail.com>
+	<c407d769c9f47083e8f411c13989522e32262562.1750146719.git.mchehab+huawei@kernel.org>
+	<m27c1ak0k9.fsf@gmail.com>
+	<20250617154049.104ef6ff@sal.lan>
+	<20250617180001.46931ba9@sal.lan>
+	<CAD4GDZzWMoxnatNXYbKOphzVZ4NyedD5FtjxF7cgB1ad-wDFWg@mail.gmail.com>
 X-Mailer: Claws Mail 4.3.1 (GTK 3.24.49; x86_64-redhat-linux-gnu)
 Precedence: bulk
 X-Mailing-List: lkmm@lists.linux.dev
@@ -56,37 +59,40 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
 
-Em Tue, 17 Jun 2025 11:38:06 +0100
+Em Tue, 17 Jun 2025 18:23:22 +0100
 Donald Hunter <donald.hunter@gmail.com> escreveu:
 
-> Mauro Carvalho Chehab <mchehab+huawei@kernel.org> writes:
+> On Tue, 17 Jun 2025 at 17:00, Mauro Carvalho Chehab
+> <mchehab+huawei@kernel.org> wrote:
+> > >
+> > > (2) is cleaner and faster, but (1) is easier to implement on an
+> > > already-existing code.  
+> >
+> > The logic below implements (1). This seems to be the easiest way for
+> > pyyaml. I will submit as 2 separate patches at the end of the next
+> > version.
+> >
+> > Please notice that I didn't check yet for the "quality" of the
+> > line numbers. Some tweaks could be needed later on.  
 > 
-> > When one does:
-> > 	make SPHINXDIRS="foo" htmldocs
-> >
-> > All patterns would be relative to Documentation/foo, which
-> > causes the include/exclude patterns like:
-> >
-> > 	include_patterns = [
-> > 		...
-> > 		f'foo/*.{ext}',
-> > 	]
-> >
-> > to break. This is not what it is expected. Address it by
-> > adding a logic to dynamically adjust the pattern when
-> > SPHINXDIRS is used.
-> >
-> > That allows adding parsers for other file types.
-> >
-> > Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>  
-> 
-> Reviewed-by: Donald Hunter <donald.hunter@gmail.com>
+> Thanks for working on this. I suppose we might be able to work on an
+> evolution from (1) to (2) in a followup piece of work?
 
-Thanks for reviewing. At the next version, I'm placing some backward
-compatible code for Sphinx 5.1, based on Akira's feedback.
+Yes, it shouldn't be hard for you to migrate to (2) in the future. 
 
-As the basic logic is the same, I'm keeping your review there.
+Currently, the parser is stateless, but, as there's now a class,
+IMO the best would be to store the lines as an array of tuples
+inside the YnlDocGenerator class, like this:
 
+	self.lines = [
+		(line_number1, message_string1),
+		(line_number2, message_string2),
+		(line_number3, message_string3),
+		(line_number4, message_string4),
+		...
+	]
+
+This way, the parse_yaml_file() method would just return self.lines.
 
 Thanks,
 Mauro

@@ -1,79 +1,79 @@
-Received: from mail-qk1-f179.google.com (mail-qk1-f179.google.com [209.85.222.179])
+Received: from mail-qk1-f182.google.com (mail-qk1-f182.google.com [209.85.222.182])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2483A2F94A0
-	for <lkmm@lists.linux.dev>; Wed, 18 Jun 2025 16:49:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 877F22F0028
+	for <lkmm@lists.linux.dev>; Wed, 18 Jun 2025 16:49:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750265394; cv=none; b=JPp/iYf1wxFvnxGmk6nn19kc3UfFlyloTQ3HqNlSLZ+m06XXahPWhcqUhY0WGsgMvnlBQzhvkTQtZ+ngjvg0gVe1WVjI0dbDO6hj1Qqzheh+39kBNsPf6neMwxrhtlL5SNwec41hR2eOHNLun6cDp/+d3fFbU+H57aRkyyPuib8=
+	t=1750265395; cv=none; b=psYJBDIGUHeFtg6rWASHr/xT/V8wkiYvGLyg6cRJJd3SeLslh1fybshOniFxMh98hh0m00P06DQCY3ysUOObuC6M4XgsBEIPs421it0s1Q06wt9GV0Ty3CFwHI/8grlzw4AfbEHUZAPa3qkKqs+UFY20LEwQ1hMGoQJkrXqZHeg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750265394; c=relaxed/simple;
-	bh=dvU14r0iEmi4OnkDpLWDsbtGzzO7lc6z0w9QAU4TSno=;
+	s=arc-20240116; t=1750265395; c=relaxed/simple;
+	bh=bw14+xZqI0w9yxj/j5uKeKXaYLL1MtfH8KsStGXN1Us=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=gTIyLSR/q/CL+4Br4QTrYXSwRQTlFMqRMKyCHiHFA1Bh+TxXF3+o+zMdwK3QHGNHu8/tdGEr0t7IT0hkb66eFFFsJTAuVtrye8Jc2GDcENu88UW5agZhG0LbHh9MMkc3DKVHRCH+WKjpWwCFUG6llM4dEoDInPDtzNlzqpV/ZC4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=nJ9tBgiU; arc=none smtp.client-ip=209.85.222.179
+	 MIME-Version; b=i18FtkdijlFe7Ux5uq0wKcva0ILIJo+bFajeNm0aAoSQT+GgfsvixNUCJP2rRipSuoIhPxbUj1xdtAmfL45beTSVGd4t3RFVA35T57xQz1h88+jQsHromzk4IUxry+5ld5jUGSRLplZLVfUzSQvFKq7fCV5zCCaQkTwNv38GZAU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Zps3RI4F; arc=none smtp.client-ip=209.85.222.182
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nJ9tBgiU"
-Received: by mail-qk1-f179.google.com with SMTP id af79cd13be357-7cad6a4fae4so1389974185a.2
-        for <lkmm@lists.linux.dev>; Wed, 18 Jun 2025 09:49:51 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Zps3RI4F"
+Received: by mail-qk1-f182.google.com with SMTP id af79cd13be357-7d3cc0017fdso508118085a.3
+        for <lkmm@lists.linux.dev>; Wed, 18 Jun 2025 09:49:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1750265391; x=1750870191; darn=lists.linux.dev;
+        d=gmail.com; s=20230601; t=1750265392; x=1750870192; darn=lists.linux.dev;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:feedback-id:from:to:cc:subject
          :date:message-id:reply-to;
-        bh=ZOCtxk6LFOKknpWbYEkP2m+QB/jgJqyC9svVPxtO+w4=;
-        b=nJ9tBgiU/9T2JhAVdsWc8ndbO4ngVGVVHobfKgv15gJR3nwjtlQJpONf+lp56Sb3aG
-         jrURp1HbM30gVJ/bA0m9/7jsqvB3zchUcvA0LjMGJxx+WLlwmaqGdiImIJ+bNzdCRSVh
-         RvHWqpYi1jGC0SsEyntBdjswCng3s7yEMp2CJ4GWzmqCACGe0RuAfwaKnqpKM8xpuzLW
-         HUfwKDeDWr+Gj1jU6DIUuNas2rlKgi6CridC3x9uEKEpjtvdqtasHpqsIyGVq5jfm8LF
-         OAhVOBGTbS2DXkfCAo6/noI2V8ZaUTWHhUM6OSYjaAP7s4yGtHpoTzphmW+uN80o5KIA
-         KlXQ==
+        bh=hO2T4XtpSZqQqdPFG12LlFMg3J8jBgvJe6Qf6HA4HQY=;
+        b=Zps3RI4F8k10AtkEb6jOPFl0KQhNNRP42Rhc0IOBRKh6EMqELCcjCV7+HRe2iWomee
+         zLIvdJJOamfkEZBXwvmoNByP/5KRSr2SBXpVlSh6IjcJT8KMtDrs/0+lJQAxLc3VH+Aa
+         HxwZ+fyzkue7IEw7ywBX03sJq3+pOz96148PD40snWKVgA1Cqc6z5LqPs48CCrjxmNOc
+         EPMRhKCPccFrZLi5cX/dHIgrDsVXHJ3xZwdBvvQXihVnYgdiYtX3n8jff+AUgWwvGOWv
+         ul31pxLzhfgWCvWuhEhnG97pzX2Axm9ZZMuC4y/KKwRezLe+N5xh7a4932ukyp6zF6A3
+         ACEQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1750265391; x=1750870191;
+        d=1e100.net; s=20230601; t=1750265392; x=1750870192;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:feedback-id:x-gm-message-state
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=ZOCtxk6LFOKknpWbYEkP2m+QB/jgJqyC9svVPxtO+w4=;
-        b=LB69ueGCB0mv5unzZJo0euIOskjCKOj15aq0K4S6aGGVPTstXZuIbPMzsJv/J+mcsJ
-         Tl+BR01Al+RBIrL97wlRMBK2VaMIvyIUPuwc18rtQ0QXiqyz0N289Td5iUlyBvL84fVg
-         wbTok9BbCQeECSZzjegic/Ih5T9M1b2LNbJM7KmDEAsD7Zn83trw3NfzAh4EhSZCXw3Z
-         2dkjVAj/Vv95YiwPxxw0oOSEv4u55OkAdpVE0LHoJ3jsC1ldJMHHxcnSvAhoPHOm8kNo
-         AQ1qSQO4lUuidPFg64ptZ7T5E3JDyruuHayEAKblsxQpJ9f69B6gIWj/W0pVqf8ixJgE
-         3uZw==
-X-Forwarded-Encrypted: i=1; AJvYcCUSYN0x5u4oAkFtwLSqH5aawko8Jf74eANcOxM9gYkiiKMEGazdqPtutnHZXVgsBYI8EaJJ@lists.linux.dev
-X-Gm-Message-State: AOJu0YwpDGe0GWlM1fhrfHJX2en1jBGzMzjwq1nrqx86/Zkgq2M6uSZL
-	j7wjXxQDvF0ok3V8RTodmdKsMrXh8CUYHrLyEDqtmBpwyWae2lfwvl8E
-X-Gm-Gg: ASbGncvkv+2QMpupVUO95L6i39EzUuUxkSUkY+7VXvPGa8mqSvuor6kwMOuzIU4jubD
-	s4SAaIVcPo8ZK3fs41I80KdUlV93GoF03suvwdYccj/I9zPGJIzqWmu/DLYLcxpq38D9+9f3Bi4
-	l88mzwonnpzdQjzsdOH9xyEsywL9diB63CAsmNKA/zntoy6HZXq//eBVJbOkAoQXu5O0+emj+zH
-	2vsDfaMLAM84WYqP7RQzUMp5WXBFgD0CLC+AbcxyfyQ4ko9DakelSRuPwXBipBiT1KKlq8Llhw6
-	uJ0vAAUikPd1elM1Ww4/iGfxAw75+f5tGmdMz447r8dP+4Mpx8VcW/uhji66TV3H4nxeBYGiqbS
-	2h7m6IW/J3wykMA5AZPHT6wW2/8Nt1TFOJkMugo6w0++6tIcGeopf
-X-Google-Smtp-Source: AGHT+IGtMbe/TFPtiErhwZaMxWZkvFVyH4tNlqSJ3Rbys4ejjuEohtWqE7T+GmnAfqkxFN4yigkK7A==
-X-Received: by 2002:a05:620a:1b8f:b0:7d0:996f:9c48 with SMTP id af79cd13be357-7d3c6c04a8cmr2658207685a.9.1750265390952;
-        Wed, 18 Jun 2025 09:49:50 -0700 (PDT)
+        bh=hO2T4XtpSZqQqdPFG12LlFMg3J8jBgvJe6Qf6HA4HQY=;
+        b=ef7wSj1mSlGyd3324/Z4udubn2Dg8e7wQVg+mCixw8raX1TeRl1gMIEYz03akfa/pd
+         wvxx0j4KhV+4HN+wMn+L2mYAX2X5SgL6IdsC7SQut3+7dAphEyYWGjZ1NuwJZYL/9lAo
+         F8mddyJFPCQNapMCu9ycCrtKvTzHHqdd1wuGTd5MVhmmURohKVaJhmIZ36gUllo1oXCT
+         vmcwKvR5TdqczJmoYfSpyrfD2Iim46MbyFS/gfhqisWauyhvztK4RJtyCWbbQe5cw78A
+         v0nknLR9u4Hm34AxzwXlVTY1YE4vBvadAV7Azm2ti1LT5iQTW/EEbZvTpnG0tq8l6Hag
+         9U2w==
+X-Forwarded-Encrypted: i=1; AJvYcCXRhapgKrvEDOfK3lg+WXr1ifwMQWic1hg1joY+/USUakj+UlT6J1hWt5RNLctlj3cxdX4j@lists.linux.dev
+X-Gm-Message-State: AOJu0YyRFrdobT0dzP22kjScke0yRVbw1xJ8yz4wqK3NUZh7o5OQiWOy
+	TF6L2rXq1h/ArWqXLCnEX8Uhp5K33fXBJZCQeSq5dGAWmVj8/23ube4e
+X-Gm-Gg: ASbGncv32E9EtMQAu52iT4ld1/XOuxnbLtYldozFtqH1tNniXvY8O5odmb+YyHmeFTn
+	g50TxoazToENS0T03r9Tz9HP3JoR8rJjiTMwac0REaERZGiW4nS/MXZoPEuv0YaOS4OzdasDAU4
+	aQi3BZef1eWHJ2rLzfxsVrg53nqEuoM2ZDFtq0CpfzbJt3nwvvokncemgf31e5dPab99yhhzx+9
+	1RqW7HQEDMeF7haXgJ0xFqMHDPucaFu0M+zGW8inkV5JQMac6kStUvoRkcTiYG2GquGhEFkU64d
+	xoU1UOx5fhw5LoJ5+LwojvuYS2/TuIDo6+x+PMRx9Gu6nC0jEoq3LE61P01y8kfCrf4mNmRh3ZH
+	DSWEbv0xKzGLA1R+ZuocOHorIgeWofG5geriqvO6+I7HR+Qs46Fbq
+X-Google-Smtp-Source: AGHT+IFkHVXdIToKeS9IYC04H0XhotnExqBscPeT2KS3dLGvn7Ooi5xAI0y8yvE+Wp85XtZepw3pvA==
+X-Received: by 2002:a05:620a:440f:b0:7ca:f02a:4d2b with SMTP id af79cd13be357-7d3c6c0d3b0mr2596059785a.12.1750265392346;
+        Wed, 18 Jun 2025 09:49:52 -0700 (PDT)
 Received: from fauth-a2-smtp.messagingengine.com (fauth-a2-smtp.messagingengine.com. [103.168.172.201])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-7d3b8f272a8sm785667285a.115.2025.06.18.09.49.50
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-6fb35c927cesm74824436d6.124.2025.06.18.09.49.51
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 18 Jun 2025 09:49:50 -0700 (PDT)
-Received: from phl-compute-07.internal (phl-compute-07.phl.internal [10.202.2.47])
-	by mailfauth.phl.internal (Postfix) with ESMTP id 17A1B1200043;
-	Wed, 18 Jun 2025 12:49:50 -0400 (EDT)
+        Wed, 18 Jun 2025 09:49:52 -0700 (PDT)
+Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
+	by mailfauth.phl.internal (Postfix) with ESMTP id 6E4AB1200043;
+	Wed, 18 Jun 2025 12:49:51 -0400 (EDT)
 Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-07.internal (MEProxy); Wed, 18 Jun 2025 12:49:50 -0400
-X-ME-Sender: <xms:Le5SaNGlL0BXeqWamwgO14IJwsXLuBbaX7ByVVp-ycgX77-wVenB8Q>
-    <xme:Le5SaCV85YXd5HCy9jx3uea_0oYdHUBxmGhdJBVaeDroOI0OMSxpH05oGZathsQVT
-    xAqwyesbxyzrNYsFw>
-X-ME-Received: <xmr:Le5SaPJxu6_crYiXgAEMwRk9KfWMGou9tcaP0qhNSUuk59fyrIxRgQLDI7j3HA>
+  by phl-compute-01.internal (MEProxy); Wed, 18 Jun 2025 12:49:51 -0400
+X-ME-Sender: <xms:L-5SaPZs7INv9PvJEjATrx34D-oOEMwd89GdvaBB7pP72BOpHwziAA>
+    <xme:L-5SaOaETaR7yn2MtJbfHdEe8ng44l4dwv0I4DlBze_-KTXI5PjnaupFhHZQ5BLbK
+    zO3NDuQHw3rMFR4XQ>
+X-ME-Received: <xmr:L-5SaB-S0IkR5iOtkAXq0rz1sxMiS1A6JsSMwXP3S3CoutpJgrmZ8RevsP2bbQ>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddvgdefudeiucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
     rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
     htshculddquddttddmnecujfgurhephffvvefufffkofgjfhgggfestdekredtredttden
     ucfhrhhomhepuehoqhhunhcuhfgvnhhguceosghoqhhunhdrfhgvnhhgsehgmhgrihhlrd
     gtohhmqeenucggtffrrghtthgvrhhnpeegleejiedthedvheeggfejveefjeejkefgveff
-    ieeujefhueeigfegueehgeeggfenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmh
+    ieeujefhueeigfegueehgeeggfenucevlhhushhtvghrufhiiigvpedunecurfgrrhgrmh
     epmhgrihhlfhhrohhmpegsohhquhhnodhmvghsmhhtphgruhhthhhpvghrshhonhgrlhhi
     thihqdeiledvgeehtdeigedqudejjeekheehhedvqdgsohhquhhnrdhfvghngheppehgmh
     grihhlrdgtohhmsehfihigmhgvrdhnrghmvgdpnhgspghrtghpthhtohepvdeipdhmohgu
@@ -86,14 +86,14 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddvgdefudeiucetufdoteggod
     nhdrfhgvnhhgsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghgrrhihsehgrghrhihguh
     hordhnvghtpdhrtghpthhtohepsghjohhrnhefpghghhesphhrohhtohhnmhgrihhlrdgt
     ohhm
-X-ME-Proxy: <xmx:Le5SaDFcKmdD23MLk7VvkfkgJxCElpAFgpOZ8B3hPu8Gal2VxFSzMg>
-    <xmx:Le5SaDULTbO6iw-pb01ZYFqIAehM9FsdgdfvDXCUm3Acm4JeGumn1A>
-    <xmx:Le5SaOP_oVtelCnzsacGqaRz10tckFqlVzYlxAbtYXXNRdr_8W4mfA>
-    <xmx:Le5SaC13wcEP0_f-QxcWW-JZq271JH4m1uMSxCGzFnxxBFbLH5DS-g>
-    <xmx:Lu5SaAX5njxNFtK3pQHOgHL_EGyhpOdN5ZOrhTLY9Nb-Y2P0FgD0XJIb>
+X-ME-Proxy: <xmx:L-5SaFp9jezQUuWT8ghuBZ3Rl77GwSkiCeloXIaZqeJAl-8Vo9KvbQ>
+    <xmx:L-5SaKr_GK66wQWUqSCUCxSyZwWup2ZfYEUX1qOPB4xHjoEZunEfdQ>
+    <xmx:L-5SaLQz9jN0WCCf99VytGe4F0h4tSrM_bVqGbdT4NLYRI5c5SmQaA>
+    <xmx:L-5SaCpN1YZWFrNxfAcwVjJ5J_JeKhSWsIuKJm09pEtP-Ul4kumFmQ>
+    <xmx:L-5SaL5jjqNpvF_3JPV9GWgP1Qon6C0JifsG5phYICaZJlqrynyswStv>
 Feedback-ID: iad51458e:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 18 Jun 2025 12:49:49 -0400 (EDT)
+ 18 Jun 2025 12:49:50 -0400 (EDT)
 From: Boqun Feng <boqun.feng@gmail.com>
 To: linux-kernel@vger.kernel.org,
 	rust-for-linux@vger.kernel.org,
@@ -121,9 +121,9 @@ Cc: Miguel Ojeda <ojeda@kernel.org>,
 	"Greg Kroah-Hartman" <gregkh@linuxfoundation.org>,
 	Linus Torvalds <torvalds@linux-foundation.org>,
 	"Thomas Gleixner" <tglx@linutronix.de>
-Subject: [PATCH v5 09/10] rust: sync: atomic: Add Atomic<*mut T>
-Date: Wed, 18 Jun 2025 09:49:33 -0700
-Message-Id: <20250618164934.19817-10-boqun.feng@gmail.com>
+Subject: [PATCH v5 10/10] rust: sync: Add memory barriers
+Date: Wed, 18 Jun 2025 09:49:34 -0700
+Message-Id: <20250618164934.19817-11-boqun.feng@gmail.com>
 X-Mailer: git-send-email 2.39.5 (Apple Git-154)
 In-Reply-To: <20250618164934.19817-1-boqun.feng@gmail.com>
 References: <20250618164934.19817-1-boqun.feng@gmail.com>
@@ -135,147 +135,147 @@ List-Unsubscribe: <mailto:lkmm+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Add atomic support for raw pointer values, similar to `isize` and
-`usize`, the representation type is selected based on CONFIG_64BIT.
+Memory barriers are building blocks for concurrent code, hence provide
+a minimal set of them.
 
-`*mut T` is not `Send`, however `Atomic<*mut T>` definitely needs to be
-a `Sync`, and that's the whole point of atomics: being able to have
-multiple shared references in different threads so that they can sync
-with each other. As a result, a pointer value will be transferred from
-one thread to another via `Atomic<*mut T>`:
+The compiler barrier, barrier(), is implemented in inline asm instead of
+using core::sync::atomic::compiler_fence() because memory models are
+different: kernel's atomics are implemented in inline asm therefore the
+compiler barrier should be implemented in inline asm as well. Also it's
+currently only public to the kernel crate until there's a reasonable
+driver usage.
 
-	<thread 1>		<thread 2>
-	x.store(p1, Relaxed);
-				let p = x.load(p1, Relaxed);
-
-This means a raw pointer value (`*mut T`) needs to be able to transfer
-across thread boundaries, which is essentially `Send`.
-
-To reflect this in the type system, and based on the fact that pointer
-values can be transferred safely (only using them to dereference is
-unsafe), as suggested by Alice, extend the `AllowAtomic` trait to
-include a customized `Send` semantics, that is: `impl AllowAtomic` has
-to be safe to be transferred across thread boundaries.
-
-Suggested-by: Alice Ryhl <aliceryhl@google.com>
 Signed-off-by: Boqun Feng <boqun.feng@gmail.com>
 ---
- rust/kernel/sync/atomic.rs         | 48 ++++++++++++++++++++++++++++++
- rust/kernel/sync/atomic/generic.rs | 16 ++++++++--
- 2 files changed, 61 insertions(+), 3 deletions(-)
+ rust/helpers/barrier.c      | 18 ++++++++++
+ rust/helpers/helpers.c      |  1 +
+ rust/kernel/sync.rs         |  1 +
+ rust/kernel/sync/barrier.rs | 67 +++++++++++++++++++++++++++++++++++++
+ 4 files changed, 87 insertions(+)
+ create mode 100644 rust/helpers/barrier.c
+ create mode 100644 rust/kernel/sync/barrier.rs
 
-diff --git a/rust/kernel/sync/atomic.rs b/rust/kernel/sync/atomic.rs
-index 829511f4d582..70920146935f 100644
---- a/rust/kernel/sync/atomic.rs
-+++ b/rust/kernel/sync/atomic.rs
-@@ -114,6 +114,22 @@ fn delta_into_repr(d: Self::Delta) -> Self::Repr {
-         d as Self::Repr
-     }
- }
-+// SAFETY: A `*mut T` has the same size and the alignment as `i64` for 64bit and the same as `i32`
-+// for 32bit. And it's safe to transfer the ownership of a pointer value to another thread.
-+unsafe impl<T> generic::AllowAtomic for *mut T {
-+    #[cfg(CONFIG_64BIT)]
-+    type Repr = i64;
-+    #[cfg(not(CONFIG_64BIT))]
-+    type Repr = i32;
+diff --git a/rust/helpers/barrier.c b/rust/helpers/barrier.c
+new file mode 100644
+index 000000000000..cdf28ce8e511
+--- /dev/null
++++ b/rust/helpers/barrier.c
+@@ -0,0 +1,18 @@
++// SPDX-License-Identifier: GPL-2.0
 +
-+    fn into_repr(self) -> Self::Repr {
-+        self as Self::Repr
-+    }
++#include <asm/barrier.h>
 +
-+    fn from_repr(repr: Self::Repr) -> Self {
-+        repr as Self
++void rust_helper_smp_mb(void)
++{
++	smp_mb();
++}
++
++void rust_helper_smp_wmb(void)
++{
++	smp_wmb();
++}
++
++void rust_helper_smp_rmb(void)
++{
++	smp_rmb();
++}
+diff --git a/rust/helpers/helpers.c b/rust/helpers/helpers.c
+index 83e89f6a68fb..8ddfc8f84e87 100644
+--- a/rust/helpers/helpers.c
++++ b/rust/helpers/helpers.c
+@@ -9,6 +9,7 @@
+ 
+ #include "atomic.c"
+ #include "auxiliary.c"
++#include "barrier.c"
+ #include "blk.c"
+ #include "bug.c"
+ #include "build_assert.c"
+diff --git a/rust/kernel/sync.rs b/rust/kernel/sync.rs
+index b620027e0641..c7c0e552bafe 100644
+--- a/rust/kernel/sync.rs
++++ b/rust/kernel/sync.rs
+@@ -11,6 +11,7 @@
+ 
+ mod arc;
+ pub mod atomic;
++pub mod barrier;
+ mod condvar;
+ pub mod lock;
+ mod locked_by;
+diff --git a/rust/kernel/sync/barrier.rs b/rust/kernel/sync/barrier.rs
+new file mode 100644
+index 000000000000..36a5c70e6716
+--- /dev/null
++++ b/rust/kernel/sync/barrier.rs
+@@ -0,0 +1,67 @@
++// SPDX-License-Identifier: GPL-2.0
++
++//! Memory barriers.
++//!
++//! These primitives have the same semantics as their C counterparts: and the precise definitions of
++//! semantics can be found at [`LKMM`].
++//!
++//! [`LKMM`]: srctree/tools/memory-mode/
++
++/// A compiler barrier.
++///
++/// An explicic compiler barrier function that prevents the compiler from moving the memory
++/// accesses either side of it to the other side.
++pub(crate) fn barrier() {
++    // By default, Rust inline asms are treated as being able to access any memory or flags, hence
++    // it suffices as a compiler barrier.
++    //
++    // SAFETY: An empty asm block should be safe.
++    unsafe {
++        core::arch::asm!("");
 +    }
 +}
- 
- use crate::macros::kunit_tests;
- 
-@@ -139,6 +155,9 @@ fn atomic_basic_tests() {
- 
-             assert_eq!(v, x.load(Relaxed));
-         });
 +
-+        let x = Atomic::new(core::ptr::null_mut::<i32>());
-+        assert!(x.load(Relaxed).is_null());
-     }
- 
-     #[test]
-@@ -182,4 +201,33 @@ fn atomic_arithmetic_tests() {
-             assert_eq!(v + 25, x.load(Relaxed));
-         });
-     }
-+
-+    #[test]
-+    fn atomic_ptr_tests() -> crate::error::Result {
-+        use crate::alloc::{flags::GFP_KERNEL, KBox};
-+        use core::ptr;
-+
-+        let x = Atomic::new(ptr::null_mut::<i32>());
-+
-+        assert!(x.load(Relaxed).is_null());
-+
-+        let new = KBox::new(42, GFP_KERNEL)?;
-+        x.store(ptr::from_mut(KBox::leak(new)), Release);
-+
-+        let ptr = x.load(Relaxed);
-+        assert!(!ptr.is_null());
-+
-+        // SAFETY: `ptr` is a valid pointer from `KBox::leak()` and the address dependency
-+        // guarantees observation of the initialization of `KBox`.
-+        assert_eq!(42, unsafe { ptr.read_volatile() });
-+
-+        x.xchg(ptr::null_mut(), Relaxed);
-+        assert!(x.load(Relaxed).is_null());
-+
-+        // SAFETY: `ptr` is a valid pointer from `KBox::leak()` and no one is currently referencing
-+        // the pointer, so it's safety to convert the ownership back to a `KBox`.
-+        drop(unsafe { KBox::from_raw(ptr) });
-+
-+        Ok(())
++/// A full memory barrier.
++///
++/// A barrier function that prevents both the compiler and the CPU from moving the memory accesses
++/// either side of it to the other side.
++pub fn smp_mb() {
++    if cfg!(CONFIG_SMP) {
++        // SAFETY: `smp_mb()` is safe to call.
++        unsafe {
++            bindings::smp_mb();
++        }
++    } else {
++        barrier();
 +    }
- }
-diff --git a/rust/kernel/sync/atomic/generic.rs b/rust/kernel/sync/atomic/generic.rs
-index 8c5bd90b2619..f496774c1686 100644
---- a/rust/kernel/sync/atomic/generic.rs
-+++ b/rust/kernel/sync/atomic/generic.rs
-@@ -18,6 +18,10 @@
- #[repr(transparent)]
- pub struct Atomic<T: AllowAtomic>(Opaque<T>);
- 
-+// SAFETY: `Atomic<T>` is safe to send between execution contexts, because `T` is `AllowAtomic` and
-+// `AllowAtomic`'s safety requirement guarantees that.
-+unsafe impl<T: AllowAtomic> Send for Atomic<T> {}
++}
 +
- // SAFETY: `Atomic<T>` is safe to share among execution contexts because all accesses are atomic.
- unsafe impl<T: AllowAtomic> Sync for Atomic<T> {}
- 
-@@ -30,8 +34,13 @@ unsafe impl<T: AllowAtomic> Sync for Atomic<T> {}
- ///
- /// # Safety
- ///
--/// [`Self`] must have the same size and alignment as [`Self::Repr`].
--pub unsafe trait AllowAtomic: Sized + Send + Copy {
-+/// - [`Self`] must have the same size and alignment as [`Self::Repr`].
-+/// - The implementer must guarantee it's safe to transfer ownership from one execution context to
-+///   another, this means it has to be a [`Send`], but because `*mut T` is not [`Send`] and that's
-+///   the basic type needs to support atomic operations, so this safety requirement is added to
-+///   [`AllowAtomic`] trait. This safety requirement is automatically satisfied if the type is a
-+///   [`Send`].
-+pub unsafe trait AllowAtomic: Sized + Copy {
-     /// The backing atomic implementation type.
-     type Repr: AtomicImpl;
- 
-@@ -44,7 +53,8 @@ pub unsafe trait AllowAtomic: Sized + Send + Copy {
- 
- // An `AtomicImpl` is automatically an `AllowAtomic`.
- //
--// SAFETY: `T::Repr` is `Self` (i.e. `T`), so they have the same size and alignment.
-+// SAFETY: `T::Repr` is `Self` (i.e. `T`), so they have the same size and alignment. And all
-+// `AtomicImpl` types are `Send`.
- unsafe impl<T: AtomicImpl> AllowAtomic for T {
-     type Repr = Self;
- 
++/// A write-write memory barrier.
++///
++/// A barrier function that prevents both the compiler and the CPU from moving the memory write
++/// accesses either side of it to the other side.
++pub fn smp_wmb() {
++    if cfg!(CONFIG_SMP) {
++        // SAFETY: `smp_wmb()` is safe to call.
++        unsafe {
++            bindings::smp_wmb();
++        }
++    } else {
++        barrier();
++    }
++}
++
++/// A read-read memory barrier.
++///
++/// A barrier function that prevents both the compiler and the CPU from moving the memory read
++/// accesses either side of it to the other side.
++pub fn smp_rmb() {
++    if cfg!(CONFIG_SMP) {
++        // SAFETY: `smp_rmb()` is safe to call.
++        unsafe {
++            bindings::smp_rmb();
++        }
++    } else {
++        barrier();
++    }
++}
 -- 
 2.39.5 (Apple Git-154)
 

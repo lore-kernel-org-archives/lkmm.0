@@ -1,144 +1,162 @@
-Received: from mail-ej1-f46.google.com (mail-ej1-f46.google.com [209.85.218.46])
+Received: from mail-pf1-f176.google.com (mail-pf1-f176.google.com [209.85.210.176])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F95B2E9EAB;
-	Wed, 18 Jun 2025 15:42:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3EB7B4C8E;
+	Wed, 18 Jun 2025 15:46:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750261378; cv=none; b=GQqTmkekOGi0FxhUcMtLSKRhqUdSuO02x/DRVWzdVfBIqBlgUmt85EW8BupSwW7hgMnJ+MGI7lZnehXix+pkigJXLBdlZD7M2Kj6ooPiNHtwncQ9gVorM8rgIPTbjAe3ozshzq4dMcMB9sceXW7jfg9uuM7f6F6jb2qtPXXHFww=
+	t=1750261582; cv=none; b=AYtvaBs6YOgZQmPTy4x84vulSkTmgKVcr0TVFh6vLAOAwkcTqpv8a5L2n9kgrE7u/50nERkdNWqKO7EQHt5/XiZQ+qtZxOwY6XA8BbSQt4l2yi2Eu0dEnfiXerus8yd0swrLFV+RNxUsLPJUvh1EH16MCP+bliTXpbBYPRzIsv0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750261378; c=relaxed/simple;
-	bh=ZAdHHI1Qa6a7uSzz9G6krYI8Sdg7y2V5dKsM4QZVgG0=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Jc7xdly/EMjtfFCQZuPtNAWKpj8pJRfT3+XGPLMx74CG0dmCQi+2EYkZ2NGhBQJXqpAaAMX7CggdX/awImTyym6jLV7ebqGDXgYvdjtdsVsCQr6/3YeNQAyoYzCGGqTNL0QMA/x1mQW8ll96C1Ekkm99cGnFLo1HF3xVH3Hb1c4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=debian.org; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.218.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=debian.org
+	s=arc-20240116; t=1750261582; c=relaxed/simple;
+	bh=RkhAhy7cJp7ZZXWeYy/4iE+8/T6IKGFMwCV6ga9hQfU=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=fi66Uw4W6XVNqzP/rvYNvXcYqMf0IxZ3O/GA7GVv3RPPaHATu/cDtnIdEBePjgxjwIxcbLOcruru0CYqOSXylY2QuHA0q4r1gcE1znCgJBqnoHszA4BCd8O+A5okwHdHoTmU/LHSdibFJQSPt/yiFH63rMOXQKrfS/WeM2kJ8JU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=IBeTS2+3; arc=none smtp.client-ip=209.85.210.176
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-ej1-f46.google.com with SMTP id a640c23a62f3a-ad574992fcaso1118296366b.1;
-        Wed, 18 Jun 2025 08:42:56 -0700 (PDT)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="IBeTS2+3"
+Received: by mail-pf1-f176.google.com with SMTP id d2e1a72fcca58-748f54dfa5fso233817b3a.2;
+        Wed, 18 Jun 2025 08:46:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1750261580; x=1750866380; darn=lists.linux.dev;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=egqntrQT0mcTNXSQUXdoAiXmKkzBs77HbRV6QGmeUAk=;
+        b=IBeTS2+3PAgNJ4vdzyKu2D8o/yC/7ZVsNF476I/DwWPcJ5FEYEiq5/tROQWLBX6ZJa
+         44tOJDl2CwzseBE8SaPY8S8o3dLd+ygTKOFCVlkKLiEA7LOs9iO5Ayqpd0iQvgPwO3yD
+         0mD0XRssZaEPmRPJ04HVFGnLEO4OeFmO1mlHrv5dmNJ1l8IAsIYrDApejssHoEPKQlUv
+         ivdsYIMtCXVxym+zAL2BVM/Je567L3XiaCDv2cNEkaYuqvBE2sY9Tk10HZHYSCZOdtha
+         VUZajE9dTe/W7dEejW1T2ut9s1Lnd/XGDqYJI1ODZ+uUiwXYOoR7E8ZGfWlWbvOnYCVL
+         j3RA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1750261375; x=1750866175;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=LWYHbpP051s3adQYzbRj7oJpUnu9maWKCI8y343Rnlo=;
-        b=JEo8PYBM1eTqZ0Y4ebIRkaDvQBxq9Xw7mKcbXg+8fS1do6SzjDp/sIa888WXtZG37q
-         P5Odyg1EODSYfLE1bzfe+Hki0bJc5pIzMnqOpdmi1KZyC1wpSwNB+qUHo/lKDlS/tbrT
-         /ebOFTxBReinor5D/0A6ajHx+PQNoL3Jy/VM27TuaNKcfKg+L2+bMeTiZ7T4Kb4ipkDI
-         0ni9t6PpLmGSlVeGU8VpUNl7yvLcJX6I03ZeMttxfVLrzsIIJpyMsQiFdFBniFpWOLud
-         xEbvz2CGJ9EXEfsCcscubs23LSSU8C2i7hBzlkIt3RxIByLIr0XK4s1Ie/zt77gMowJu
-         nVWQ==
-X-Forwarded-Encrypted: i=1; AJvYcCUh+LvUG7oBH/m5+VazKyqB4HOeK7qROWd1MKjiHKmhgC9GIT5nPcavvHqwRBis+/imxKebGbku34yFnkAQG3CB9uJtUw==@lists.linux.dev, AJvYcCV4d+8CpRI/XxQ0bRgIjF75gm/UP2YI0asbpsduxMnuvzA3QEAs/V2dyNE/IzdgdjqKtrtAgw==@lists.linux.dev
-X-Gm-Message-State: AOJu0YwCNj+1y5D9U2baCOuxtoWgqWw5vN3DrS6889fRQFD3/p3IefmC
-	8smQdcEbKDOzBlobHXLzcYfs3MKU2mIlhfw4w+f+7Prp4rPbKsdSUznnQu8hFg==
-X-Gm-Gg: ASbGnctjwAON9zqVmS9/mdGtKrXJbmaEa/eH7KchLCgGm3AxA0HwCRCALBnKW3WiJMp
-	3Tx4ZIIMqErn6oqncEIOqOQOPfBHAxjMAjvAqwz1eRj03eIHk7fkIHtj2dGdbN2rsD68OZp4gaY
-	8kM6kNVk4igLqgt9CO6Wad4LvDeepuiBhDVTyOf1lwptclBRXAML/bKcW2Xps4n4hB55pKc0wgF
-	w9GUH/iJNFtj26484YxBfiTcbTQg4rAQehxHcQ1VpKll8mzubGUgKJ84CMx99dUU0eWmaMWsJ2l
-	iaPtPExj6DBGWfZ+xvZNCJMT3eJ2AcLFg92611Jwpc4lrBw3NluZ
-X-Google-Smtp-Source: AGHT+IEZeb5BUZBwW+3X3Mghevtyvvv3qa+6/WQujzPyWQjQVnuNccvQjc/vqxVtBIzGQN0UTopzuA==
-X-Received: by 2002:a17:907:3f07:b0:adb:2db9:b0b0 with SMTP id a640c23a62f3a-adfad415cafmr1729558966b.35.1750261374664;
-        Wed, 18 Jun 2025 08:42:54 -0700 (PDT)
-Received: from gmail.com ([2a03:2880:30ff:4::])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-adec88ff5d3sm1104154566b.101.2025.06.18.08.42.53
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 18 Jun 2025 08:42:54 -0700 (PDT)
-Date: Wed, 18 Jun 2025 08:42:51 -0700
-From: Breno Leitao <leitao@debian.org>
-To: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-Cc: Linux Doc Mailing List <linux-doc@vger.kernel.org>,
-	Jonathan Corbet <corbet@lwn.net>, Akira Yokosawa <akiyks@gmail.com>,
-	"David S. Miller" <davem@davemloft.net>,
-	Donald Hunter <donald.hunter@gmail.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Ignacio Encinas Rubio <ignacio@iencinas.com>,
-	Jan Stancek <jstancek@redhat.com>, Marco Elver <elver@google.com>,
-	Paolo Abeni <pabeni@redhat.com>, Ruben Wauters <rubenru09@aol.com>,
-	Shuah Khan <skhan@linuxfoundation.org>, joel@joelfernandes.org,
-	linux-kernel-mentees@lists.linux.dev, linux-kernel@vger.kernel.org,
-	lkmm@lists.linux.dev, netdev@vger.kernel.org, peterz@infradead.org,
-	stern@rowland.harvard.edu
-Subject: Re: [PATCH v6 01/15] docs: conf.py: properly handle include and
- exclude patterns
-Message-ID: <aFLee2PdbK+6SiA8@gmail.com>
-References: <cover.1750246291.git.mchehab+huawei@kernel.org>
- <737b08e891765dc10bd944d4d42f8b1e37b80275.1750246291.git.mchehab+huawei@kernel.org>
+        d=1e100.net; s=20230601; t=1750261580; x=1750866380;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=egqntrQT0mcTNXSQUXdoAiXmKkzBs77HbRV6QGmeUAk=;
+        b=Vg3j5Qu86nn0wTSyq5Gi4dD8dfOyk/T4E+R5ryXKb9RKUVMEwtRrMXNm5Z/TvzfKP/
+         6Z90dPeSUIUlvv6MgcWdi+PcS5WpKhH46gRtn8Q+wMJtz19FTIkuM293Tg5wBhQkAYU/
+         2ti1MngIbFrX2O+3N8zSeIQayxLf+haJbbzXvT9S/QgohCDLwZRT2gJ3GBCEf8fY1gbD
+         dASmQN/KcLpsYijM8bf1v173+IeDNCtBxOkDyEf8u9OfmFw63PN/T9z90IlzN52yKkgz
+         msvLZHw36ZboWHgECghvnim3Nv2fkjNcBJEXo64CX+c6m/lpV4qn1cpT9+Xckqasd7te
+         D44w==
+X-Forwarded-Encrypted: i=1; AJvYcCU18XbFb/8rgm4z71NBd92AjSa/0w2k1JvakiX76ebfuaPPU1CSFufat/XMTpdxgaEgnaPCgw==@lists.linux.dev, AJvYcCUJ4C+eCQjdd2DHL52PKDqAb7BWTaYBYCtvKFmXhKqwJ997jIu5YNj/MXKu2tFY2ub1DoRGWkUfMUe3HjWrSb4vzWM1QQ==@lists.linux.dev
+X-Gm-Message-State: AOJu0YxQNiTmyihyBy73L5X3pFdnLiZVNAJ+50XIa1SSpDGR91BwtT12
+	fRLI1Wd2y1JIDTdrPNHnl6/NMSdm/CV55UKbfEogUyhMwhmWmTCfV/pE
+X-Gm-Gg: ASbGncup5GoiVuhgeRqqdbbgzW4XV4O7/wtsYTulTRDoxR2vDdCSoL4zU1KFArCZpAk
+	/7Sf3jsrZ5W4onhfWUttr1vUlh0nOtenAi3N6vmOD3UkFMP7tkV8WTeJVUIsOhlO+AXBe+b9fms
+	zOw4REvGd8MSJAQsp+St+2wO12LMJ4K8sr2+/jWRgDvX8a2zmGlGyjayw/vj9yvIQXj/2lNbPxa
+	FWdVjsdjQWQNNWU0PRjcCSAm6U0hQIfgFZtelqMpS+XGQAAHcJCoD0qAvKXOjXdD55xf0Au0cJ+
+	sagDvSbVbv5jBiukc1SHqEE13TXZT6aMZpyow4/c+z+ENRK8eEyknNJfm1069bySNE2/h4taqWf
+	K/3Q7ztL38PrzIsaow7Ij6pdOQTDmipTU
+X-Google-Smtp-Source: AGHT+IGojw9TogQCLzzrFvTji884jdeSs6pD+joQuFZ1XOjZry8dO66lcKyVpPr1hvTndaJFUZbB5g==
+X-Received: by 2002:a05:6a00:895:b0:73e:2dc5:a93c with SMTP id d2e1a72fcca58-7489cf9a3bbmr21984258b3a.11.1750261580264;
+        Wed, 18 Jun 2025 08:46:20 -0700 (PDT)
+Received: from [10.0.2.15] (KD106167137155.ppp-bb.dion.ne.jp. [106.167.137.155])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-74890082e71sm11574559b3a.107.2025.06.18.08.46.15
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 18 Jun 2025 08:46:19 -0700 (PDT)
+Message-ID: <17f2a9ce-85ac-414a-b872-fbcd30354473@gmail.com>
+Date: Thu, 19 Jun 2025 00:46:15 +0900
 Precedence: bulk
 X-Mailing-List: lkmm@lists.linux.dev
 List-Id: <lkmm.lists.linux.dev>
 List-Subscribe: <mailto:lkmm+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:lkmm+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <737b08e891765dc10bd944d4d42f8b1e37b80275.1750246291.git.mchehab+huawei@kernel.org>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v6 00/15] Don't generate netlink .rst files inside
+ $(srctree)
+To: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
+ Linux Doc Mailing List <linux-doc@vger.kernel.org>,
+ Jonathan Corbet <corbet@lwn.net>
+Cc: linux-kernel@vger.kernel.org, "David S. Miller" <davem@davemloft.net>,
+ Ignacio Encinas Rubio <ignacio@iencinas.com>, Marco Elver
+ <elver@google.com>, Shuah Khan <skhan@linuxfoundation.org>,
+ Donald Hunter <donald.hunter@gmail.com>, Eric Dumazet <edumazet@google.com>,
+ Jan Stancek <jstancek@redhat.com>, Paolo Abeni <pabeni@redhat.com>,
+ Ruben Wauters <rubenru09@aol.com>, joel@joelfernandes.org,
+ linux-kernel-mentees@lists.linux.dev, lkmm@lists.linux.dev,
+ netdev@vger.kernel.org, peterz@infradead.org, stern@rowland.harvard.edu,
+ Breno Leitao <leitao@debian.org>, Randy Dunlap <rdunlap@infradead.org>,
+ Akira Yokosawa <akiyks@gmail.com>
+References: <cover.1750246291.git.mchehab+huawei@kernel.org>
+Content-Language: en-US
+From: Akira Yokosawa <akiyks@gmail.com>
+In-Reply-To: <cover.1750246291.git.mchehab+huawei@kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Wed, Jun 18, 2025 at 01:46:28PM +0200, Mauro Carvalho Chehab wrote:
-> When one does:
-> 	make SPHINXDIRS="foo" htmldocs
+Hi Mauro,
+
+On 2025/06/18 20:46, Mauro Carvalho Chehab wrote:
+> As discussed at:
+>    https://lore.kernel.org/all/20250610101331.62ba466f@foz.lan/
 > 
-> All patterns would be relative to Documentation/foo, which
-> causes the include/exclude patterns like:
+> changeset f061c9f7d058 ("Documentation: Document each netlink family")
+> added a logic which generates *.rst files inside $(srctree). This is bad
+> when O=<BUILDDIR> is used.
 > 
-> 	include_patterns = [
-> 		...
-> 		f'foo/*.{ext}',
-> 	]
+> A recent change renamed the yaml files used by Netlink, revealing a bad
+> side effect: as "make cleandocs" don't clean the produced files and symbols
+> appear duplicated for people that don't build the kernel from scratch.
 > 
-> to break. This is not what it is expected. Address it by
-> adding a logic to dynamically adjust the pattern when
-> SPHINXDIRS is used.
+> This series adds an yaml parser extension and uses an index file with glob for
+> *. We opted to write such extension in a way that no actual yaml conversion
+> code is inside it. This makes it flexible enough to handle other types of yaml
+> files in the future. The actual yaml conversion logic were placed at 
+> netlink_yml_parser.py. 
 > 
-> That allows adding parsers for other file types.
+> As requested by YNL maintainers, this version has netlink_yml_parser.py
+> inside tools/net/ynl/pyynl/ directory. I don't like mixing libraries with
+> binaries, nor to have Python libraries spread all over the Kernel. IMO,
+> the best is to put all of them on a common place (scripts/lib, python/lib,
+> lib/python, ...) but, as this can be solved later, for now let's keep it this
+> way.
 > 
-> It should be noticed that include_patterns was added on
-> Sphinx 5.1:
-> 	https://www.sphinx-doc.org/en/master/usage/configuration.html#confval-include_patterns
-> 
-> So, a backward-compatible code is needed when we start
-> using it for real.
-> 
-> Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-> Reviewed-by: Donald Hunter <donald.hunter@gmail.com>
 > ---
->  Documentation/conf.py | 67 ++++++++++++++++++++++++++++++++++++++++---
->  1 file changed, 63 insertions(+), 4 deletions(-)
 > 
-> diff --git a/Documentation/conf.py b/Documentation/conf.py
-> index 12de52a2b17e..4ba4ee45e599 100644
-> --- a/Documentation/conf.py
-> +++ b/Documentation/conf.py
-> @@ -17,6 +17,66 @@ import os
->  import sphinx
->  import shutil
->  
-> +# Get Sphinx version
-> +major, minor, patch = sphinx.version_info[:3]
-> +
-> +# Include_patterns were added on Sphinx 5.1
-> +if (major < 5) or (major == 5 and minor < 1):
-> +    has_include_patterns = False
-> +else:
-> +    has_include_patterns = True
-> +    # Include patterns that don't contain directory names, in glob format
-> +    include_patterns = ['**.rst']
-> +
-> +# Location of Documentation/ directory
-> +doctree = os.path.abspath('.')
-> +
-> +# Exclude of patterns that don't contain directory names, in glob format.
-> +exclude_patterns = []
-> +
-> +# List of patterns that contain directory names in glob format.
-> +dyn_include_patterns = []
-> +dyn_exclude_patterns = ['output']
-> +
-> +# Properly handle include/exclude patterns
-> +# ----------------------------------------
-> +
-> +def update_patterns(app):
-> +
+> v6:
+> - YNL doc parser is now at tools/net/ynl/pyynl/lib/doc_generator.py;
+> - two patches got merged;
+> - added instructions to test docs with Sphinx 3.4.3 (minimal supported
+>   version);
+> - minor fixes.
 
-PEP-257 says we don't want a line before docstring:
+Quick tests against Sphinx 3.4.3 using container images based on
+debian:bullseye and almalinux:9, both of which have 3.4.3 as their distro
+packages, emits a *bunch* of warnings like the following:
 
-https://peps.python.org/pep-0257/#multi-line-docstrings
+/<srcdir>/Documentation/netlink/specs/conntrack.yaml:: WARNING: YAML parsing error: AttributeError("'Values' object has no attribute 'tab_width'")
+/<srcdir>/Documentation/netlink/specs/devlink.yaml:: WARNING: YAML parsing error: AttributeError("'Values' object has no attribute 'tab_width'")
+/<srcdir>/Documentation/netlink/specs/dpll.yaml:: WARNING: YAML parsing error: AttributeError("'Values' object has no attribute 'tab_width'")
+/<srcdir>/Documentation/netlink/specs/ethtool.yaml:: WARNING: YAML parsing error: AttributeError("'Values' object has no attribute 'tab_width'")
+/<srcdir>/Documentation/netlink/specs/fou.yaml:: WARNING: YAML parsing error: AttributeError("'Values' object has no attribute 'tab_width'")
+[...]
+
+I suspect there should be a minimal required minimal version of PyYAML.
+
+"pip freeze" based on almalinux:9 says:
+
+    PyYAML==5.4.1
+
+"pip freeze" based on debian:bullseye says:
+
+    PyYAML==5.3.1
+
+What is the minimal required version here?
+
+And if users of those old distros need to manually upgrade PyYAML,
+why don't you suggest them to upgrade Sphinx as well?
+
+        Thanks, Akira
+
+>
+> v5:
+> - some patch reorg;
+> - netlink_yml_parser.py is now together with ynl tools;
+> - minor fixes.
+[...]
+

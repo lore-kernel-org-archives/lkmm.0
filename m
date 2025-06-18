@@ -1,281 +1,205 @@
-Received: from mail-qk1-f182.google.com (mail-qk1-f182.google.com [209.85.222.182])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 877F22F0028
-	for <lkmm@lists.linux.dev>; Wed, 18 Jun 2025 16:49:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 731631E0B91;
+	Wed, 18 Jun 2025 19:55:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750265395; cv=none; b=psYJBDIGUHeFtg6rWASHr/xT/V8wkiYvGLyg6cRJJd3SeLslh1fybshOniFxMh98hh0m00P06DQCY3ysUOObuC6M4XgsBEIPs421it0s1Q06wt9GV0Ty3CFwHI/8grlzw4AfbEHUZAPa3qkKqs+UFY20LEwQ1hMGoQJkrXqZHeg=
+	t=1750276505; cv=none; b=D2BdpQf3Qoy4+5Ib/Xo6M1Q0fTlWZ6JHaeSeP49Eq4AdFuowL6F1UOfbyvUKjLLBzEILDi4uFWQYZoMzRd3MaeXus1aQZWPA7XlbhQ+/HyDEH6DFOEubkdsLrdsnGCiZ7XWyFSAz0xkxnbvQ/BYZVerIxHb0i2oiMnQ2AvXWRr4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750265395; c=relaxed/simple;
-	bh=bw14+xZqI0w9yxj/j5uKeKXaYLL1MtfH8KsStGXN1Us=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=i18FtkdijlFe7Ux5uq0wKcva0ILIJo+bFajeNm0aAoSQT+GgfsvixNUCJP2rRipSuoIhPxbUj1xdtAmfL45beTSVGd4t3RFVA35T57xQz1h88+jQsHromzk4IUxry+5ld5jUGSRLplZLVfUzSQvFKq7fCV5zCCaQkTwNv38GZAU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Zps3RI4F; arc=none smtp.client-ip=209.85.222.182
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1750276505; c=relaxed/simple;
+	bh=1RlycySOdSP3ZEPT62sfSnVE+tSXDy0OAIIpXyF3AKU=;
+	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=HUdoyTH+7+zPdqq3b7wlQuMzrCRptxm/0xMjtgQpUSLhK6bmqkc873ZxMXgzEq4mv7px729tbWTWhUAlG1G4XxrUjpX8CmWdStHOH7FKWaGLToiR1sqhgHZKm70jXLUlJlxinQipffvVrtTxzW+nQobgOWCHb3YbkimGxLDKDrQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Mkx4JIXw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Zps3RI4F"
-Received: by mail-qk1-f182.google.com with SMTP id af79cd13be357-7d3cc0017fdso508118085a.3
-        for <lkmm@lists.linux.dev>; Wed, 18 Jun 2025 09:49:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1750265392; x=1750870192; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:feedback-id:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=hO2T4XtpSZqQqdPFG12LlFMg3J8jBgvJe6Qf6HA4HQY=;
-        b=Zps3RI4F8k10AtkEb6jOPFl0KQhNNRP42Rhc0IOBRKh6EMqELCcjCV7+HRe2iWomee
-         zLIvdJJOamfkEZBXwvmoNByP/5KRSr2SBXpVlSh6IjcJT8KMtDrs/0+lJQAxLc3VH+Aa
-         HxwZ+fyzkue7IEw7ywBX03sJq3+pOz96148PD40snWKVgA1Cqc6z5LqPs48CCrjxmNOc
-         EPMRhKCPccFrZLi5cX/dHIgrDsVXHJ3xZwdBvvQXihVnYgdiYtX3n8jff+AUgWwvGOWv
-         ul31pxLzhfgWCvWuhEhnG97pzX2Axm9ZZMuC4y/KKwRezLe+N5xh7a4932ukyp6zF6A3
-         ACEQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1750265392; x=1750870192;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:feedback-id:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=hO2T4XtpSZqQqdPFG12LlFMg3J8jBgvJe6Qf6HA4HQY=;
-        b=ef7wSj1mSlGyd3324/Z4udubn2Dg8e7wQVg+mCixw8raX1TeRl1gMIEYz03akfa/pd
-         wvxx0j4KhV+4HN+wMn+L2mYAX2X5SgL6IdsC7SQut3+7dAphEyYWGjZ1NuwJZYL/9lAo
-         F8mddyJFPCQNapMCu9ycCrtKvTzHHqdd1wuGTd5MVhmmURohKVaJhmIZ36gUllo1oXCT
-         vmcwKvR5TdqczJmoYfSpyrfD2Iim46MbyFS/gfhqisWauyhvztK4RJtyCWbbQe5cw78A
-         v0nknLR9u4Hm34AxzwXlVTY1YE4vBvadAV7Azm2ti1LT5iQTW/EEbZvTpnG0tq8l6Hag
-         9U2w==
-X-Forwarded-Encrypted: i=1; AJvYcCXRhapgKrvEDOfK3lg+WXr1ifwMQWic1hg1joY+/USUakj+UlT6J1hWt5RNLctlj3cxdX4j@lists.linux.dev
-X-Gm-Message-State: AOJu0YyRFrdobT0dzP22kjScke0yRVbw1xJ8yz4wqK3NUZh7o5OQiWOy
-	TF6L2rXq1h/ArWqXLCnEX8Uhp5K33fXBJZCQeSq5dGAWmVj8/23ube4e
-X-Gm-Gg: ASbGncv32E9EtMQAu52iT4ld1/XOuxnbLtYldozFtqH1tNniXvY8O5odmb+YyHmeFTn
-	g50TxoazToENS0T03r9Tz9HP3JoR8rJjiTMwac0REaERZGiW4nS/MXZoPEuv0YaOS4OzdasDAU4
-	aQi3BZef1eWHJ2rLzfxsVrg53nqEuoM2ZDFtq0CpfzbJt3nwvvokncemgf31e5dPab99yhhzx+9
-	1RqW7HQEDMeF7haXgJ0xFqMHDPucaFu0M+zGW8inkV5JQMac6kStUvoRkcTiYG2GquGhEFkU64d
-	xoU1UOx5fhw5LoJ5+LwojvuYS2/TuIDo6+x+PMRx9Gu6nC0jEoq3LE61P01y8kfCrf4mNmRh3ZH
-	DSWEbv0xKzGLA1R+ZuocOHorIgeWofG5geriqvO6+I7HR+Qs46Fbq
-X-Google-Smtp-Source: AGHT+IFkHVXdIToKeS9IYC04H0XhotnExqBscPeT2KS3dLGvn7Ooi5xAI0y8yvE+Wp85XtZepw3pvA==
-X-Received: by 2002:a05:620a:440f:b0:7ca:f02a:4d2b with SMTP id af79cd13be357-7d3c6c0d3b0mr2596059785a.12.1750265392346;
-        Wed, 18 Jun 2025 09:49:52 -0700 (PDT)
-Received: from fauth-a2-smtp.messagingengine.com (fauth-a2-smtp.messagingengine.com. [103.168.172.201])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-6fb35c927cesm74824436d6.124.2025.06.18.09.49.51
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 18 Jun 2025 09:49:52 -0700 (PDT)
-Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
-	by mailfauth.phl.internal (Postfix) with ESMTP id 6E4AB1200043;
-	Wed, 18 Jun 2025 12:49:51 -0400 (EDT)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-01.internal (MEProxy); Wed, 18 Jun 2025 12:49:51 -0400
-X-ME-Sender: <xms:L-5SaPZs7INv9PvJEjATrx34D-oOEMwd89GdvaBB7pP72BOpHwziAA>
-    <xme:L-5SaOaETaR7yn2MtJbfHdEe8ng44l4dwv0I4DlBze_-KTXI5PjnaupFhHZQ5BLbK
-    zO3NDuQHw3rMFR4XQ>
-X-ME-Received: <xmr:L-5SaB-S0IkR5iOtkAXq0rz1sxMiS1A6JsSMwXP3S3CoutpJgrmZ8RevsP2bbQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddvgdefudeiucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
-    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
-    htshculddquddttddmnecujfgurhephffvvefufffkofgjfhgggfestdekredtredttden
-    ucfhrhhomhepuehoqhhunhcuhfgvnhhguceosghoqhhunhdrfhgvnhhgsehgmhgrihhlrd
-    gtohhmqeenucggtffrrghtthgvrhhnpeegleejiedthedvheeggfejveefjeejkefgveff
-    ieeujefhueeigfegueehgeeggfenucevlhhushhtvghrufhiiigvpedunecurfgrrhgrmh
-    epmhgrihhlfhhrohhmpegsohhquhhnodhmvghsmhhtphgruhhthhhpvghrshhonhgrlhhi
-    thihqdeiledvgeehtdeigedqudejjeekheehhedvqdgsohhquhhnrdhfvghngheppehgmh
-    grihhlrdgtohhmsehfihigmhgvrdhnrghmvgdpnhgspghrtghpthhtohepvdeipdhmohgu
-    vgepshhmthhpohhuthdprhgtphhtthhopehlihhnuhigqdhkvghrnhgvlhesvhhgvghrrd
-    hkvghrnhgvlhdrohhrghdprhgtphhtthhopehruhhsthdqfhhorhdqlhhinhhugiesvhhg
-    vghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehlkhhmmheslhhishhtshdrlhhinh
-    hugidruggvvhdprhgtphhtthhopehlihhnuhigqdgrrhgthhesvhhgvghrrdhkvghrnhgv
-    lhdrohhrghdprhgtphhtthhopehojhgvuggrsehkvghrnhgvlhdrohhrghdprhgtphhtth
-    hopegrlhgvgidrghgrhihnohhrsehgmhgrihhlrdgtohhmpdhrtghpthhtohepsghoqhhu
-    nhdrfhgvnhhgsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghgrrhihsehgrghrhihguh
-    hordhnvghtpdhrtghpthhtohepsghjohhrnhefpghghhesphhrohhtohhnmhgrihhlrdgt
-    ohhm
-X-ME-Proxy: <xmx:L-5SaFp9jezQUuWT8ghuBZ3Rl77GwSkiCeloXIaZqeJAl-8Vo9KvbQ>
-    <xmx:L-5SaKr_GK66wQWUqSCUCxSyZwWup2ZfYEUX1qOPB4xHjoEZunEfdQ>
-    <xmx:L-5SaLQz9jN0WCCf99VytGe4F0h4tSrM_bVqGbdT4NLYRI5c5SmQaA>
-    <xmx:L-5SaCpN1YZWFrNxfAcwVjJ5J_JeKhSWsIuKJm09pEtP-Ul4kumFmQ>
-    <xmx:L-5SaL5jjqNpvF_3JPV9GWgP1Qon6C0JifsG5phYICaZJlqrynyswStv>
-Feedback-ID: iad51458e:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 18 Jun 2025 12:49:50 -0400 (EDT)
-From: Boqun Feng <boqun.feng@gmail.com>
-To: linux-kernel@vger.kernel.org,
-	rust-for-linux@vger.kernel.org,
-	lkmm@lists.linux.dev,
-	linux-arch@vger.kernel.org
-Cc: Miguel Ojeda <ojeda@kernel.org>,
-	Alex Gaynor <alex.gaynor@gmail.com>,
-	Boqun Feng <boqun.feng@gmail.com>,
-	Gary Guo <gary@garyguo.net>,
-	=?UTF-8?q?Bj=C3=B6rn=20Roy=20Baron?= <bjorn3_gh@protonmail.com>,
-	Benno Lossin <lossin@kernel.org>,
-	Andreas Hindborg <a.hindborg@kernel.org>,
-	Alice Ryhl <aliceryhl@google.com>,
-	Trevor Gross <tmgross@umich.edu>,
-	Danilo Krummrich <dakr@kernel.org>,
-	Will Deacon <will@kernel.org>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Wedson Almeida Filho <wedsonaf@gmail.com>,
-	Viresh Kumar <viresh.kumar@linaro.org>,
-	Lyude Paul <lyude@redhat.com>,
-	Ingo Molnar <mingo@kernel.org>,
-	Mitchell Levy <levymitchell0@gmail.com>,
-	"Paul E. McKenney" <paulmck@kernel.org>,
-	"Greg Kroah-Hartman" <gregkh@linuxfoundation.org>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	"Thomas Gleixner" <tglx@linutronix.de>
-Subject: [PATCH v5 10/10] rust: sync: Add memory barriers
-Date: Wed, 18 Jun 2025 09:49:34 -0700
-Message-Id: <20250618164934.19817-11-boqun.feng@gmail.com>
-X-Mailer: git-send-email 2.39.5 (Apple Git-154)
-In-Reply-To: <20250618164934.19817-1-boqun.feng@gmail.com>
-References: <20250618164934.19817-1-boqun.feng@gmail.com>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Mkx4JIXw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 025DAC4CEE7;
+	Wed, 18 Jun 2025 19:55:00 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1750276505;
+	bh=1RlycySOdSP3ZEPT62sfSnVE+tSXDy0OAIIpXyF3AKU=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+	b=Mkx4JIXwXrnHLEBQvsqdW8RQuZ9ro4sF496hW+Nz2EUz3hGoyOssK8CDgRrj7zfq6
+	 kHx9kNAJRe4tiFbn5CxjXby7pDGgWrN6ncNZru50wpgIlHpSjgLh8IVgKBYBWb5u3a
+	 ScvcmA9JYKhPljZwKKvfMVfxnt4XtYzzsNRQH1qa8Gi1WIL8TNmt3ZbNg6tdbAXv6y
+	 QOQ1JweU/4wPFO884GFGJ+tVHUzeCeMq6Oim6N8Fz4/NvnH+Mok+/FAbV2FsfXiSeC
+	 yPZsTaEpj9jr3mDfRvhNUrtgR/ngH68Z7eKvMjC4gf18xp0631bOiPFXsc9V5vYz0z
+	 DRK5GxK8gExdg==
+Date: Wed, 18 Jun 2025 21:54:57 +0200
+From: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+To: Breno Leitao <leitao@debian.org>
+Cc: Linux Doc Mailing List <linux-doc@vger.kernel.org>, Jonathan Corbet
+ <corbet@lwn.net>, Akira Yokosawa <akiyks@gmail.com>, "David S. Miller"
+ <davem@davemloft.net>, Donald Hunter <donald.hunter@gmail.com>, Eric
+ Dumazet <edumazet@google.com>, Ignacio Encinas Rubio
+ <ignacio@iencinas.com>, Jan Stancek <jstancek@redhat.com>, Marco Elver
+ <elver@google.com>, Paolo Abeni <pabeni@redhat.com>, Ruben Wauters
+ <rubenru09@aol.com>, Shuah Khan <skhan@linuxfoundation.org>,
+ joel@joelfernandes.org, linux-kernel-mentees@lists.linux.dev,
+ linux-kernel@vger.kernel.org, lkmm@lists.linux.dev, netdev@vger.kernel.org,
+ peterz@infradead.org, stern@rowland.harvard.edu
+Subject: Re: [PATCH v6 01/15] docs: conf.py: properly handle include and
+ exclude patterns
+Message-ID: <20250618215457.72b93b8d@foz.lan>
+In-Reply-To: <aFLee2PdbK+6SiA8@gmail.com>
+References: <cover.1750246291.git.mchehab+huawei@kernel.org>
+	<737b08e891765dc10bd944d4d42f8b1e37b80275.1750246291.git.mchehab+huawei@kernel.org>
+	<aFLee2PdbK+6SiA8@gmail.com>
+X-Mailer: Claws Mail 4.3.1 (GTK 3.24.49; x86_64-redhat-linux-gnu)
 Precedence: bulk
 X-Mailing-List: lkmm@lists.linux.dev
 List-Id: <lkmm.lists.linux.dev>
 List-Subscribe: <mailto:lkmm+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:lkmm+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 
-Memory barriers are building blocks for concurrent code, hence provide
-a minimal set of them.
+Em Wed, 18 Jun 2025 08:42:51 -0700
+Breno Leitao <leitao@debian.org> escreveu:
 
-The compiler barrier, barrier(), is implemented in inline asm instead of
-using core::sync::atomic::compiler_fence() because memory models are
-different: kernel's atomics are implemented in inline asm therefore the
-compiler barrier should be implemented in inline asm as well. Also it's
-currently only public to the kernel crate until there's a reasonable
-driver usage.
+> On Wed, Jun 18, 2025 at 01:46:28PM +0200, Mauro Carvalho Chehab wrote:
+> > When one does:
+> > 	make SPHINXDIRS="foo" htmldocs
+> > 
+> > All patterns would be relative to Documentation/foo, which
+> > causes the include/exclude patterns like:
+> > 
+> > 	include_patterns = [
+> > 		...
+> > 		f'foo/*.{ext}',
+> > 	]
+> > 
+> > to break. This is not what it is expected. Address it by
+> > adding a logic to dynamically adjust the pattern when
+> > SPHINXDIRS is used.
+> > 
+> > That allows adding parsers for other file types.
+> > 
+> > It should be noticed that include_patterns was added on
+> > Sphinx 5.1:
+> > 	https://www.sphinx-doc.org/en/master/usage/configuration.html#confval-include_patterns
+> > 
+> > So, a backward-compatible code is needed when we start
+> > using it for real.
+> > 
+> > Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+> > Reviewed-by: Donald Hunter <donald.hunter@gmail.com>
+> > ---
+> >  Documentation/conf.py | 67 ++++++++++++++++++++++++++++++++++++++++---
+> >  1 file changed, 63 insertions(+), 4 deletions(-)
+> > 
+> > diff --git a/Documentation/conf.py b/Documentation/conf.py
+> > index 12de52a2b17e..4ba4ee45e599 100644
+> > --- a/Documentation/conf.py
+> > +++ b/Documentation/conf.py
+> > @@ -17,6 +17,66 @@ import os
+> >  import sphinx
+> >  import shutil
+> >  
+> > +# Get Sphinx version
+> > +major, minor, patch = sphinx.version_info[:3]
+> > +
+> > +# Include_patterns were added on Sphinx 5.1
+> > +if (major < 5) or (major == 5 and minor < 1):
+> > +    has_include_patterns = False
+> > +else:
+> > +    has_include_patterns = True
+> > +    # Include patterns that don't contain directory names, in glob format
+> > +    include_patterns = ['**.rst']
+> > +
+> > +# Location of Documentation/ directory
+> > +doctree = os.path.abspath('.')
+> > +
+> > +# Exclude of patterns that don't contain directory names, in glob format.
+> > +exclude_patterns = []
+> > +
+> > +# List of patterns that contain directory names in glob format.
+> > +dyn_include_patterns = []
+> > +dyn_exclude_patterns = ['output']
+> > +
+> > +# Properly handle include/exclude patterns
+> > +# ----------------------------------------
+> > +
+> > +def update_patterns(app):
+> > +  
+> 
+> PEP-257 says we don't want a line before docstring:
+> 
+> https://peps.python.org/pep-0257/#multi-line-docstrings
 
-Signed-off-by: Boqun Feng <boqun.feng@gmail.com>
----
- rust/helpers/barrier.c      | 18 ++++++++++
- rust/helpers/helpers.c      |  1 +
- rust/kernel/sync.rs         |  1 +
- rust/kernel/sync/barrier.rs | 67 +++++++++++++++++++++++++++++++++++++
- 4 files changed, 87 insertions(+)
- create mode 100644 rust/helpers/barrier.c
- create mode 100644 rust/kernel/sync/barrier.rs
+True, but:
 
-diff --git a/rust/helpers/barrier.c b/rust/helpers/barrier.c
-new file mode 100644
-index 000000000000..cdf28ce8e511
---- /dev/null
-+++ b/rust/helpers/barrier.c
-@@ -0,0 +1,18 @@
-+// SPDX-License-Identifier: GPL-2.0
-+
-+#include <asm/barrier.h>
-+
-+void rust_helper_smp_mb(void)
-+{
-+	smp_mb();
-+}
-+
-+void rust_helper_smp_wmb(void)
-+{
-+	smp_wmb();
-+}
-+
-+void rust_helper_smp_rmb(void)
-+{
-+	smp_rmb();
-+}
-diff --git a/rust/helpers/helpers.c b/rust/helpers/helpers.c
-index 83e89f6a68fb..8ddfc8f84e87 100644
---- a/rust/helpers/helpers.c
-+++ b/rust/helpers/helpers.c
-@@ -9,6 +9,7 @@
- 
- #include "atomic.c"
- #include "auxiliary.c"
-+#include "barrier.c"
- #include "blk.c"
- #include "bug.c"
- #include "build_assert.c"
-diff --git a/rust/kernel/sync.rs b/rust/kernel/sync.rs
-index b620027e0641..c7c0e552bafe 100644
---- a/rust/kernel/sync.rs
-+++ b/rust/kernel/sync.rs
-@@ -11,6 +11,7 @@
- 
- mod arc;
- pub mod atomic;
-+pub mod barrier;
- mod condvar;
- pub mod lock;
- mod locked_by;
-diff --git a/rust/kernel/sync/barrier.rs b/rust/kernel/sync/barrier.rs
-new file mode 100644
-index 000000000000..36a5c70e6716
---- /dev/null
-+++ b/rust/kernel/sync/barrier.rs
-@@ -0,0 +1,67 @@
-+// SPDX-License-Identifier: GPL-2.0
-+
-+//! Memory barriers.
-+//!
-+//! These primitives have the same semantics as their C counterparts: and the precise definitions of
-+//! semantics can be found at [`LKMM`].
-+//!
-+//! [`LKMM`]: srctree/tools/memory-mode/
-+
-+/// A compiler barrier.
-+///
-+/// An explicic compiler barrier function that prevents the compiler from moving the memory
-+/// accesses either side of it to the other side.
-+pub(crate) fn barrier() {
-+    // By default, Rust inline asms are treated as being able to access any memory or flags, hence
-+    // it suffices as a compiler barrier.
-+    //
-+    // SAFETY: An empty asm block should be safe.
-+    unsafe {
-+        core::arch::asm!("");
-+    }
-+}
-+
-+/// A full memory barrier.
-+///
-+/// A barrier function that prevents both the compiler and the CPU from moving the memory accesses
-+/// either side of it to the other side.
-+pub fn smp_mb() {
-+    if cfg!(CONFIG_SMP) {
-+        // SAFETY: `smp_mb()` is safe to call.
-+        unsafe {
-+            bindings::smp_mb();
-+        }
-+    } else {
-+        barrier();
-+    }
-+}
-+
-+/// A write-write memory barrier.
-+///
-+/// A barrier function that prevents both the compiler and the CPU from moving the memory write
-+/// accesses either side of it to the other side.
-+pub fn smp_wmb() {
-+    if cfg!(CONFIG_SMP) {
-+        // SAFETY: `smp_wmb()` is safe to call.
-+        unsafe {
-+            bindings::smp_wmb();
-+        }
-+    } else {
-+        barrier();
-+    }
-+}
-+
-+/// A read-read memory barrier.
-+///
-+/// A barrier function that prevents both the compiler and the CPU from moving the memory read
-+/// accesses either side of it to the other side.
-+pub fn smp_rmb() {
-+    if cfg!(CONFIG_SMP) {
-+        // SAFETY: `smp_rmb()` is safe to call.
-+        unsafe {
-+            bindings::smp_rmb();
-+        }
-+    } else {
-+        barrier();
-+    }
-+}
--- 
-2.39.5 (Apple Git-154)
+$ pylint Documentation/conf.py 
+************* Module conf
+Documentation/conf.py:357:0: W0311: Bad indentation. Found 16 spaces, expected 12 (bad-indentation)
+Documentation/conf.py:587:0: W0311: Bad indentation. Found 1 spaces, expected 4 (bad-indentation)
+Documentation/conf.py:567:1: W0511: FIXME: Do not add the index file here; the result will be too big. Adding (fixme)
+Documentation/conf.py:1:0: C0114: Missing module docstring (missing-module-docstring)
+Documentation/conf.py:229:0: W0622: Redefining built-in 'copyright' (redefined-builtin)
+Documentation/conf.py:21:22: I1101: Module 'sphinx' has no 'version_info' member, but source is unavailable. Consider adding this module to extension-pkg-allow-list if you want to perform analysis based on run-time introspection of living objects. (c-extension-no-member)
+Documentation/conf.py:25:4: C0103: Constant name "has_include_patterns" doesn't conform to UPPER_CASE naming style (invalid-name)
+Documentation/conf.py:27:4: C0103: Constant name "has_include_patterns" doesn't conform to UPPER_CASE naming style (invalid-name)
+Documentation/conf.py:65:4: W0612: Unused variable 'sourcedir' (unused-variable)
+Documentation/conf.py:66:4: W0612: Unused variable 'builddir' (unused-variable)
+Documentation/conf.py:104:0: E0401: Unable to import 'load_config' (import-error)
+Documentation/conf.py:104:0: C0413: Import "from load_config import loadConfig" should be placed at the top of the module (wrong-import-position)
+Documentation/conf.py:109:0: C0103: Constant name "needs_sphinx" doesn't conform to UPPER_CASE naming style (invalid-name)
+Documentation/conf.py:186:0: C0103: Constant name "autosectionlabel_prefix_document" doesn't conform to UPPER_CASE naming style (invalid-name)
+Documentation/conf.py:187:0: C0103: Constant name "autosectionlabel_maxdepth" doesn't conform to UPPER_CASE naming style (invalid-name)
+Documentation/conf.py:200:8: C0103: Constant name "load_imgmath" doesn't conform to UPPER_CASE naming style (invalid-name)
+Documentation/conf.py:202:8: C0103: Constant name "load_imgmath" doesn't conform to UPPER_CASE naming style (invalid-name)
+Documentation/conf.py:204:25: C0209: Formatting a regular string which could be an f-string (consider-using-f-string)
+Documentation/conf.py:208:4: C0103: Constant name "math_renderer" doesn't conform to UPPER_CASE naming style (invalid-name)
+Documentation/conf.py:210:4: C0103: Constant name "math_renderer" doesn't conform to UPPER_CASE naming style (invalid-name)
+Documentation/conf.py:225:0: C0103: Constant name "master_doc" doesn't conform to UPPER_CASE naming style (invalid-name)
+Documentation/conf.py:228:0: C0103: Constant name "project" doesn't conform to UPPER_CASE naming style (invalid-name)
+Documentation/conf.py:229:0: C0103: Constant name "copyright" doesn't conform to UPPER_CASE naming style (invalid-name)
+Documentation/conf.py:230:0: C0103: Constant name "author" doesn't conform to UPPER_CASE naming style (invalid-name)
+Documentation/conf.py:253:0: W0702: No exception type(s) specified (bare-except)
+Documentation/conf.py:243:4: C0103: Constant name "makefile_version" doesn't conform to UPPER_CASE naming style (invalid-name)
+Documentation/conf.py:244:4: C0103: Constant name "makefile_patchlevel" doesn't conform to UPPER_CASE naming style (invalid-name)
+Documentation/conf.py:245:16: R1732: Consider using 'with' for resource-allocating operations (consider-using-with)
+Documentation/conf.py:245:16: W1514: Using open without explicitly specifying an encoding (unspecified-encoding)
+Documentation/conf.py:259:8: C0103: Constant name "version" doesn't conform to UPPER_CASE naming style (invalid-name)
+Documentation/conf.py:259:18: C0103: Constant name "release" doesn't conform to UPPER_CASE naming style (invalid-name)
+Documentation/conf.py:266:0: C0116: Missing function or method docstring (missing-function-docstring)
+Documentation/conf.py:284:0: C0103: Constant name "language" doesn't conform to UPPER_CASE naming style (invalid-name)
+Documentation/conf.py:308:0: C0103: Constant name "pygments_style" doesn't conform to UPPER_CASE naming style (invalid-name)
+Documentation/conf.py:317:0: C0103: Constant name "todo_include_todos" doesn't conform to UPPER_CASE naming style (invalid-name)
+Documentation/conf.py:319:0: C0103: Constant name "primary_domain" doesn't conform to UPPER_CASE naming style (invalid-name)
+Documentation/conf.py:320:0: C0103: Constant name "highlight_language" doesn't conform to UPPER_CASE naming style (invalid-name)
+Documentation/conf.py:328:0: C0103: Constant name "html_theme" doesn't conform to UPPER_CASE naming style (invalid-name)
+Documentation/conf.py:334:3: R1714: Consider merging these comparisons with 'in' by using 'html_theme in ('sphinx_rtd_theme', 'sphinx_rtd_dark_mode')'. Use a set instead if elements are hashable. (consider-using-in)
+Documentation/conf.py:353:16: W0104: Statement seems to have no effect (pointless-statement)
+Documentation/conf.py:364:8: C0103: Constant name "html_theme" doesn't conform to UPPER_CASE naming style (invalid-name)
+Documentation/conf.py:382:17: C0209: Formatting a regular string which could be an f-string (consider-using-f-string)
+Documentation/conf.py:392:0: C0103: Constant name "smartquotes_action" doesn't conform to UPPER_CASE naming style (invalid-name)
+Documentation/conf.py:404:0: C0103: Constant name "html_logo" doesn't conform to UPPER_CASE naming style (invalid-name)
+Documentation/conf.py:407:0: C0103: Constant name "htmlhelp_basename" doesn't conform to UPPER_CASE naming style (invalid-name)
+Documentation/conf.py:487:8: C0103: Constant name "has" doesn't conform to UPPER_CASE naming style (invalid-name)
+Documentation/conf.py:490:16: C0103: Constant name "has" doesn't conform to UPPER_CASE naming style (invalid-name)
+Documentation/conf.py:494:36: C0209: Formatting a regular string which could be an f-string (consider-using-f-string)
+Documentation/conf.py:551:0: C0103: Constant name "epub_title" doesn't conform to UPPER_CASE naming style (invalid-name)
+Documentation/conf.py:552:0: C0103: Constant name "epub_author" doesn't conform to UPPER_CASE naming style (invalid-name)
+Documentation/conf.py:553:0: C0103: Constant name "epub_publisher" doesn't conform to UPPER_CASE naming style (invalid-name)
+Documentation/conf.py:554:0: C0103: Constant name "epub_copyright" doesn't conform to UPPER_CASE naming style (invalid-name)
+Documentation/conf.py:571:29: W1406: The u prefix for strings is no longer necessary in Python >=3.0 (redundant-u-string-prefix)
+Documentation/conf.py:571:40: W1406: The u prefix for strings is no longer necessary in Python >=3.0 (redundant-u-string-prefix)
+Documentation/conf.py:571:51: W1406: The u prefix for strings is no longer necessary in Python >=3.0 (redundant-u-string-prefix)
+Documentation/conf.py:577:0: C0103: Constant name "kerneldoc_bin" doesn't conform to UPPER_CASE naming style (invalid-name)
+Documentation/conf.py:578:0: C0103: Constant name "kerneldoc_srctree" doesn't conform to UPPER_CASE naming style (invalid-name)
+Documentation/conf.py:586:0: C0116: Missing function or method docstring (missing-function-docstring)
+Documentation/conf.py:18:0: C0411: standard import "shutil" should be placed before third party import "sphinx" (wrong-import-order)
+Documentation/conf.py:350:16: W0611: Unused import sphinx_rtd_dark_mode (unused-import)
 
+This file needs a major cleanup, as it is currently not following
+any Python code style, and still has some Phython 2.x legacy
+coding styles.
+
+Perhaps it is time to take some care of it and on other
+sphinx/*.py files that aren't compliant ;-)
+
+Thanks,
+Mauro

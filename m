@@ -1,96 +1,125 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D107212D97;
-	Wed, 18 Jun 2025 06:51:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACA80257AC2;
+	Wed, 18 Jun 2025 06:57:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750229517; cv=none; b=FCO/blGQDEBAB1a/wNguRT5JBUgQkg+kPmZKeCap3hV7F6ntX6jJ923D8a//SSDeSJvwn+8KFxbQJ0j1lRsyGockU5U9VqvOS08ywDtL9g1tSy87nmqzUTl1Smjh2yYO8y6XdgB2Z2r0oj7mFBas1dj9mzzMzGzihA+x2apMQ9E=
+	t=1750229863; cv=none; b=LFb8Nj5hq9iiH0rxbc2eh6wHAmFzAfvHqUy9HgqWMoMHWqnmkgNBiQCTSuZshSbM9RMJS7tXoG6BO9cGtoSugPVsXIb1pzgC3466iYwG+PJZ/6WRfLhk5+pL3ralU543xB54iibXkBfoc/VKIvB5Ejt1OjHT7iHRyt+7+9uX4/A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750229517; c=relaxed/simple;
-	bh=WvwQCHstGsP4NHsM2WggCpU1wppw6aSP0CoxaTIrbUU=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=RUaDcEiB9uDxDIb+OZaefMVtmjxVjaV2X6zydFoix20SjBWo+y3rC2EU/GQGrJlIUN9I3wgZN5lBSZSPzznzKgey/8YocHcamalgO3f3Sogc3UUtqS2wLi+k/IR0cGH8xlS9MBGcNg8UGtpBaiIdcYAY5auF2nM+M0023W32Pco=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Yz+NyiyX; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1750229863; c=relaxed/simple;
+	bh=RFQtspKngvjxdT3mkmOe3FrXsaTZvezQsEA/vCFJOSQ=;
+	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=EAO9l/DlT7ue7MjCCJzoPCe97tsaluHrpPWZd4GAz12WsZmWzTBf13tvnCzBMhiFspeXPmdvM7RXDMx474ist49pztNCzIGXI5Np0R9rUIpwy1coZD+yaPvcYletYlOX03lHU8k6UL73PKbopSOIHBSwiXS8AkdKpjZpSOgKCyM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=pvLvDGTF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Yz+NyiyX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5C28C4CEE7;
-	Wed, 18 Jun 2025 06:51:56 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="pvLvDGTF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25104C4CEED;
+	Wed, 18 Jun 2025 06:57:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1750229516;
-	bh=WvwQCHstGsP4NHsM2WggCpU1wppw6aSP0CoxaTIrbUU=;
-	h=Date:From:To:Cc:Subject:Reply-To:References:In-Reply-To:From;
-	b=Yz+NyiyXoCPo0nGbuEbFKAV9ZKH28VF+Vjvsmm70ndiBhecdB9x2/8FlCdb9v0O/f
-	 1hiAUzygX0yiikOIbjbRb4ufZW+A0eHCQE/JQbtpBJ8MoSsp7FZflJPs30xWbM5utp
-	 HcxWa9Qy9oWlQYJjf94Mksu/N6Pw/kyLbq5K5RhCoIATQ4YA42+z3vd0zupWbY8gaw
-	 ZSzMarEFv9VQME8vx3/SuGvBv/5MGje5gQ1EQ0k0yHJWfM2jG1y5ug8QP6N0Hg32PE
-	 JjqomlygSuXtG/O6MJ8bsd5xJR7fYtM0zlpIOOLMH+2HZUkQY82TEMR7OrIcRLd5bg
-	 XfMlRgV69R6XQ==
-Received: by paulmck-ThinkPad-P17-Gen-1.home (Postfix, from userid 1000)
-	id 90E50CE0A33; Tue, 17 Jun 2025 23:51:49 -0700 (PDT)
-Date: Tue, 17 Jun 2025 23:51:49 -0700
-From: "Paul E. McKenney" <paulmck@kernel.org>
-To: Peter Zijlstra <peterz@infradead.org>
-Cc: Thomas Haas <t.haas@tu-bs.de>, Alan Stern <stern@rowland.harvard.edu>,
-	Andrea Parri <parri.andrea@gmail.com>,
-	Will Deacon <will@kernel.org>, Boqun Feng <boqun.feng@gmail.com>,
-	Nicholas Piggin <npiggin@gmail.com>,
-	David Howells <dhowells@redhat.com>,
-	Jade Alglave <j.alglave@ucl.ac.uk>,
-	Luc Maranget <luc.maranget@inria.fr>,
-	Akira Yokosawa <akiyks@gmail.com>,
-	Daniel Lustig <dlustig@nvidia.com>,
-	Joel Fernandes <joelagnelf@nvidia.com>,
-	linux-kernel@vger.kernel.org, linux-arch@vger.kernel.org,
-	lkmm@lists.linux.dev, hernan.poncedeleon@huaweicloud.com,
-	jonas.oberhauser@huaweicloud.com,
-	"r.maseli@tu-bs.de" <r.maseli@tu-bs.de>
-Subject: Re: [RFC] Potential problem in qspinlock due to mixed-size accesses
-Message-ID: <0b20c5e8-ef01-4527-9122-8722f96972ae@paulmck-laptop>
-Reply-To: paulmck@kernel.org
-References: <cb83e3e4-9e22-4457-bf61-5614cc4396ad@tu-bs.de>
- <20250613075501.GI2273038@noisy.programming.kicks-ass.net>
+	s=k20201202; t=1750229862;
+	bh=RFQtspKngvjxdT3mkmOe3FrXsaTZvezQsEA/vCFJOSQ=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+	b=pvLvDGTFYOWl3fc6P3KuOrtwdTiOuGl6+DvxBg0GsdS8wmwav5EBVT67CPl1IzQ8v
+	 N988iKSa2lXRm7aA8OMF9nuKVcuNHDRz4/TRHg/tYLneDDdP/53A96EV3k/z7/RADQ
+	 YC+4NbycT40fGbDxSYmS8+2ijRBYxGB0UzmCh22CHyzULWpfWYw5WMYydCpH2Ml86M
+	 z7SqWtLuvwHhNvsSbOugVYLLe4ZJowKDOGaXSuLd2iA3GwoyCDAoN3/UOFKuuJ+97o
+	 KZoSRqmOHg2FwrqHFE+R9jWnEjc436segDd5QKyu+BG2yCOucbbQkW3RYKORUGtfvR
+	 0reNTsB2M81qQ==
+Date: Wed, 18 Jun 2025 08:57:35 +0200
+From: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+To: Simon Horman <horms@kernel.org>
+Cc: Linux Doc Mailing List <linux-doc@vger.kernel.org>, Jonathan Corbet
+ <corbet@lwn.net>, Akira Yokosawa <akiyks@gmail.com>, Breno Leitao
+ <leitao@debian.org>, "David S. Miller" <davem@davemloft.net>, Donald Hunter
+ <donald.hunter@gmail.com>, Eric Dumazet <edumazet@google.com>, Ignacio
+ Encinas Rubio <ignacio@iencinas.com>, Jan Stancek <jstancek@redhat.com>,
+ Marco Elver <elver@google.com>, Paolo Abeni <pabeni@redhat.com>, Ruben
+ Wauters <rubenru09@aol.com>, Shuah Khan <skhan@linuxfoundation.org>,
+ joel@joelfernandes.org, linux-kernel-mentees@lists.linux.dev,
+ linux-kernel@vger.kernel.org, lkmm@lists.linux.dev, netdev@vger.kernel.org,
+ peterz@infradead.org, stern@rowland.harvard.edu
+Subject: Re: [PATCH v5 05/15] tools: ynl_gen_rst.py: make the index parser
+ more generic
+Message-ID: <20250618085735.7f9aa5a6@foz.lan>
+In-Reply-To: <20250617115927.GK5000@horms.kernel.org>
+References: <cover.1750146719.git.mchehab+huawei@kernel.org>
+	<1cd8b28bfe159677b8a8b1228b04ba2919c8aee8.1750146719.git.mchehab+huawei@kernel.org>
+	<20250617115927.GK5000@horms.kernel.org>
+X-Mailer: Claws Mail 4.3.1 (GTK 3.24.49; x86_64-redhat-linux-gnu)
 Precedence: bulk
 X-Mailing-List: lkmm@lists.linux.dev
 List-Id: <lkmm.lists.linux.dev>
 List-Subscribe: <mailto:lkmm+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:lkmm+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20250613075501.GI2273038@noisy.programming.kicks-ass.net>
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 
-On Fri, Jun 13, 2025 at 09:55:01AM +0200, Peter Zijlstra wrote:
-> On Thu, Jun 12, 2025 at 04:55:28PM +0200, Thomas Haas wrote:
+Em Tue, 17 Jun 2025 12:59:27 +0100
+Simon Horman <horms@kernel.org> escreveu:
 
-[ . . . ]
-
-> >     - put some other read-read barrier between the xchg_tail and the load.
+> On Tue, Jun 17, 2025 at 10:02:02AM +0200, Mauro Carvalho Chehab wrote:
+> > It is not a good practice to store build-generated files
+> > inside $(srctree), as one may be using O=<BUILDDIR> and even
+> > have the Kernel on a read-only directory.
 > > 
+> > Change the YAML generation for netlink files to allow it
+> > to parse data based on the source or on the object tree.
 > > 
-> > ### Implications for qspinlock executed on non-ARM architectures.
+> > Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+> > ---
+> >  tools/net/ynl/pyynl/ynl_gen_rst.py | 22 ++++++++++++++++------
+> >  1 file changed, 16 insertions(+), 6 deletions(-)
 > > 
-> > Unfortunately, there are no MSA extensions for other hardware memory models,
-> > so we have to speculate based on whether the problematic reordering is
-> > permitted if the problematic load was treated as two individual
-> > instructions.
-> > It seems Power and RISCV would have no problem reordering the instructions,
-> > so qspinlock might also break on those architectures.
+> > diff --git a/tools/net/ynl/pyynl/ynl_gen_rst.py b/tools/net/ynl/pyynl/ynl_gen_rst.py
+> > index 7bfb8ceeeefc..b1e5acafb998 100755
+> > --- a/tools/net/ynl/pyynl/ynl_gen_rst.py
+> > +++ b/tools/net/ynl/pyynl/ynl_gen_rst.py
+> > @@ -365,6 +365,7 @@ def parse_arguments() -> argparse.Namespace:
+> >  
+> >      parser.add_argument("-v", "--verbose", action="store_true")
+> >      parser.add_argument("-o", "--output", help="Output file name")
+> > +    parser.add_argument("-d", "--input_dir", help="YAML input directory")
+> >  
+> >      # Index and input are mutually exclusive
+> >      group = parser.add_mutually_exclusive_group()
+> > @@ -405,11 +406,14 @@ def write_to_rstfile(content: str, filename: str) -> None:
+> >      """Write the generated content into an RST file"""
+> >      logging.debug("Saving RST file to %s", filename)
+> >  
+> > +    dir = os.path.dirname(filename)
+> > +    os.makedirs(dir, exist_ok=True)
+> > +
+> >      with open(filename, "w", encoding="utf-8") as rst_file:
+> >          rst_file.write(content)  
 > 
-> Power (and RiscV without ZABHA) 'emulate' the short XCHG using a full
-> word LL/SC and should be good.
+> Hi Mauro,
 > 
-> But yes, ZABHA might be equally broken.
+> With this patch applied I see the following, which did not happen before.
 
-All architectures handle eight-bit atomics and stores, but last I checked,
-there were a few systems still around that failed to support 16-bit
-atomics and stores.  I will check again.
+Thanks! this was an intermediate step. I'll just drop this patch and
+fix conflicts at the next version.
 
-(But those systems's architectures can simply avoid supporting kernel
-features requiring these 16-bit operations.)
+> 
+> $ make -C tools/net/ynl
+> ...
+> Traceback (most recent call last):
+>   File ".../tools/net/ynl/generated/../pyynl/ynl_gen_rst.py", line 464, in <module>
+>     main()
+>     ~~~~^^
+>   File ".../tools/net/ynl/generated/../pyynl/ynl_gen_rst.py", line 456, in main
+>     write_to_rstfile(content, args.output)
+>     ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+>   File ".../tools/net/ynl/generated/../pyynl/ynl_gen_rst.py", line 410, in write_to_rstfile
+>     os.makedirs(dir, exist_ok=True)
+>     ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+>   File "<frozen os>", line 227, in makedirs
+> FileNotFoundError: [Errno 2] No such file or directory: ''
+> make[1]: *** [Makefile:55: conntrack.rst] Error 1
+> 
 
-It would be good to add multiple sizes to LKMM, and even moreso once we
-have 16-bit support across the board.
 
-							Thanx, Paul
+
+Thanks,
+Mauro

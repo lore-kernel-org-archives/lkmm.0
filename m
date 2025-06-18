@@ -1,34 +1,34 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1080B2DBF4C;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 295162DBF5B;
 	Wed, 18 Jun 2025 11:46:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750247212; cv=none; b=WIMbHWtkYz2XdfS7se/m6u9Vdn+XeqBl2X32SrBZPSlnG8vrhkPYNCan4iWucW8ptqLmC97VpDur9g7gmI7sPZYGINAbmDc1od9kxKXzSQNHwE03Lw1bdOcrJho2BIkLkaL5Kx66zPDhAdZ3SmEpVNY23De+696CowMFQvm5buE=
+	t=1750247212; cv=none; b=ODVty495NJMsJet221E4FlF81hCGDjfH8cYGDXzFicAheuYQ1jbaSr+nuUsoo+4NK+k6+X1J2PJszAe7+lsN/DKAkK8xQvlYlHECOYroFTNgaJUVONWX1LIR1zjtQ0JacBQC8jgEcnFHYrCtgnlAXvaBSWN31uDQeEm31gFgYx4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1750247212; c=relaxed/simple;
-	bh=9sv3o8O8M0IyOR5wJkoSEusaPecRlQcEL5SoMo0iJ7A=;
+	bh=sLGX0eyqIoRSaJCtRaOhRqFB+mw5FlWjFBG7e4HNq2I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lw+jiwaF/Tfi2zyBRc3u6nRZXJEWzckD/zp5kF4ijgiMh64UdEMF/YzE/pkSquyU1OJkFjddPyh4j1Ss4NQK8unuptCK9x65I/kycFdsqH0j7Q1zP6ioIrSy2i+z0WxTb7vkeW227SygplSwnNGeelcRuOG5qbVR0rk27Ggfia4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=uKo5HGIf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=L/4UxkMLsTpQ81U0VLlnAXWdQ1ukA52uA5T8OLt//wQ/GSFDn7mHcJahGVaLoFfUGE8QWbVGztCTJq/3fcHm0wz8yvENJhVYrPHzp8DR8rWC8d7ZnbC65BAh/POa/P0gtTtFYLyHpn0oB55708KR/Y+HOqYTEkB9qPqrHEAdmbc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=skrqAHXT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="uKo5HGIf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B8B0C4AF0B;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="skrqAHXT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8AEB2C113CF;
 	Wed, 18 Jun 2025 11:46:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1750247211;
-	bh=9sv3o8O8M0IyOR5wJkoSEusaPecRlQcEL5SoMo0iJ7A=;
+	bh=sLGX0eyqIoRSaJCtRaOhRqFB+mw5FlWjFBG7e4HNq2I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uKo5HGIfommgZx8yi6Zi+eJ1SoQ2VQ+0T5muWeAbjZTUtGMXuu8g73Mc1KWSLPPCT
-	 RZSfdvSj+AetUWCOucjQtZDb/DrDX8D2GrPThxG0Nkjuvl7BM+ttN8nQyQfAGOrZpZ
-	 ZIk44uUGn5Ex2o6s1xNoHE2y0rYR8Bli8XYuPV/6XAnCbqZkoXc5ugdr2sRn4+05jp
-	 ob7sqMs3tDQDF8/X/sP7TUHE3diI7O/NbQCLZXz5ilJ+UejabNBc8zptGaFqjqJ6mK
-	 WCxOmyMFcUYh6vZrAkTiuyJ9gpmwhVe70bwe0v2CwmsXJHbyIy2QXlkevHf+jnaH2P
-	 R6+Uh2uam2B7w==
+	b=skrqAHXTbHNgSUzyZwiGm2Fupr9l61UiluGGSBvxmKD6r+ld9HPm3T/9gtlevsEN6
+	 XYEIMvCdpCYWMAWMOv/sjIRwyu9+XIVe9F2260gT/2mGyR/T0esmbK6J4BcMZ5l0l9
+	 nZ8L2eoAnaFoL60aFn+A2mj6Rbvj/yYuyxbr3Jp1XTH8PO93Mn8+ghO4bV2Z/gRanl
+	 +0LXBRO3gvGxUgV2ZieuJg4JKdANstYjf0aKHJaKQLucOsPDKvOfj09pk7JZQIkrUw
+	 Tf9PXDfi1cuumo4aRVBB1PWSa++psvYvq1kEOiJfK8v5YDRCHYbO4UguU2/eZNSjTq
+	 WmJIGEttZ5UxA==
 Received: from mchehab by mail.kernel.org with local (Exim 4.98.2)
 	(envelope-from <mchehab+huawei@kernel.org>)
-	id 1uRrFh-000000036UN-1zMZ;
+	id 1uRrFh-000000036VA-3PEz;
 	Wed, 18 Jun 2025 13:46:49 +0200
 From: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 To: Linux Doc Mailing List <linux-doc@vger.kernel.org>,
@@ -46,6 +46,8 @@ Cc: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
 	"Paolo Abeni" <pabeni@redhat.com>,
 	"Ruben Wauters" <rubenru09@aol.com>,
 	"Shuah Khan" <skhan@linuxfoundation.org>,
+	Jakub Kicinski <mchehab+huawei@kernel.org>,
+	Simon Horman <mchehab+huawei@kernel.org>,
 	joel@joelfernandes.org,
 	linux-kernel-mentees@lists.linux.dev,
 	linux-kernel@vger.kernel.org,
@@ -53,9 +55,9 @@ Cc: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
 	netdev@vger.kernel.org,
 	peterz@infradead.org,
 	stern@rowland.harvard.edu
-Subject: [PATCH v6 02/15] docs: Makefile: disable check rules on make cleandocs
-Date: Wed, 18 Jun 2025 13:46:29 +0200
-Message-ID: <e4ad47a238cffc8659786bcfdba4126f08522035.1750246291.git.mchehab+huawei@kernel.org>
+Subject: [PATCH v6 14/15] docs: parser_yaml.py: add support for line numbers from the parser
+Date: Wed, 18 Jun 2025 13:46:41 +0200
+Message-ID: <33fc2894166805b93d4cf652cff9927a54b4f242.1750246291.git.mchehab+huawei@kernel.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <cover.1750246291.git.mchehab+huawei@kernel.org>
 References: <cover.1750246291.git.mchehab+huawei@kernel.org>
@@ -68,36 +70,111 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Sender: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 
-It doesn't make sense to check for missing ABI and documents
-when cleaning the tree.
+Instead of printing line numbers from the temp converted ReST
+file, get them from the original source.
 
 Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-Reviewed-by: Breno Leitao <leitao@debian.org>
-Reviewed-by: Donald Hunter <donald.hunter@gmail.com>
 ---
- Documentation/Makefile | 2 ++
- 1 file changed, 2 insertions(+)
+ Documentation/sphinx/parser_yaml.py      | 12 ++++++++++--
+ tools/net/ynl/pyynl/lib/doc_generator.py | 16 ++++++++++++----
+ 2 files changed, 22 insertions(+), 6 deletions(-)
 
-diff --git a/Documentation/Makefile b/Documentation/Makefile
-index d30d66ddf1ad..b98477df5ddf 100644
---- a/Documentation/Makefile
-+++ b/Documentation/Makefile
-@@ -5,6 +5,7 @@
- # for cleaning
- subdir- := devicetree/bindings
+diff --git a/Documentation/sphinx/parser_yaml.py b/Documentation/sphinx/parser_yaml.py
+index 2b2af239a1c2..5360fcfd4fde 100755
+--- a/Documentation/sphinx/parser_yaml.py
++++ b/Documentation/sphinx/parser_yaml.py
+@@ -29,6 +29,8 @@ class YamlParser(Parser):
  
-+ifneq ($(MAKECMDGOALS),cleandocs)
- # Check for broken documentation file references
- ifeq ($(CONFIG_WARN_MISSING_DOCUMENTS),y)
- $(shell $(srctree)/scripts/documentation-file-ref-check --warn)
-@@ -14,6 +15,7 @@ endif
- ifeq ($(CONFIG_WARN_ABI_ERRORS),y)
- $(shell $(srctree)/scripts/get_abi.py --dir $(srctree)/Documentation/ABI validate)
- endif
-+endif
+     netlink_parser = YnlDocGenerator()
  
- # You can set these variables from the command line.
- SPHINXBUILD   = sphinx-build
++    re_lineno = re.compile(r"\.\. LINENO ([0-9]+)$")
++
+     def do_parse(self, inputstring, document, msg):
+         """Parse YAML and generate a document tree."""
+ 
+@@ -38,8 +40,14 @@ class YamlParser(Parser):
+ 
+         try:
+             # Parse message with RSTParser
+-            for i, line in enumerate(msg.split('\n')):
+-                result.append(line, document.current_source, i)
++            lineoffset = 0;
++            for line in msg.split('\n'):
++                match = self.re_lineno.match(line)
++                if match:
++                    lineoffset = int(match.group(1))
++                    continue
++
++                result.append(line, document.current_source, lineoffset)
+ 
+             rst_parser = RSTParser()
+             rst_parser.parse('\n'.join(result), document)
+diff --git a/tools/net/ynl/pyynl/lib/doc_generator.py b/tools/net/ynl/pyynl/lib/doc_generator.py
+index a9d8ab6f2639..7f4f98983cdf 100644
+--- a/tools/net/ynl/pyynl/lib/doc_generator.py
++++ b/tools/net/ynl/pyynl/lib/doc_generator.py
+@@ -158,9 +158,11 @@ class YnlDocGenerator:
+     def parse_do(self, do_dict: Dict[str, Any], level: int = 0) -> str:
+         """Parse 'do' section and return a formatted string"""
+         lines = []
++        if LINE_STR in do_dict:
++            lines.append(self.fmt.rst_lineno(do_dict[LINE_STR]))
++
+         for key in do_dict.keys():
+             if key == LINE_STR:
+-                lines.append(self.fmt.rst_lineno(do_dict[key]))
+                 continue
+             lines.append(self.fmt.rst_paragraph(self.fmt.bold(key), level + 1))
+             if key in ['request', 'reply']:
+@@ -187,13 +189,15 @@ class YnlDocGenerator:
+         lines = []
+ 
+         for operation in operations:
++            if LINE_STR in operation:
++                lines.append(self.fmt.rst_lineno(operation[LINE_STR]))
++
+             lines.append(self.fmt.rst_section(namespace, 'operation',
+                                               operation["name"]))
+             lines.append(self.fmt.rst_paragraph(operation["doc"]) + "\n")
+ 
+             for key in operation.keys():
+                 if key == LINE_STR:
+-                    lines.append(self.fmt.rst_lineno(operation[key]))
+                     continue
+ 
+                 if key in preprocessed:
+@@ -253,10 +257,12 @@ class YnlDocGenerator:
+         lines = []
+ 
+         for definition in defs:
++            if LINE_STR in definition:
++                lines.append(self.fmt.rst_lineno(definition[LINE_STR]))
++
+             lines.append(self.fmt.rst_section(namespace, 'definition', definition["name"]))
+             for k in definition.keys():
+                 if k == LINE_STR:
+-                    lines.append(self.fmt.rst_lineno(definition[k]))
+                     continue
+                 if k in preprocessed + ignored:
+                     continue
+@@ -284,6 +290,9 @@ class YnlDocGenerator:
+             lines.append(self.fmt.rst_section(namespace, 'attribute-set',
+                                               entry["name"]))
+             for attr in entry["attributes"]:
++                if LINE_STR in attr:
++                    lines.append(self.fmt.rst_lineno(attr[LINE_STR]))
++
+                 type_ = attr.get("type")
+                 attr_line = attr["name"]
+                 if type_:
+@@ -294,7 +303,6 @@ class YnlDocGenerator:
+ 
+                 for k in attr.keys():
+                     if k == LINE_STR:
+-                        lines.append(self.fmt.rst_lineno(attr[k]))
+                         continue
+                     if k in preprocessed + ignored:
+                         continue
 -- 
 2.49.0
 

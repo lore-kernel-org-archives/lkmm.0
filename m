@@ -1,37 +1,53 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f46.google.com (mail-ej1-f46.google.com [209.85.218.46])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F09B258CD0;
-	Wed, 18 Jun 2025 12:40:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F95B2E9EAB;
+	Wed, 18 Jun 2025 15:42:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750250425; cv=none; b=GVqFqoHQUjzgtDHsHu8go2u6ZZ71z0/DoK32NZsyjv3H4KK0yxcan12qet+cWbbL3VrMAaMDylMmbiwsLd8/KXPFD9SmsXjVEQh+qUv5q1qzOj9eCXH2eKcurSoMFXDjsqlFix7y6U2TeqF6/7cAV+qalhiKKPGEATcKuOL4Bxk=
+	t=1750261378; cv=none; b=GQqTmkekOGi0FxhUcMtLSKRhqUdSuO02x/DRVWzdVfBIqBlgUmt85EW8BupSwW7hgMnJ+MGI7lZnehXix+pkigJXLBdlZD7M2Kj6ooPiNHtwncQ9gVorM8rgIPTbjAe3ozshzq4dMcMB9sceXW7jfg9uuM7f6F6jb2qtPXXHFww=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750250425; c=relaxed/simple;
-	bh=lKJkRX5S1J6VtzITZ5xzBjEBLhnqYUnVxruczGLyT08=;
+	s=arc-20240116; t=1750261378; c=relaxed/simple;
+	bh=ZAdHHI1Qa6a7uSzz9G6krYI8Sdg7y2V5dKsM4QZVgG0=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=QpBrawzBhEZTLwy7FJuYvlWdZA4Sdd8eL8og4KKA1BkRsAWXdfD2vfggr5jcGigNrTAMNApIHMGyEOMljSVllZ+8ROXro+lDyVJZi9GPIDOXzJu/OM52qxDoNaT+X9vaUdJo+x7XbsxDUjI/2zdLYetVU4hqmlXsTxcKexiP5d0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=T35oes2F; arc=none smtp.client-ip=10.30.226.201
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="T35oes2F"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F6CDC4CEE7;
-	Wed, 18 Jun 2025 12:40:20 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1750250424;
-	bh=lKJkRX5S1J6VtzITZ5xzBjEBLhnqYUnVxruczGLyT08=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=T35oes2Fkomfh40d6u66VAQWgiTTkCCDSuXaUmP9wZj+ZvbxEJppK5DeCdXziOEhg
-	 3HEpnVRqlDeTIAfAtsfh8HKcdGHc7Uqpj6S6eN2INZPxSjVIwS2jXPoJjuaciRncRy
-	 Xxm82+PegCaah7+5vTiKGWtGcO+DjQzVo+ZUt7AqelZLpBZY33KdEBNwB5Uaq1WxK2
-	 eOMNofrX6l+G0WeTImkNi69icQxs5GeLX0ZqZP3QGnVRWs1KH+cTaMtewy/RNj2FaO
-	 2cqyu3Mxebizp7QLsFdK6B8Fb+28XA5K2+Ds9lwEFxz13m0Kvrv1ACzaUaSh3pE8vU
-	 lxd9Pi9CUntEQ==
-Date: Wed, 18 Jun 2025 13:40:19 +0100
-From: Simon Horman <horms@kernel.org>
+	 Content-Type:Content-Disposition:In-Reply-To; b=Jc7xdly/EMjtfFCQZuPtNAWKpj8pJRfT3+XGPLMx74CG0dmCQi+2EYkZ2NGhBQJXqpAaAMX7CggdX/awImTyym6jLV7ebqGDXgYvdjtdsVsCQr6/3YeNQAyoYzCGGqTNL0QMA/x1mQW8ll96C1Ekkm99cGnFLo1HF3xVH3Hb1c4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=debian.org; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.218.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=debian.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-ej1-f46.google.com with SMTP id a640c23a62f3a-ad574992fcaso1118296366b.1;
+        Wed, 18 Jun 2025 08:42:56 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1750261375; x=1750866175;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=LWYHbpP051s3adQYzbRj7oJpUnu9maWKCI8y343Rnlo=;
+        b=JEo8PYBM1eTqZ0Y4ebIRkaDvQBxq9Xw7mKcbXg+8fS1do6SzjDp/sIa888WXtZG37q
+         P5Odyg1EODSYfLE1bzfe+Hki0bJc5pIzMnqOpdmi1KZyC1wpSwNB+qUHo/lKDlS/tbrT
+         /ebOFTxBReinor5D/0A6ajHx+PQNoL3Jy/VM27TuaNKcfKg+L2+bMeTiZ7T4Kb4ipkDI
+         0ni9t6PpLmGSlVeGU8VpUNl7yvLcJX6I03ZeMttxfVLrzsIIJpyMsQiFdFBniFpWOLud
+         xEbvz2CGJ9EXEfsCcscubs23LSSU8C2i7hBzlkIt3RxIByLIr0XK4s1Ie/zt77gMowJu
+         nVWQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUh+LvUG7oBH/m5+VazKyqB4HOeK7qROWd1MKjiHKmhgC9GIT5nPcavvHqwRBis+/imxKebGbku34yFnkAQG3CB9uJtUw==@lists.linux.dev, AJvYcCV4d+8CpRI/XxQ0bRgIjF75gm/UP2YI0asbpsduxMnuvzA3QEAs/V2dyNE/IzdgdjqKtrtAgw==@lists.linux.dev
+X-Gm-Message-State: AOJu0YwCNj+1y5D9U2baCOuxtoWgqWw5vN3DrS6889fRQFD3/p3IefmC
+	8smQdcEbKDOzBlobHXLzcYfs3MKU2mIlhfw4w+f+7Prp4rPbKsdSUznnQu8hFg==
+X-Gm-Gg: ASbGnctjwAON9zqVmS9/mdGtKrXJbmaEa/eH7KchLCgGm3AxA0HwCRCALBnKW3WiJMp
+	3Tx4ZIIMqErn6oqncEIOqOQOPfBHAxjMAjvAqwz1eRj03eIHk7fkIHtj2dGdbN2rsD68OZp4gaY
+	8kM6kNVk4igLqgt9CO6Wad4LvDeepuiBhDVTyOf1lwptclBRXAML/bKcW2Xps4n4hB55pKc0wgF
+	w9GUH/iJNFtj26484YxBfiTcbTQg4rAQehxHcQ1VpKll8mzubGUgKJ84CMx99dUU0eWmaMWsJ2l
+	iaPtPExj6DBGWfZ+xvZNCJMT3eJ2AcLFg92611Jwpc4lrBw3NluZ
+X-Google-Smtp-Source: AGHT+IEZeb5BUZBwW+3X3Mghevtyvvv3qa+6/WQujzPyWQjQVnuNccvQjc/vqxVtBIzGQN0UTopzuA==
+X-Received: by 2002:a17:907:3f07:b0:adb:2db9:b0b0 with SMTP id a640c23a62f3a-adfad415cafmr1729558966b.35.1750261374664;
+        Wed, 18 Jun 2025 08:42:54 -0700 (PDT)
+Received: from gmail.com ([2a03:2880:30ff:4::])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-adec88ff5d3sm1104154566b.101.2025.06.18.08.42.53
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 18 Jun 2025 08:42:54 -0700 (PDT)
+Date: Wed, 18 Jun 2025 08:42:51 -0700
+From: Breno Leitao <leitao@debian.org>
 To: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 Cc: Linux Doc Mailing List <linux-doc@vger.kernel.org>,
 	Jonathan Corbet <corbet@lwn.net>, Akira Yokosawa <akiyks@gmail.com>,
-	Breno Leitao <leitao@debian.org>,
 	"David S. Miller" <davem@davemloft.net>,
 	Donald Hunter <donald.hunter@gmail.com>,
 	Eric Dumazet <edumazet@google.com>,
@@ -42,13 +58,11 @@ Cc: Linux Doc Mailing List <linux-doc@vger.kernel.org>,
 	linux-kernel-mentees@lists.linux.dev, linux-kernel@vger.kernel.org,
 	lkmm@lists.linux.dev, netdev@vger.kernel.org, peterz@infradead.org,
 	stern@rowland.harvard.edu
-Subject: Re: [PATCH v5 05/15] tools: ynl_gen_rst.py: make the index parser
- more generic
-Message-ID: <20250618124019.GQ1699@horms.kernel.org>
-References: <cover.1750146719.git.mchehab+huawei@kernel.org>
- <1cd8b28bfe159677b8a8b1228b04ba2919c8aee8.1750146719.git.mchehab+huawei@kernel.org>
- <20250617115927.GK5000@horms.kernel.org>
- <20250618085735.7f9aa5a6@foz.lan>
+Subject: Re: [PATCH v6 01/15] docs: conf.py: properly handle include and
+ exclude patterns
+Message-ID: <aFLee2PdbK+6SiA8@gmail.com>
+References: <cover.1750246291.git.mchehab+huawei@kernel.org>
+ <737b08e891765dc10bd944d4d42f8b1e37b80275.1750246291.git.mchehab+huawei@kernel.org>
 Precedence: bulk
 X-Mailing-List: lkmm@lists.linux.dev
 List-Id: <lkmm.lists.linux.dev>
@@ -57,52 +71,74 @@ List-Unsubscribe: <mailto:lkmm+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250618085735.7f9aa5a6@foz.lan>
+In-Reply-To: <737b08e891765dc10bd944d4d42f8b1e37b80275.1750246291.git.mchehab+huawei@kernel.org>
 
-On Wed, Jun 18, 2025 at 08:57:35AM +0200, Mauro Carvalho Chehab wrote:
-> Em Tue, 17 Jun 2025 12:59:27 +0100
-> Simon Horman <horms@kernel.org> escreveu:
+On Wed, Jun 18, 2025 at 01:46:28PM +0200, Mauro Carvalho Chehab wrote:
+> When one does:
+> 	make SPHINXDIRS="foo" htmldocs
 > 
-> > On Tue, Jun 17, 2025 at 10:02:02AM +0200, Mauro Carvalho Chehab wrote:
-> > > It is not a good practice to store build-generated files
-> > > inside $(srctree), as one may be using O=<BUILDDIR> and even
-> > > have the Kernel on a read-only directory.
-> > > 
-> > > Change the YAML generation for netlink files to allow it
-> > > to parse data based on the source or on the object tree.
-> > > 
-> > > Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-> > > ---
-> > >  tools/net/ynl/pyynl/ynl_gen_rst.py | 22 ++++++++++++++++------
-> > >  1 file changed, 16 insertions(+), 6 deletions(-)
-> > > 
-> > > diff --git a/tools/net/ynl/pyynl/ynl_gen_rst.py b/tools/net/ynl/pyynl/ynl_gen_rst.py
-> > > index 7bfb8ceeeefc..b1e5acafb998 100755
-> > > --- a/tools/net/ynl/pyynl/ynl_gen_rst.py
-> > > +++ b/tools/net/ynl/pyynl/ynl_gen_rst.py
-> > > @@ -365,6 +365,7 @@ def parse_arguments() -> argparse.Namespace:
-> > >  
-> > >      parser.add_argument("-v", "--verbose", action="store_true")
-> > >      parser.add_argument("-o", "--output", help="Output file name")
-> > > +    parser.add_argument("-d", "--input_dir", help="YAML input directory")
-> > >  
-> > >      # Index and input are mutually exclusive
-> > >      group = parser.add_mutually_exclusive_group()
-> > > @@ -405,11 +406,14 @@ def write_to_rstfile(content: str, filename: str) -> None:
-> > >      """Write the generated content into an RST file"""
-> > >      logging.debug("Saving RST file to %s", filename)
-> > >  
-> > > +    dir = os.path.dirname(filename)
-> > > +    os.makedirs(dir, exist_ok=True)
-> > > +
-> > >      with open(filename, "w", encoding="utf-8") as rst_file:
-> > >          rst_file.write(content)  
-> > 
-> > Hi Mauro,
-> > 
-> > With this patch applied I see the following, which did not happen before.
+> All patterns would be relative to Documentation/foo, which
+> causes the include/exclude patterns like:
 > 
-> Thanks! this was an intermediate step. I'll just drop this patch and
-> fix conflicts at the next version.
+> 	include_patterns = [
+> 		...
+> 		f'foo/*.{ext}',
+> 	]
+> 
+> to break. This is not what it is expected. Address it by
+> adding a logic to dynamically adjust the pattern when
+> SPHINXDIRS is used.
+> 
+> That allows adding parsers for other file types.
+> 
+> It should be noticed that include_patterns was added on
+> Sphinx 5.1:
+> 	https://www.sphinx-doc.org/en/master/usage/configuration.html#confval-include_patterns
+> 
+> So, a backward-compatible code is needed when we start
+> using it for real.
+> 
+> Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+> Reviewed-by: Donald Hunter <donald.hunter@gmail.com>
+> ---
+>  Documentation/conf.py | 67 ++++++++++++++++++++++++++++++++++++++++---
+>  1 file changed, 63 insertions(+), 4 deletions(-)
+> 
+> diff --git a/Documentation/conf.py b/Documentation/conf.py
+> index 12de52a2b17e..4ba4ee45e599 100644
+> --- a/Documentation/conf.py
+> +++ b/Documentation/conf.py
+> @@ -17,6 +17,66 @@ import os
+>  import sphinx
+>  import shutil
+>  
+> +# Get Sphinx version
+> +major, minor, patch = sphinx.version_info[:3]
+> +
+> +# Include_patterns were added on Sphinx 5.1
+> +if (major < 5) or (major == 5 and minor < 1):
+> +    has_include_patterns = False
+> +else:
+> +    has_include_patterns = True
+> +    # Include patterns that don't contain directory names, in glob format
+> +    include_patterns = ['**.rst']
+> +
+> +# Location of Documentation/ directory
+> +doctree = os.path.abspath('.')
+> +
+> +# Exclude of patterns that don't contain directory names, in glob format.
+> +exclude_patterns = []
+> +
+> +# List of patterns that contain directory names in glob format.
+> +dyn_include_patterns = []
+> +dyn_exclude_patterns = ['output']
+> +
+> +# Properly handle include/exclude patterns
+> +# ----------------------------------------
+> +
+> +def update_patterns(app):
+> +
 
-Likewise, thanks.
+PEP-257 says we don't want a line before docstring:
+
+https://peps.python.org/pep-0257/#multi-line-docstrings

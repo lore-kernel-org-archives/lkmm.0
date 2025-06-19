@@ -1,116 +1,139 @@
-Received: from mail-wr1-f45.google.com (mail-wr1-f45.google.com [209.85.221.45])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 511EF24E4B4;
-	Thu, 19 Jun 2025 12:20:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A91F22C35D;
+	Thu, 19 Jun 2025 12:30:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750335609; cv=none; b=uTbRMDVGD9WDCq4plBf/oPWYzrbBxOywgggf/zleTSMIa8gQ0xYvr5qsbwazM8poa1vNd4wmRS7hyUI82WEx1rMVRPkdut/pNu7YNdefWMhcxmE51Y3i7MaZPE/5yozgbMmDFg5Sx3BMnJ2+V7V2ZaHt5gONwdUBnSKQnc4xZvM=
+	t=1750336209; cv=none; b=XxHVrAMQbXQ/THVSQA/CIbr+Q3OakkLvQnjzd0MyN25mSDmHs6D+4TSheB4XkcUSE2ie1hpwNAWWmX+hxQZMux2ZCJjvX8fscpWbmlArLwKw4myKbQDgF5F8G3d9QOpJ9aFAdnPmUHTP0SnyfSlXPRqmYK86fwyZBKVfka7Ni48=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750335609; c=relaxed/simple;
-	bh=mhfIBh/bFaJ/GFxVs2Ar3YirycGFXc5ADMl6GKVDQYk=;
-	h=From:To:Cc:Subject:In-Reply-To:Date:Message-ID:References:
-	 MIME-Version:Content-Type; b=V61fFlNcHSln090RK2zM7lHSxpF1lke5D5dRaduIQ9o4+zYUaOzwdKCyhlUHjRtaFOJMZh4KwvoCY0cyuLSJgo1SPLsg+YqI3UWrvcvXtEP8LxrpGU7D8w59FQRXLIcuwdgJfYYBaKn0SRYhq4pNncEeABBTA6NoWHxeEq5Ryqs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=QiA4yfc2; arc=none smtp.client-ip=209.85.221.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1750336209; c=relaxed/simple;
+	bh=+tfprZLkDpyF3dYneGjV6I0yjtC8Y9weI88akNDjiLA=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=D/E+ktufNkfMPyUJUG0vGjiutXC3iDAQarSrD3RnWb3cmYg9Q2mUNTHG/Kr3sQfpyLkvRB7V8Yiq+NZ4Z4p33zvORK55Upl5i/+rDTeQxSMGGhutledxTqHVbI62eGN8aik8AJgxRG4ElU1pnTb24OcrcWGE4ZpiIDnHUQ7k/s0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=swYDkP7J; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QiA4yfc2"
-Received: by mail-wr1-f45.google.com with SMTP id ffacd0b85a97d-3a4ef2c2ef3so605680f8f.2;
-        Thu, 19 Jun 2025 05:20:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1750335605; x=1750940405; darn=lists.linux.dev;
-        h=mime-version:user-agent:references:message-id:date:in-reply-to
-         :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=nygRZhXsxMlH28nxkhtm4NH4pDec5lLwDc7T4mx9LAQ=;
-        b=QiA4yfc29pa00FUSW7YW1KHlmFs/5RAH/AAjoYVbKiQoRQTmhFYAlHuibaBxPfc7Sz
-         2JZXkfDz+kyNO1aqeqqOIOl+oBIHvOaZdYK/onrzi0nVrEf3iAhw7ixzCOg280ipMV5i
-         ucurV66l+z3m7sUy3xuB9IJukN4qOM4n9VKmRK0ImWlTK+uPIugrh/RzwrT6RsJHvKlp
-         c0bgcIuAyOATNdNU/DaQyrrwaTYatgqT962qWLjW8fbLAMvfVKXeb+RlIYWdmB0HjaPw
-         85Xfmi2k6V1cDEg0c1qVIFxRMjpX0khUmuTZ9BtTylOFVsQFRJ/EPYP49Ho1lKLBBTfg
-         a9hQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1750335605; x=1750940405;
-        h=mime-version:user-agent:references:message-id:date:in-reply-to
-         :subject:cc:to:from:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=nygRZhXsxMlH28nxkhtm4NH4pDec5lLwDc7T4mx9LAQ=;
-        b=f5YHKjvl3IEYY5g1T52USQq0ukPY9W1R/I87L4fReMwIEkQ79D/Rh8G9kFQQW92vfb
-         K2u5vxXkbI+thd7krxK0Tnm4y27VitPszWB/78og9dEMOSn+YDscj90M564oLzqew19S
-         h4R1LpAbRTTwT7BtbNQPjFw1kYluSd8C49KLXFNNa8NXvK+THk7FgfNHNy/HKUVsglpT
-         gzSaLpBe6Icy69uSRUUcMxGrOTFyREyq2McZiQSbJqrKXDYCMuAiaeCyKOgK0ooclQvN
-         GvY7m2TuSKW1oVcckLPmhaoHZAfi8aX3cw3cf0K2TSfpFOCNT5cABspsRh/ZEeXPI0YA
-         svUw==
-X-Forwarded-Encrypted: i=1; AJvYcCUQz1ZhUh7R5VThCfsIvsoZxfzn9ccrbKRbLmdWSRFQd26Z3yQrbVYlVGqMtOL0liH8I0SQPrTOFipMW3RcBw1dIyOz8w==@lists.linux.dev, AJvYcCXdrulXSpyXNWIcI9ibDD5XsVnbN5boMG1pCqlYLMeWZa7W1IbJk4Vpe/wjk0j58+7lSGBGNw==@lists.linux.dev
-X-Gm-Message-State: AOJu0Yz6aCScONFeFQ6o68ziAH7x1BosqDRI83+weRuiFIwLQcwUlO/Q
-	ADiezqDy/1xthU6C6bVRa2p1TBNuJOYeWL/apDGa8bPbtnNTuu86ZVpiPL7HgFCj
-X-Gm-Gg: ASbGncsupDeG/Ukn0jVoHkaeRQbM1XBj/GYDWFp4A27tTrFf5PLrIL2i5jZt3WAJd6b
-	CA1+dFaboceoCA07BrbpcHGeZdyUxrVhg8DQvHN/zdNZsXSiYfDKurn6GbLR7tva0raqH+/VJ/K
-	axuIvMH/fip0z7u4rw/7/67loZOKsrpx6ZKTXsNzxaWQk/v8yyXu20VTbCB5r9bi58wGhTMSppp
-	XA8n+8ak5TZvLGtdHovlChuzjU6jEkreCtOWcsI3g1h/8moGgYscGj21cN8fQggMaPMEUB8xQio
-	0AJFDL1qv9WzlMwSKgHreNazPOWeJtOoWeXXZWdovbOyv9xk1l9M9sXhHXKpHTzVBQgyPKcb
-X-Google-Smtp-Source: AGHT+IGe/eW8uV97j+Ytu4ZG/Iy5t6+Hp3owg5exZAVJPvvkIYpSPp5SobusIEtfHV7zrOM0RAnADw==
-X-Received: by 2002:a05:6000:40df:b0:3a4:eb92:39b6 with SMTP id ffacd0b85a97d-3a572e58768mr15357688f8f.54.1750335605284;
-        Thu, 19 Jun 2025 05:20:05 -0700 (PDT)
-Received: from imac ([2a02:8010:60a0:0:ad83:585e:86eb:3f])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3a589092d1asm7161585f8f.24.2025.06.19.05.20.04
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 19 Jun 2025 05:20:04 -0700 (PDT)
-From: Donald Hunter <donald.hunter@gmail.com>
-To: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-Cc: Linux Doc Mailing List <linux-doc@vger.kernel.org>,  Jonathan Corbet
- <corbet@lwn.net>,  "Akira Yokosawa" <akiyks@gmail.com>,  "Breno Leitao"
- <leitao@debian.org>,  "David S. Miller" <davem@davemloft.net>,  "Eric
- Dumazet" <edumazet@google.com>,  "Ignacio Encinas Rubio"
- <ignacio@iencinas.com>,  "Jan Stancek" <jstancek@redhat.com>,  "Marco
- Elver" <elver@google.com>,  "Paolo Abeni" <pabeni@redhat.com>,  "Ruben
- Wauters" <rubenru09@aol.com>,  "Shuah Khan" <skhan@linuxfoundation.org>,
-  joel@joelfernandes.org,  linux-kernel-mentees@lists.linux.dev,
-  linux-kernel@vger.kernel.org,  lkmm@lists.linux.dev,
-  netdev@vger.kernel.org,  peterz@infradead.org,  stern@rowland.harvard.edu
-Subject: Re: [PATCH v7 12/17] MAINTAINERS: add netlink_yml_parser.py to
- linux-doc
-In-Reply-To: <4077605f84d7ba6423dcb5fda4e96ac950856f1d.1750315578.git.mchehab+huawei@kernel.org>
-Date: Thu, 19 Jun 2025 13:10:38 +0100
-Message-ID: <m2cyb0extt.fsf@gmail.com>
-References: <cover.1750315578.git.mchehab+huawei@kernel.org>
-	<4077605f84d7ba6423dcb5fda4e96ac950856f1d.1750315578.git.mchehab+huawei@kernel.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="swYDkP7J"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E416C4CEEA;
+	Thu, 19 Jun 2025 12:30:06 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1750336209;
+	bh=+tfprZLkDpyF3dYneGjV6I0yjtC8Y9weI88akNDjiLA=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=swYDkP7J++md93+X4jTkf568pg2I0xO/GqQE5qbjypL0+uysWbsp4M6uZkxKqXqXF
+	 eEIMnRTIDt95jmJsUBjvWm21wjqK+KlgBMq5vG+6mpgPH//9LSgx4EUPr3LZKZLzb+
+	 jgdhCQEXXLtmudxUWgZi03+w3Z6GuGfgfSlZvmoOB+SN3DEveXwUZNYs1Zs95RlqqE
+	 pK/00CoEt/112GBH0NijKXUNsp/RKAQzr1B0gh4uofJhe61sJ4k7temJ85GI69NDKf
+	 RcTQ44R/zvnBjOdywSiZ2baXULQj7Qi+oZvD+moSGMI6mypzfWwMvW44YSu9/OuLNU
+	 Yr/6zb1KFiovg==
+Date: Thu, 19 Jun 2025 13:30:02 +0100
+From: Will Deacon <will@kernel.org>
+To: Hernan Ponce de Leon <hernan.poncedeleon@huaweicloud.com>
+Cc: Thomas Haas <t.haas@tu-bs.de>, Peter Zijlstra <peterz@infradead.org>,
+	Alan Stern <stern@rowland.harvard.edu>,
+	Andrea Parri <parri.andrea@gmail.com>,
+	Boqun Feng <boqun.feng@gmail.com>,
+	Nicholas Piggin <npiggin@gmail.com>,
+	David Howells <dhowells@redhat.com>,
+	Jade Alglave <j.alglave@ucl.ac.uk>,
+	Luc Maranget <luc.maranget@inria.fr>,
+	"Paul E. McKenney" <paulmck@kernel.org>,
+	Akira Yokosawa <akiyks@gmail.com>,
+	Daniel Lustig <dlustig@nvidia.com>,
+	Joel Fernandes <joelagnelf@nvidia.com>,
+	linux-kernel@vger.kernel.org, linux-arch@vger.kernel.org,
+	lkmm@lists.linux.dev, jonas.oberhauser@huaweicloud.com,
+	"r.maseli@tu-bs.de" <r.maseli@tu-bs.de>
+Subject: Re: [RFC] Potential problem in qspinlock due to mixed-size accesses
+Message-ID: <20250619123002.GC21372@willie-the-truck>
+References: <cb83e3e4-9e22-4457-bf61-5614cc4396ad@tu-bs.de>
+ <20250613075501.GI2273038@noisy.programming.kicks-ass.net>
+ <20250616142347.GA17781@willie-the-truck>
+ <d66d0351-b523-40da-ae47-8b06f37bf3b6@tu-bs.de>
+ <2b11f09d-b938-4a8e-8c3a-c39b6fea2b21@huaweicloud.com>
+ <20250617141704.GB19021@willie-the-truck>
+ <7a20b873-3c26-4a52-b118-c816ede7298d@tu-bs.de>
+ <218abf15-b4ed-4d13-9541-aab975bd3835@huaweicloud.com>
 Precedence: bulk
 X-Mailing-List: lkmm@lists.linux.dev
 List-Id: <lkmm.lists.linux.dev>
 List-Subscribe: <mailto:lkmm+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:lkmm+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <218abf15-b4ed-4d13-9541-aab975bd3835@huaweicloud.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 
-Mauro Carvalho Chehab <mchehab+huawei@kernel.org> writes:
+On Tue, Jun 17, 2025 at 09:00:30PM +0200, Hernan Ponce de Leon wrote:
+> On 6/17/2025 4:23 PM, Thomas Haas wrote:
+> > 
+> > 
+> > On 17.06.25 16:17, Will Deacon wrote:
+> > > On Tue, Jun 17, 2025 at 10:42:04AM +0200, Hernan Ponce de Leon wrote:
+> > > > On 6/17/2025 8:19 AM, Thomas Haas wrote:
+> > > > > On 16.06.25 16:23, Will Deacon wrote:
+> > > > > > I'm half inclined to think that the Arm memory model
+> > > > > > should be tightened
+> > > > > > here; I can raise that with Arm and see what they say.
+> > > > > > 
+> > > > > > Although the cited paper does give examples of store-forwarding from a
+> > > > > > narrow store to a wider load, the case in qspinlock is further
+> > > > > > constrained by having the store come from an atomic rmw and the load
+> > > > > > having acquire semantics. Setting aside the MSA part,
+> > > > > > that specific case
+> > > > > > _is_ ordered in the Arm memory model (and C++ release
+> > > > > > sequences rely on
+> > > > > > it iirc), so it's fair to say that Arm CPUs don't permit
+> > > > > > forwarding from
+> > > > > > an atomic rmw to an acquire load.
+> > > > > > 
+> > > > > > Given that, I don't see how this is going to occur in practice.
+> > > > > 
+> > > > > You are probably right. The ARM model's atomic-ordered-before relation
+> > > > > 
+> > > > >        let aob = rmw | [range(rmw)]; lrs; [A | Q]
+> > > > > 
+> > > > > clearly orders the rmw-store with subsequent acquire loads
+> > > > > (lrs = local-
+> > > > > read-successor, A = acquire).
+> > > > > If we treat this relation (at least the second part) as a "global
+> > > > > ordering" and extend it by "si" (same-instruction), then the
+> > > > > problematic
+> > > > > reordering under MSA should be gone.
+> > > > > I quickly ran Dartagnan on the MSA litmus tests with this change to the
+> > > > > ARM model and all the tests still pass.
+> > > > 
+> > > > Even with this change I still get violations (both safety and
+> > > > termination)
+> > > > for qspinlock with dartagnan.
+> > > 
+> > > Please can you be more specific about the problems you see?
+> > 
+> > I talked to Hernán personally and it turned out that he used the generic
+> > implementation of smp_cond_acquire (not sure if the name is correct)
+> > which uses a relaxed load followed by a barrier. In that case, replacing
+> > aob by aob;si does not change anything.
+> > Indeed, even in the reported problem we used the generic implementation
+> > (I was unaware of this), though it is easy to check that changing the
+> > relaxed load to acquire does not give sufficient orderings.
+> 
+> Yes, my bad. I was using the generic header rather than the aarch64 specific
+> one and then the changes to the model were having not effect (as they
+> should).
+> 
+> Now I am using the aarch64 specific ones and I can confirm dartagnan still
+> reports the violations with the current model and making the change proposed
+> by Thomas (adding ;si just to the second part seems to be enough) indeed
+> removes all violations.
 
-> The documentation build depends on the parsing code
-> at ynl_gen_rst.py. Ensure that changes to it will be c/c
-> to linux-doc ML and maintainers by adding an entry for
-> it. This way, if a change there would affect the build,
-> or the minimal version required for Python, doc developers
-> may know in advance.
->
-> Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-> Reviewed-by: Breno Leitao <leitao@debian.org>
-> ---
->  MAINTAINERS | 1 +
->  1 file changed, 1 insertion(+)
->
-> diff --git a/MAINTAINERS b/MAINTAINERS
-> index a92290fffa16..caa3425e5755 100644
-> --- a/MAINTAINERS
-> +++ b/MAINTAINERS
-> @@ -7202,6 +7202,7 @@ F:	scripts/get_abi.py
->  F:	scripts/kernel-doc*
->  F:	scripts/lib/abi/*
->  F:	scripts/lib/kdoc/*
-> +F:	tools/net/ynl/pyynl/netlink_yml_parser.py
+That's great! Thanks for working together to get to the bottom of it. I
+was worried that this was the tip of the iceberg.
 
-Wrong path now, right?
+I'll try to follow-up with Arm to see if that ';si' addition is an
+acceptable to atomic-ordered before. If not, we'll absorb the smp_wmb()
+into xchg_release() with a fat comment about RCsc and mixed-size
+accesses.
 
->  F:	scripts/sphinx-pre-install
->  X:	Documentation/ABI/
->  X:	Documentation/admin-guide/media/
+Will

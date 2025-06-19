@@ -1,130 +1,91 @@
-Received: from mail-qt1-f174.google.com (mail-qt1-f174.google.com [209.85.160.174])
+Received: from mail-qk1-f176.google.com (mail-qk1-f176.google.com [209.85.222.176])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25AEE3085DB
-	for <lkmm@lists.linux.dev>; Thu, 19 Jun 2025 15:15:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A062623C8D3
+	for <lkmm@lists.linux.dev>; Thu, 19 Jun 2025 17:57:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750346147; cv=none; b=Y4AFFcY53/7iw95m17mVJLngBWAGTf0DxMwfO5mzIVENBgQDL68r4YlBlNhwmranW5s7/elkybV4F7Htb+aRke7XJTmK/AKyS+xBsffEgZrPIs9JRQOgRJ/zgvmAkhATjgFw4cVi9dF1ECWSC44BHSZ69hz3AW2v46ydUtOMhRM=
+	t=1750355825; cv=none; b=jVOfoAnh8F8ELJ7WxNLrnwEXRJGxi9xKneSLOAh73Z1723IPpYTSryuEnxYTrNIyazJ7v2QgLe5Ynakg1ESjKxx1UUU/9UY2QJk5PgfoIMYfduFUfG5GoGBvSr2cVeBchSWvHdQ+ZeAAbV/vF1Nnbz8+H5cSoylnuwuEe6FU2RM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750346147; c=relaxed/simple;
-	bh=zHZPU0pQVvtvELT/A0DnUl36QCSDJghMFFVkTWTaZUc=;
+	s=arc-20240116; t=1750355825; c=relaxed/simple;
+	bh=eai0KmAEI/LXOe/M1noE2xH7znIEBHLB9tBGHx4OkBM=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=f6M14oh442YbHgRRu/UEZbODUGUFkdv16enoeYd9NdLcbnM4GbOquqlDBCMdWLrGwDfJuUU0h+EvF4fjw+rly/0wdB6ziXYHGrIFAviRtS77kr80YueauNXc7ZL8vYcuEWSZSm+y60i3LWOTuGoPuBYr/OFKGUWD2p9O/ZtqibY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=XfrHaslq; arc=none smtp.client-ip=209.85.160.174
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	 Content-Type:Content-Disposition:In-Reply-To; b=X7wvR7dlhbqcxn6ZvntB9SIEugoRIkVa5capG8+NCv6/HHvmmYIlSyV20zp8FONlLu/Q0Ozmz8pNbKc+M5iSzb2/SISMIYb4JXUqDtortyhiMdUku0xGR/vHaMay1Sf2qua/OoYNqFQmL0VloEHqREs7zU6+ZHWVxOqLZBvvGZo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=rowland.harvard.edu; spf=fail smtp.mailfrom=g.harvard.edu; dkim=pass (2048-bit key) header.d=rowland.harvard.edu header.i=@rowland.harvard.edu header.b=aF2m48Tj; arc=none smtp.client-ip=209.85.222.176
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=rowland.harvard.edu
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=g.harvard.edu
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XfrHaslq"
-Received: by mail-qt1-f174.google.com with SMTP id d75a77b69052e-4a58ebece05so7711211cf.1
-        for <lkmm@lists.linux.dev>; Thu, 19 Jun 2025 08:15:45 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=rowland.harvard.edu header.i=@rowland.harvard.edu header.b="aF2m48Tj"
+Received: by mail-qk1-f176.google.com with SMTP id af79cd13be357-7d3e5df4785so67090585a.0
+        for <lkmm@lists.linux.dev>; Thu, 19 Jun 2025 10:57:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1750346145; x=1750950945; darn=lists.linux.dev;
+        d=rowland.harvard.edu; s=google; t=1750355822; x=1750960622; darn=lists.linux.dev;
         h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:feedback-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=iB6NBWoWO017Q/yotmTxC8XiQqyoYl9JmICEhhvlvHU=;
-        b=XfrHaslqyTvYHWk3W+3FoaCiFJv1U7tAUVVyXbJFmVsEVhTXBO3gL7Qyl7y3tIV+z9
-         +Vy85OMyW1bjNhbqR+uXNBoGhbGRdsTwXuohDsObIlfFiLDnqOCmLMUP045Lb1S6EqRJ
-         VpDEsfA4gTjfLXfSVjoNaPNZRFKh/eI2Yx1ebIDiDTtcGHMby9JoL2RE462Dq4KjcWKm
-         TXtC9EOupNHKr87zTZCPLIfTM+GYx3Gocb6sOApIn82oQ8Hh4YcH7pZI7jlTEYXi9/ro
-         ixSDsZsRLq2SzeDiXo8pWR22Ra9iXbmyf+Nbb7GoqIjhl2hFSJnWUHkgwFDvW96hQBeU
-         Yntg==
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=U8d2ui7E+uX2eOaUMaNXo/P5F6Y0SfvCqCGd0JgYOPM=;
+        b=aF2m48Tj7FLBGrbX/1zSLDLin411JjMvStWcaA+jF7sBnQXNBcfxBSA6Bv4b+XeYEI
+         ts7Lqbgr3vj6U2jmLBhfETvLnSkhWSJ6Jk/KuNM7fXV2G7bj8yvOTarbHJTMMrwbUeI0
+         vCM2jbY7MTv5OtnbXwzXSUh+f9534YVkH6ICGwZd8x/zYIMzaMPeFQGQJX3ss/fomP2t
+         u8i8WqY1dmQo7pn8jAGg6zxh6X3ZwXRd+bjJ6BdTQ8bHudmLFR+0Rifm8WSHNb4yOOY9
+         ac8gsuSdiwHXhrFMNkmFNp1cT60COCqGz/LiRGKWOwSUkZgLIj/rXCtryERHWySAUfMD
+         0lBA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1750346145; x=1750950945;
+        d=1e100.net; s=20230601; t=1750355822; x=1750960622;
         h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:feedback-id:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=iB6NBWoWO017Q/yotmTxC8XiQqyoYl9JmICEhhvlvHU=;
-        b=WWLWsf6R3l90NEEmU6ZNDZNLXgDaTQKBd8ujuygX7ohK7zJaFhwaIUSUTur4ewt2nT
-         vCaWkYhKw75J5AicgXlAOVQlgVVR+63fKiOG4OsSkxcOYLAcpgWrVhZrC8d/QBjEjVq+
-         nm7YSlkD3mq5yHNOaNM08oyCZCwe2SClYPq2INPU2/wPHE325ls7/NUyug0V50wd/Myu
-         iQD9oaCaT7vP1GMX8uZZrIraTg+4pf+k/wU88oaJkfpa+ONhLH9woTRsim2VX+uvjsix
-         oAyta+gY4to/UXPVjlSn9V3r4Z7AM4frOBXhnqoytEDf+dAL0nMIPnU3fdG5Cajw4+Uz
-         4YZw==
-X-Forwarded-Encrypted: i=1; AJvYcCVoCOc2OPKlKfh//gGb9wh8dHmTQiydqCTvoxZEWS5xD15hpPKeF6LPTex/Dbvuj6LSbgGc@lists.linux.dev
-X-Gm-Message-State: AOJu0YwVLz7g2JZYyso6gZKD7K/6Q35Ds7dWyH4tyQlSPEV0ngP+U0M8
-	4M4Qra4iGbkf/V6LSiigcpcMiWwt8vV4XFl+cTO/ZtyFnS5vJg2ufySM
-X-Gm-Gg: ASbGncskV6B9iNqkgw0GCclm5v9NkIRtnudW49n/4MweHLc8xCNBroql9fmZu4hkClO
-	VQrl5vC/OPPAhmSbO39gKxFDp7y5qv3+/qv81L3fFAPhICXEI7ghGv6JlQfMM5n0TpE0bDA69Wq
-	guT0J0WqIyx0JLKCS7cTo5fJjceDHppjxQpL8jVb3s7RAGG4XYc01l1tGgx1UBwtELJhgG4PeTN
-	Hjqb+vFH0i7hN0M4cBTxF8W/cA9Rl0qlbAqXFI+CAb4DwcSICNZB+70ST/6UbaY7gk0n5+dtYiZ
-	/MB4Nzn8Aj+jcNFd7YhT+LLTVs5lZ/y9B7MRk5Jt67nCbkm4EnN0KIf/qyyxe5ZkIIKvGE3fLeE
-	5wp0PJ6sNfCmFoBvxlFSockdvQr2LYUAxPv0dEhn4IzSzGxGughcQ
-X-Google-Smtp-Source: AGHT+IF8vYUaxN9IXHpKW7pA/QJMa955Hnx3mIGzGHZgpjKqaBXYX9dt9SNO06zJEdxRolqCx+PzwA==
-X-Received: by 2002:ac8:58ce:0:b0:4a4:2d64:a7e4 with SMTP id d75a77b69052e-4a73c608616mr347986811cf.35.1750346144930;
-        Thu, 19 Jun 2025 08:15:44 -0700 (PDT)
-Received: from fauth-a1-smtp.messagingengine.com (fauth-a1-smtp.messagingengine.com. [103.168.172.200])
-        by smtp.gmail.com with ESMTPSA id d75a77b69052e-4a7784ce4d1sm443131cf.27.2025.06.19.08.15.41
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=U8d2ui7E+uX2eOaUMaNXo/P5F6Y0SfvCqCGd0JgYOPM=;
+        b=CMU6gWmW0csYTKSxTWKx8uZTEBlLvz0cfWpC1hMM72sdKT8++1nAZs78wnqpo52Ayb
+         hgmdhnDvI3MtRaNGBELO6xJuisj720tztkuKB1jeVq7B5hjluH7AFuFI/88omuFr4Kb9
+         k6G0YzcCp691sMKjETGxtNgTM48jRiR4LrvTcc8KJuryKwn0vAemVTxS3W7fSAx1pByL
+         UrOY9224pflRLlkp0obILcjlpoUS4dZaS9a/eHgG2lJM2AD3XUHzCeymQFQVIvbb5u32
+         k40IgLD6Z+Q3mOfMk7qomLQ6j3IXVjsok+F6wJfjMwWdB+EqayHhMrnL5Op6pZ2X5dug
+         KlRg==
+X-Forwarded-Encrypted: i=1; AJvYcCX2H9Ms3pqYUadH0hFPxnwYMF5Zsya8SY8gWYus0Ya/IvPfKb5HAO95fqi2f3Vq3p/rsxZD@lists.linux.dev
+X-Gm-Message-State: AOJu0YyCfacNu4fj1VbY0+H7Qc8VrT2bJnjJsTtJ66xHT45e2I/R2U/+
+	Grl7qFgN/MX27Y7d10/jrlnw+SYtZqa79FYOemn0pxNjfzyS913ICn23Z97UTAtbRw==
+X-Gm-Gg: ASbGncs5hHG+DtlXZGDicbbeSYFaBY4D4QXsqn9Kg6rKWQvbTohW3iHS+HD9idcAGgN
+	JHnWh6p5wcJrRO9QBf21yyzO1Eze/3NiuTp3qIYFnP03va4ICc6GLgFgDeaexCb5uOL9TeYvKKq
+	nTJAJ0ZynqXMamdEe5TLNFZbpOprFu+8WUVEegHUjeACy/9WC3DBjX9nEq6jpYtLb5F4SBnEQvW
+	H8jVGYzXISoNh3uYPw1IGfsny37GLODAU53zmzJ/y1RKFztD85HD/D2H2Gtka1CP0U8fKpnx3F+
+	BnvVzvaVKJSyVDl1Jb+z3BPnKlTw37TnVuI1xkKzanKo64LltsTgyUxjvd+ocj8=
+X-Google-Smtp-Source: AGHT+IFfAivhqC/12RhcVOhHTCkxtn7BPAMKJ8jBgCMvwPH79EHDEwzW7+X8dU3ooMKnx4PjKTOoZg==
+X-Received: by 2002:a05:6214:2c0d:b0:6fa:c5be:daca with SMTP id 6a1803df08f44-6fd0a4694e4mr3308996d6.7.1750355822520;
+        Thu, 19 Jun 2025 10:57:02 -0700 (PDT)
+Received: from rowland.harvard.edu ([2601:19b:681:fd10::9ca8])
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-6fd09593450sm2348556d6.98.2025.06.19.10.57.00
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 19 Jun 2025 08:15:42 -0700 (PDT)
-Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
-	by mailfauth.phl.internal (Postfix) with ESMTP id BA82F1200069;
-	Thu, 19 Jun 2025 11:15:41 -0400 (EDT)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-01.internal (MEProxy); Thu, 19 Jun 2025 11:15:41 -0400
-X-ME-Sender: <xms:nSlUaIskrN58R8pfL5HcUXbdEiumOwJqeuesDalCGA3HVarVvmyARA>
-    <xme:nSlUaFeNOvpNck2jrzCPWg4LTetKM-aQVMaK8C29bgMk9ofYorlSYilskBbtliwyw
-    3Gmn_LeOdbJVgUfcA>
-X-ME-Received: <xmr:nSlUaDywfts9qXJkAqSPEMQoe1SVaa1E4BW_p8tiC1i2t22isfspKuYbeQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddvgdehkeeiucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceurghi
-    lhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujfgurh
-    epfffhvfevuffkfhggtggujgesthdtredttddtvdenucfhrhhomhepuehoqhhunhcuhfgv
-    nhhguceosghoqhhunhdrfhgvnhhgsehgmhgrihhlrdgtohhmqeenucggtffrrghtthgvrh
-    hnpefgledvudfhudfhhedugeegheekhfeileelteffgfekleegjeetueefieetudehueen
-    ucffohhmrghinheprhgvlhgvrghsvgdrshhonecuvehluhhsthgvrhfuihiivgeptdenuc
-    frrghrrghmpehmrghilhhfrhhomhepsghoqhhunhdomhgvshhmthhprghuthhhphgvrhhs
-    ohhnrghlihhthidqieelvdeghedtieegqddujeejkeehheehvddqsghoqhhunhdrfhgvnh
-    hgpeepghhmrghilhdrtghomhesfhhigihmvgdrnhgrmhgvpdhnsggprhgtphhtthhopedv
-    iedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepphgvthgvrhiisehinhhfrhgrug
-    gvrggurdhorhhgpdhrtghpthhtoheplhhinhhugidqkhgvrhhnvghlsehvghgvrhdrkhgv
-    rhhnvghlrdhorhhgpdhrtghpthhtoheprhhushhtqdhfohhrqdhlihhnuhigsehvghgvrh
-    drkhgvrhhnvghlrdhorhhgpdhrtghpthhtoheplhhkmhhmsehlihhsthhsrdhlihhnuhig
-    rdguvghvpdhrtghpthhtoheplhhinhhugidqrghrtghhsehvghgvrhdrkhgvrhhnvghlrd
-    horhhgpdhrtghpthhtohepohhjvggurgeskhgvrhhnvghlrdhorhhgpdhrtghpthhtohep
-    rghlvgigrdhgrgihnhhorhesghhmrghilhdrtghomhdprhgtphhtthhopehgrghrhiesgh
-    grrhihghhuohdrnhgvthdprhgtphhtthhopegsjhhorhhnfegpghhhsehprhhothhonhhm
-    rghilhdrtghomh
-X-ME-Proxy: <xmx:nSlUaLNdegtaf3xa6TtwhaE9QVx0LOLdxrxkjQsJumnZV9M82BoMFw>
-    <xmx:nSlUaI97kKqOW3Jz1ZTEl1t1OU9zu2-JXHQ7WwsMcfFCSFGvg1MkrA>
-    <xmx:nSlUaDWyQdmWn8GXYlEn-B9jFQd6bol3p47FB5jr87ZtyMi-7Vjw5g>
-    <xmx:nSlUaBcQjjgb1RuxLQIQq9W7jb-vnzoQorE84AInrV4M6SHYASavZg>
-    <xmx:nSlUaKdQ1obqpDC4h0bIwoMZVevMyR3SsKD7oaRo9lMngoUJv_RfiWfS>
-Feedback-ID: iad51458e:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 19 Jun 2025 11:15:41 -0400 (EDT)
-Date: Thu, 19 Jun 2025 08:15:40 -0700
-From: Boqun Feng <boqun.feng@gmail.com>
-To: Peter Zijlstra <peterz@infradead.org>
-Cc: linux-kernel@vger.kernel.org, rust-for-linux@vger.kernel.org,
-	lkmm@lists.linux.dev, linux-arch@vger.kernel.org,
-	Miguel Ojeda <ojeda@kernel.org>,
-	Alex Gaynor <alex.gaynor@gmail.com>, Gary Guo <gary@garyguo.net>,
-	=?iso-8859-1?Q?Bj=F6rn?= Roy Baron <bjorn3_gh@protonmail.com>,
-	Benno Lossin <lossin@kernel.org>,
-	Andreas Hindborg <a.hindborg@kernel.org>,
-	Alice Ryhl <aliceryhl@google.com>, Trevor Gross <tmgross@umich.edu>,
-	Danilo Krummrich <dakr@kernel.org>, Will Deacon <will@kernel.org>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Wedson Almeida Filho <wedsonaf@gmail.com>,
-	Viresh Kumar <viresh.kumar@linaro.org>,
-	Lyude Paul <lyude@redhat.com>, Ingo Molnar <mingo@kernel.org>,
-	Mitchell Levy <levymitchell0@gmail.com>,
+        Thu, 19 Jun 2025 10:57:01 -0700 (PDT)
+Date: Thu, 19 Jun 2025 13:56:58 -0400
+From: Alan Stern <stern@rowland.harvard.edu>
+To: Thomas Haas <t.haas@tu-bs.de>
+Cc: Andrea Parri <parri.andrea@gmail.com>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Will Deacon <will@kernel.org>, Boqun Feng <boqun.feng@gmail.com>,
+	Nicholas Piggin <npiggin@gmail.com>,
+	David Howells <dhowells@redhat.com>,
+	Jade Alglave <j.alglave@ucl.ac.uk>,
+	Luc Maranget <luc.maranget@inria.fr>,
 	"Paul E. McKenney" <paulmck@kernel.org>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Thomas Gleixner <tglx@linutronix.de>
-Subject: Re: [PATCH v5 03/10] rust: sync: atomic: Add ordering annotation
- types
-Message-ID: <aFQpnBGrOrd3rtbF@Mac.home>
-References: <20250618164934.19817-1-boqun.feng@gmail.com>
- <20250618164934.19817-4-boqun.feng@gmail.com>
- <20250619103155.GD1613376@noisy.programming.kicks-ass.net>
- <aFQQuf44uovVNFCV@Mac.home>
- <20250619143214.GJ1613376@noisy.programming.kicks-ass.net>
- <aFQmDoRSEmUuPIQG@Mac.home>
- <20250619151050.GN1613376@noisy.programming.kicks-ass.net>
+	Akira Yokosawa <akiyks@gmail.com>,
+	Daniel Lustig <dlustig@nvidia.com>,
+	Joel Fernandes <joelagnelf@nvidia.com>,
+	linux-kernel@vger.kernel.org, linux-arch@vger.kernel.org,
+	lkmm@lists.linux.dev, hernan.poncedeleon@huaweicloud.com,
+	jonas.oberhauser@huaweicloud.com,
+	"r.maseli@tu-bs.de" <r.maseli@tu-bs.de>
+Subject: Re: [RFC] Potential problem in qspinlock due to mixed-size accesses
+Message-ID: <a0887a91-468c-43ff-872e-c4c4e23b26dd@rowland.harvard.edu>
+References: <cb83e3e4-9e22-4457-bf61-5614cc4396ad@tu-bs.de>
+ <20250613075501.GI2273038@noisy.programming.kicks-ass.net>
+ <aEwHufdehlQnBX7g@andrea>
+ <9264df13-36db-4b25-b2c4-7a9701df2f4d@tu-bs.de>
+ <aE-3_mJPjea62anv@andrea>
+ <357b3147-22e0-4081-a9ac-524b65251d62@rowland.harvard.edu>
+ <aFF3NSJD6PBMAYGY@andrea>
+ <595209ed-2074-46da-8f57-be276c2e383b@tu-bs.de>
+ <6ac81900-873e-415e-b5b2-96e9f7689468@rowland.harvard.edu>
+ <c97665c6-2d8b-49ae-acc5-be5be04f0093@tu-bs.de>
 Precedence: bulk
 X-Mailing-List: lkmm@lists.linux.dev
 List-Id: <lkmm.lists.linux.dev>
@@ -133,56 +94,49 @@ List-Unsubscribe: <mailto:lkmm+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250619151050.GN1613376@noisy.programming.kicks-ass.net>
+In-Reply-To: <c97665c6-2d8b-49ae-acc5-be5be04f0093@tu-bs.de>
 
-On Thu, Jun 19, 2025 at 05:10:50PM +0200, Peter Zijlstra wrote:
-> On Thu, Jun 19, 2025 at 08:00:30AM -0700, Boqun Feng wrote:
+On Thu, Jun 19, 2025 at 04:59:38PM +0200, Thomas Haas wrote:
 > 
-> > > So given we build locks from atomics, this has to come from somewhere.
-> > > 
-> > > The simplest lock -- TAS -- is: rmw.acquire + store.release.
-> > > 
-> > > So while plain store.release + load.acquire might not make TSO (although
-> > > IIRC ARM added variants that do just that in an effort to aid x86
-> > > emulation); store.release + rmw.acquire must, otherwise we cannot
-> > > satisfy that unlock+lock.
+> 
+> On 19.06.25 16:32, Alan Stern wrote:
+> > On Thu, Jun 19, 2025 at 04:27:56PM +0200, Thomas Haas wrote:
+> > > I support this endeavor, but from the Dartagnan side :).
+> > > We already support MSA in real C/Linux code and so extending our supported
+> > > Litmus fragment to MSA does not sound too hard to me.
+> > > We are just missing a LKMM cat model that supports MSA.
 > > 
-> > Make sense, so something like this in the model should work:
+> > To me, it doesn't feel all that easy.  I'm not even sure where to start
+> > changing the LKMM.\
 > > 
-> > diff --git a/tools/memory-model/linux-kernel.cat b/tools/memory-model/linux-kernel.cat
-> > index d7e7bf13c831..90cb6db6e335 100644
-> > --- a/tools/memory-model/linux-kernel.cat
-> > +++ b/tools/memory-model/linux-kernel.cat
-> > @@ -27,7 +27,7 @@ include "lock.cat"
-> >  (* Release Acquire *)
-> >  let acq-po = [Acquire] ; po ; [M]
-> >  let po-rel = [M] ; po ; [Release]
-> > -let po-unlock-lock-po = po ; [UL] ; (po|rf) ; [LKR] ; po
-> > +let po-unlock-lock-po = po ; (([UL] ; (po|rf) ; [LKR]) | ([Release]; (po;rf); [Acquire & RMW])) ; po
+> > Probably the best way to keep things organized would be to begin with
+> > changes to the informal operational model and then figure out how to
+> > formalize them.  But what changes are needed to the operational model?
 > > 
-> >  (* Fences *)
-> >  let R4rmb = R \ Noreturn       (* Reads for which rmb works *)
-> > 
+> > Alan
 > 
-> I am forever struggling with cats, but that does look about right :-)
+> Of course, the difficult part is to get the model right. Maybe I shouldn't
+> have said that we are "just" missing the model :).
+> I'm only saying that we already have some tooling to validate changes to the
+> formal model.
 > 
-
-;-) ;-) ;-)
-
-> > although I'm not sure whether there will be actual users that use this
-> > ordering.
+> I think it makes sense to first play around with the tooling and changes to
+> the formal model to just get a feeling of what can go wrong and what needs
+> to go right. Then it might become more clear on how the informal operational
+> model needs to change.
 > 
-> include/asm-generic/ticket_spinlock.h comes to mind, as I thing would
-> kernel/locking/qspinlock.*, no?
-> 
+> A good starting point might be to lift the existing ARM8 MSA litmus tests to
+> corresponding C/LKMM litmus tests and go from there.
+> If the informal operational model fails to explain them, then it needs to
+> change. This goes only one way though: if ARM permits a behavior then so
+> should LKMM. If ARM does not, then it is not so clear if LKMM should or not.
 
-Ah, right. Although I thought users outside lock implementation would be
-nice, but you're right, we do have users. Previously our reasoning for
-correctness of this particular locking ordering kinda depends on
-per-architecture memory model reasoning, so modeling this does make
-sense.
+Okay, that seems reasonable.
 
-Regards,
-Boqun
+BTW, I don't want to disagree with what you wrote ... but doesn't your 
+last paragraph contradict the paragraph before it?  Is starting with the 
+various MSA litmus tests and seeing how the operational model fails to 
+explain them not the opposite of first playing around with the tooling 
+and changes to the formal model?
 
-> 
+Alan

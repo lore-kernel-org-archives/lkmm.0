@@ -1,165 +1,192 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF4A31DDC3F;
-	Thu, 19 Jun 2025 06:23:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 099EB14F98;
+	Thu, 19 Jun 2025 06:50:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750314205; cv=none; b=ZyQJWEwtX3r2Qf7rnkYTOERrCKYjIhDatTAh6Ed6oVKYLDCdzGElvGN7nRrXptx7r0dvjzdOrqNEkMWIqM4xnbSW3pd+USPFGSN67kTTuf33nVm+M/9nvzETA2OfWxkds5McBUXW8be5jM5hznHSXEgNxlQJl6xRX7suS1+c2BY=
+	t=1750315821; cv=none; b=ClP93R9l0xIpB6k+RmRvvAzyZsTxiX1Kr3KsMDOYwGcWmBEycP5huGk4BpnavOu5luBhUDhJSKlqOqwl+NLKjGLdH3nYENPbGDDZ19806Ai9fgsoNK8rED2qp1RblgrtM1XqTUuyypRJO80E2hXUP6VGUzO092MJVshrMHLr2Sg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750314205; c=relaxed/simple;
-	bh=3c5lKu3ERIrxQCRZitVKfr7EkbtCphwpBOu10sQCKLU=;
-	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=q3cHnfdHcqP74lSderslDoCxCLb70ZFGcXCET90sTI5O10ppMcZWB/UXel48iUUgyHJmdUBNuQILF2pFiplH6XQ4YfCfjPmvkLSGzM8hajabw/BlQPwWNw04cY2BgsPqvjKa0+ucavllcv9TaF+KNLm936AI1NzR8IAUjyd4B4s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=lZ7Wifff; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1750315821; c=relaxed/simple;
+	bh=JvTI+DF/1Dszyn4T0n7ZKhi6vNtj6FoC1Ae/TMd5FHM=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=I+qfVXZYT29iX4h+3j0SR4PhWQcJxwbHnBi0Jg++OjmrZQ7alQfNb2gzl5a9Lx7v5xQEybC/DTwe6rLLxS1a3yPMG8uKzDbyokQSFof2t/cbdzH9mlbrj12ugmHVeX7uEPriREMN3w6P5dVvId4q/WDGMZiflwvCCiq57FIVLpw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=G3Ias+ip; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="lZ7Wifff"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E2DDC4CEEA;
-	Thu, 19 Jun 2025 06:23:20 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="G3Ias+ip"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6FEBC4CEEF;
+	Thu, 19 Jun 2025 06:50:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1750314205;
-	bh=3c5lKu3ERIrxQCRZitVKfr7EkbtCphwpBOu10sQCKLU=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-	b=lZ7Wifff3vQNAaIYSjj+AXJCug9/GiIoxCHb5rsq31C1cJZAnjm9T4qPTwd+7nItS
-	 cZtjg9wQQ3HLSiI7KLYP86TyCBsgaoHZGN+y2euToTfZ9eM/i5xqQPjJeQgZhFduuC
-	 SYypV8u3sAlCnlIecStbKmQ9vI76ds6PEpzpQ2udHv7WV5rcaY0U/NkVjqwNSY0v+3
-	 UrQiX7X5tgUoIzp7wnLd7tgB1xnTj+uryOSX0q60VCAHQ+m/38yavUhEfkCAvkDxpl
-	 BQhxDWQRk2CBc4w/MAuiBJ9GD4tWu2YiK0sDYon7Djsja7QVXexoSdu5k+VU3a52FZ
-	 LzP/zhYNmcSeQ==
-Date: Thu, 19 Jun 2025 08:23:18 +0200
+	s=k20201202; t=1750315820;
+	bh=JvTI+DF/1Dszyn4T0n7ZKhi6vNtj6FoC1Ae/TMd5FHM=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=G3Ias+ipf86GGwEO696BS4I3hyYvFXlxOBAGciBgQQdC+P+FTYaKXuiz7aXKqEekB
+	 41ROxbKjmPuoKAd9tjfNgQqtOqQYazDXp6UegXPSFE0/pZ+LCyI/gFx5I1zmeq7Jr9
+	 tA81uMylDht8q2RvATdvzBe93F4GvuVAy2Z08iAW1lF+Rb1kETwLbWk8haNy/j8Y3j
+	 1AOV+ArwTydcOqym6NhVQx+FxNx130IYvv0gRNHa8vhMf7pqjfvRAjDx/G0jWUr1IT
+	 oAmKW6DE2sqa5wo3YM0ZLVbEgD4eP3sqO1PwNPhHlH00nh30QsotYnZb99Sbw1UkTu
+	 OgpLPizO9qIrA==
+Received: from mchehab by mail.kernel.org with local (Exim 4.98.2)
+	(envelope-from <mchehab+huawei@kernel.org>)
+	id 1uS96I-00000003dGa-3TSR;
+	Thu, 19 Jun 2025 08:50:18 +0200
 From: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-To: Akira Yokosawa <akiyks@gmail.com>
-Cc: Breno Leitao <leitao@debian.org>, Linux Doc Mailing List
- <linux-doc@vger.kernel.org>, Jonathan Corbet <corbet@lwn.net>,
- linux-kernel@vger.kernel.org, "David S. Miller" <davem@davemloft.net>,
- Ignacio Encinas Rubio <ignacio@iencinas.com>, Marco Elver
- <elver@google.com>, Shuah Khan <skhan@linuxfoundation.org>, Donald Hunter
- <donald.hunter@gmail.com>, Eric Dumazet <edumazet@google.com>, Jan Stancek
- <jstancek@redhat.com>, Paolo Abeni <pabeni@redhat.com>, Ruben Wauters
- <rubenru09@aol.com>, joel@joelfernandes.org,
- linux-kernel-mentees@lists.linux.dev, lkmm@lists.linux.dev,
- netdev@vger.kernel.org, peterz@infradead.org, stern@rowland.harvard.edu,
- Randy Dunlap <rdunlap@infradead.org>
-Subject: Re: [PATCH v6 00/15] Don't generate netlink .rst files inside
- $(srctree)
-Message-ID: <20250619082318.32f754f6@foz.lan>
-In-Reply-To: <598b2cb7-2fd7-4388-96ba-2ddf0ab55d2a@gmail.com>
-References: <cover.1750246291.git.mchehab+huawei@kernel.org>
-	<17f2a9ce-85ac-414a-b872-fbcd30354473@gmail.com>
-	<20250618182032.03e7a727@sal.lan>
-	<598b2cb7-2fd7-4388-96ba-2ddf0ab55d2a@gmail.com>
-X-Mailer: Claws Mail 4.3.1 (GTK 3.24.49; x86_64-redhat-linux-gnu)
+To: Linux Doc Mailing List <linux-doc@vger.kernel.org>,
+	Jonathan Corbet <corbet@lwn.net>
+Cc: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
+	"Akira Yokosawa" <akiyks@gmail.com>,
+	"Breno Leitao" <leitao@debian.org>,
+	"David S. Miller" <davem@davemloft.net>,
+	"Donald Hunter" <donald.hunter@gmail.com>,
+	"Eric Dumazet" <edumazet@google.com>,
+	"Ignacio Encinas Rubio" <ignacio@iencinas.com>,
+	"Jan Stancek" <jstancek@redhat.com>,
+	"Marco Elver" <elver@google.com>,
+	"Mauro Carvalho Chehab" <mchehab+huawei@kernel.org>,
+	"Paolo Abeni" <pabeni@redhat.com>,
+	"Ruben Wauters" <rubenru09@aol.com>,
+	"Shuah Khan" <skhan@linuxfoundation.org>,
+	joel@joelfernandes.org,
+	linux-kernel-mentees@lists.linux.dev,
+	linux-kernel@vger.kernel.org,
+	lkmm@lists.linux.dev,
+	netdev@vger.kernel.org,
+	peterz@infradead.org,
+	stern@rowland.harvard.edu
+Subject: [PATCH v7 01/17] docs: conf.py: properly handle include and exclude patterns
+Date: Thu, 19 Jun 2025 08:48:54 +0200
+Message-ID: <737b08e891765dc10bd944d4d42f8b1e37b80275.1750315578.git.mchehab+huawei@kernel.org>
+X-Mailer: git-send-email 2.49.0
+In-Reply-To: <cover.1750315578.git.mchehab+huawei@kernel.org>
+References: <cover.1750315578.git.mchehab+huawei@kernel.org>
 Precedence: bulk
 X-Mailing-List: lkmm@lists.linux.dev
 List-Id: <lkmm.lists.linux.dev>
 List-Subscribe: <mailto:lkmm+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:lkmm+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
+Sender: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 
-Em Thu, 19 Jun 2025 10:34:59 +0900
-Akira Yokosawa <akiyks@gmail.com> escreveu:
+When one does:
+	make SPHINXDIRS="foo" htmldocs
 
-> On Wed, 18 Jun 2025 18:20:32 +0200, Mauro Carvalho Chehab wrote:
-> > Em Thu, 19 Jun 2025 00:46:15 +0900
-> > Akira Yokosawa <akiyks@gmail.com> escreveu:
-> >   
-> >> Quick tests against Sphinx 3.4.3 using container images based on
-> >> debian:bullseye and almalinux:9, both of which have 3.4.3 as their distro
-> >> packages, emits a *bunch* of warnings like the following:
-> >>
-> >> /<srcdir>/Documentation/netlink/specs/conntrack.yaml:: WARNING: YAML parsing error: AttributeError("'Values' object has no attribute 'tab_width'")
-> >> /<srcdir>/Documentation/netlink/specs/devlink.yaml:: WARNING: YAML parsing error: AttributeError("'Values' object has no attribute 'tab_width'")
-> >> /<srcdir>/Documentation/netlink/specs/dpll.yaml:: WARNING: YAML parsing error: AttributeError("'Values' object has no attribute 'tab_width'")
-> >> /<srcdir>/Documentation/netlink/specs/ethtool.yaml:: WARNING: YAML parsing error: AttributeError("'Values' object has no attribute 'tab_width'")
-> >> /<srcdir>/Documentation/netlink/specs/fou.yaml:: WARNING: YAML parsing error: AttributeError("'Values' object has no attribute 'tab_width'")
-> >> [...]
-> >>
-> >> I suspect there should be a minimal required minimal version of PyYAML.  
-> > 
-> > Likely yes. From my side, I didn't change anything related to PyYAML, 
-> > except by adding a loader at the latest patch to add line numbers.
-> > 
-> > The above warnings don't seem related. So, probably this was already
-> > an issue.
-> > 
-> > Funny enough, I did, on my venv:
-> > 
-> > 	$ pip install PyYAML==5.1
-> > 	$ tools/net/ynl/pyynl/ynl_gen_rst.py -i Documentation/netlink/specs/dpll.yaml -o Documentation/output/netlink/specs/dpll.rst -v
-> > 	...
-> > 	$ make clean; make SPHINXDIRS="netlink/specs" htmldocs
-> > 	...
-> > 
-> > but didn't get any issue (I have a later version installed outside
-> > venv - not sure it it will do the right thing).
-> > 
-> > That's what I have at venv:
-> > 
-> > ----------------------------- ---------
-> > Package                       Version
-> > ----------------------------- ---------
-> > alabaster                     0.7.13
-> > babel                         2.17.0
-> > certifi                       2025.6.15
-> > charset-normalizer            3.4.2
-> > docutils                      0.17.1
-> > idna                          3.10
-> > imagesize                     1.4.1
-> > Jinja2                        2.8.1
-> > MarkupSafe                    1.1.1
-> > packaging                     25.0
-> > pip                           25.1.1
-> > Pygments                      2.19.1
-> > PyYAML                        5.1
-> > requests                      2.32.4
-> > setuptools                    80.1.0
-> > snowballstemmer               3.0.1
-> > Sphinx                        3.4.3
-> > sphinxcontrib-applehelp       1.0.4
-> > sphinxcontrib-devhelp         1.0.2
-> > sphinxcontrib-htmlhelp        2.0.1
-> > sphinxcontrib-jsmath          1.0.1
-> > sphinxcontrib-qthelp          1.0.3
-> > sphinxcontrib-serializinghtml 1.1.5
-> > urllib3                       2.4.0
-> > ----------------------------- ---------
-> >   
-> [...]
-> 
-> > Please compare the versions that you're using on your test
-> > environment with the ones I used here.  
-> 
-> It looks to me like the minimal required version of docutils is 0.17.1
-> for PyYAML integration.  Both almalinux:9 and debian:11 have 0.16.
-> 
-> Sphinx 4.3.2 of Ubuntu 22.04 comes with docutils 0.17.1, and it is
-> free of the warnings from PyYAML.
+All patterns would be relative to Documentation/foo, which
+causes the include/exclude patterns like:
 
-Yes, it seems so. As I commented on my past e-mail, I think we need
-a validation logic that will warn if versions are incompatible.
-Using the experimental checks you and me did, and checking the minimal
-version on Sphinx release notes (*), it seems to be that a good start
-point is this:
+	include_patterns = [
+		...
+		f'foo/*.{ext}',
+	]
 
-            ========  ============  ============
-            Sphinx    Min Docutils  Max Docutils
-            Version   Version       Version
-            --------  ------------  ------------
-            < 4.0.0   0.17.1        0.17.1
-            < 6.0.0   0.17.1        0.18.1
-            < 7.0.0   0.18.0        0.18.1
-            >= 7.0.0  0.20.0        0.21.2
-            ========  ============  ============
+to break. This is not what it is expected. Address it by
+adding a logic to dynamically adjust the pattern when
+SPHINXDIRS is used.
 
-Eventually, we may need to blacklist or whitelist other
-combinations, but this would require a lot of time.
+That allows adding parsers for other file types.
 
-(*) I asked a LLM AI to check Sphinx release notes and docutils
-    versions at the time Sphinx versions were released to aid
-    creating such table. I also added your feedback about
-    docutils 0.19 and your and my tests with docutils < 0.17.1.
+It should be noticed that include_patterns was added on
+Sphinx 5.1:
+	https://www.sphinx-doc.org/en/master/usage/configuration.html#confval-include_patterns
 
-Thanks,
-Mauro
+So, a backward-compatible code is needed when we start
+using it for real.
+
+Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+Reviewed-by: Donald Hunter <donald.hunter@gmail.com>
+---
+ Documentation/conf.py | 67 ++++++++++++++++++++++++++++++++++++++++---
+ 1 file changed, 63 insertions(+), 4 deletions(-)
+
+diff --git a/Documentation/conf.py b/Documentation/conf.py
+index 12de52a2b17e..4ba4ee45e599 100644
+--- a/Documentation/conf.py
++++ b/Documentation/conf.py
+@@ -17,6 +17,66 @@ import os
+ import sphinx
+ import shutil
+ 
++# Get Sphinx version
++major, minor, patch = sphinx.version_info[:3]
++
++# Include_patterns were added on Sphinx 5.1
++if (major < 5) or (major == 5 and minor < 1):
++    has_include_patterns = False
++else:
++    has_include_patterns = True
++    # Include patterns that don't contain directory names, in glob format
++    include_patterns = ['**.rst']
++
++# Location of Documentation/ directory
++doctree = os.path.abspath('.')
++
++# Exclude of patterns that don't contain directory names, in glob format.
++exclude_patterns = []
++
++# List of patterns that contain directory names in glob format.
++dyn_include_patterns = []
++dyn_exclude_patterns = ['output']
++
++# Properly handle include/exclude patterns
++# ----------------------------------------
++
++def update_patterns(app):
++
++    """
++    On Sphinx, all directories are relative to what it is passed as
++    SOURCEDIR parameter for sphinx-build. Due to that, all patterns
++    that have directory names on it need to be dynamically set, after
++    converting them to a relative patch.
++
++    As Sphinx doesn't include any patterns outside SOURCEDIR, we should
++    exclude relative patterns that start with "../".
++    """
++
++    sourcedir = app.srcdir  # full path to the source directory
++    builddir = os.environ.get("BUILDDIR")
++
++    # setup include_patterns dynamically
++    if has_include_patterns:
++        for p in dyn_include_patterns:
++            full = os.path.join(doctree, p)
++
++            rel_path = os.path.relpath(full, start = app.srcdir)
++            if rel_path.startswith("../"):
++                continue
++
++            app.config.include_patterns.append(rel_path)
++
++    # setup exclude_patterns dynamically
++    for p in dyn_exclude_patterns:
++        full = os.path.join(doctree, p)
++
++        rel_path = os.path.relpath(full, start = app.srcdir)
++        if rel_path.startswith("../"):
++            continue
++
++        app.config.exclude_patterns.append(rel_path)
++
+ # helper
+ # ------
+ 
+@@ -219,10 +279,6 @@ language = 'en'
+ # Else, today_fmt is used as the format for a strftime call.
+ #today_fmt = '%B %d, %Y'
+ 
+-# List of patterns, relative to source directory, that match files and
+-# directories to ignore when looking for source files.
+-exclude_patterns = ['output']
+-
+ # The reST default role (used for this markup: `text`) to use for all
+ # documents.
+ #default_role = None
+@@ -516,3 +572,6 @@ kerneldoc_srctree = '..'
+ # the last statement in the conf.py file
+ # ------------------------------------------------------------------------------
+ loadConfig(globals())
++
++def setup(app):
++	app.connect('builder-inited', update_patterns)
+-- 
+2.49.0
+

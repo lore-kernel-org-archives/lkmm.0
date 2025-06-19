@@ -1,61 +1,61 @@
-Received: from mail-wr1-f48.google.com (mail-wr1-f48.google.com [209.85.221.48])
+Received: from mail-wr1-f43.google.com (mail-wr1-f43.google.com [209.85.221.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41A4523E35D;
-	Thu, 19 Jun 2025 12:20:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F011B21FF33;
+	Thu, 19 Jun 2025 12:20:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750335604; cv=none; b=crjc6HpkBkks971SCedoP3l90JKmWj1cNWj2/3nj6thj2MoebOPTkA3X+O66FWfPXWp9ZPmI3agvvaHZIu7M86rWPBculb9IjxY4ySFeOg6ZjG1sWcE8IX8lfy521JjjGI6BKwrlAlFKhK/0bU5tRz7zJf6zwyL77SfuTWWLi6A=
+	t=1750335605; cv=none; b=nYv0UvBnc8t4WDrhQcBiJ5fYM9hooY+wJRn72eiS7b3+wNtpxnTH7fbYCNB0EVB7bIWjy+3rUqg92R5RYSsbuc0iHmccusj95ayFfddcRQbd10saA6+KJ1fKDaZPRIfcJ3iS/QWT04kQEf12JfBhcdKKKExWAA1szp/1xFTOA9M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750335604; c=relaxed/simple;
-	bh=UlwbZeLMLNhVytz2MMF8Q4is5QXNpz/xiXdRg+hnNMs=;
+	s=arc-20240116; t=1750335605; c=relaxed/simple;
+	bh=SFVUled2DNWsQTvMSa+zPfq1kFUaKNFnt90w8B3bJxA=;
 	h=From:To:Cc:Subject:In-Reply-To:Date:Message-ID:References:
-	 MIME-Version:Content-Type; b=IfxkaBkw88xsMlLXmJsntdSzbtAtuPBJlHGF5LuG4ust4VDlbmWnspYGbnrH+ujyM7keuw7oIhjLD94s/KgvFgc2fP1Pp1gHphjkorAgILTDkS79FwU/akxOCJsj1UIgSN/HkCZwa3foVFulBAbNcMU1MBm72DGtNA38vL7SsdQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=lUn3jB9r; arc=none smtp.client-ip=209.85.221.48
+	 MIME-Version:Content-Type; b=Q3AWK3D+aYz8sNY7P7QrRGAAda3a1FQ66PapvSgw+evRpNT6nQOQY6D1pKHPnauHi8tLqLFzWRweWF1jDCEJ/oVaUbC386a1iPcv3lErxo9gcmmjGYc8ukj2G0vYPa/N4KT6KYGq8CrB3uTgKhL+d/06KUChAm/Ge4hmilSO7RM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=T7i4r1Ja; arc=none smtp.client-ip=209.85.221.43
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lUn3jB9r"
-Received: by mail-wr1-f48.google.com with SMTP id ffacd0b85a97d-3a4f379662cso679808f8f.0;
-        Thu, 19 Jun 2025 05:20:01 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="T7i4r1Ja"
+Received: by mail-wr1-f43.google.com with SMTP id ffacd0b85a97d-3a507e88b0aso642621f8f.1;
+        Thu, 19 Jun 2025 05:20:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1750335600; x=1750940400; darn=lists.linux.dev;
+        d=gmail.com; s=20230601; t=1750335602; x=1750940402; darn=lists.linux.dev;
         h=mime-version:user-agent:references:message-id:date:in-reply-to
          :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=pqJP4+yTYhK9BQPQIOtnsPRRAOa7y/0vl+XuyGoTtX8=;
-        b=lUn3jB9rFIVfTumQeMUSICjg4+zT6tFCaj4YE7P9zDpV7/qi4t3kiSW7fil9O9rGA+
-         EuKX7Z0lmPE4ZBiNteTw4g1gGMUYO+8s/Cwcxr3Fv0yRQquEFc1m8OlZaYRJa1aTaR0p
-         fNrU7DzlBSgO/8Hy5YmgFeh++mlpDr0Itouk8Zs4+HBr9N9fXWAW3BI5A4ys8BWiiPuq
-         4simMD7dN+bY3xDbQeNOOU2NICkJcOFB42WsjtTJYhpk36vj0ncl+f3a0tpGx60ip+mb
-         WurN3tB0VbcAV88qc93HhdbhCb6DJgRpRxh8//w1ded8zADoxHnQzJn+zXKlcJVj5+3c
-         +umg==
+        bh=SFVUled2DNWsQTvMSa+zPfq1kFUaKNFnt90w8B3bJxA=;
+        b=T7i4r1JaFBgoOc2adq3vl1HMfsTe9PU43JRXi8uG8g1AOLJis6l5IMAp8CM09TqUdf
+         nQ6ezEi4AnB5wRNLmggWDmcS6kcTvzxhdNLW+Lry982NIq7tu1/UT71dcAlABNznIf9Y
+         bdUkbMbKBMGDuOJB2wKVgcGG9bRCIoL0PkMX58QBXhYwxNbTHE03g6IlIMwdoAPDrkYY
+         7ffOJcluXmi/PDGHMUWv0kVZnPUgPhY5jh1QlG1lCyQkNf5GSCbJT/0CfWW1neGfdPJW
+         DTeH97/AlaG1fzZ6Vh0KQ6RpRkwge3HV9NfYZvFn3WeLA5Z/bw6Jwe44tTrpQxn1y9oH
+         8kjg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1750335600; x=1750940400;
+        d=1e100.net; s=20230601; t=1750335602; x=1750940402;
         h=mime-version:user-agent:references:message-id:date:in-reply-to
          :subject:cc:to:from:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=pqJP4+yTYhK9BQPQIOtnsPRRAOa7y/0vl+XuyGoTtX8=;
-        b=WmtMzPL978eXPYYE41hbEruEHlGr269c3iQzSrE6Y+wx1wSZJUNzK1DMDTKaIZlN8Z
-         zzvKMYX5AtPf9yDsleEnsfzgGYOpZheZ6mROtin6Otvihexcs0GVNLDpoEJAX1qyUpP/
-         cUSBFA3PVBJ7RllWQMSYO32yJjZ3DpEHzb9cdcjpgTH3pDND1Xl3tW2Sm8998qmaf4Tk
-         xYnbTGCNIQZxpsP6C6opMOA6znDFE65oDBL0LGGqg+Ss2CYBFImYzvXkM7zVozk+ICAj
-         15CDp737a5s3mWT+WhIv9AI5Tl0Scj34dL976uaaLr76PHKwSwHOHL+75/PzXF5lecwP
-         U9/A==
-X-Forwarded-Encrypted: i=1; AJvYcCVdkHCLzZ1iVSFxeTLVO8BE1PmjRjXH4K96QasfFna321dBkJTFMYUdenvmuVlHvRwhEbGSHlkulvViH612GC1epcut3Q==@lists.linux.dev, AJvYcCVlKsZvIHwOa1j2toYNH2zEmvwFZiN/bEB0/evXZcP14Kr9dz2DrVF+wvxFCzaPoaRIhDeiog==@lists.linux.dev
-X-Gm-Message-State: AOJu0YxqkzqgMC5JVK+24gLE/2Y00YYLTOyA0R/gsbrk3MH8bCbWJh9v
-	dt3OAI8UgNtEdmAz880sCeCzry2YeDZCBAD6Jle9z0p/qgE9Oed1C7gT
-X-Gm-Gg: ASbGncsMQmotQYr1DbtTb6I0oVouhHirj+vHqGOyJs0n+egv8chuYtk1SKzAPgF3eiu
-	PuXqe5tQF4rmi/OM21zH2Q+CiKSfPLfNZNFgHeeqifE7zK6yl7fEL2qiWDoSuNHa9nGzO/e1dHQ
-	PaVbDPT/bMXZGgNt6iKhOMffD5Hy+teX7LGnfa2MTqIUVLeV19kpn2HIr3OT2bXIEb8OXGv2ycu
-	iIwPD/+BFzZGHTyUN7GJ2mOcAZ+8+ycO9MnVM8lVd9Q75vSb/lhfsyv+IKtbYBlNX6g6LqjpsVB
-	oc6YWTgXumJ8JCbMK+75SH0R0qNmk3M1sjJO+lhKHrtBJiUCAKSZo6COwF8iJev0awW4bmfo
-X-Google-Smtp-Source: AGHT+IFFW++i0RClDXuN5jzsKFtxPwiv+zyqlTFsPj4l45JcwpuEYcB4ySEwNMpn0lpcnf2uOPXLqg==
-X-Received: by 2002:a05:6000:4702:b0:3a4:f7e3:c63c with SMTP id ffacd0b85a97d-3a571894b7bmr19742912f8f.0.1750335600402;
-        Thu, 19 Jun 2025 05:20:00 -0700 (PDT)
+        bh=SFVUled2DNWsQTvMSa+zPfq1kFUaKNFnt90w8B3bJxA=;
+        b=l7Ak3PF17IXQiV+wZXjyV5hjfLL4U64BIlwWrn+6qCKDCjvLFB1zWUEUySRgaqSYxb
+         U88Kx2ii6hiXhH9+Tnd9l5QgD/H/DU5gowBk6e/bf8K74jEvpuz6H7KcbcRRR6o0ACgP
+         NdYjkS0x379mTPRriE8B1AEF7BLfg1Y1CLS/1jD04thNFbe0g6WOawUM0SBt1MsJsa2C
+         CUa5f9d1vgNePrQaF+LI5c36zxs2Kz4lETakeVFhtV/eBC6Fdj1mPxVNAGqyiNqPwDwG
+         DweDAd/lJEBvhDCDuDJ7nhs5u3OAzTAMWKb4izkWmnqm9N1KWqsYYAUygWx2tL463G0P
+         ZX1w==
+X-Forwarded-Encrypted: i=1; AJvYcCVev6dO27orZnul2/Qz0m334Sy+gD8OLSZr1tvftklmDRNudciuOUlq2Cdrdc4fWb9NvySNbjkNyM3okxeWdYetj+hPVg==@lists.linux.dev, AJvYcCWDkCq1nIyuZRoHn+i2kgc2mps8wDdoZ8CnsSRbc1OIRv2YEiyBbtlXYOLtgZPm9Clm4r+Swg==@lists.linux.dev
+X-Gm-Message-State: AOJu0YzyhDmADnGc5RacXqEt5Wshw2EqZLis4NzsqlmQ2+Zm4Vku4sjO
+	TtYnmBeANT5NPWdKZVB9wvhNAs9Kmn61N9Ge1TnS6LgLmMVOcnihGNYhZJZyAkYT
+X-Gm-Gg: ASbGnctoKXkLZmVf89b1ADWVwRU5g/aj0N2D51QEorp7pmfiVSE4WSKpMP/n5HFFl7E
+	AJQk70xVVgOGIPU2hRrXr1Om03lr0/ToteZ9phqvLDI0zeaF0PGo7a0OU+bNQzx0gOCom/BldYa
+	9LsABrOShyS4BFYyux1KLvO8pR9S5f5kJvRpnaDLZmM8n+cz1pRHl9zBgHHon1DZUHx/xNvXtY/
+	0OjJIHN3tVJi07jzzo/mI2J4Kw9FzMOHXYd7Obf16U7g6BlAWgbQLQgZPbuUD6cPsY3qb7wLNEi
+	XhR3G63jBv3uig27SHBAnZKQtXXHr1D9HYxiw1YP1ZoDAMqzjMzD1HvbiJ1RFqGh0w2YxOg7
+X-Google-Smtp-Source: AGHT+IHrpm5jxLPfVnVLJ87g+D7u7rNwqCS0PrAflkDvNv7ygn4IyA1hW4bxGY9gJHusIbAXcvODMw==
+X-Received: by 2002:a05:6000:25e9:b0:3a4:d994:be4b with SMTP id ffacd0b85a97d-3a572367d55mr15927457f8f.1.1750335602053;
+        Thu, 19 Jun 2025 05:20:02 -0700 (PDT)
 Received: from imac ([2a02:8010:60a0:0:ad83:585e:86eb:3f])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-45362219d3dsm6837755e9.26.2025.06.19.05.19.59
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4535e99cad0sm27567735e9.32.2025.06.19.05.20.00
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 19 Jun 2025 05:19:59 -0700 (PDT)
+        Thu, 19 Jun 2025 05:20:01 -0700 (PDT)
 From: Donald Hunter <donald.hunter@gmail.com>
 To: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 Cc: Linux Doc Mailing List <linux-doc@vger.kernel.org>,  Jonathan Corbet
@@ -68,13 +68,12 @@ Cc: Linux Doc Mailing List <linux-doc@vger.kernel.org>,  Jonathan Corbet
   joel@joelfernandes.org,  linux-kernel-mentees@lists.linux.dev,
   linux-kernel@vger.kernel.org,  lkmm@lists.linux.dev,
   netdev@vger.kernel.org,  peterz@infradead.org,  stern@rowland.harvard.edu
-Subject: Re: [PATCH v7 04/17] tools: ynl_gen_rst.py: Split library from
- command line tool
-In-Reply-To: <4e26583ad1d8a05ba40cada4213c95120bd45efc.1750315578.git.mchehab+huawei@kernel.org>
-Date: Thu, 19 Jun 2025 13:01:14 +0100
-Message-ID: <m2plf0ey9h.fsf@gmail.com>
+Subject: Re: [PATCH v7 06/17] tools: ynl_gen_rst.py: cleanup coding style
+In-Reply-To: <901d329a2d679e05572eb399b39418a48a491844.1750315578.git.mchehab+huawei@kernel.org>
+Date: Thu, 19 Jun 2025 13:04:33 +0100
+Message-ID: <m2ldpoey3y.fsf@gmail.com>
 References: <cover.1750315578.git.mchehab+huawei@kernel.org>
-	<4e26583ad1d8a05ba40cada4213c95120bd45efc.1750315578.git.mchehab+huawei@kernel.org>
+	<901d329a2d679e05572eb399b39418a48a491844.1750315578.git.mchehab+huawei@kernel.org>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: lkmm@lists.linux.dev
@@ -85,50 +84,12 @@ MIME-Version: 1.0
 Content-Type: text/plain
 
 Mauro Carvalho Chehab <mchehab+huawei@kernel.org> writes:
-> +
-> +    def generate_main_index_rst(self, output: str, index_dir: str) -> None:
-> +        """Generate the `networking_spec/index` content and write to the file"""
-> +        lines = []
-> +
-> +        lines.append(self.fmt.rst_header())
-> +        lines.append(self.fmt.rst_label("specs"))
-> +        lines.append(self.fmt.rst_title("Netlink Family Specifications"))
-> +        lines.append(self.fmt.rst_toctree(1))
-> +
-> +        index_fname = os.path.basename(output)
-> +        base, ext = os.path.splitext(index_fname)
-> +
-> +        if not index_dir:
-> +            index_dir = os.path.dirname(output)
-> +
-> +        logging.debug(f"Looking for {ext} files in %s", index_dir)
-> +        for filename in sorted(os.listdir(index_dir)):
-> +            if not filename.endswith(ext) or filename == index_fname:
-> +                continue
-> +            base, ext = os.path.splitext(filename)
-> +            lines.append(f"   {base}\n")
-> +
-> +        logging.debug("Writing an index file at %s", output)
-> +
-> +        return "".join(lines)
 
-Did you miss my comment on v5 to not move this from ynl_gen_rst.py,
-since it is not needed and gets removed in a later patch.
+> Cleanup some coding style issues pointed by pylint and flake8.
+>
+> No functional changes.
+>
+> Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+> Reviewed-by: Breno Leitao <leitao@debian.org>
 
-> @@ -411,7 +65,6 @@ def write_to_rstfile(content: str, filename: str) -> None:
->  
->  def generate_main_index_rst(output: str) -> None:
->      """Generate the `networking_spec/index` content and write to the file"""
-> -    lines = []
->  
->      lines.append(rst_header())
->      lines.append(rst_label("specs"))
-> @@ -426,7 +79,7 @@ def generate_main_index_rst(output: str) -> None:
->          lines.append(f"   {filename.replace('.rst', '')}\n")
->  
->      logging.debug("Writing an index file at %s", output)
-> -    write_to_rstfile("".join(lines), output)
-> +    write_to_rstfile(msg, output)
-
-The changes leave this function broken. Bot lines and msg never get
-defined.
+Reviewed-by: Donald Hunter <donald.hunter@gmail.com>

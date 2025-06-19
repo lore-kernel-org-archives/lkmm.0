@@ -1,128 +1,134 @@
-Received: from mail-qv1-f43.google.com (mail-qv1-f43.google.com [209.85.219.43])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pmxout1.rz.tu-bs.de (pmxout1.rz.tu-bs.de [134.169.4.151])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A06522F4A19
-	for <lkmm@lists.linux.dev>; Thu, 19 Jun 2025 18:04:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 395AC30E85F
+	for <lkmm@lists.linux.dev>; Thu, 19 Jun 2025 18:21:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=134.169.4.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750356300; cv=none; b=ORhqOHHM2EKYLgRX8aUJfKeykVCwH2cg1V3qXaBFNXJj7rf6uYpID8rPjTIXDg1LsbHyRhcWTY6JZ7/5KHWOziZL/n4yghMjmS/LmaprF11mIheKno4kFVBf/m/CpPWJn9SO8PtO1AUTN7+KcKG9eq4AJOAbKjdFQloXVFeIqUE=
+	t=1750357321; cv=none; b=kLW0fElX96Cykqy7Q5y1cr4whOBeFkjIOIo4XWT8/DRpvnvTWeItri8C/Rn+/OHkoPjcF1q8aSeYht6Cq0gxjAGpeqVY0AtXY62zYV75tZlqiLHJS/D0vt93tmrr168nC8ftwqtMwe2qtZ0o2mpJo6Ap/p5U5rx40zbG5hRgmig=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750356300; c=relaxed/simple;
-	bh=1dJVx9uawlA9hJYDvC4nybtTSvTD1cO2bZ9M1c+EVuk=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=UMTf3Ft0sc3iHwBkKRK9/FSYvTNzFuZia3izBkjlYsY4fdCGhqXFcSlyffx/zogxVIHabkjDWoQ4hnGhrtP/4Ej1JUpJGURtbqgTRiN/hiKNXXPDqwLw49OMkTgYAOySVkSf+HW7sP5YoqmPePo+JhFCUWzaVFNUK2o/7uvmtgI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=rowland.harvard.edu; spf=fail smtp.mailfrom=g.harvard.edu; dkim=pass (2048-bit key) header.d=rowland.harvard.edu header.i=@rowland.harvard.edu header.b=MTM+1Sir; arc=none smtp.client-ip=209.85.219.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=rowland.harvard.edu
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=g.harvard.edu
+	s=arc-20240116; t=1750357321; c=relaxed/simple;
+	bh=CkNoFT5ffgvUGTHoy9QzeulxFQ+RkKqe2v/CRKEUFy8=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=uHikV9IDKu++jNEDsk60ER2XzwLJ/QW9b7bv6jKTjIjUJ/UxZ3UjC0MU0KOCshKp+jPBxm+8C1zUxVLPVPox7GN/0Zi0bd3tjvWS0HFJo3Zv3JCnX0t43Z2mW//ne5rSc1Q7SPy6MdGTFrKPY2EyR/bUg34KsmTyEP3Y3qLCffo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=tu-bs.de; spf=pass smtp.mailfrom=tu-braunschweig.de; dkim=pass (2048-bit key) header.d=tu-bs.de header.i=@tu-bs.de header.b=o/xAKfJ/; arc=none smtp.client-ip=134.169.4.151
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=tu-bs.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=tu-braunschweig.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=rowland.harvard.edu header.i=@rowland.harvard.edu header.b="MTM+1Sir"
-Received: by mail-qv1-f43.google.com with SMTP id 6a1803df08f44-6f0ad74483fso11203586d6.1
-        for <lkmm@lists.linux.dev>; Thu, 19 Jun 2025 11:04:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=rowland.harvard.edu; s=google; t=1750356297; x=1750961097; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=Ju0rK1YrXezG8RMPatgIQGMIY6rdX0cs7akdNztgfu4=;
-        b=MTM+1Sir1Qv12lqJvXYvyU4bIQHK07veOK95kqxImgpGtBjcbyhIfNc3qvVPan0VML
-         gRFa7Bbn5a1a/iOw+KeUxxiu7bp2ivi3C/SMYGXT5+p6NMU1ZQJrlIXRdCtErO/aQwqI
-         1wIp7Y4LvEoNpkjkbiQ4PKGu3OQjzYyXAsnS5kt5I43mAWy9xQvje7eC+uifL12YA2el
-         0V7uUIVTmWX3/6Wywo35d98HUMfSEv2vqWy2w3X3FqYMlDayzO2GQYOHHTziSe6tz0Ke
-         yT1g+VEbKm08k+m/OPZGOrKIraeyY8LLJYRnE9aKqP70UTYdsxjhj6Epe2eOUCAIjRR9
-         Anng==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1750356297; x=1750961097;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Ju0rK1YrXezG8RMPatgIQGMIY6rdX0cs7akdNztgfu4=;
-        b=eAvi168zU+hpcTSluBot6btmcrM/zNHJdv/SHmhnYNoJxX7A4gAbvvo606BWn5NfbT
-         tW46tRrU0b0byRSef76Wzupf1T2goGtCHTcytwjsZ6Il+2DnxVLdMbdlXFTCsihdU2Mp
-         euWQTMqGx1QLsDLFoiZ9poTmRq9PTWXn6NzERxoc7TYX4duftkbqAk4mUzsSzuu/wxDA
-         bj4xxBzetwYebp1FCV1d96FhBolcHAve8HeG3eW7j7bygWnRu0wNFIjn3d2Kn58vReHU
-         izwDRjnLuUWRclbfL5S/xh++JNaQMAjCjim/fr3p10vW//8JLgrwr3o7cOYZisuxQ+Sl
-         RF+g==
-X-Forwarded-Encrypted: i=1; AJvYcCUs/7FIDPY9jxbD8Fo8a7bpcZ094FinEkzf/n5lq7MqZXZUwxVBRzl9k7JNRuk6X4FRfLuD@lists.linux.dev
-X-Gm-Message-State: AOJu0YyVcs63JrzRbUAfPD/1/2fP78VtzJX6n10FuHiNHhUVT/UFxALp
-	Kkz3ZYWZ41xu6MU8D5qg1USa+zUeLp5Dqsv/N03dMKcD+cV/eVQSCV8xDlfPBsoRAQ==
-X-Gm-Gg: ASbGncsCvth/ylVe9RjdecemwYS0AOBJ7T1+fB1hJw2xgBdvATcm7OfvCcnxjsj/TGv
-	wp53q8R9uFF8UKcR4uqCrWVFcDaPI251jiDg6NKV5kSFdwvn4P9r6qqxpeJxMhXJ3GE5Uc/6HLZ
-	nhq7ZvZ7HHqf7S9wlIWpYAzFQj5oz1DbxwXjhVwcbtK0sb4aptQIWk+gJNcn8iKa+96eV4mp5qB
-	/GFvd1eeQTShdu/A8TgZkttt0WYP2z3Svw3EAATdOqZBdlhR3LasxBRf7UBV4QV1nsDY9KvKSI2
-	SguyTMKEjiNDZcejynELcnYLNo6QXuVDI+rslNKCv/AO91jWgIHM59fVQzR1HvQ=
-X-Google-Smtp-Source: AGHT+IHYQPCClOz6CKzGdC08frCU41q/Xam4KfyuktRr18N70eT9mCmlX3M2z1ua5tmNIo2PbaShTw==
-X-Received: by 2002:a05:6214:4598:b0:6f8:a978:d46 with SMTP id 6a1803df08f44-6fd0a49c0e7mr3871256d6.19.1750356297608;
-        Thu, 19 Jun 2025 11:04:57 -0700 (PDT)
-Received: from rowland.harvard.edu ([2601:19b:681:fd10::9ca8])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-6fd09544e75sm2440186d6.70.2025.06.19.11.04.54
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 19 Jun 2025 11:04:57 -0700 (PDT)
-Date: Thu, 19 Jun 2025 14:04:52 -0400
-From: Alan Stern <stern@rowland.harvard.edu>
-To: Boqun Feng <boqun.feng@gmail.com>
-Cc: Peter Zijlstra <peterz@infradead.org>, linux-kernel@vger.kernel.org,
-	rust-for-linux@vger.kernel.org, lkmm@lists.linux.dev,
-	linux-arch@vger.kernel.org, Miguel Ojeda <ojeda@kernel.org>,
-	Alex Gaynor <alex.gaynor@gmail.com>, Gary Guo <gary@garyguo.net>,
-	=?iso-8859-1?Q?Bj=F6rn?= Roy Baron <bjorn3_gh@protonmail.com>,
-	Benno Lossin <lossin@kernel.org>,
-	Andreas Hindborg <a.hindborg@kernel.org>,
-	Alice Ryhl <aliceryhl@google.com>, Trevor Gross <tmgross@umich.edu>,
-	Danilo Krummrich <dakr@kernel.org>, Will Deacon <will@kernel.org>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Wedson Almeida Filho <wedsonaf@gmail.com>,
-	Viresh Kumar <viresh.kumar@linaro.org>,
-	Lyude Paul <lyude@redhat.com>, Ingo Molnar <mingo@kernel.org>,
-	Mitchell Levy <levymitchell0@gmail.com>,
-	"Paul E. McKenney" <paulmck@kernel.org>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Thomas Gleixner <tglx@linutronix.de>
-Subject: Re: [PATCH v5 03/10] rust: sync: atomic: Add ordering annotation
- types
-Message-ID: <d84ae4de-3fde-4097-a42b-9dec0902f27d@rowland.harvard.edu>
-References: <20250618164934.19817-1-boqun.feng@gmail.com>
- <20250618164934.19817-4-boqun.feng@gmail.com>
- <20250619103155.GD1613376@noisy.programming.kicks-ass.net>
- <aFQQuf44uovVNFCV@Mac.home>
- <20250619143214.GJ1613376@noisy.programming.kicks-ass.net>
- <aFQmDoRSEmUuPIQG@Mac.home>
+	dkim=pass (2048-bit key) header.d=tu-bs.de header.i=@tu-bs.de header.b="o/xAKfJ/"
+Received: from Hermes02.ad.tu-bs.de (hermes02.rz.tu-bs.de [134.169.4.130])
+	by pmxout1.rz.tu-bs.de (Postfix) with ESMTPS id 24C294E07C4;
+	Thu, 19 Jun 2025 20:21:57 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tu-bs.de;
+	s=exchange_neu; t=1750357317;
+	bh=CkNoFT5ffgvUGTHoy9QzeulxFQ+RkKqe2v/CRKEUFy8=;
+	h=Date:Subject:To:CC:References:From:In-Reply-To:From;
+	b=o/xAKfJ//VE0Fr/dnumBKDrb5x/N7ISP9f0OUQksx3Fq4OE5mq6Bls0HhCJ3b2K+2
+	 4soMApCbSt620DL+ovmwg2j0ugPwJ5ydQkVqWK5lXPr+LbHzAukjbFbnTV3jb34jXR
+	 O8Z5+ZY20SGNHsQg9DIxyMULa92S4fC6SaPo12dnOZFTQgqtk41V/UiNzaFVm1WLoR
+	 iQu5LRztBuJzkEf9c9u8mh1y2cbVJAI3Lzz/fgSElUB1YbMSw26oecT04HkJeguUx0
+	 BYuf0hzz6oIlNadh289J72+G01VjXHmrjoXQp5wy1JAU/x48vgYm5A7yBKNMqJfKVj
+	 TUlrQ72xQDoAw==
+Received: from [192.168.178.23] (134.169.9.110) by Hermes02.ad.tu-bs.de
+ (134.169.4.130) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.10; Thu, 19 Jun
+ 2025 20:21:56 +0200
+Message-ID: <7097cd74-45b5-4092-b96e-b16769fa68f4@tu-bs.de>
+Date: Thu, 19 Jun 2025 20:21:50 +0200
 Precedence: bulk
 X-Mailing-List: lkmm@lists.linux.dev
 List-Id: <lkmm.lists.linux.dev>
 List-Subscribe: <mailto:lkmm+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:lkmm+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <aFQmDoRSEmUuPIQG@Mac.home>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC] Potential problem in qspinlock due to mixed-size accesses
+To: Alan Stern <stern@rowland.harvard.edu>
+CC: Andrea Parri <parri.andrea@gmail.com>, Peter Zijlstra
+	<peterz@infradead.org>, Will Deacon <will@kernel.org>, Boqun Feng
+	<boqun.feng@gmail.com>, Nicholas Piggin <npiggin@gmail.com>, David Howells
+	<dhowells@redhat.com>, Jade Alglave <j.alglave@ucl.ac.uk>, Luc Maranget
+	<luc.maranget@inria.fr>, "Paul E. McKenney" <paulmck@kernel.org>, Akira
+ Yokosawa <akiyks@gmail.com>, Daniel Lustig <dlustig@nvidia.com>, Joel
+ Fernandes <joelagnelf@nvidia.com>, <linux-kernel@vger.kernel.org>,
+	<linux-arch@vger.kernel.org>, <lkmm@lists.linux.dev>,
+	<hernan.poncedeleon@huaweicloud.com>, <jonas.oberhauser@huaweicloud.com>,
+	"r.maseli@tu-bs.de" <r.maseli@tu-bs.de>
+References: <cb83e3e4-9e22-4457-bf61-5614cc4396ad@tu-bs.de>
+ <20250613075501.GI2273038@noisy.programming.kicks-ass.net>
+ <aEwHufdehlQnBX7g@andrea> <9264df13-36db-4b25-b2c4-7a9701df2f4d@tu-bs.de>
+ <aE-3_mJPjea62anv@andrea>
+ <357b3147-22e0-4081-a9ac-524b65251d62@rowland.harvard.edu>
+ <aFF3NSJD6PBMAYGY@andrea> <595209ed-2074-46da-8f57-be276c2e383b@tu-bs.de>
+ <6ac81900-873e-415e-b5b2-96e9f7689468@rowland.harvard.edu>
+ <c97665c6-2d8b-49ae-acc5-be5be04f0093@tu-bs.de>
+ <a0887a91-468c-43ff-872e-c4c4e23b26dd@rowland.harvard.edu>
+Content-Language: en-US
+From: Thomas Haas <t.haas@tu-bs.de>
+In-Reply-To: <a0887a91-468c-43ff-872e-c4c4e23b26dd@rowland.harvard.edu>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: Hermes11.ad.tu-bs.de (134.169.4.139) To
+ Hermes02.ad.tu-bs.de (134.169.4.130)
 
-On Thu, Jun 19, 2025 at 08:00:30AM -0700, Boqun Feng wrote:
-> Make sense, so something like this in the model should work:
-> 
-> diff --git a/tools/memory-model/linux-kernel.cat b/tools/memory-model/linux-kernel.cat
-> index d7e7bf13c831..90cb6db6e335 100644
-> --- a/tools/memory-model/linux-kernel.cat
-> +++ b/tools/memory-model/linux-kernel.cat
-> @@ -27,7 +27,7 @@ include "lock.cat"
->  (* Release Acquire *)
->  let acq-po = [Acquire] ; po ; [M]
->  let po-rel = [M] ; po ; [Release]
-> -let po-unlock-lock-po = po ; [UL] ; (po|rf) ; [LKR] ; po
-> +let po-unlock-lock-po = po ; (([UL] ; (po|rf) ; [LKR]) | ([Release]; (po;rf); [Acquire & RMW])) ; po
-> 
->  (* Fences *)
->  let R4rmb = R \ Noreturn       (* Reads for which rmb works *)
-> 
-> 
-> although I'm not sure whether there will be actual users that use this
-> ordering.
 
-If we do end up making a change like this then we should also start 
-keeping careful track of the parts of the LKMM that are not justified by 
-the operational model (and vice versa), perhaps putting something about 
-them into the documentation.  As far as I can remember, 
-po-unlock-lock-po is the only current example, but my memory isn't 
-always the greatest -- just one reason why it would be good to have 
-these things written down in an organized manner.
 
-Alan
+On 19.06.25 19:56, Alan Stern wrote:
+> On Thu, Jun 19, 2025 at 04:59:38PM +0200, Thomas Haas wrote:
+>>
+>>
+>> On 19.06.25 16:32, Alan Stern wrote:
+>>> On Thu, Jun 19, 2025 at 04:27:56PM +0200, Thomas Haas wrote:
+>>>> I support this endeavor, but from the Dartagnan side :).
+>>>> We already support MSA in real C/Linux code and so extending our supported
+>>>> Litmus fragment to MSA does not sound too hard to me.
+>>>> We are just missing a LKMM cat model that supports MSA.
+>>>
+>>> To me, it doesn't feel all that easy.  I'm not even sure where to start
+>>> changing the LKMM.\
+>>>
+>>> Probably the best way to keep things organized would be to begin with
+>>> changes to the informal operational model and then figure out how to
+>>> formalize them.  But what changes are needed to the operational model?
+>>>
+>>> Alan
+>>
+>> Of course, the difficult part is to get the model right. Maybe I shouldn't
+>> have said that we are "just" missing the model :).
+>> I'm only saying that we already have some tooling to validate changes to the
+>> formal model.
+>>
+>> I think it makes sense to first play around with the tooling and changes to
+>> the formal model to just get a feeling of what can go wrong and what needs
+>> to go right. Then it might become more clear on how the informal operational
+>> model needs to change.
+>>
+>> A good starting point might be to lift the existing ARM8 MSA litmus tests to
+>> corresponding C/LKMM litmus tests and go from there.
+>> If the informal operational model fails to explain them, then it needs to
+>> change. This goes only one way though: if ARM permits a behavior then so
+>> should LKMM. If ARM does not, then it is not so clear if LKMM should or not.
+> 
+> Okay, that seems reasonable.
+> 
+> BTW, I don't want to disagree with what you wrote ... but doesn't your
+> last paragraph contradict the paragraph before it?  Is starting with the
+> various MSA litmus tests and seeing how the operational model fails to
+> explain them not the opposite of first playing around with the tooling
+> and changes to the formal model?
+> 
+> Alan
+
+I would rather see the approaches as complementary.
+If you lift ARM tests to LKMM tests, you can use them to reason about 
+both the informal operational model and the formal axiomatic model.
+I mean, there are going to be litmus tests that show behavior that 
+should reasonably be forbidden on all platforms, and trying to adapt the 
+formal LKMM to also forbid them seems like a good exercise.
+Even if it turns out that the changes are unsound, I think you will end 
+up with better understanding, no?
+
+Either way, I'm just suggesting possible ways to start but I myself 
+don't have the time (right now) to get this project going.
+
+Thomas

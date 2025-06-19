@@ -1,99 +1,109 @@
-Received: from casper.infradead.org (casper.infradead.org [90.155.50.34])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f48.google.com (mail-wr1-f48.google.com [209.85.221.48])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F23C41E2312;
-	Thu, 19 Jun 2025 10:32:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=90.155.50.34
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FB5221FF33
+	for <lkmm@lists.linux.dev>; Thu, 19 Jun 2025 12:19:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750329124; cv=none; b=Imgqqx+QgWa1vC48szRnz3tEr5b4quQwCu3B5rjd6EkqG4B6cKb48Cmpz7P7kbWQCE7Ki9RGYfmZ9oulAxtTYF0UfWaOYZyp56vrOV2d/TXydJqNG/WIwcOauQl8fsg+dSVjrECQwgJayJi34yeVt1i5zxLFjQQaL9ApkKPEWr0=
+	t=1750335580; cv=none; b=p25j/DRS1v+FEGl7reBJ39F48sbDc/s3oUpN+sUphNeEUwXyBlLroJaFctSvVh+ymfMGcXMCllIyznyapK7tAI70854K5bNp9ZHDFcE8GhZ5athsOygBSputPAuTdByPyS8X1/T02supeCucluwUz6PLNuRCQmLY9XW8wDuOT54=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750329124; c=relaxed/simple;
-	bh=Khe/sdUUkDDqg1DjiaL2gTiOly2J6fsQL2KHmvONI2E=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Ut3t2DdIde3Gbl6oAa11Yygck/5kuYzuA9VUXfOvckhZPkRLh0U3wDoPJIX+ID7Bhrfz4wF1EXePC8Me14Yg2LlVkgbsHOfR0XgjQ88QngC6CqKd3LnAScfRRyxORCXVRH7dBdjiFQY4GosMzOlofXrBhO/WviniksBGfb8mOAo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=infradead.org; spf=none smtp.mailfrom=infradead.org; dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b=T++0IscD; arc=none smtp.client-ip=90.155.50.34
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=infradead.org
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=infradead.org
+	s=arc-20240116; t=1750335580; c=relaxed/simple;
+	bh=7ac51FHNRIWsyGPsA2cT/OoFSdh1Legd6vLnNQpKO8c=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=i6PCTJGNaFCEvpEwn5r7rSLpsl8abz6Ff+l16GfwteALneNZicLQlHOb5BF5dmV6khxtNfOwT1pAdtRICjTKs0lz/+oxBHLY3Os3tljnYbznwm8YuoIGqX+EKJP+WBQD/d6OtOnrG8QGFWuHkz/oKSyYvi512NBU0b/eCWFcxTk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=rtSDbI2v; arc=none smtp.client-ip=209.85.221.48
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b="T++0IscD"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=infradead.org; s=casper.20170209; h=In-Reply-To:Content-Type:MIME-Version:
-	References:Message-ID:Subject:Cc:To:From:Date:Sender:Reply-To:
-	Content-Transfer-Encoding:Content-ID:Content-Description;
-	bh=w1pniWAitZ7xsbl8EX2cBNfwJUGO6gUBYk8UsyzHaho=; b=T++0IscDTMH7RV/B13VlfwthTO
-	ocClwLWiSq5vhdXUmVM8gBi1SzG4bbvemjpW501sZlrU2uz4YOxforUAKJ+5ObYEFa3SxnbOiCd0k
-	TEK9F2H9iDYc6rxTdlrx9CSfCAl6P0SB4LxNQPp2rH1+vAsl9snvEv+NV3vVLtWRai3k0aVxDEANJ
-	YUWwo1d3cMR5Sk6nyaThKPq2nwpwpzx/hZf8edvc2wN/LB3re0uolTEKg9IdrEw7qMR4WvHa96lGZ
-	a0Cy8pN0ix0sd+rF5z81jdqTdyXw8QwZhmMCuBkQkOShQj2q57sCV4lyc3O078BZMBx7UKr8BnzEW
-	vtaQRULw==;
-Received: from 2001-1c00-8d82-d000-266e-96ff-fe07-7dcc.cable.dynamic.v6.ziggo.nl ([2001:1c00:8d82:d000:266e:96ff:fe07:7dcc] helo=noisy.programming.kicks-ass.net)
-	by casper.infradead.org with esmtpsa (Exim 4.98.2 #2 (Red Hat Linux))
-	id 1uSCYm-00000008GyW-2KJ1;
-	Thu, 19 Jun 2025 10:31:56 +0000
-Received: by noisy.programming.kicks-ass.net (Postfix, from userid 1000)
-	id 9FB5A30890E; Thu, 19 Jun 2025 12:31:55 +0200 (CEST)
-Date: Thu, 19 Jun 2025 12:31:55 +0200
-From: Peter Zijlstra <peterz@infradead.org>
-To: Boqun Feng <boqun.feng@gmail.com>
-Cc: linux-kernel@vger.kernel.org, rust-for-linux@vger.kernel.org,
-	lkmm@lists.linux.dev, linux-arch@vger.kernel.org,
-	Miguel Ojeda <ojeda@kernel.org>,
-	Alex Gaynor <alex.gaynor@gmail.com>, Gary Guo <gary@garyguo.net>,
-	=?iso-8859-1?Q?Bj=F6rn?= Roy Baron <bjorn3_gh@protonmail.com>,
-	Benno Lossin <lossin@kernel.org>,
-	Andreas Hindborg <a.hindborg@kernel.org>,
-	Alice Ryhl <aliceryhl@google.com>, Trevor Gross <tmgross@umich.edu>,
-	Danilo Krummrich <dakr@kernel.org>, Will Deacon <will@kernel.org>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Wedson Almeida Filho <wedsonaf@gmail.com>,
-	Viresh Kumar <viresh.kumar@linaro.org>,
-	Lyude Paul <lyude@redhat.com>, Ingo Molnar <mingo@kernel.org>,
-	Mitchell Levy <levymitchell0@gmail.com>,
-	"Paul E. McKenney" <paulmck@kernel.org>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Thomas Gleixner <tglx@linutronix.de>
-Subject: Re: [PATCH v5 03/10] rust: sync: atomic: Add ordering annotation
- types
-Message-ID: <20250619103155.GD1613376@noisy.programming.kicks-ass.net>
-References: <20250618164934.19817-1-boqun.feng@gmail.com>
- <20250618164934.19817-4-boqun.feng@gmail.com>
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="rtSDbI2v"
+Received: by mail-wr1-f48.google.com with SMTP id ffacd0b85a97d-3a6cdc27438so458023f8f.2
+        for <lkmm@lists.linux.dev>; Thu, 19 Jun 2025 05:19:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20230601; t=1750335576; x=1750940376; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=7ac51FHNRIWsyGPsA2cT/OoFSdh1Legd6vLnNQpKO8c=;
+        b=rtSDbI2vl6w5d+Hg8MtUw3xw39fFtRMsjhz7y/73OC2laHO4s/ybAoaIQtmzCRL5Kf
+         1WdBuxZWRNLokZF09/zrPjJLmrXLck0e48AMz6lDxvKp+2vvDgA7K6TiKjFLjQKyZkJA
+         g6ybqtwfCCmXgaXt1rCi1rD2p3WqPnlTLRy6EMMQvA6bRzomW+2OotmrpmT2Nb+Fvba+
+         luD0pjK5cVNEHulTeenSkVvz6w9COlIV2bUdB9z/ihfAkukZIrXbCauSpB5y90hAZDvd
+         fNBrjjjiS/lFpG9xYtbCxLC1m+p+/KMle3aeisLAXSV1ZFbFSSFlTQj3yKvq3gSmfU3I
+         JEYw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1750335576; x=1750940376;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=7ac51FHNRIWsyGPsA2cT/OoFSdh1Legd6vLnNQpKO8c=;
+        b=dOLSKsEZKZWvrMy134YtO+mx0Sue18MA3DbHLlYG8Dz2JuWdldPK1poe5Ajw1IH9c4
+         YvLqKftu/PJIy6OJa6WFCeoEUM08AtNuv8t04Tyih788R4zolna5j8qM6ycYeu0O+Ld1
+         +I9NQYLUO/TmVoTyMTvbGrwU+jKDrGp3U1irnxZGkKaEONCN2GkD/jKYQqFV8X4czIJz
+         mIJPnJvvSipPpsBjOaQkRtvnJyLRJxG9DcgxpDafpVTbgWvPLFAR1u9WY3e8TDefObZG
+         1FwSS97hhDY8KJOmmM02C8/9pXMk9otueF7nkXxvmoTK24H9fFL/Kcsy3RXzwnAn+Ic/
+         Cq3A==
+X-Forwarded-Encrypted: i=1; AJvYcCX6qWLGZYQZm8UNOv9U8FBjP6251iJ3Ze4/zt4JysgF/PVSEUuXJ0pQqxlCdJw9kRBEPHIY@lists.linux.dev
+X-Gm-Message-State: AOJu0YwYRgI6fn0P3WGkaVdl263JOqWMVkKneW3uUnmfWQoLYgqIwmFh
+	fzHVfrtAsvomJlrMYIVsMLr1/aGi2Y7iB8qt79kBKMqn67eppcuBGCmqQCaIBdp0oCueVyTishD
+	AqDo/zgM6L01xEu08tFTpgov7J8ut1bFxzKf8nXkE
+X-Gm-Gg: ASbGncv9EuDqyoNSfVi/GcGGmn++RGt9vE2XkaIMHN5W4vYGeuD9oKWvVorpnCvSYQJ
+	Ff/bRAEwdbnO59ntahk/ldyjlVuqZG/wthoD8Mm9KD9vHiDZmu54p0ilfjo5G/ekbYlLczT5lcV
+	kpE0thR7elexVH39guW5ERT38qWBIaWwLR39dGQ8uxt7OxogdKnKdP789vtY7RWICTnCSbaFuwn
+	XYBlLQMVpXP
+X-Google-Smtp-Source: AGHT+IEdN1dcFOkm876VSH5eqAcy40nZdytTN0BHyo53UKISb9ybhB6h26VIwqtDwmUT6/7XOiLspK8lUcD/OvMDcxw=
+X-Received: by 2002:a05:6000:430c:b0:3a5:3517:de3e with SMTP id
+ ffacd0b85a97d-3a572e6bc97mr18896998f8f.35.1750335576228; Thu, 19 Jun 2025
+ 05:19:36 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: lkmm@lists.linux.dev
 List-Id: <lkmm.lists.linux.dev>
 List-Subscribe: <mailto:lkmm+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:lkmm+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250618164934.19817-4-boqun.feng@gmail.com>
+References: <20250618164934.19817-1-boqun.feng@gmail.com> <20250618164934.19817-4-boqun.feng@gmail.com>
+ <20250619103155.GD1613376@noisy.programming.kicks-ass.net>
+In-Reply-To: <20250619103155.GD1613376@noisy.programming.kicks-ass.net>
+From: Alice Ryhl <aliceryhl@google.com>
+Date: Thu, 19 Jun 2025 14:19:23 +0200
+X-Gm-Features: Ac12FXz2t9QSaVzsNj9MSWHyeQZH7QvXWY1Yd25RYMgxbqiHuVm7qkIrRqBSAbY
+Message-ID: <CAH5fLgjhdxdFztu_pXLjngu4cD7g7jw16bcQYz=XNmGxKfThsA@mail.gmail.com>
+Subject: Re: [PATCH v5 03/10] rust: sync: atomic: Add ordering annotation types
+To: Peter Zijlstra <peterz@infradead.org>
+Cc: Boqun Feng <boqun.feng@gmail.com>, linux-kernel@vger.kernel.org, 
+	rust-for-linux@vger.kernel.org, lkmm@lists.linux.dev, 
+	linux-arch@vger.kernel.org, Miguel Ojeda <ojeda@kernel.org>, 
+	Alex Gaynor <alex.gaynor@gmail.com>, Gary Guo <gary@garyguo.net>, 
+	=?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, 
+	Benno Lossin <lossin@kernel.org>, Andreas Hindborg <a.hindborg@kernel.org>, 
+	Trevor Gross <tmgross@umich.edu>, Danilo Krummrich <dakr@kernel.org>, Will Deacon <will@kernel.org>, 
+	Mark Rutland <mark.rutland@arm.com>, Wedson Almeida Filho <wedsonaf@gmail.com>, 
+	Viresh Kumar <viresh.kumar@linaro.org>, Lyude Paul <lyude@redhat.com>, 
+	Ingo Molnar <mingo@kernel.org>, Mitchell Levy <levymitchell0@gmail.com>, 
+	"Paul E. McKenney" <paulmck@kernel.org>, Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
+	Linus Torvalds <torvalds@linux-foundation.org>, Thomas Gleixner <tglx@linutronix.de>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Wed, Jun 18, 2025 at 09:49:27AM -0700, Boqun Feng wrote:
+On Thu, Jun 19, 2025 at 12:31=E2=80=AFPM Peter Zijlstra <peterz@infradead.o=
+rg> wrote:
+>
+> On Wed, Jun 18, 2025 at 09:49:27AM -0700, Boqun Feng wrote:
+>
+> > +//! Memory orderings.
+> > +//!
+> > +//! The semantics of these orderings follows the [`LKMM`] definitions =
+and rules.
+> > +//!
+> > +//! - [`Acquire`] and [`Release`] are similar to their counterpart in =
+Rust memory model.
+>
+> So I've no clue what the Rust memory model states, and I'm assuming
+> it is very similar to the C11 model. I have also forgotten what LKMM
+> states :/
+>
+> Do they all agree on what RELEASE+ACQUIRE makes?
 
-> +//! Memory orderings.
-> +//!
-> +//! The semantics of these orderings follows the [`LKMM`] definitions and rules.
-> +//!
-> +//! - [`Acquire`] and [`Release`] are similar to their counterpart in Rust memory model.
+Rust just uses the C11 model outright, so yes it's the same. There's
+no separate Rust memory model as far as atomics are concerned.
 
-So I've no clue what the Rust memory model states, and I'm assuming
-it is very similar to the C11 model. I have also forgotten what LKMM
-states :/
-
-Do they all agree on what RELEASE+ACQUIRE makes?
-
-> +//! - [`Full`] means "fully-ordered", that is:
-> +//!   - It provides ordering between all the preceding memory accesses and the annotated operation.
-> +//!   - It provides ordering between the annotated operation and all the following memory accesses.
-> +//!   - It provides ordering between all the preceding memory accesses and all the fllowing memory
-> +//!     accesses.
-> +//!   - All the orderings are the same strong as a full memory barrier (i.e. `smp_mb()`).
-
-s/strong/strength/ ?
-
-> +//! - [`Relaxed`] is similar to the counterpart in Rust memory model, except that dependency
-> +//!   orderings are also honored in [`LKMM`]. Dependency orderings are described in "DEPENDENCY
-> +//!   RELATIONS" in [`LKMM`]'s [`explanation`].
-> +//!
-> +//! [`LKMM`]: srctree/tools/memory-model/
-> +//! [`explanation`]: srctree/tools/memory-model/Documentation/explanation.txt
+Alice

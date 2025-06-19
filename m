@@ -1,34 +1,34 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6103B248F7F;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88FCC253959;
 	Thu, 19 Jun 2025 06:50:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750315821; cv=none; b=kfuoO1oJ+H/a55aMEcEnVk2B7xpZCJtve3NDFs6xS9eZhRTfFFdvAEViDKCvs2sy1w3Yv1LBlZZJizq6h+XxvhyuUbS2Qr0+DCuL6UKd79fPxrK7xqjVPgkcw56zqLmBU3lPZqzycd0HbrMV1TuDFONZ6wue8qZ7iyDXJaeqmu8=
+	t=1750315821; cv=none; b=tpY8ekRtmxW5EKAyiQPYPDtAY4M5rsTnCJGD1fQAvIgqJXHZplKe9aEegaDULk7SzUu11V4QMLhB1VJRG+ZZz0HQj9ZauyY8oGw6qEsOBb+jv4lwqk0H0gzjnDLgLAXHccn0Dqv2ej30l9wsNWuXtHKQRWdhOLr7CkO4NKj55J4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1750315821; c=relaxed/simple;
-	bh=2WQh1GG+XNK0Cdx26utHd/0dTt1jIj+urA1wFYdPe3Y=;
+	bh=4NisMpZH9SoZ5VV4u6jFkhlkA+lqE03MPhW7QcfYJIs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YZUB1FesV7y/lXyReaPGr0Be/TF0kIYW+yCReeYjF1iwpzfIatcSSx3eehXzohQifX9qFCrOwQELzt8OG9niioKTCNTFn1Odq4+0Bf4tNKF4ePk44BkiXeCeemK8T++08OZQWHVqd2CqmByzD+zsKinEiklyamo+1cYYBOonJ4Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jMEjse6c; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GpgNsgbZFaFNTde9MBGPPeBlqP5y/L+KpaHLyEK+hghI4EtRZOZ0Hm8pNhJZEKGDETyMBfheE6vDsWaRsVfR/ns9kSgiNn0Qa8gZkr7FO3LGzlpfCSd0m4ewwEd6/n5wx5N6NULIM4qm6VLP398MxBFxlkonrIKNSV4qtVbEHZE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=IimrqQdi; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jMEjse6c"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC450C4CEF9;
-	Thu, 19 Jun 2025 06:50:20 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="IimrqQdi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1AA05C19424;
+	Thu, 19 Jun 2025 06:50:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1750315820;
-	bh=2WQh1GG+XNK0Cdx26utHd/0dTt1jIj+urA1wFYdPe3Y=;
+	s=k20201202; t=1750315821;
+	bh=4NisMpZH9SoZ5VV4u6jFkhlkA+lqE03MPhW7QcfYJIs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jMEjse6cg4r2ntotJIAcyHpxXXyFo0O8Qp1tJuELRLjPwAmJPGNWkSVoNc6PM30FR
-	 cSLbje2+1PXsWR0o4Q2CploANXWcOO2iSBC+qanSnqGbr00LOsTtFo9SvCTXeQuCL0
-	 l+gvjQHL14iwJKemVRzwNRcWnnom8qomn7JbFPy/7Xo/LMHYPwaYIFYt6ovSMYzHDs
-	 FSVimInct4LY6iIHjMUfGtyVAsFFKPpUhuLqE7phIyHfVItRxUcqG/GHXou3S2e5+f
-	 dYdf3RYRyHSrqjqAlHSzL7U9iXwc4NL+nmUeYV2BsnL63EwQcePCvaGPJmfFj9hBmb
-	 KBCgOWTCXBqdQ==
+	b=IimrqQdiUejm+wBblyRRTg9HZcr+2iaV49ANTlPsNNx0zs93yGxnDtI/Cb8IeQHHx
+	 xa8pBTEpSS1n56wI4IgWeyBHCVuxHMJEPmpIG/xRn8JFtfZmJOerxntvR3gV29bV8X
+	 CYaay9TE4gQ1sHmq13+OtupdxdHXmm+As9sA16UO/JFpk93dsYGaOXUxeys4KvTJY/
+	 duNCnzf3pORXb456NAOpc9Dy6zruowkPUAxYQo/UDod1du1SZkQzQ0hK6n/iANYOy9
+	 Pm4v7KPG1+GX6YZPf1+u/zJ1+0Q5iICJCAPKhVjZP0dHoMl+HijwHPF5UGwAS/wBX6
+	 W5/BC6MlZrvJQ==
 Received: from mchehab by mail.kernel.org with local (Exim 4.98.2)
 	(envelope-from <mchehab+huawei@kernel.org>)
-	id 1uS96J-00000003dGy-01bn;
+	id 1uS96J-00000003dHc-1GDW;
 	Thu, 19 Jun 2025 08:50:19 +0200
 From: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 To: Linux Doc Mailing List <linux-doc@vger.kernel.org>,
@@ -53,9 +53,9 @@ Cc: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
 	netdev@vger.kernel.org,
 	peterz@infradead.org,
 	stern@rowland.harvard.edu
-Subject: [PATCH v7 07/17] docs: sphinx: add a parser for yaml files for Netlink specs
-Date: Thu, 19 Jun 2025 08:49:00 +0200
-Message-ID: <79fd88d84e63351d1156a343d697d9bbca8159c5.1750315578.git.mchehab+huawei@kernel.org>
+Subject: [PATCH v7 17/17] docs: conf.py: Check Sphinx and docutils version
+Date: Thu, 19 Jun 2025 08:49:10 +0200
+Message-ID: <8719d77d3a6ef30dff58f959dad5dd973496eeea.1750315578.git.mchehab+huawei@kernel.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <cover.1750315578.git.mchehab+huawei@kernel.org>
 References: <cover.1750315578.git.mchehab+huawei@kernel.org>
@@ -68,116 +68,89 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Sender: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 
-Add a simple sphinx.Parser to handle yaml files and add the
-the code to handle Netlink specs. All other yaml files are
-ignored.
+As reported by Akira, there are incompatibility issues with
+Sphinx and docutils.
 
-The code was written in a way that parsing yaml for different
-subsystems and even for different parts of Netlink are easy.
+I manually checked that before docutils 0.17.1, yaml generation
+doesn't work properly. Akira checked that 0.19 is problematic too.
 
-All it takes to have a different parser is to add an
-import line similar to:
+After check Sphinx release notes, it seems that the
+versions that are supposed to cope well together are:
 
-	from netlink_yml_parser import YnlDocGenerator
+	========  ============  ============
+	Sphinx    Min Docutils  Max Docutils
+	Version   Version       Version
+	--------  ------------  ------------
+	< 4.0.0	  0.17.1        0.17.1
+	< 6.0.0	  0.17.1        0.18.1
+	< 7.0.0   0.18.0        0.18.1
+	>= 7.0.0  0.20.0        0.21.2
+	========  ============  ============
 
-adding the corresponding parser somewhere at the extension:
+Add a logic inside conf.py to check the above, emitting warnings
+if the docutils version don't match what is known to be supported.
 
-	netlink_parser = YnlDocGenerator()
-
-And then add a logic inside parse() to handle different
-doc outputs, depending on the file location, similar to:
-
-        if "/netlink/specs/" in fname:
-            msg = self.netlink_parser.parse_yaml_file(fname)
-
+Reported-by: Akira Yokosawa <akiyks@gmail.com>
+Closes: https://lore.kernel.org/linux-doc/6fcb75ee-61db-4fb3-9c5f-2029a7fea4ee@gmail.com/
 Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 ---
- Documentation/sphinx/parser_yaml.py | 76 +++++++++++++++++++++++++++++
- 1 file changed, 76 insertions(+)
- create mode 100755 Documentation/sphinx/parser_yaml.py
+ Documentation/conf.py | 33 ++++++++++++++++++++++++++++++---
+ 1 file changed, 30 insertions(+), 3 deletions(-)
 
-diff --git a/Documentation/sphinx/parser_yaml.py b/Documentation/sphinx/parser_yaml.py
-new file mode 100755
-index 000000000000..635945e1c5ba
---- /dev/null
-+++ b/Documentation/sphinx/parser_yaml.py
-@@ -0,0 +1,76 @@
-+"""
-+Sphinx extension for processing YAML files
-+"""
-+
-+import os
-+import re
-+import sys
-+
-+from pprint import pformat
-+
-+from docutils.parsers.rst import Parser as RSTParser
-+from docutils.statemachine import ViewList
-+
+diff --git a/Documentation/conf.py b/Documentation/conf.py
+index 5eddf5885f77..6047ec85add1 100644
+--- a/Documentation/conf.py
++++ b/Documentation/conf.py
+@@ -9,7 +9,11 @@ import os
+ import shutil
+ import sys
+ 
++import docutils
+ import sphinx
 +from sphinx.util import logging
-+from sphinx.parsers import Parser
-+
-+srctree = os.path.abspath(os.environ["srctree"])
-+sys.path.insert(0, os.path.join(srctree, "tools/net/ynl/pyynl"))
-+
-+from netlink_yml_parser import YnlDocGenerator        # pylint: disable=C0413
 +
 +logger = logging.getLogger(__name__)
+ 
+ # If extensions (or modules to document with autodoc) are in another directory,
+ # add these directories to sys.path here. If the directory is relative to the
+@@ -21,11 +25,34 @@ from load_config import loadConfig               # pylint: disable=C0413,E0401
+ # Minimal supported version
+ needs_sphinx = "3.4.3"
+ 
+-# Get Sphinx version
+-major, minor, patch = sphinx.version_info[:3]          # pylint: disable=I1101
++# Get Sphinx and docutils versions
++sphinx_ver = sphinx.version_info[:3]          # pylint: disable=I1101
++docutils_ver = docutils.__version_info__[:3]
 +
-+class YamlParser(Parser):
-+    """Custom parser for YAML files."""
++#
++if sphinx_ver < (4, 0, 0):
++    min_docutils = (0, 16, 0)
++    max_docutils = (0, 17, 1)
++elif sphinx_ver < (6, 0, 0):
++    min_docutils = (0, 17, 0)
++    max_docutils = (0, 18, 1)
++elif sphinx_ver < (7, 0, 0):
++    min_docutils = (0, 18, 0)
++    max_docutils = (0, 18, 1)
++else:
++    min_docutils = (0, 20, 0)
++    max_docutils = (0, 21, 2)
 +
-+    # Need at least two elements on this set
-+    supported = ('yaml', 'yml')
++sphinx_ver_str = ".".join([str(x) for x in sphinx_ver])
++docutils_ver_str = ".".join([str(x) for x in docutils_ver])
 +
-+    netlink_parser = YnlDocGenerator()
-+
-+    def do_parse(self, inputstring, document, msg):
-+        """Parse YAML and generate a document tree."""
-+
-+        self.setup_parse(inputstring, document)
-+
-+        result = ViewList()
-+
-+        try:
-+            # Parse message with RSTParser
-+            for i, line in enumerate(msg.split('\n')):
-+                result.append(line, document.current_source, i)
-+
-+            rst_parser = RSTParser()
-+            rst_parser.parse('\n'.join(result), document)
-+
-+        except Exception as e:
-+            document.reporter.error("YAML parsing error: %s" % pformat(e))
-+
-+        self.finish_parse()
-+
-+    # Overrides docutils.parsers.Parser. See sphinx.parsers.RSTParser
-+    def parse(self, inputstring, document):
-+        """Check if a YAML is meant to be parsed."""
-+
-+        fname = document.current_source
-+
-+        # Handle netlink yaml specs
-+        if "/netlink/specs/" in fname:
-+            msg = self.netlink_parser.parse_yaml_file(fname)
-+            self.do_parse(inputstring, document, msg)
-+
-+        # All other yaml files are ignored
-+
-+def setup(app):
-+    """Setup function for the Sphinx extension."""
-+
-+    # Add YAML parser
-+    app.add_source_parser(YamlParser)
-+    app.add_source_suffix('.yaml', 'yaml')
-+
-+    return {
-+        'version': '1.0',
-+        'parallel_read_safe': True,
-+        'parallel_write_safe': True,
-+    }
++if docutils_ver < min_docutils:
++    logger.warning(f"Docutils {docutils_ver_str} is too old for Sphinx {sphinx_ver_str}. Doc generation may fail")
++elif docutils_ver > max_docutils:
++    logger.warning(f"Docutils {docutils_ver_str} could be too new for Sphinx {sphinx_ver_str}. Doc generation may fail")
+ 
+ # Include_patterns were added on Sphinx 5.1
+-if (major < 5) or (major == 5 and minor < 1):
++if sphinx_ver < (5, 1, 0):
+     has_include_patterns = False
+ else:
+     has_include_patterns = True
 -- 
 2.49.0
 

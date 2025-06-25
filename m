@@ -1,236 +1,217 @@
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qv1-f41.google.com (mail-qv1-f41.google.com [209.85.219.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 833C6262FDB
-	for <lkmm@lists.linux.dev>; Wed, 25 Jun 2025 15:52:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.129.124
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBBC017A318
+	for <lkmm@lists.linux.dev>; Wed, 25 Jun 2025 16:09:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750866733; cv=none; b=LGe9fA01zLy4w7nTwkJUiwmgF4w2UCKYEx0OwDNIG0jHNe8ugSuJtNQuE4b27AoyRdKgUA8uS4XcXyHsN6lY4bFXxlzbNCH1S8mml5czo2RePUzUsTps+QirZNa5jL4pA9lBVB8i+PruQpC57QhD7+nxFDR/dUw/TyhODxSDbNE=
+	t=1750867798; cv=none; b=AE0kJhoWv7a3G/KPWWMwS0lBjxwr2nhx9CTdaQ5rt3rmIo5sGYzLJrbbliWkvj4ilS0E1XREgsZo3kHRse16c695/FPQekYC+4SkShzD2QfBI1tWYSMQJF2xgfjcKdqwS88I4uqEeH+xpGtwM97MSmK4BdujR+SR5wHiYwXLxRw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750866733; c=relaxed/simple;
-	bh=2dEZxA9znoi4/j5ZU/wsEM4CqiVDW+cT8z82gn8Ynjg=;
-	h=From:Message-ID:Date:MIME-Version:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=KZkpJ+o4Qn0OGc7C3jaqUdFqS6blZ9A2DpV4zOiPL8Z12058SRxfzGYJhtbsbJSRXibWEcN7fVhwCi8w+qLOLCby7OJxlOW4xCQT0k9lQPH3br1DlEXF6Nksx0cX1VL4ivLeN8WXsE3AFshyOJkZ/HvEdkPn1iXAyeygufttgV8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=AroxS4Xe; arc=none smtp.client-ip=170.10.129.124
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
+	s=arc-20240116; t=1750867798; c=relaxed/simple;
+	bh=XcujPXMq0SgwRgGcyvHtvax+x0rV8Zggez8M12wwghA=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=c8a7O7vY9xWKCGOYgQUKbVj2iCnJrMdwi60asF4QrUkbvFc7bz6sSqSeFNUjaIX90R1pxmMuRedM/9k/doGKU83oxByZCE/YemfroUSNMOHz7BVVTVH5g/6u173HXqn0T765QAbPda9zO5KOkCxhPOPWLhTnOjjwiAGcsSC5M5o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=hkk95piM; arc=none smtp.client-ip=209.85.219.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="AroxS4Xe"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1750866730;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=UprNKi29neeOtDuoBhXpguAmiHeVIiz0UMx6QLlk6uM=;
-	b=AroxS4XeeMZYXFDXFXjRw0Vxbsvs3qtGYGbyQMtNCsXu60Mimi/k1SQm+KuA1+kCJcjvQO
-	6moXOgdHAxqh3UDE4TYNo9Rqp1K2d82WvgDYZWA+D/1jAXRqVO8rrO1vszinlHBE3Lugo+
-	VXglqUs/zO9lbShzO95jmmfcUVyImQk=
-Received: from mail-pj1-f72.google.com (mail-pj1-f72.google.com
- [209.85.216.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-471-K8tMrXVXPf2W6b9Hojf6NQ-1; Wed, 25 Jun 2025 11:52:08 -0400
-X-MC-Unique: K8tMrXVXPf2W6b9Hojf6NQ-1
-X-Mimecast-MFC-AGG-ID: K8tMrXVXPf2W6b9Hojf6NQ_1750866728
-Received: by mail-pj1-f72.google.com with SMTP id 98e67ed59e1d1-311a6b43ed7so5763047a91.1
-        for <lkmm@lists.linux.dev>; Wed, 25 Jun 2025 08:52:08 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hkk95piM"
+Received: by mail-qv1-f41.google.com with SMTP id 6a1803df08f44-6facacf521eso920486d6.3
+        for <lkmm@lists.linux.dev>; Wed, 25 Jun 2025 09:09:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1750867796; x=1751472596; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:feedback-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=xPhczO6D/8eJ5ZW1VQow1Wu7VLrhbANFKfpYebLr5Do=;
+        b=hkk95piMhIAJM91CPKY7A30yZvniuZCyQdZNxf0sR4OKQi016LizUtSe0HIKlkV09Y
+         fvXro0WBlgfbsCPmJj27H4an2CNwreCQO9GHrE9x7jCP3h5ArhrSi+YLrfHpz8ruk88Y
+         Ic+eFf2wj8OWnXkTkbL1VtuCRqOn9tuF7cldXJ59pmlOl96rz7GkeCO0Y3FKSjvLpfN2
+         QIoz0jV7iYU2tsHwFnI1kDLwtfGSHx1VllGgUMM1lIPXD1YEtWfOVUUn9iXZoaovB+zE
+         Ye8yBTfOAHfYJeHcdDxFYXnzCPZxHZULePcqZ6WbZQemZIM4A8vX6Z+nk1/tUHTFSYDz
+         b7BQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1750866728; x=1751471528;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:subject:user-agent:mime-version:date:message-id:from
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=UprNKi29neeOtDuoBhXpguAmiHeVIiz0UMx6QLlk6uM=;
-        b=B8bgJeaoQZjQvYan1RZ6teImueAlQ/m5J5+ftFFDr36GpM26xvOC+XI1vLGy11BI9E
-         hZFmzDm0yEiQzmYDh2pkwfhKszXm6973eg5iNpvMsVeYmqd0SgdF45BL476wYCIGxT5x
-         YsVhzfvMS8fR4SsC3lYbkDoCUD1suPv7sckF7vMtQR8QDUGNrxr2GnEbREBZIqgmtGlc
-         3c7++PwCbaXH6Cz0ybpouffDGBGybHtiiCakqv4xYnAbW+3ZZzRJdFGsYoap/5goYAWz
-         LXtslW1oFJG1B3c1rwWqjEiZ8fPTM7127CUEgTJq9rOZ9FTpsTvdlNZPQhOZPD/8q/s1
-         y30g==
-X-Forwarded-Encrypted: i=1; AJvYcCVj2LzFgldyFSHd7xjKVkIs4QCElKtiWsihqAJ0Tiyf7S8a51XtYrrfRt7QHgBLb0a3v+bb@lists.linux.dev
-X-Gm-Message-State: AOJu0Yw/M22oYrtAlXsLhLm3cLu/RQzvvCY5E30Wflw24fyuO5IVDFMG
-	MjnLLn1cE6yydqLu53BISsSXOfIovb70ytxXg29HUXQ3rzCwmcs3q7ler5xwmE3VcFYHuR49QTk
-	IWAldZAuJNdqb1+mISe9oG1C12V6DLNeg5+cxdi2qNumLWnMlqHrOfHo=
-X-Gm-Gg: ASbGncuG9WfbqeoTPyRp+untTZoKTtlsvzQoSh4gK0jZWjeXf1wxCoLhbAmjAyEbMsf
-	ybumIEH0OwnIVTlwg9LpXg6zJdcvqBS+u16Y8R3EWuYZMgVE+dzjdwNBzTHdpGgPMUEVQhHP/Ez
-	uXman3eHb/r8CwLhaWzE2wedYn4oVBcU3UkeberDoWwIllIa/Qu1RfD5OGh0CyodSDslr51BkIw
-	O9ZTgl8f14H6EhjoJdOSceeOxpIvO0ERH/19KComVR56UjvOxj0/NF+D92VPxdgxQPASacaOZUd
-	jwk8cuXGpZ5az65ffKtQ7089v37QAbN8ENUr38oJhJcnSqFmjP4fXR3RBcAGn8i2AqID
-X-Received: by 2002:a17:90b:1fce:b0:312:e731:5a6b with SMTP id 98e67ed59e1d1-315f269fa68mr4355068a91.32.1750866727513;
-        Wed, 25 Jun 2025 08:52:07 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGglaSDui+roskZocwG9xuSyfP0Kpa0z0xiQ8gfEl8NwUolpzM/PIXW3EJfCfspj5HFPWW0bw==
-X-Received: by 2002:a17:90b:1fce:b0:312:e731:5a6b with SMTP id 98e67ed59e1d1-315f269fa68mr4355024a91.32.1750866727029;
-        Wed, 25 Jun 2025 08:52:07 -0700 (PDT)
-Received: from ?IPV6:2601:600:947f:f020:85dc:d2b2:c5ee:e3c4? ([2601:600:947f:f020:85dc:d2b2:c5ee:e3c4])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-315f53ea827sm2146576a91.41.2025.06.25.08.52.04
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 25 Jun 2025 08:52:05 -0700 (PDT)
-From: Waiman Long <llong@redhat.com>
-X-Google-Original-From: Waiman Long <longman@redhat.com>
-Message-ID: <c649c8ec-6c1b-41a3-90c5-43c0feed7803@redhat.com>
-Date: Wed, 25 Jun 2025 11:52:04 -0400
+        d=1e100.net; s=20230601; t=1750867796; x=1751472596;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:feedback-id:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=xPhczO6D/8eJ5ZW1VQow1Wu7VLrhbANFKfpYebLr5Do=;
+        b=BW4mLu3dhzvJ7SDtnNWu+Pwb0s94YComyu/5ou675/+tuYwYQA6M10cPeAaOREv+yU
+         pGpJFWB+91lp9bG8RxllSbGMsbtyVw6tbxukEwDBhvrnaMZr86Ib49ecjPhnj9/SZM8v
+         jV7pEUxTnWiESBZmus8+qawS95RDHa+fyDkBhf9D0XHglS/sOcaXl/Pw4iyRCpt7wA0l
+         6Fc0W/btRsONxaqlHslUzl/00FFsZ+f46spuHTgn2tqo8BPOgNoPi+C+3B6Owvrl+N3P
+         hHLa6f57aTOkMH3S+tg3ATahzzA9PB3C9Wqn9OS17d3DMqPZvej/Ep6c54PO1UQ73Jt5
+         yAcg==
+X-Forwarded-Encrypted: i=1; AJvYcCUI7S6Ig2Z8HylGzPx3xe0oCja+kYbs8Z2a2tYQjgclPpxXTLl9QYvhD6ZXQ0ng2Yv97TAd@lists.linux.dev
+X-Gm-Message-State: AOJu0YyQsp5wGK/c/fCGHe4zuNB+mP0bhc50Cpw629nWRgxSG1nimBYm
+	ARPtPMdaFWkvlVJOKrdNhMoX+gURO2alPlXOIEcRObfNKPX9czzJtSOE
+X-Gm-Gg: ASbGncsLx7ZJMO8UhJ/xvK+1YL3TimjDdAHeXTUgvaCp/T/bPYa6wVIuiqMB86WQsnc
+	DPntmkUGQ73eoctodbjRxdocdFPfelDVPQ/nnEExzbq7acoxppmS7J1n5UwxjN24waZpW0KrUPN
+	yNlL1qy0a5EE7bijUX0jk/n22FeV+FPu7UG+3j8BzyNuJJhuLHWGVoHB2es+CZF6PdDjelm1JpS
+	Q4TMyDJx7Wdm5cB+QZJT+2hWz3CM59nFpzKd0AdKiMh/eUKbZlZHF9f5/L3drQzoT5cvhE+eaRu
+	VIiiwYaebx3ipwmt2VhjHknLC7P+XL8mDcVlSMYwXC+hCkdsiJnH/llmWgh9dgUMOwSWDzNdsxT
+	KiC0Xb1/ZOD8e1Np8L37O41zelbPPHNzRhGsb8fqcdF1NXlueRpkK
+X-Google-Smtp-Source: AGHT+IFGhDRREH3gHeUx79lJ5VxzKJvTjEFfsbt4u2kIHQe0XYfcSk9/RB20l94+X4h2aOgKgRNKtQ==
+X-Received: by 2002:a05:6214:3c9d:b0:6f8:bfbf:5d47 with SMTP id 6a1803df08f44-6fd5efac5f8mr43788206d6.24.1750867795877;
+        Wed, 25 Jun 2025 09:09:55 -0700 (PDT)
+Received: from fauth-a1-smtp.messagingengine.com (fauth-a1-smtp.messagingengine.com. [103.168.172.200])
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-7d3f999a14bsm623199485a.13.2025.06.25.09.09.54
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 25 Jun 2025 09:09:55 -0700 (PDT)
+Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
+	by mailfauth.phl.internal (Postfix) with ESMTP id 8CA8CF40068;
+	Wed, 25 Jun 2025 12:09:54 -0400 (EDT)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-06.internal (MEProxy); Wed, 25 Jun 2025 12:09:54 -0400
+X-ME-Sender: <xms:Uh9caBV3GZ6rVcDATtwA0qmFIRhO6ZhjoQ9y5fBqbsz-gL3B8pP44w>
+    <xme:Uh9caBmuJneho1_SeL03jdFLJ7g6iRzC4UndmG9z9QiMwI9Tt7rup_MJ2meQixu7q
+    myiXy3BXgfj1PWM5w>
+X-ME-Received: <xmr:Uh9caNbuTqB9mzm_ScOkuYJnOL_qJPelsPpCo7UGQhNwg96-t-wyfG6eJQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddvgddvfedvvdcutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+    hrpeffhffvvefukfhfgggtuggjsehttdertddttddvnecuhfhrohhmpeeuohhquhhnucfh
+    vghnghcuoegsohhquhhnrdhfvghnghesghhmrghilhdrtghomheqnecuggftrfgrthhtvg
+    hrnhephedugfduffffteeutddvheeuveelvdfhleelieevtdeguefhgeeuveeiudffiedv
+    necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepsghoqh
+    hunhdomhgvshhmthhprghuthhhphgvrhhsohhnrghlihhthidqieelvdeghedtieegqddu
+    jeejkeehheehvddqsghoqhhunhdrfhgvnhhgpeepghhmrghilhdrtghomhesfhhigihmvg
+    drnhgrmhgvpdhnsggprhgtphhtthhopedviedpmhhouggvpehsmhhtphhouhhtpdhrtghp
+    thhtoheplhhlohhnghesrhgvughhrghtrdgtohhmpdhrtghpthhtoheplhhinhhugidqkh
+    gvrhhnvghlsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtoheprhgtuhesvhhg
+    vghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehlkhhmmheslhhishhtshdrlhhinh
+    hugidruggvvhdprhgtphhtthhopehpvghtvghriiesihhnfhhrrgguvggrugdrohhrghdp
+    rhgtphhtthhopehmihhnghhosehkvghrnhgvlhdrohhrghdprhgtphhtthhopeifihhllh
+    eskhgvrhhnvghlrdhorhhgpdhrtghpthhtohepuggrvhgvsehsthhgohhlrggsshdrnhgv
+    thdprhgtphhtthhopehprghulhhmtghksehkvghrnhgvlhdrohhrgh
+X-ME-Proxy: <xmx:Uh9caEVhWzKC8z26i0kuQBvNRCUVl9eoHG0oev3CF3ZqWENnnCv-ZQ>
+    <xmx:Uh9caLksLEiezojUwLvXeEXzGitCJ3VxoVnP5VN7rGgOyISupD0NOQ>
+    <xmx:Uh9caBfdb5Q7qvJIjVpYdkWMC46I4XNOk3H1nucNBnVu52OyI1KPNg>
+    <xmx:Uh9caFFeFer0mMaGBy5rIqeFSQTtOD_G6belVQL_KV6ra-9_95S3Dw>
+    <xmx:Uh9caFm7Mhd8DAfWqYNPLxaz5mjMb4d1lYGeGa1K1wlBaQi3lzhsIzOo>
+Feedback-ID: iad51458e:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 25 Jun 2025 12:09:54 -0400 (EDT)
+Date: Wed, 25 Jun 2025 09:09:52 -0700
+From: Boqun Feng <boqun.feng@gmail.com>
+To: Waiman Long <llong@redhat.com>
+Cc: linux-kernel@vger.kernel.org, rcu@vger.kernel.org, lkmm@lists.linux.dev,
+	Peter Zijlstra <peterz@infradead.org>,
+	Ingo Molnar <mingo@kernel.org>, Will Deacon <will@kernel.org>,
+	Davidlohr Bueso <dave@stgolabs.net>,
+	"Paul E. McKenney" <paulmck@kernel.org>,
+	Josh Triplett <josh@joshtriplett.org>,
+	Frederic Weisbecker <frederic@kernel.org>,
+	Neeraj Upadhyay <neeraj.upadhyay@kernel.org>,
+	Joel Fernandes <joelagnelf@nvidia.com>,
+	Uladzislau Rezki <urezki@gmail.com>,
+	Steven Rostedt <rostedt@goodmis.org>,
+	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
+	Lai Jiangshan <jiangshanlai@gmail.com>,
+	Zqiang <qiang.zhang@linux.dev>, Breno Leitao <leitao@debian.org>,
+	aeh@meta.com, netdev@vger.kernel.org, edumazet@google.com,
+	jhs@mojatatu.com, kernel-team@meta.com,
+	Erik Lundgren <elundgren@meta.com>
+Subject: Re: [PATCH 1/8] Introduce simple hazard pointers
+Message-ID: <aFwfUCw2izpjC0wr@Mac.home>
+References: <20250625031101.12555-1-boqun.feng@gmail.com>
+ <20250625031101.12555-2-boqun.feng@gmail.com>
+ <c649c8ec-6c1b-41a3-90c5-43c0feed7803@redhat.com>
 Precedence: bulk
 X-Mailing-List: lkmm@lists.linux.dev
 List-Id: <lkmm.lists.linux.dev>
 List-Subscribe: <mailto:lkmm+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:lkmm+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/8] Introduce simple hazard pointers
-To: Boqun Feng <boqun.feng@gmail.com>, linux-kernel@vger.kernel.org,
- rcu@vger.kernel.org, lkmm@lists.linux.dev
-Cc: Peter Zijlstra <peterz@infradead.org>, Ingo Molnar <mingo@kernel.org>,
- Will Deacon <will@kernel.org>, Davidlohr Bueso <dave@stgolabs.net>,
- "Paul E. McKenney" <paulmck@kernel.org>,
- Josh Triplett <josh@joshtriplett.org>,
- Frederic Weisbecker <frederic@kernel.org>,
- Neeraj Upadhyay <neeraj.upadhyay@kernel.org>,
- Joel Fernandes <joelagnelf@nvidia.com>, Uladzislau Rezki <urezki@gmail.com>,
- Steven Rostedt <rostedt@goodmis.org>,
- Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
- Lai Jiangshan <jiangshanlai@gmail.com>, Zqiang <qiang.zhang@linux.dev>,
- Breno Leitao <leitao@debian.org>, aeh@meta.com, netdev@vger.kernel.org,
- edumazet@google.com, jhs@mojatatu.com, kernel-team@meta.com,
- Erik Lundgren <elundgren@meta.com>
-References: <20250625031101.12555-1-boqun.feng@gmail.com>
- <20250625031101.12555-2-boqun.feng@gmail.com>
-In-Reply-To: <20250625031101.12555-2-boqun.feng@gmail.com>
-X-Mimecast-Spam-Score: 0
-X-Mimecast-MFC-PROC-ID: 2KhjcHJX8uA03lIun5LW0J9rDb0GM_2G2asz7tyBQ9I_1750866728
-X-Mimecast-Originator: redhat.com
-Content-Language: en-US
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <c649c8ec-6c1b-41a3-90c5-43c0feed7803@redhat.com>
+
+On Wed, Jun 25, 2025 at 11:52:04AM -0400, Waiman Long wrote:
+[...]
+> > +/*
+> > + * Acquire a hazptr slot and begin the hazard pointer critical section.
+> > + *
+> > + * Must be called with preemption disabled, and preemption must remain disabled
+> > + * until shazptr_clear().
+> > + */
+> > +static inline struct shazptr_guard shazptr_acquire(void *ptr)
+> > +{
+> > +	struct shazptr_guard guard = {
+> > +		/* Preemption is disabled. */
+> > +		.slot = this_cpu_ptr(&shazptr_slots),
+> > +		.use_wildcard = false,
+> > +	};
+> > +
+> > +	if (likely(!READ_ONCE(*guard.slot))) {
+> > +		WRITE_ONCE(*guard.slot, ptr);
+> > +	} else {
+> > +		guard.use_wildcard = true;
+> > +		WRITE_ONCE(*guard.slot, SHAZPTR_WILDCARD);
+> > +	}
+> Is it correct to assume that shazptr cannot be used in a mixed context
+> environment on the same CPU like a task context and an interrupt context
+> trying to acquire it simultaneously because the current check isn't atomic
+> with respect to that?
+
+I think the current implementation actually support mixed context usage,
+let see (assuming we start in a task context):
+
+	if (likely(!READ_ONCE(*guard.slot))) {
+
+if an interrupt happens here, it's fine because the slot is still empty,
+as long as the interrupt will eventually clear the slot.
+
+		WRITE_ONCE(*guard.slot, ptr);
+
+if an interrupt happens here, it's fine because the interrupt would
+notice that the slot is already occupied, hence the interrupt will use a
+wildcard, and because it uses a wild, it won't clear the slot after it
+returns. However the task context's shazptr_clear() will eventually
+clear the slot because its guard's .use_wildcard is false.
+
+	} else {
+
+if an interrupt happens here, it's fine because of the same: interrupt
+will use wildcard, and it will not clear the slot, and some
+shazptr_clear() in the task context will eventually clear it.
+
+		guard.use_wildcard = true;
+		WRITE_ONCE(*guard.slot, SHAZPTR_WILDCARD);
+
+if an interrupt happens here, it's fine because of the same.
+
+	}
 
 
-On 6/24/25 11:10 PM, Boqun Feng wrote:
-> As its name suggests, simple hazard pointers (shazptr) is a
-> simplification of hazard pointers [1]: it has only one hazard pointer
-> slot per-CPU and is targeted for simple use cases where the read-side
-> already has preemption disabled. It's a trade-off between full features
-> of a normal hazard pointer implementation (multiple slots, dynamic slot
-> allocation, etc.) and the simple use scenario.
->
-> Since there's only one slot per-CPU, so shazptr read-side critical
-> section nesting is a problem that needs to be resolved, because at very
-> least, interrupts and NMI can introduce nested shazptr read-side
-> critical sections. A SHAZPTR_WILDCARD is introduced to resolve this:
-> SHAZPTR_WILDCARD is a special address value that blocks *all* shazptr
-> waiters. In an interrupt-causing shazptr read-side critical section
-> nesting case (i.e. an interrupt happens while the per-CPU hazard pointer
-> slot being used and tries to acquire a hazard pointer itself), the inner
-> critical section will switch the value of the hazard pointer slot into
-> SHAZPTR_WILDCARD, and let the outer critical section eventually zero the
-> slot. The SHAZPTR_WILDCARD still provide the correct protection because
-> it blocks all the waiters.
->
-> It's true that once the wildcard mechanism is activated, shazptr
-> mechanism may be downgrade to something similar to RCU (and probably
-> with a worse implementation), which generally has longer wait time and
-> larger memory footprint compared to a typical hazard pointer
-> implementation. However, that can only happen with a lot of users using
-> hazard pointers, and then it's reasonable to introduce the
-> fully-featured hazard pointer implementation [2] and switch users to it.
->
-> Note that shazptr_protect() may be added later, the current potential
-> usage doesn't require it, and a shazptr_acquire(), which installs the
-> protected value to hazard pointer slot and proves the smp_mb(), is
-> enough for now.
->
-> [1]: M. M. Michael, "Hazard pointers: safe memory reclamation for
->       lock-free objects," in IEEE Transactions on Parallel and
->       Distributed Systems, vol. 15, no. 6, pp. 491-504, June 2004
->
-> Link: https://lore.kernel.org/lkml/20240917143402.930114-1-boqun.feng@gmail.com/ [2]
-> Signed-off-by: Boqun Feng <boqun.feng@gmail.com>
-> ---
->   include/linux/shazptr.h  | 73 ++++++++++++++++++++++++++++++++++++++++
->   kernel/locking/Makefile  |  2 +-
->   kernel/locking/shazptr.c | 29 ++++++++++++++++
->   3 files changed, 103 insertions(+), 1 deletion(-)
->   create mode 100644 include/linux/shazptr.h
->   create mode 100644 kernel/locking/shazptr.c
->
-> diff --git a/include/linux/shazptr.h b/include/linux/shazptr.h
-> new file mode 100644
-> index 000000000000..287cd04b4be9
-> --- /dev/null
-> +++ b/include/linux/shazptr.h
-> @@ -0,0 +1,73 @@
-> +/* SPDX-License-Identifier: GPL-2.0 */
-> +/*
-> + * Simple hazard pointers
-> + *
-> + * Copyright (c) 2025, Microsoft Corporation.
-> + *
-> + * Author: Boqun Feng <boqun.feng@gmail.com>
-> + *
-> + * A simple variant of hazard pointers, the users must ensure the preemption
-> + * is already disabled when calling a shazptr_acquire() to protect an address.
-> + * If one shazptr_acquire() is called after another shazptr_acquire() has been
-> + * called without the corresponding shazptr_clear() has been called, the later
-> + * shazptr_acquire() must be cleared first.
-> + *
-> + * The most suitable usage is when only one address need to be protected in a
-> + * preemption disabled critical section.
-> + */
-> +
-> +#ifndef _LINUX_SHAZPTR_H
-> +#define _LINUX_SHAZPTR_H
-> +
-> +#include <linux/cleanup.h>
-> +#include <linux/percpu.h>
-> +
-> +/* Make ULONG_MAX the wildcard value */
-> +#define SHAZPTR_WILDCARD ((void *)(ULONG_MAX))
-> +
-> +DECLARE_PER_CPU_SHARED_ALIGNED(void *, shazptr_slots);
-> +
-> +/* Represent a held hazard pointer slot */
-> +struct shazptr_guard {
-> +	void **slot;
-> +	bool use_wildcard;
-> +};
-> +
-> +/*
-> + * Acquire a hazptr slot and begin the hazard pointer critical section.
-> + *
-> + * Must be called with preemption disabled, and preemption must remain disabled
-> + * until shazptr_clear().
-> + */
-> +static inline struct shazptr_guard shazptr_acquire(void *ptr)
-> +{
-> +	struct shazptr_guard guard = {
-> +		/* Preemption is disabled. */
-> +		.slot = this_cpu_ptr(&shazptr_slots),
-> +		.use_wildcard = false,
-> +	};
-> +
-> +	if (likely(!READ_ONCE(*guard.slot))) {
-> +		WRITE_ONCE(*guard.slot, ptr);
-> +	} else {
-> +		guard.use_wildcard = true;
-> +		WRITE_ONCE(*guard.slot, SHAZPTR_WILDCARD);
-> +	}
-Is it correct to assume that shazptr cannot be used in a mixed context 
-environment on the same CPU like a task context and an interrupt context 
-trying to acquire it simultaneously because the current check isn't 
-atomic with respect to that?
-> +
-> +	smp_mb(); /* Synchronize with smp_mb() at synchronize_shazptr(). */
-> +
-> +	return guard;
-> +}
-> +
-> +static inline void shazptr_clear(struct shazptr_guard guard)
-> +{
-> +	/* Only clear the slot when the outermost guard is released */
-> +	if (likely(!guard.use_wildcard))
-> +		smp_store_release(guard.slot, NULL); /* Pair with ACQUIRE at synchronize_shazptr() */
-> +}
+It's similar to why rcu_read_lock() can be just a non-atomic inc.
 
-Is it better to name it shazptr_release() to be conformant with our 
-current locking convention?
+> > +
+> > +	smp_mb(); /* Synchronize with smp_mb() at synchronize_shazptr(). */
+> > +
+> > +	return guard;
+> > +}
+> > +
+> > +static inline void shazptr_clear(struct shazptr_guard guard)
+> > +{
+> > +	/* Only clear the slot when the outermost guard is released */
+> > +	if (likely(!guard.use_wildcard))
+> > +		smp_store_release(guard.slot, NULL); /* Pair with ACQUIRE at synchronize_shazptr() */
+> > +}
+> 
+> Is it better to name it shazptr_release() to be conformant with our current
+> locking convention?
+> 
 
-Cheers,
-Longman
+Maybe, but I will need to think about slot reusing between
+shazptr_acquire() and shazptr_release(), in the general hazptr API,
+you can hazptr_alloc() a slot, use it and hazptr_clear() and then
+use it again, eventually hazptr_free(). I would like to keep both hazptr
+APIs consistent as well. Thanks!
 
+Regards,
+Boqun
+
+> Cheers,
+> Longman
+> 

@@ -1,72 +1,72 @@
-Received: from mail-qk1-f173.google.com (mail-qk1-f173.google.com [209.85.222.173])
+Received: from mail-qk1-f176.google.com (mail-qk1-f176.google.com [209.85.222.176])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F290A1DE4F1
-	for <lkmm@lists.linux.dev>; Wed, 25 Jun 2025 03:11:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CFA41DF99C
+	for <lkmm@lists.linux.dev>; Wed, 25 Jun 2025 03:11:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750821092; cv=none; b=SsPhCm3ZvBCb5LSvd2YdwBie1q+NfTaRTZzotf/0tj1iW6llGnyYS9ozjU7TMLLUgQxFKufocdbu/c+01DPJNEvD8nbf6qBxm6qxAgMJlQFgyfOi4H+CTmYGH6aHHRYa2NEPYMWe7RTpksK5RxcZ9n2jZ5oU4msadJttuiasoj8=
+	t=1750821094; cv=none; b=S50A0YOTGwfnun4pKNI0djfvh9JG5yNjyVZwzm0QIfl0dLgUmDW0PBSkR2ZCevpVYVG7vo5+KA5uBlQYrcBRcJwRsxZ0CaWi+n6kdVlH9OwPYL1rThmNUZXjrX0DiOEGmef1I3EABTwJGNO/nqMQUVj8T0ZLNMQp5aVcg+rItIs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750821092; c=relaxed/simple;
-	bh=TZOtCUxplLpVZwlulyF2AdR7IutlsKFrx5aA44BpK6Q=;
+	s=arc-20240116; t=1750821094; c=relaxed/simple;
+	bh=sxyTkmClYKCx2KAlJR1DYraQKkP+bsD2bxeiep/d0Nw=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=ILwfSoZpWY8Ykk7P3WtQmfwyDa92QOyvl5e70vq99ZsYdWvu/V4ke7KAv1qAA6fOom6F/b67oYREforyOoNf98pckgeneDvuYDugBs8tqlQsVbDYNbGtxg/s+LV/Q60UT4onA8ELC5niB/XXbv/zWquFzhSCNaVkB4M+49eVz8Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Dojuspiz; arc=none smtp.client-ip=209.85.222.173
+	 MIME-Version; b=Q/qyxvDIfV84gV0PC3P15SyfHW8jv8uYxem0kCpcCdgEjHCwFrNjy0X3SjaF/ZVivUazbHx6+JtjJm86ZSfcpwTp/o0hlc9iZuMWTtpRszpSXOlVAZkpg+6VWPqwiv+riwWDtMK9/8V7KjOWBscZfJHV1w47M8dhOvH9xqbjthk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=CYclxul6; arc=none smtp.client-ip=209.85.222.176
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Dojuspiz"
-Received: by mail-qk1-f173.google.com with SMTP id af79cd13be357-7d3862646eeso398543185a.2
-        for <lkmm@lists.linux.dev>; Tue, 24 Jun 2025 20:11:30 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CYclxul6"
+Received: by mail-qk1-f176.google.com with SMTP id af79cd13be357-7d41cd4114aso167868085a.2
+        for <lkmm@lists.linux.dev>; Tue, 24 Jun 2025 20:11:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1750821090; x=1751425890; darn=lists.linux.dev;
+        d=gmail.com; s=20230601; t=1750821091; x=1751425891; darn=lists.linux.dev;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:feedback-id:from:to:cc:subject
          :date:message-id:reply-to;
-        bh=qhQXR4q/1FKoBNWknRJmtYgN/63wc+pb7z14qfrzMOI=;
-        b=Dojuspiz+xLx9zRCG6NhNT17o2dwKUzhWAnRN6GO4IABxfxzl1ipgZyuU420JkPWlV
-         vS3bu5tc8fq35YFRTnoBiZrpCapu1RMi2wqUMocwR6lcuO7joWsrHh7FIXgEG4QGKAnz
-         eqisc6IU/DxT3uXPXzVHcDlPD9nTTzYRwC8epl7tIq3Uy02MujEFTTxDa8pVapf4ASGA
-         n6XKy3bfuol3kArvVn8/hFrU0dg4kW0c0mLlfa+VGWgs7WrXiw+jW5jAObIK2hYLTb81
-         exKLRIS8MGqBouISp+8F3DEMe2WeKkM70olQpdylp514+WoNxf28s6n+k3QJyI+EhqyO
-         zOLg==
+        bh=w/jmQRtJolvJ8MRtLxIpfpnxQl5ZuerDrjfqxOk6x7w=;
+        b=CYclxul6BS/VWV3ARFz1f5cvtyn9rld3XKDOXYzJgfYAYkY8j+yrur/qVPn6dP2Tgc
+         1k1rS08BWagUbTOyzpM6el20oZxZ5uD9SvLfZ5i3Z3NKniFqgDZneIpAFNwqpxdIKK3P
+         UnV4QEAdCt4pjiu/qB5yzlkOV7heKlDMBF21gGEpesasAeKAtFVAdR5I3HHmNdnQg0+p
+         /ta/1D1R3Ngtnp3fZk6gpZserm5UJF+4V7T9CJ4vQQ30MhOZ0RgxGcrLtr4dQN7xyX1b
+         Pq3lKZe3qbJa5WL2NvgQnRm0BiRmWKQviE7XGuUbTWBZrsNsEV4qymlUP1ms6wWRObyo
+         l5CA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1750821090; x=1751425890;
+        d=1e100.net; s=20230601; t=1750821091; x=1751425891;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:feedback-id:x-gm-message-state
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=qhQXR4q/1FKoBNWknRJmtYgN/63wc+pb7z14qfrzMOI=;
-        b=W7a7Tgp4Jrbx3U+LNhNJDRN2A/NutbMnn1yxYUmDTvVRAzGhG2PaDEem00cKCm0sdb
-         b7OQ3AuQMPvbc3W/OrK9uDBc0cmOpVvB4Ll5LYFPkhJqCQv1Sw7xasH0fx8cRceJdB3d
-         Q1nBXqjBauZcjLCy5fF5INitiCFv46aW9BVrszRRihoxkTkG9aej7CoMoAYoIHAdoHOa
-         N0GOz2V2wL09ICBDgAIrh+q6wW8v+9qWs2KOyD/+R+d9/Z/sThP1s0KnxmUeHk8Zyqja
-         z0a/eI7NfJPHA1naZEb0eNELrlPUy8x57hVQX1aPK5CIFgkVGY8Hyxk4+X+aJajdLst0
-         hmAQ==
-X-Forwarded-Encrypted: i=1; AJvYcCXWA/MK+RZR07+09wS+OCECOvNlla3pOAidTmjA/C6k5DT0cddjgXHqQ81f3iklqJ1TfpxP@lists.linux.dev
-X-Gm-Message-State: AOJu0Yw1Xs9m12kyu9/8aJ3HnGpMl3XaF6PPmO6nP3wSffhtyTTvU/aD
-	7gWc6P6zG8hHdfMae/R+nER0Md36yI2Yijw4t8rPxm7KxllAEVqy4szR+BDQAA==
-X-Gm-Gg: ASbGncvlYEZEq8WPh0qeBQ5Sn9+G2rb+osLh3jiFu7ZqlDRKOKpG7qfkZIPEHibJRfx
-	IP4GCJq/idVN6kn4hTU7EYj0LpzKMYCgeeLj2AcrsoU9BJpxu6itrCRBY6CUhhcoakQ7F73xRbF
-	E8Hkj+/pAm7P6v5sGwInJdICN7S/dWtUpBVe5kCyd6qYcpLnFEOi3C4AtYKCOrVpT+mz4guoDzg
-	zp4U3hc7MQIRU3QGxaLfs63oG6shjNQlXL1YHCXvsPizdHigWd7oacIBmFGNCN9mXHsZlDovWS/
-	JAzAAIy3EIzijpj3zg+x6lfPRSemrA2bUfFOrLgWIZqnuw4leQXZxTmtdr82Sduk+LBSOWUGFjA
-	pBKKJMyNvT8gTkaUx5miOpz1ub2NZbVpAXkUKS2QiritrYqOvrCKc
-X-Google-Smtp-Source: AGHT+IEcTWAIOOFSCQca6pLktm0oe2Iu3mQqxK8tubUlzRS0uHFLS6o5cXHt4DbBg4x47R2Z4s8MFw==
-X-Received: by 2002:a05:620a:6a14:b0:7d4:29ea:a9a7 with SMTP id af79cd13be357-7d429eaaaf9mr113733385a.49.1750821089756;
-        Tue, 24 Jun 2025 20:11:29 -0700 (PDT)
+        bh=w/jmQRtJolvJ8MRtLxIpfpnxQl5ZuerDrjfqxOk6x7w=;
+        b=SrbW3pSl/vGOAXUHyZy5FS27oZVmCIcOFLb3oWzpNiqA1G6o6IF9pRjwUtGq2QyB+7
+         KCL5eJpnxEL/pEioLCxvBp4FxDmBVg18LQhS/3yoMzFiFfXkGfx0q/0f9i77SJ/pjKXu
+         TTxgym79cr9iw98ZLePNXq2PSIvbZEbC347KM4iCVP453ql0AJeS9g7xJc0WTn5LrHXA
+         j64LuAbSCVtKk0oB3b9+oLMpd0eCKRkex9BrlJFOb8uzqobCvUo6RvR75h2tFFEtRRiF
+         EUqXqTpgQKDPEboR3b2H+8hTv+MOO7uulZBijiazUkalTeBHHiLG4q/y/Q9suJGBLoWh
+         SChQ==
+X-Forwarded-Encrypted: i=1; AJvYcCVG0Bzsm4KnDqICinU241PT+miRSJh/kTfl2TSoG9db3+P8sNliZG/FQFaxkV7OLXcZFlOH@lists.linux.dev
+X-Gm-Message-State: AOJu0Yzmcue7dDo80aAwLZ6hBViaD2ED4sjmhEprcBkxGCwqgIs/iWeB
+	LVp5sOEUZW1l06MSMtv+MJ1zPXXKIp0S06CDtZaTDXJMAwjRehob7hJ/
+X-Gm-Gg: ASbGncsAp87KB/QpmJOAMdtaD+J0pO3rLKJv3JG2mXjtar75w3q5+uATaKyP0Cd8Omz
+	x8nFnHszwM8W9vNRJ5igkKTcddNyEEybmsBw1xGw+PuvnU5qYp9hMCvSnrBR3OIH71NU2P6MJwl
+	CPCDTAwXmG/nnoyiiMgOyg0fkYIsPhjPLVZL6J6tnfECsdzJUI7iPYDFInLx5dxBB2Q6UoV3HzA
+	ErEw1+0E6+o4fNK8kOoBeUyu98wq/DYNKmbOtHcnRvsLkwfkJlbGVADSOCmQ+x58E4Zi89zYxBC
+	9+wIzY4tFyVLUZQOeQtJObAD0k2bWXBxWX9IrmKdqlZO0XCWWRG2Et6AE0883aURup/XTxe9f43
+	1efyV4KgFYf1Wbx/3r6AQlB+N9K3wXY4byaiU3mTWDlE+Ox0rYW1e
+X-Google-Smtp-Source: AGHT+IFVRwKccPAflt2V1XXD1Q8zsrzo7w5VtHeTyKZceopLjwAcJzQGavaQnodNpvUONHM1DDrC7Q==
+X-Received: by 2002:a05:620a:2916:b0:7cf:159:9aea with SMTP id af79cd13be357-7d4296ca04bmr190876685a.2.1750821091010;
+        Tue, 24 Jun 2025 20:11:31 -0700 (PDT)
 Received: from fauth-a1-smtp.messagingengine.com (fauth-a1-smtp.messagingengine.com. [103.168.172.200])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-7d3f999a5a8sm566908585a.18.2025.06.24.20.11.28
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-6fd167ff184sm52004366d6.43.2025.06.24.20.11.30
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 24 Jun 2025 20:11:29 -0700 (PDT)
+        Tue, 24 Jun 2025 20:11:30 -0700 (PDT)
 Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
-	by mailfauth.phl.internal (Postfix) with ESMTP id C0A4CF40066;
-	Tue, 24 Jun 2025 23:11:28 -0400 (EDT)
+	by mailfauth.phl.internal (Postfix) with ESMTP id 0FAF7F40066;
+	Tue, 24 Jun 2025 23:11:30 -0400 (EDT)
 Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-06.internal (MEProxy); Tue, 24 Jun 2025 23:11:28 -0400
-X-ME-Sender: <xms:4GhbaAshV837yyRgI5hdabuiYaKWvA_nvNFJmqlobWwl9tCokX65oQ>
-    <xme:4GhbaNcP4_0MOtrRqIOpydv_z6G1DehWZSwA_E7IyC_VU1rMh5P7fISi6SulWE1gL
-    C7oHH4DuKDtq8Ff1w>
-X-ME-Received: <xmr:4GhbaLxAfR0ZZalGGBpcGRV4qqXUHimwSKdWEhMQm3JywMO3OufFpHlLaw>
+  by phl-compute-06.internal (MEProxy); Tue, 24 Jun 2025 23:11:30 -0400
+X-ME-Sender: <xms:4WhbaN1dh-h06R-SU3a5PE7gX5AxFjRHQLUf6xKvQ4HAnkArXyeCYQ>
+    <xme:4WhbaEGhqRXSPNvbfnU_Mp0eSpXLW-49qiQriFXrOiKlhbk7zuodgl_wfkQaMrsSO
+    PxLQqWNy0ocjjfeBQ>
+X-ME-Received: <xmr:4WhbaN5mZp3zhhKpyr_uJlW34wmF2Gjq5PwZO_iDPx6p4yeiyFKX-sSisA>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddvgddvudeiiecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
     ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
@@ -84,14 +84,14 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddvgddvudeiiecutefuodetgg
     rhgtphhtthhopeifihhllheskhgvrhhnvghlrdhorhhgpdhrtghpthhtohepsghoqhhunh
     drfhgvnhhgsehgmhgrihhlrdgtohhmpdhrtghpthhtoheplhhonhhgmhgrnhesrhgvughh
     rghtrdgtohhmpdhrtghpthhtohepuggrvhgvsehsthhgohhlrggsshdrnhgvth
-X-ME-Proxy: <xmx:4GhbaDPksBCZcfdzklDTbpZCJJfDMAodPdwNrA9nvfTPNMrgytKeAA>
-    <xmx:4GhbaA_Ant31p09B8hgfPf0aE9RYp-hJtzjb3JXqA1QcSfQkrCNuRw>
-    <xmx:4GhbaLXc341HcEi4epQd4K-xNuxskJhw1xwNpW_hlXmW-SzKcGhj1A>
-    <xmx:4GhbaJcoFWjVIYzOt-i0ZLYUK2hz0XxL6EEBVKPrSY1_wUXMhbkZ2g>
-    <xmx:4GhbaCe_XrlQZGP6mDaJ2vhS0NlJc_kteqtLcHRvcqiw4W34gkl9CZN1>
+X-ME-Proxy: <xmx:4WhbaK2skKI-2MKOA5gqwpAC-ON425xF9k29PiYf6sHg1nddyk6I-A>
+    <xmx:4WhbaAG4fKTjtsp2aTLxMmsF5ht-YurZXKT7rmqOPvpMEibLRsCMjQ>
+    <xmx:4WhbaL_aPRYxzNznPVI2bLLJS91_poAkyPzCIiC-dIMgwcSEHxck9w>
+    <xmx:4WhbaNlOj8eXT5vSOnCIx-_cEyfILvf7Omn900FTrFJXkw_A8z8JCg>
+    <xmx:4mhbaEFVmJ9tZ29Nzc96Tk8OCu0QcmIUp3or0LauR8Xn0c9SGhfY6_UN>
 Feedback-ID: iad51458e:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 24 Jun 2025 23:11:28 -0400 (EDT)
+ 24 Jun 2025 23:11:29 -0400 (EDT)
 From: Boqun Feng <boqun.feng@gmail.com>
 To: linux-kernel@vger.kernel.org,
 	rcu@vger.kernel.org,
@@ -119,9 +119,9 @@ Cc: Peter Zijlstra <peterz@infradead.org>,
 	jhs@mojatatu.com,
 	kernel-team@meta.com,
 	Erik Lundgren <elundgren@meta.com>
-Subject: [PATCH 3/8] shazptr: Add refscale test for wildcard
-Date: Tue, 24 Jun 2025 20:10:56 -0700
-Message-Id: <20250625031101.12555-4-boqun.feng@gmail.com>
+Subject: [PATCH 4/8] shazptr: Avoid synchronize_shaptr() busy waiting
+Date: Tue, 24 Jun 2025 20:10:57 -0700
+Message-Id: <20250625031101.12555-5-boqun.feng@gmail.com>
 X-Mailer: git-send-email 2.39.5 (Apple Git-154)
 In-Reply-To: <20250625031101.12555-1-boqun.feng@gmail.com>
 References: <20250625031101.12555-1-boqun.feng@gmail.com>
@@ -133,73 +133,330 @@ List-Unsubscribe: <mailto:lkmm+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Add the refscale test for shazptr, which starts another shazptr critical
-section inside an existing one to measure the reader side performance
-when wildcard logic is triggered.
+For a general purpose hazard pointers implemenation, always busy waiting
+is not an option. It may benefit some special workload, but overall it
+hurts the system performance when more and more users begin to call
+synchronize_shazptr(). Therefore avoid busy waiting for hazard pointer
+slots changes by using a scan kthread, and each synchronize_shazptr()
+queues themselves if a quick scan shows they are blocked by some slots.
+
+A simple optimization is done inside the scan: each
+synchronize_shazptr() tracks which CPUs (or CPU groups if nr_cpu_ids >
+BITS_PER_LONG) are blocking it and the scan function updates this
+information for each synchronize_shazptr() (via shazptr_wait)
+individually. In this way, synchronize_shazptr() doesn't need to wait
+until a scan result showing all slots are not blocking (as long as the
+scan has observed each slot has changed into non-block state once).
 
 Signed-off-by: Boqun Feng <boqun.feng@gmail.com>
 ---
- kernel/rcu/refscale.c | 40 +++++++++++++++++++++++++++++++++++++++-
- 1 file changed, 39 insertions(+), 1 deletion(-)
+ kernel/locking/shazptr.c | 277 ++++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 276 insertions(+), 1 deletion(-)
 
-diff --git a/kernel/rcu/refscale.c b/kernel/rcu/refscale.c
-index 154520e4ee4c..fdbb4a2c91fe 100644
---- a/kernel/rcu/refscale.c
-+++ b/kernel/rcu/refscale.c
-@@ -928,6 +928,44 @@ static const struct ref_scale_ops shazptr_ops = {
- 	.name		= "shazptr"
- };
+diff --git a/kernel/locking/shazptr.c b/kernel/locking/shazptr.c
+index 991fd1a05cfd..a8559cb559f8 100644
+--- a/kernel/locking/shazptr.c
++++ b/kernel/locking/shazptr.c
+@@ -7,18 +7,243 @@
+  * Author: Boqun Feng <boqun.feng@gmail.com>
+  */
  
-+static void ref_shazptr_wc_read_section(const int nloops)
-+{
-+	int i;
++#define pr_fmt(fmt) "shazptr: " fmt
 +
-+	for (i = nloops; i >= 0; i--) {
-+		preempt_disable();
-+		{
-+			guard(shazptr)(ref_shazptr_read_section);
-+			/* Trigger wildcard logic */
-+			guard(shazptr)(ref_shazptr_wc_read_section);
-+		}
-+		preempt_enable();
-+	}
-+}
-+
-+static void ref_shazptr_wc_delay_section(const int nloops, const int udl, const int ndl)
-+{
-+	int i;
-+
-+	for (i = nloops; i >= 0; i--) {
-+		preempt_disable();
-+		{
-+			guard(shazptr)(ref_shazptr_delay_section);
-+			/* Trigger wildcard logic */
-+			guard(shazptr)(ref_shazptr_wc_delay_section);
-+			un_delay(udl, ndl);
-+		}
-+		preempt_enable();
-+	}
-+}
-+
-+static const struct ref_scale_ops shazptr_wildcard_ops = {
-+	.init		= ref_shazptr_init,
-+	.readsection	= ref_shazptr_wc_read_section,
-+	.delaysection	= ref_shazptr_wc_delay_section,
-+	.name		= "shazptr_wildcard"
+ #include <linux/atomic.h>
+ #include <linux/cpumask.h>
++#include <linux/completion.h>
++#include <linux/kthread.h>
++#include <linux/list.h>
++#include <linux/mutex.h>
+ #include <linux/shazptr.h>
++#include <linux/slab.h>
++#include <linux/sort.h>
+ 
+ DEFINE_PER_CPU_SHARED_ALIGNED(void *, shazptr_slots);
+ EXPORT_PER_CPU_SYMBOL_GPL(shazptr_slots);
+ 
+-void synchronize_shazptr(void *ptr)
++/* Wait structure for synchronize_shazptr(). */
++struct shazptr_wait {
++	struct list_head list;
++	/* Which groups of CPUs are blocking. */
++	unsigned long blocking_grp_mask;
++	void *ptr;
++	struct completion done;
 +};
 +
- static void rcu_scale_one_reader(void)
++/* Snapshot for hazptr slot. */
++struct shazptr_snapshot {
++	unsigned long ptr;
++	unsigned long grp_mask;
++};
++
++static inline int
++shazptr_snapshot_cmp(const void *a, const void *b)
++{
++	const struct shazptr_snapshot *snap_a = (struct shazptr_snapshot *)a;
++	const struct shazptr_snapshot *snap_b = (struct shazptr_snapshot *)b;
++
++	if (snap_a->ptr > snap_b->ptr)
++		return 1;
++	else if (snap_a->ptr < snap_b->ptr)
++		return -1;
++	else
++		return 0;
++}
++
++/* *In-place* merge @n together based on ->ptr and accumulate the >grp_mask. */
++static int shazptr_snapshot_merge(struct shazptr_snapshot *snaps, int n)
++{
++	int new, i;
++
++	/* Sort first. */
++	sort(snaps, n, sizeof(*snaps), shazptr_snapshot_cmp, NULL);
++
++	new = 0;
++
++	/* Skip NULLs. */
++	for (i = 0; i < n; i++) {
++		if (snaps[i].ptr)
++			break;
++	}
++
++	while (i < n) {
++		/* Start with a new address. */
++		snaps[new] = snaps[i];
++
++		for (; i < n; i++) {
++			/* Merge if the next one has the same address. */
++			if (snaps[new].ptr == snaps[i].ptr) {
++				snaps[new].grp_mask |= snaps[i].grp_mask;
++			} else
++				break;
++		}
++
++		/*
++		 * Either the end has been reached or need to start with a new
++		 * record.
++		 */
++		new++;
++	}
++
++	return new;
++}
++
++/*
++ * Calculate which group is still blocking @ptr, this assumes the @snaps is
++ * already merged.
++ */
++static unsigned long
++shazptr_snapshot_blocking_grp_mask(struct shazptr_snapshot *snaps,
++				   int n, void *ptr)
++{
++	unsigned long mask = 0;
++
++	if (!n)
++		return mask;
++	else if (snaps[n-1].ptr == (unsigned long)SHAZPTR_WILDCARD) {
++		/*
++		 * Take SHAZPTR_WILDCARD slots, which is ULONG_MAX, into
++		 * consideration if any.
++		 */
++		mask = snaps[n-1].grp_mask;
++	}
++
++	/* TODO: binary search if n is big. */
++	for (int i = 0; i < n; i++) {
++		if (snaps[i].ptr == (unsigned long)ptr) {
++			mask |= snaps[i].grp_mask;
++			break;
++		}
++	}
++
++	return mask;
++}
++
++/* Scan structure for synchronize_shazptr(). */
++struct shazptr_scan {
++	/* The scan kthread */
++	struct task_struct *thread;
++
++	/* Wait queue for the scan kthread */
++	struct swait_queue_head wq;
++
++	/* Whether the scan kthread has been scheduled to scan */
++	bool scheduled;
++
++	/* The lock protecting ->queued and ->scheduled */
++	struct mutex lock;
++
++	/* List of queued synchronize_shazptr() request. */
++	struct list_head queued;
++
++	int cpu_grp_size;
++
++	/* List of scanning synchronize_shazptr() request. */
++	struct list_head scanning;
++
++	/* Buffer used for hazptr slot scan, nr_cpu_ids slots*/
++	struct shazptr_snapshot* snaps;
++};
++
++static struct shazptr_scan shazptr_scan;
++
++static void shazptr_do_scan(struct shazptr_scan *scan)
++{
++	int cpu;
++	int snaps_len;
++	struct shazptr_wait *curr, *next;
++
++	scoped_guard(mutex, &scan->lock) {
++		/* Move from ->queued to ->scanning. */
++		list_splice_tail_init(&scan->queued, &scan->scanning);
++	}
++
++	memset(scan->snaps, nr_cpu_ids, sizeof(struct shazptr_snapshot));
++
++	for_each_possible_cpu(cpu) {
++		void **slot = per_cpu_ptr(&shazptr_slots, cpu);
++		void *val;
++
++		/* Pair with smp_store_release() in shazptr_clear(). */
++		val = smp_load_acquire(slot);
++
++		scan->snaps[cpu].ptr = (unsigned long)val;
++		scan->snaps[cpu].grp_mask = 1UL << (cpu / scan->cpu_grp_size);
++	}
++
++	snaps_len = shazptr_snapshot_merge(scan->snaps, nr_cpu_ids);
++
++	/* Only one thread can access ->scanning, so can be lockless. */
++	list_for_each_entry_safe(curr, next, &scan->scanning, list) {
++		/* Accumulate the shazptr slot scan result. */
++		curr->blocking_grp_mask &=
++			shazptr_snapshot_blocking_grp_mask(scan->snaps,
++							   snaps_len,
++							   curr->ptr);
++
++		if (curr->blocking_grp_mask == 0) {
++			/* All shots are observed as not blocking once. */
++			list_del(&curr->list);
++			complete(&curr->done);
++		}
++	}
++}
++
++static int __noreturn shazptr_scan_kthread(void *unused)
++{
++	for (;;) {
++		swait_event_idle_exclusive(shazptr_scan.wq,
++					   READ_ONCE(shazptr_scan.scheduled));
++
++		shazptr_do_scan(&shazptr_scan);
++
++		scoped_guard(mutex, &shazptr_scan.lock) {
++			if (list_empty(&shazptr_scan.queued) &&
++			    list_empty(&shazptr_scan.scanning))
++				shazptr_scan.scheduled = false;
++		}
++	}
++}
++
++static int __init shazptr_scan_init(void)
++{
++	struct shazptr_scan *scan = &shazptr_scan;
++	struct task_struct *t;
++
++	init_swait_queue_head(&scan->wq);
++	mutex_init(&scan->lock);
++	INIT_LIST_HEAD(&scan->queued);
++	INIT_LIST_HEAD(&scan->scanning);
++	scan->scheduled = false;
++
++	/* Group CPUs into at most BITS_PER_LONG groups. */
++	scan->cpu_grp_size = DIV_ROUND_UP(nr_cpu_ids, BITS_PER_LONG);
++
++	scan->snaps = kcalloc(nr_cpu_ids, sizeof(scan->snaps[0]), GFP_KERNEL);
++
++	if (scan->snaps) {
++		t = kthread_run(shazptr_scan_kthread, NULL, "shazptr_scan");
++		if (!IS_ERR(t)) {
++			smp_store_release(&scan->thread, t);
++			/* Kthread creation succeeds */
++			return 0;
++		} else {
++			kfree(scan->snaps);
++		}
++	}
++
++	pr_info("Failed to create the scan thread, only busy waits\n");
++	return 0;
++}
++core_initcall(shazptr_scan_init);
++
++static void synchronize_shazptr_busywait(void *ptr)
  {
- 	if (readdelay <= 0)
-@@ -1235,7 +1273,7 @@ ref_scale_init(void)
- 		&refcnt_ops, &rwlock_ops, &rwsem_ops, &lock_ops, &lock_irq_ops,
- 		&acqrel_ops, &sched_clock_ops, &clock_ops, &jiffies_ops,
- 		&typesafe_ref_ops, &typesafe_lock_ops, &typesafe_seqlock_ops,
--		&shazptr_ops,
-+		&shazptr_ops, &shazptr_wildcard_ops,
- 	};
+ 	int cpu;
  
- 	if (!torture_init_begin(scale_type, verbose))
+ 	smp_mb(); /* Synchronize with the smp_mb() in shazptr_acquire(). */
++
+ 	for_each_possible_cpu(cpu) {
+ 		void **slot = per_cpu_ptr(&shazptr_slots, cpu);
+ 		/* Pair with smp_store_release() in shazptr_clear(). */
+@@ -26,4 +251,54 @@ void synchronize_shazptr(void *ptr)
+ 				      VAL != ptr && VAL != SHAZPTR_WILDCARD);
+ 	}
+ }
++
++static void synchronize_shazptr_normal(void *ptr)
++{
++	int cpu;
++	unsigned long blocking_grp_mask = 0;
++
++	smp_mb(); /* Synchronize with the smp_mb() in shazptr_acquire(). */
++
++	for_each_possible_cpu(cpu) {
++		void **slot = per_cpu_ptr(&shazptr_slots, cpu);
++		void *val;
++
++		/* Pair with smp_store_release() in shazptr_clear(). */
++		val = smp_load_acquire(slot);
++
++		if (val == ptr || val == SHAZPTR_WILDCARD)
++			blocking_grp_mask |= 1UL << (cpu / shazptr_scan.cpu_grp_size);
++	}
++
++	/* Found blocking slots, prepare to wait. */
++	if (blocking_grp_mask) {
++		struct shazptr_scan *scan = &shazptr_scan;
++		struct shazptr_wait wait = {
++			.blocking_grp_mask = blocking_grp_mask,
++		};
++
++		INIT_LIST_HEAD(&wait.list);
++		init_completion(&wait.done);
++
++		scoped_guard(mutex, &scan->lock) {
++			list_add_tail(&wait.list, &scan->queued);
++
++			if (!scan->scheduled) {
++				WRITE_ONCE(scan->scheduled, true);
++				swake_up_one(&shazptr_scan.wq);
++			}
++		}
++
++		wait_for_completion(&wait.done);
++	}
++}
++
++void synchronize_shazptr(void *ptr)
++{
++	/* Busy waiting if the scan kthread has not been created. */
++	if (!smp_load_acquire(&shazptr_scan.thread))
++		synchronize_shazptr_busywait(ptr);
++	else
++		synchronize_shazptr_normal(ptr);
++}
+ EXPORT_SYMBOL_GPL(synchronize_shazptr);
 -- 
 2.39.5 (Apple Git-154)
 

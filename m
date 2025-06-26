@@ -1,137 +1,99 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7ABBD25F78D;
-	Thu, 26 Jun 2025 08:13:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CEDD221FDA;
+	Thu, 26 Jun 2025 08:44:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750925637; cv=none; b=EelqM2QuVh2DlpSTj2HQnCbqOaT8q2iL2tXkBq3zPDEDr9901AV5aAAflYNmqtPE4IpuMX1OZg0ezLojGoho9XMdMHf8dsvnuDN4XkXktiE9cv8hdkGUTLq1XmmVRPOCuz/nK3YYQPXZHwfcXkVZaXQQlxYjoUIPmMpzPtEQJjw=
+	t=1750927464; cv=none; b=qfvjTZFnJ+Wuib+FcooSkbWO5w9/2vSzVfwnnkZhKOlkRgCKozDcb8B1DwKIlP3oJvB2/fkdsaDz5Z23wgWKtCnp5TUhG6SD8sEf72vonZlhDZHtIHP8d1w7QEf6akteAxUSo36B9jdW8fTKCYdfsSGR95REvqNmGO8KjWvcopk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750925637; c=relaxed/simple;
-	bh=RtMlJEGnwJcXwbx5tmVTpg7dpV3ohe25eAqzrcO2vOE=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KN0/icCD05Xbvukl1vEKGGM6PCoJbeR6e1qxX9CIV8t73Tvlu8xq4cOrCUVhCtdbuCVRq0cp/2vNpt+1rBCtpfsj40Nep4Pi/OVyUjKEMITWf2TJ+zcdWnnjPlXXjQDdGhQDrBZHGVdikvB5Co+LnKtejA5EGfKO1SSAyBfpl6U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Gf4RJEbh; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1750927464; c=relaxed/simple;
+	bh=qJllYfkWSydOQyAUEgySBOwOR32Vk67l9y6tXzeF9BA=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=M7WQOdp78eMLkg/oTIKjlgfWWzwFIh7pvBxZyKFuG/K7AOuqUHziMqsF+B33IhHfvBE01Of4ePp00gqV/kXyvXbL4n0medsE3bE8/V55fPHjipuHArfbvFusXbmoAa0K1qJQZ/rBafB6Px5mCdjGjra2c2aPIPykRwbNpy7KGtA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=eDWWOlop; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Gf4RJEbh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 517DAC4CEEF;
-	Thu, 26 Jun 2025 08:13:57 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="eDWWOlop"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F058C4CEEB;
+	Thu, 26 Jun 2025 08:44:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1750925637;
-	bh=RtMlJEGnwJcXwbx5tmVTpg7dpV3ohe25eAqzrcO2vOE=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Gf4RJEbh1bU6CjFcqFyfrh1BM6hLKCj/Ki4yBrZXB7u8EsthzzTwr8QM4uHmD0pUG
-	 YUvZc0lPp+5xUuUVjq0iQoqlWTbzQ7MP57eK221NHaxFfoW8SReKJn1HLA0E8XQo/N
-	 M9KAUnkhjyumg/HK8E6v+6aoIekQTpFC63wyuSQA39Oux9NoO5Vkl/mcOwV7aUEytO
-	 xxTenjKFlrj/2k4v0o+NLY76txtDDhhLPCw4O82PC1JIUwgo8XXDw/gZd7h1z5qOzb
-	 U26VNPcA/BBM9mVYVPo0g2nZ+Ty5faotVIMZ9guMWFk9kLaw4iQu0x1IacQKYlroBH
-	 3GOACjN+j2g7g==
-Received: from mchehab by mail.kernel.org with local (Exim 4.98.2)
-	(envelope-from <mchehab+huawei@kernel.org>)
-	id 1uUhjT-00000004svu-1oUW;
-	Thu, 26 Jun 2025 10:13:19 +0200
-From: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-To: Linux Doc Mailing List <linux-doc@vger.kernel.org>,
-	Jonathan Corbet <corbet@lwn.net>
-Cc: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
-	"Akira Yokosawa" <akiyks@gmail.com>,
-	"Breno Leitao" <leitao@debian.org>,
-	"David S. Miller" <davem@davemloft.net>,
-	"Donald Hunter" <donald.hunter@gmail.com>,
-	"Eric Dumazet" <edumazet@google.com>,
-	"Ignacio Encinas Rubio" <ignacio@iencinas.com>,
-	"Jan Stancek" <jstancek@redhat.com>,
-	"Marco Elver" <elver@google.com>,
-	"Mauro Carvalho Chehab" <mchehab+huawei@kernel.org>,
-	"Paolo Abeni" <pabeni@redhat.com>,
-	"Randy Dunlap" <rdunlap@infradead.org>,
-	"Ruben Wauters" <rubenru09@aol.com>,
-	"Shuah Khan" <skhan@linuxfoundation.org>,
-	Jakub Kicinski <mchehab+huawei@kernel.org>,
-	Simon Horman <mchehab+huawei@kernel.org>,
-	joel@joelfernandes.org,
-	linux-kernel-mentees@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	lkmm@lists.linux.dev,
-	netdev@vger.kernel.org,
-	peterz@infradead.org,
-	stern@rowland.harvard.edu
-Subject: [PATCH v8 08/13] tools: ynl_gen_rst.py: drop support for generating index files
-Date: Thu, 26 Jun 2025 10:13:04 +0200
-Message-ID: <95d1ed00026acbe425f036f860f7bcd1a18ce98b.1750925410.git.mchehab+huawei@kernel.org>
-X-Mailer: git-send-email 2.49.0
-In-Reply-To: <cover.1750925410.git.mchehab+huawei@kernel.org>
-References: <cover.1750925410.git.mchehab+huawei@kernel.org>
+	s=k20201202; t=1750927464;
+	bh=qJllYfkWSydOQyAUEgySBOwOR32Vk67l9y6tXzeF9BA=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:From;
+	b=eDWWOlopEX0odwWU7aX6iYDKgBgsKIyIc2cGgnxhF5C3ZOTe7dTJPuL3onhs0n9Wp
+	 jTX5HTxvGzTrjrq4qgF/KPe9imTHLGSs7O3Hr4NLyErCbw3DUe3gaNG3NppZWI43fn
+	 9OCzDJhCwtfXFFJ26qbgEuM1nHgK5pXuVFRGpzWtI6ItbLNYlqjUxjrBOmn90E2fAQ
+	 juiT6UloxUa0110XWprVzaQsCFmEFqbO44L+B/BGhBsREpiZkS5ZFqVdJpxpOuW9Gg
+	 wGEhllF5ZkVSZXYD+hX94lOvGYZ3lcg1SrAVl2Y8/g0LhlMA/goKDJb8vD7MzCbxI7
+	 ZqoQmph3L8bmQ==
+From: Andreas Hindborg <a.hindborg@kernel.org>
+To: "Boqun Feng" <boqun.feng@gmail.com>
+Cc: <linux-kernel@vger.kernel.org>,  <rust-for-linux@vger.kernel.org>,
+  <lkmm@lists.linux.dev>,  <linux-arch@vger.kernel.org>,  "Miguel Ojeda"
+ <ojeda@kernel.org>,  "Alex Gaynor" <alex.gaynor@gmail.com>,  "Gary Guo"
+ <gary@garyguo.net>,  =?utf-8?Q?Bj=C3=B6rn?= Roy Baron
+ <bjorn3_gh@protonmail.com>,  "Benno
+ Lossin" <lossin@kernel.org>,  "Alice Ryhl" <aliceryhl@google.com>,
+  "Trevor Gross" <tmgross@umich.edu>,  "Danilo Krummrich"
+ <dakr@kernel.org>,  "Will Deacon" <will@kernel.org>,  "Peter Zijlstra"
+ <peterz@infradead.org>,  "Mark Rutland" <mark.rutland@arm.com>,  "Wedson
+ Almeida Filho" <wedsonaf@gmail.com>,  "Viresh Kumar"
+ <viresh.kumar@linaro.org>,  "Lyude Paul" <lyude@redhat.com>,  "Ingo
+ Molnar" <mingo@kernel.org>,  "Mitchell Levy" <levymitchell0@gmail.com>,
+  "Paul E. McKenney" <paulmck@kernel.org>,  "Greg Kroah-Hartman"
+ <gregkh@linuxfoundation.org>,  "Linus Torvalds"
+ <torvalds@linux-foundation.org>,  "Thomas Gleixner" <tglx@linutronix.de>
+Subject: Re: [PATCH v5 01/10] rust: Introduce atomic API helpers
+In-Reply-To: <20250618164934.19817-2-boqun.feng@gmail.com> (Boqun Feng's
+	message of "Wed, 18 Jun 2025 09:49:25 -0700")
+References: <20250618164934.19817-1-boqun.feng@gmail.com>
+	<Uqju6u2xO_vCzY1ykGKU72OTQDzH6QgCbUFbq2e4ibAiXgKNzQRBv5IMVNEaCg9zFQpebc65KefA6rzhLNQ9xA==@protonmail.internalid>
+	<20250618164934.19817-2-boqun.feng@gmail.com>
+User-Agent: mu4e 1.12.9; emacs 30.1
+Date: Thu, 26 Jun 2025 10:44:13 +0200
+Message-ID: <87jz4y28pu.fsf@kernel.org>
 Precedence: bulk
 X-Mailing-List: lkmm@lists.linux.dev
 List-Id: <lkmm.lists.linux.dev>
 List-Subscribe: <mailto:lkmm+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:lkmm+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Sender: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+Content-Type: text/plain
 
-As we're now using an index file with a glob, there's no need
-to generate index files anymore.
+"Boqun Feng" <boqun.feng@gmail.com> writes:
 
-Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
----
- tools/net/ynl/pyynl/ynl_gen_rst.py | 28 ----------------------------
- 1 file changed, 28 deletions(-)
+> In order to support LKMM atomics in Rust, add rust_helper_* for atomic
+> APIs. These helpers ensure the implementation of LKMM atomics in Rust is
+> the same as in C. This could save the maintenance burden of having two
+> similar atomic implementations in asm.
+>
+> Originally-by: Mark Rutland <mark.rutland@arm.com>
+> Signed-off-by: Boqun Feng <boqun.feng@gmail.com>
+> ---
+>  rust/helpers/atomic.c                     | 1038 +++++++++++++++++++++
+>  rust/helpers/helpers.c                    |    1 +
+>  scripts/atomic/gen-atomics.sh             |    1 +
+>  scripts/atomic/gen-rust-atomic-helpers.sh |   65 ++
+>  4 files changed, 1105 insertions(+)
+>  create mode 100644 rust/helpers/atomic.c
+>  create mode 100755 scripts/atomic/gen-rust-atomic-helpers.sh
+>
+> diff --git a/rust/helpers/atomic.c b/rust/helpers/atomic.c
+> new file mode 100644
+> index 000000000000..00bf10887928
+> --- /dev/null
+> +++ b/rust/helpers/atomic.c
+> @@ -0,0 +1,1038 @@
+> +// SPDX-License-Identifier: GPL-2.0
+> +
+> +// Generated by scripts/atomic/gen-rust-atomic-helpers.sh
+> +// DO NOT MODIFY THIS FILE DIRECTLY
 
-diff --git a/tools/net/ynl/pyynl/ynl_gen_rst.py b/tools/net/ynl/pyynl/ynl_gen_rst.py
-index 010315fad498..90ae19aac89d 100755
---- a/tools/net/ynl/pyynl/ynl_gen_rst.py
-+++ b/tools/net/ynl/pyynl/ynl_gen_rst.py
-@@ -31,9 +31,6 @@ def parse_arguments() -> argparse.Namespace:
- 
-     # Index and input are mutually exclusive
-     group = parser.add_mutually_exclusive_group()
--    group.add_argument(
--        "-x", "--index", action="store_true", help="Generate the index page"
--    )
-     group.add_argument("-i", "--input", help="YAML file name")
- 
-     args = parser.parse_args()
-@@ -63,27 +60,6 @@ def write_to_rstfile(content: str, filename: str) -> None:
-         rst_file.write(content)
- 
- 
--def generate_main_index_rst(parser: YnlDocGenerator, output: str) -> None:
--    """Generate the `networking_spec/index` content and write to the file"""
--    lines = []
--
--    lines.append(parser.fmt.rst_header())
--    lines.append(parser.fmt.rst_label("specs"))
--    lines.append(parser.fmt.rst_title("Netlink Family Specifications"))
--    lines.append(parser.fmt.rst_toctree(1))
--
--    index_dir = os.path.dirname(output)
--    logging.debug("Looking for .rst files in %s", index_dir)
--    for filename in sorted(os.listdir(index_dir)):
--        base, ext = os.path.splitext(filename)
--        if filename == "index.rst" or ext not in [".rst", ".yaml"]:
--            continue
--        lines.append(f"   {base}\n")
--
--    logging.debug("Writing an index file at %s", output)
--    write_to_rstfile("".join(lines), output)
--
--
- def main() -> None:
-     """Main function that reads the YAML files and generates the RST files"""
- 
-@@ -102,10 +78,6 @@ def main() -> None:
- 
-         write_to_rstfile(content, args.output)
- 
--    if args.index:
--        # Generate the index RST file
--        generate_main_index_rst(parser, args.output)
--
- 
- if __name__ == "__main__":
-     main()
--- 
-2.49.0
+If this file is generated, why check it in? Can't we run the generator
+at build time?
+
+
+Best regards,
+Andreas Hindborg
+
 

@@ -1,123 +1,287 @@
-Received: from mail-wr1-f48.google.com (mail-wr1-f48.google.com [209.85.221.48])
+Received: from mail-qt1-f174.google.com (mail-qt1-f174.google.com [209.85.160.174])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BC8D2DD611;
-	Fri, 27 Jun 2025 11:05:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4496E2DD5FF
+	for <lkmm@lists.linux.dev>; Fri, 27 Jun 2025 13:53:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751022308; cv=none; b=fPEj9LL1C+0sfVVKSyJjx9jRnz7baHFO/a2HzXAQLqBvSb1Yf0YoqqJhMCrrO573sf8CH2D2R2AN6QNuY8SmQM72TTuoLDgiT56mJoWJs0bpEas5Hm87bqcshCd5FZLrFp3kAcJqTU8WEeoOrcTaPZvOngET2UklzxIV7LyHb8k=
+	t=1751032420; cv=none; b=PJ189K6O+g/QG9r4XEsjf0Fzx0zr70Uxk40ARkYWQOWHcPesKII2BhjyXxgJ26IyswIqSqtExrR80tpXW0dHmGqCSx+4u8H2NSU9DZY3KYiXgisnTwFihHDn7Rz9QwmmoJrVnIuQB+X/AO84F30/EKf6LvOPXkEvjFRPPaN684w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751022308; c=relaxed/simple;
-	bh=ppQn+qQ90LPpJSTEWumnr97tAFSmfMRRb9BDUUMwjN8=;
-	h=From:To:Cc:Subject:In-Reply-To:Date:Message-ID:References:
-	 MIME-Version:Content-Type; b=lb8gVALNZ8fg+vcgJ2vnXtadUe3tHuo/l3mSZyEC0+u3cr3tcqfO2DqQIwnmGg9/0pP5wvvSGN2ZuDgjrHSTDzIMHXSEOrvbZG4aZzkHaKUDgDvmO7D1i+tsHtUWfGVUsRpEdUWfIcxOLhJvM/41XtJwBH000lFJkCC9zjuz7Ts=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ME4KBcZD; arc=none smtp.client-ip=209.85.221.48
+	s=arc-20240116; t=1751032420; c=relaxed/simple;
+	bh=8tB5Tt+SddCBUKuuMhYJNECWuks405uefcI+g9Gv/+o=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=sXrgwyg7BiWv1ipdCfu6uBWJ6fLbcpyrPSnG5b0W0Ir/+JxZOZJXNigsgV4kBgKXGOhDDPYIjpiQeZ4mcJfw8ehp5RkD57mooMMw5d7MNq4sMqSp5PLmF2+sP7tSllyZjgpBQr5KKNiJS47kgmBmNmw03WZ8F4iTZfIqTPof7FA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=SVkWaiMi; arc=none smtp.client-ip=209.85.160.174
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ME4KBcZD"
-Received: by mail-wr1-f48.google.com with SMTP id ffacd0b85a97d-3a536ecbf6fso1174613f8f.2;
-        Fri, 27 Jun 2025 04:05:06 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SVkWaiMi"
+Received: by mail-qt1-f174.google.com with SMTP id d75a77b69052e-4a7f46f9bb6so26702661cf.3
+        for <lkmm@lists.linux.dev>; Fri, 27 Jun 2025 06:53:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1751022305; x=1751627105; darn=lists.linux.dev;
-        h=mime-version:user-agent:references:message-id:date:in-reply-to
-         :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=SNpoYqb/6Tu0KuIF/3Z4TcTfvMcxACyRbx3GldGRXxM=;
-        b=ME4KBcZD1FVwgUvIVM38FPZgowKocLSZkxaG5bWcgDUXZmnhHEfDfdPt3MyHpvNfHh
-         HzW8ufd03fwndBCjYveFuCc3zczED3yVV4OwhxLf3bJ5zlvAXfPYHnmd77uE9YZLqTc6
-         CVzHLKdfh3THfv0lDdeyvMSHwgqZuIk84mj3yA83Cflf9qtBGjQrO67/Z1oJ7Vzh1Bum
-         FBm/z3YwknItzUDdYK+A5ckjykQi0tO2dQ/unLlhBJjcJRXpo8LA2rY5OYghXFOemcIy
-         Z1wRWIth43BlKrgR09eKE1bZW3Va+ogXO6ceq9Yb9xNqUEMJuPGoEqExE0Xju4M/xJTy
-         lnZw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1751022305; x=1751627105;
-        h=mime-version:user-agent:references:message-id:date:in-reply-to
-         :subject:cc:to:from:x-gm-message-state:from:to:cc:subject:date
+        d=gmail.com; s=20230601; t=1751032417; x=1751637217; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:feedback-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=SNpoYqb/6Tu0KuIF/3Z4TcTfvMcxACyRbx3GldGRXxM=;
-        b=s11O1J4ASXn42P0QiLGUwgmDtMdIvv7hWuUCTUfqy3gw7U/S/ys2cSNsECYgcfCkI1
-         HQXDba0/J5aYk6b04cV7NXgYEEomVklvkTxNEnCvVGB+mrFwP7pXPtbTD3179t69QBiF
-         DAB+BtKl1jwvzu55QeU6wJVaOM+xcfKdVz4QAr2WfE3HChWAeErx26jewqFts2zUZoj6
-         9iSUVnMTvXezye/OjHbUBPBGaK29fkk/D5QzR9h9shJb5QthYUpyAGDZWjcivAffgSTJ
-         fkxuw4jYwJXPGUn7cOjspAGLI1YXj15qa13eg/ndMqBFF3nXLOBhEzcVJheUkNTK4yHJ
-         e02A==
-X-Forwarded-Encrypted: i=1; AJvYcCVdiGHbN3M0/PpK1ejSHR89alMWPMS/VhPzoI2ZFs8OjK1ppN5oerqPW4eEJbj390WrmZXpMQ==@lists.linux.dev, AJvYcCVrza6GQoc/ZYFEd0/pKesH7rlB4kefvTlktHvcKrzcie4rdXGjAIOn1+4NeEXxoj4/P/pudC4G2FeiLsHF/eiHDk1Omw==@lists.linux.dev
-X-Gm-Message-State: AOJu0YyKeUaj3BlIhHqmTPTDUtRjocvEPdcETnF6JEljBFi5UaCeBGjC
-	sFFMeeUL3zZjV9u9EYDh/5NsuIwmkFadyMH18eECsMScOguz9xq9crap
-X-Gm-Gg: ASbGncsLv+z7Tl70vIYTZuVVQUTD4cR43nRvJ9wjPmkJgLgvFUOqzmmXj4O7AytmH4j
-	+VncekVRd6bxbQn756sftl0Q3VvO9htKuzyELuS9YKwKz2BFJ9hqpFyFckWgvDw8rnzvLuM4KQJ
-	gHtwiFT2N5krMIrDW3hJiMCYVrRDZFlzG+H2jfCg2rGbfDkLkHF7ldmOmmV2WthndMvdi1cGRsI
-	ZkQ3vwdTjV6pw9EvrFTsxw8THXPixRUlIBABpEno4aFWEM53981NVF0XOibgwUkKlWXystNfZd1
-	CPkTxToz225gbNf1V5/bm8QI7M8/aXv2SD55PK6KF6W+firhLAFKqQGBg1UVtqKTdIRUKHvDwA=
-	=
-X-Google-Smtp-Source: AGHT+IEW+VyfbzB5QN/NRNUa99sM0LvI8L4cDy6ynoPn7Q4Ru6gR/EqZ673FUOrLyastEjFoWeHGDw==
-X-Received: by 2002:adf:9ccf:0:b0:3a5:67d5:a400 with SMTP id ffacd0b85a97d-3a8ffcc9da8mr1892347f8f.33.1751022304411;
-        Fri, 27 Jun 2025 04:05:04 -0700 (PDT)
-Received: from imac ([2a02:8010:60a0:0:40b8:18e0:8ac6:da0])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3a892e52b9esm2405966f8f.61.2025.06.27.04.05.03
+        bh=uouMimeWn3ZYuKBw0rjlLhYpQtgnBhD5z9a/AZnhU0Q=;
+        b=SVkWaiMinMfEo5TsFJWwSibWF547+2/bTvv8SgIJt8ksUhtuOeezCQWy+IrApQfBtn
+         T3+o6HfR5gO3iYC6iKV2TB69gQL2ztu2PxoIGXyqiTo1a3oziQ9i9soVPYmHj2DjXf1L
+         ESWPbxLtVfLNX0KhlTFYLPkSCCyPHGFZCm/hdILx7T3RAG3FfK5+zQa+2BXc61EBf5DA
+         1SE2i9S9j8A0AFRQOpB3Y09cRJIwKIh1bFG7BeQpnji2FW6Eg8+426o3groERVJUBHO2
+         1pcaU9v2IIGL0AB3xO6dut35SHyRMsH5oAF1lwZC5ZE+w8Pe1wSqbUdwcAn1No+XxgsJ
+         R1Cw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1751032417; x=1751637217;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:feedback-id:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=uouMimeWn3ZYuKBw0rjlLhYpQtgnBhD5z9a/AZnhU0Q=;
+        b=KOfukotHiJXbazExJCkG+Ikx8wwSRsKJc8wxorz6aqY/WlD+JznxbRWb/JohyxT7GF
+         P8wb6QdV1aEHl2u6klM91x+YYn83Wfu/E/dEh7yANgp2apIwxJmscUBq03omoBJfDIQc
+         devukGYm6VVDyPmZYFlckujlE41YFcOwa0Flt+feTTTsSqBQydKKm0gDmgF10UGa4qMS
+         dh8iRGJniw02Hleci8v3KPH0F8EM0EFxvNb43fieggLdWkC6ybkrNu0aDDA0s2AY4lgQ
+         lFWHTXHPLFzT6Zkd1tF10j+ur7KpqY3JQdP+osUccOWygA9+eni9PncvVJqlyOP2GoEc
+         PUUQ==
+X-Forwarded-Encrypted: i=1; AJvYcCVJGk/eTTjy5vCrtJD4eFUADsuGzfjMUmLT77jklgwBKuf6MdWsYyQUV8Pr1LtOXudMMfTy@lists.linux.dev
+X-Gm-Message-State: AOJu0YxAciw39Q+MVqr88XRLcFnE+LiOrB+LVP/3PaEvnFUX8XFRM3wM
+	pHdhmwT+ZKukhsoRnp7J5J8XK8jGMjzjzJRBlz8aCQIAELbYmC0+49gt
+X-Gm-Gg: ASbGncuWb9l9VhksOhXHHyORdKa422acm36OVQHDMtErYnZodMWBM3IQ/tlTa1dqAE9
+	aVZWt3ekzCBdWcc4RvYWDsQ0BfKydfFOl2BC8wLmxt37iifGl3PkL7IkJUMT1gpT9AzUNr5RDIc
+	biWyHAutKsR46e5daDcqBTHyEDHMjL5LGg3ZYfY8DVvzzA8n3g+f5Ny/DvYzglTeoFggYo3oTMv
+	2C49P+N6ey9+o1Y/eUMuR6R2VXt+Uu1m1A32XhFgwtZn94wVtbNc2ha+p8pCNYDyxniTrSGadX5
+	tPbz6+mSZpn7zXq3Ut7TOPT/G/a3dBaCujWu3uDlT1c8xT6jtotPVaP171VWP/h5E6zndcNcCmy
+	x4g5YKKihPBL2b7Cyc+OLkbbiPwnCJGknEKBdnhrY2XWSoxwM7Gb5
+X-Google-Smtp-Source: AGHT+IFB5RPz7AavPYxnvUdQV0GTPoXzInj8vBq+TaGKAoDyNUISq/13GFMrDrtRPxv8yQgsf/UAoA==
+X-Received: by 2002:a05:622a:1b8f:b0:4a7:f683:9749 with SMTP id d75a77b69052e-4a7fcacff9emr61351051cf.30.1751032416813;
+        Fri, 27 Jun 2025 06:53:36 -0700 (PDT)
+Received: from fauth-a2-smtp.messagingengine.com (fauth-a2-smtp.messagingengine.com. [103.168.172.201])
+        by smtp.gmail.com with ESMTPSA id d75a77b69052e-4a7fc1061d3sm12664251cf.15.2025.06.27.06.53.35
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 27 Jun 2025 04:05:04 -0700 (PDT)
-From: Donald Hunter <donald.hunter@gmail.com>
-To: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-Cc: Linux Doc Mailing List <linux-doc@vger.kernel.org>,  Jonathan Corbet
- <corbet@lwn.net>,  "Akira Yokosawa" <akiyks@gmail.com>,  "Breno Leitao"
- <leitao@debian.org>,  "David S. Miller" <davem@davemloft.net>,  "Eric
- Dumazet" <edumazet@google.com>,  "Ignacio Encinas Rubio"
- <ignacio@iencinas.com>,  "Jan Stancek" <jstancek@redhat.com>,  "Marco
- Elver" <elver@google.com>,  "Paolo Abeni" <pabeni@redhat.com>,  "Randy
- Dunlap" <rdunlap@infradead.org>,  "Ruben Wauters" <rubenru09@aol.com>,
-  "Shuah Khan" <skhan@linuxfoundation.org>,  joel@joelfernandes.org,
-  linux-kernel-mentees@lists.linux.dev,  linux-kernel@vger.kernel.org,
-  lkmm@lists.linux.dev,  netdev@vger.kernel.org,  peterz@infradead.org,
-  stern@rowland.harvard.edu
-Subject: Re: [PATCH v8 11/13] tools: netlink_yml_parser.py: add line numbers
- to parsed data
-In-Reply-To: <549be41405b5ddb6b78ead71f26c33fd6ce8e190.1750925410.git.mchehab+huawei@kernel.org>
-Date: Fri, 27 Jun 2025 12:03:07 +0100
-Message-ID: <m2bjq98n10.fsf@gmail.com>
-References: <cover.1750925410.git.mchehab+huawei@kernel.org>
-	<549be41405b5ddb6b78ead71f26c33fd6ce8e190.1750925410.git.mchehab+huawei@kernel.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+        Fri, 27 Jun 2025 06:53:36 -0700 (PDT)
+Received: from phl-compute-02.internal (phl-compute-02.phl.internal [10.202.2.42])
+	by mailfauth.phl.internal (Postfix) with ESMTP id 52B84F40066;
+	Fri, 27 Jun 2025 09:53:35 -0400 (EDT)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-02.internal (MEProxy); Fri, 27 Jun 2025 09:53:35 -0400
+X-ME-Sender: <xms:X6JeaHTxoa3I_5haNUJuCuDhdqS0gqX5rNd4xGZpITPIHCtjcBRtKA>
+    <xme:X6JeaIwiyONgnklVtgQedSe3iBmF3fqDjqOueL8G0BFIab4uYk3T4maCJfEIouMNO
+    C4oZEolDkepnmhjcg>
+X-ME-Received: <xmr:X6JeaM3VsANY7ZPYU55fdYt_hWX_c9bQf_ONd9Vvh3yi_1RzOxZXPhC9Ig>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdefvdefucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceurghi
+    lhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujfgurh
+    epfffhvfevuffkfhggtggujgesthdtredttddtvdenucfhrhhomhepuehoqhhunhcuhfgv
+    nhhguceosghoqhhunhdrfhgvnhhgsehgmhgrihhlrdgtohhmqeenucggtffrrghtthgvrh
+    hnpedugeetueejudegieffvdevffektefgvdfhgfekvdduffeuieduueekkeetleevleen
+    ucffohhmrghinheprhgvrgguhidrshhtohhrvgdprhgvrgguhidrtghomhhprghrvgenuc
+    evlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpegsohhquhhn
+    odhmvghsmhhtphgruhhthhhpvghrshhonhgrlhhithihqdeiledvgeehtdeigedqudejje
+    ekheehhedvqdgsohhquhhnrdhfvghngheppehgmhgrihhlrdgtohhmsehfihigmhgvrdhn
+    rghmvgdpnhgspghrtghpthhtohepvdeipdhmohguvgepshhmthhpohhuthdprhgtphhtth
+    hopehlohhsshhinheskhgvrhhnvghlrdhorhhgpdhrtghpthhtoheplhhinhhugidqkhgv
+    rhhnvghlsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtoheprhhushhtqdhfoh
+    hrqdhlihhnuhigsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtoheplhhkmhhm
+    sehlihhsthhsrdhlihhnuhigrdguvghvpdhrtghpthhtoheplhhinhhugidqrghrtghhse
+    hvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepohhjvggurgeskhgvrhhnvghl
+    rdhorhhgpdhrtghpthhtoheprghlvgigrdhgrgihnhhorhesghhmrghilhdrtghomhdprh
+    gtphhtthhopehgrghrhiesghgrrhihghhuohdrnhgvthdprhgtphhtthhopegsjhhorhhn
+    fegpghhhsehprhhothhonhhmrghilhdrtghomh
+X-ME-Proxy: <xmx:X6JeaHCiQJZ8SxvfLpk-O1IjpqLksqfNI4FqnICIg2jQe0D_yPtFfg>
+    <xmx:X6JeaAiO-SZ71Rf7y5-ZPjT8akWg9wCztqk7_qxN6iFSFQ3Xr6BIBA>
+    <xmx:X6JeaLpFIy4Lsu2G4UjMEKuCBp1oauPq7GdJzkD-czkOtbtQ2hJNMw>
+    <xmx:X6JeaLhdv1stuY4KcDbGvhX3Hqy50z03qVyk_fGc5PK94i7qTXjtcA>
+    <xmx:X6JeaDQE__zOJyV2HLRV7dRbmDuQyG6DOvQLyoicHMV1M2zUdFvrCMIu>
+Feedback-ID: iad51458e:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 27 Jun 2025 09:53:33 -0400 (EDT)
+Date: Fri, 27 Jun 2025 06:53:32 -0700
+From: Boqun Feng <boqun.feng@gmail.com>
+To: Benno Lossin <lossin@kernel.org>
+Cc: linux-kernel@vger.kernel.org, rust-for-linux@vger.kernel.org,
+	lkmm@lists.linux.dev, linux-arch@vger.kernel.org,
+	Miguel Ojeda <ojeda@kernel.org>,
+	Alex Gaynor <alex.gaynor@gmail.com>, Gary Guo <gary@garyguo.net>,
+	=?iso-8859-1?Q?Bj=F6rn?= Roy Baron <bjorn3_gh@protonmail.com>,
+	Andreas Hindborg <a.hindborg@kernel.org>,
+	Alice Ryhl <aliceryhl@google.com>, Trevor Gross <tmgross@umich.edu>,
+	Danilo Krummrich <dakr@kernel.org>, Will Deacon <will@kernel.org>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Wedson Almeida Filho <wedsonaf@gmail.com>,
+	Viresh Kumar <viresh.kumar@linaro.org>,
+	Lyude Paul <lyude@redhat.com>, Ingo Molnar <mingo@kernel.org>,
+	Mitchell Levy <levymitchell0@gmail.com>,
+	"Paul E. McKenney" <paulmck@kernel.org>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Thomas Gleixner <tglx@linutronix.de>
+Subject: Re: [PATCH v5 05/10] rust: sync: atomic: Add atomic {cmp,}xchg
+ operations
+Message-ID: <aF6iXB6wiHcpAKIU@Mac.home>
+References: <20250618164934.19817-1-boqun.feng@gmail.com>
+ <20250618164934.19817-6-boqun.feng@gmail.com>
+ <DAX6WZ87S99G.1CMIN6IQXJYPL@kernel.org>
 Precedence: bulk
 X-Mailing-List: lkmm@lists.linux.dev
 List-Id: <lkmm.lists.linux.dev>
 List-Subscribe: <mailto:lkmm+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:lkmm+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <DAX6WZ87S99G.1CMIN6IQXJYPL@kernel.org>
 
-Mauro Carvalho Chehab <mchehab+huawei@kernel.org> writes:
+On Fri, Jun 27, 2025 at 10:58:43AM +0200, Benno Lossin wrote:
+> On Wed Jun 18, 2025 at 6:49 PM CEST, Boqun Feng wrote:
+> > +impl<T: AllowAtomic> Atomic<T>
+> > +where
+> > +    T::Repr: AtomicHasXchgOps,
+> > +{
+> > +    /// Atomic exchange.
+> > +    ///
+> > +    /// # Examples
+> > +    ///
+> > +    /// ```rust
+> > +    /// use kernel::sync::atomic::{Atomic, Acquire, Relaxed};
+> > +    ///
+> > +    /// let x = Atomic::new(42);
+> > +    ///
+> > +    /// assert_eq!(42, x.xchg(52, Acquire));
+> > +    /// assert_eq!(52, x.load(Relaxed));
+> > +    /// ```
+> > +    #[doc(alias("atomic_xchg", "atomic64_xchg"))]
+> > +    #[inline(always)]
+> > +    pub fn xchg<Ordering: All>(&self, v: T, _: Ordering) -> T {
+> 
+> Can we name this `exchange`?
+> 
 
-> When something goes wrong, we want Sphinx error to point to the
-> right line number from the original source, not from the
-> processed ReST data.
->
-> Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-> ---
->  tools/net/ynl/pyynl/lib/doc_generator.py | 34 ++++++++++++++++++++++--
->  1 file changed, 32 insertions(+), 2 deletions(-)
->
-> diff --git a/tools/net/ynl/pyynl/lib/doc_generator.py b/tools/net/ynl/pyynl/lib/doc_generator.py
-> index 866551726723..a9d8ab6f2639 100644
-> --- a/tools/net/ynl/pyynl/lib/doc_generator.py
-> +++ b/tools/net/ynl/pyynl/lib/doc_generator.py
-> @@ -20,6 +20,16 @@
->  from typing import Any, Dict, List
->  import yaml
+FYI, in Rust std, this operation is called `swap()`, what's the reason
+of using a name that is neither the Rust convention nor Linux kernel
+convention?
+
+As for naming, the reason I choose xchg() and cmpxchg() is because they
+are the name LKMM uses for a long time, to use another name, we have to
+have a very good reason to do so and I don't see a good reason
+that the other names are better, especially, in our memory model, we use
+xchg() and cmpxchg() a lot, and they are different than Rust version
+where you can specify orderings separately. Naming LKMM xchg()/cmpxchg()
+would cause more confusion I believe.
+
+Same answer for compare_exchange() vs cmpxchg().
+
+> > +        let v = T::into_repr(v);
+> > +        let a = self.as_ptr().cast::<T::Repr>();
+> > +
+> > +        // SAFETY:
+> > +        // - For calling the atomic_xchg*() function:
+> > +        //   - `self.as_ptr()` is a valid pointer, and per the safety requirement of `AllocAtomic`,
+> > +        //      a `*mut T` is a valid `*mut T::Repr`. Therefore `a` is a valid pointer,
+> > +        //   - per the type invariants, the following atomic operation won't cause data races.
+> > +        // - For extra safety requirement of usage on pointers returned by `self.as_ptr():
+> > +        //   - atomic operations are used here.
+> > +        let ret = unsafe {
+> > +            match Ordering::TYPE {
+> > +                OrderingType::Full => T::Repr::atomic_xchg(a, v),
+> > +                OrderingType::Acquire => T::Repr::atomic_xchg_acquire(a, v),
+> > +                OrderingType::Release => T::Repr::atomic_xchg_release(a, v),
+> > +                OrderingType::Relaxed => T::Repr::atomic_xchg_relaxed(a, v),
+> > +            }
+> > +        };
+> > +
+> > +        T::from_repr(ret)
+> > +    }
+> > +
+> > +    /// Atomic compare and exchange.
+> > +    ///
+> > +    /// Compare: The comparison is done via the byte level comparison between the atomic variables
+> > +    /// with the `old` value.
+> > +    ///
+> > +    /// Ordering: When succeeds, provides the corresponding ordering as the `Ordering` type
+> > +    /// parameter indicates, and a failed one doesn't provide any ordering, the read part of a
+> > +    /// failed cmpxchg should be treated as a relaxed read.
+> 
+> This is a bit confusing to me. The operation has a store and a load
+> operation and both can have different orderings (at least in Rust
+> userland) depending on the success/failure of the operation. In
+> userland, I can supply `AcqRel` and `Acquire` to ensure that I always
+> have Acquire semantics on any read and `Release` semantics on any write
+> (which I would think is a common case). How do I do this using your API?
+> 
+
+Usually in kernel that means in a failure case you need to use a barrier
+afterwards, for example:
+
+	if (old != cmpxchg(v, old, new)) {
+		smp_mb();
+		// ^ following memory operations are ordered against.
+	}
+
+> Don't I need `Acquire` semantics on the read in order for
+> `compare_exchange` to give me the correct behavior in this example:
+> 
+>     pub struct Foo {
+>         data: Atomic<u64>,
+>         new: Atomic<bool>,
+>         ready: Atomic<bool>,
+>     }
+> 
+>     impl Foo {
+>         pub fn new() -> Self {
+>             Self {
+>                 data: Atomic::new(0),
+>                 new: Atomic::new(false),
+>                 ready: Atomic::new(false),
+>             }
+>         }
+> 
+>         pub fn get(&self) -> Option<u64> {
+>             if self.new.compare_exchange(true, false, Release).is_ok() {
+
+You should use `Full` if you want AcqRel-like behavior when succeed.
+
+>                 let val = self.data.load(Acquire);
+>                 self.ready.store(false, Release);
+>                 Some(val)
+>             } else {
+>                 None
+>             }
+>         }
+> 
+>         pub fn set(&self, val: u64) -> Result<(), u64> {
+>             if self.ready.compare_exchange(false, true, Release).is_ok() {
+
+Same.
+
+Regards,
+Boqun
+
+>                 self.data.store(val, Release);
+>                 self.new.store(true, Release);
+>             } else {
+>                 Err(val)
+>             }
+>         }
+>     }
+> 
+> IIUC, you need `Acquire` ordering on both `compare_exchange` operations'
+> reads for this to work, right? Because if they are relaxed, this could
+> happen:
+> 
+>                     Thread 0                    |                    Thread 1
+> ------------------------------------------------|------------------------------------------------
+>  get() {                                        | set(42) {
+>                                                 |   if ready.cmpxchg(false, true, Rel).is_ok() {
+>                                                 |     data.store(42, Rel)
+>                                                 |     new.store(true, Rel)
+>    if new.cmpxchg(true, false, Rel).is_ok() {   |
+>      let val = self.data.load(Acq); // reads 0  |
+>      ready.store(false, Rel);                   |
+>      Some(val)                                  |
+>    }                                            |   }
+>  }                                              | }
 >  
-> +LINE_STR = '__lineno__'
-> +
-> +class NumberedSafeLoader(yaml.SafeLoader):
-> +    """Override the SafeLoader class to add line number to parsed data"""
-> +
-> +    def construct_mapping(self, node):
-> +        mapping = super().construct_mapping(node)
-> +        mapping[LINE_STR] = node.start_mark.line
-> +
-> +        return mapping
-
-pylint gives these 2 warnings:
-
-tools/net/ynl/pyynl/lib/doc_generator.py:25:0: R0901: Too many ancestors (9/7) (too-many-ancestors)
-tools/net/ynl/pyynl/lib/doc_generator.py:28:4: W0221: Number of parameters was 3 in 'SafeConstructor.construct_mapping' and is now 2 in overriding 'NumberedSafeLoader.construct_mapping' method (arguments-differ)
-
+> So essentially, the `data.store` operation is not synchronized, because
+> the read on `new` is not `Acquire`.
+> 
+[...]

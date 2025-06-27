@@ -1,143 +1,294 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A3A0323E;
-	Fri, 27 Jun 2025 06:48:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFF96229B15;
+	Fri, 27 Jun 2025 08:58:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751006902; cv=none; b=F5HRPYZvxle5+6bt7wHDG31FHZiF1RF0B28vQnCVQzPGGdIys1HySglN1uXjOiAsy9p+kWA3ZyiCwGI3Di/6tb9mPPIEcqqZS4QlHt/v6FftLO5V88glnaJhDrrBdqnSx7c22svo+7vhPY76ckeisvCJ11M/GvjJFLvYDadl9UI=
+	t=1751014730; cv=none; b=J33f3BgNDFQKl/u3vE1zGOyHZ9F4t5kROuxx1Oxo7LIPzbOnMBpItLFBgPQI7ZIeNezv5WwpIkYEBPYQiDM4ug5IoqwWLjEM2Zg5JqdMGSTAjX8X+yJ87uw3xnztisZrh9RDUOV95g2/tLI/y3ZNX3KapaBq8hsXPw3Iy30BsM0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751006902; c=relaxed/simple;
-	bh=Gk61ujEoSEVxxkZaVv4tUnsHFqXUUAQCjXVa3r0CnDY=;
-	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=MJDAxz53z/hB8cWdppDX9hZ9m8bXYAhN5oodHNiWam6dOljwaUnlKD93S3sV/jsLlJmmPUTJDc9+rBFur5+e42HHxAiJMMpK4AxAHo7Ny7d+WfYstWoZX5wsjd9O4oclwUxRd4BOer2Mr/5SjDfIh25KxycowlVNibvy8TpONhk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=t08uwEq6; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1751014730; c=relaxed/simple;
+	bh=7Q0EJNGfoLDItxk7UkA5TTYdcSirFMepdH0/ItIQbdY=;
+	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
+	 References:In-Reply-To; b=JSTux3G4EmE5UWMHX3fsgsNh7P0Mtlv++onlJY1c5fAjC3DF6CdVOPrCoEe+FOt+djDhtKtqePvmX9OiWnORBn/i8x/chtnz/YlIkuwEGIq1US1wBV4m6y/+QV+tPXb4yPK7TUqyOmVgcQ4EC6yQcOcLGXX2XqWTiCI3GBOgEf8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=KZ1uBfMr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="t08uwEq6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8465FC4CEE3;
-	Fri, 27 Jun 2025 06:48:17 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="KZ1uBfMr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BED55C4CEED;
+	Fri, 27 Jun 2025 08:58:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1751006901;
-	bh=Gk61ujEoSEVxxkZaVv4tUnsHFqXUUAQCjXVa3r0CnDY=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-	b=t08uwEq64ptQhfSGo4H8UuSvXroAFX2X+2ikEziO04jWE0rsW4zd0KIOUK/5v7Qcs
-	 LZsFAvWLC0LKJJ5VcE4xawcYpe+OC8GLHHfkJZxdA2Z3TYw+Qhh/DsvDR8g9yKaMnx
-	 wzyD0GvJ0uYsEYYqLvKiP5QEhL/1Te++/hiGz391m4zorOEaf2SWmPjjwX2uJF5i34
-	 MR+DnD1Fnnt1bUSpq5MbG0qsy2jRmBXK5VthA2n9737ulzhiIKW7sXqwkokWI2hJ9m
-	 5t+EPRor34f1aW4Xw/xdPqyddGr+RyPrTtZ/34rRU4fmjb++BBCGwG95wLbuDf7RHt
-	 MuWbbjAF61ZcA==
-Date: Fri, 27 Jun 2025 08:48:14 +0200
-From: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-To: Akira Yokosawa <akiyks@gmail.com>
-Cc: Linux Doc Mailing List <linux-doc@vger.kernel.org>, Jonathan Corbet
- <corbet@lwn.net>, Breno Leitao <leitao@debian.org>, "David S. Miller"
- <davem@davemloft.net>, Donald Hunter <donald.hunter@gmail.com>, Eric
- Dumazet <edumazet@google.com>, Ignacio Encinas Rubio
- <ignacio@iencinas.com>, Jan Stancek <jstancek@redhat.com>, Marco Elver
- <elver@google.com>, Paolo Abeni <pabeni@redhat.com>, Randy Dunlap
- <rdunlap@infradead.org>, Ruben Wauters <rubenru09@aol.com>, Shuah Khan
- <skhan@linuxfoundation.org>, joel@joelfernandes.org,
- linux-kernel-mentees@lists.linux.dev, linux-kernel@vger.kernel.org,
- lkmm@lists.linux.dev, netdev@vger.kernel.org, peterz@infradead.org,
- stern@rowland.harvard.edu
-Subject: Re: [PATCH v8 13/13] docs: parser_yaml.py: fix backward
- compatibility with old docutils
-Message-ID: <20250627084814.7f4a43d4@foz.lan>
-In-Reply-To: <ebdb0f12-0573-4023-bb7f-c51a94dedb27@gmail.com>
-References: <cover.1750925410.git.mchehab+huawei@kernel.org>
-	<d00a73776167e486a1804cf87746fa342294c943.1750925410.git.mchehab+huawei@kernel.org>
-	<ebdb0f12-0573-4023-bb7f-c51a94dedb27@gmail.com>
-X-Mailer: Claws Mail 4.3.1 (GTK 3.24.49; x86_64-redhat-linux-gnu)
+	s=k20201202; t=1751014730;
+	bh=7Q0EJNGfoLDItxk7UkA5TTYdcSirFMepdH0/ItIQbdY=;
+	h=Date:Cc:Subject:From:To:References:In-Reply-To:From;
+	b=KZ1uBfMrQUHPPAz+Nq7hNbEKd+DazgJ4hhbGGNZtF9sYEAlWqDk2hUkgp7CKHbPZA
+	 PO/Z9Cliyx8yWpvUSSEujEPB1WvTpUjeI1WDsbW4IFZFM+1AHCqcwgmxGtdFfxbgQA
+	 jfkCYhDr/6x73ihykZhMxtylSWREa8Xi2d5+JXzvIKNB6cjyVeRl5lpkIVh/hSFAuU
+	 RdDgcJM09g7WpkXSL4Ql/h3MBBWjipOU/ep4M0Omk8e8+JzYDSEy2nqzC6JwEzlBXh
+	 xzFkJ6yUCLBTg5s4xlDLtk5mqiS1gdWDZER9SHXYxBjCzfjORcsL3+MFb95ngw4LFn
+	 SyMyA004Wxi1w==
 Precedence: bulk
 X-Mailing-List: lkmm@lists.linux.dev
 List-Id: <lkmm.lists.linux.dev>
 List-Subscribe: <mailto:lkmm+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:lkmm+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Fri, 27 Jun 2025 10:58:43 +0200
+Message-Id: <DAX6WZ87S99G.1CMIN6IQXJYPL@kernel.org>
+Cc: "Miguel Ojeda" <ojeda@kernel.org>, "Alex Gaynor"
+ <alex.gaynor@gmail.com>, "Gary Guo" <gary@garyguo.net>,
+ =?utf-8?q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, "Andreas
+ Hindborg" <a.hindborg@kernel.org>, "Alice Ryhl" <aliceryhl@google.com>,
+ "Trevor Gross" <tmgross@umich.edu>, "Danilo Krummrich" <dakr@kernel.org>,
+ "Will Deacon" <will@kernel.org>, "Peter Zijlstra" <peterz@infradead.org>,
+ "Mark Rutland" <mark.rutland@arm.com>, "Wedson Almeida Filho"
+ <wedsonaf@gmail.com>, "Viresh Kumar" <viresh.kumar@linaro.org>, "Lyude
+ Paul" <lyude@redhat.com>, "Ingo Molnar" <mingo@kernel.org>, "Mitchell Levy"
+ <levymitchell0@gmail.com>, "Paul E. McKenney" <paulmck@kernel.org>, "Greg
+ Kroah-Hartman" <gregkh@linuxfoundation.org>, "Linus Torvalds"
+ <torvalds@linux-foundation.org>, "Thomas Gleixner" <tglx@linutronix.de>
+Subject: Re: [PATCH v5 05/10] rust: sync: atomic: Add atomic {cmp,}xchg
+ operations
+From: "Benno Lossin" <lossin@kernel.org>
+To: "Boqun Feng" <boqun.feng@gmail.com>, <linux-kernel@vger.kernel.org>,
+ <rust-for-linux@vger.kernel.org>, <lkmm@lists.linux.dev>,
+ <linux-arch@vger.kernel.org>
+X-Mailer: aerc 0.20.1
+References: <20250618164934.19817-1-boqun.feng@gmail.com>
+ <20250618164934.19817-6-boqun.feng@gmail.com>
+In-Reply-To: <20250618164934.19817-6-boqun.feng@gmail.com>
 
-Hi Akira,
+On Wed Jun 18, 2025 at 6:49 PM CEST, Boqun Feng wrote:
+> +impl<T: AllowAtomic> Atomic<T>
+> +where
+> +    T::Repr: AtomicHasXchgOps,
+> +{
+> +    /// Atomic exchange.
+> +    ///
+> +    /// # Examples
+> +    ///
+> +    /// ```rust
+> +    /// use kernel::sync::atomic::{Atomic, Acquire, Relaxed};
+> +    ///
+> +    /// let x =3D Atomic::new(42);
+> +    ///
+> +    /// assert_eq!(42, x.xchg(52, Acquire));
+> +    /// assert_eq!(52, x.load(Relaxed));
+> +    /// ```
+> +    #[doc(alias("atomic_xchg", "atomic64_xchg"))]
+> +    #[inline(always)]
+> +    pub fn xchg<Ordering: All>(&self, v: T, _: Ordering) -> T {
 
-Em Fri, 27 Jun 2025 08:59:16 +0900
-Akira Yokosawa <akiyks@gmail.com> escreveu:
+Can we name this `exchange`?
 
-> Hi Mauro,
-> 
-> On Thu, 26 Jun 2025 10:13:09 +0200, Mauro Carvalho Chehab wrote:
-> > As reported by Akira, older docutils versions are not compatible
-> > with the way some Sphinx versions send tab_width. Add a code to
-> > address it.
-> >   
-> 
-> Tested OK against debian:11's and almalinux:9's Sphinx 3.4.3, both of
-> which have docutils 0.16 bundled.
-> 
-> opensuse/leap:15.6's Sphinx 4.2.0 has docutils 0.16 with it, but it is
-> python 3.6 base and it does't work with the ynl integration.
-> As opensuse/leap:15.6 provides Sphinx 7.2.6 (on top of python 3.11) as
-> an alternative, obsoleting it should be acceptable.  
+> +        let v =3D T::into_repr(v);
+> +        let a =3D self.as_ptr().cast::<T::Repr>();
+> +
+> +        // SAFETY:
+> +        // - For calling the atomic_xchg*() function:
+> +        //   - `self.as_ptr()` is a valid pointer, and per the safety re=
+quirement of `AllocAtomic`,
+> +        //      a `*mut T` is a valid `*mut T::Repr`. Therefore `a` is a=
+ valid pointer,
+> +        //   - per the type invariants, the following atomic operation w=
+on't cause data races.
+> +        // - For extra safety requirement of usage on pointers returned =
+by `self.as_ptr():
+> +        //   - atomic operations are used here.
+> +        let ret =3D unsafe {
+> +            match Ordering::TYPE {
+> +                OrderingType::Full =3D> T::Repr::atomic_xchg(a, v),
+> +                OrderingType::Acquire =3D> T::Repr::atomic_xchg_acquire(=
+a, v),
+> +                OrderingType::Release =3D> T::Repr::atomic_xchg_release(=
+a, v),
+> +                OrderingType::Relaxed =3D> T::Repr::atomic_xchg_relaxed(=
+a, v),
+> +            }
+> +        };
+> +
+> +        T::from_repr(ret)
+> +    }
+> +
+> +    /// Atomic compare and exchange.
+> +    ///
+> +    /// Compare: The comparison is done via the byte level comparison be=
+tween the atomic variables
+> +    /// with the `old` value.
+> +    ///
+> +    /// Ordering: When succeeds, provides the corresponding ordering as =
+the `Ordering` type
+> +    /// parameter indicates, and a failed one doesn't provide any orderi=
+ng, the read part of a
+> +    /// failed cmpxchg should be treated as a relaxed read.
 
-Thank you for the tests! At changes.rst we updated the minimum
-python requirement to:
+This is a bit confusing to me. The operation has a store and a load
+operation and both can have different orderings (at least in Rust
+userland) depending on the success/failure of the operation. In
+userland, I can supply `AcqRel` and `Acquire` to ensure that I always
+have Acquire semantics on any read and `Release` semantics on any write
+(which I would think is a common case). How do I do this using your API?
 
-	Python (optional)      3.9.x            python3 --version
+Don't I need `Acquire` semantics on the read in order for
+`compare_exchange` to give me the correct behavior in this example:
 
-So, I guess we can keep this way. 
+    pub struct Foo {
+        data: Atomic<u64>,
+        new: Atomic<bool>,
+        ready: Atomic<bool>,
+    }
 
-The 3.9 requirement reflects the needs of most scripts. Still, for doc build, 
-the min requirement was to support f-string, so Python 3.6.
+    impl Foo {
+        pub fn new() -> Self {
+            Self {
+                data: Atomic::new(0),
+                new: Atomic::new(false),
+                ready: Atomic::new(false),
+            }
+        }
 
-In this specific case, it is likely some minor incompatibility, as vermin 
-tool thinks that 3.6 would be enough: 
+        pub fn get(&self) -> Option<u64> {
+            if self.new.compare_exchange(true, false, Release).is_ok() {
+                let val =3D self.data.load(Acquire);
+                self.ready.store(false, Release);
+                Some(val)
+            } else {
+                None
+            }
+        }
 
-	$ vermin --no-tips --hidden --pessimistic -v tools/net/ynl/pyynl/ynl_gen_rst.py Documentation/sphinx/parser_yaml.py tools/net/ynl/pyynl/lib/*.py
-	Detecting python files..
-	Analyzing 6 files using 24 processes..
-	2.3, 3.0     /new_devel/v4l/docs/Documentation/sphinx/parser_yaml.py
-	~2, ~3       /new_devel/v4l/docs/tools/net/ynl/pyynl/lib/__init__.py
-	!2, 3.6      /new_devel/v4l/docs/tools/net/ynl/pyynl/lib/doc_generator.py
-	!2, 3.6      /new_devel/v4l/docs/tools/net/ynl/pyynl/lib/nlspec.py
-	!2, 3.6      /new_devel/v4l/docs/tools/net/ynl/pyynl/lib/ynl.py
-	!2, 3.4      /new_devel/v4l/docs/tools/net/ynl/pyynl/ynl_gen_rst.py
-	Minimum required versions: 3.6
-	Incompatible versions:     2
+        pub fn set(&self, val: u64) -> Result<(), u64> {
+            if self.ready.compare_exchange(false, true, Release).is_ok() {
+                self.data.store(val, Release);
+                self.new.store(true, Release);
+            } else {
+                Err(val)
+            }
+        }
+    }
 
-If the change is minimal, I don't mind having it fixed.
+IIUC, you need `Acquire` ordering on both `compare_exchange` operations'
+reads for this to work, right? Because if they are relaxed, this could
+happen:
 
-Anyway, IMO we need to add a checker at scripts/sphinx-pre-install to
-warn against too old Python versions.
+                    Thread 0                    |                    Thread=
+ 1
+------------------------------------------------|--------------------------=
+----------------------
+ get() {                                        | set(42) {
+                                                |   if ready.cmpxchg(false,=
+ true, Rel).is_ok() {
+                                                |     data.store(42, Rel)
+                                                |     new.store(true, Rel)
+   if new.cmpxchg(true, false, Rel).is_ok() {   |
+     let val =3D self.data.load(Acq); // reads 0  |
+     ready.store(false, Rel);                   |
+     Some(val)                                  |
+   }                                            |   }
+ }                                              | }
+=20
+So essentially, the `data.store` operation is not synchronized, because
+the read on `new` is not `Acquire`.
 
-> 
-> Reported-by: Akira Yokosawa <akiyks@gmail.com>
-> > Closes: https://lore.kernel.org/linux-doc/598b2cb7-2fd7-4388-96ba-2ddf0ab55d2a@gmail.com/
-> > Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>  
-> Tested-by: Akira Yokosawa <akiyks@gmail.com>
-> 
->         Thanks, Akira
-> 
-> > ---
-> >  Documentation/sphinx/parser_yaml.py | 4 ++++
-> >  1 file changed, 4 insertions(+)
-> > 
-> > diff --git a/Documentation/sphinx/parser_yaml.py b/Documentation/sphinx/parser_yaml.py
-> > index 8288e2ff7c7c..1602b31f448e 100755
-> > --- a/Documentation/sphinx/parser_yaml.py
-> > +++ b/Documentation/sphinx/parser_yaml.py
-> > @@ -77,6 +77,10 @@ class YamlParser(Parser):
-> >  
-> >                  result.append(line, document.current_source, lineoffset)
-> >  
-> > +            # Fix backward compatibility with docutils < 0.17.1
-> > +            if "tab_width" not in vars(document.settings):
-> > +                document.settings.tab_width = 8
-> > +
-> >              rst_parser = RSTParser()
-> >              rst_parser.parse('\n'.join(result), document)
-> >    
-> 
+> +    ///
+> +    /// Returns `Ok(value)` if cmpxchg succeeds, and `value` is guarante=
+ed to be equal to `old`,
+> +    /// otherwise returns `Err(value)`, and `value` is the value of the =
+atomic variable when
+> +    /// cmpxchg was happening.
+> +    ///
+> +    /// # Examples
+> +    ///
+> +    /// ```rust
+> +    /// use kernel::sync::atomic::{Atomic, Full, Relaxed};
+> +    ///
+> +    /// let x =3D Atomic::new(42);
+> +    ///
+> +    /// // Checks whether cmpxchg succeeded.
+> +    /// let success =3D x.cmpxchg(52, 64, Relaxed).is_ok();
+> +    /// # assert!(!success);
+> +    ///
+> +    /// // Checks whether cmpxchg failed.
+> +    /// let failure =3D x.cmpxchg(52, 64, Relaxed).is_err();
+> +    /// # assert!(failure);
+> +    ///
+> +    /// // Uses the old value if failed, probably re-try cmpxchg.
+> +    /// match x.cmpxchg(52, 64, Relaxed) {
+> +    ///     Ok(_) =3D> { },
+> +    ///     Err(old) =3D> {
+> +    ///         // do something with `old`.
+> +    ///         # assert_eq!(old, 42);
+> +    ///     }
+> +    /// }
+> +    ///
+> +    /// // Uses the latest value regardlessly, same as atomic_cmpxchg() =
+in C.
+> +    /// let latest =3D x.cmpxchg(42, 64, Full).unwrap_or_else(|old| old)=
+;
+> +    /// # assert_eq!(42, latest);
+> +    /// assert_eq!(64, x.load(Relaxed));
+> +    /// ```
+> +    #[doc(alias(
+> +        "atomic_cmpxchg",
+> +        "atomic64_cmpxchg",
+> +        "atomic_try_cmpxchg",
+> +        "atomic64_try_cmpxchg"
+> +    ))]
+> +    #[inline(always)]
+> +    pub fn cmpxchg<Ordering: All>(&self, mut old: T, new: T, o: Ordering=
+) -> Result<T, T> {
 
+`compare_exchange`?
 
+> +    /// Atomic compare and exchange and returns whether the operation su=
+cceeds.
+> +    ///
+> +    /// "Compare" and "Ordering" part are the same as [`Atomic::cmpxchg(=
+)`].
+> +    ///
+> +    /// Returns `true` means the cmpxchg succeeds otherwise returns `fal=
+se` with `old` updated to
+> +    /// the value of the atomic variable when cmpxchg was happening.
+> +    #[inline(always)]
+> +    fn try_cmpxchg<Ordering: All>(&self, old: &mut T, new: T, _: Orderin=
+g) -> bool {
 
-Thanks,
-Mauro
+`try_compare_exchange`?
+
+---
+Cheers,
+Benno
+
+> +        let old =3D (old as *mut T).cast::<T::Repr>();
+> +        let new =3D T::into_repr(new);
+> +        let a =3D self.0.get().cast::<T::Repr>();
+> +
+> +        // SAFETY:
+> +        // - For calling the atomic_try_cmpchg*() function:
+> +        //   - `self.as_ptr()` is a valid pointer, and per the safety re=
+quirement of `AllowAtomic`,
+> +        //      a `*mut T` is a valid `*mut T::Repr`. Therefore `a` is a=
+ valid pointer,
+> +        //   - per the type invariants, the following atomic operation w=
+on't cause data races.
+> +        //   - `old` is a valid pointer to write because it comes from a=
+ mutable reference.
+> +        // - For extra safety requirement of usage on pointers returned =
+by `self.as_ptr():
+> +        //   - atomic operations are used here.
+> +        unsafe {
+> +            match Ordering::TYPE {
+> +                OrderingType::Full =3D> T::Repr::atomic_try_cmpxchg(a, o=
+ld, new),
+> +                OrderingType::Acquire =3D> T::Repr::atomic_try_cmpxchg_a=
+cquire(a, old, new),
+> +                OrderingType::Release =3D> T::Repr::atomic_try_cmpxchg_r=
+elease(a, old, new),
+> +                OrderingType::Relaxed =3D> T::Repr::atomic_try_cmpxchg_r=
+elaxed(a, old, new),
+> +            }
+> +        }
+> +    }
+> +}
+

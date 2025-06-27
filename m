@@ -1,136 +1,133 @@
-Received: from mail-pf1-f178.google.com (mail-pf1-f178.google.com [209.85.210.178])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52F0022A813;
-	Thu, 26 Jun 2025 23:59:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76A08219E8;
+	Fri, 27 Jun 2025 02:56:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750982364; cv=none; b=s3JdbeT9mfqlTmnA7sjYdMqoNirURs9907nGT0NUSfpBFxTX0xtpI2WgiBY7TpzDeGxXN6ZpgvhSGpnTY0z6J8p3ckgYtxJbkq8YyQBSsD8pJ3d6NJwGfEHywLkfinFXU5M5w7qvAdqywJrBZztiRkS3k96tWKlxYkO/LEPireA=
+	t=1750993008; cv=none; b=dpYIUWKpCyck6P4QYO+TFgjMekkSbZGi46Op3iTVy6omoxsu/S5x+TquigVCA6MUJC2/IkHzEHIE0H3m9KLjSADAUUpYbwnB3Ste0Nx9vPyT0kpD3MKaQFW8T5MQvOnhNAj4eoir32gsOXzSBJMJQhycts8+/nv67vcVyuOBWw8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750982364; c=relaxed/simple;
-	bh=s3rbMWUAfYhIRKU2aYRNEwpl6k00a31yw5xuU8prP3c=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=sd4oOTUNL55jAxBhEQaO6WWW8PHXEQ3/Rr1sUjksq9/JZ7mqtP5mK93iFljZBYjuR+uN0sSuluFiA2q6VB7oyQeiQogNrduCMnZCZE9xj83408zlaMvVWnTx3Z6O9Uj+URKAfI1N2bGv96qYoBn0rMvvSu0uaOjKeSQ3MFF1Bgw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=FihTM8KH; arc=none smtp.client-ip=209.85.210.178
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1750993008; c=relaxed/simple;
+	bh=6HaipL2Nb3QqfyHkXwTX10Vg5Q0zLosiWZASw1iDunI=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=iygLSTWcfVFe73Ih9S0g7nScfwqovRsLZBtKjIbZygZZLLw0UvPFs2m4rj8TyTIOiio6qYdhYMGiV4i+PqUsTeg9f/UkqjgUHqb3d2tcYXeN6XdhT7V/F2jhMXba/v6LHDN7XCB+RRja6MFwQ26AFR3VgpQAIunoVNNQtmgoxME=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=OdfZsgQJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FihTM8KH"
-Received: by mail-pf1-f178.google.com with SMTP id d2e1a72fcca58-74ad4533ac5so2091449b3a.0;
-        Thu, 26 Jun 2025 16:59:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1750982363; x=1751587163; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=MU802fHFDsWEcG5O/JQOLJRXUp/Mx/sjo2Oncuu4jl0=;
-        b=FihTM8KHAgT4ltimKVVnFBf+wYh48aR5cRSo9DOKAgD6zpzQgDaNHb5Xtz9uI5cOCg
-         2SRvdNoiPV0jj9vTVBxj4ge5ZHqScQmqrswAJaEoCEuC163f3mcfRMNevh0dnzhxEceO
-         hefEmRZG2hgdDEaoExbyF4VbmCAB9eXyFjUQTEPJu8IlF35CEasDCeg0stLlyDaUC3WW
-         O4evESxLp7QrhMoigK3JxxLxeozAL6lWr3uDEjh3iczIzlX6AIQ2lnP9lNIQTfD/VzYY
-         YXvbxwTz16hAPBAZaarDtZXx/Ydew96vPm8QCaFeohUrv39mMJIGzTelx0dg7nHfRyWh
-         zS5A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1750982363; x=1751587163;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=MU802fHFDsWEcG5O/JQOLJRXUp/Mx/sjo2Oncuu4jl0=;
-        b=ZSg9y3FxtUAFaxeqVc7hZ8yh5JayYM0fc+ztwJpGoQRZ20MTdDDRnoHwq8DrDNAhOR
-         5ag8gAGBZl6KaXHcIVceITutkLZTODXWFrUNlrOOsTWTLTLmYNOvzvrBQ4atGBHOSOTD
-         d4HDGLoqd5K1B0btcH9JYVyMI1mDP3VLBdcFv1LWhPyzeZTyYrEC7dkyl2OdJEYyU7bd
-         vFgMvpVmj5TseZzXX751UxQOcNd+CuElAHmp11B4njyHfVZaoyNyRVBEa765OoTZkc3K
-         EZkrPscG+ABEmISvTjjYM4ZfciryXDTKv02aBmgmfl2rViAeV6UTO8aFLfn5XbW4nEr2
-         WTtQ==
-X-Forwarded-Encrypted: i=1; AJvYcCV7Cb+zrxHpJ9XAoPm41+4xIYQlYmTtf8Hf95U0QJ6zYJqQr6kZvhZcJzF0vwYonhZ+Wj6I4Q==@lists.linux.dev, AJvYcCWjKkE00+j1KJ4fbYYQogBVSGu6+qCBHwxiMnqyaxb2rEV4fnC/PLpVBdWPM3OYzLNDSa+wLFp4M6ZvytYHeaMqHkNywQ==@lists.linux.dev
-X-Gm-Message-State: AOJu0YyHg7cIAUJ4vsNL8zXFyadij0P5SOOefc6hdcbWOD6RyQe/KJzs
-	IBkWfCcidtjrwlkxI82wpUDdCTia+mviCK+Q1dOsJfonR216di7nvObV
-X-Gm-Gg: ASbGnct3DbTP1uLQdlDUJ4lKpUJIMA/UVEgxTXTvcW63CgQ4+6IFq6LlNTvWrL4jg3f
-	mdHyglMbZzR5OnA8IThwKwH1kSYTSjpegsAvrrOL2l+XtbwF+F4FJ1mEVTmlHT2Eva7Xtz6Q8vy
-	9YeB00VSrepgctY+ezQ9cO7aXvVsKvM4Szf2yTON6mZ0ECTtAZ2L2dNHNIqafevnS2F8ozjKBLp
-	AHIW5kDZo+ufGdL0iGSxPZLd8VPp6qdgKlMfoFe5sHAcn90KblOZjTgH6pYA+74Q+qi4gWo3iUx
-	KQkACMGqdB3/PtEoP2QLxAZMVrUPRfas4CXD5A9FvkMIWRiE6nqSxGWZCK5E3Za2FvMJ1Poxjb+
-	kl6KNOTn46ycRC8RD/fw1U/GOC6uM7YBG
-X-Google-Smtp-Source: AGHT+IH2QEv1EXX1AwW0bplm/IMyDMqzMeclzHruNi6dErZJ0S6a5ZLa64wP13/R2bF/xVlDw1ddCA==
-X-Received: by 2002:a05:6a21:1fc3:b0:1f3:3547:f21b with SMTP id adf61e73a8af0-220a08dc64amr1126298637.5.1750982362495;
-        Thu, 26 Jun 2025 16:59:22 -0700 (PDT)
-Received: from [10.0.2.15] (KD106167137155.ppp-bb.dion.ne.jp. [106.167.137.155])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-74af56cffccsm799591b3a.130.2025.06.26.16.59.17
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 26 Jun 2025 16:59:22 -0700 (PDT)
-Message-ID: <ebdb0f12-0573-4023-bb7f-c51a94dedb27@gmail.com>
-Date: Fri, 27 Jun 2025 08:59:16 +0900
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="OdfZsgQJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ECAB8C4CEEE;
+	Fri, 27 Jun 2025 02:56:47 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1750993008;
+	bh=6HaipL2Nb3QqfyHkXwTX10Vg5Q0zLosiWZASw1iDunI=;
+	h=Date:From:To:Cc:Subject:Reply-To:References:In-Reply-To:From;
+	b=OdfZsgQJGCnp3QbzwZi/zpPrlV5AoEmH+oQkmwbR6fdiolFsnMuFy5CbxALNOtiIl
+	 K3izNJ445A48065KWMd5dheH849l83Vg0XMaYNBhLm/OHhNIMjXaWIAMIyuVXX1oHj
+	 8ST9CyjCzuLKEuS6AE3RJY1depX4h/si9ywALa8ffHaOKsQEI7czwRP/P4hOmBzHTL
+	 OYSohwCRSgjkzUGQQTKYP6tl5FEs0XMZ0lIalMChEoUf33q/JnyYOB+RIxzXSE8QQG
+	 36bti5RB2cXv7p2zSLKRKySeQrSPbG5gyEzSFr01Z9EIFDkIW2IhWckSxMUE7rmMJt
+	 HDlifh/m7lBFQ==
+Received: by paulmck-ThinkPad-P17-Gen-1.home (Postfix, from userid 1000)
+	id 99F29CE0C3C; Thu, 26 Jun 2025 19:56:47 -0700 (PDT)
+Date: Thu, 26 Jun 2025 19:56:47 -0700
+From: "Paul E. McKenney" <paulmck@kernel.org>
+To: Boqun Feng <boqun.feng@gmail.com>
+Cc: Christoph Hellwig <hch@infradead.org>, linux-kernel@vger.kernel.org,
+	rcu@vger.kernel.org, lkmm@lists.linux.dev,
+	Peter Zijlstra <peterz@infradead.org>,
+	Ingo Molnar <mingo@kernel.org>, Will Deacon <will@kernel.org>,
+	Waiman Long <longman@redhat.com>,
+	Davidlohr Bueso <dave@stgolabs.net>,
+	Josh Triplett <josh@joshtriplett.org>,
+	Frederic Weisbecker <frederic@kernel.org>,
+	Neeraj Upadhyay <neeraj.upadhyay@kernel.org>,
+	Joel Fernandes <joelagnelf@nvidia.com>,
+	Uladzislau Rezki <urezki@gmail.com>,
+	Steven Rostedt <rostedt@goodmis.org>,
+	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
+	Lai Jiangshan <jiangshanlai@gmail.com>,
+	Zqiang <qiang.zhang@linux.dev>, Breno Leitao <leitao@debian.org>,
+	aeh@meta.com, netdev@vger.kernel.org, edumazet@google.com,
+	jhs@mojatatu.com, kernel-team@meta.com,
+	Erik Lundgren <elundgren@meta.com>
+Subject: Re: [PATCH 0/8] Introduce simple hazard pointers for lockdep
+Message-ID: <a8e06076-3f66-441f-9ccb-0b368d95e1a1@paulmck-laptop>
+Reply-To: paulmck@kernel.org
+References: <20250625031101.12555-1-boqun.feng@gmail.com>
+ <aFvl96hO03K1gd2m@infradead.org>
+ <aFwC-dvuyYRYSWpY@Mac.home>
+ <aF0eEfoWVCyoIAgx@infradead.org>
+ <aF1rjV8XQozi7hXB@Mac.home>
 Precedence: bulk
 X-Mailing-List: lkmm@lists.linux.dev
 List-Id: <lkmm.lists.linux.dev>
 List-Subscribe: <mailto:lkmm+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:lkmm+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v8 13/13] docs: parser_yaml.py: fix backward compatibility
- with old docutils
-To: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
- Linux Doc Mailing List <linux-doc@vger.kernel.org>,
- Jonathan Corbet <corbet@lwn.net>
-Cc: Breno Leitao <leitao@debian.org>, "David S. Miller"
- <davem@davemloft.net>, Donald Hunter <donald.hunter@gmail.com>,
- Eric Dumazet <edumazet@google.com>,
- Ignacio Encinas Rubio <ignacio@iencinas.com>,
- Jan Stancek <jstancek@redhat.com>, Marco Elver <elver@google.com>,
- Paolo Abeni <pabeni@redhat.com>, Randy Dunlap <rdunlap@infradead.org>,
- Ruben Wauters <rubenru09@aol.com>, Shuah Khan <skhan@linuxfoundation.org>,
- joel@joelfernandes.org, linux-kernel-mentees@lists.linux.dev,
- linux-kernel@vger.kernel.org, lkmm@lists.linux.dev, netdev@vger.kernel.org,
- peterz@infradead.org, stern@rowland.harvard.edu,
- Akira Yokosawa <akiyks@gmail.com>
-References: <cover.1750925410.git.mchehab+huawei@kernel.org>
- <d00a73776167e486a1804cf87746fa342294c943.1750925410.git.mchehab+huawei@kernel.org>
-Content-Language: en-US
-From: Akira Yokosawa <akiyks@gmail.com>
-In-Reply-To: <d00a73776167e486a1804cf87746fa342294c943.1750925410.git.mchehab+huawei@kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <aF1rjV8XQozi7hXB@Mac.home>
 
-Hi Mauro,
-
-On Thu, 26 Jun 2025 10:13:09 +0200, Mauro Carvalho Chehab wrote:
-> As reported by Akira, older docutils versions are not compatible
-> with the way some Sphinx versions send tab_width. Add a code to
-> address it.
+On Thu, Jun 26, 2025 at 08:47:25AM -0700, Boqun Feng wrote:
+> On Thu, Jun 26, 2025 at 03:16:49AM -0700, Christoph Hellwig wrote:
+> > On Wed, Jun 25, 2025 at 07:08:57AM -0700, Boqun Feng wrote:
+> > > Sure, I will put one for the future version, here is the gist:
+> > 
+> > Thanks a lot!
+> > 
+> > > The updater's wait can finish immediately if no one is accessing 'a', in
+> > > other words it doesn't need to wait for reader 2.
+> > 
+> > So basically it is the RCU concept, but limited to protecting exactly
+> > one pointer update per critical section with no ability for the read
+> > to e.g. acquire a refcount on the objected pointed to by that pointer?
 > 
-
-Tested OK against debian:11's and almalinux:9's Sphinx 3.4.3, both of
-which have docutils 0.16 bundled.
-
-opensuse/leap:15.6's Sphinx 4.2.0 has docutils 0.16 with it, but it is
-python 3.6 base and it does't work with the ynl integration.
-As opensuse/leap:15.6 provides Sphinx 7.2.6 (on top of python 3.11) as
-an alternative, obsoleting it should be acceptable.  
-
-Reported-by: Akira Yokosawa <akiyks@gmail.com>
-> Closes: https://lore.kernel.org/linux-doc/598b2cb7-2fd7-4388-96ba-2ddf0ab55d2a@gmail.com/
-> Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-Tested-by: Akira Yokosawa <akiyks@gmail.com>
-
-        Thanks, Akira
-
-> ---
->  Documentation/sphinx/parser_yaml.py | 4 ++++
->  1 file changed, 4 insertions(+)
+> For the current simple hazard pointer, yes. But simple hazard pointers
+> is easily to extend so support reading:
 > 
-> diff --git a/Documentation/sphinx/parser_yaml.py b/Documentation/sphinx/parser_yaml.py
-> index 8288e2ff7c7c..1602b31f448e 100755
-> --- a/Documentation/sphinx/parser_yaml.py
-> +++ b/Documentation/sphinx/parser_yaml.py
-> @@ -77,6 +77,10 @@ class YamlParser(Parser):
->  
->                  result.append(line, document.current_source, lineoffset)
->  
-> +            # Fix backward compatibility with docutils < 0.17.1
-> +            if "tab_width" not in vars(document.settings):
-> +                document.settings.tab_width = 8
-> +
->              rst_parser = RSTParser()
->              rst_parser.parse('\n'.join(result), document)
->  
+> 	{ gp is a global pointer }
+> 
+> 	Reader				Updater
+> 	======				=======
+> 	g = shazptr_acquire(p):
+> 	      WRITE_ONCE(*this_cpu_ptr(slot), gp);
+> 	      smp_mb();
+> 	
+> 	if (READ_ONCE(gp) == *this_cpu_ptr(slot)) {
+> 	    // still being protected.
+> 	    <can read gp here>
+> 					to_free = READ_ONCE(gp);
+> 					WRITE_ONCE(gp, new);
+> 					synchronize_shazptr(to_free):
+> 					  smp_mb();
+> 					  // wait on the slot of reader
+> 					  // CPU being 0.
+> 					  READ_ONCE(per_cpu(reader, slot));
+> 	}
+> 
+> 	shazptr_clear(g):
+> 	  WRITE_ONCE(*this_cpu_ptr(slot), NULL); // unblock synchronize_shazptr()
+> 
+> 
+> Usually the shazptr_acqurie() + "pointer comparison"* is called
+> shazptr_try_protect().
+> 
+> I will add a document about this in the next version along with other
+> bits of hazard pointers.
+> 
+> [*]: The pointer comparison is more complicated topic, but Mathieu has
+>      figured out how to do it correctly:
+> 
+>      https://lore.kernel.org/lkml/20241008135034.1982519-2-mathieu.desnoyers@efficios.com/
 
+It might be helpful to add that, at a high level, hazard pointers
+are a scalable replacement for reference counting.  At a similarly
+high level, RCU is a scalable replacement for reader-writer locking.
+At lower levels, there is considerable overlap in applicability, so that
+you can use RCU to replace many reference-counting use cases and hazard
+pointers to replace many reader-writer-locking use cases..
+
+Plus, as both Mathieu and Boqun pointed out, both RCU and hazard pointers
+can be combined with other synchronization mechanisms, including each
+other.
+
+							Thanx, Paul

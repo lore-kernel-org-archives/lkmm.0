@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BE4F248F71;
-	Mon, 30 Jun 2025 09:54:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E40824466E;
+	Mon, 30 Jun 2025 10:16:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751277286; cv=none; b=rphym/U65CbAx7JlqgzVJBbT4M9Gcrw20lArjBNmz7gUinTpl+lE2FMJOBwqER2k28aIm3mFJ/xYNlaU8LPHH3tIuN3ZxuX9bTDa+v8EqgXJEBkpLuhXkWBubo0vZnF7XboOSGug0XzVjNUJ1Xt98siX0DQK2eI1DOlAQbelHYA=
+	t=1751278616; cv=none; b=gKygM2+pGDNqVtBR2lUtw48PawZ/i9fkNfhW6ETQpo0157RsqU0bGqFHPpLRSN3CNfRL9JMJkJBP+0zOVqFmA55mPRlFmJrqzaPuKqWtbFr5eY/gfrEncuiGuAK/kyeg0xfLj8nBjcvXhPivEInOCKiOdcsFdxCzRID1ilGy12E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751277286; c=relaxed/simple;
-	bh=WIDUvS7JkY3GNFQTSjGce34RpeCHS2xzEDHzrQxx0nY=;
+	s=arc-20240116; t=1751278616; c=relaxed/simple;
+	bh=jyY7VefVj/pRCib4aQ/EAxfV4IOvZHmPLQGlbEVLfrA=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=Xc7Obp6ELLs4/y6cpCmdh7wts57jvNnXnB2t5Y5GGCYhCy8Hz8uuMFgmu1aeyBK2vSH9uMNM9K9BVhFnR5xIy22bzw7+/JHFPDTNjTh716Bl2AQ/5emNXN2oTqNIQKl/0vGBBrygUKC6ae49undoza8DViwSh2wNNc2V9+l1dYA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=hE7GnNve; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=fE12EDwfR9btKMuGhIXwrvkgmoIa6bq4qBorYFlX0mQJN3IkrxVCx5IwAXkRs6/RwMIrvySF8qEOc6E8veCBLMRdx++pzRS8deqiKEvdUtLxmJZ5JBak4BX3GPPikvucbme0vA6sOXbzMPqKAuD/4ZGH6wymDsoYS95biHY/clU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=lK+Qs1me; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="hE7GnNve"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1D2FC4CEEB;
-	Mon, 30 Jun 2025 09:54:41 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="lK+Qs1me"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5B8FC4CEEF;
+	Mon, 30 Jun 2025 10:16:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1751277286;
-	bh=WIDUvS7JkY3GNFQTSjGce34RpeCHS2xzEDHzrQxx0nY=;
+	s=k20201202; t=1751278616;
+	bh=jyY7VefVj/pRCib4aQ/EAxfV4IOvZHmPLQGlbEVLfrA=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:From;
-	b=hE7GnNveBwjT+D7CEFtAVW3o91xUIPk56n2r99qz7K+QtQ21aLpMTVDvrbAp0wW/o
-	 xW8dXbKz8cNkuz9ncs7Y1t3TpcNkh/mYGKjbEvXfgWP9sXZl0Wt0xXZSKodesR0IyI
-	 AXYQz54vQ2mAAd18ZrCGx1Z0pLgIMZ00Hr3yx/z/R+UFJ62pMZ9HQ8fZD3wPKlE3zR
-	 3V7DLNPxsUs76lI/1UA67LE5wK4Gmirr0SW0trcIcdEUqohzpro7FhfXD83c2S4MEZ
-	 TT9O3JTjCYADcpICUsYbGrCXVwq/x/MrHLTy2b0Fn7GcZY+Mov9j9MP8LwzMWWBAeT
-	 X4yVDygFcNgQQ==
+	b=lK+Qs1meId433F4nC7m2zLarI/XsKLyZs/NfXqSW08FevT7XSPlMrHPvkMzFEU5ej
+	 IvT3UDjLnfVoSZvhzu0eM6dvMa/FoFOAlrrF7fEdu9o2SbHuaSWfPYm4iTy0Jyg9aD
+	 kNrflsFLt+mvouLIkVjJC+naTdwm3VHchi/gBnA1RYic2R5CotM73QSCLyWi2FVxoe
+	 bn0BMrrfefesjQ6M29xvJfOTvoWm9LinFL8DjMKems0c5OgqtCn6XgDqvUkzlZSmoF
+	 eJ3AI5Pj/RokTFGvBmOAoSN7T5q8gN8uPKsV2On28I21lzlyfwsM1qFDRln/r7+KTZ
+	 OOjVIlzPoI+tg==
 From: Andreas Hindborg <a.hindborg@kernel.org>
 To: "Boqun Feng" <boqun.feng@gmail.com>
 Cc: <linux-kernel@vger.kernel.org>,  <rust-for-linux@vger.kernel.org>,
@@ -43,143 +43,147 @@ Cc: <linux-kernel@vger.kernel.org>,  <rust-for-linux@vger.kernel.org>,
   "Paul E. McKenney" <paulmck@kernel.org>,  "Greg Kroah-Hartman"
  <gregkh@linuxfoundation.org>,  "Linus Torvalds"
  <torvalds@linux-foundation.org>,  "Thomas Gleixner" <tglx@linutronix.de>
-Subject: Re: [PATCH v5 10/10] rust: sync: Add memory barriers
-In-Reply-To: <aF9krO0nVjN0yoEC@Mac.home> (Boqun Feng's message of "Fri, 27 Jun
-	2025 20:42:36 -0700")
+Subject: Re: [PATCH v5 05/10] rust: sync: atomic: Add atomic {cmp,}xchg
+ operations
+In-Reply-To: <aF9bmpX-i6HVMlaj@Mac.home> (Boqun Feng's message of "Fri, 27 Jun
+	2025 20:03:54 -0700")
 References: <20250618164934.19817-1-boqun.feng@gmail.com>
-	<A-SZkzm2EzwbPsG5Vm5qfT1BIGijzoQ7zQI6ExgXZbSXf8ZfIMw6fe-Z7xWgvKnr0BPylikGRuhEfiKfXx5xTw==@protonmail.internalid>
-	<20250618164934.19817-11-boqun.feng@gmail.com> <874iw2zkti.fsf@kernel.org>
-	<epLSBAaTAfRuG5Eb6xqY9vkhnj_hJxwcYvQZw9WGNvxU3Z861O5w58L0rz3s4fq1u5FEYdFkXywUmLVmkp4gvg==@protonmail.internalid>
-	<aF9krO0nVjN0yoEC@Mac.home>
+	<jBAtISwM9LKkR7KuCHEnym75NfGOM4z408pMuDfk4U8VzN8PQuk9JJfBc33Usre3YSjbgtFRj8c0ZNeeQMpZsA==@protonmail.internalid>
+	<20250618164934.19817-6-boqun.feng@gmail.com> <87a55uzlxv.fsf@kernel.org>
+	<_pLa3zqu-AHBOnxkEz7l13l9W-OsKBtuXIkjRsIJJy6EnYTrM99E8Yr24pzjqwCAj1_qs_PI-cVxRsBsbgiFdA==@protonmail.internalid>
+	<aF9bmpX-i6HVMlaj@Mac.home>
 User-Agent: mu4e 1.12.9; emacs 30.1
-Date: Mon, 30 Jun 2025 11:54:37 +0200
-Message-ID: <87ecv1zh9e.fsf@kernel.org>
+Date: Mon, 30 Jun 2025 12:16:27 +0200
+Message-ID: <878ql9zg90.fsf@kernel.org>
 Precedence: bulk
 X-Mailing-List: lkmm@lists.linux.dev
 List-Id: <lkmm.lists.linux.dev>
 List-Subscribe: <mailto:lkmm+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:lkmm+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 
 "Boqun Feng" <boqun.feng@gmail.com> writes:
 
-> On Thu, Jun 26, 2025 at 03:36:25PM +0200, Andreas Hindborg wrote:
+> On Thu, Jun 26, 2025 at 03:12:12PM +0200, Andreas Hindborg wrote:
 >> "Boqun Feng" <boqun.feng@gmail.com> writes:
-> [...]
->> > +//! [`LKMM`]: srctree/tools/memory-mode/
 >>
->> Typo in link target.
->>
+>> > xchg() and cmpxchg() are basic operations on atomic. Provide these based
+>> > on C APIs.
+>> >
+>> > Note that cmpxchg() use the similar function signature as
+>> > compare_exchange() in Rust std: returning a `Result`, `Ok(old)` means
+>> > the operation succeeds and `Err(old)` means the operation fails.
+>> >
+>> > Signed-off-by: Boqun Feng <boqun.feng@gmail.com>
+>> > ---
+>> >  rust/kernel/sync/atomic/generic.rs | 154 +++++++++++++++++++++++++++++
+>> >  1 file changed, 154 insertions(+)
+>> >
+>> > diff --git a/rust/kernel/sync/atomic/generic.rs b/rust/kernel/sync/atomic/generic.rs
+>> > index 73c26f9cf6b8..bcdbeea45dd8 100644
+>> > --- a/rust/kernel/sync/atomic/generic.rs
+>> > +++ b/rust/kernel/sync/atomic/generic.rs
+>> > @@ -256,3 +256,157 @@ pub fn store<Ordering: ReleaseOrRelaxed>(&self, v: T, _: Ordering) {
+>> >          };
+>> >      }
+>> >  }
 >> > +
->> > +/// A compiler barrier.
->> > +///
->> > +/// An explicic compiler barrier function that prevents the compiler =
-from moving the memory
->> > +/// accesses either side of it to the other side.
+>> > +impl<T: AllowAtomic> Atomic<T>
+>> > +where
+>> > +    T::Repr: AtomicHasXchgOps,
+>> > +{
+>> > +    /// Atomic exchange.
+>> > +    ///
+>> > +    /// # Examples
+>> > +    ///
+>> > +    /// ```rust
+>> > +    /// use kernel::sync::atomic::{Atomic, Acquire, Relaxed};
+>> > +    ///
+>> > +    /// let x = Atomic::new(42);
+>> > +    ///
+>> > +    /// assert_eq!(42, x.xchg(52, Acquire));
+>> > +    /// assert_eq!(52, x.load(Relaxed));
+>> > +    /// ```
+>> > +    #[doc(alias("atomic_xchg", "atomic64_xchg"))]
+>> > +    #[inline(always)]
+>> > +    pub fn xchg<Ordering: All>(&self, v: T, _: Ordering) -> T {
+>> > +        let v = T::into_repr(v);
+>> > +        let a = self.as_ptr().cast::<T::Repr>();
+>> > +
+>> > +        // SAFETY:
+>> > +        // - For calling the atomic_xchg*() function:
+>> > +        //   - `self.as_ptr()` is a valid pointer, and per the safety requirement of `AllocAtomic`,
 >>
->> Typo in "explicit".
+>> Typo: `AllowAtomic`.
 >>
 >
 > Fixed.
 >
->> How about:
->>
->>   A compiler barrier. Prevents the compiler from reordering
->>   memory access instructions across the barrier.
->>
->>
->> > +pub(crate) fn barrier() {
->> > +    // By default, Rust inline asms are treated as being able to acce=
-ss any memory or flags, hence
->> > +    // it suffices as a compiler barrier.
->> > +    //
->> > +    // SAFETY: An empty asm block should be safe.
->> > +    unsafe {
->> > +        core::arch::asm!("");
->> > +    }
->> > +}
+>> > +        //      a `*mut T` is a valid `*mut T::Repr`. Therefore `a` is a valid pointer,
+>> > +        //   - per the type invariants, the following atomic operation won't cause data races.
+>> > +        // - For extra safety requirement of usage on pointers returned by `self.as_ptr():
+>> > +        //   - atomic operations are used here.
+>> > +        let ret = unsafe {
+>> > +            match Ordering::TYPE {
+>> > +                OrderingType::Full => T::Repr::atomic_xchg(a, v),
+>> > +                OrderingType::Acquire => T::Repr::atomic_xchg_acquire(a, v),
+>> > +                OrderingType::Release => T::Repr::atomic_xchg_release(a, v),
+>> > +                OrderingType::Relaxed => T::Repr::atomic_xchg_relaxed(a, v),
+>> > +            }
+>> > +        };
 >> > +
->> > +/// A full memory barrier.
->> > +///
->> > +/// A barrier function that prevents both the compiler and the CPU fr=
-om moving the memory accesses
->> > +/// either side of it to the other side.
->>
->>
->>   A barrier that prevents compiler and CPU from reordering memory access
->>   instructions across the barrier.
->>
->> > +pub fn smp_mb() {
->> > +    if cfg!(CONFIG_SMP) {
->> > +        // SAFETY: `smp_mb()` is safe to call.
->> > +        unsafe {
->> > +            bindings::smp_mb();
->> > +        }
->> > +    } else {
->> > +        barrier();
+>> > +        T::from_repr(ret)
 >> > +    }
->> > +}
 >> > +
->> > +/// A write-write memory barrier.
->> > +///
->> > +/// A barrier function that prevents both the compiler and the CPU fr=
-om moving the memory write
->> > +/// accesses either side of it to the other side.
+>> > +    /// Atomic compare and exchange.
+>> > +    ///
+>> > +    /// Compare: The comparison is done via the byte level comparison between the atomic variables
+>> > +    /// with the `old` value.
+>> > +    ///
+>> > +    /// Ordering: When succeeds, provides the corresponding ordering as the `Ordering` type
+>> > +    /// parameter indicates, and a failed one doesn't provide any ordering, the read part of a
+>> > +    /// failed cmpxchg should be treated as a relaxed read.
 >>
->>   A barrier that prevents compiler and CPU from reordering memory write
->>   instructions across the barrier.
+>> Rust `core::ptr` functions have this sentence on success ordering for
+>> compare_exchange:
 >>
->> > +pub fn smp_wmb() {
->> > +    if cfg!(CONFIG_SMP) {
->> > +        // SAFETY: `smp_wmb()` is safe to call.
->> > +        unsafe {
->> > +            bindings::smp_wmb();
->> > +        }
->> > +    } else {
->> > +        barrier();
->> > +    }
->> > +}
->> > +
->> > +/// A read-read memory barrier.
->> > +///
->> > +/// A barrier function that prevents both the compiler and the CPU fr=
-om moving the memory read
->> > +/// accesses either side of it to the other side.
+>>   Using Acquire as success ordering makes the store part of this
+>>   operation Relaxed, and using Release makes the successful load
+>>   Relaxed.
 >>
->>   A barrier that prevents compiler and CPU from reordering memory read
->>   instructions across the barrier.
+>> Does this translate to LKMM cmpxchg operations? If so, I think we should
+>> include this sentence. This also applies to `Atomic::xchg`.
 >>
 >
-> These are good wording, except that I will use "memory (read/write)
-> accesses" instead of "memory (read/write) instructions" because:
+> I see this as a different style of documenting, so in my next version,
+> I have the following:
 >
-> 1) "instructions" are at lower level than the language, and memory
->    barriers function are provided as synchonization primitives, so I
->    feel we should describe memory barrier effects at language level,
->    i.e. mention how it would interact with objects and accesses to them.
+> //! - [`Acquire`] provides ordering between the load part of the annotated operation and all the
+> //!   following memory accesses.
+> //! - [`Release`] provides ordering between all the preceding memory accesses and the store part of
+> //!   the annotated operation.
 >
-> 2) There are instructions can do read and write in one instruction, it
->    might be unclear when we say "prevents reordering an instruction"
->    whether both parts are included, for example:
+> in atomic/ordering.rs, I think I can extend it to:
 >
->    r1 =3D atomic_add(x, 1); // <- this can be one instruction.
->    smp_rmb();
->    r2 =3D atomic_read(y);
+> //! - [`Acquire`] provides ordering between the load part of the annotated operation and all the
+> //!   following memory accesses, and if there is a store part, it has Relaxed ordering.
+> //! - [`Release`] provides ordering between all the preceding memory accesses and the store part of
+> //!   the annotated operation, and if there is load part, it has Relaxed ordering
 >
->    people may think because the smp_rmb() prevents read instructions
->    reordering, and atomic_add() is one instruction in this case,
->    smp_rmb() can prevents the write part of that instruction from
->    reordering, but that's not the case.
->
->
-> So I will do:
->
->    A barrier that prevents compiler and CPU from reordering memory read
->    accesses across the barrier.
+> This aligns with what we usually describe things in tool/memory-model/.
 
-Right, that makes sense =F0=9F=91=8D
+Cool. When you start to go into details of ordering concepts, I feel
+like something is missing though. For example for this sentence:
+
+  [`Release`] provides ordering between all the preceding memory
+  accesses and the store part of the annotated operation.
+
+I guess this provided ordering is only guaranteed to be observable for
+threads that read the same location with `Acquire` or stronger ordering?
+
+If we start expanding on the orderings, rather than deferring to LKMM,
+we should include this info.
 
 
 Best regards,

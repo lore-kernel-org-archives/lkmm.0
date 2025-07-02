@@ -1,210 +1,154 @@
-Received: from mail-qv1-f43.google.com (mail-qv1-f43.google.com [209.85.219.43])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB023191493
-	for <lkmm@lists.linux.dev>; Tue,  1 Jul 2025 14:50:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6066238F91;
+	Wed,  2 Jul 2025 08:33:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751381424; cv=none; b=Jv91cIdpgSC+LFfWeY3fpweKtg6lRkvkmPCpcp0rvJqfQCkniydlPAttzti2ZhG6rnlHFMRlMY4j6ihhtRElFQdOrvMrUb1PQaKu/I2u7XOphMGMGuKfk1wHLOZGApbaQra7LF2jMWk36PZxAQnBgM8tGxBiwGb19HIkbzDvR5Q=
+	t=1751445219; cv=none; b=cz7G50SLkaCuwSooOGCPzqM06tbD7nyGtcDPs8/5IcWhNV9PA+TnxtREjd5iriomPsvx3nGcsJf58ofNEL5UbeCSAIwat/0SxFKq2Ls7Z71ZpuO61dA/tyBPiaiehS9GXKVYYzWCvq/sonZeVh0DjoWQLdDvVM9X9GZopV0l/yM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751381424; c=relaxed/simple;
-	bh=Pp4vcS03lDmrPdszYRwucchkYH6zncgLHopCa9qKIcc=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=hifjwmGKxZ3Ezvr6rjXnutuDpzpRqeDTiLz5kxPgPjDLw7+EWXOcPbxORGwGKdCjM40CpwIz2Jyt/Pj6HkTXxY9Qu2ZIGzP7HSD2OCJPvHsHtFZDsbHsuqF6hsA2t92EDcCdqaO3NGDp9DITQDUoBHIr7AvKi0ZbLZIfFskQbw4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=XMtr/jiy; arc=none smtp.client-ip=209.85.219.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1751445219; c=relaxed/simple;
+	bh=kJ0c2Y+z8vkhvIp9L3wSYqCfON+TxnGqLUp7nQEzxic=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=LQocdRZLBeyPKoPL8L6vRBrO1LmEEucKbtFvI7Kc/exK5DFcPYm4YtBWSByHMOGwGc0dH/WMp1fpmpKPRR1PETlK7PlHvdzYwgajtwsyMQK/m0uQd+4BJeLpW/tG/j3CDypafqwumSneTEudCWAWHPA7fbu08p+7ZAys0ilGczg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=q8+Skwj3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XMtr/jiy"
-Received: by mail-qv1-f43.google.com with SMTP id 6a1803df08f44-6face367320so37949596d6.3
-        for <lkmm@lists.linux.dev>; Tue, 01 Jul 2025 07:50:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1751381422; x=1751986222; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:feedback-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=1xMPzI4BYFmtrcIaXCgikpxCSbMyY6dtY8BA23HqZsU=;
-        b=XMtr/jiytRhr2Rv+7pNonbS9WRoSlJiyPr8E+4Y/OZC5n7VoCQnx+fTcFBhJAfyGA1
-         4ICQgztpzqhnp0QHUak7vmXCI6Ez/NP7NHI3ZjIwXLKcSoFK8t3mcbFvnFqNeqaLey1B
-         jd4BLLpaWGCh2XB2ZKjDkFDVXvcS8a84UHsTdwRw1Wu9jyNjRkaZHhgaIVyeKSNx//zh
-         sbb8AVGTDEZJ+DH+H8BziowYvEbxdrCq5EZqFGxdygQApcedSQFufPd6+RgIBFHOiq4q
-         9N9I7vTj2C1UaVRKhVWJN4SvIcWziNj97Sz83F8FTlBGlxWtbSsM9lhwQoEIRF9LhmzX
-         AOJg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1751381422; x=1751986222;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:feedback-id:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=1xMPzI4BYFmtrcIaXCgikpxCSbMyY6dtY8BA23HqZsU=;
-        b=AWY+iF/o6ze+q8cS2QTHPPjXon8w2wt+tk01hdAJKsIOlxCG7MarNPMZsDf/he0SuB
-         Aj9f3rLYh1nZQ5W8GqDv+DfjS8FHgSKOtYvWVJPk9Wx5HyRX69Oscl4ng6w0QzJTqu81
-         0UJv/FmYefTDk3M0TWhttQiFi0WKZo/yTq6wF6eB/QGLXz50gnOGnoVyu3pVSFm/Mh3Y
-         O+i4j9ySEb/XIREdRQZzvOAUmflK9rtI9A2BHHm1T/m2ClxXJHdk8OLA/66pNF49449f
-         V0B6P/FJb73dD6BlNIbVbviChybESvONLDRR0YHvsOjHQXEeUzKn8FRppIAOU+WUoPYW
-         QiSQ==
-X-Forwarded-Encrypted: i=1; AJvYcCVv1PvaOPmoNbTbdX2N7bmhQxZ514JFxe+Clmig5XFkDdSgLo5cxBV9XSFPGv+NagsuwTbL@lists.linux.dev
-X-Gm-Message-State: AOJu0YwEjMY37LVmJbYPZbFluokUpaufBakQOuH4Sc+kiO3LHhphYSNf
-	DF3hlA5KbGAKwL/Fk7Rtuj4gs/07xj1C9aUWp6GDNWC0NbXmJ7ecw/mc
-X-Gm-Gg: ASbGncsfTwciM5w+UrpAzBBKsYJ1csKLa+ju1dNlqARBEffuiPAq2ONlCvjbR/vUNph
-	0kttE7M3A1/o5UEgKINIbcdqc7Va1Nrs56D0Tc+AAgZ8zWhEst3DNb9RGIsAhutrFQLnEoSvqsu
-	GOMxa11UYXCbdvdwFvxrXFC3S7z7LiFybA0SlP7A36askXfm95B87JfOcJhZHXQt3hGoo+y9BcW
-	cSexunh3TBFScYJ9zmguhOHDOba/g5+S63j6YxgLzrfNH6PpIeiAz8hLgM2yFZaR17TfTge9tgy
-	jG1knAbVR2U5hj/baZebAIHUCOM/2SlFEGLTNgN6YOv4ImEpFKltzvduStJto9EhY+yK8q+nRPv
-	G5imtuw+7FECio7G3YE1YBIi+6kM8cFUIej4drJ7uEL08jrOco0hr
-X-Google-Smtp-Source: AGHT+IHfI2aCrI4TIYMVgRKiuqjH+gb+mFLEAN3w4NLv9Fi8LElRo+IdtEtnYa5pG130yeXIgjMESQ==
-X-Received: by 2002:a05:6214:5f04:b0:6fa:fcb0:b88d with SMTP id 6a1803df08f44-70003995071mr338769956d6.28.1751381421434;
-        Tue, 01 Jul 2025 07:50:21 -0700 (PDT)
-Received: from fauth-a2-smtp.messagingengine.com (fauth-a2-smtp.messagingengine.com. [103.168.172.201])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-6fd771c0d3esm84971806d6.42.2025.07.01.07.50.20
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 01 Jul 2025 07:50:20 -0700 (PDT)
-Received: from phl-compute-10.internal (phl-compute-10.phl.internal [10.202.2.50])
-	by mailfauth.phl.internal (Postfix) with ESMTP id 33A68F40067;
-	Tue,  1 Jul 2025 10:50:20 -0400 (EDT)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-10.internal (MEProxy); Tue, 01 Jul 2025 10:50:20 -0400
-X-ME-Sender: <xms:rPVjaDmf6bppXXWuyv1FjC8_peq-09fIctn0u9XCKW8HJGaMoalaTg>
-    <xme:rPVjaG0dCPk3Xfsd8Teyi8FhpDmDGrCuBbiXMqNclw-S1PlIFIsFeSBkjxucLCzOH
-    -DCvC0FeYBs6CsX0g>
-X-ME-Received: <xmr:rPVjaJrNwPDxboVIkUWqKBbELesfszbYKGDLqoh7RVSeV3iA5Yc2cxZd-g>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddugeektdcutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpeffhffvvefukfhfgggtuggjsehttdertddttddvnecuhfhrohhmpeeuohhquhhnucfh
-    vghnghcuoegsohhquhhnrdhfvghnghesghhmrghilhdrtghomheqnecuggftrfgrthhtvg
-    hrnhephedugfduffffteeutddvheeuveelvdfhleelieevtdeguefhgeeuveeiudffiedv
-    necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepsghoqh
-    hunhdomhgvshhmthhprghuthhhphgvrhhsohhnrghlihhthidqieelvdeghedtieegqddu
-    jeejkeehheehvddqsghoqhhunhdrfhgvnhhgpeepghhmrghilhdrtghomhesfhhigihmvg
-    drnhgrmhgvpdhnsggprhgtphhtthhopedvjedpmhhouggvpehsmhhtphhouhhtpdhrtghp
-    thhtoheprgdrhhhinhgusghorhhgsehkvghrnhgvlhdrohhrghdprhgtphhtthhopehsth
-    gvrhhnsehrohiflhgrnhgurdhhrghrvhgrrhgurdgvughupdhrtghpthhtoheplhhinhhu
-    gidqkhgvrhhnvghlsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtoheprhhush
-    htqdhfohhrqdhlihhnuhigsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohep
-    lhhkmhhmsehlihhsthhsrdhlihhnuhigrdguvghvpdhrtghpthhtoheplhhinhhugidqrg
-    hrtghhsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepohhjvggurgeskhgv
-    rhhnvghlrdhorhhgpdhrtghpthhtoheprghlvgigrdhgrgihnhhorhesghhmrghilhdrtg
-    homhdprhgtphhtthhopehgrghrhiesghgrrhihghhuohdrnhgvth
-X-ME-Proxy: <xmx:rPVjaLlSqxV867VYSVIxy4V0XyF2b04cvL7jofUibe7Ao8Wb0-vnKg>
-    <xmx:rPVjaB0zFBPdu2v8fvtKv2UYeIMh2sGKriDGVyWI7S_okQbRHQ8g6g>
-    <xmx:rPVjaKttKAur6FBBU7yTblwAgSCi4R-SX6kCCy6UgacTFOtUDLmi7Q>
-    <xmx:rPVjaFXl_-j9uf18xtrqCUaFjFrPeK8idU9rx-cRoape6jeWe--tqQ>
-    <xmx:rPVjaA3QC0YP7iRSJV12wavuytCNqclO0FL1w9C_7sO-BSGw0mnPKWxK>
-Feedback-ID: iad51458e:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 1 Jul 2025 10:50:19 -0400 (EDT)
-Date: Tue, 1 Jul 2025 07:50:18 -0700
-From: Boqun Feng <boqun.feng@gmail.com>
-To: Andreas Hindborg <a.hindborg@kernel.org>
-Cc: Alan Stern <stern@rowland.harvard.edu>, linux-kernel@vger.kernel.org,
-	rust-for-linux@vger.kernel.org, lkmm@lists.linux.dev,
-	linux-arch@vger.kernel.org, Miguel Ojeda <ojeda@kernel.org>,
-	Alex Gaynor <alex.gaynor@gmail.com>, Gary Guo <gary@garyguo.net>,
-	=?iso-8859-1?Q?Bj=F6rn?= Roy Baron <bjorn3_gh@protonmail.com>,
-	Benno Lossin <lossin@kernel.org>, Alice Ryhl <aliceryhl@google.com>,
-	Trevor Gross <tmgross@umich.edu>,
-	Danilo Krummrich <dakr@kernel.org>, Will Deacon <will@kernel.org>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Wedson Almeida Filho <wedsonaf@gmail.com>,
-	Viresh Kumar <viresh.kumar@linaro.org>,
-	Lyude Paul <lyude@redhat.com>, Ingo Molnar <mingo@kernel.org>,
-	Mitchell Levy <levymitchell0@gmail.com>,
-	"Paul E. McKenney" <paulmck@kernel.org>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Thomas Gleixner <tglx@linutronix.de>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="q8+Skwj3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 683ADC4CEED;
+	Wed,  2 Jul 2025 08:33:34 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1751445219;
+	bh=kJ0c2Y+z8vkhvIp9L3wSYqCfON+TxnGqLUp7nQEzxic=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:From;
+	b=q8+Skwj3QzyUajp+7zFyee3Jrk9XxY71iydzWBnwzhOU2Eka/4YCsA4zHrsPOLb7F
+	 giS3CtoP3N1oKev4+5eKYZS7vrJnPLIJnwWp3beZJ2UNgQSbrrWAdv18YcI1gLJZsx
+	 9epXbFSCWR/WfoegWEE5O6RGbm3OoS0mExfqPrPCLNedHrpX1xQ6jrHnKJqqny8IWH
+	 H+jQYsy+8dpCp3/+PXIEGzWWy/pMoLdqexYFnnxXJBEIE45g6kpgEYaME+BsGOxFhG
+	 PHylNKcGo48d5x3ohuanRsAeSakrq6VNKU3xX6sLWEb/AR7GH7AfJY1UOn3r6tItUf
+	 ILjHfS4TISX3A==
+From: Andreas Hindborg <a.hindborg@kernel.org>
+To: "Boqun Feng" <boqun.feng@gmail.com>
+Cc: "Alan Stern" <stern@rowland.harvard.edu>,
+  <linux-kernel@vger.kernel.org>,  <rust-for-linux@vger.kernel.org>,
+  <lkmm@lists.linux.dev>,  <linux-arch@vger.kernel.org>,  "Miguel Ojeda"
+ <ojeda@kernel.org>,  "Alex Gaynor" <alex.gaynor@gmail.com>,  "Gary Guo"
+ <gary@garyguo.net>,  =?utf-8?Q?Bj=C3=B6rn?= Roy Baron
+ <bjorn3_gh@protonmail.com>,  "Benno
+ Lossin" <lossin@kernel.org>,  "Alice Ryhl" <aliceryhl@google.com>,
+  "Trevor Gross" <tmgross@umich.edu>,  "Danilo Krummrich"
+ <dakr@kernel.org>,  "Will Deacon" <will@kernel.org>,  "Peter Zijlstra"
+ <peterz@infradead.org>,  "Mark Rutland" <mark.rutland@arm.com>,  "Wedson
+ Almeida Filho" <wedsonaf@gmail.com>,  "Viresh Kumar"
+ <viresh.kumar@linaro.org>,  "Lyude Paul" <lyude@redhat.com>,  "Ingo
+ Molnar" <mingo@kernel.org>,  "Mitchell Levy" <levymitchell0@gmail.com>,
+  "Paul E. McKenney" <paulmck@kernel.org>,  "Greg Kroah-Hartman"
+ <gregkh@linuxfoundation.org>,  "Linus Torvalds"
+ <torvalds@linux-foundation.org>,  "Thomas Gleixner" <tglx@linutronix.de>
 Subject: Re: [PATCH v5 04/10] rust: sync: atomic: Add generic atomics
-Message-ID: <aGP1qoda9U0q2yss@Mac.home>
+In-Reply-To: <aGP1qoda9U0q2yss@Mac.home> (Boqun Feng's message of "Tue, 01 Jul
+	2025 07:50:18 -0700")
 References: <20250618164934.19817-1-boqun.feng@gmail.com>
- <8ISRnKRw28Na4so9GDfdv0gd40nmTGOwD7hFx507xGgJ64p9s8qECsOkboryQH02IQJ4ObvqAwcLUZCKt1QwZQ==@protonmail.internalid>
- <20250618164934.19817-5-boqun.feng@gmail.com>
- <8734bm1yxk.fsf@kernel.org>
- <jJqJwkURyr0NjkFdJaF6oYbPGY4LEzZs_sfY9jlmqoK1B9iE8VjqbfINHilEHxKfmpc9co7DmsS142ZWsBQ8tw==@protonmail.internalid>
- <aF6yRIixTPx5YZbA@Mac.home>
- <87jz4tzhcs.fsf@kernel.org>
- <Xfm2JGPb6LBj7GAjuEFddz5UvwY_vFr3r-253ujBCBa4galferuILoEDKNSQcfOL-lFi65L-rTnBWAxxCE4cyg==@protonmail.internalid>
- <7eea6ee3-4a9e-4eb5-b412-2ece02b33c6c@rowland.harvard.edu>
- <875xgcxpe6.fsf@kernel.org>
+	<8ISRnKRw28Na4so9GDfdv0gd40nmTGOwD7hFx507xGgJ64p9s8qECsOkboryQH02IQJ4ObvqAwcLUZCKt1QwZQ==@protonmail.internalid>
+	<20250618164934.19817-5-boqun.feng@gmail.com> <8734bm1yxk.fsf@kernel.org>
+	<jJqJwkURyr0NjkFdJaF6oYbPGY4LEzZs_sfY9jlmqoK1B9iE8VjqbfINHilEHxKfmpc9co7DmsS142ZWsBQ8tw==@protonmail.internalid>
+	<aF6yRIixTPx5YZbA@Mac.home> <87jz4tzhcs.fsf@kernel.org>
+	<Xfm2JGPb6LBj7GAjuEFddz5UvwY_vFr3r-253ujBCBa4galferuILoEDKNSQcfOL-lFi65L-rTnBWAxxCE4cyg==@protonmail.internalid>
+	<7eea6ee3-4a9e-4eb5-b412-2ece02b33c6c@rowland.harvard.edu>
+	<875xgcxpe6.fsf@kernel.org>
+	<2E_dNXmHJqWTXxnkODAnirCUgwU4iXANoAbNVSze1fnVwr49fbc8TeYMaLvKoIyO4Z8aRLwfwaaOiz7Zht1Leg==@protonmail.internalid>
+	<aGP1qoda9U0q2yss@Mac.home>
+User-Agent: mu4e 1.12.9; emacs 30.1
+Date: Wed, 02 Jul 2025 10:33:30 +0200
+Message-ID: <87a55nvvol.fsf@kernel.org>
 Precedence: bulk
 X-Mailing-List: lkmm@lists.linux.dev
 List-Id: <lkmm.lists.linux.dev>
 List-Subscribe: <mailto:lkmm+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:lkmm+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <875xgcxpe6.fsf@kernel.org>
+Content-Type: text/plain
 
-On Tue, Jul 01, 2025 at 10:54:09AM +0200, Andreas Hindborg wrote:
-> "Alan Stern" <stern@rowland.harvard.edu> writes:
-> 
-> > On Mon, Jun 30, 2025 at 11:52:35AM +0200, Andreas Hindborg wrote:
-> >> "Boqun Feng" <boqun.feng@gmail.com> writes:
-> >> > Well, a non-atomic read vs an atomic read is not a data race (for both
-> >> > Rust memory model and LKMM), so your proposal is overly restricted.
-> >>
-> >> OK, my mistake then. I thought mixing marked and plain accesses would be
-> >> considered a race. I got hat from
-> >> `tools/memory-model/Documentation/explanation.txt`:
-> >>
-> >>     A "data race"
-> >>     occurs when there are two memory accesses such that:
-> >>
-> >>     1.	they access the same location,
-> >>
-> >>     2.	at least one of them is a store,
-> >>
-> >>     3.	at least one of them is plain,
-> >>
-> >>     4.	they occur on different CPUs (or in different threads on the
-> >>       same CPU), and
-> >>
-> >>     5.	they execute concurrently.
-> >>
-> >> I did not study all that documentation, so I might be missing a point or
-> >> two.
-> >
-> > You missed point 2 above: at least one of the accesses has to be a
-> > store.  When you're looking at a non-atomic read vs. an atomic read,
-> > both of them are loads and so it isn't a data race.
-> 
-> Ah, right. I was missing the entire point made by Boqun. Thanks for
-> clarifying.
-> 
-> Since what constitutes a race might not be immediately clear to users
-> (like me), can we include the section above in the safety comment,
-> rather than deferring to LKMM docs?
-> 
+"Boqun Feng" <boqun.feng@gmail.com> writes:
 
-Still, I don't think it's a good idea. For a few reasons:
+> On Tue, Jul 01, 2025 at 10:54:09AM +0200, Andreas Hindborg wrote:
+>> "Alan Stern" <stern@rowland.harvard.edu> writes:
+>>
+>> > On Mon, Jun 30, 2025 at 11:52:35AM +0200, Andreas Hindborg wrote:
+>> >> "Boqun Feng" <boqun.feng@gmail.com> writes:
+>> >> > Well, a non-atomic read vs an atomic read is not a data race (for both
+>> >> > Rust memory model and LKMM), so your proposal is overly restricted.
+>> >>
+>> >> OK, my mistake then. I thought mixing marked and plain accesses would be
+>> >> considered a race. I got hat from
+>> >> `tools/memory-model/Documentation/explanation.txt`:
+>> >>
+>> >>     A "data race"
+>> >>     occurs when there are two memory accesses such that:
+>> >>
+>> >>     1.	they access the same location,
+>> >>
+>> >>     2.	at least one of them is a store,
+>> >>
+>> >>     3.	at least one of them is plain,
+>> >>
+>> >>     4.	they occur on different CPUs (or in different threads on the
+>> >>       same CPU), and
+>> >>
+>> >>     5.	they execute concurrently.
+>> >>
+>> >> I did not study all that documentation, so I might be missing a point or
+>> >> two.
+>> >
+>> > You missed point 2 above: at least one of the accesses has to be a
+>> > store.  When you're looking at a non-atomic read vs. an atomic read,
+>> > both of them are loads and so it isn't a data race.
+>>
+>> Ah, right. I was missing the entire point made by Boqun. Thanks for
+>> clarifying.
+>>
+>> Since what constitutes a race might not be immediately clear to users
+>> (like me), can we include the section above in the safety comment,
+>> rather than deferring to LKMM docs?
+>>
+>
+> Still, I don't think it's a good idea. For a few reasons:
+>
+> 1) Maintaining multiple sources of truth is painful and risky, it's
+>    going to be further confusing if users feel LKMM and the function
+>    safety requirement conflict with each other.
 
-1) Maintaining multiple sources of truth is painful and risky, it's
-   going to be further confusing if users feel LKMM and the function
-   safety requirement conflict with each other.
+I would agree.
 
-2) Human language is not the best tool to describe memory model, that's
-   why we use herd to describe and use memory model. Trying to describe
-   the memory model in comments rather than referring to the formal
-   model is a way backwards.
+>
+> 2) Human language is not the best tool to describe memory model, that's
+>    why we use herd to describe and use memory model. Trying to describe
+>    the memory model in comments rather than referring to the formal
+>    model is a way backwards.
 
-3) I believed the reason we got our discussion here is because you tried
-   to improve the comment of `from_ptr()`, and I do appreciate that
-   effort. And I think we should continue in that direction instead of
-   pulling the whole "what are data race conditions" into picture. So
-   how about we clearly call out that it'll be safe if other accesses
-   are atomic, which should be the most cases:
+I do not agree with this. I read human language much better than formal logic.
 
-   /// - For the duration of `'a`, other accesses to the object cannot cause data races
-   ///   (defined by [`LKMM`]) against atomic operations on the returned reference. Note
-   ///   that if all other accesses are atomic, then this safety requirement is trivially
-   ///   fulfilled.
+>
+> 3) I believed the reason we got our discussion here is because you tried
+>    to improve the comment of `from_ptr()`, and I do appreciate that
+>    effort. And I think we should continue in that direction instead of
+>    pulling the whole "what are data race conditions" into picture.
 
-Regards,
-Boqun
+Yes, absolutely.
 
-> 
-> Best regards,
-> Andreas Hindborg
-> 
-> 
+> So
+>    how about we clearly call out that it'll be safe if other accesses
+>    are atomic, which should be the most cases:
+>
+>    /// - For the duration of `'a`, other accesses to the object cannot cause data races
+>    ///   (defined by [`LKMM`]) against atomic operations on the returned reference. Note
+>    ///   that if all other accesses are atomic, then this safety requirement is trivially
+>    ///   fulfilled.
+
+Sounds good to me, thanks!
+
+
+Best regards,
+Andreas Hindborg
+
+
+

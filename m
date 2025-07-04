@@ -1,154 +1,303 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qv1-f48.google.com (mail-qv1-f48.google.com [209.85.219.48])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6066238F91;
-	Wed,  2 Jul 2025 08:33:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A256B2E3715
+	for <lkmm@lists.linux.dev>; Fri,  4 Jul 2025 20:25:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751445219; cv=none; b=cz7G50SLkaCuwSooOGCPzqM06tbD7nyGtcDPs8/5IcWhNV9PA+TnxtREjd5iriomPsvx3nGcsJf58ofNEL5UbeCSAIwat/0SxFKq2Ls7Z71ZpuO61dA/tyBPiaiehS9GXKVYYzWCvq/sonZeVh0DjoWQLdDvVM9X9GZopV0l/yM=
+	t=1751660726; cv=none; b=KZjXVX1JS7/jyidaIV0NZVGSP+vrijnGRl+xPh33hHR4BtK14ppVUYXmhdrHYdJuRNof53R2/BvQZN8c6KkCMzvH10U++T3T1RO8scQQIAQTC7oH60on3DmpNMFi98Gq1gt9dr0VP5h+HATy4QSV++kiMgWHzW9yl6IJwIJJiFE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751445219; c=relaxed/simple;
-	bh=kJ0c2Y+z8vkhvIp9L3wSYqCfON+TxnGqLUp7nQEzxic=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=LQocdRZLBeyPKoPL8L6vRBrO1LmEEucKbtFvI7Kc/exK5DFcPYm4YtBWSByHMOGwGc0dH/WMp1fpmpKPRR1PETlK7PlHvdzYwgajtwsyMQK/m0uQd+4BJeLpW/tG/j3CDypafqwumSneTEudCWAWHPA7fbu08p+7ZAys0ilGczg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=q8+Skwj3; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1751660726; c=relaxed/simple;
+	bh=8ONKBczAcoAupa0sWz4Fs7VvElHdMFKermzcLXdRHnQ=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Yp4mOgun0G5jKywIMq1/cHRkl9RGn7Xg20bjiC2BToRriNs0z+J+vjZ6Q6AYfzDGxed30efQKUpa8jwfXb9WV0UbKnXK1U/ml9COlzJUnBu1ruwQzXVvfGgbrA9808VlatfOzxbBcEQZDVlUmQ23ry8P5OuBn4JpeH8q78IVCSU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=AW3ErQpV; arc=none smtp.client-ip=209.85.219.48
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="q8+Skwj3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 683ADC4CEED;
-	Wed,  2 Jul 2025 08:33:34 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1751445219;
-	bh=kJ0c2Y+z8vkhvIp9L3wSYqCfON+TxnGqLUp7nQEzxic=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:From;
-	b=q8+Skwj3QzyUajp+7zFyee3Jrk9XxY71iydzWBnwzhOU2Eka/4YCsA4zHrsPOLb7F
-	 giS3CtoP3N1oKev4+5eKYZS7vrJnPLIJnwWp3beZJ2UNgQSbrrWAdv18YcI1gLJZsx
-	 9epXbFSCWR/WfoegWEE5O6RGbm3OoS0mExfqPrPCLNedHrpX1xQ6jrHnKJqqny8IWH
-	 H+jQYsy+8dpCp3/+PXIEGzWWy/pMoLdqexYFnnxXJBEIE45g6kpgEYaME+BsGOxFhG
-	 PHylNKcGo48d5x3ohuanRsAeSakrq6VNKU3xX6sLWEb/AR7GH7AfJY1UOn3r6tItUf
-	 ILjHfS4TISX3A==
-From: Andreas Hindborg <a.hindborg@kernel.org>
-To: "Boqun Feng" <boqun.feng@gmail.com>
-Cc: "Alan Stern" <stern@rowland.harvard.edu>,
-  <linux-kernel@vger.kernel.org>,  <rust-for-linux@vger.kernel.org>,
-  <lkmm@lists.linux.dev>,  <linux-arch@vger.kernel.org>,  "Miguel Ojeda"
- <ojeda@kernel.org>,  "Alex Gaynor" <alex.gaynor@gmail.com>,  "Gary Guo"
- <gary@garyguo.net>,  =?utf-8?Q?Bj=C3=B6rn?= Roy Baron
- <bjorn3_gh@protonmail.com>,  "Benno
- Lossin" <lossin@kernel.org>,  "Alice Ryhl" <aliceryhl@google.com>,
-  "Trevor Gross" <tmgross@umich.edu>,  "Danilo Krummrich"
- <dakr@kernel.org>,  "Will Deacon" <will@kernel.org>,  "Peter Zijlstra"
- <peterz@infradead.org>,  "Mark Rutland" <mark.rutland@arm.com>,  "Wedson
- Almeida Filho" <wedsonaf@gmail.com>,  "Viresh Kumar"
- <viresh.kumar@linaro.org>,  "Lyude Paul" <lyude@redhat.com>,  "Ingo
- Molnar" <mingo@kernel.org>,  "Mitchell Levy" <levymitchell0@gmail.com>,
-  "Paul E. McKenney" <paulmck@kernel.org>,  "Greg Kroah-Hartman"
- <gregkh@linuxfoundation.org>,  "Linus Torvalds"
- <torvalds@linux-foundation.org>,  "Thomas Gleixner" <tglx@linutronix.de>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="AW3ErQpV"
+Received: by mail-qv1-f48.google.com with SMTP id 6a1803df08f44-6faf66905adso10309056d6.2
+        for <lkmm@lists.linux.dev>; Fri, 04 Jul 2025 13:25:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1751660723; x=1752265523; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:feedback-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=1ieDkWPWYpbEbfvpC14I2yn3YD4poh1OnnQQlUX+8JM=;
+        b=AW3ErQpVG9lhj5chDjKWIjZJrwaEAqWaBi+SSBBFp33g7V5QdTPf1s0TAxRPkggiWv
+         qTrqCf6Y1/dYXN2FBbIyL+bnxUVQ0MbI5pLGNvk2hvif9HNJ7byKNdl2jLDZQ7Xw/Ygj
+         748DE8zgyE7+wknlKN5PHk9vrLIt/TdNCOSAi3ZkojE7tgAEJWwjxrn1eNQUJDRdEsjx
+         2nrCvHSxJ8SmimN/grldLoG26h0ju2bhsLTj5fAeWO94UiD/QjkSgTlmbtnD5wn30kl9
+         jP9fihdsQe9kMOIPKYCJnTBB6K3Mc9jMUV1VW8wh3GIt63+IpWj6wdjxvvVYOvVbj478
+         zDyw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1751660723; x=1752265523;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:feedback-id:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=1ieDkWPWYpbEbfvpC14I2yn3YD4poh1OnnQQlUX+8JM=;
+        b=StgiBchOa/YDpWGFAMDYogx9i0KRzcyaaCl5PRVgGwH/1RS+ROrR8RjkFrAb6BWojr
+         2hI2J63smWGieRpdsUDiqb5wWRhCbX3jbgf1M42xwu3xlZcG6JU4eOHhV4owR1WZO8rk
+         s/ArpWYh8mPmEsvEl1BW7pmZirRJ+IShwIpU2jJxk/BoOA2qB+yAKAC2dvFHJKOzLwac
+         c2Talx1ayJPqtWkQphCl94rx6UXG0GPfxm8aanHkngd2I0z+8DvcrWl7c3/zKU/V9uSw
+         rPBaLYxPppCNcv4xwdMpgH5MZFU+LWQSdxeUxf2C17nJdqhs8pwE14z5RTLrx/ycqdOQ
+         0Ctw==
+X-Forwarded-Encrypted: i=1; AJvYcCXGdZNkZ0CZkY2pzkqn/52+6uxeZ6p83pqgU8gRf4H0+ZghovdlyHLjoQjIeoTR+IxITQpF@lists.linux.dev
+X-Gm-Message-State: AOJu0YyhGjMwjM9VMRDZqytLXAfqUOgB8GLft8SPxbjPRXD+78WmvqMW
+	tfUmU/4gxji08Cg8A9clOPANmn/O+ZN2R/qTW5RKbVwiX4eAk18yRuIl
+X-Gm-Gg: ASbGncu18aMXltg6n9tb55W+0NT/pl6D9hQPN6+1VkFtFpnLv0C7ZqwkrseYlEkZmzu
+	dMd+AWZHZm5vTEX2lwsGABqsoFI0G6SZvjFMz9CNog88uPj77b1BYxHTTgd/420p3W6auLU9Fyw
+	ZD+UjVUOZdP7aVkl0RmURTB5AULAUeETjt0+AB22/oT4MOMziJDHQwj83SiufCMP5ZE9wT5c1yS
+	XrudN6p+BGBICsh1DdBYHoKHiveVv9233l4fTwJK3Kvuxn7qp5dWpo3W4O0YknBTNVe/JjrwKOC
+	CK2sFKDLS+9HtUM9WhQf/vRzoYTG7YjaBSOHnsNytzJPMiwWfI6YmwvK7CbLFDEEBsRHcDRe6Yv
+	O88J0jXb2XUneX0bDtXSnwjECRXA9GjNAH0kCznSGQWJ8XKLKBqnw
+X-Google-Smtp-Source: AGHT+IHUPSjkAPnAQgg+ShSWKvcuKJlXl3+Jkt7DJ6lGqMF2S5k/FpndMrTnv45qROvemTwVLrDYcA==
+X-Received: by 2002:ad4:5ba2:0:b0:700:c1c9:9c24 with SMTP id 6a1803df08f44-702c8b90447mr47131726d6.14.1751660723391;
+        Fri, 04 Jul 2025 13:25:23 -0700 (PDT)
+Received: from fauth-a1-smtp.messagingengine.com (fauth-a1-smtp.messagingengine.com. [103.168.172.200])
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-702c4cc75a2sm18185486d6.15.2025.07.04.13.25.22
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 04 Jul 2025 13:25:23 -0700 (PDT)
+Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
+	by mailfauth.phl.internal (Postfix) with ESMTP id 42435F40068;
+	Fri,  4 Jul 2025 16:25:22 -0400 (EDT)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-05.internal (MEProxy); Fri, 04 Jul 2025 16:25:22 -0400
+X-ME-Sender: <xms:sjhoaKIo2ReoaKQcdUzWvqExKdI1ONYO_XF3_luzvz1uFjNJsbIsXQ>
+    <xme:sjhoaCL1RXsFavr4W53hEA9S7JQVM8Kd3__4Dar6fATugn4X5TL6W5yQ-tjmeAUaf
+    rg2hevqe26xJS1Dag>
+X-ME-Received: <xmr:sjhoaKtDvsUZ3VTDGzKYwvp199fpOdXIJTPbtIAR_UtqUUVSkLmBT0GM3A>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddvgeduudcutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+    hrpeffhffvvefukfhfgggtuggjsehttdertddttddvnecuhfhrohhmpeeuohhquhhnucfh
+    vghnghcuoegsohhquhhnrdhfvghnghesghhmrghilhdrtghomheqnecuggftrfgrthhtvg
+    hrnhephfetvdfgtdeukedvkeeiteeiteejieehvdetheduudejvdektdekfeegvddvhedt
+    necuffhomhgrihhnpehkvghrnhgvlhdrohhrghenucevlhhushhtvghrufhiiigvpedtne
+    curfgrrhgrmhepmhgrihhlfhhrohhmpegsohhquhhnodhmvghsmhhtphgruhhthhhpvghr
+    shhonhgrlhhithihqdeiledvgeehtdeigedqudejjeekheehhedvqdgsohhquhhnrdhfvg
+    hngheppehgmhgrihhlrdgtohhmsehfihigmhgvrdhnrghmvgdpnhgspghrtghpthhtohep
+    vdeipdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgrghrhiesghgrrhihghhuoh
+    drnhgvthdprhgtphhtthhopehlihhnuhigqdhkvghrnhgvlhesvhhgvghrrdhkvghrnhgv
+    lhdrohhrghdprhgtphhtthhopehruhhsthdqfhhorhdqlhhinhhugiesvhhgvghrrdhkvg
+    hrnhgvlhdrohhrghdprhgtphhtthhopehlkhhmmheslhhishhtshdrlhhinhhugidruggv
+    vhdprhgtphhtthhopehlihhnuhigqdgrrhgthhesvhhgvghrrdhkvghrnhgvlhdrohhrgh
+    dprhgtphhtthhopehojhgvuggrsehkvghrnhgvlhdrohhrghdprhgtphhtthhopegrlhgv
+    gidrghgrhihnohhrsehgmhgrihhlrdgtohhmpdhrtghpthhtohepsghjohhrnhefpghghh
+    esphhrohhtohhnmhgrihhlrdgtohhmpdhrtghpthhtoheplhhoshhsihhnsehkvghrnhgv
+    lhdrohhrgh
+X-ME-Proxy: <xmx:sjhoaPbdVRMS21nw8AO5EaWPJjZgKXNbWKcMQU__Dn1nidRipR_yUg>
+    <xmx:sjhoaBZKBpBuj8WVXDxuwdImUnwZO07szFNDylwbW__dv34Wijk_Jw>
+    <xmx:sjhoaLDra9ptDDgL1viTKR0zx06YrMmf1uzZcE2UQW4xjHxExz87pg>
+    <xmx:sjhoaHYLkU75PhpVsI8_mSBoMpkW-OtIylWM8VI08qmJZqBKUPWdfQ>
+    <xmx:sjhoaBqyhrGp5pdFH18GitbXQFjrvr5K6AQUBgI_DfDuf4ZH16zJpja8>
+Feedback-ID: iad51458e:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 4 Jul 2025 16:25:21 -0400 (EDT)
+Date: Fri, 4 Jul 2025 13:25:20 -0700
+From: Boqun Feng <boqun.feng@gmail.com>
+To: Gary Guo <gary@garyguo.net>
+Cc: linux-kernel@vger.kernel.org, rust-for-linux@vger.kernel.org,
+	lkmm@lists.linux.dev, linux-arch@vger.kernel.org,
+	Miguel Ojeda <ojeda@kernel.org>,
+	Alex Gaynor <alex.gaynor@gmail.com>,
+	=?iso-8859-1?Q?Bj=F6rn?= Roy Baron <bjorn3_gh@protonmail.com>,
+	Benno Lossin <lossin@kernel.org>,
+	Andreas Hindborg <a.hindborg@kernel.org>,
+	Alice Ryhl <aliceryhl@google.com>, Trevor Gross <tmgross@umich.edu>,
+	Danilo Krummrich <dakr@kernel.org>, Will Deacon <will@kernel.org>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Wedson Almeida Filho <wedsonaf@gmail.com>,
+	Viresh Kumar <viresh.kumar@linaro.org>,
+	Lyude Paul <lyude@redhat.com>, Ingo Molnar <mingo@kernel.org>,
+	Mitchell Levy <levymitchell0@gmail.com>,
+	"Paul E. McKenney" <paulmck@kernel.org>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Thomas Gleixner <tglx@linutronix.de>
 Subject: Re: [PATCH v5 04/10] rust: sync: atomic: Add generic atomics
-In-Reply-To: <aGP1qoda9U0q2yss@Mac.home> (Boqun Feng's message of "Tue, 01 Jul
-	2025 07:50:18 -0700")
+Message-ID: <aGg4sIORQiG02IoD@Mac.home>
 References: <20250618164934.19817-1-boqun.feng@gmail.com>
-	<8ISRnKRw28Na4so9GDfdv0gd40nmTGOwD7hFx507xGgJ64p9s8qECsOkboryQH02IQJ4ObvqAwcLUZCKt1QwZQ==@protonmail.internalid>
-	<20250618164934.19817-5-boqun.feng@gmail.com> <8734bm1yxk.fsf@kernel.org>
-	<jJqJwkURyr0NjkFdJaF6oYbPGY4LEzZs_sfY9jlmqoK1B9iE8VjqbfINHilEHxKfmpc9co7DmsS142ZWsBQ8tw==@protonmail.internalid>
-	<aF6yRIixTPx5YZbA@Mac.home> <87jz4tzhcs.fsf@kernel.org>
-	<Xfm2JGPb6LBj7GAjuEFddz5UvwY_vFr3r-253ujBCBa4galferuILoEDKNSQcfOL-lFi65L-rTnBWAxxCE4cyg==@protonmail.internalid>
-	<7eea6ee3-4a9e-4eb5-b412-2ece02b33c6c@rowland.harvard.edu>
-	<875xgcxpe6.fsf@kernel.org>
-	<2E_dNXmHJqWTXxnkODAnirCUgwU4iXANoAbNVSze1fnVwr49fbc8TeYMaLvKoIyO4Z8aRLwfwaaOiz7Zht1Leg==@protonmail.internalid>
-	<aGP1qoda9U0q2yss@Mac.home>
-User-Agent: mu4e 1.12.9; emacs 30.1
-Date: Wed, 02 Jul 2025 10:33:30 +0200
-Message-ID: <87a55nvvol.fsf@kernel.org>
+ <20250618164934.19817-5-boqun.feng@gmail.com>
+ <20250621123212.66fb016b.gary@garyguo.net>
+ <aFjj8AV668pl9jLN@Mac.home>
+ <20250623193019.6c425467.gary@garyguo.net>
+ <aFmmYSAyvxotYfo7@tardis.local>
 Precedence: bulk
 X-Mailing-List: lkmm@lists.linux.dev
 List-Id: <lkmm.lists.linux.dev>
 List-Subscribe: <mailto:lkmm+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:lkmm+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <aFmmYSAyvxotYfo7@tardis.local>
 
-"Boqun Feng" <boqun.feng@gmail.com> writes:
+On Mon, Jun 23, 2025 at 12:09:21PM -0700, Boqun Feng wrote:
+> On Mon, Jun 23, 2025 at 07:30:19PM +0100, Gary Guo wrote:
+> > On Sun, 22 Jun 2025 22:19:44 -0700
+> > Boqun Feng <boqun.feng@gmail.com> wrote:
+> > 
+> > > On Sat, Jun 21, 2025 at 12:32:12PM +0100, Gary Guo wrote:
+> > > [...]
+> > > > > +#[repr(transparent)]
+> > > > > +pub struct Atomic<T: AllowAtomic>(Opaque<T>);  
+> > > > 
+> > > > This should store `Opaque<T::Repr>` instead.
+> > > >   
+> > > 
+> > > "should" is a strong word ;-) If we still use `into_repr`/`from_repr`
+> > > it's a bit impossible, because Atomic::new() wants to be a const
+> > > function, so it requires const_trait_impl I believe.
+> > > 
+> > > If we require transmutability as a safety requirement for `AllowAtomic`,
+> > > then either `T` or `T::Repr` is fine.
+> > > 
+> > > > The implementation below essentially assumes that this is
+> > > > `Opaque<T::Repr>`:
+> > > > * atomic ops cast this to `*mut T::Repr`
+> > > > * load/store operates on `T::Repr` then converts to `T` with
+> > > >   `T::from_repr`/`T::into_repr`.
+> > > >   
+> > > 
+> > > Note that we only require one direction of strong transmutability, that
+> > > is: for every `T`, it must be able to safe transmute to a `T::Repr`, for
+> > > `T::Repr` -> `T` transmutation, only if it's a result of a `transmute<T,
+> > > T::Repr>()`. This is mostly due to potential support for unit-only enum.  
+> > > E.g. using an atomic variable to represent a finite state.
+> > > 
+> > > > Note tha the transparent new types restriction on `AllowAtomic` is not
+> > > > sufficient for this, as I can define
+> > > >   
+> > > 
+> > > Nice catch! I do agree we should disallow `MyWeirdI32`, and I also agree
+> > > that we should put transmutability as safety requirement for
+> > > `AllowAtomic`. However, I would suggest we still keep
+> > > `into_repr`/`from_repr`, and require the implementation to make them
+> > > provide the same results as transmute(), as a correctness precondition
+> > > (instead of a safety precondition), in other words, you can still write
+> > > a `MyWeirdI32`, and it won't cause safety issues, but it'll be
+> > > incorrect.
+> > > 
+> > > The reason why I think we should keep `into_repr`/`from_repr` but add
+> > > a correctness precondition is that they are easily to implement as safe
+> > > code for basic types, so it'll be better than a transmute() call. Also
+> > > considering `Atomic<*mut T>`, would transmuting between integers and
+> > > pointers act the same as expose_provenance() and
+> > > from_exposed_provenance()?
+> > 
+> > Okay, this is more problematic than I thought then. For pointers, you
+> 
+> Welcome to my nightmare ;-)
+> 
+> > cannot just transmute between from pointers to usize (which is its
+> > Repr):
+> > * Transmuting from pointer to usize discards provenance
+> > * Transmuting from usize to pointer gives invalid provenance
+> > 
+> > We want neither behaviour, so we must store `usize` directly and
+> > always call into repr functions.
+> > 
+> 
+> If we store `usize`, how can we support the `get_mut()` then? E.g.
+> 
+>     static V: i32 = 32;
+> 
+>     let mut x = Atomic::new(&V as *const i32 as *mut i32);
+>     // ^ assume we expose_provenance() in new().
+> 
+>     let ptr: &mut *mut i32 = x.get_mut(); // which is `&mut self.0.get()`.
+> 
+>     let ptr_val = *ptr; // Does `ptr_val` have the proper provenance?
+> 
 
-> On Tue, Jul 01, 2025 at 10:54:09AM +0200, Andreas Hindborg wrote:
->> "Alan Stern" <stern@rowland.harvard.edu> writes:
->>
->> > On Mon, Jun 30, 2025 at 11:52:35AM +0200, Andreas Hindborg wrote:
->> >> "Boqun Feng" <boqun.feng@gmail.com> writes:
->> >> > Well, a non-atomic read vs an atomic read is not a data race (for both
->> >> > Rust memory model and LKMM), so your proposal is overly restricted.
->> >>
->> >> OK, my mistake then. I thought mixing marked and plain accesses would be
->> >> considered a race. I got hat from
->> >> `tools/memory-model/Documentation/explanation.txt`:
->> >>
->> >>     A "data race"
->> >>     occurs when there are two memory accesses such that:
->> >>
->> >>     1.	they access the same location,
->> >>
->> >>     2.	at least one of them is a store,
->> >>
->> >>     3.	at least one of them is plain,
->> >>
->> >>     4.	they occur on different CPUs (or in different threads on the
->> >>       same CPU), and
->> >>
->> >>     5.	they execute concurrently.
->> >>
->> >> I did not study all that documentation, so I might be missing a point or
->> >> two.
->> >
->> > You missed point 2 above: at least one of the accesses has to be a
->> > store.  When you're looking at a non-atomic read vs. an atomic read,
->> > both of them are loads and so it isn't a data race.
->>
->> Ah, right. I was missing the entire point made by Boqun. Thanks for
->> clarifying.
->>
->> Since what constitutes a race might not be immediately clear to users
->> (like me), can we include the section above in the safety comment,
->> rather than deferring to LKMM docs?
->>
->
-> Still, I don't think it's a good idea. For a few reasons:
->
-> 1) Maintaining multiple sources of truth is painful and risky, it's
->    going to be further confusing if users feel LKMM and the function
->    safety requirement conflict with each other.
+There are a few off-list discussions, and I've been trying some
+experiment myself, here are a few points/concepts that will help future
+discussion or documentation, so I put it down here:
 
-I would agree.
+* Round-trip transmutability (thank Benno for the name!).
 
->
-> 2) Human language is not the best tool to describe memory model, that's
->    why we use herd to describe and use memory model. Trying to describe
->    the memory model in comments rather than referring to the formal
->    model is a way backwards.
+  We realize this should be a safety requirement of `AllowAtomic` type
+  (i.e. the type that can be put in a Atomic<T>). What it means is:
 
-I do not agree with this. I read human language much better than formal logic.
+  - If `T: AllowAtomic`, transmute() from `T` to `T::Repr` is always
+    safe and
+  - if a value of `T::Repr` is a result of transmute() from `T` to
+    `T::Repr`, then `transmute()` for that value to `T` is also safe.
 
->
-> 3) I believed the reason we got our discussion here is because you tried
->    to improve the comment of `from_ptr()`, and I do appreciate that
->    effort. And I think we should continue in that direction instead of
->    pulling the whole "what are data race conditions" into picture.
+  This essentially means a valid bit pattern of `T: AllowAtomic` has to
+  be a valid bit pattern of `T::Repr`.
 
-Yes, absolutely.
+  This is needed because the atomic framework operates on `T::Repr` to
+  implement atomic operations on `T`.
 
-> So
->    how about we clearly call out that it'll be safe if other accesses
->    are atomic, which should be the most cases:
->
->    /// - For the duration of `'a`, other accesses to the object cannot cause data races
->    ///   (defined by [`LKMM`]) against atomic operations on the returned reference. Note
->    ///   that if all other accesses are atomic, then this safety requirement is trivially
->    ///   fulfilled.
+  Note that this is more relaxed than bi-direct transmutability (i.e.
+  transmute() between `T` and `T::Repr`) because we want to support
+  atomic type over unit-only enums:
 
-Sounds good to me, thanks!
+    #[repr(i32)]
+    pub enum State {
+        Init = 0,
+	Working = 1,
+	Done = 2,
+    }
 
+  This should be really helpful to support atomics as states, for
+  example:
 
-Best regards,
-Andreas Hindborg
+    https://lore.kernel.org/rust-for-linux/20250702-module-params-v3-v14-1-5b1cc32311af@kernel.org/
 
+* transmute()-equivalent from_repr() and into_repr().
 
+  (This is not a safety requirement)
 
+  from_repr() and into_repr(), if exist, should behave like transmute()
+  on the bit pattern of the results, in other words, bit patterns of `T`
+  or `T::Repr` should stay the same before and after these operations.
+
+  Of course if we remove them and replace with transmute(), same result.
+
+  This reflects the fact that customized atomic types should store
+  unmodified bit patterns into atomic variables, and this make atomic
+  operations don't have weird behavior [1] when combined with new(),
+  from_ptr() and get_mut().
+
+* Provenance preservation.
+
+  (This is not a safety requirement for Atomic itself)
+
+  For a `Atomic<*mut T>`, it should preserve the provenance of the
+  pointer that has been stored into it, i.e. the load result from a
+  `Atomic<*mut T>` should have the same provenance.
+
+  Technically, without this, `Atomic<*mut T>` still work without any
+  safety issue itself, but the user of it must maintain the provenance
+  themselves before store or after load.
+
+  And it turns out it's not very hard to prove the current
+  implementation achieve this:
+
+  - For a non-atomic operation done on the atomic variable, they are
+    already using pointer operation, so the provenance has been
+    preserved.
+  - For an atomic operation, since they are done via inline asm code, in
+    Rust's abstract machine, they can be treated as pointer read and
+    write:
+
+    a) A load of the atomic can be treated as a pointer read and then
+       exposing the provenance.
+    b) A store of the atomic can be treated as a pointer write with a
+       value created with the exposed provenance.
+
+    And our implementation, thanks to no arbitrary type coercion,
+    already guarantee that for each a) there is a from_repr() after and
+    for each b) there is a into_repr() before. And from_repr() acts as
+    a with_exposed_provenance() and into_repr() acts as a
+    expose_provenance(). Hence the provenance is preserved.
+
+  Note this is a global property and it has to proven at `Atomic<T>`
+  level.
+
+Regards,
+Boqun

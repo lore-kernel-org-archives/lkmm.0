@@ -1,34 +1,34 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06F8D2EA726;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20F202EA733;
 	Wed,  9 Jul 2025 15:59:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752076750; cv=none; b=POB3he+ffWINYNdUkn5MokZ38AvQcTM1hwWp320QgJty3yHDA2aFu/VA6hpZZbj5ew6ul6uUbSkDMbTe1j6E9zL1GmK6KpnXY/HOvZvc1bZayXMYRukSOr8AmeyX0OY4yK0Wv+fhdzvehIsQIoenouvnQOkfscexO0+vIaGyNcU=
+	t=1752076750; cv=none; b=f3kSzVQ1qYQnXGVfr9raqRkph0zgcMmnpv+eglWU7Z6GkPE4Y6SLQArHcZBy0sdq9DLqGNtFssjhMvhaal7bMuJIohMY1uMvf4vbcuUf8WJUUVxS81Zcc/4o0HJKVb9a4Jh4gg2GLlNkRJlrXVoHvy7/QoujdMXrSNUJKeWGgRc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1752076750; c=relaxed/simple;
-	bh=otVjsBKFUHYlcqJjnUpXdq/CVdL2g8H+2Ln8zBoihTA=;
+	bh=CA8rENJCqrPXF4f4frEOOWVuEMYfDrH4SLtxePG/My8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YGiZ87Iqd61RddGrW4zNedkwoV0XfZD7SUbql0+fSljt9Qka2qlBgpeTyT7MSpGSZnz/pT1Bz/yZv2/6RYsdwIhveQdk0OONf6qehs2hglXDjJRaMxWetlQIDpFjQJxPHlnuH35GBSXtbLO9MLonQdcyr2xf4vBbaeKgG2ZOFUw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=b+601J0p; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SgeIlywjU1q5qUjwUbC251ARPFxIB/xR/9aOlP2l2j6BoXFmN+H/iZARLWtPP/xg6Yj/slO/CBU0e0Zw0DC1GRJTTjQpVVQnEGLNBwZJyW7MUmDnIpsgG1C8mXYl2t/41VaIcGMX3lnTKYEpi4bMZ7rMRIzcyD5PwJh6E9pOfRU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Nmi8szye; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="b+601J0p"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF46CC4CEF1;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Nmi8szye"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B591EC4AF09;
 	Wed,  9 Jul 2025 15:59:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1752076749;
-	bh=otVjsBKFUHYlcqJjnUpXdq/CVdL2g8H+2Ln8zBoihTA=;
+	bh=CA8rENJCqrPXF4f4frEOOWVuEMYfDrH4SLtxePG/My8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=b+601J0p0iRyivZ6yAx7xrhjVd+dWUdu0glKR1yPcAp5JvDNCr5lp4DSCCK3ODBW1
-	 kxZCWmlli2aigSoqfuu3L9Xdf4bP8DN6gjKmwYktMpwpMsTVG6/7+gGG84aY8aPNml
-	 an1KpUZHHEOXWobftkWEyHz66qJwihP7L5iPGJ1h6CrRUm2vMcaIs1hy5f2IzElOS2
-	 Ovq1tQHYh8Dyfuh5UBQtzV/3buuLMRwEZyw6dgwf6zniKQncWveo4T85WD4acNpnFO
-	 TrYme7dd/hcryDmdFB2a+DhasF4u8PnPFtsaInYUCdDOf7uy467A08FOVrH82g8EUk
-	 hDia6RrP+UpEA==
+	b=Nmi8szye9CLn97L6BsitCJmFWygxE7Otew6NSaRkQ+GrXl6tG5qjKDoZvgvBuxo4w
+	 2EYt9uhbmlIHL0vTPm3osQggXAvclEQk34Z07IxTgyMss5w+Weu5FK+4sbSDAzAPCu
+	 wAFtkdEOrbNcDQyxClTMj4tvKNKP/dfETbKvagilJQcGEPBMa7hVASLoLHkAuUwDew
+	 LjEeCdHkxsSWrYgG+iT9ldaxMbueshy0a0rljp6BL9NISjL64M14Ynll9mt03CW+m8
+	 zMw72jO/sJAJlv4fYFRyZnooE2OJOC/6cPfHWBYuk52JTrnPHx9fuROw7wcqKz/8Ny
+	 6qWmyVoMK4ttw==
 Received: from mchehab by mail.kernel.org with local (Exim 4.98.2)
 	(envelope-from <mchehab@kernel.org>)
-	id 1uZXCJ-00000000IhN-22TJ;
+	id 1uZXCJ-00000000Ih5-1My5;
 	Wed, 09 Jul 2025 17:59:03 +0200
 From: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 To: Linux Doc Mailing List <linux-doc@vger.kernel.org>,
@@ -55,9 +55,9 @@ Cc: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
 	netdev@vger.kernel.org,
 	peterz@infradead.org,
 	stern@rowland.harvard.edu
-Subject: [PATCH v9 12/13] docs: parser_yaml.py: add support for line numbers from the parser
-Date: Wed,  9 Jul 2025 17:58:56 +0200
-Message-ID: <3b18b30b1b50b01a014fd4b5a38423e529cde2fb.1752076293.git.mchehab+huawei@kernel.org>
+Subject: [PATCH v9 06/13] docs: use parser_yaml extension to handle Netlink specs
+Date: Wed,  9 Jul 2025 17:58:50 +0200
+Message-ID: <ae81df3793f6dfdbc2a54028876a61fae9ef78c7.1752076293.git.mchehab+huawei@kernel.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <cover.1752076293.git.mchehab+huawei@kernel.org>
 References: <cover.1752076293.git.mchehab+huawei@kernel.org>
@@ -70,111 +70,132 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Sender: Mauro Carvalho Chehab <mchehab@kernel.org>
 
-Instead of printing line numbers from the temp converted ReST
-file, get them from the original source.
+Instead of manually calling ynl_gen_rst.py, use a Sphinx extension.
+This way, no .rst files would be written to the Kernel source
+directories.
+
+We are using here a toctree with :glob: property. This way, there
+is no need to touch the netlink/specs/index.rst file every time
+a new Netlink spec is added/renamed/removed.
 
 Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+Reviewed-by: Donald Hunter <donald.hunter@gmail.com>
 ---
- Documentation/sphinx/parser_yaml.py      | 12 ++++++++++--
- tools/net/ynl/pyynl/lib/doc_generator.py | 16 ++++++++++++----
- 2 files changed, 22 insertions(+), 6 deletions(-)
+ Documentation/Makefile                        | 17 ----------------
+ Documentation/conf.py                         | 20 ++++++++++++++-----
+ Documentation/networking/index.rst            |  2 +-
+ .../networking/netlink_spec/readme.txt        |  4 ----
+ 4 files changed, 16 insertions(+), 27 deletions(-)
+ delete mode 100644 Documentation/networking/netlink_spec/readme.txt
 
-diff --git a/Documentation/sphinx/parser_yaml.py b/Documentation/sphinx/parser_yaml.py
-index fa2e6da17617..8288e2ff7c7c 100755
---- a/Documentation/sphinx/parser_yaml.py
-+++ b/Documentation/sphinx/parser_yaml.py
-@@ -54,6 +54,8 @@ class YamlParser(Parser):
+diff --git a/Documentation/Makefile b/Documentation/Makefile
+index b98477df5ddf..820f07e0afe6 100644
+--- a/Documentation/Makefile
++++ b/Documentation/Makefile
+@@ -104,22 +104,6 @@ quiet_cmd_sphinx = SPHINX  $@ --> file://$(abspath $(BUILDDIR)/$3/$4)
+ 		cp $(if $(patsubst /%,,$(DOCS_CSS)),$(abspath $(srctree)/$(DOCS_CSS)),$(DOCS_CSS)) $(BUILDDIR)/$3/_static/; \
+ 	fi
  
-     netlink_parser = YnlDocGenerator()
+-YNL_INDEX:=$(srctree)/Documentation/networking/netlink_spec/index.rst
+-YNL_RST_DIR:=$(srctree)/Documentation/networking/netlink_spec
+-YNL_YAML_DIR:=$(srctree)/Documentation/netlink/specs
+-YNL_TOOL:=$(srctree)/tools/net/ynl/pyynl/ynl_gen_rst.py
+-
+-YNL_RST_FILES_TMP := $(patsubst %.yaml,%.rst,$(wildcard $(YNL_YAML_DIR)/*.yaml))
+-YNL_RST_FILES := $(patsubst $(YNL_YAML_DIR)%,$(YNL_RST_DIR)%, $(YNL_RST_FILES_TMP))
+-
+-$(YNL_INDEX): $(YNL_RST_FILES)
+-	$(Q)$(YNL_TOOL) -o $@ -x
+-
+-$(YNL_RST_DIR)/%.rst: $(YNL_YAML_DIR)/%.yaml $(YNL_TOOL)
+-	$(Q)$(YNL_TOOL) -i $< -o $@
+-
+-htmldocs texinfodocs latexdocs epubdocs xmldocs: $(YNL_INDEX)
+-
+ htmldocs:
+ 	@$(srctree)/scripts/sphinx-pre-install --version-check
+ 	@+$(foreach var,$(SPHINXDIRS),$(call loop_cmd,sphinx,html,$(var),,$(var)))
+@@ -186,7 +170,6 @@ refcheckdocs:
+ 	$(Q)cd $(srctree);scripts/documentation-file-ref-check
  
-+    re_lineno = re.compile(r"\.\. LINENO ([0-9]+)$")
+ cleandocs:
+-	$(Q)rm -f $(YNL_INDEX) $(YNL_RST_FILES)
+ 	$(Q)rm -rf $(BUILDDIR)
+ 	$(Q)$(MAKE) BUILDDIR=$(abspath $(BUILDDIR)) $(build)=Documentation/userspace-api/media clean
+ 
+diff --git a/Documentation/conf.py b/Documentation/conf.py
+index 700516238d3f..f9828f3862f9 100644
+--- a/Documentation/conf.py
++++ b/Documentation/conf.py
+@@ -42,6 +42,15 @@ exclude_patterns = []
+ dyn_include_patterns = []
+ dyn_exclude_patterns = ["output"]
+ 
++# Currently, only netlink/specs has a parser for yaml.
++# Prefer using include patterns if available, as it is faster
++if has_include_patterns:
++    dyn_include_patterns.append("netlink/specs/*.yaml")
++else:
++    dyn_exclude_patterns.append("netlink/*.yaml")
++    dyn_exclude_patterns.append("devicetree/bindings/**.yaml")
++    dyn_exclude_patterns.append("core-api/kho/bindings/**.yaml")
 +
-     def rst_parse(self, inputstring, document, msg):
-         """
-         Receives a ReST content that was previously converted by the
-@@ -66,8 +68,14 @@ class YamlParser(Parser):
+ # Properly handle include/exclude patterns
+ # ----------------------------------------
  
-         try:
-             # Parse message with RSTParser
--            for i, line in enumerate(msg.split('\n')):
--                result.append(line, document.current_source, i)
-+            lineoffset = 0;
-+            for line in msg.split('\n'):
-+                match = self.re_lineno.match(line)
-+                if match:
-+                    lineoffset = int(match.group(1))
-+                    continue
-+
-+                result.append(line, document.current_source, lineoffset)
+@@ -102,12 +111,12 @@ extensions = [
+     "kernel_include",
+     "kfigure",
+     "maintainers_include",
++    "parser_yaml",
+     "rstFlatTable",
+     "sphinx.ext.autosectionlabel",
+     "sphinx.ext.ifconfig",
+     "translations",
+ ]
+-
+ # Since Sphinx version 3, the C function parser is more pedantic with regards
+ # to type checking. Due to that, having macros at c:function cause problems.
+ # Those needed to be escaped by using c_id_attributes[] array
+@@ -204,10 +213,11 @@ else:
+ # Add any paths that contain templates here, relative to this directory.
+ templates_path = ["sphinx/templates"]
  
-             rst_parser = RSTParser()
-             rst_parser.parse('\n'.join(result), document)
-diff --git a/tools/net/ynl/pyynl/lib/doc_generator.py b/tools/net/ynl/pyynl/lib/doc_generator.py
-index 658759a527a6..403abf1a2eda 100644
---- a/tools/net/ynl/pyynl/lib/doc_generator.py
-+++ b/tools/net/ynl/pyynl/lib/doc_generator.py
-@@ -158,9 +158,11 @@ class YnlDocGenerator:
-     def parse_do(self, do_dict: Dict[str, Any], level: int = 0) -> str:
-         """Parse 'do' section and return a formatted string"""
-         lines = []
-+        if LINE_STR in do_dict:
-+            lines.append(self.fmt.rst_lineno(do_dict[LINE_STR]))
-+
-         for key in do_dict.keys():
-             if key == LINE_STR:
--                lines.append(self.fmt.rst_lineno(do_dict[key]))
-                 continue
-             lines.append(self.fmt.rst_paragraph(self.fmt.bold(key), level + 1))
-             if key in ['request', 'reply']:
-@@ -187,13 +189,15 @@ class YnlDocGenerator:
-         lines = []
+-# The suffix(es) of source filenames.
+-# You can specify multiple suffix as a list of string:
+-# source_suffix = ['.rst', '.md']
+-source_suffix = '.rst'
++# The suffixes of source filenames that will be automatically parsed
++source_suffix = {
++    ".rst": "restructuredtext",
++    ".yaml": "yaml",
++}
  
-         for operation in operations:
-+            if LINE_STR in operation:
-+                lines.append(self.fmt.rst_lineno(operation[LINE_STR]))
-+
-             lines.append(self.fmt.rst_section(namespace, 'operation',
-                                               operation["name"]))
-             lines.append(self.fmt.rst_paragraph(operation["doc"]) + "\n")
- 
-             for key in operation.keys():
-                 if key == LINE_STR:
--                    lines.append(self.fmt.rst_lineno(operation[key]))
-                     continue
- 
-                 if key in preprocessed:
-@@ -253,10 +257,12 @@ class YnlDocGenerator:
-         lines = []
- 
-         for definition in defs:
-+            if LINE_STR in definition:
-+                lines.append(self.fmt.rst_lineno(definition[LINE_STR]))
-+
-             lines.append(self.fmt.rst_section(namespace, 'definition', definition["name"]))
-             for k in definition.keys():
-                 if k == LINE_STR:
--                    lines.append(self.fmt.rst_lineno(definition[k]))
-                     continue
-                 if k in preprocessed + ignored:
-                     continue
-@@ -284,6 +290,9 @@ class YnlDocGenerator:
-             lines.append(self.fmt.rst_section(namespace, 'attribute-set',
-                                               entry["name"]))
-             for attr in entry["attributes"]:
-+                if LINE_STR in attr:
-+                    lines.append(self.fmt.rst_lineno(attr[LINE_STR]))
-+
-                 type_ = attr.get("type")
-                 attr_line = attr["name"]
-                 if type_:
-@@ -294,7 +303,6 @@ class YnlDocGenerator:
- 
-                 for k in attr.keys():
-                     if k == LINE_STR:
--                        lines.append(self.fmt.rst_lineno(attr[k]))
-                         continue
-                     if k in preprocessed + ignored:
-                         continue
+ # The encoding of source files.
+ # source_encoding = 'utf-8-sig'
+diff --git a/Documentation/networking/index.rst b/Documentation/networking/index.rst
+index ac90b82f3ce9..b7a4969e9bc9 100644
+--- a/Documentation/networking/index.rst
++++ b/Documentation/networking/index.rst
+@@ -57,7 +57,7 @@ Contents:
+    filter
+    generic-hdlc
+    generic_netlink
+-   netlink_spec/index
++   ../netlink/specs/index
+    gen_stats
+    gtp
+    ila
+diff --git a/Documentation/networking/netlink_spec/readme.txt b/Documentation/networking/netlink_spec/readme.txt
+deleted file mode 100644
+index 030b44aca4e6..000000000000
+--- a/Documentation/networking/netlink_spec/readme.txt
++++ /dev/null
+@@ -1,4 +0,0 @@
+-SPDX-License-Identifier: GPL-2.0
+-
+-This file is populated during the build of the documentation (htmldocs) by the
+-tools/net/ynl/pyynl/ynl_gen_rst.py script.
 -- 
 2.49.0
 

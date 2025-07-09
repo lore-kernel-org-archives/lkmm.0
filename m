@@ -1,32 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78C91AD21;
-	Wed,  9 Jul 2025 15:25:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D692A2D3EC5;
+	Wed,  9 Jul 2025 15:44:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752074723; cv=none; b=TTApBaZxS9uVTHwjLcfUM6ez9XCnUouaSVMi9/2Wrn2oRNNZV7nSRx22Ro/ZRChLjM6iulUA/CKLHkFdQAbNK3EVs4ywMws9CyEIDO3vd1830+3KlZeUxxOw3lIYf+5leZyPzXqsbyvDfjbKG5tSynAkOEKpjR8ZEx5q8RZntYA=
+	t=1752075893; cv=none; b=Km9ULW1huugwvepvobANsDqK9ymU0G95i6VFk8SbHIvSoZ5NUIjG442eLXMjKDU2tR8Q97Ztad4EZh8XkHZ3B8E7BSuzcb5Ku4zKyY0YXbou7RQsg/+HPucwrkqSrpyz1oKtTqxoaC2PoRnMJ6Rihl9hV0hf9HSPGi6GTw5IY+4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752074723; c=relaxed/simple;
-	bh=vQvUTZYDPFvJtZWLT3bsD4zVtLOSn/hT6DJD+GszzQ8=;
+	s=arc-20240116; t=1752075893; c=relaxed/simple;
+	bh=faK0ZcZx9HxOdB6jQlzbXh6mkQSJ4VnVDjYLsm75zDQ=;
 	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ttQoATe+u4t1OHUkQS+bhvmGVoxCnb2+ClWGi7HC9I+O3eFzLIZQI+bvwLmKuAPubA7wZPdusAUNVSmTjXA0ey9WVIhO4JGZCm0WwY6WgIWm+bHaRjAsQvwRYFWJODpN0IfEfnAySZHxJlz6SVBXVi2oY9Qf7lZr3pZBSyA6TNM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ikPxL0de; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=JS6nhMiAVS6MANCpom+wx6KiVY1AbHZIDiqn6aUR3JdwsqpROXU0kbv6YfePJJaYx4pJrIrBavf6bkJi3+CU4wvJvFMpN0yN1s+QOQmkOEpIX6R44f4RtYMHsTgRF800ceKGiUD0FlAFTPWmT+l9A20mYQniUw1WHlXtUMj4STU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ekenn0eo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ikPxL0de"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDD41C4CEEF;
-	Wed,  9 Jul 2025 15:25:15 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ekenn0eo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31445C4CEF9;
+	Wed,  9 Jul 2025 15:44:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1752074723;
-	bh=vQvUTZYDPFvJtZWLT3bsD4zVtLOSn/hT6DJD+GszzQ8=;
+	s=k20201202; t=1752075892;
+	bh=faK0ZcZx9HxOdB6jQlzbXh6mkQSJ4VnVDjYLsm75zDQ=;
 	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-	b=ikPxL0deZqTQhV1qx988jIg1WQwS7TiasZUN6jIIG1fVwUWqn2ZJVuNt/sgdArR9x
-	 UxkEzZlprVh+dmbrWTTQZzbw3lyjWYJhoJo90HwOFwZ3s7mbZVv3I7SOJDAF7EV5vB
-	 RvEHdDUJu9v3HTnQ1AFyv14d6EXfzt9uNAr0qCkQ0a4RlRD+iDRaSK1Xm50YFbM7Fu
-	 q+0hWU+fQjdb8P6+jnUjfIvznP8iSqjnTD31hZTq+Dfl90dlaQ5iS+8Wq0CGVc28bG
-	 V8XK+76nKHlXpmaiJYYEhwx2pAd8xnVtdIYRYkQm87d9xgvd8ZIBaOdvqyled90aqY
-	 wTfFf7ljiNuFw==
-Date: Wed, 9 Jul 2025 17:25:10 +0200
+	b=ekenn0eonP+8DTcaA8V08ebMOrVY2uW/sSO1IseARj9uplvipipWkzvW/FH6Dtw8h
+	 k3dNwLLDxBTZKRyvTrUlB5RkxG84teQsL8uDwXcgG3N/OfehygX77fThw8lbdrh62I
+	 SnTRGvFdeU9OfWHoxerAv+f3RWRueXD5Q5QmqDGIgzCF/tXC5EtGyiISGQo9y+sBmX
+	 7i9jQmmhDAGAQtDR2FypDRPfvs30wNXQO95GCDg+yU52DceFBwQF7mqJ1paQ5Ue66c
+	 ZfzAUpc76vUE7eflBYX0GOgOfKvAAENXvcBz0cbwchEvdlMgcAUo0+URPWImK3SRJq
+	 dodYpEazrY0qg==
+Date: Wed, 9 Jul 2025 17:44:40 +0200
 From: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 To: Donald Hunter <donald.hunter@gmail.com>
 Cc: Linux Doc Mailing List <linux-doc@vger.kernel.org>, Jonathan Corbet
@@ -40,13 +40,13 @@ Cc: Linux Doc Mailing List <linux-doc@vger.kernel.org>, Jonathan Corbet
  linux-kernel-mentees@lists.linux.dev, linux-kernel@vger.kernel.org,
  lkmm@lists.linux.dev, netdev@vger.kernel.org, peterz@infradead.org,
  stern@rowland.harvard.edu
-Subject: Re: [PATCH v8 06/13] docs: use parser_yaml extension to handle
- Netlink specs
-Message-ID: <20250709172510.191c116e@sal.lan>
-In-Reply-To: <m2wm8x8omf.fsf@gmail.com>
+Subject: Re: [PATCH v8 11/13] tools: netlink_yml_parser.py: add line numbers
+ to parsed data
+Message-ID: <20250709174440.39b0f49e@sal.lan>
+In-Reply-To: <m2bjq98n10.fsf@gmail.com>
 References: <cover.1750925410.git.mchehab+huawei@kernel.org>
-	<34e491393347ca1ba6fd65e73a468752b1436a80.1750925410.git.mchehab+huawei@kernel.org>
-	<m2wm8x8omf.fsf@gmail.com>
+	<549be41405b5ddb6b78ead71f26c33fd6ce8e190.1750925410.git.mchehab+huawei@kernel.org>
+	<m2bjq98n10.fsf@gmail.com>
 X-Mailer: Claws Mail 4.3.1 (GTK 3.24.49; x86_64-redhat-linux-gnu)
 Precedence: bulk
 X-Mailing-List: lkmm@lists.linux.dev
@@ -57,30 +57,70 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
 
-Em Fri, 27 Jun 2025 11:28:40 +0100
+Em Fri, 27 Jun 2025 12:03:07 +0100
 Donald Hunter <donald.hunter@gmail.com> escreveu:
 
 > Mauro Carvalho Chehab <mchehab+huawei@kernel.org> writes:
 > 
-> > Instead of manually calling ynl_gen_rst.py, use a Sphinx extension.
-> > This way, no .rst files would be written to the Kernel source
-> > directories.
-> >
-> > We are using here a toctree with :glob: property. This way, there
-> > is no need to touch the netlink/specs/index.rst file every time
-> > a new Netlink spec is added/renamed/removed.
+> > When something goes wrong, we want Sphinx error to point to the
+> > right line number from the original source, not from the
+> > processed ReST data.
 > >
 > > Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-> > Reviewed-by: Donald Hunter <donald.hunter@gmail.com>  
+> > ---
+> >  tools/net/ynl/pyynl/lib/doc_generator.py | 34 ++++++++++++++++++++++--
+> >  1 file changed, 32 insertions(+), 2 deletions(-)
+> >
+> > diff --git a/tools/net/ynl/pyynl/lib/doc_generator.py b/tools/net/ynl/pyynl/lib/doc_generator.py
+> > index 866551726723..a9d8ab6f2639 100644
+> > --- a/tools/net/ynl/pyynl/lib/doc_generator.py
+> > +++ b/tools/net/ynl/pyynl/lib/doc_generator.py
+> > @@ -20,6 +20,16 @@
+> >  from typing import Any, Dict, List
+> >  import yaml
+> >  
+> > +LINE_STR = '__lineno__'
+> > +
+> > +class NumberedSafeLoader(yaml.SafeLoader):
+> > +    """Override the SafeLoader class to add line number to parsed data"""
+> > +
+> > +    def construct_mapping(self, node):
+> > +        mapping = super().construct_mapping(node)
+> > +        mapping[LINE_STR] = node.start_mark.line
+> > +
+> > +        return mapping  
 > 
-> This patch doesn't currently merge in the net-next tree because it
-> depends on a series in docs-next.
+> pylint gives these 2 warnings:
+> 
+> tools/net/ynl/pyynl/lib/doc_generator.py:25:0: R0901: Too many ancestors (9/7) (too-many-ancestors)
 
-True. It has to either be applied on docs-next or you need to merge
-from it if you want to apply on your tree.
+I'm yet to find any pylint Rxxx warning that I didn't have to
+disable ;-)
 
-This patch depends at the changes there to properly address 
-include_pattern/exclude_pattern.
+This particular one is useless for us, as it basically tells that PyYAML
+has a big class hierarchy.
+
+> tools/net/ynl/pyynl/lib/doc_generator.py:28:4: W0221: Number of parameters was 3 in 'SafeConstructor.construct_mapping' and is now 2 in overriding 'NumberedSafeLoader.construct_mapping' method (arguments-differ)
+
+I'll fix this one to prevent potential future issues.
+
+Changing the code to:
+ 
+-class NumberedSafeLoader(yaml.SafeLoader):
++class NumberedSafeLoader(yaml.SafeLoader):              # pylint: disable=R0901
+     """Override the SafeLoader class to add line number to parsed data"""
+ 
+-    def construct_mapping(self, node):
+-        mapping = super().construct_mapping(node)
++    def construct_mapping(self, node, *args, **kwargs):
++        mapping = super().construct_mapping(node, *args, **kwargs)
+         mapping[LINE_STR] = node.start_mark.line
+ 
+         return mapping
+
+This should hopefully be future-proof.
 
 Regards,
 Mauro
+
+

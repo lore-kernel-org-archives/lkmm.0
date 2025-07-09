@@ -1,98 +1,86 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 288A01B4257;
-	Tue,  8 Jul 2025 22:59:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78C91AD21;
+	Wed,  9 Jul 2025 15:25:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752015561; cv=none; b=WOKi1uCHrxVKB8ZOql7mwhJsIKpt0PT1k+KvvqhbjtiMB9e1ifXhLf9blP6PIso4HEEu6Pe6jL8g0ovvwxu3TsG4aEZwRDrsKIdU9iK0cRHa5unPukgEJhyH/9NSby1FTw3k46rgIcfx9kDf1bMX+kiwToxvE5us0SVJ40k3eQw=
+	t=1752074723; cv=none; b=TTApBaZxS9uVTHwjLcfUM6ez9XCnUouaSVMi9/2Wrn2oRNNZV7nSRx22Ro/ZRChLjM6iulUA/CKLHkFdQAbNK3EVs4ywMws9CyEIDO3vd1830+3KlZeUxxOw3lIYf+5leZyPzXqsbyvDfjbKG5tSynAkOEKpjR8ZEx5q8RZntYA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752015561; c=relaxed/simple;
-	bh=PWEloiXUotz1C51oWqbRdlrm+SKoJ+BU5dA2jDSl7Qo=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=oxM8cinCdH8g+LRgLjFP+r4F63yjdQ56RIxyl8mwu6pc/gpPWToBPFeOtcbGCG+hMQxEd1Y5yIR0dSXJJwUIMuwPSTPMghZ1uAch7Ct131qGen9KbtF6GSmkIBYa51FTz1jmdXSQ2HY82w936eyKkrekWElfjo8k09CZupWFHK8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZoY7ft4S; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1752074723; c=relaxed/simple;
+	bh=vQvUTZYDPFvJtZWLT3bsD4zVtLOSn/hT6DJD+GszzQ8=;
+	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=ttQoATe+u4t1OHUkQS+bhvmGVoxCnb2+ClWGi7HC9I+O3eFzLIZQI+bvwLmKuAPubA7wZPdusAUNVSmTjXA0ey9WVIhO4JGZCm0WwY6WgIWm+bHaRjAsQvwRYFWJODpN0IfEfnAySZHxJlz6SVBXVi2oY9Qf7lZr3pZBSyA6TNM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ikPxL0de; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZoY7ft4S"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85114C4CEED;
-	Tue,  8 Jul 2025 22:59:20 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ikPxL0de"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDD41C4CEEF;
+	Wed,  9 Jul 2025 15:25:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1752015560;
-	bh=PWEloiXUotz1C51oWqbRdlrm+SKoJ+BU5dA2jDSl7Qo=;
-	h=Date:From:To:Cc:Subject:Reply-To:References:In-Reply-To:From;
-	b=ZoY7ft4SzlfM8T6ehzjrAmCUoG6RPj0KaxAvmaRyhEy4e7hBrX2YSJ4g/LRdFLfFO
-	 mZ+3xjJaGDiXky7CBHaYL9sP5kSNWSP5QSb6A2D1+mELOXYOtQ8viozTSBc83FYQ2L
-	 QcLG7OvwL9pnGjgtnfRSM1hnnV8HrVSuUMKa90bce/SuoCHTtsBMRcBr/V92J9vaBM
-	 n8qYWmCg7gl/laueUgucJwppcYNH7ui0SdiJAIuzBtvoD58m/uT2ndZ6zvfnEsBn7b
-	 Ko1nQUkIgJYC3RJWbTH6UNHlyNZMGI8q6UyTKuz8p7Uwrl955PwYEpw3OA6OLfX5Si
-	 Rsz7QOX+FgQDw==
-Received: by paulmck-ThinkPad-P17-Gen-1.home (Postfix, from userid 1000)
-	id 31DD7CE08A1; Tue,  8 Jul 2025 15:59:20 -0700 (PDT)
-Date: Tue, 8 Jul 2025 15:59:20 -0700
-From: "Paul E. McKenney" <paulmck@kernel.org>
-To: =?iso-8859-1?Q?H=E5kon?= Bugge <haakon.bugge@oracle.com>
-Cc: Alan Stern <stern@rowland.harvard.edu>,
-	Andrea Parri <parri.andrea@gmail.com>,
-	Will Deacon <will@kernel.org>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Boqun Feng <boqun.feng@gmail.com>,
-	Nicholas Piggin <npiggin@gmail.com>,
-	David Howells <dhowells@redhat.com>,
-	Jade Alglave <j.alglave@ucl.ac.uk>,
-	Luc Maranget <luc.maranget@inria.fr>,
-	Akira Yokosawa <akiyks@gmail.com>,
-	Daniel Lustig <dlustig@nvidia.com>,
-	Joel Fernandes <joelagnelf@nvidia.com>,
-	Jonathan Corbet <corbet@lwn.net>, linux-kernel@vger.kernel.org,
-	linux-arch@vger.kernel.org, lkmm@lists.linux.dev,
-	linux-doc@vger.kernel.org
-Subject: Re: [PATCH v2 1/1] docs/memory-barriers.txt: Add wait_event_cmd()
- and wait_event_exclusive_cmd()
-Message-ID: <60e29735-7359-4ef8-841a-fd5714404cf0@paulmck-laptop>
-Reply-To: paulmck@kernel.org
-References: <20250627105034.1612947-1-haakon.bugge@oracle.com>
+	s=k20201202; t=1752074723;
+	bh=vQvUTZYDPFvJtZWLT3bsD4zVtLOSn/hT6DJD+GszzQ8=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+	b=ikPxL0deZqTQhV1qx988jIg1WQwS7TiasZUN6jIIG1fVwUWqn2ZJVuNt/sgdArR9x
+	 UxkEzZlprVh+dmbrWTTQZzbw3lyjWYJhoJo90HwOFwZ3s7mbZVv3I7SOJDAF7EV5vB
+	 RvEHdDUJu9v3HTnQ1AFyv14d6EXfzt9uNAr0qCkQ0a4RlRD+iDRaSK1Xm50YFbM7Fu
+	 q+0hWU+fQjdb8P6+jnUjfIvznP8iSqjnTD31hZTq+Dfl90dlaQ5iS+8Wq0CGVc28bG
+	 V8XK+76nKHlXpmaiJYYEhwx2pAd8xnVtdIYRYkQm87d9xgvd8ZIBaOdvqyled90aqY
+	 wTfFf7ljiNuFw==
+Date: Wed, 9 Jul 2025 17:25:10 +0200
+From: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+To: Donald Hunter <donald.hunter@gmail.com>
+Cc: Linux Doc Mailing List <linux-doc@vger.kernel.org>, Jonathan Corbet
+ <corbet@lwn.net>, "Akira Yokosawa" <akiyks@gmail.com>, "Breno Leitao"
+ <leitao@debian.org>, "David S. Miller" <davem@davemloft.net>, "Eric
+ Dumazet" <edumazet@google.com>, "Ignacio Encinas Rubio"
+ <ignacio@iencinas.com>, "Jan Stancek" <jstancek@redhat.com>, "Marco Elver"
+ <elver@google.com>, "Paolo Abeni" <pabeni@redhat.com>, "Randy Dunlap"
+ <rdunlap@infradead.org>, "Ruben Wauters" <rubenru09@aol.com>, "Shuah Khan"
+ <skhan@linuxfoundation.org>, joel@joelfernandes.org,
+ linux-kernel-mentees@lists.linux.dev, linux-kernel@vger.kernel.org,
+ lkmm@lists.linux.dev, netdev@vger.kernel.org, peterz@infradead.org,
+ stern@rowland.harvard.edu
+Subject: Re: [PATCH v8 06/13] docs: use parser_yaml extension to handle
+ Netlink specs
+Message-ID: <20250709172510.191c116e@sal.lan>
+In-Reply-To: <m2wm8x8omf.fsf@gmail.com>
+References: <cover.1750925410.git.mchehab+huawei@kernel.org>
+	<34e491393347ca1ba6fd65e73a468752b1436a80.1750925410.git.mchehab+huawei@kernel.org>
+	<m2wm8x8omf.fsf@gmail.com>
+X-Mailer: Claws Mail 4.3.1 (GTK 3.24.49; x86_64-redhat-linux-gnu)
 Precedence: bulk
 X-Mailing-List: lkmm@lists.linux.dev
 List-Id: <lkmm.lists.linux.dev>
 List-Subscribe: <mailto:lkmm+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:lkmm+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20250627105034.1612947-1-haakon.bugge@oracle.com>
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 
-On Fri, Jun 27, 2025 at 12:50:33PM +0200, Håkon Bugge wrote:
-> Add said functions to Documentation/memory-barriers.txt.
-> 
-> Signed-off-by: Håkon Bugge <haakon.bugge@oracle.com>
+Em Fri, 27 Jun 2025 11:28:40 +0100
+Donald Hunter <donald.hunter@gmail.com> escreveu:
 
-Seeing no objections, I have queued this, thank you!
+> Mauro Carvalho Chehab <mchehab+huawei@kernel.org> writes:
+> 
+> > Instead of manually calling ynl_gen_rst.py, use a Sphinx extension.
+> > This way, no .rst files would be written to the Kernel source
+> > directories.
+> >
+> > We are using here a toctree with :glob: property. This way, there
+> > is no need to touch the netlink/specs/index.rst file every time
+> > a new Netlink spec is added/renamed/removed.
+> >
+> > Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+> > Reviewed-by: Donald Hunter <donald.hunter@gmail.com>  
+> 
+> This patch doesn't currently merge in the net-next tree because it
+> depends on a series in docs-next.
 
-							Thanx, Paul
+True. It has to either be applied on docs-next or you need to merge
+from it if you want to apply on your tree.
 
-> --
-> 
-> v1 -> v2:
->       * Changed the prosaic part to kernel-doc style and moved it to
->         include/linux/wait.h in another commit
-> ---
->  Documentation/memory-barriers.txt | 2 ++
->  1 file changed, 2 insertions(+)
-> 
-> diff --git a/Documentation/memory-barriers.txt b/Documentation/memory-barriers.txt
-> index 93d58d9a428b8..1d164e0057769 100644
-> --- a/Documentation/memory-barriers.txt
-> +++ b/Documentation/memory-barriers.txt
-> @@ -2192,6 +2192,8 @@ interpolate the memory barrier in the right place:
->  	wait_event_timeout();
->  	wait_on_bit();
->  	wait_on_bit_lock();
-> +	wait_event_cmd();
-> +	wait_event_exclusive_cmd();
->  
->  
->  Secondly, code that performs a wake up normally follows something like this:
-> -- 
-> 2.43.5
-> 
+This patch depends at the changes there to properly address 
+include_pattern/exclude_pattern.
+
+Regards,
+Mauro

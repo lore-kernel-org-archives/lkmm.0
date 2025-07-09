@@ -1,126 +1,139 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D692A2D3EC5;
-	Wed,  9 Jul 2025 15:44:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D24E88F40;
+	Wed,  9 Jul 2025 15:59:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752075893; cv=none; b=Km9ULW1huugwvepvobANsDqK9ymU0G95i6VFk8SbHIvSoZ5NUIjG442eLXMjKDU2tR8Q97Ztad4EZh8XkHZ3B8E7BSuzcb5Ku4zKyY0YXbou7RQsg/+HPucwrkqSrpyz1oKtTqxoaC2PoRnMJ6Rihl9hV0hf9HSPGi6GTw5IY+4=
+	t=1752076749; cv=none; b=K6i4zIBYT3+Uavqe9Vh1SbF1WJoWOL4X4lqhhlPZJEQukNWXszhJl+XkKFO+TRxqkayy27PsIfx73v2n31qoon5k6XovONGKh1X8pPuFJxbftbsL4gqgZUavMfseZqz6pfMq5SPNtTkrnj/RYngmdxCCYtBMBibfGaEwVIXb81E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752075893; c=relaxed/simple;
-	bh=faK0ZcZx9HxOdB6jQlzbXh6mkQSJ4VnVDjYLsm75zDQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=JS6nhMiAVS6MANCpom+wx6KiVY1AbHZIDiqn6aUR3JdwsqpROXU0kbv6YfePJJaYx4pJrIrBavf6bkJi3+CU4wvJvFMpN0yN1s+QOQmkOEpIX6R44f4RtYMHsTgRF800ceKGiUD0FlAFTPWmT+l9A20mYQniUw1WHlXtUMj4STU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ekenn0eo; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1752076749; c=relaxed/simple;
+	bh=W4oDpda6kbCRnn0ODm8ONN7mKwlVwM/eB17fbg3mJL0=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=sy//IaFxB79lAwxU9o9TO8N0Aer9W/DbSew/Ytk1RX7CT2Yh7QvL97hhP+VFtJ5T9tLysjBUEABpWE7wLSCGvnDFTxpGb1Ruj3EJDkKYDLrcrPVaQuFP6KY4vYEec21J66psQ1O9hIFWkc86i5V6T7dAJLoRcVneaG2/RVN58is=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=G5mxQYhJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ekenn0eo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31445C4CEF9;
-	Wed,  9 Jul 2025 15:44:45 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="G5mxQYhJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA21FC4CEF6;
+	Wed,  9 Jul 2025 15:59:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1752075892;
-	bh=faK0ZcZx9HxOdB6jQlzbXh6mkQSJ4VnVDjYLsm75zDQ=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-	b=ekenn0eonP+8DTcaA8V08ebMOrVY2uW/sSO1IseARj9uplvipipWkzvW/FH6Dtw8h
-	 k3dNwLLDxBTZKRyvTrUlB5RkxG84teQsL8uDwXcgG3N/OfehygX77fThw8lbdrh62I
-	 SnTRGvFdeU9OfWHoxerAv+f3RWRueXD5Q5QmqDGIgzCF/tXC5EtGyiISGQo9y+sBmX
-	 7i9jQmmhDAGAQtDR2FypDRPfvs30wNXQO95GCDg+yU52DceFBwQF7mqJ1paQ5Ue66c
-	 ZfzAUpc76vUE7eflBYX0GOgOfKvAAENXvcBz0cbwchEvdlMgcAUo0+URPWImK3SRJq
-	 dodYpEazrY0qg==
-Date: Wed, 9 Jul 2025 17:44:40 +0200
+	s=k20201202; t=1752076748;
+	bh=W4oDpda6kbCRnn0ODm8ONN7mKwlVwM/eB17fbg3mJL0=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=G5mxQYhJQ3plU3wn+9g6HVoJfWZcRPJBnbUJzowJTsPBApSdXe7iGzpvPCAzzLjZg
+	 bthsN1+Q5vZ6h3CPV7xFff5AP55LB0ZL6v1ZcNs4gaJAxZdqAYVdEwSyntaPtuhz2b
+	 2W7ifLwtaXrL5wdf9KTyHot0EKpUfn0ylg88B/QwQPHjRNCH+m3ooUgf3V6JYoZhwN
+	 iGtsD3VQHxoZtdO9sjWcEWHwvmaZ2Q0dluiBaLosq1F/RTOstxtr9CXpj/vhPm5LTN
+	 P4WFvU+y0r/+1DHiM0E0sutUToD6nG3YrVED6uXiG+tg+safuyyOkBPMLUI2gMRKVo
+	 lK+Oswv5c9bYQ==
+Received: from mchehab by mail.kernel.org with local (Exim 4.98.2)
+	(envelope-from <mchehab@kernel.org>)
+	id 1uZXCJ-00000000Igp-0lkF;
+	Wed, 09 Jul 2025 17:59:03 +0200
 From: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-To: Donald Hunter <donald.hunter@gmail.com>
-Cc: Linux Doc Mailing List <linux-doc@vger.kernel.org>, Jonathan Corbet
- <corbet@lwn.net>, "Akira Yokosawa" <akiyks@gmail.com>, "Breno Leitao"
- <leitao@debian.org>, "David S. Miller" <davem@davemloft.net>, "Eric
- Dumazet" <edumazet@google.com>, "Ignacio Encinas Rubio"
- <ignacio@iencinas.com>, "Jan Stancek" <jstancek@redhat.com>, "Marco Elver"
- <elver@google.com>, "Paolo Abeni" <pabeni@redhat.com>, "Randy Dunlap"
- <rdunlap@infradead.org>, "Ruben Wauters" <rubenru09@aol.com>, "Shuah Khan"
- <skhan@linuxfoundation.org>, joel@joelfernandes.org,
- linux-kernel-mentees@lists.linux.dev, linux-kernel@vger.kernel.org,
- lkmm@lists.linux.dev, netdev@vger.kernel.org, peterz@infradead.org,
- stern@rowland.harvard.edu
-Subject: Re: [PATCH v8 11/13] tools: netlink_yml_parser.py: add line numbers
- to parsed data
-Message-ID: <20250709174440.39b0f49e@sal.lan>
-In-Reply-To: <m2bjq98n10.fsf@gmail.com>
-References: <cover.1750925410.git.mchehab+huawei@kernel.org>
-	<549be41405b5ddb6b78ead71f26c33fd6ce8e190.1750925410.git.mchehab+huawei@kernel.org>
-	<m2bjq98n10.fsf@gmail.com>
-X-Mailer: Claws Mail 4.3.1 (GTK 3.24.49; x86_64-redhat-linux-gnu)
+To: Linux Doc Mailing List <linux-doc@vger.kernel.org>,
+	Jonathan Corbet <corbet@lwn.net>
+Cc: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
+	"Akira Yokosawa" <akiyks@gmail.com>,
+	"Breno Leitao" <leitao@debian.org>,
+	"David S. Miller" <davem@davemloft.net>,
+	"Donald Hunter" <donald.hunter@gmail.com>,
+	"Eric Dumazet" <edumazet@google.com>,
+	"Ignacio Encinas Rubio" <ignacio@iencinas.com>,
+	"Jan Stancek" <jstancek@redhat.com>,
+	"Marco Elver" <elver@google.com>,
+	"Paolo Abeni" <pabeni@redhat.com>,
+	"Randy Dunlap" <rdunlap@infradead.org>,
+	"Ruben Wauters" <rubenru09@aol.com>,
+	"Shuah Khan" <skhan@linuxfoundation.org>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Simon Horman <horms@kernel.org>,
+	joel@joelfernandes.org,
+	linux-kernel-mentees@lists.linux.dev,
+	linux-kernel@vger.kernel.org,
+	lkmm@lists.linux.dev,
+	netdev@vger.kernel.org,
+	peterz@infradead.org,
+	stern@rowland.harvard.edu
+Subject: [PATCH v9 01/13] docs: netlink: netlink-raw.rst: use :ref: instead of :doc:
+Date: Wed,  9 Jul 2025 17:58:45 +0200
+Message-ID: <9d6089d93e9cd25e8773d7966f6e60ed016d2ccd.1752076293.git.mchehab+huawei@kernel.org>
+X-Mailer: git-send-email 2.49.0
+In-Reply-To: <cover.1752076293.git.mchehab+huawei@kernel.org>
+References: <cover.1752076293.git.mchehab+huawei@kernel.org>
 Precedence: bulk
 X-Mailing-List: lkmm@lists.linux.dev
 List-Id: <lkmm.lists.linux.dev>
 List-Subscribe: <mailto:lkmm+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:lkmm+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
+Sender: Mauro Carvalho Chehab <mchehab@kernel.org>
 
-Em Fri, 27 Jun 2025 12:03:07 +0100
-Donald Hunter <donald.hunter@gmail.com> escreveu:
+Currently, rt documents are referred with:
 
-> Mauro Carvalho Chehab <mchehab+huawei@kernel.org> writes:
-> 
-> > When something goes wrong, we want Sphinx error to point to the
-> > right line number from the original source, not from the
-> > processed ReST data.
-> >
-> > Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-> > ---
-> >  tools/net/ynl/pyynl/lib/doc_generator.py | 34 ++++++++++++++++++++++--
-> >  1 file changed, 32 insertions(+), 2 deletions(-)
-> >
-> > diff --git a/tools/net/ynl/pyynl/lib/doc_generator.py b/tools/net/ynl/pyynl/lib/doc_generator.py
-> > index 866551726723..a9d8ab6f2639 100644
-> > --- a/tools/net/ynl/pyynl/lib/doc_generator.py
-> > +++ b/tools/net/ynl/pyynl/lib/doc_generator.py
-> > @@ -20,6 +20,16 @@
-> >  from typing import Any, Dict, List
-> >  import yaml
-> >  
-> > +LINE_STR = '__lineno__'
-> > +
-> > +class NumberedSafeLoader(yaml.SafeLoader):
-> > +    """Override the SafeLoader class to add line number to parsed data"""
-> > +
-> > +    def construct_mapping(self, node):
-> > +        mapping = super().construct_mapping(node)
-> > +        mapping[LINE_STR] = node.start_mark.line
-> > +
-> > +        return mapping  
-> 
-> pylint gives these 2 warnings:
-> 
-> tools/net/ynl/pyynl/lib/doc_generator.py:25:0: R0901: Too many ancestors (9/7) (too-many-ancestors)
+Documentation/userspace-api/netlink/netlink-raw.rst: :doc:`rt-link<../../networking/netlink_spec/rt-link>`
+Documentation/userspace-api/netlink/netlink-raw.rst: :doc:`tc<../../networking/netlink_spec/tc>`
+Documentation/userspace-api/netlink/netlink-raw.rst: :doc:`tc<../../networking/netlink_spec/tc>`
 
-I'm yet to find any pylint Rxxx warning that I didn't have to
-disable ;-)
+Having :doc: references with relative paths doesn't always work,
+as it may have troubles when O= is used. Also that's hard to
+maintain, and may break if we change the way rst files are
+generated from yaml. Better to use instead a reference for
+the netlink family.
 
-This particular one is useless for us, as it basically tells that PyYAML
-has a big class hierarchy.
+So, replace them by Sphinx cross-reference tag that are
+created by ynl_gen_rst.py.
 
-> tools/net/ynl/pyynl/lib/doc_generator.py:28:4: W0221: Number of parameters was 3 in 'SafeConstructor.construct_mapping' and is now 2 in overriding 'NumberedSafeLoader.construct_mapping' method (arguments-differ)
+Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+Reviewed-by: Donald Hunter <donald.hunter@gmail.com>
+---
+ Documentation/userspace-api/netlink/netlink-raw.rst | 6 +++---
+ tools/net/ynl/pyynl/ynl_gen_rst.py                  | 5 +++--
+ 2 files changed, 6 insertions(+), 5 deletions(-)
 
-I'll fix this one to prevent potential future issues.
-
-Changing the code to:
+diff --git a/Documentation/userspace-api/netlink/netlink-raw.rst b/Documentation/userspace-api/netlink/netlink-raw.rst
+index 31fc91020eb3..aae296c170c5 100644
+--- a/Documentation/userspace-api/netlink/netlink-raw.rst
++++ b/Documentation/userspace-api/netlink/netlink-raw.rst
+@@ -62,8 +62,8 @@ Sub-messages
+ ------------
  
--class NumberedSafeLoader(yaml.SafeLoader):
-+class NumberedSafeLoader(yaml.SafeLoader):              # pylint: disable=R0901
-     """Override the SafeLoader class to add line number to parsed data"""
+ Several raw netlink families such as
+-:doc:`rt-link<../../networking/netlink_spec/rt-link>` and
+-:doc:`tc<../../networking/netlink_spec/tc>` use attribute nesting as an
++:ref:`rt-link<netlink-rt-link>` and
++:ref:`tc<netlink-tc>` use attribute nesting as an
+ abstraction to carry module specific information.
  
--    def construct_mapping(self, node):
--        mapping = super().construct_mapping(node)
-+    def construct_mapping(self, node, *args, **kwargs):
-+        mapping = super().construct_mapping(node, *args, **kwargs)
-         mapping[LINE_STR] = node.start_mark.line
+ Conceptually it looks as follows::
+@@ -162,7 +162,7 @@ then this is an error.
+ Nested struct definitions
+ -------------------------
  
-         return mapping
-
-This should hopefully be future-proof.
-
-Regards,
-Mauro
-
+-Many raw netlink families such as :doc:`tc<../../networking/netlink_spec/tc>`
++Many raw netlink families such as :ref:`tc<netlink-tc>`
+ make use of nested struct definitions. The ``netlink-raw`` schema makes it
+ possible to embed a struct within a struct definition using the ``struct``
+ property. For example, the following struct definition embeds the
+diff --git a/tools/net/ynl/pyynl/ynl_gen_rst.py b/tools/net/ynl/pyynl/ynl_gen_rst.py
+index 0cb6348e28d3..7bfb8ceeeefc 100755
+--- a/tools/net/ynl/pyynl/ynl_gen_rst.py
++++ b/tools/net/ynl/pyynl/ynl_gen_rst.py
+@@ -314,10 +314,11 @@ def parse_yaml(obj: Dict[str, Any]) -> str:
+ 
+     # Main header
+ 
+-    lines.append(rst_header())
+-
+     family = obj['name']
+ 
++    lines.append(rst_header())
++    lines.append(rst_label("netlink-" + family))
++
+     title = f"Family ``{family}`` netlink specification"
+     lines.append(rst_title(title))
+     lines.append(rst_paragraph(".. contents:: :depth: 3\n"))
+-- 
+2.49.0
 

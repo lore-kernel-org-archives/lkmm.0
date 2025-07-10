@@ -1,124 +1,120 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f49.google.com (mail-ed1-f49.google.com [209.85.208.49])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EFDF1EA73;
-	Thu, 10 Jul 2025 12:01:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAFF921CC56
+	for <lkmm@lists.linux.dev>; Thu, 10 Jul 2025 14:06:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752148868; cv=none; b=QPG5v3ytJ9NipvDZTl8gdXOfgUlKPHkhIR33spNGVG697elbjzT6dO4GqJVXqluy4B+ioh4DnIgsOVeG6sjmpwEzw2STUr/tKB9xdGuPAHmdGYCxobdfdi3u0Bik1q6tG2oXgbFjXKbkVtFwMD4tQXfrLYcBrn/U1UUs4tcfMsw=
+	t=1752156378; cv=none; b=dM4wgQAcxp9yNnX/Mja6Uje0TtsZ47NpG1hfwq5Tz3ypX4unppTisjzI+6eCEPNG+mOpZ7IDPkXWiPW4OC1pdXqJAc3D4M7FklT6EKHLoWdM0F7SMj8emMFv+QWO1RSvT4a1vl5e/BcC+PtMKEc2vWRcRoOhQCDv848R5p2riCk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752148868; c=relaxed/simple;
-	bh=xlOKUHxAG5+wDJb2IC+FgPeerBVxfJ6Ohz+JMX7/gpI=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=o0uka/Oac72rZ+w8isqfg8Ske7cTdS5g4L2C2fqNhfKWawq1aCZea8NK8Lv4G3ZbZq6NXLA9lGmK2TbqYRYxYq0m9qHD0dGrzujrmTwtntgdQg8B2/mZ0H5VHlojaB32BsdWbwbrlSADVAiOdZPj4pKk5efFqBnYFGTLsuBtnUQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=W6nv30q1; arc=none smtp.client-ip=10.30.226.201
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="W6nv30q1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E000C4CEE3;
-	Thu, 10 Jul 2025 12:01:03 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1752148867;
-	bh=xlOKUHxAG5+wDJb2IC+FgPeerBVxfJ6Ohz+JMX7/gpI=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:From;
-	b=W6nv30q18H8QhIFXyBVNo5oXW0gI/m+DesNOelLmRsQkbSUQMuruGa9bvwZn1hblG
-	 olZk7orPdkztCj9aZy46xyY9ZOYIqwpHjrCpm7xGNnfqfYp+yFNuyFr5DOcENbVxSj
-	 AZJJ9tq0uh3A2taBqFaJWTC3cmTQxKa1XWm8525tRxQbSrX7LENZeF18+wTwywg49r
-	 pGMhGk9Siao5Pw4JOivaoF6B7rHRm4vmo0IhZ/1DUUSlaRlXpm77kQzuWnFmjpUYkv
-	 Z+IJ3Tu94t+POIiPdkl6CJXLtH2ibipoWm0zC/EyyeDxO46i99Hd4CGoVx2BG0dmsk
-	 smk2Tb9A6tQNw==
-From: Andreas Hindborg <a.hindborg@kernel.org>
-To: "Benno Lossin" <lossin@kernel.org>
-Cc: "Boqun Feng" <boqun.feng@gmail.com>,  <linux-kernel@vger.kernel.org>,
-  <rust-for-linux@vger.kernel.org>,  <lkmm@lists.linux.dev>,
-  <linux-arch@vger.kernel.org>,  "Miguel Ojeda" <ojeda@kernel.org>,  "Alex
- Gaynor" <alex.gaynor@gmail.com>,  "Gary Guo" <gary@garyguo.net>,
-  =?utf-8?Q?Bj=C3=B6rn?=
- Roy Baron <bjorn3_gh@protonmail.com>,  "Alice Ryhl"
- <aliceryhl@google.com>,  "Trevor Gross" <tmgross@umich.edu>,  "Danilo
- Krummrich" <dakr@kernel.org>,  "Will Deacon" <will@kernel.org>,  "Peter
- Zijlstra" <peterz@infradead.org>,  "Mark Rutland" <mark.rutland@arm.com>,
-  "Wedson Almeida Filho" <wedsonaf@gmail.com>,  "Viresh Kumar"
- <viresh.kumar@linaro.org>,  "Lyude Paul" <lyude@redhat.com>,  "Ingo
- Molnar" <mingo@kernel.org>,  "Mitchell Levy" <levymitchell0@gmail.com>,
-  "Paul E. McKenney" <paulmck@kernel.org>,  "Greg Kroah-Hartman"
- <gregkh@linuxfoundation.org>,  "Linus Torvalds"
- <torvalds@linux-foundation.org>,  "Thomas Gleixner" <tglx@linutronix.de>,
-  "Alan Stern" <stern@rowland.harvard.edu>
-Subject: Re: [PATCH v6 3/9] rust: sync: atomic: Add ordering annotation types
-In-Reply-To: <DB8BTA477Z2V.1J7XFLDXHMN2S@kernel.org> (Benno Lossin's message
-	of "Thu, 10 Jul 2025 13:08:19 +0200")
-References: <20250710060052.11955-1-boqun.feng@gmail.com>
-	<20250710060052.11955-4-boqun.feng@gmail.com>
-	<4Ql5DIvfmXBHoUA428q2PelaaLNBI5Mi0jE3y3YPObJLRgY73zNZzQ8Pdl2qq25VWsMQFKUpYRHHQ1e7wFaGUw==@protonmail.internalid>
-	<DB8BTA477Z2V.1J7XFLDXHMN2S@kernel.org>
-User-Agent: mu4e 1.12.9; emacs 30.1
-Date: Thu, 10 Jul 2025 14:00:59 +0200
-Message-ID: <87v7o0i7b8.fsf@kernel.org>
+	s=arc-20240116; t=1752156378; c=relaxed/simple;
+	bh=yA/I0gJM/OKVOhc8b6C9blaRbMv2JfyPFC62inigLKo=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=lkZbfGFhdjzYHIqj90/VSzWraqQnWGM/1cKI/wV3heTwjyHV9SvwpUcE1zOIJ357gXlgk76dX0CbUKjg0UCTuxCsLKMoQOQxc2dEjWwVmYivJqab0cKn4/OyWq2zJRdvsliN6pGeLuI12Qw8fjm00M9pVFrmW/wnBLWvX8Xyl9M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=debian.org; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.208.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=debian.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-ed1-f49.google.com with SMTP id 4fb4d7f45d1cf-607cc1a2bd8so1611485a12.2
+        for <lkmm@lists.linux.dev>; Thu, 10 Jul 2025 07:06:15 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1752156374; x=1752761174;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=6racAcJNW4RKgIaC4lIcLewARYRmDGKH6RcAriCOozU=;
+        b=KaITqxobqQs5VNifbasQyzMCF1Ev8bL5ukVDl2qzrBHABg7s/8RAyJAtuVhdGmJbaO
+         16x7Z35bm1sxTjLhe9GkeHt5POyUhcgTFrfkxRz135rZR0bjqTf/FR24Qn/+faAmdVQJ
+         0wWjqycJrCbopENz6qQL6WxaiR6MPeg95TSaHsseKDlS/B3Z0ETifCxB+t17dnyOSQvp
+         Z/e23UfDadmfQ+bQ1Dr+LvWDhba11h3CiFtotwk+gZpdGVb8bJgkwCXz+tDIkE0S/6VB
+         84eOZHHIYxEM1nSgnmPw7Fiu9LW6MblsDWz8STR0HSd9va4hTLdj2YlYUb2YbhJLP6P1
+         gcdA==
+X-Forwarded-Encrypted: i=1; AJvYcCXQjpfE5Af50/9ObDuMD3W7EpZ6s1KPeqCnrgNGxxpRqNA53/Sy+v5MN83I0S7OEavL7p9L@lists.linux.dev
+X-Gm-Message-State: AOJu0Yz3esK4jq/NmtQ4hTx5wyv5LqKauujX32DE3n50O2/tDeoQYRhF
+	oFMS0jTB4LSybQ1vErmCdt631ev2FL3YdN2WJISoah3mELAxXSqPN0Db
+X-Gm-Gg: ASbGncvMKwZKiPojvF0jFa1dzI5PR4gkqX9sBi+0z93XCSg2BPAGH8jTjSyXGZG+L5N
+	9yMtW6UjnvcL94BfGcNkvEQ7rkFdGsHWm8kLfpY63LR1+rUa3Qqsi748PLXyxdzo2SHZyFglpi1
+	PDSRgA9syY9NCbGtNTYqNbbI/zNIhsN76EvRjpJD9BkhK9PUoP05CVLURBobUNUnTzfUUqaALiX
+	zRhPtOEwYFeuG0TvuPCI7lsM1SbBz+81+8vTcpfv1c2YM4Gpf/T/2JQCW2ybwCXcQBx2fkMK3FZ
+	BhpVP+qOz3gqejAqmMHnmgM8L70ekqzMeZxiPaoXNVNnEWWQ2odw
+X-Google-Smtp-Source: AGHT+IFmVAxl1c+wDjcDDTe+BiajHbN+l+Z6s7GZDC3h8YpwVObUutZTnP3nnWaOqw2omJw6WNqiMQ==
+X-Received: by 2002:a05:6402:1f46:b0:602:36ce:d0e7 with SMTP id 4fb4d7f45d1cf-611c84d65d3mr2307951a12.14.1752156373710;
+        Thu, 10 Jul 2025 07:06:13 -0700 (PDT)
+Received: from gmail.com ([2a03:2880:30ff:6::])
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-611c9524072sm927420a12.20.2025.07.10.07.06.12
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 10 Jul 2025 07:06:13 -0700 (PDT)
+Date: Thu, 10 Jul 2025 07:06:09 -0700
+From: Breno Leitao <leitao@debian.org>
+To: Boqun Feng <boqun.feng@gmail.com>
+Cc: linux-kernel@vger.kernel.org, rcu@vger.kernel.org, 
+	lkmm@lists.linux.dev, Peter Zijlstra <peterz@infradead.org>, 
+	Ingo Molnar <mingo@kernel.org>, Will Deacon <will@kernel.org>, Waiman Long <longman@redhat.com>, 
+	Davidlohr Bueso <dave@stgolabs.net>, "Paul E. McKenney" <paulmck@kernel.org>, 
+	Josh Triplett <josh@joshtriplett.org>, Frederic Weisbecker <frederic@kernel.org>, 
+	Neeraj Upadhyay <neeraj.upadhyay@kernel.org>, Joel Fernandes <joelagnelf@nvidia.com>, 
+	Uladzislau Rezki <urezki@gmail.com>, Steven Rostedt <rostedt@goodmis.org>, 
+	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>, Lai Jiangshan <jiangshanlai@gmail.com>, 
+	Zqiang <qiang.zhang@linux.dev>, aeh@meta.com, netdev@vger.kernel.org, edumazet@google.com, 
+	jhs@mojatatu.com, kernel-team@meta.com, Erik Lundgren <elundgren@meta.com>
+Subject: Re: [PATCH 8/8] locking/lockdep: Use shazptr to protect the key
+ hashlist
+Message-ID: <i3mukc6vgwrp3cy5eis2inyms7f5b4a6pel4cvvdx6jlxrij2g@wgrnkstlifv3>
+References: <20250625031101.12555-1-boqun.feng@gmail.com>
+ <20250625031101.12555-9-boqun.feng@gmail.com>
 Precedence: bulk
 X-Mailing-List: lkmm@lists.linux.dev
 List-Id: <lkmm.lists.linux.dev>
 List-Subscribe: <mailto:lkmm+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:lkmm+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250625031101.12555-9-boqun.feng@gmail.com>
 
-"Benno Lossin" <lossin@kernel.org> writes:
+Hello Boqun,
 
-> On Thu Jul 10, 2025 at 8:00 AM CEST, Boqun Feng wrote:
->> Preparation for atomic primitives. Instead of a suffix like _acquire, a
->> method parameter along with the corresponding generic parameter will be
->> used to specify the ordering of an atomic operations. For example,
->> atomic load() can be defined as:
->>
->> 	impl<T: ...> Atomic<T> {
->> 	    pub fn load<O: AcquireOrRelaxed>(&self, _o: O) -> T { ... }
->> 	}
->>
->> and acquire users would do:
->>
->> 	let r = x.load(Acquire);
->>
->> relaxed users:
->>
->> 	let r = x.load(Relaxed);
->>
->> doing the following:
->>
->> 	let r = x.load(Release);
->>
->> will cause a compiler error.
->>
->> Compared to suffixes, it's easier to tell what ordering variants an
->> operation has, and it also make it easier to unify the implementation of
->> all ordering variants in one method via generic. The `TYPE` associate
->> const is for generic function to pick up the particular implementation
->> specified by an ordering annotation.
->>
->> Reviewed-by: Alice Ryhl <aliceryhl@google.com>
->> Signed-off-by: Boqun Feng <boqun.feng@gmail.com>
->
-> One naming comment below, with that fixed:
->
-> Reviewed-by: Benno Lossin <lossin@kernel.org>
->
->> ---
->>  rust/kernel/sync/atomic.rs          |  3 +
->>  rust/kernel/sync/atomic/ordering.rs | 97 +++++++++++++++++++++++++++++
->>  2 files changed, 100 insertions(+)
->>  create mode 100644 rust/kernel/sync/atomic/ordering.rs
->
->> +/// The trait bound for annotating operations that support any ordering.
->> +pub trait Any: internal::Sealed {
->
-> I don't like the name `Any`, how about `AnyOrdering`? Otherwise we
-> should require people to write `ordering::Any` because otherwise it's
-> pretty confusing.
+On Tue, Jun 24, 2025 at 08:11:01PM -0700, Boqun Feng wrote:
+> Erik Lundgren and Breno Leitao reported [1] a case where
+> lockdep_unregister_key() can be called from time critical code pathes
+> where rntl_lock() may be held. And the synchronize_rcu() in it can slow
+> down operations such as using tc to replace a qdisc in a network device.
+> 
+> In fact the synchronize_rcu() in lockdep_unregister_key() is to wait for
+> all is_dynamic_key() callers to finish so that removing a key from the
+> key hashlist, and we can use shazptr to protect the hashlist as well.
+> 
+> Compared to the proposed solution which replaces synchronize_rcu() with
+> synchronize_rcu_expedited(), using shazptr here can achieve the
+> same/better synchronization time without the need to send IPI. Hence use
+> shazptr here.
+> 
+> Reported-by: Erik Lundgren <elundgren@meta.com>
+> Reported-by: Breno Leitao <leitao@debian.org>
+> Link: https://lore.kernel.org/all/20250321-lockdep-v1-1-78b732d195fb@debian.org/ [1]
+> Signed-off-by: Boqun Feng <boqun.feng@gmail.com>
 
-I agree with this observation.
+First of all, thanks for working to fix the origianl issue. I've been
+able to test this in my host, and the gain is impressive.
 
+Before:
 
-Best regards,
-Andreas Hindborg
+         # time /usr/sbin/tc qdisc replace dev eth0 root handle 0x1234: mq
+         real    0m13.195s
+         user    0m0.001s
+         sys     0m2.746s
+	
+With your patch:
 
+	#  time /usr/sbin/tc qdisc replace dev eth0 root handle 0x1234: mq
+	real	0m0.135s
+	user	0m0.002s
+	sys	0m0.116s
 
+	#  time /usr/sbin/tc qdisc replace dev eth0 root handle 0x1: mq
+	real	0m0.127s
+	user	0m0.001s
+	sys	0m0.112s
 
+Please add the following to the series:
+
+Tested-by: Breno Leitao <leitao@debian.org>

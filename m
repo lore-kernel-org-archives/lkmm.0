@@ -1,73 +1,73 @@
-Received: from mail-qk1-f180.google.com (mail-qk1-f180.google.com [209.85.222.180])
+Received: from mail-qk1-f173.google.com (mail-qk1-f173.google.com [209.85.222.173])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C7D9275AF7
-	for <lkmm@lists.linux.dev>; Thu, 10 Jul 2025 15:57:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA7522727FE
+	for <lkmm@lists.linux.dev>; Thu, 10 Jul 2025 16:16:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752163035; cv=none; b=q/iHO/cXjdl4Qt+oWBj7I8jRtuTfCHVT7s9RP/S8+DOA9aI6o4DJPwUiH7kx+4pOGghhnaRDIg1qGe0o1ApF4ic1gZwPRClujYOHe1fEUM8L9mSarDrUY85AAQPfZ0AWDrz6VvkV0RrB7ZxyENye5QCxflNBVtMprNxxj19d4M4=
+	t=1752164181; cv=none; b=ci6IhbQYPel4pVKgdYnzy82jbrFFF6DEVgWWrKSwaOMUx+z9ir9uzHE+egxlpdhCgX6dc3od8unKjo2QoO9cD1oE7fkhQ2Y4WlqNbdQMR4EcPyAntkSUy7d28Cl1KSpwVZCdJUztd3O6PH/5EZDOv0haxfj79E6ALowKX3VtAwE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752163035; c=relaxed/simple;
-	bh=+mABmYXOeNV8mM9HnoSX6J6gUSDBDbFmr1UdHiOlW5U=;
+	s=arc-20240116; t=1752164181; c=relaxed/simple;
+	bh=qJz6fbDEwKR2n0fhRoYqJTEv9xrZ4rc7vxiYqtlCqFQ=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=THPzJniAWSRJg2BsVuJW5uhui9ZHz+gINbygGLQCrx6NJX0KvmlL7YEzJADYtef9QXY3Gnr7NgHYu6ITpssqw8qzmiCOez3/xc7w+cs21hUzMhMKHL00Wt6sbBPXeHzuHbgs9Rz4vqN8fOJosQOmQ7uph1z4cFvDCJCx/h6kRXA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=CWlgwkfv; arc=none smtp.client-ip=209.85.222.180
+	 Content-Type:Content-Disposition:In-Reply-To; b=Fm6HLeyXoogIyrc/z7NJcM2lPoXmuvboVr8+05JrslTkZ3Kg1OuZqPwDm5RaUHhHWw2zO15O07lEBf2QlkQHDoYDuXHhpAkmKvODexMdr3n2mGzl21nJScOpTaq9yc6uzXc+pJwk2qhom9axeRtAjt6BR+pf11Zkp6645CEVAyY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=dfOcOW2c; arc=none smtp.client-ip=209.85.222.173
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CWlgwkfv"
-Received: by mail-qk1-f180.google.com with SMTP id af79cd13be357-7d45f5fde50so111857685a.2
-        for <lkmm@lists.linux.dev>; Thu, 10 Jul 2025 08:57:13 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dfOcOW2c"
+Received: by mail-qk1-f173.google.com with SMTP id af79cd13be357-7d20f79a00dso166361585a.0
+        for <lkmm@lists.linux.dev>; Thu, 10 Jul 2025 09:16:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1752163033; x=1752767833; darn=lists.linux.dev;
+        d=gmail.com; s=20230601; t=1752164179; x=1752768979; darn=lists.linux.dev;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:feedback-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=0TrK7hCfWutY70p0zkUOMvAeOn+WmB0RO4OTHpoohBs=;
-        b=CWlgwkfvQoeee87Pp2buFmldZzRj+zKZIK2nOeLtQUnwNTHc2zPhkvCWmqwtmro5o8
-         Nx+FagxSDC1BC/GI993RP2wzabhi+pm1AN/F9VI7ExRS2jIETH2dN0Qm403cLVIZbETC
-         +WrAMsSrEbh79UFtfq9TEknbRBeI75Bng73WNYkEp6xJgQ76youcjmyyRMVhCouFIOs4
-         Dg43mgk4o1PgAqvti7U+Pb1xMtuwv7EH24dcf4zRLmprnjW0AU4PciuXQesK3KXeD/zm
-         5zy3fyoOyCryUjV5LKBC0tvbP3K4Kb8w+AWE6O3bjPE8h4RoUd5QxLzVeq695Lp54aK1
-         AyTg==
+        bh=1e38L05MDqdYlj/kHUFQccsi1c7uERaQIJKOoZdkmzQ=;
+        b=dfOcOW2c5DavZSL1nLrEupZtsFNJagCKMF5OAHpNq5jhTkubr6d/tyLB0Ul4k4KCUG
+         URCP7xQMKXa91C5hbe03iZgsNqOG/6GprCW15h9AGTHiKpag3E14bYOaCq8caFoMpLs9
+         D87CPKuuUN/ALfncp0hR9bu4hiJ2KRvp4H8D4degdZAUYcum+lk9p53BJDjlQA3trZe5
+         UHv6R7PKHtsPcf+BlKumqAyikzx4rqKh4S07cqKJfchrGc7YWv3RaPkM7xeG0kJCd8H3
+         H6LujtUeBeVtLPfFrCTtXSRP/EMfgeJBRllmIC9ZIyU9XY3TK4l70NYnPWR8plJWSdcz
+         Hj0A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1752163033; x=1752767833;
+        d=1e100.net; s=20230601; t=1752164179; x=1752768979;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:feedback-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=0TrK7hCfWutY70p0zkUOMvAeOn+WmB0RO4OTHpoohBs=;
-        b=dWzZ79xeFJ18WKpprpdPYeWY4bJiQuV0yBCbRT77KPpvkflmz9LZPuQ3OVfmnlBVVY
-         BBr75cvg5FT7o7ZBBPdM4grBtwU6dmQkKWffMbW+7Cv8zbIAUsbdZhKIJcdZYqTvhRaB
-         lU0qnCiso7ifGtVyG48dB/uvQ6MNQQCygysfqKiIWMCURDdYGKT+wZ0eZtVn80RyRPnI
-         YAy43nBm5BcgnejlXg0RUCb64BDVysG0tSIKg4O0Kvr4n5MOETtvCpfRrcOPHz9t7YVm
-         94YkxtNoO0pLuaIrRaR7YfLmpLuQK8fT1yueZGgYk+kf/83MZw5Z1Pr2rixl950KO+hD
-         KWVw==
-X-Forwarded-Encrypted: i=1; AJvYcCWPIyepYfNDJhpBIZYVkjck+1X4udANgNre7VQQq9HbBQZoa5SQE+uxE6s9Z6QpJRmSGohM@lists.linux.dev
-X-Gm-Message-State: AOJu0YzGAPM4pydBWfKwt9jbFZr1huBDmKCHUOsByOgkQei+hWaZVRrp
-	sKAnDj8DavLjOgPMTeG3eXatnBhlptyzbeDHkknwCk1RfRxoOpObtLZm
-X-Gm-Gg: ASbGncvjR14U1xuSynPSYbz6Fl8SLSZUPxskoO4tUwBo4j8Hp7o5YJK6+UoEnqQw0fD
-	SB6H7f7lu5f90yDlXUOXyjJ4OknGRSY2m2C4fBb/rfuTk14bTbOjXkxR8cs3RRYdf1idDbXLBv0
-	bVd1dy6udSicn1F2W2aufyMQEKqoR6RfrWAEzZVrW7Sp1s1YcTPL+Zcx9b4VzrrAAzAf6RHhAzf
-	LtWjq0I1WR2wrb056XuUUQyBmvtPWUy/mpfvKqNhYMOst+OkzUZ1e3RoPZvEcfgJ2QZYDKF5ZPO
-	kPjho48YANnS0lg40F+YUk5GYJdtkYehtcmbJW0SHSnBw0ZzcPTznggF4Fp2X762dESjGzhtQsv
-	JrBTV+iElvJD6XOvu5+eRLowYlIMoHoWQ2frqg/Luepgd+5X9SdZa
-X-Google-Smtp-Source: AGHT+IFo5HxxuRZ6u/J4mgSOUZlvRs5fgOEFkl8u0k1/U/qjbOqofWDsz0TnG4Ksq/SUnO8IHLWzvQ==
-X-Received: by 2002:a05:620a:2906:b0:7c5:962b:e87c with SMTP id af79cd13be357-7dded1f04ddmr2015685a.44.1752163032749;
-        Thu, 10 Jul 2025 08:57:12 -0700 (PDT)
+        bh=1e38L05MDqdYlj/kHUFQccsi1c7uERaQIJKOoZdkmzQ=;
+        b=H/7C+qeuc/f/TuwlpJNK9RVoEIH9whOREO5sxsTlZsdoIv0VoCpz81ICClcpHh3qOC
+         emtUdEGiZMm1jzWSkW3Y8nxlOZhS6QgKmfxro4Y9Jkpyp6o3d7MyhbatblS+IFMvZwFW
+         a7ihiR+e3aUwtcp2yXphjueHMLMftRgJDQntgjvYMl70z9dnltAxzqSZMZrEz4ide1/J
+         HVV9HWfFmHHxet0yGKnRHcsk/skZtMD5CBRj/IJChxPFJYDrkelcd8lIlPlJL6GJy5et
+         6FVQYuu365BFk6voBPPoTtxww8zSxRrYvN9MAV6J9EDwqbMImZ0QIU/crYJNMHiN0W6p
+         gPQA==
+X-Forwarded-Encrypted: i=1; AJvYcCVVMEshH1AAFGsX/8L/j9U1VxLk5OKch2s5ejOrEaVORdB45ZS9sLmv3dUrieZHl1/EiSJb@lists.linux.dev
+X-Gm-Message-State: AOJu0YwY86OAsmxvG0b0jrSMRzhwKOTTgVTQCMXgCu++dg38rbatMkoS
+	kZXWAa+5IYSvfyoEl0PybWrw3wPB8wRH5MhGoSL8wrl4O40gco/+BP+r
+X-Gm-Gg: ASbGncu5IlA0bRpUoEEi7qVSaYc5UJXe+w7ctZpYQbFkooGXflmJujW59fE91VV50R7
+	A+G/U6dWwtcGe1Fmo0Hpa/ORbM9Inp+0rUCHnU6RFkKVmoeZpwof95RYXfT11DybPPZ1A/U3bGt
+	UdZ9oMrZ8muq9VjLQuXVAdUDHRcv49do82RbvsZwUT0/inVqRXk45Xmu0D9RqfRbUFDy9teKp1J
+	ybgGNZBWcyJzmlRhA762mhJSfh9SbXukTtaBdZvDoWjWLsEkIMdxmLdLTO3IkkA3fX9mXpu00Ht
+	UM9JElsjUKwUzBRuEtlH3z27X2ruJ7ed01DyjaxhWA9x2Av+md+qXV6D2bIcZLjSfBwSWIwywSA
+	s2ShSSHzGzB/R8SSMX7BmRhx/R57CTSBqrepRWbcLKEiLvnUWrVuI
+X-Google-Smtp-Source: AGHT+IHJozt3f+ojIXaL0YmFLWxTUamIZY9TjGksGKQkUrOQV9kg9o5Js9x38WbBIRg4VOWyeYCXew==
+X-Received: by 2002:a05:620a:3726:b0:7d4:451:b8cb with SMTP id af79cd13be357-7dde9b5e387mr16954485a.4.1752164178277;
+        Thu, 10 Jul 2025 09:16:18 -0700 (PDT)
 Received: from fauth-a1-smtp.messagingengine.com (fauth-a1-smtp.messagingengine.com. [103.168.172.200])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-7dcdbb079eesm110174985a.17.2025.07.10.08.57.11
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-7dcdebeb7fasm110680985a.109.2025.07.10.09.16.17
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 10 Jul 2025 08:57:12 -0700 (PDT)
-Received: from phl-compute-10.internal (phl-compute-10.phl.internal [10.202.2.50])
-	by mailfauth.phl.internal (Postfix) with ESMTP id 9F1A0F40066;
-	Thu, 10 Jul 2025 11:57:11 -0400 (EDT)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-10.internal (MEProxy); Thu, 10 Jul 2025 11:57:11 -0400
-X-ME-Sender: <xms:1-JvaG3YDd-0_A6g6b4Gbf8FEuPVgU0NxEniHcMQlz7zsEPsm7ra3g>
-    <xme:1-JvaKl9pL1Nt-udWykYtO-WFqG6oFZJY8soHK-j_LlIN93qssLYwKIE8Yct8WvR4
-    suxhyODHd3oI4GiIA>
-X-ME-Received: <xmr:1-JvaDe2yjEjJvvdykzVaF_sTJ9FldzzDXJBV3wq76wXTWIdxxPb57xgkg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdegtdekiecutefuodetggdotefrod
+        Thu, 10 Jul 2025 09:16:17 -0700 (PDT)
+Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
+	by mailfauth.phl.internal (Postfix) with ESMTP id 34CD6F40069;
+	Thu, 10 Jul 2025 12:16:17 -0400 (EDT)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-05.internal (MEProxy); Thu, 10 Jul 2025 12:16:17 -0400
+X-ME-Sender: <xms:UedvaAZzkqA4y-cGMCDXhpnP5iUm7BEXqqGZ0eUqDCTSALRe49hJKg>
+    <xme:UedvaM7GC3k1K3EeNd_1dLbW8KFVJom3BlpOnEXM0NDKo10dLzU80gt52cAFyO8Ws
+    v4q1uC6yHqSxTlP7g>
+X-ME-Received: <xmr:UedvaPgYmEx6Hjh4M-dt6OV_SzTufwnw2GgvL_ZqOLOG-PFgxQSlK10aCg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdegtdeltdcutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
     ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
     hrpeffhffvvefukfhfgggtuggjsehttdertddttddvnecuhfhrohhmpeeuohhquhhnucfh
@@ -77,30 +77,31 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdegtdekiecutefuodetgg
     hunhdomhgvshhmthhprghuthhhphgvrhhsohhnrghlihhthidqieelvdeghedtieegqddu
     jeejkeehheehvddqsghoqhhunhdrfhgvnhhgpeepghhmrghilhdrtghomhesfhhigihmvg
     drnhgrmhgvpdhnsggprhgtphhtthhopedvjedpmhhouggvpehsmhhtphhouhhtpdhrtghp
-    thhtoheplhhoshhsihhnsehkvghrnhgvlhdrohhrghdprhgtphhtthhopegrrdhhihhnug
-    gsohhrgheskhgvrhhnvghlrdhorhhgpdhrtghpthhtoheplhhinhhugidqkhgvrhhnvghl
-    sehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtoheprhhushhtqdhfohhrqdhlih
-    hnuhigsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtoheplhhkmhhmsehlihhs
-    thhsrdhlihhnuhigrdguvghvpdhrtghpthhtoheplhhinhhugidqrghrtghhsehvghgvrh
-    drkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepohhjvggurgeskhgvrhhnvghlrdhorhhg
-    pdhrtghpthhtoheprghlvgigrdhgrgihnhhorhesghhmrghilhdrtghomhdprhgtphhtth
-    hopehgrghrhiesghgrrhihghhuohdrnhgvth
-X-ME-Proxy: <xmx:1-JvaHWpqqP39ns8iX2QesksUcEImbUsie36qAkqad4a0lYDViwfuw>
-    <xmx:1-JvaHGcvGlxRvDKt50S3P_H53q7ShTh3mE3Wh--AXWPGvGmAFmNBA>
-    <xmx:1-JvaJc4rDlhruJUoTeas9x1kPn1_quLXTUh3gKR5ND2XN6_36HqiA>
-    <xmx:1-JvaAbMELaLB8Vdfebc7b33lZ4OY60-7NtHJhYnbqEAG5w7V_vylg>
-    <xmx:1-JvaMojquPgJlEe8muVgwWgLwNU6uDTQeyFturzlSlCOv15QvNqedFR>
+    thhtoheplhhoshhsihhnsehkvghrnhgvlhdrohhrghdprhgtphhtthhopehlihhnuhigqd
+    hkvghrnhgvlhesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehruhhsthdq
+    fhhorhdqlhhinhhugiesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehlkh
+    hmmheslhhishhtshdrlhhinhhugidruggvvhdprhgtphhtthhopehlihhnuhigqdgrrhgt
+    hhesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehojhgvuggrsehkvghrnh
+    gvlhdrohhrghdprhgtphhtthhopegrlhgvgidrghgrhihnohhrsehgmhgrihhlrdgtohhm
+    pdhrtghpthhtohepghgrrhihsehgrghrhihguhhordhnvghtpdhrtghpthhtohepsghjoh
+    hrnhefpghghhesphhrohhtohhnmhgrihhlrdgtohhm
+X-ME-Proxy: <xmx:UedvaKIbw_sHaSckgITENpmw56Jjxg6e8QxxTssYV4es8AlV5ddMAQ>
+    <xmx:UedvaJqnNSqPoM8DT1t1bKQi0m22-aumA3PfFbujDO8bkh7SoOohYg>
+    <xmx:UedvaAzPCMXdsGHR10Wv25vwkPCt4m5eysWGDiSlx34Xt7hgapAl1Q>
+    <xmx:UedvaNf5hWVSwyquZXYio9wVymOgYsWVBCoYi5YXTeaDwoaunvBkAw>
+    <xmx:UedvaMdrZFotRxzxKBSQ7xt2JlnMdNGnIWZMFnBUhOZvMNlJ2lnxViCs>
 Feedback-ID: iad51458e:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 10 Jul 2025 11:57:10 -0400 (EDT)
-Date: Thu, 10 Jul 2025 08:57:09 -0700
+ 10 Jul 2025 12:16:16 -0400 (EDT)
+Date: Thu, 10 Jul 2025 09:16:15 -0700
 From: Boqun Feng <boqun.feng@gmail.com>
 To: Benno Lossin <lossin@kernel.org>
-Cc: Andreas Hindborg <a.hindborg@kernel.org>, linux-kernel@vger.kernel.org,
-	rust-for-linux@vger.kernel.org, lkmm@lists.linux.dev,
-	linux-arch@vger.kernel.org, Miguel Ojeda <ojeda@kernel.org>,
+Cc: linux-kernel@vger.kernel.org, rust-for-linux@vger.kernel.org,
+	lkmm@lists.linux.dev, linux-arch@vger.kernel.org,
+	Miguel Ojeda <ojeda@kernel.org>,
 	Alex Gaynor <alex.gaynor@gmail.com>, Gary Guo <gary@garyguo.net>,
 	=?iso-8859-1?Q?Bj=F6rn?= Roy Baron <bjorn3_gh@protonmail.com>,
+	Andreas Hindborg <a.hindborg@kernel.org>,
 	Alice Ryhl <aliceryhl@google.com>, Trevor Gross <tmgross@umich.edu>,
 	Danilo Krummrich <dakr@kernel.org>, Will Deacon <will@kernel.org>,
 	Peter Zijlstra <peterz@infradead.org>,
@@ -114,15 +115,14 @@ Cc: Andreas Hindborg <a.hindborg@kernel.org>, linux-kernel@vger.kernel.org,
 	Linus Torvalds <torvalds@linux-foundation.org>,
 	Thomas Gleixner <tglx@linutronix.de>,
 	Alan Stern <stern@rowland.harvard.edu>
-Subject: Re: [PATCH v6 3/9] rust: sync: atomic: Add ordering annotation types
-Message-ID: <aG_i1aQhkBa6k8JZ@Mac.home>
+Subject: Re: [PATCH v6 2/9] rust: sync: Add basic atomic operation mapping
+ framework
+Message-ID: <aG_nT3H8J-h2qwr5@Mac.home>
 References: <20250710060052.11955-1-boqun.feng@gmail.com>
- <20250710060052.11955-4-boqun.feng@gmail.com>
- <4Ql5DIvfmXBHoUA428q2PelaaLNBI5Mi0jE3y3YPObJLRgY73zNZzQ8Pdl2qq25VWsMQFKUpYRHHQ1e7wFaGUw==@protonmail.internalid>
- <DB8BTA477Z2V.1J7XFLDXHMN2S@kernel.org>
- <87v7o0i7b8.fsf@kernel.org>
- <aG_RcB0tcdnkE_v4@Mac.home>
- <DB8GUTJA9QU1.X112WTV7ABZN@kernel.org>
+ <20250710060052.11955-3-boqun.feng@gmail.com>
+ <DB8BQGJNFDAY.BGQ8CZSFFOLH@kernel.org>
+ <aG_Yah5FFHcA3IZy@Mac.home>
+ <DB8HQLY48DFX.3PBBUTQLV14PC@kernel.org>
 Precedence: bulk
 X-Mailing-List: lkmm@lists.linux.dev
 List-Id: <lkmm.lists.linux.dev>
@@ -131,61 +131,117 @@ List-Unsubscribe: <mailto:lkmm+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <DB8GUTJA9QU1.X112WTV7ABZN@kernel.org>
+In-Reply-To: <DB8HQLY48DFX.3PBBUTQLV14PC@kernel.org>
 
-On Thu, Jul 10, 2025 at 05:05:25PM +0200, Benno Lossin wrote:
-> On Thu Jul 10, 2025 at 4:42 PM CEST, Boqun Feng wrote:
-> > On Thu, Jul 10, 2025 at 02:00:59PM +0200, Andreas Hindborg wrote:
-> >> "Benno Lossin" <lossin@kernel.org> writes:
-> >> > On Thu Jul 10, 2025 at 8:00 AM CEST, Boqun Feng wrote:
-> >> >> +/// The trait bound for annotating operations that support any ordering.
-> >> >> +pub trait Any: internal::Sealed {
-> >> >
-> >> > I don't like the name `Any`, how about `AnyOrdering`? Otherwise we
-> >> > should require people to write `ordering::Any` because otherwise it's
-> >> > pretty confusing.
+On Thu, Jul 10, 2025 at 05:46:56PM +0200, Benno Lossin wrote:
+> On Thu Jul 10, 2025 at 5:12 PM CEST, Boqun Feng wrote:
+> > On Thu, Jul 10, 2025 at 01:04:38PM +0200, Benno Lossin wrote:
+> >> On Thu Jul 10, 2025 at 8:00 AM CEST, Boqun Feng wrote:
+> >> > +declare_and_impl_atomic_methods!(
+> >> > +    AtomicHasBasicOps ("Basic atomic operations") {
+> >> > +        read[acquire](ptr: *mut Self) -> Self {
+> >> > +            call(ptr.cast())
+> >> > +        }
+> >> > +
+> >> > +        set[release](ptr: *mut Self, v: Self) {
+> >> > +            call(ptr.cast(), v)
+> >> > +        }
+> >> > +    }
 > >> 
-> >> I agree with this observation.
+> >> I think this would look a bit better:
+> >> 
+> >>     /// Basic atomic operations.
+> >>     pub trait AtomicHasBasicOps {
+> >>         unsafe fn read[acquire](ptr: *mut Self) -> Self {
+> >>             bindings::#call(ptr.cast())
+> >>         }
+> >> 
+> >>         unsafe fn set[release](ptr: *mut Self, v: Self) {
+> >>             bindings::#call(ptr.cast(), v)
+> >>         }
+> >>     }
 > >> 
 > >
-> > I'm OK to do the change, but let me show my arguments ;-)
+> > Make sense, I've made `pub trait`, `bindings::#` and `unsafe fn`
+> > hard-coded:
 > >
-> > * First, we are using a language that supports namespaces,
-> >   so I feel it's a bit unnecessary to use a different name just because
-> >   it conflicts with `core::any::Any`. Doing so kinda undermines the
-> >   namespace concepts. And we may have other `Any`s in the future, are we
-> >   sure at the moment we should keyword `Any`?
+> > macro_rules! declare_and_impl_atomic_methods {
+> >     (#[doc = $doc:expr] pub trait $ops:ident {
 > 
-> I don't think `Any` is a good name for something this specific anyways.
-
-Well, that's the point of namespace: providing contexts for a name, and
-the contexts can be very specific. I'm sure we both have used "any" in
-English to refer something specific ;-)
-
-> If it were something private, then sure use `Any`, but since this is
-> public, I don't think `Any` is a good name.
+> You should allow any kind of attribute (and multiple), that makes it
+> much simpler.
 > 
 
-This essentially means we keyword `Any` as a public trait name, then we
-should document it somewhere, along with other names we want to keyword.
+I didn't know I could do that, updated:
+
+    ($(#[$attr:meta])* pub trait $ops:ident {
+        $(
+            unsafe fn $func:ident [$($variant:ident),*]($($arg_sig:tt)*) $( -> $ret:ty)? {
+                bindings::#call($($arg:tt)*)
+            }
+        )*
+    }) => {
+        $(#[$attr])*
+
+Thanks!
+
+> >         $(
+> >             unsafe fn $func:ident [$($variant:ident),*]($($arg_sig:tt)*) $( -> $ret:ty)? {
+> >                 bindings::#call($($arg:tt)*)
+> >             }
+> >         )*
+> >     }) => {
+> >
+> > It shouldn't be very hard to make use of the actual visibility or
+> > unsafe, but we currently don't have other visibility or safe function,
+> > so it's simple to keep it as it is.
+[..]
+> >> I'm not sure if this is worth it, but for reading the definitions of
+> >> these operations directly in the code this is going to be a lot more
+> >> readable. I don't think it's too bad to duplicate it.
+> >> 
+> >> I'm also not fully satisfied with the safety comment on
+> >> `bindings::#call`...
+> >> 
+> >
+> > Based on the above, I'm not going to do the change (i.e. duplicating
+> > the safe comments and improve them), and I would make an issue tracking
+> > it, and we can revisit it when we have time. Sounds good?
+> 
+> Sure, I feel like some kind of method duplication macro might be much
+> better here, like:
+> 
+>     multi_functions! {
+>         pub trait AtomicHasBasicOps {
+>             /// Atomic read
+>             ///
+>             /// # Safety
+>             /// - Any pointer passed to the function has to be a valid pointer
+>             /// - Accesses must not cause data races per LKMM:
+>             ///   - Atomic read racing with normal read, normal write or atomic write is not a data race.
+>             ///   - Atomic write racing with normal read or normal write is a data race, unless the
+>             ///     normal access is done from the C side and considered immune to data races, e.g.
+>             ///     `CONFIG_KCSAN_ASSUME_PLAIN_WRITES_ATOMIC`.
+>             unsafe fn [<read, read_acquire>](ptr: *mut Self) -> Self;
+> 
+>             // ...
+>         }
+>     }
+> 
+> And then also allow it on impls. I don't really like the idea of
+> duplicating and thus hiding the safety docs... But I also see that just
+
+At least the rustdoc has safety section for each function. ;-)
+
+> copy pasting them everywhere isn't really a good solution either...
+> 
+
+Yeah, perhaps there is no immediate resolution, but open to any
+suggestion.
 
 Regards,
 Boqun
 
-> > * Another thing is that this trait won't be used very often outside
-> >   definition of functions that having ordering variants, currently the
-> >   only users are all inside atomic/generic.rs.
-> 
-> I don't think this is a good argument to keep a bad name.
-> 
-> > I probably choose the `ordering::Any` approach if you guys insist.
-> 
-> I don't think we have a lint for that, so I'd prefer if we avoid that...
-> 
-> Someone is going to just `use ...::ordering::Any` and then have a
-> function `fn<T: Any>(_: T)` in their code and that will be very
-> confusing.
-> 
 > ---
 > Cheers,
 > Benno

@@ -1,79 +1,79 @@
-Received: from mail-qk1-f177.google.com (mail-qk1-f177.google.com [209.85.222.177])
+Received: from mail-qk1-f179.google.com (mail-qk1-f179.google.com [209.85.222.179])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B005E298CD2
-	for <lkmm@lists.linux.dev>; Thu, 10 Jul 2025 06:01:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 465F4295530
+	for <lkmm@lists.linux.dev>; Thu, 10 Jul 2025 06:01:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752127265; cv=none; b=gnd6+BoJ3XarAFxO7F7/iAsO+IbitiqbHJfnKeTCTYUseMYCG13VhGdDsF8ddA3FA3/ESZeuRa/qHrZ3AiF1sPF2cmTPBUjmmpBsr0TZzLUNTZH1fNffZLhkMwN3fk6A7Q9rkzxZHEvHoCB7/cRbt2BGW7Bnz6/U8I1SG3lgpG4=
+	t=1752127266; cv=none; b=D4K1GWjcF0Wlss7fxhM4pNMSkA7AFGjt4cb12Rf3rUafS/twQgHf+mUDE1TST5jNT7k1EwkV/zNP19y/G4bIrhUSeaIj/PvRBjQFe1eaQ1Ej1MuceGMkS3y9jSHIxrv2JT7L2GavbOttABJijo6zAr/zzXfsO9FeuLglIlPeY2E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752127265; c=relaxed/simple;
-	bh=AofuJkxBhjDiz8NtTL9ENppPKcq3Wvnh4vcrq/oOHfc=;
+	s=arc-20240116; t=1752127266; c=relaxed/simple;
+	bh=qy5FEETkiBvgopjXeebnW8YWe2JigwYRCQH/qWzGYHg=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=Dxvuf7jeCA0GJE/JYBQYLGCHrbxLOEb2qNoU7t+3JMsXT74BaUpipgPbhVR88JtvZx9DYC+myPI4NukLMksA/8LRy+z3LmvaeHEAlnLPyWNn2aVnIp0FmfaUKd0SPe6gIoJGRaTNC93jVUJlSbzp265YZKVF3Faw/n/V8l1dxqI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=VixX4STq; arc=none smtp.client-ip=209.85.222.177
+	 MIME-Version; b=DPMzBbNa5GFGLqWRAMINOPyzg08cD2TpRD6oIUM9nyK+VklJdC6hk+4SwNxZ+rEkvxnAcrnuLVr6IW+B2AaYW6rE0psD2YNWjrU6b2yF6QOEv81GTW/qRcBPrtolDQId6T0TXJg0cRL5c/Kt9L9mOSDKZquaSdnB0LKfyqNqyPw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=egH5DMNV; arc=none smtp.client-ip=209.85.222.179
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VixX4STq"
-Received: by mail-qk1-f177.google.com with SMTP id af79cd13be357-7d5d0ea6c8dso47469685a.1
-        for <lkmm@lists.linux.dev>; Wed, 09 Jul 2025 23:01:03 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="egH5DMNV"
+Received: by mail-qk1-f179.google.com with SMTP id af79cd13be357-7d09a17d2f7so53634785a.1
+        for <lkmm@lists.linux.dev>; Wed, 09 Jul 2025 23:01:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1752127262; x=1752732062; darn=lists.linux.dev;
+        d=gmail.com; s=20230601; t=1752127261; x=1752732061; darn=lists.linux.dev;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:feedback-id:from:to:cc:subject
          :date:message-id:reply-to;
-        bh=/DU6Gd6GsvMpxfhg5e8gpmRBqjJBuHlmTByBwz0k8BE=;
-        b=VixX4STqRNUYjMM4lMavv0v6KDo6yXO0uLhkbyRaMR9Ks+H1GGgwrqOJqeVibmSr8Y
-         uUsn35eQVwU6w5Y4efMgWf8sctg3FKkCG6wk2vbtaor6MY5TYZD1ludH5C8o+sxRQENH
-         u4PKL5v6veZ4rgY7J0tGkPSxar+L+uH5eJs7v9PEKiBOW3JCdgUKu6uXKM9M13CFJyaR
-         1XQ9Fu/FKcpi9gGVQBy4WycjutU0JSVKIDCSuUI60R10f9/LaSgJSYd9tCkIWSycWWLa
-         S2/AroNwUo+j6t4b41k0scDwguAJYLt62OmIeQDucjxK5eOJXHiKZA4vV3bPg2N81CaD
-         ia1A==
+        bh=OmxZh0kPcuIR00xg4FNk0vUM7gWMjruROudJ19fQk24=;
+        b=egH5DMNV8EMbTDYcF8j7C9p4C/qCNivLruhvGjiRqgPNFDMfgHquBIwFZO7UxBesI4
+         c35ARfzJ4zJA0LJReDmk7MWTp+tL0d47K+pbD3etMGpGXRkrt5lL1IotT/FIDgUHSUo2
+         9fXmevku2/fNblaTOjHRapLViOXg1Ytuiw0wovQZh14xF8LOu6YpI0ZTK61WfyOP9UXk
+         jaf9HXXd4lJn8ZHay9j4kkZR+akdWSd7RZG2qOLfdb8wWW8Hzy0T45Yrw4G+yv+YAnOw
+         25A8OiEt+jXrw/spyVXF07vlHvcuYh+7h37OndyX2K0FPuiq5prH0/fKZJ3J00eGXt5g
+         ev9Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1752127262; x=1752732062;
+        d=1e100.net; s=20230601; t=1752127261; x=1752732061;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:feedback-id:x-gm-message-state
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=/DU6Gd6GsvMpxfhg5e8gpmRBqjJBuHlmTByBwz0k8BE=;
-        b=aZhsWyafXza9fJ1q6eUaIoYzJt0GwV0W1AMtJ2KdXP3Rp6Z++1jzghdECJDh/cTcDq
-         8812ljP0OeRYdThBSAlMWZTMSGV6MyE8XcjXcx8NHdjKU0xWxN+AgHYyHptKKXcGZpuK
-         cGRrerl6PYQ3k0u0KqMo7Q+ZRFTisogA+9dH6q6HozOOB9BUVQwoAef3m1OhlyAjcUdY
-         FEu0lAkdaPzDJgoeppOaMwOQ++4GKSz0HFkZdrWm5AR0nTwYfeFouMzSuWlmcrpTVT1H
-         7mmZSCiM6ONEGJyUvauzJYMdgTbUDjyzqg68opkRJu776L6OX5sQYAVkxBu2iaEi7Ojc
-         bgpA==
-X-Forwarded-Encrypted: i=1; AJvYcCVI2lW5rLS7jerxEP0w81UIo8vKoTgKFr+xggeZVq06pLr0jU/AaqiaGQsECoHRpaV1fLb0@lists.linux.dev
-X-Gm-Message-State: AOJu0Yz26pwSEmP8TerVYrTPkcOkYTRODb9jFTZtDTBlhlSmIkPhqE/b
-	2wiDmQARVxy7cmpbiAlXnjX6Fyl2Zq/YkGS6Kmwl0qeisZb+/h9qOMLE
-X-Gm-Gg: ASbGncuHDiCA8vJM2XDrY/jB2H7jDfweGDxJ/vqb/EC/T+xnrc167nc/TuSqUaGhjMj
-	6Yev/ZAvzJKiGBcCidTV9v+OvHbI8WjcyeyOw/9/3l2Z/Xcb253AscslwP8OF3avMj41otZbXNm
-	98qbZUpujZSmUJzXiiD87lVwPehzKM53xjonRUOXf50Dix9qcy8+LLGq/ArSLqpZvrhfjDNmutw
-	1bv9/WhJXdYL0+7UQq6BV7T8n8pZ+Y/4VyGGY1qinE0y+IEz7mGQcdIaG+hOG5acgW6IlPgFGiW
-	8emE0cgYyMCbFfNwqmxIRgijQO/+8iX2AmtPK93IFVY3nt8TH023RYlUMYGSLns+9X75dk3HJ5W
-	o5nh/g+vifZqU2UqZoh/YI/nl7Ys799ycGda5Pz+ha0ARiewHrjpD
-X-Google-Smtp-Source: AGHT+IFs5ymxGXZTKT0mW5UQCDuMkgRaKeOffj5osmMYN6AhUjxFiddukVJ8qK5/G6K6QWWdCKvJqg==
-X-Received: by 2002:a05:620a:1a04:b0:7d4:57c8:af59 with SMTP id af79cd13be357-7dcccbb4d3bmr225348385a.50.1752127262264;
-        Wed, 09 Jul 2025 23:01:02 -0700 (PDT)
+        bh=OmxZh0kPcuIR00xg4FNk0vUM7gWMjruROudJ19fQk24=;
+        b=YF/MWaacYC/I+K3QwUhKZ1z1vF4MT/AFSrNbYtAX7AC7LAdTv8a5PzDZOicynZITNc
+         aoS8dgUzJpOyREcBIbegmAMdO16+CD7DHxV8lXXkmTMXGFhUlV3MsVoS4taWOHrpA5di
+         pTY7qXHbN9xVmqLo9vl3O+cvxhx34NBPqYHCAF6A5c7TydQHO4OXJ0jJEnToKKGLXP75
+         Q3RB3ji9MUkO2zvOhicbDlbS0XgESNBlT+HJaYDQGFI2xpDUMlX2C/AkwMVLX3ykhCRQ
+         fShpRXpOFzktk5sCaL+JVPJLV+voZ3EkUYSqkVeGd+G6P+ggIwTjCJNY1BOvzWE0s1aJ
+         ufTg==
+X-Forwarded-Encrypted: i=1; AJvYcCWDB44RtkcHPKTLjMSU9HgzSJ4f3gBMbBbdz06Tfp3NBw3sHAGQ7K3UV7gSETLBditBhpuB@lists.linux.dev
+X-Gm-Message-State: AOJu0YyHrGhoFAOFBsXAKumvyoVZ0VeUMtfYulvws/NMhIoUY7PO3xsW
+	OJBHfxOliq08b5V/rHbO0lqkdGWlpE0bFAq2hXJ98wk1U4K908KiGHBY
+X-Gm-Gg: ASbGncvUgIMVZMKjzNVmsZBrza8AYBLhBE7kAMBKiSOzjVdMZdbvIlmpIhrcvQ7LH7e
+	ZZ0kU8Yb0Lf2m8e2h3ibsawqkZKi20/Y56hCD2rekH2vGZE4oo0942Kjd7rJzc5n/HWva1DPjzT
+	NR0y/zzK/b+Uw/j/4G2+cmfRHlTU451i+OsU+d7j/wGUfB8MHjq6XkQ2CkTv5udahdxG48gBzyL
+	Kdb0YzSvujGMZEsb9wQMaMSUH/MUYxRG+WT42AaAMlCuVgEcMfdelLQ0bBI2zhf/NUaOXOdQbNH
+	rHlFE2nuscJwCnT4Mkzqad42drsBRfTd343ekwVntPQ7VQbKwYtOeZTH4zfLS9z2aHxd86NdAe5
+	c8WSNhuZn6vR/h5Xk2FY1Xf9Mxb6MMiFyEMRVrQIVLe8zfnarndOb
+X-Google-Smtp-Source: AGHT+IE39I/ZCV5JUlSGV91Jhr/jX7eWhRzRc42gnXQJ1OTLx+9pk2H/73JWcJ7f9UbB1XdzHATvDQ==
+X-Received: by 2002:a05:620a:47d1:b0:7dd:45dd:e307 with SMTP id af79cd13be357-7dd45dde396mr23579485a.45.1752127260734;
+        Wed, 09 Jul 2025 23:01:00 -0700 (PDT)
 Received: from fauth-a2-smtp.messagingengine.com (fauth-a2-smtp.messagingengine.com. [103.168.172.201])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-7dcdbb1dbc5sm62289085a.22.2025.07.09.23.01.01
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-7dcdbb25853sm63102185a.2.2025.07.09.23.00.59
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 09 Jul 2025 23:01:01 -0700 (PDT)
-Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
-	by mailfauth.phl.internal (Postfix) with ESMTP id 2D85EF4006C;
-	Thu, 10 Jul 2025 02:01:01 -0400 (EDT)
+        Wed, 09 Jul 2025 23:01:00 -0700 (PDT)
+Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
+	by mailfauth.phl.internal (Postfix) with ESMTP id BE5F3F4006C;
+	Thu, 10 Jul 2025 02:00:59 -0400 (EDT)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-04.internal (MEProxy); Thu, 10 Jul 2025 02:01:01 -0400
-X-ME-Sender: <xms:HVdvaI9cn1_Z_tNbj2LiSKo8N63CF9WOHyphCEhjUO-IYt-BzMSgcg>
-    <xme:HVdvaCNMqIOEMkrmp_8DmOZpppN8oKQxEQBYIlGg63CR7uRI4V2xsalgLuq_4ULnB
-    gYwrF75PQiLR-jV8g>
-X-ME-Received: <xmr:HVdvaCk8YxFVcSLOb0Snv5KASgFy3EqayLM1sDbAkWB0NjJfSLKMG9zxqg>
+  by phl-compute-01.internal (MEProxy); Thu, 10 Jul 2025 02:00:59 -0400
+X-ME-Sender: <xms:G1dvaPjn2jF-n_B7IwWkPdWgSDxFRI7K8DzyHzuxj7lvUEWghhxFNA>
+    <xme:G1dvaNrzTBPGz_jaej2-XJ_B8SKYSbd-vVOoDeMNsHIW_4rtsij_Ffh52uwnDxXRm
+    hWqiE6QsfmFRQNW8A>
+X-ME-Received: <xmr:G1dvaNxZw9cqcI2T_9z_lHlwSLYqPRmmiftK3nvG4SDJl7nIjaum3vf4Vw>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdefleeijecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
     ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
     hrpefhvfevufffkffojghfggfgsedtkeertdertddtnecuhfhrohhmpeeuohhquhhnucfh
     vghnghcuoegsohhquhhnrdhfvghnghesghhmrghilhdrtghomheqnecuggftrfgrthhtvg
     hrnhepgeeljeeitdehvdehgefgjeevfeejjeekgfevffeiueejhfeuiefggeeuheeggefg
-    necuvehluhhsthgvrhfuihiivgepudenucfrrghrrghmpehmrghilhhfrhhomhepsghoqh
+    necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepsghoqh
     hunhdomhgvshhmthhprghuthhhphgvrhhsohhnrghlihhthidqieelvdeghedtieegqddu
     jeejkeehheehvddqsghoqhhunhdrfhgvnhhgpeepghhmrghilhdrtghomhesfhhigihmvg
     drnhgrmhgvpdhnsggprhgtphhtthhopedvjedpmhhouggvpehsmhhtphhouhhtpdhrtghp
@@ -85,14 +85,14 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdefleeijecutefuodetgg
     esghhmrghilhdrtghomhdprhgtphhtthhopegsohhquhhnrdhfvghnghesghhmrghilhdr
     tghomhdprhgtphhtthhopehgrghrhiesghgrrhihghhuohdrnhgvthdprhgtphhtthhope
     gsjhhorhhnfegpghhhsehprhhothhonhhmrghilhdrtghomh
-X-ME-Proxy: <xmx:HVdvaH8dCzeJffYK2lkrIaxWC3l1UFB409OEcgR1bk3rG7eWRHX4Uw>
-    <xmx:HVdvaLMAR3c9Pi5MizGpTEHHzNp80V0pgxJjqUnLG7ETCsddepJGcw>
-    <xmx:HVdvaLE0hPyw_Xc2CjUJkKC09XIibhSqusHpn8U3cxarSBKoS25cDA>
-    <xmx:HVdvaBh_fqxDHKQciVrNSUzQI5qLcoR1Rn38PVvp9i2OPlH-XTx8mw>
-    <xmx:HVdvaHSO2Q_cpvd_ven0Nef96QOJ-qooqZcm3i5Zj5171_teWwyMOelt>
+X-ME-Proxy: <xmx:G1dvaExCsLd-2M05DorKXXFOTVloO6YLMCR-SqhHOAbZ5o1mvpT9yQ>
+    <xmx:G1dvaNaYUCHpsHDZiB2ARMqwS5bSmVrPHF5ZwFBgnyasw8QxuRg5Tg>
+    <xmx:G1dvaNlgmmGv_YPhvXw5vZ0IkFMW-cP-U5mXlQzH2IyeAo7aZu9FgQ>
+    <xmx:G1dvaKETeLXD02I3cvsqd6X4FyeMRdG6AscimYHwrTNUzQfnU1da1w>
+    <xmx:G1dvaMhUUhmEQ9Wh6PhZmyq0vSwsvn3F0B42oiUrfaDvZThDP_X0P0M2>
 Feedback-ID: iad51458e:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 10 Jul 2025 02:01:00 -0400 (EDT)
+ 10 Jul 2025 02:00:58 -0400 (EDT)
 From: Boqun Feng <boqun.feng@gmail.com>
 To: linux-kernel@vger.kernel.org,
 	rust-for-linux@vger.kernel.org,
@@ -121,9 +121,9 @@ Cc: "Miguel Ojeda" <ojeda@kernel.org>,
 	"Linus Torvalds" <torvalds@linux-foundation.org>,
 	"Thomas Gleixner" <tglx@linutronix.de>,
 	Alan Stern <stern@rowland.harvard.edu>
-Subject: [PATCH v6 3/9] rust: sync: atomic: Add ordering annotation types
-Date: Wed,  9 Jul 2025 23:00:46 -0700
-Message-Id: <20250710060052.11955-4-boqun.feng@gmail.com>
+Subject: [PATCH v6 2/9] rust: sync: Add basic atomic operation mapping framework
+Date: Wed,  9 Jul 2025 23:00:45 -0700
+Message-Id: <20250710060052.11955-3-boqun.feng@gmail.com>
 X-Mailer: git-send-email 2.39.5 (Apple Git-154)
 In-Reply-To: <20250710060052.11955-1-boqun.feng@gmail.com>
 References: <20250710060052.11955-1-boqun.feng@gmail.com>
@@ -135,157 +135,299 @@ List-Unsubscribe: <mailto:lkmm+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Preparation for atomic primitives. Instead of a suffix like _acquire, a
-method parameter along with the corresponding generic parameter will be
-used to specify the ordering of an atomic operations. For example,
-atomic load() can be defined as:
+Preparation for generic atomic implementation. To unify the
+implementation of a generic method over `i32` and `i64`, the C side
+atomic methods need to be grouped so that in a generic method, they can
+be referred as <type>::<method>, otherwise their parameters and return
+value are different between `i32` and `i64`, which would require using
+`transmute()` to unify the type into a `T`.
 
-	impl<T: ...> Atomic<T> {
-	    pub fn load<O: AcquireOrRelaxed>(&self, _o: O) -> T { ... }
-	}
+Introduce `AtomicImpl` to represent a basic type in Rust that has the
+direct mapping to an atomic implementation from C. This trait is sealed,
+and currently only `i32` and `i64` impl this.
 
-and acquire users would do:
+Further, different methods are put into different `*Ops` trait groups,
+and this is for the future when smaller types like `i8`/`i16` are
+supported but only with a limited set of API (e.g. only set(), load(),
+xchg() and cmpxchg(), no add() or sub() etc).
 
-	let r = x.load(Acquire);
+While the atomic mod is introduced, documentation is also added for
+memory models and data races.
 
-relaxed users:
-
-	let r = x.load(Relaxed);
-
-doing the following:
-
-	let r = x.load(Release);
-
-will cause a compiler error.
-
-Compared to suffixes, it's easier to tell what ordering variants an
-operation has, and it also make it easier to unify the implementation of
-all ordering variants in one method via generic. The `TYPE` associate
-const is for generic function to pick up the particular implementation
-specified by an ordering annotation.
+Also bump my role to the maintainer of ATOMIC INFRASTRUCTURE to reflect
+my responsiblity on the Rust atomic mod.
 
 Reviewed-by: Alice Ryhl <aliceryhl@google.com>
 Signed-off-by: Boqun Feng <boqun.feng@gmail.com>
 ---
- rust/kernel/sync/atomic.rs          |  3 +
- rust/kernel/sync/atomic/ordering.rs | 97 +++++++++++++++++++++++++++++
- 2 files changed, 100 insertions(+)
- create mode 100644 rust/kernel/sync/atomic/ordering.rs
+ MAINTAINERS                    |   4 +-
+ rust/kernel/sync.rs            |   1 +
+ rust/kernel/sync/atomic.rs     |  19 ++++
+ rust/kernel/sync/atomic/ops.rs | 195 +++++++++++++++++++++++++++++++++
+ 4 files changed, 218 insertions(+), 1 deletion(-)
+ create mode 100644 rust/kernel/sync/atomic.rs
+ create mode 100644 rust/kernel/sync/atomic/ops.rs
 
-diff --git a/rust/kernel/sync/atomic.rs b/rust/kernel/sync/atomic.rs
-index c9c7c3617dd5..e80ac049f36b 100644
---- a/rust/kernel/sync/atomic.rs
-+++ b/rust/kernel/sync/atomic.rs
-@@ -17,3 +17,6 @@
- //! [`LKMM`]: srctree/tools/memory-model/
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 0c1d245bf7b8..5eef524975ca 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -3894,7 +3894,7 @@ F:	drivers/input/touchscreen/atmel_mxt_ts.c
+ ATOMIC INFRASTRUCTURE
+ M:	Will Deacon <will@kernel.org>
+ M:	Peter Zijlstra <peterz@infradead.org>
+-R:	Boqun Feng <boqun.feng@gmail.com>
++M:	Boqun Feng <boqun.feng@gmail.com>
+ R:	Mark Rutland <mark.rutland@arm.com>
+ L:	linux-kernel@vger.kernel.org
+ S:	Maintained
+@@ -3903,6 +3903,8 @@ F:	arch/*/include/asm/atomic*.h
+ F:	include/*/atomic*.h
+ F:	include/linux/refcount.h
+ F:	scripts/atomic/
++F:	rust/kernel/sync/atomic.rs
++F:	rust/kernel/sync/atomic/
  
- pub mod ops;
-+pub mod ordering;
-+
-+pub use ordering::{Acquire, Full, Relaxed, Release};
-diff --git a/rust/kernel/sync/atomic/ordering.rs b/rust/kernel/sync/atomic/ordering.rs
+ ATTO EXPRESSSAS SAS/SATA RAID SCSI DRIVER
+ M:	Bradley Grove <linuxdrivers@attotech.com>
+diff --git a/rust/kernel/sync.rs b/rust/kernel/sync.rs
+index 36a719015583..b620027e0641 100644
+--- a/rust/kernel/sync.rs
++++ b/rust/kernel/sync.rs
+@@ -10,6 +10,7 @@
+ use pin_init;
+ 
+ mod arc;
++pub mod atomic;
+ mod condvar;
+ pub mod lock;
+ mod locked_by;
+diff --git a/rust/kernel/sync/atomic.rs b/rust/kernel/sync/atomic.rs
 new file mode 100644
-index 000000000000..5fffbaa2fa6d
+index 000000000000..c9c7c3617dd5
 --- /dev/null
-+++ b/rust/kernel/sync/atomic/ordering.rs
-@@ -0,0 +1,97 @@
++++ b/rust/kernel/sync/atomic.rs
+@@ -0,0 +1,19 @@
 +// SPDX-License-Identifier: GPL-2.0
 +
-+//! Memory orderings.
++//! Atomic primitives.
 +//!
-+//! The semantics of these orderings follows the [`LKMM`] definitions and rules.
++//! These primitives have the same semantics as their C counterparts: and the precise definitions of
++//! semantics can be found at [`LKMM`]. Note that Linux Kernel Memory (Consistency) Model is the
++//! only model for Rust code in kernel, and Rust's own atomics should be avoided.
 +//!
-+//! - [`Acquire`] provides ordering between the load part of the annotated operation and all the
-+//!   following memory accesses, and if there is a store part, the store part has the [`Relaxed`]
-+//!   ordering.
-+//! - [`Release`] provides ordering between all the preceding memory accesses and the store part of
-+//!   the annotated operation, and if there is a load part, the load part has the [`Relaxed`]
-+//!   ordering.
-+//! - [`Full`] means "fully-ordered", that is:
-+//!   - It provides ordering between all the preceding memory accesses and the annotated operation.
-+//!   - It provides ordering between the annotated operation and all the following memory accesses.
-+//!   - It provides ordering between all the preceding memory accesses and all the fllowing memory
-+//!     accesses.
-+//!   - All the orderings are the same strength as a full memory barrier (i.e. `smp_mb()`).
-+//! - [`Relaxed`] provides no ordering except the dependency orderings. Dependency orderings are
-+//!   described in "DEPENDENCY RELATIONS" in [`LKMM`]'s [`explanation`].
++//! # Data races
++//!
++//! [`LKMM`] atomics have different rules regarding data races:
++//!
++//! - A normal write from C side is treated as an atomic write if
++//!   CONFIG_KCSAN_ASSUME_PLAIN_WRITES_ATOMIC=y.
++//! - Mixed-size atomic accesses don't cause data races.
 +//!
 +//! [`LKMM`]: srctree/tools/memory-model/
-+//! [`explanation`]: srctree/tools/memory-model/Documentation/explanation.txt
 +
-+/// The annotation type for relaxed memory ordering.
-+pub struct Relaxed;
++pub mod ops;
+diff --git a/rust/kernel/sync/atomic/ops.rs b/rust/kernel/sync/atomic/ops.rs
+new file mode 100644
+index 000000000000..da04dd383962
+--- /dev/null
++++ b/rust/kernel/sync/atomic/ops.rs
+@@ -0,0 +1,195 @@
++// SPDX-License-Identifier: GPL-2.0
 +
-+/// The annotation type for acquire memory ordering.
-+pub struct Acquire;
++//! Atomic implementations.
++//!
++//! Provides 1:1 mapping of atomic implementations.
 +
-+/// The annotation type for release memory ordering.
-+pub struct Release;
++use crate::bindings::*;
++use crate::macros::paste;
 +
-+/// The annotation type for fully-order memory ordering.
-+pub struct Full;
-+
-+/// Describes the exact memory ordering.
-+#[doc(hidden)]
-+pub enum OrderingType {
-+    /// Relaxed ordering.
-+    Relaxed,
-+    /// Acquire ordering.
-+    Acquire,
-+    /// Release ordering.
-+    Release,
-+    /// Fully-ordered.
-+    Full,
-+}
-+
-+mod internal {
-+    /// Sealed trait, can be only implemented inside atomic mod.
++mod private {
++    /// Sealed trait marker to disable customized impls on atomic implementation traits.
 +    pub trait Sealed {}
-+
-+    impl Sealed for super::Relaxed {}
-+    impl Sealed for super::Acquire {}
-+    impl Sealed for super::Release {}
-+    impl Sealed for super::Full {}
 +}
 +
-+/// The trait bound for annotating operations that support any ordering.
-+pub trait Any: internal::Sealed {
-+    /// Describes the exact memory ordering.
-+    const TYPE: OrderingType;
++// `i32` and `i64` are only supported atomic implementations.
++impl private::Sealed for i32 {}
++impl private::Sealed for i64 {}
++
++/// A marker trait for types that implement atomic operations with C side primitives.
++///
++/// This trait is sealed, and only types that have directly mapping to the C side atomics should
++/// impl this:
++///
++/// - `i32` maps to `atomic_t`.
++/// - `i64` maps to `atomic64_t`.
++pub trait AtomicImpl: Sized + Send + Copy + private::Sealed {}
++
++// `atomic_t` implements atomic operations on `i32`.
++impl AtomicImpl for i32 {}
++
++// `atomic64_t` implements atomic operations on `i64`.
++impl AtomicImpl for i64 {}
++
++// This macro generates the function signature with given argument list and return type.
++macro_rules! declare_atomic_method {
++    (
++        $func:ident($($arg:ident : $arg_type:ty),*) $(-> $ret:ty)?
++    ) => {
++        paste!(
++            #[doc = concat!("Atomic ", stringify!($func))]
++            #[doc = "# Safety"]
++            #[doc = "- Any pointer passed to the function has to be a valid pointer"]
++            #[doc = "- Accesses must not cause data races per LKMM:"]
++            #[doc = "  - Atomic read racing with normal read, normal write or atomic write is not data race."]
++            #[doc = "  - Atomic write racing with normal read or normal write is data-race, unless the"]
++            #[doc = "    normal accesses are done at C side and considered as immune to data"]
++            #[doc = "    races, e.g. CONFIG_KCSAN_ASSUME_PLAIN_WRITES_ATOMIC."]
++            unsafe fn [< atomic_ $func >]($($arg: $arg_type,)*) $(-> $ret)?;
++        );
++    };
++    (
++        $func:ident [$variant:ident $($rest:ident)*]($($arg_sig:tt)*) $(-> $ret:ty)?
++    ) => {
++        paste!(
++            declare_atomic_method!(
++                [< $func _ $variant >]($($arg_sig)*) $(-> $ret)?
++            );
++        );
++
++        declare_atomic_method!(
++            $func [$($rest)*]($($arg_sig)*) $(-> $ret)?
++        );
++    };
++    (
++        $func:ident []($($arg_sig:tt)*) $(-> $ret:ty)?
++    ) => {
++        declare_atomic_method!(
++            $func($($arg_sig)*) $(-> $ret)?
++        );
++    }
 +}
 +
-+impl Any for Relaxed {
-+    const TYPE: OrderingType = OrderingType::Relaxed;
++// This macro generates the function implementation with given argument list and return type, and it
++// will replace "call(...)" expression with "$ctype _ $func" to call the real C function.
++macro_rules! impl_atomic_method {
++    (
++        ($ctype:ident) $func:ident($($arg:ident: $arg_type:ty),*) $(-> $ret:ty)? {
++            call($($c_arg:expr),*)
++        }
++    ) => {
++        paste!(
++            #[inline(always)]
++            unsafe fn [< atomic_ $func >]($($arg: $arg_type,)*) $(-> $ret)? {
++                // SAFETY: Per function safety requirement, all pointers are valid, and accesses
++                // won't cause data race per LKMM.
++                unsafe { [< $ctype _ $func >]($($c_arg,)*) }
++            }
++        );
++    };
++    (
++        ($ctype:ident) $func:ident[$variant:ident $($rest:ident)*]($($arg_sig:tt)*) $(-> $ret:ty)? {
++            call($($arg:tt)*)
++        }
++    ) => {
++        paste!(
++            impl_atomic_method!(
++                ($ctype) [< $func _ $variant >]($($arg_sig)*) $( -> $ret)? {
++                    call($($arg)*)
++            }
++            );
++        );
++        impl_atomic_method!(
++            ($ctype) $func [$($rest)*]($($arg_sig)*) $( -> $ret)? {
++                call($($arg)*)
++            }
++        );
++    };
++    (
++        ($ctype:ident) $func:ident[]($($arg_sig:tt)*) $( -> $ret:ty)? {
++            call($($arg:tt)*)
++        }
++    ) => {
++        impl_atomic_method!(
++            ($ctype) $func($($arg_sig)*) $(-> $ret)? {
++                call($($arg)*)
++            }
++        );
++    }
 +}
 +
-+impl Any for Acquire {
-+    const TYPE: OrderingType = OrderingType::Acquire;
++// Delcares $ops trait with methods and implements the trait for `i32` and `i64`.
++macro_rules! declare_and_impl_atomic_methods {
++    ($ops:ident ($doc:literal) {
++        $(
++            $func:ident [$($variant:ident),*]($($arg_sig:tt)*) $( -> $ret:ty)? {
++                call($($arg:tt)*)
++            }
++        )*
++    }) => {
++        #[doc = $doc]
++        pub trait $ops: AtomicImpl {
++            $(
++                declare_atomic_method!(
++                    $func[$($variant)*]($($arg_sig)*) $(-> $ret)?
++                );
++            )*
++        }
++
++        impl $ops for i32 {
++            $(
++                impl_atomic_method!(
++                    (atomic) $func[$($variant)*]($($arg_sig)*) $(-> $ret)? {
++                        call($($arg)*)
++                    }
++                );
++            )*
++        }
++
++        impl $ops for i64 {
++            $(
++                impl_atomic_method!(
++                    (atomic64) $func[$($variant)*]($($arg_sig)*) $(-> $ret)? {
++                        call($($arg)*)
++                    }
++                );
++            )*
++        }
++    }
 +}
 +
-+impl Any for Release {
-+    const TYPE: OrderingType = OrderingType::Release;
-+}
++declare_and_impl_atomic_methods!(
++    AtomicHasBasicOps ("Basic atomic operations") {
++        read[acquire](ptr: *mut Self) -> Self {
++            call(ptr.cast())
++        }
 +
-+impl Any for Full {
-+    const TYPE: OrderingType = OrderingType::Full;
-+}
++        set[release](ptr: *mut Self, v: Self) {
++            call(ptr.cast(), v)
++        }
++    }
++);
 +
-+/// The trait bound for operations that only support acquire or relaxed ordering.
-+pub trait AcquireOrRelaxed: Any {}
++declare_and_impl_atomic_methods!(
++    AtomicHasXchgOps ("Exchange and compare-and-exchange atomic operations") {
++        xchg[acquire, release, relaxed](ptr: *mut Self, v: Self) -> Self {
++            call(ptr.cast(), v)
++        }
 +
-+impl AcquireOrRelaxed for Acquire {}
-+impl AcquireOrRelaxed for Relaxed {}
++        try_cmpxchg[acquire, release, relaxed](ptr: *mut Self, old: *mut Self, new: Self) -> bool {
++            call(ptr.cast(), old, new)
++        }
++    }
++);
 +
-+/// The trait bound for operations that only support release or relaxed ordering.
-+pub trait ReleaseOrRelaxed: Any {}
++declare_and_impl_atomic_methods!(
++    AtomicHasArithmeticOps ("Atomic arithmetic operations") {
++        add[](ptr: *mut Self, v: Self) {
++            call(v, ptr.cast())
++        }
 +
-+impl ReleaseOrRelaxed for Release {}
-+impl ReleaseOrRelaxed for Relaxed {}
-+
-+/// The trait bound for operations that only support relaxed ordering.
-+pub trait RelaxedOnly: AcquireOrRelaxed + ReleaseOrRelaxed + Any {}
-+
-+impl RelaxedOnly for Relaxed {}
++        fetch_add[acquire, release, relaxed](ptr: *mut Self, v: Self) -> Self {
++            call(v, ptr.cast())
++        }
++    }
++);
 -- 
 2.39.5 (Apple Git-154)
 

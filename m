@@ -1,120 +1,117 @@
-Received: from mail-ed1-f49.google.com (mail-ed1-f49.google.com [209.85.208.49])
+Received: from mail-wr1-f49.google.com (mail-wr1-f49.google.com [209.85.221.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAFF921CC56
-	for <lkmm@lists.linux.dev>; Thu, 10 Jul 2025 14:06:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E742027056F;
+	Thu, 10 Jul 2025 14:27:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752156378; cv=none; b=dM4wgQAcxp9yNnX/Mja6Uje0TtsZ47NpG1hfwq5Tz3ypX4unppTisjzI+6eCEPNG+mOpZ7IDPkXWiPW4OC1pdXqJAc3D4M7FklT6EKHLoWdM0F7SMj8emMFv+QWO1RSvT4a1vl5e/BcC+PtMKEc2vWRcRoOhQCDv848R5p2riCk=
+	t=1752157632; cv=none; b=Ukq7sJcVPFsnpJ14EgbWAxfoBoSNKVQLWcNSkEv3dwl6KiqbFeOkydckfmpUC3kZJoBqOOPoYPU8DNUYaxQWPBJ6dfTGlVcampPKqLRRyHBL8yWhe3m8F4YIWiQ1jOXU0bPP3A28SL6dIZ02zxHR/BYzmom8VIv4ajYMtf0NprU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752156378; c=relaxed/simple;
-	bh=yA/I0gJM/OKVOhc8b6C9blaRbMv2JfyPFC62inigLKo=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=lkZbfGFhdjzYHIqj90/VSzWraqQnWGM/1cKI/wV3heTwjyHV9SvwpUcE1zOIJ357gXlgk76dX0CbUKjg0UCTuxCsLKMoQOQxc2dEjWwVmYivJqab0cKn4/OyWq2zJRdvsliN6pGeLuI12Qw8fjm00M9pVFrmW/wnBLWvX8Xyl9M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=debian.org; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.208.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=debian.org
+	s=arc-20240116; t=1752157632; c=relaxed/simple;
+	bh=SE9IOhUv1MNCCrAdQ80BgU7INBJblvB5g5BNAJCOdvY=;
+	h=From:To:Cc:Subject:In-Reply-To:Date:Message-ID:References:
+	 MIME-Version:Content-Type; b=PPFlT0U64DaGq4nQ0el1UfjQwpD4/2NnDgBFnJE4B89F/tSHFcDH7cTSSkeXUU70+5OoXh9hlYXCnIWr0uNjQaLmqmUYRqw5hl2av+p3KiSGLznIJnKmNSPIXRQg/8uJjCJ0BmZLMmnFzvCsmQlxQECMJUb1+IfwXA7MFmJMiPE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=M07WGiVk; arc=none smtp.client-ip=209.85.221.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-ed1-f49.google.com with SMTP id 4fb4d7f45d1cf-607cc1a2bd8so1611485a12.2
-        for <lkmm@lists.linux.dev>; Thu, 10 Jul 2025 07:06:15 -0700 (PDT)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="M07WGiVk"
+Received: by mail-wr1-f49.google.com with SMTP id ffacd0b85a97d-3a4e742dc97so1450608f8f.0;
+        Thu, 10 Jul 2025 07:27:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1752157629; x=1752762429; darn=lists.linux.dev;
+        h=mime-version:user-agent:references:message-id:date:in-reply-to
+         :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=8+aeDuNjHdMlA3YEkviB2IrzxUH9ijDL9rPE1bZjJuQ=;
+        b=M07WGiVkjpW78j2ws13tRcGNiIkBALlLARsxtiIW3A1cM5touhJMs4ry7N2poScguy
+         dIV0S33REYOBCfAGxirs3WZOdaZIPFT803B4l5HbJC/z5ObDFRn0sCTTX0aWGXwA54dl
+         VT7K8djW7UuwQaMH6ufdfoV7WZu0FoOsx0M7OMYZMFrALgDf0X/iJZPpNc12WBTjixdl
+         ay+ySUg8wMp1F5zgvPBh/Sja32sOq/C+f4g6HSFi2k4V/bvNH7iOlB2f6RX9HQq2bf4i
+         MQo0i2FrWvqyjhw979LisxIPbr8bjSHsJ2LbM3rWpXuk0plz9pwtVeePqLmdIVKIi3FW
+         DcjQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1752156374; x=1752761174;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+        d=1e100.net; s=20230601; t=1752157629; x=1752762429;
+        h=mime-version:user-agent:references:message-id:date:in-reply-to
+         :subject:cc:to:from:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=6racAcJNW4RKgIaC4lIcLewARYRmDGKH6RcAriCOozU=;
-        b=KaITqxobqQs5VNifbasQyzMCF1Ev8bL5ukVDl2qzrBHABg7s/8RAyJAtuVhdGmJbaO
-         16x7Z35bm1sxTjLhe9GkeHt5POyUhcgTFrfkxRz135rZR0bjqTf/FR24Qn/+faAmdVQJ
-         0wWjqycJrCbopENz6qQL6WxaiR6MPeg95TSaHsseKDlS/B3Z0ETifCxB+t17dnyOSQvp
-         Z/e23UfDadmfQ+bQ1Dr+LvWDhba11h3CiFtotwk+gZpdGVb8bJgkwCXz+tDIkE0S/6VB
-         84eOZHHIYxEM1nSgnmPw7Fiu9LW6MblsDWz8STR0HSd9va4hTLdj2YlYUb2YbhJLP6P1
-         gcdA==
-X-Forwarded-Encrypted: i=1; AJvYcCXQjpfE5Af50/9ObDuMD3W7EpZ6s1KPeqCnrgNGxxpRqNA53/Sy+v5MN83I0S7OEavL7p9L@lists.linux.dev
-X-Gm-Message-State: AOJu0Yz3esK4jq/NmtQ4hTx5wyv5LqKauujX32DE3n50O2/tDeoQYRhF
-	oFMS0jTB4LSybQ1vErmCdt631ev2FL3YdN2WJISoah3mELAxXSqPN0Db
-X-Gm-Gg: ASbGncvMKwZKiPojvF0jFa1dzI5PR4gkqX9sBi+0z93XCSg2BPAGH8jTjSyXGZG+L5N
-	9yMtW6UjnvcL94BfGcNkvEQ7rkFdGsHWm8kLfpY63LR1+rUa3Qqsi748PLXyxdzo2SHZyFglpi1
-	PDSRgA9syY9NCbGtNTYqNbbI/zNIhsN76EvRjpJD9BkhK9PUoP05CVLURBobUNUnTzfUUqaALiX
-	zRhPtOEwYFeuG0TvuPCI7lsM1SbBz+81+8vTcpfv1c2YM4Gpf/T/2JQCW2ybwCXcQBx2fkMK3FZ
-	BhpVP+qOz3gqejAqmMHnmgM8L70ekqzMeZxiPaoXNVNnEWWQ2odw
-X-Google-Smtp-Source: AGHT+IFmVAxl1c+wDjcDDTe+BiajHbN+l+Z6s7GZDC3h8YpwVObUutZTnP3nnWaOqw2omJw6WNqiMQ==
-X-Received: by 2002:a05:6402:1f46:b0:602:36ce:d0e7 with SMTP id 4fb4d7f45d1cf-611c84d65d3mr2307951a12.14.1752156373710;
-        Thu, 10 Jul 2025 07:06:13 -0700 (PDT)
-Received: from gmail.com ([2a03:2880:30ff:6::])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-611c9524072sm927420a12.20.2025.07.10.07.06.12
+        bh=8+aeDuNjHdMlA3YEkviB2IrzxUH9ijDL9rPE1bZjJuQ=;
+        b=iwsUYTX4uLILbMZoehiEXghmRPsV84P1x4r2wmZhx/VfGxAmQv/GLYFYdYiLA95Pbe
+         qwsh02Rd0GGJu+pZcs80rMkAIDpSd+rMa6yTinKDUDgat/NKURkdQfxMsn2h++KR1WJT
+         hw5d5JMGmHjwTUiAF+sIiETkUrCr4g2IP3PBR7H6e0RXkgAM9sWeBC4J94Al7VXbvq+N
+         r46sycsXihXKPkg5FSjAhbAY2OpHB4nWJqhPWGWXnIHN7CK7cxuUfbftrPa99ZbZ2sTe
+         rerj5wxr0IQAt09+9JQJsNscojJENfCiCSi6xFqNsMGuFwwX1ZMP2mXQh89UWiVrU6RM
+         k4Bw==
+X-Forwarded-Encrypted: i=1; AJvYcCVWuHuvHCDXB9hmAxcexE9/cp3TKFPLHcWURDb5FwWBXf555pKJkVubfUUA/OFc8Uumnh6xtA==@lists.linux.dev, AJvYcCX9GOQ25Mfsm3mNlUPcQlTnTOI+9nY+6hu0bt4oWHSzGyCttjx4+B+PVRNoQtvh9F7aJO7CAa2Z7lEtGNlCpUAudc+msg==@lists.linux.dev
+X-Gm-Message-State: AOJu0YwDAFJf7WVPEWza0buCKjWGrHx4vO+DllyVuCbJWoJJE9fFhquR
+	MLm1QKDkVBpz4pMjtGK3D/04uxLw77pt9ZcD+Ue0GvZv0HXxMoMd830k
+X-Gm-Gg: ASbGncvNbwNN5V60OfF7XSUYuDwDffJqdCWBQDAeVGSXGc86SOtqRmKWTpZnI1CTSR+
+	wIXjbEBtZMExXfPj8vbBCNPQQOu31Jvv7VRxI9WdMplIf8B68SYsiz/kRUUEzmuWI/HplHmq2VO
+	yySro+nJYscbDjwcthXvjNjfNB3Z77FWbN2iH/JocEfnM9h4DJkpSPmOfmNyFPzXJ4V/w9rD3Mr
+	N/d4Nsw7raAXn6X6ScMGdysTGW+6gNWpDjYyCOnVactan66fPxNeVdby5mKiEk5zUhLOBnIcy1Z
+	g2KI1wknuNlXOxvLm7zx5bAelCBUI9Kr+w6UBbJuYlC11/gHWvSs9xb6L1inTJi3RsmChrW0V7Q
+	=
+X-Google-Smtp-Source: AGHT+IGbhb1Zio9W5HRGTNs7ZDqwVrGP0s2avBpyUCsXHGSEKkLCgpXpwSHo+05QvzlMF+IRw+s3EQ==
+X-Received: by 2002:a05:6000:2283:b0:3a4:d685:3de7 with SMTP id ffacd0b85a97d-3b5e7f0efe6mr3140716f8f.8.1752157629028;
+        Thu, 10 Jul 2025 07:27:09 -0700 (PDT)
+Received: from imac ([2a02:8010:60a0:0:a8bc:3071:67a5:abea])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3b5e8dc2147sm2051192f8f.32.2025.07.10.07.27.07
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 10 Jul 2025 07:06:13 -0700 (PDT)
-Date: Thu, 10 Jul 2025 07:06:09 -0700
-From: Breno Leitao <leitao@debian.org>
-To: Boqun Feng <boqun.feng@gmail.com>
-Cc: linux-kernel@vger.kernel.org, rcu@vger.kernel.org, 
-	lkmm@lists.linux.dev, Peter Zijlstra <peterz@infradead.org>, 
-	Ingo Molnar <mingo@kernel.org>, Will Deacon <will@kernel.org>, Waiman Long <longman@redhat.com>, 
-	Davidlohr Bueso <dave@stgolabs.net>, "Paul E. McKenney" <paulmck@kernel.org>, 
-	Josh Triplett <josh@joshtriplett.org>, Frederic Weisbecker <frederic@kernel.org>, 
-	Neeraj Upadhyay <neeraj.upadhyay@kernel.org>, Joel Fernandes <joelagnelf@nvidia.com>, 
-	Uladzislau Rezki <urezki@gmail.com>, Steven Rostedt <rostedt@goodmis.org>, 
-	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>, Lai Jiangshan <jiangshanlai@gmail.com>, 
-	Zqiang <qiang.zhang@linux.dev>, aeh@meta.com, netdev@vger.kernel.org, edumazet@google.com, 
-	jhs@mojatatu.com, kernel-team@meta.com, Erik Lundgren <elundgren@meta.com>
-Subject: Re: [PATCH 8/8] locking/lockdep: Use shazptr to protect the key
- hashlist
-Message-ID: <i3mukc6vgwrp3cy5eis2inyms7f5b4a6pel4cvvdx6jlxrij2g@wgrnkstlifv3>
-References: <20250625031101.12555-1-boqun.feng@gmail.com>
- <20250625031101.12555-9-boqun.feng@gmail.com>
+        Thu, 10 Jul 2025 07:27:08 -0700 (PDT)
+From: Donald Hunter <donald.hunter@gmail.com>
+To: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+Cc: Linux Doc Mailing List <linux-doc@vger.kernel.org>,  Jonathan Corbet
+ <corbet@lwn.net>,  "Akira Yokosawa" <akiyks@gmail.com>,  "Breno Leitao"
+ <leitao@debian.org>,  "David S. Miller" <davem@davemloft.net>,  "Eric
+ Dumazet" <edumazet@google.com>,  "Ignacio Encinas Rubio"
+ <ignacio@iencinas.com>,  "Jan Stancek" <jstancek@redhat.com>,  "Marco
+ Elver" <elver@google.com>,  "Paolo Abeni" <pabeni@redhat.com>,  "Randy
+ Dunlap" <rdunlap@infradead.org>,  "Ruben Wauters" <rubenru09@aol.com>,
+  "Shuah Khan" <skhan@linuxfoundation.org>,  Jakub Kicinski
+ <kuba@kernel.org>,  Simon Horman <horms@kernel.org>,
+  joel@joelfernandes.org,  linux-kernel-mentees@lists.linux.dev,
+  linux-kernel@vger.kernel.org,  lkmm@lists.linux.dev,
+  netdev@vger.kernel.org,  peterz@infradead.org,  stern@rowland.harvard.edu
+Subject: Re: [PATCH v9 12/13] docs: parser_yaml.py: add support for line
+ numbers from the parser
+In-Reply-To: <m2zfdc5ltn.fsf@gmail.com>
+Date: Thu, 10 Jul 2025 15:25:20 +0100
+Message-ID: <m2ms9c5din.fsf@gmail.com>
+References: <cover.1752076293.git.mchehab+huawei@kernel.org>
+	<3b18b30b1b50b01a014fd4b5a38423e529cde2fb.1752076293.git.mchehab+huawei@kernel.org>
+	<m2zfdc5ltn.fsf@gmail.com>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: lkmm@lists.linux.dev
 List-Id: <lkmm.lists.linux.dev>
 List-Subscribe: <mailto:lkmm+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:lkmm+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250625031101.12555-9-boqun.feng@gmail.com>
+Content-Type: text/plain
 
-Hello Boqun,
+Donald Hunter <donald.hunter@gmail.com> writes:
 
-On Tue, Jun 24, 2025 at 08:11:01PM -0700, Boqun Feng wrote:
-> Erik Lundgren and Breno Leitao reported [1] a case where
-> lockdep_unregister_key() can be called from time critical code pathes
-> where rntl_lock() may be held. And the synchronize_rcu() in it can slow
-> down operations such as using tc to replace a qdisc in a network device.
-> 
-> In fact the synchronize_rcu() in lockdep_unregister_key() is to wait for
-> all is_dynamic_key() callers to finish so that removing a key from the
-> key hashlist, and we can use shazptr to protect the hashlist as well.
-> 
-> Compared to the proposed solution which replaces synchronize_rcu() with
-> synchronize_rcu_expedited(), using shazptr here can achieve the
-> same/better synchronization time without the need to send IPI. Hence use
-> shazptr here.
-> 
-> Reported-by: Erik Lundgren <elundgren@meta.com>
-> Reported-by: Breno Leitao <leitao@debian.org>
-> Link: https://lore.kernel.org/all/20250321-lockdep-v1-1-78b732d195fb@debian.org/ [1]
-> Signed-off-by: Boqun Feng <boqun.feng@gmail.com>
+>>              # Parse message with RSTParser
+>> -            for i, line in enumerate(msg.split('\n')):
+>> -                result.append(line, document.current_source, i)
+>> +            lineoffset = 0;
+>> +            for line in msg.split('\n'):
+>> +                match = self.re_lineno.match(line)
+>> +                if match:
+>> +                    lineoffset = int(match.group(1))
+>> +                    continue
+>> +
+>> +                result.append(line, document.current_source, lineoffset)
+>
+> I expect this would need to be source=document.current_source, offset=lineoffset
 
-First of all, thanks for working to fix the origianl issue. I've been
-able to test this in my host, and the gain is impressive.
+Ignore that. I see it's not kwargs. It's just the issue below.
 
-Before:
+>>              rst_parser = RSTParser()
+>>              rst_parser.parse('\n'.join(result), document)
+>
+> But anyway this discards any line information by just concatenating the
+> lines together again.
 
-         # time /usr/sbin/tc qdisc replace dev eth0 root handle 0x1234: mq
-         real    0m13.195s
-         user    0m0.001s
-         sys     0m2.746s
-	
-With your patch:
-
-	#  time /usr/sbin/tc qdisc replace dev eth0 root handle 0x1234: mq
-	real	0m0.135s
-	user	0m0.002s
-	sys	0m0.116s
-
-	#  time /usr/sbin/tc qdisc replace dev eth0 root handle 0x1: mq
-	real	0m0.127s
-	user	0m0.001s
-	sys	0m0.112s
-
-Please add the following to the series:
-
-Tested-by: Breno Leitao <leitao@debian.org>
+Looks to me like there's no Parser() API that works with ViewList() so
+it would be necessary to directly use the docutils RSTStateMachine() for
+this approach to work.

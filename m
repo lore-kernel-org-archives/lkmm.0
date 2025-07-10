@@ -1,73 +1,107 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from out-170.mta1.migadu.com (out-170.mta1.migadu.com [95.215.58.170])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFA2521E0B2;
-	Thu, 10 Jul 2025 19:21:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B1E42248B3
+	for <lkmm@lists.linux.dev>; Thu, 10 Jul 2025 19:28:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752175285; cv=none; b=rq+BpIwGtC7KiIQxBLBK0QWMTFwSXgJ0ZuMJYnoASwWAqmiRriRCh23H3H2dP9U80yQG5I10U9Ct5+t89YFJMhRjiXK2OingFDXn5CtKx6v5JiV/G0JciMoH8MJZofTUoKdZbDMt0WQiNFzyKQKM8LgHBzFU+XW47pJvlEvFGtg=
+	t=1752175721; cv=none; b=ZWrFd7J2gZuxjqEWHt9FnMN8rwzjsp3C2yAjCF/POuA4dg8clu3lVYSDl8ufb/d5okiIK2Kv92dfuo22u6cUnLsRvjKpm0HyVdUIn+fZs2NqetTl5gYPIE2iD40z4ttb/fCln5+EAVymcmsl3lzY9sUYgtuql9jpp7wXcJCnlfU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752175285; c=relaxed/simple;
-	bh=IIT3aYIMd7f75/9qiMZTlRieRdG0lit3iU4um0MO9N4=;
-	h=Mime-Version:Content-Type:Date:Message-Id:From:To:Cc:Subject:
-	 References:In-Reply-To; b=sUEmOyUJ8YviroIl6n2MZVYRfOq30p/NAYu8YkkYT2cEPcU8znBE4vw49PhpcW22rp2IXGmjkh2ntYJ0iBe9F7DQQCZ8t5DvcjR2UasGcn+txd0Q6RdsUnIZu7erRTROVCf5tumR8S7RzbtHS280sP+3MJpQStKTOKgWMEd/yOo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Cy872Nl/; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1752175721; c=relaxed/simple;
+	bh=zVY+b+S3n4ZG/VFQuk9CCHdsoYZhdESMhk1/PEdkPkQ=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=dRbMSg40FzvJQ6JFpGeFUPAD6kpCK9gb3BLdeCLajEWOaiLfhIa/36ils4iJy7sLp8HpRfBU4o2vZl5KKjVuC1DTc784VuyRPjuMszHFjgRv2BxbbTcWWdTnL5iUKEbik6v4ivvZHIHtTrkvRZqFeiA6N/NXuUnDQ6QwAqYCoow=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=d7rQXUfD; arc=none smtp.client-ip=95.215.58.170
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Cy872Nl/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4112C4CEE3;
-	Thu, 10 Jul 2025 19:21:19 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1752175284;
-	bh=IIT3aYIMd7f75/9qiMZTlRieRdG0lit3iU4um0MO9N4=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=Cy872Nl/YqchCJsns7dQxc8VuBnnziOur57O6LW1DQ//DNwCCYsqnGGRpXfAuaVtA
-	 glh7LBHdTD7kvsTBC76LXydXupps/8v8gS+vP6fm/+PRjhRTJk8FYaO/IYkXtBmcrc
-	 bb7g8h9qkD7UI3pEJvq0OSsA1xaZNTNZg01F4skJkxB7SKZPoyVQWz2CprBzn98DTL
-	 d8eKrz35fzkq1jCfBWFeip8b+5heG3Tpgu4/fbNEBt5QpNyC/ipqocVZQrystHtQom
-	 eJDCjPzp0tZOITuOK0v1QlcfhXfHq8yH/SPDBkBmT87D4U+X02FZcYurcvFZoFQwXT
-	 s1lV/all/KDVg==
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="d7rQXUfD"
+Message-ID: <f914d8c1-0e87-43ed-b5af-7dba776d76ee@linux.dev>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
+	t=1752175712;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=ACTscg3Et5oSzAHLPse1wLZeVGYcH/Kg//tzct6pHZg=;
+	b=d7rQXUfD2003WoGYkXZLWvLwPNSf/hlDrfer7J9b923go4i2+nHS+gyiz4APmjFIxxXhbv
+	5Dl2sK8bjiuEAaJw56AKlttRg8PNqkyUUTcb0VThOrnYfiQX8NeCe1UgkABBWms0R0lLMp
+	R/sWE1JAkabikstNzp0k9Kay+ND1700=
+Date: Thu, 10 Jul 2025 12:28:22 -0700
 Precedence: bulk
 X-Mailing-List: lkmm@lists.linux.dev
 List-Id: <lkmm.lists.linux.dev>
 List-Subscribe: <mailto:lkmm+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:lkmm+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Thu, 10 Jul 2025 21:21:17 +0200
-Message-Id: <DB8MAQC4V57F.1GGYO1PNPOV2X@kernel.org>
-From: "Benno Lossin" <lossin@kernel.org>
-To: "Boqun Feng" <boqun.feng@gmail.com>
-Cc: <linux-kernel@vger.kernel.org>, <rust-for-linux@vger.kernel.org>,
- <lkmm@lists.linux.dev>, <linux-arch@vger.kernel.org>, "Miguel Ojeda"
- <ojeda@kernel.org>, "Alex Gaynor" <alex.gaynor@gmail.com>, "Gary Guo"
- <gary@garyguo.net>, =?utf-8?q?Bj=C3=B6rn_Roy_Baron?=
- <bjorn3_gh@protonmail.com>, "Andreas Hindborg" <a.hindborg@kernel.org>,
- "Alice Ryhl" <aliceryhl@google.com>, "Trevor Gross" <tmgross@umich.edu>,
- "Danilo Krummrich" <dakr@kernel.org>, "Will Deacon" <will@kernel.org>,
- "Peter Zijlstra" <peterz@infradead.org>, "Mark Rutland"
- <mark.rutland@arm.com>, "Wedson Almeida Filho" <wedsonaf@gmail.com>,
- "Viresh Kumar" <viresh.kumar@linaro.org>, "Lyude Paul" <lyude@redhat.com>,
- "Ingo Molnar" <mingo@kernel.org>, "Mitchell Levy"
- <levymitchell0@gmail.com>, "Paul E. McKenney" <paulmck@kernel.org>, "Greg
- Kroah-Hartman" <gregkh@linuxfoundation.org>, "Linus Torvalds"
- <torvalds@linux-foundation.org>, "Thomas Gleixner" <tglx@linutronix.de>,
- "Alan Stern" <stern@rowland.harvard.edu>
-Subject: Re: [PATCH v6 2/9] rust: sync: Add basic atomic operation mapping
- framework
-X-Mailer: aerc 0.20.1
-References: <20250710060052.11955-1-boqun.feng@gmail.com>
- <20250710060052.11955-3-boqun.feng@gmail.com>
- <DB8BQGJNFDAY.BGQ8CZSFFOLH@kernel.org> <aG_Yah5FFHcA3IZy@Mac.home>
- <DB8HQLY48DFX.3PBBUTQLV14PC@kernel.org> <aG_nT3H8J-h2qwr5@Mac.home>
-In-Reply-To: <aG_nT3H8J-h2qwr5@Mac.home>
+MIME-Version: 1.0
+Subject: Re: [PATCH bpf-next 1/1] selftests/bpf: fix implementation of
+ smp_mb()
+Content-Language: en-GB
+To: Puranjay Mohan <puranjay@kernel.org>, Andrii Nakryiko
+ <andrii@kernel.org>, Eduard Zingerman <eddyz87@gmail.com>,
+ Mykola Lysenko <mykolal@fb.com>, Alexei Starovoitov <ast@kernel.org>,
+ Daniel Borkmann <daniel@iogearbox.net>,
+ Martin KaFai Lau <martin.lau@linux.dev>, Song Liu <song@kernel.org>,
+ John Fastabend <john.fastabend@gmail.com>, KP Singh <kpsingh@kernel.org>,
+ Stanislav Fomichev <sdf@fomichev.me>, Hao Luo <haoluo@google.com>,
+ Jiri Olsa <jolsa@kernel.org>, Kumar Kartikeya Dwivedi <memxor@gmail.com>,
+ "Paul E . McKenney" <paulmck@kernel.org>
+Cc: bpf@vger.kernel.org, lkmm@lists.linux.dev
+References: <20250710175434.18829-1-puranjay@kernel.org>
+ <20250710175434.18829-2-puranjay@kernel.org>
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+From: Yonghong Song <yonghong.song@linux.dev>
+In-Reply-To: <20250710175434.18829-2-puranjay@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Migadu-Flow: FLOW_OUT
 
-On Thu Jul 10, 2025 at 6:16 PM CEST, Boqun Feng wrote:
-> At least the rustdoc has safety section for each function. ;-)
 
-I don't usually use rustdoc to read function safety sections. Instead I
-jump to their definition and read the code.
 
----
-Cheers,
-Benno
+On 7/10/25 10:54 AM, Puranjay Mohan wrote:
+> As BPF doesn't include any barrier instructions, smp_mb() is implemented
+> by doing a dummy value returning atomic operation. Such an operation
+> acts a full barrier as enforced by LKMM and also by the work in progress
+> BPF memory model.
+>
+> If the returned value is not used, clang[1] can optimize the value
+> returning atomic instruction in to a normal atomic instruction which
+> provides no ordering guarantees.
+>
+> Mark the variable as volatile so the above optimization is never
+> performed and smp_mb() works as expected.
+>
+> [1] https://godbolt.org/z/qzze7bG6z
+
+You are using llvm19 in the above godbolt run.
+But from llvm20, instead of 'lock ...' insn, 'atomic_fetch_or'
+will be generated so barrier semantics will be preserved.
+
+Since CI is using llvm20, so we should not have any problem.
+But for llvm19 or lower, the patch does fix a problem for arm64 etc.
+So in case that maintainer agrees with this patch, my ACK is below:
+
+   Acked-by: Yonghong Song <yonghong.song@linux.dev>
+   
+
+>
+> Fixes: 88d706ba7cc5 ("selftests/bpf: Introduce arena spin lock")
+> Signed-off-by: Puranjay Mohan <puranjay@kernel.org>
+> ---
+>   tools/testing/selftests/bpf/bpf_atomic.h | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/tools/testing/selftests/bpf/bpf_atomic.h b/tools/testing/selftests/bpf/bpf_atomic.h
+> index a9674e544322..c550e5711967 100644
+> --- a/tools/testing/selftests/bpf/bpf_atomic.h
+> +++ b/tools/testing/selftests/bpf/bpf_atomic.h
+> @@ -61,7 +61,7 @@ extern bool CONFIG_X86_64 __kconfig __weak;
+>   
+>   #define smp_mb()                                 \
+>   	({                                       \
+> -		unsigned long __val;             \
+> +		volatile unsigned long __val;    \
+>   		__sync_fetch_and_add(&__val, 0); \
+>   	})
+>   
+

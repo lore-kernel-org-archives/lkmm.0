@@ -1,58 +1,58 @@
-Received: from mail-pl1-f173.google.com (mail-pl1-f173.google.com [209.85.214.173])
+Received: from mail-pl1-f176.google.com (mail-pl1-f176.google.com [209.85.214.176])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 099341D7E54
-	for <lkmm@lists.linux.dev>; Thu, 10 Jul 2025 18:32:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2035F2EFDBE
+	for <lkmm@lists.linux.dev>; Thu, 10 Jul 2025 19:06:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752172375; cv=none; b=QOEFHRU2Up10ixzp5kvQlGjDfw7qoqRuZNwOOlXs51OZeXt12OPeiWu7kvM7rfWi+IU1c1jEtqOrQZBYMUef/vVNZMxj2NGnFmq+mdnFBpMgxbGCHQdXFj8yX4AlwkMf1cvqNczK8DLBbJ9x658uIxznB2CVI7BtV2TvPWYkw4Y=
+	t=1752174409; cv=none; b=Rn0uVz4Tjd0pvr7n3+S8hZsuf008vGhtWsn8TFnI8tzdCwYlrhFRSh2wE2+/ToCZ7FYVOEIG1EPuaDIotwbJXrPZGcVKFP8X6YN9j9Q39xDQLyYuFZM4jhDPM6zZkhMPmnjc30pNgfJ8NEIWbk/dkzFlt6DSJWtOFLUfN2vN7mk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752172375; c=relaxed/simple;
-	bh=WepPI1QEsb7KVPco0eNErLMr0WYuLRbteu135zLMSYg=;
+	s=arc-20240116; t=1752174409; c=relaxed/simple;
+	bh=d1TgekxlM1F6cmtjM39Ek7NrGs4UiAhKYGCORsJeMDg=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=knCVVmgpW+LFKTXv/HbPOoWta+uwP4gxXvTXZJnG/7UXCLB1mnra1/0ecBHvaZX4hAmwjvmJcuTJ9RvqetUVGypSuFIiyijSm79KoZ41E3oBOQdTeq/QYV6CCs5znKBzDHTl+hWLvJlFtgLbxWB8OY9Zw02b//70lca1BBC40PQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=UEGBNfGk; arc=none smtp.client-ip=209.85.214.173
+	 To:Cc:Content-Type; b=DQjT8WjznQvMrTr+W9nC0+6N5U+JPcmJPiBO04hCw0zXV9Wi1iKIbwda8VkcqXMKXzHAIVwrHr0caU7y9fVQd9OJFfsCZvK4JjMhrU9iLJZJheP7ud/QXqahgubCKdAdkI7ljfuLy0WL/aiO1fgEiUB+UNa3trWoligC4969eQc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=NpxsC9La; arc=none smtp.client-ip=209.85.214.176
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="UEGBNfGk"
-Received: by mail-pl1-f173.google.com with SMTP id d9443c01a7336-23c71b21f72so1729805ad.2
-        for <lkmm@lists.linux.dev>; Thu, 10 Jul 2025 11:32:53 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NpxsC9La"
+Received: by mail-pl1-f176.google.com with SMTP id d9443c01a7336-2355360ea88so1960295ad.2
+        for <lkmm@lists.linux.dev>; Thu, 10 Jul 2025 12:06:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1752172373; x=1752777173; darn=lists.linux.dev;
+        d=gmail.com; s=20230601; t=1752174407; x=1752779207; darn=lists.linux.dev;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=WepPI1QEsb7KVPco0eNErLMr0WYuLRbteu135zLMSYg=;
-        b=UEGBNfGkbSktGleK/siumhgAfg+4DtcoMU4SBDu3Iu2pDBV4zJKA4Edm19SFFb8U3t
-         JcrwpS3xx3S56P+3vMRUrWB9dSIhy+6EgTEfEYs1ap04GWnR8CF6/ZJjwc131Pa+qHx/
-         RK29qm8w90z2BMrnYYpmWnTmWv09SH7ogS/4qjE5yYh3itTl1+6wo2LGv+GA7x3mC9nA
-         KpstlEskEefuU0JjxjS/oFWMCetBGVtIA0/89aO5EycLl39zNrcdo8vXWw1AohB0ckrM
-         2+2oL80ofPsgLndy7xJXx6Ra1JiKS5/M6XhCmlKKzwaLDvmM4Iw369qIRPjBZKfyULdI
-         U0wg==
+        bh=d1TgekxlM1F6cmtjM39Ek7NrGs4UiAhKYGCORsJeMDg=;
+        b=NpxsC9LatKUAPlACN4E//jmLtvJJ0vhceBEG+nnijuMjYzv58/LKrNUbFI8rlYgDk9
+         qMwYpT7QR+lB9y0pkEcqS12g0XndI0OdegeXxHwV088HX1btG1nPUy/dKFsFTnvpkhsP
+         brRvqJRmxN2tChqF2RnxsGanScYAwFWQXylnmfDltgm9di+9qGp2O+GA99PHlDGeAeD/
+         P4FWUcw58O3uxrCFwWHEdirQMXKX3w+KOgcsccFMx6Mj2Ph2lVtIv/DKOIXhjbGf5GwQ
+         ioI6xj46vGhCjiq5+jXr+pCNhIoMdQToRWWZifAeR/pdiobIIoczOLKLsCMg6RJoc1zS
+         ZX4Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1752172373; x=1752777173;
+        d=1e100.net; s=20230601; t=1752174407; x=1752779207;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=WepPI1QEsb7KVPco0eNErLMr0WYuLRbteu135zLMSYg=;
-        b=ReaOC01OVkOH3Ufc5b1AJopSDutM4f7+HP8F53X0CIlBfxennMEGFsTgkPEJWH6XSB
-         Kz9wOGHD2wpT5r7QwRwEbeVb6GR2gDR1nZyUJ+V15zWc7Xcwl44eZZlmXIhbj/KfsheM
-         gH7uAZgZDpLczcbeQcm7PHTHsDLF8AsQ2F8XpYe1S99RWtEByALgWlENinsFzrijsoOR
-         dqbd+Xxs2btnewmPg8HMnk4bjw5cz1JBQlWdohIHSxXjYElMYb4Vf8dj9ipKAi6SegRO
-         QcQXtrCva1JugeW9aFXCbJzg3yL5sT+Y2TW6F392Ko3blZDu+oGo8YkjNdNkjfiCo8gb
-         oc2w==
-X-Forwarded-Encrypted: i=1; AJvYcCXj81eyTEyZpZTHiRDovO2fqrIAAygogM6jr8YiEnZI2j3XgE+96tjIAakjYX4WKAR9lVhp@lists.linux.dev
-X-Gm-Message-State: AOJu0Yzdcq+kH6pBNiVbcDTQ/qorjzFWoEU+672dMADuMr8lf3CzDhVZ
-	+s9r69Uwo8Cw3O2E8+jA4YVIYsYMVAH+leT7vPIJ7eL19OwpnZTtMLbmtBGgNm/uc8xcmvy6DRC
-	8jGCx56cD3AR3pt7usYweyvyJ6kg+1i4=
-X-Gm-Gg: ASbGncuujycwypSOSIkwmbOSKBX4bjdAlsVzrIGhVohwFKXVNv4TKkV6wYb7qhtXFEi
-	f0yvfrjMZ+KwbDSQ71oeCJzeodIKqfQ/buPZBTuUjqrAAAoQPanifjeOZi2/bHzG6fNI99whyHX
-	6hT80AtuhhQ5Ap1Matc08BRcEXOpjt0YoZheVjBhM4
-X-Google-Smtp-Source: AGHT+IFTkKMM44D0WTx8T2njTBo+Lj4fPVbE0SyMH8GHthy2NxnMMGZoDLNlGDght6fNtjTJq1SCULKC7PXatR5fYYs=
-X-Received: by 2002:a17:902:d504:b0:236:9302:bf11 with SMTP id
- d9443c01a7336-23dede81473mr1222765ad.13.1752172373216; Thu, 10 Jul 2025
- 11:32:53 -0700 (PDT)
+        bh=d1TgekxlM1F6cmtjM39Ek7NrGs4UiAhKYGCORsJeMDg=;
+        b=BjQ1A9vpNn8n+32jenbi/Q/tth3naxD5Jbn08vpAPGqnztnA7pzrZI0EcJXbZbymco
+         us5eFCwaReIpDtSarTq1Ysw5P0aMIzciSJ4U4wLR1OgrD5XcfDsCrJjSAiomR5MdiJrt
+         mwTj6VVI/Eam0auifwkIwFL6RRbzV6j4HdD3Q2iGlhFgFWgx8BXUP3YmiwH9PD0p1vZG
+         HKntv8MDK2ml8FvKl/SP0NydVb/ZUMf2zHqHYHIEVFYBU6fgAKJMNSpNh7VFk+mm26O6
+         t5CuWxetsZoepsceI1A4iC8yaoBiEuQcU9Gv09LMlKCrFta3VSIi2dVSJiU81BEhkjHB
+         BAFA==
+X-Forwarded-Encrypted: i=1; AJvYcCXBLnRPIHbAzcKymHytOxgmIpL0oMzVTgMxW3WmyIR3pcciZKMuLGcHTLfBQZ8E4O2sZOh7@lists.linux.dev
+X-Gm-Message-State: AOJu0Ywnb7oNpdBIySXEeFoExT8RAV9K1GB+kE0/UT3AusF8SxvioeP4
+	vjgT8o6/KBol5kB/SJBbTIn4C+CB4lnEelUgwOFxyQHO+P0dX74oj1eufUxUZmXRDr3QsOfKmir
+	I+PeUe8svvdKXUE8mDBgvkazHdTg/zH4=
+X-Gm-Gg: ASbGncu0b2E4uniX9V59hRSP6r5Z2yUAqJb+//k/Rx5x3gfkxluBERpulKbL3g+2Ght
+	OSnTnNKdeaL3cJBmady+73dY0bS8OWqvj28G+qnWPfHmV5cluqtXfDG7Ns8OwgwQ/Cr5PrYTqrY
+	EC2HlQYNpCAvaKqsGrIcb+zYeZ1cnbqMrnnmshInjF
+X-Google-Smtp-Source: AGHT+IHkEFYCa3ATI/QIEvvVfoRX0qcKn6U4rLVncaPPUJONzR3iCGpU45qxH8NuVBQIRr9ulvGNtoRqwfRpZl1JiFI=
+X-Received: by 2002:a17:903:1245:b0:236:71f1:d347 with SMTP id
+ d9443c01a7336-23dede76501mr2207985ad.10.1752174407365; Thu, 10 Jul 2025
+ 12:06:47 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: lkmm@lists.linux.dev
 List-Id: <lkmm.lists.linux.dev>
@@ -62,12 +62,12 @@ MIME-Version: 1.0
 References: <20250710060052.11955-1-boqun.feng@gmail.com> <20250710060052.11955-4-boqun.feng@gmail.com>
  <4Ql5DIvfmXBHoUA428q2PelaaLNBI5Mi0jE3y3YPObJLRgY73zNZzQ8Pdl2qq25VWsMQFKUpYRHHQ1e7wFaGUw==@protonmail.internalid>
  <DB8BTA477Z2V.1J7XFLDXHMN2S@kernel.org> <87v7o0i7b8.fsf@kernel.org>
- <aG_RcB0tcdnkE_v4@Mac.home> <DB8GUTJA9QU1.X112WTV7ABZN@kernel.org>
-In-Reply-To: <DB8GUTJA9QU1.X112WTV7ABZN@kernel.org>
+ <aG_RcB0tcdnkE_v4@Mac.home> <DB8GUTJA9QU1.X112WTV7ABZN@kernel.org> <CANiq72=Oq-JHkBuTAZPVYO5omuXswgGfLXu+nAGwEdRdgkU-0w@mail.gmail.com>
+In-Reply-To: <CANiq72=Oq-JHkBuTAZPVYO5omuXswgGfLXu+nAGwEdRdgkU-0w@mail.gmail.com>
 From: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
-Date: Thu, 10 Jul 2025 20:32:40 +0200
-X-Gm-Features: Ac12FXxC1iNg6z30MULXJfC5bntwimdqt0Ot5Oz7qXD1RzXTBtdQy9P9OvPMxcw
-Message-ID: <CANiq72=Oq-JHkBuTAZPVYO5omuXswgGfLXu+nAGwEdRdgkU-0w@mail.gmail.com>
+Date: Thu, 10 Jul 2025 21:06:35 +0200
+X-Gm-Features: Ac12FXw1CiwqDgqRLKnAYlHxWPBCV-YdBB3D1UT2TjwRBmWnZYqiMVSnF3Wqfxk
+Message-ID: <CANiq72=K8+Rx_3yDXPxsTMftg6Kabg=_O3voMKNoQ647wznGpw@mail.gmail.com>
 Subject: Re: [PATCH v6 3/9] rust: sync: atomic: Add ordering annotation types
 To: Benno Lossin <lossin@kernel.org>
 Cc: Boqun Feng <boqun.feng@gmail.com>, Andreas Hindborg <a.hindborg@kernel.org>, 
@@ -86,23 +86,13 @@ Cc: Boqun Feng <boqun.feng@gmail.com>, Andreas Hindborg <a.hindborg@kernel.org>,
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Thu, Jul 10, 2025 at 5:05=E2=80=AFPM Benno Lossin <lossin@kernel.org> wr=
-ote:
+On Thu, Jul 10, 2025 at 8:32=E2=80=AFPM Miguel Ojeda
+<miguel.ojeda.sandonis@gmail.com> wrote:
 >
-> I don't think we have a lint for that, so I'd prefer if we avoid that...
->
-> Someone is going to just `use ...::ordering::Any` and then have a
-> function `fn<T: Any>(_: T)` in their code and that will be very
-> confusing.
+> I guess there could be a lint that detects a given item being `use`d
+> which we could use in some cases like this.
 
-I guess there could be a lint that detects a given item being `use`d
-which we could use in some cases like this.
-
-I took a quick look, and I see `enum_glob_use`, but that seems global
-without a way to filter, and it doesn't cover direct `use`s.
-
-Then there is `wildcard_imports`, and that seems fairly usable (it has
-an allowed list), but of course doesn't cover non-wildcard ones.
+Filled: https://github.com/rust-lang/rust-clippy/issues/15244.
 
 Cheers,
 Miguel

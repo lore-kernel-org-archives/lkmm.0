@@ -1,107 +1,160 @@
-Received: from out-170.mta1.migadu.com (out-170.mta1.migadu.com [95.215.58.170])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qk1-f177.google.com (mail-qk1-f177.google.com [209.85.222.177])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B1E42248B3
-	for <lkmm@lists.linux.dev>; Thu, 10 Jul 2025 19:28:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C03132FE314
+	for <lkmm@lists.linux.dev>; Thu, 10 Jul 2025 20:29:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752175721; cv=none; b=ZWrFd7J2gZuxjqEWHt9FnMN8rwzjsp3C2yAjCF/POuA4dg8clu3lVYSDl8ufb/d5okiIK2Kv92dfuo22u6cUnLsRvjKpm0HyVdUIn+fZs2NqetTl5gYPIE2iD40z4ttb/fCln5+EAVymcmsl3lzY9sUYgtuql9jpp7wXcJCnlfU=
+	t=1752179376; cv=none; b=BBbDetLRzOwUDI13wrsCuOzkQMmp0a0DVoY9VHpM9R1wjyc9Ue9x38z9/odCF53UzghuAnPJv9+9WQ0Heppga/9JWtXOzmJ4MJRJUf/MEEh9YzUFFOAS6L5eSTjAq54x/9qdXaytsboJgSONWwN45xomJPFv6Xf6rnADzyqpa/0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752175721; c=relaxed/simple;
-	bh=zVY+b+S3n4ZG/VFQuk9CCHdsoYZhdESMhk1/PEdkPkQ=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=dRbMSg40FzvJQ6JFpGeFUPAD6kpCK9gb3BLdeCLajEWOaiLfhIa/36ils4iJy7sLp8HpRfBU4o2vZl5KKjVuC1DTc784VuyRPjuMszHFjgRv2BxbbTcWWdTnL5iUKEbik6v4ivvZHIHtTrkvRZqFeiA6N/NXuUnDQ6QwAqYCoow=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=d7rQXUfD; arc=none smtp.client-ip=95.215.58.170
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
+	s=arc-20240116; t=1752179376; c=relaxed/simple;
+	bh=hI6kF2VsYpQSxed7fWUz+U28xt0SkXt5Eiurxvo0eFo=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=gRJQLgwWeq3T56m7Y4mNNqj02csOdKAz8INHJSDMCikthcKOX5iXR/hLMBWYFvd3kP/HU43GiV8/VAVbSk2wYws6bQvfnh3Pbpi30k5x+QBbuoljOqAfzaX9xBTXSjiabrdmPEr93A/j6F80KIpBhXi5Vl3E1cfMA2QwHmdsK48=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=HTGSQ2WK; arc=none smtp.client-ip=209.85.222.177
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="d7rQXUfD"
-Message-ID: <f914d8c1-0e87-43ed-b5af-7dba776d76ee@linux.dev>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
-	t=1752175712;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=ACTscg3Et5oSzAHLPse1wLZeVGYcH/Kg//tzct6pHZg=;
-	b=d7rQXUfD2003WoGYkXZLWvLwPNSf/hlDrfer7J9b923go4i2+nHS+gyiz4APmjFIxxXhbv
-	5Dl2sK8bjiuEAaJw56AKlttRg8PNqkyUUTcb0VThOrnYfiQX8NeCe1UgkABBWms0R0lLMp
-	R/sWE1JAkabikstNzp0k9Kay+ND1700=
-Date: Thu, 10 Jul 2025 12:28:22 -0700
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HTGSQ2WK"
+Received: by mail-qk1-f177.google.com with SMTP id af79cd13be357-7d21cecc11fso254955685a.3
+        for <lkmm@lists.linux.dev>; Thu, 10 Jul 2025 13:29:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1752179373; x=1752784173; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:feedback-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=n9Kows6//5K1XKbUlD36iwUd832otL138Wso87VJRuU=;
+        b=HTGSQ2WKc+HN+U/uZSJbudykEjM20AMk6o8as+eWTQj4X4To5XK5Zd1y7ip6w4eRCd
+         FKlWOjbCxRQgCkrJGDhQnIsynTrM24y6/YaGnj3IUpkeBEWnZYPMWapkgFIRZmhpKHMA
+         Ys+wTUIR8/AjWdY3h/xBQrwL/NTSRG+crVgAsjEgmSGmTlCMFpCpKPdKGPDra+oNRuTX
+         X0NA18CGe2qZjVNDMa0B6OYLolNbyrbgauaxM3avPENuTSC5LcR27LAgH8s9jdY0lpe7
+         Bpp1Eic7n/4+bMD8Ln9+dDpsfEHTjTFB4SpyMCatJYgeKeZ1mKNtKsOLwGV5KwLdQ6sA
+         7I+g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1752179373; x=1752784173;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:feedback-id:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=n9Kows6//5K1XKbUlD36iwUd832otL138Wso87VJRuU=;
+        b=jY7XCw1MTFAUPXdQU/h+QLxGwXCT5S4R7V79UuH/84kVpGDDox+YqcyPCmVArCMkhB
+         GPC4F7MIf4js98FSLSXwcaArCMPFvX2sbbbnZOIc8dKP773WKRbuj2ODZ0ABu892QaoJ
+         jZm0bGb9TArRutrcP3A6YWJEhMNvZlMJS/ky81iICYZzw/4WAkebI+VsouW0xCC9SV8G
+         WbwOm2FNNflksJU7nmV7hrHf/4ylTb+SbcNDGjkLaYBID+ALNs1tn9PyHJdfH6bUBMDO
+         Y9gzNSQ8rTH8fxM9+HZxbYFupAvXrc7EfhhK/hSOKDIVDkSjtUPuqW9E2WqzvSipC+TH
+         3gDA==
+X-Forwarded-Encrypted: i=1; AJvYcCUAqZ9neN/M/WVQndexWSmD5u7CwVCdnXNnvPVPJXNhtGDEguxsQ54RXW72yC/o913lTb1e@lists.linux.dev
+X-Gm-Message-State: AOJu0YzG7KoJVxdNDhWthu9KslNz9bJ6anczsktEU70lFb5kSP0dF1v3
+	WPUc21QHJTHRm4HhhBt84rbXsycMBzMNBQg1KHg9fwac6kQSZTc7xR0T
+X-Gm-Gg: ASbGnct99/+QCA7nW6KngAixVm87PsB2VDKom55iOisFt6u3K+5cSZ2uAKXE2iW9hEE
+	42rNQ0RI07PClS+AsnVujLJ2XZdOD0n4c0X2X/5XkWEQMAv8u86C85A2LK1LhIkEJKOPF2USwan
+	IH/2d45ZTRdldMufCAYcc5t8/yKdg0ArJYRPYjvKBI7LorDAIlr8XWBA4evMUoHA1O2wYmfZHZh
+	fZtnn05kQhMs5j/0asdzYb5fW5wQD4p4ZPsPMVl/bC6hEO7vBK0JOzfFmM6tl0J1i6F6y+M9Lf9
+	BT90LOE4htxyy6GgM5ZRLh5hFdATATo+R0Q4Uj3xX+Bni0YZf45d6X3EvEKU1OMsjhB+RFZWt1h
+	sAJKlgbF40X46Y/nVVDWqJ08zatJ5fLyE81aQYTp/9T2Mgaoe4Wv6
+X-Google-Smtp-Source: AGHT+IHTxHpV0SwGmDFllmbTBLgJt+IQPK8l4umZTYz9F0x4Va7+5/8tlYrHthE4s2dROSDM9gkudA==
+X-Received: by 2002:a05:620a:a118:b0:7d4:57b7:bc12 with SMTP id af79cd13be357-7dde9d4b464mr115881485a.10.1752179373431;
+        Thu, 10 Jul 2025 13:29:33 -0700 (PDT)
+Received: from fauth-a2-smtp.messagingengine.com (fauth-a2-smtp.messagingengine.com. [103.168.172.201])
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-7dcdebeadb5sm136572885a.113.2025.07.10.13.29.32
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 10 Jul 2025 13:29:33 -0700 (PDT)
+Received: from phl-compute-09.internal (phl-compute-09.phl.internal [10.202.2.49])
+	by mailfauth.phl.internal (Postfix) with ESMTP id 26EFEF40066;
+	Thu, 10 Jul 2025 16:29:32 -0400 (EDT)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-09.internal (MEProxy); Thu, 10 Jul 2025 16:29:32 -0400
+X-ME-Sender: <xms:rCJwaApMAG3WehairgMCq8kOSYcKvMddKt9s7szDEwvLTogrYO4TDw>
+    <xme:rCJwaILFerzZGDlmOTkw4csLP2SdPJPzHC7jmO8TG3CRlnOR_6U2lkLa-nijzVRJw
+    chnhFI0VM5NPb_5Iw>
+X-ME-Received: <xmr:rCJwaJxDoKHRCxVqWXHTBIs6llhd7KG1GACW0EPSONc5jKvUnmOxWxwhYF3anoVz6UbHpEMUvdey0hWHD_L5ezcPi24>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdegudegtdcutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+    hrpeffhffvvefukfhfgggtuggjsehttdertddttddvnecuhfhrohhmpeeuohhquhhnucfh
+    vghnghcuoegsohhquhhnrdhfvghnghesghhmrghilhdrtghomheqnecuggftrfgrthhtvg
+    hrnhephedugfduffffteeutddvheeuveelvdfhleelieevtdeguefhgeeuveeiudffiedv
+    necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepsghoqh
+    hunhdomhgvshhmthhprghuthhhphgvrhhsohhnrghlihhthidqieelvdeghedtieegqddu
+    jeejkeehheehvddqsghoqhhunhdrfhgvnhhgpeepghhmrghilhdrtghomhesfhhigihmvg
+    drnhgrmhgvpdhnsggprhgtphhtthhopedvjedpmhhouggvpehsmhhtphhouhhtpdhrtghp
+    thhtoheplhhoshhsihhnsehkvghrnhgvlhdrohhrghdprhgtphhtthhopehlihhnuhigqd
+    hkvghrnhgvlhesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehruhhsthdq
+    fhhorhdqlhhinhhugiesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehlkh
+    hmmheslhhishhtshdrlhhinhhugidruggvvhdprhgtphhtthhopehlihhnuhigqdgrrhgt
+    hhesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehojhgvuggrsehkvghrnh
+    gvlhdrohhrghdprhgtphhtthhopegrlhgvgidrghgrhihnohhrsehgmhgrihhlrdgtohhm
+    pdhrtghpthhtohepghgrrhihsehgrghrhihguhhordhnvghtpdhrtghpthhtohepsghjoh
+    hrnhefpghghhesphhrohhtohhnmhgrihhlrdgtohhm
+X-ME-Proxy: <xmx:rCJwaHabvA280zNgmWRCUYxiiRtxOB7BFdP3fzB8P0egKRMvSLaxTg>
+    <xmx:rCJwaN6MuakdEsUfkF6v6aCHEK7TRJKsVZ8ewUsMpmy_EqhSIzDx2A>
+    <xmx:rCJwaACF3OI3zx8uVHhJ-JWze1x5lpppwZs0aLk65pMEvBhDhBSWBw>
+    <xmx:rCJwaLuqE6Nqlit1Cv77HRIYlf2VTRDVoSiSvt_B6klWLtN4nPPuyA>
+    <xmx:rCJwaNuU1aYnFxMo6iLrDLg7_BdA_kdupz1-vus4I2wi46AAq4QRP1cu>
+Feedback-ID: iad51458e:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 10 Jul 2025 16:29:31 -0400 (EDT)
+Date: Thu, 10 Jul 2025 13:29:30 -0700
+From: Boqun Feng <boqun.feng@gmail.com>
+To: Benno Lossin <lossin@kernel.org>
+Cc: linux-kernel@vger.kernel.org, rust-for-linux@vger.kernel.org,
+	lkmm@lists.linux.dev, linux-arch@vger.kernel.org,
+	Miguel Ojeda <ojeda@kernel.org>,
+	Alex Gaynor <alex.gaynor@gmail.com>, Gary Guo <gary@garyguo.net>,
+	=?iso-8859-1?Q?Bj=F6rn?= Roy Baron <bjorn3_gh@protonmail.com>,
+	Andreas Hindborg <a.hindborg@kernel.org>,
+	Alice Ryhl <aliceryhl@google.com>, Trevor Gross <tmgross@umich.edu>,
+	Danilo Krummrich <dakr@kernel.org>, Will Deacon <will@kernel.org>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Wedson Almeida Filho <wedsonaf@gmail.com>,
+	Viresh Kumar <viresh.kumar@linaro.org>,
+	Lyude Paul <lyude@redhat.com>, Ingo Molnar <mingo@kernel.org>,
+	Mitchell Levy <levymitchell0@gmail.com>,
+	"Paul E. McKenney" <paulmck@kernel.org>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Alan Stern <stern@rowland.harvard.edu>
+Subject: Re: [PATCH v6 2/9] rust: sync: Add basic atomic operation mapping
+ framework
+Message-ID: <aHAiqhPe5OwVioUe@tardis-2.local>
+References: <20250710060052.11955-1-boqun.feng@gmail.com>
+ <20250710060052.11955-3-boqun.feng@gmail.com>
+ <DB8BQGJNFDAY.BGQ8CZSFFOLH@kernel.org>
+ <aG_Yah5FFHcA3IZy@Mac.home>
+ <DB8HQLY48DFX.3PBBUTQLV14PC@kernel.org>
+ <aG_nT3H8J-h2qwr5@Mac.home>
+ <DB8MAQC4V57F.1GGYO1PNPOV2X@kernel.org>
 Precedence: bulk
 X-Mailing-List: lkmm@lists.linux.dev
 List-Id: <lkmm.lists.linux.dev>
 List-Subscribe: <mailto:lkmm+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:lkmm+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Subject: Re: [PATCH bpf-next 1/1] selftests/bpf: fix implementation of
- smp_mb()
-Content-Language: en-GB
-To: Puranjay Mohan <puranjay@kernel.org>, Andrii Nakryiko
- <andrii@kernel.org>, Eduard Zingerman <eddyz87@gmail.com>,
- Mykola Lysenko <mykolal@fb.com>, Alexei Starovoitov <ast@kernel.org>,
- Daniel Borkmann <daniel@iogearbox.net>,
- Martin KaFai Lau <martin.lau@linux.dev>, Song Liu <song@kernel.org>,
- John Fastabend <john.fastabend@gmail.com>, KP Singh <kpsingh@kernel.org>,
- Stanislav Fomichev <sdf@fomichev.me>, Hao Luo <haoluo@google.com>,
- Jiri Olsa <jolsa@kernel.org>, Kumar Kartikeya Dwivedi <memxor@gmail.com>,
- "Paul E . McKenney" <paulmck@kernel.org>
-Cc: bpf@vger.kernel.org, lkmm@lists.linux.dev
-References: <20250710175434.18829-1-puranjay@kernel.org>
- <20250710175434.18829-2-puranjay@kernel.org>
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-From: Yonghong Song <yonghong.song@linux.dev>
-In-Reply-To: <20250710175434.18829-2-puranjay@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Migadu-Flow: FLOW_OUT
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <DB8MAQC4V57F.1GGYO1PNPOV2X@kernel.org>
 
+On Thu, Jul 10, 2025 at 09:21:17PM +0200, Benno Lossin wrote:
+> On Thu Jul 10, 2025 at 6:16 PM CEST, Boqun Feng wrote:
+> > At least the rustdoc has safety section for each function. ;-)
+> 
+> I don't usually use rustdoc to read function safety sections. Instead I
+> jump to their definition and read the code.
+> 
 
+Understood. It's probalby the first time we use macros to generate a few
+unsafe functions, so this is something new.
 
-On 7/10/25 10:54 AM, Puranjay Mohan wrote:
-> As BPF doesn't include any barrier instructions, smp_mb() is implemented
-> by doing a dummy value returning atomic operation. Such an operation
-> acts a full barrier as enforced by LKMM and also by the work in progress
-> BPF memory model.
->
-> If the returned value is not used, clang[1] can optimize the value
-> returning atomic instruction in to a normal atomic instruction which
-> provides no ordering guarantees.
->
-> Mark the variable as volatile so the above optimization is never
-> performed and smp_mb() works as expected.
->
-> [1] https://godbolt.org/z/qzze7bG6z
+But let me ask you a question, as a programmer yourself, when you run
+into a code base, and see something repeat in a similar pattern for 10+
+times, what's your instinct? You would try to combine the them together,
+right? That's why duplication seems not compelling to me. But surely, we
+don't need to draw conclusion right now, however that's my opinion.
+ 
+Regards,
+Boqun
 
-You are using llvm19 in the above godbolt run.
-But from llvm20, instead of 'lock ...' insn, 'atomic_fetch_or'
-will be generated so barrier semantics will be preserved.
-
-Since CI is using llvm20, so we should not have any problem.
-But for llvm19 or lower, the patch does fix a problem for arm64 etc.
-So in case that maintainer agrees with this patch, my ACK is below:
-
-   Acked-by: Yonghong Song <yonghong.song@linux.dev>
-   
-
->
-> Fixes: 88d706ba7cc5 ("selftests/bpf: Introduce arena spin lock")
-> Signed-off-by: Puranjay Mohan <puranjay@kernel.org>
 > ---
->   tools/testing/selftests/bpf/bpf_atomic.h | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/tools/testing/selftests/bpf/bpf_atomic.h b/tools/testing/selftests/bpf/bpf_atomic.h
-> index a9674e544322..c550e5711967 100644
-> --- a/tools/testing/selftests/bpf/bpf_atomic.h
-> +++ b/tools/testing/selftests/bpf/bpf_atomic.h
-> @@ -61,7 +61,7 @@ extern bool CONFIG_X86_64 __kconfig __weak;
->   
->   #define smp_mb()                                 \
->   	({                                       \
-> -		unsigned long __val;             \
-> +		volatile unsigned long __val;    \
->   		__sync_fetch_and_add(&__val, 0); \
->   	})
->   
-
+> Cheers,
+> Benno

@@ -1,231 +1,172 @@
-Received: from mail-qk1-f174.google.com (mail-qk1-f174.google.com [209.85.222.174])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E84E28DF27
-	for <lkmm@lists.linux.dev>; Fri, 11 Jul 2025 18:21:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2988C2F3C2D;
+	Fri, 11 Jul 2025 18:34:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752258064; cv=none; b=b4ehqvdoQ59LWO6Ki6L7PieAygfs8dPIxGj1xuhLhPKLDPOKNBGH48Tsv23t5IZdmLmixxy5FqWGkV5q7Jv4xhRjAyWYCoJfhe93JS3w246JRkX3gf/HNghGwAOoAOFH0S49Q9jPKP28Cs+6i8gl5L6NEi9jHidah5Ce4p5EDX8=
+	t=1752258855; cv=none; b=d87AlS+Q8+ZKc+H4NlqsS1pW7HsvpjydMKq7G6rMRnqNskGpc+tCJkNK98wWKHYRgiN9+02OSK0iPfxVC8qliHKKAMF5D3GaIIzoi195I4ZRoAH4obdSltLK8AQcB3lWx+xDisenWK50LHH0SL1tr0eYS3BmLjbjyUWy7Pa4f34=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752258064; c=relaxed/simple;
-	bh=5+WRseIX7sV1ABSOz3FQOgwgr+hUm9J+m6BFBIFSUKE=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=s2B9IDwTZOhlwiK7bH3CtBdvzi3e36tjaRxF/HO8M0q7I4BJ9tsOSlkFU8kN0pOku6K+csYSOeWywmBxbf/oiYcKzacBO5vNpuEQHGCV7mU07ORmFYyqeysTDxCNz6mNk3gFNYkNEKxZ8fSa0+fInLvCxRDjQ/J6tvsBF8KyAXY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ftLm9gAt; arc=none smtp.client-ip=209.85.222.174
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1752258855; c=relaxed/simple;
+	bh=It/+GohocGAsvEMF/zvsp6BbZBv/a9T1VVszUI+GGqI=;
+	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
+	 References:In-Reply-To; b=nVjs2n6T6nC0WwED+zmHoYHgSxD9TswfPtGu3fJkL2CfuCL0m4PsHftQdMUbhC+6AzW7gaasuYxEYMWw2ME0dFhvFEQMAXXR/gGjiDkMo73xfDCzh9mwBG1udDHxxfPNsRuY2FHg3lOan6vAoZ8iB2wb1Zl386ea9miNDqaWfoY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=JsTHyEQh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ftLm9gAt"
-Received: by mail-qk1-f174.google.com with SMTP id af79cd13be357-7d21cecc11fso416884485a.3
-        for <lkmm@lists.linux.dev>; Fri, 11 Jul 2025 11:21:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1752258061; x=1752862861; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:feedback-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=ia66QNFe8vhG6RCTBKrhJqFEhohx5sDMdLUqqKQCukc=;
-        b=ftLm9gAtzFG1k7WzaNxeI5a+BMqfAkRkErwpyji/dnwh7T/+J2Qm2f4DWgsiJHJ4q2
-         kUwjloj0pJ/OPy5BHaQ9WuHsxpRZi93MMlGnVqyrDmv5o61SFQK2CkjtAiMkbSsPexoh
-         RYr9abu27BmEfXZuwSy4XpQLdlvB2h9tngSvcAqZ8qugMHSKGZrD+U2U2F1WufN+cSzm
-         RRBAG2Rt3cHxRJH/hx98kiwlaTwXJhTaC2JX3nYTFLQ5/aDDtw4claBt5kSjRJ+5irHS
-         bQ45ulf0JAfoZcBXXrhU1eQaGO4YRGCba5ea/CyuZQojlz2wHIINcZaEpz+jKBszd2ed
-         emZA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1752258061; x=1752862861;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:feedback-id:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=ia66QNFe8vhG6RCTBKrhJqFEhohx5sDMdLUqqKQCukc=;
-        b=PzQ+JfVRacFxxADNnkcReOZL8NiUWbEtAjNchbvh9g6v2g4z9STK6EhWC1KSUtbAzR
-         bvJQjompii/f/RUwRH/Py4azXx5ubzDJk7DmFW45IuaIgkIAnCmfrqYfNiOQlL7a/CCN
-         OxaAB9XcRV7H8VDOqsm171Fac3j6iGc5bGNnUQR7FxEtxNeMBL2LuIaDBxZagb+jT0B4
-         XLu97MH5BvGFdI/6J7aotWW/QMetR2BFaEFQBUexZQjsWImcj7pNUDMfGC8Slbkyn6Ce
-         NORZMOaH0HdTI+bp4ZKn5uJdzGpBCIv7RkNrduN7WYcivTnT7ptvb1Ju4AqjsJmSPLey
-         9TPw==
-X-Forwarded-Encrypted: i=1; AJvYcCWvWj+z8Lq7DFynqwYrhyExI/+K6I+CwkcHH6ETIyTpqgakuhBnVmH6HhyGoVFAXnaA2D7l@lists.linux.dev
-X-Gm-Message-State: AOJu0YyPVQK0WrSfmO12+WQbdKwo1InA1edWNrhE7Svg9M/N3KfD9MVd
-	pGdacv1XrUX57EqyHXT0koPAJFB5PxAslOIJrbaOziSzM8LvHk08BoLH
-X-Gm-Gg: ASbGnct98GLSx0BVXSi0MRCdUWtAWAGqW7PGcHW+jKZWZK+36a/GT5cN7fP6Z4jK6yb
-	RHKCYL1MHtyGaelkF34MkMzrgMPhmNMYyyX17ZygXAKUWb4Oj0p6smyWxiIZGOkp8KAbtbtyzDk
-	FXlFkF/txuAel+OOPUX2JxRggZMan2lvZhgxGLT0ZZJzcIWGSWa2GypLlx0NrIpO1Noc2tuoG5j
-	FH3KuuW7qlt+N609F/bvUcTH8Ig6CBzcted+UOVujy4Uk+Je432GI05uUhvDiMEjdkybNR6uchP
-	vzg852rgyfq/q17iCXZHtAonICAomACgosnrozIbM40gLb5Un5rAGgnztiyxipu/aZfx+lN6YbJ
-	E+fqEQDjAh053o0jSk+11AuyQixpcZYApIocdSc5NlGUyYNpqbslsDkOv9qxxNtxr5yB7F2YYQY
-	D4DOqmxtvq3Er6
-X-Google-Smtp-Source: AGHT+IGvju+RNJB6luNnf7Ro13LJcoRMdK6UBQfn+z29hRMsCafaDqLiDBwyRlDvYEkOXMdNOn1hWw==
-X-Received: by 2002:a05:620a:404d:b0:7e0:5afb:596d with SMTP id af79cd13be357-7e05afb6b48mr261917285a.40.1752258061105;
-        Fri, 11 Jul 2025 11:21:01 -0700 (PDT)
-Received: from fauth-a1-smtp.messagingengine.com (fauth-a1-smtp.messagingengine.com. [103.168.172.200])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-7dcde8fd235sm244492585a.92.2025.07.11.11.21.00
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 11 Jul 2025 11:21:00 -0700 (PDT)
-Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
-	by mailfauth.phl.internal (Postfix) with ESMTP id DBF48F40066;
-	Fri, 11 Jul 2025 14:20:59 -0400 (EDT)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-01.internal (MEProxy); Fri, 11 Jul 2025 14:20:59 -0400
-X-ME-Sender: <xms:C1ZxaFYp1VQqnVoibjeIYVnT-PeKAsIGezO3f82lOIuwqctXuFPXcw>
-    <xme:C1ZxaNkwUY4ZDxAp6Jks-6h8FscK-JgEDL7OUiyhBo9FRzC6AIaJkU7ebjOwKqapD
-    WcACoQ6_pb4Ylw3RQ>
-X-ME-Received: <xmr:C1ZxaIasO6WXRkFRgQprYF3wYC7n87PTOVINwex3WP3g4KHdm85QrmmGgGtw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdeggedtvdcutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpeffhffvvefukfhfgggtuggjsehttdortddttddvnecuhfhrohhmpeeuohhquhhnucfh
-    vghnghcuoegsohhquhhnrdhfvghnghesghhmrghilhdrtghomheqnecuggftrfgrthhtvg
-    hrnhephfeliedvudfhgfeivdffhfektefhudehjefgveevvedvjefgvdejhfffieejuefh
-    necuffhomhgrihhnpehgohgusgholhhtrdhorhhgpdhgihhthhhusgdrtghomhenucevlh
-    hushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpegsohhquhhnodhm
-    vghsmhhtphgruhhthhhpvghrshhonhgrlhhithihqdeiledvgeehtdeigedqudejjeekhe
-    ehhedvqdgsohhquhhnrdhfvghngheppehgmhgrihhlrdgtohhmsehfihigmhgvrdhnrghm
-    vgdpnhgspghrtghpthhtohepvdekpdhmohguvgepshhmthhpohhuthdprhgtphhtthhope
-    hlohhsshhinheskhgvrhhnvghlrdhorhhgpdhrtghpthhtoheplhhinhhugidqkhgvrhhn
-    vghlsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtoheprhhushhtqdhfohhrqd
-    hlihhnuhigsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtoheplhhkmhhmsehl
-    ihhsthhsrdhlihhnuhigrdguvghvpdhrtghpthhtoheplhhinhhugidqrghrtghhsehvgh
-    gvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepohhjvggurgeskhgvrhhnvghlrdho
-    rhhgpdhrtghpthhtoheprghlvgigrdhgrgihnhhorhesghhmrghilhdrtghomhdprhgtph
-    htthhopehgrghrhiesghgrrhihghhuohdrnhgvthdprhgtphhtthhopegsjhhorhhnfegp
-    ghhhsehprhhothhonhhmrghilhdrtghomh
-X-ME-Proxy: <xmx:C1ZxaNBcPLPqcZLuWVlBexTo4DRAMJpR4gsk4SlH7NHZ-Ul3rHIu5w>
-    <xmx:C1ZxaGbMO6hxS7eRNZf2tw4vAtdYrHpuVUL7WORhfX8BlLElUpaFoA>
-    <xmx:C1ZxaJiLKau3z5SP48LT7APwcwrigHUcn819fP49i0EMRkZgcEzn7Q>
-    <xmx:C1ZxaOxdEa-nDCzAoinLCrYahnrBYbFRnzHAIODJO4s47Sg2NA8bEg>
-    <xmx:C1ZxaM5ETPbpN0nzxWrba5eo0UZ_u9xV_E1OYOczPJVzTndGtzR_gb17>
-Feedback-ID: iad51458e:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 11 Jul 2025 14:20:59 -0400 (EDT)
-Date: Fri, 11 Jul 2025 11:20:58 -0700
-From: Boqun Feng <boqun.feng@gmail.com>
-To: Benno Lossin <lossin@kernel.org>
-Cc: linux-kernel@vger.kernel.org, rust-for-linux@vger.kernel.org,
-	lkmm@lists.linux.dev, linux-arch@vger.kernel.org,
-	Miguel Ojeda <ojeda@kernel.org>,
-	Alex Gaynor <alex.gaynor@gmail.com>, Gary Guo <gary@garyguo.net>,
-	=?iso-8859-1?Q?Bj=F6rn?= Roy Baron <bjorn3_gh@protonmail.com>,
-	Andreas Hindborg <a.hindborg@kernel.org>,
-	Alice Ryhl <aliceryhl@google.com>, Trevor Gross <tmgross@umich.edu>,
-	Danilo Krummrich <dakr@kernel.org>, Will Deacon <will@kernel.org>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Wedson Almeida Filho <wedsonaf@gmail.com>,
-	Viresh Kumar <viresh.kumar@linaro.org>,
-	Lyude Paul <lyude@redhat.com>, Ingo Molnar <mingo@kernel.org>,
-	Mitchell Levy <levymitchell0@gmail.com>,
-	"Paul E. McKenney" <paulmck@kernel.org>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Alan Stern <stern@rowland.harvard.edu>, Ralf Jung <post@ralfj.de>
-Subject: Re: [PATCH v6 8/9] rust: sync: Add memory barriers
-Message-ID: <aHFWCsOfcGLSUPAP@tardis-2.local>
-References: <20250710060052.11955-1-boqun.feng@gmail.com>
- <20250710060052.11955-9-boqun.feng@gmail.com>
- <DB93NWEAK46D.2YW5P9MSAWVCN@kernel.org>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="JsTHyEQh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BDB14C4CEED;
+	Fri, 11 Jul 2025 18:34:09 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1752258854;
+	bh=It/+GohocGAsvEMF/zvsp6BbZBv/a9T1VVszUI+GGqI=;
+	h=Date:Cc:Subject:From:To:References:In-Reply-To:From;
+	b=JsTHyEQh/g9uryvO7vC85leXnjShJBaLn/c0qEyKXapNFSZBWK28QrPQC+z+/46rw
+	 Cb3khfyxlUkHutoIbyWQXkYGuth3r+B449/hAeN0LMIg+Y1aIatDfs5RR482agUMlP
+	 33QxFBzc+rn6IuS9t4UiiJ+f2Fq9PF7aEbOqPqrmN8OYm8RzRqvkSi/ZCBFKd9pol9
+	 dgvBCQvLeXJT5Noy5QTMwZgCfJEWv0nviuchH5y/eJwtCmOhCdymNeWEHoPfp8d83z
+	 JkSnL0xg0G3edjfmscmc13ZeryWltqHfdnIWDd6/V5Te0g2iJAbj8moBLrhtR6HJOp
+	 9VEewnApye/Lg==
 Precedence: bulk
 X-Mailing-List: lkmm@lists.linux.dev
 List-Id: <lkmm.lists.linux.dev>
 List-Subscribe: <mailto:lkmm+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:lkmm+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <DB93NWEAK46D.2YW5P9MSAWVCN@kernel.org>
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Fri, 11 Jul 2025 20:34:07 +0200
+Message-Id: <DB9FX5XAK4JJ.3GTCC6Z5EHARV@kernel.org>
+Cc: <linux-kernel@vger.kernel.org>, <rust-for-linux@vger.kernel.org>,
+ <lkmm@lists.linux.dev>, <linux-arch@vger.kernel.org>, "Miguel Ojeda"
+ <ojeda@kernel.org>, "Alex Gaynor" <alex.gaynor@gmail.com>, "Gary Guo"
+ <gary@garyguo.net>, =?utf-8?q?Bj=C3=B6rn_Roy_Baron?=
+ <bjorn3_gh@protonmail.com>, "Andreas Hindborg" <a.hindborg@kernel.org>,
+ "Alice Ryhl" <aliceryhl@google.com>, "Trevor Gross" <tmgross@umich.edu>,
+ "Danilo Krummrich" <dakr@kernel.org>, "Will Deacon" <will@kernel.org>,
+ "Peter Zijlstra" <peterz@infradead.org>, "Mark Rutland"
+ <mark.rutland@arm.com>, "Wedson Almeida Filho" <wedsonaf@gmail.com>,
+ "Viresh Kumar" <viresh.kumar@linaro.org>, "Lyude Paul" <lyude@redhat.com>,
+ "Ingo Molnar" <mingo@kernel.org>, "Mitchell Levy"
+ <levymitchell0@gmail.com>, "Paul E. McKenney" <paulmck@kernel.org>, "Greg
+ Kroah-Hartman" <gregkh@linuxfoundation.org>, "Linus Torvalds"
+ <torvalds@linux-foundation.org>, "Thomas Gleixner" <tglx@linutronix.de>,
+ "Alan Stern" <stern@rowland.harvard.edu>
+Subject: Re: [PATCH v6 4/9] rust: sync: atomic: Add generic atomics
+From: "Benno Lossin" <lossin@kernel.org>
+To: "Boqun Feng" <boqun.feng@gmail.com>
+X-Mailer: aerc 0.20.1
+References: <20250710060052.11955-1-boqun.feng@gmail.com>
+ <20250710060052.11955-5-boqun.feng@gmail.com>
+ <DB92I10114UN.33MAFJVWIX4AB@kernel.org> <aHEQKBT68xvqIIjW@Mac.home>
+ <DB99JZ3XMHZS.3N0GLG94JJSA9@kernel.org> <aHEWze8p40qeNBr_@Mac.home>
+In-Reply-To: <aHEWze8p40qeNBr_@Mac.home>
 
-On Fri, Jul 11, 2025 at 10:57:48AM +0200, Benno Lossin wrote:
-> On Thu Jul 10, 2025 at 8:00 AM CEST, Boqun Feng wrote:
-> > diff --git a/rust/kernel/sync/barrier.rs b/rust/kernel/sync/barrier.rs
-> > new file mode 100644
-> > index 000000000000..df4015221503
-> > --- /dev/null
-> > +++ b/rust/kernel/sync/barrier.rs
-> > @@ -0,0 +1,65 @@
-> > +// SPDX-License-Identifier: GPL-2.0
-> > +
-> > +//! Memory barriers.
-> > +//!
-> > +//! These primitives have the same semantics as their C counterparts: and the precise definitions
-> > +//! of semantics can be found at [`LKMM`].
-> > +//!
-> > +//! [`LKMM`]: srctree/tools/memory-model/
-> > +
-> > +/// A compiler barrier.
-> > +///
-> > +/// A barrier that prevents compiler from reordering memory accesses across the barrier.
-> > +pub(crate) fn barrier() {
-> > +    // By default, Rust inline asms are treated as being able to access any memory or flags, hence
-> > +    // it suffices as a compiler barrier.
-> 
-> I don't know about this, but it also isn't my area of expertise... I
-> think I heard Ralf talk about this at Rust Week, but I don't remember...
-> 
+On Fri Jul 11, 2025 at 3:51 PM CEST, Boqun Feng wrote:
+> On Fri, Jul 11, 2025 at 03:34:47PM +0200, Benno Lossin wrote:
+>> On Fri Jul 11, 2025 at 3:22 PM CEST, Boqun Feng wrote:
+>> > On Fri, Jul 11, 2025 at 10:03:07AM +0200, Benno Lossin wrote:
+>> > [...]
+>> >> > +
+>> >> > +    /// Returns a pointer to the underlying atomic variable.
+>> >> > +    ///
+>> >> > +    /// Extra safety requirement on using the return pointer: the =
+operations done via the pointer
+>> >> > +    /// cannot cause data races defined by [`LKMM`].
+>> >>=20
+>> >> I don't think this is correct. I could create an atomic and then shar=
+e
+>> >> it with the C side via this function, since I have exclusive access, =
+the
+>> >> writes to this pointer don't need to be atomic.
+>> >>=20
+>> >
+>> > that's why it says "the operations done via the pointer cannot cause
+>> > data races .." instead of saying "it must be atomic".
+>>=20
+>> Ah right I misread... But then the safety requirement is redundant? Data
+>> races are already UB...
+>>=20
+>> >> We also don't document additional postconditions like this... If you
+>> >
+>> > Please see how Rust std document their `as_ptr()`:
+>> >
+>> > 	https://doc.rust-lang.org/std/sync/atomic/struct.AtomicI32.html#metho=
+d.as_ptr
+>> >
+>> > It mentions that "Doing non-atomic reads and writes on the resulting
+>> > integer can be a data race." (although the document is a bit out of
+>> > date, since non-atomic read and atomic read are no longer data race no=
+w,
+>> > see [1])
+>>=20
+>> That's very different from the comment you wrote though. It's not an
+>> additional safety requirement, but rather a note to users of the API
+>> that they should be careful with the returned pointer.
+>>=20
+>> > I think we can use the similar document structure here: providing more
+>> > safety requirement on the returning pointers, and...
+>> >
+>> >> really would have to do it like this (which you shouldn't given the
+>> >> example above), you would have to make this function `unsafe`, otherw=
+ise
+>> >> there is no way to ensure that people adhere to it (since it isn't pa=
+rt
+>> >> of the safety docs).
+>> >>=20
+>> >
+>> > ...since dereferencing pointers is always `unsafe`, users need to avoi=
+d
+>> > data races anyway, hence this is just additional information that help=
+s
+>> > reasoning.
+>>=20
+>> I disagree.
+>>=20
+>> As mentioned above, data races are already forbidden for raw pointers.
+>> We should indeed add a note that says that non-atomic operations might
+>> result in data races. But that's very different from adding an
+>> additional safety requirement for using the pointer.
+>>=20
+>> And I don't think that we can add additional safety requirements to
+>> dereferencing a raw pointer without an additional `unsafe` block.
+>>=20
+>
+> So all your disagreement is about the "extra safety requirement" part?
+> How about I drop that:
+>
+>     /// Returns a pointer to the underlying atomic `T`.
+>     pub const fn as_ptr(&self) -> *mut T {
+>         self.0.get()
+>     }
 
-Easy, let's Cc Ralf ;-)
+Yes that's what I had in mind.
 
-Ralf, I believe the question here is:
+> ? I tried to add something additional information:
+>
+> /// Note that non-atomic reads and writes via the returned pointer may
+> /// cause data races if racing with atomic reads and writes per [LKMM].
+>
+> but that seems redundant, because as you said, data races are UB anyway.
 
-In kernel C, we define a compiler barrier (barrier()), which is
-implemented as:
+Yeah... I don't think the stdlib docs are too useful on this function:
 
-# define barrier() __asm__ __volatile__("": : :"memory")
+    Doing non-atomic reads and writes on the resulting integer can be a dat=
+a
+    race. This method is mostly useful for FFI, where the function signatur=
+e
+    may use *mut i32 instead of &AtomicI32.
+   =20
+    Returning an *mut pointer from a shared reference to this atomic is saf=
+e
+    because the atomic types work with interior mutability. All
+    modifications of an atomic change the value through a shared reference,
+    and can do so safely as long as they use atomic operations. Any use of
+    the returned raw pointer requires an unsafe block and still has to
+    uphold the same restriction: operations on it must be atomic.
 
-Now we want to have a Rust version, and I think an empty `asm!()` should
-be enough as an equivalent as a barrier() in C, because an empty
-`asm!()` in Rust implies "memory" as the clobber:
+You can mention the use of this function for FFI. People might then be
+discouraged from using it for other things where it doesn't make sense.
 
-	https://godbolt.org/z/3z3fnWYjs
-
-?
-
-I know you have some opinions on C++ compiler_fence() [1]. But in LKMM,
-barrier() and other barriers work for all memory accesses not just
-atomics, so the problem "So, if your program contains no atomic
-accesses, but some atomic fences, those fences do nothing." doesn't
-exist for us. And our barrier() is strictly weaker than other barriers.
-
-And based on my understanding of the consensus on Rust vs LKMM, "do
-whatever kernel C does and rely on whatever kernel C relies" is the
-general suggestion, so I think an empty `asm!()` works here. Of course
-if in practice, we find an issue, I'm happy to look for solutions ;-)
-
-Thoughts?
-
-[1]: https://github.com/rust-lang/unsafe-code-guidelines/issues/347
-
-Regards,
-Boqun
-
-> > +    //
-> > +    // SAFETY: An empty asm block should be safe.
-> 
->     // SAFETY: An empty asm block.
-> 
-> > +    unsafe {
-> > +        core::arch::asm!("");
-> > +    }
-> 
->     unsafe { core::arch::asm!("") };
-> 
-> > +}
-> > +
-> > +/// A full memory barrier.
-> > +///
-> > +/// A barrier that prevents compiler and CPU from reordering memory accesses across the barrier.
-> > +pub fn smp_mb() {
-> > +    if cfg!(CONFIG_SMP) {
-> > +        // SAFETY: `smp_mb()` is safe to call.
-> > +        unsafe {
-> > +            bindings::smp_mb();
-> 
-> Does this really work? How does the Rust compiler know this is a memory
-> barrier?
-> 
-> ---
-> Cheers,
-> Benno
-> 
-> > +        }
-> > +    } else {
-> > +        barrier();
-> > +    }
-> > +}
+---
+Cheers,
+Benno

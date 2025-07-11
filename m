@@ -1,217 +1,246 @@
-Received: from mail-qv1-f45.google.com (mail-qv1-f45.google.com [209.85.219.45])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78B1D2ED149
-	for <lkmm@lists.linux.dev>; Fri, 11 Jul 2025 15:47:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B8B4219A91;
+	Fri, 11 Jul 2025 17:40:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752248826; cv=none; b=j3IuDznSdsL5MhHHJgOhWgN+eRueSz3+ZzMo1Zw7Y3O2n/3cI7rcle+n7FKgEeBahmAZA1Y5iVrQY1Ap0UvWAEO8+lhqf7hnSJfVJgV8giosMzR1+Ol1qgxnjL5HBjqetSiwEm47c+3pBWK0vX3j4Bt1BNnXdb04vh431sSb4g0=
+	t=1752255655; cv=none; b=MPCN7zQS8zZWn0OET7pAyUeaEw1Zr8spx8IhZ9wBRBxvHRZ46bDkykM8fOuJQXdxSmnzar8koogCRmFgUDGEH9AA4S5foswBXc84AhX1yx3av8djthHpxcImRuLD5WDIvt3m1HeazpxN9KyZwv960sVsfBrcukYoEC8w+D3OYSc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752248826; c=relaxed/simple;
-	bh=2Nh8QxkXw0V2Fc735JNOnhnIyUYWwQyxa7yIKpxASWk=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=fa2jCOgYtRii5UaQ7eVe3icWmaw8pnbcJsES5Zx6p5coXN3CbXAH6TzUVWQLjSRQmDbm+vJuICgBy7MA2ASPgOPysMnGfPAMqquIeQqS2jFlFhXxI1zY9iTz5syL9R+kVPhWrYel24dNQzavNhgtUWY+YgCfPVvGlPkLWF0hfZo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=DIyK9JGR; arc=none smtp.client-ip=209.85.219.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1752255655; c=relaxed/simple;
+	bh=Z5h8RYJc6k17AEf7UTbWHnSOM2I8FCkIKpXNIERJo78=;
+	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=XR1LaYu3pLN0X+0iupIRFSRtBRvdGSZlWNWQ8UZ0wSCgCQeiYpTCAcS3Yxohi03Lus9F9PWx3Qi3FB8a1rHdIjhfBOET6VwjMyEI+5Vf+3h5o1XPWe/4k/8wZkQo2k4oOty6piEaegxLVAL6FWCwvHv4EB0gj4HAv4ZdFdnIih0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=UEvXuqzN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DIyK9JGR"
-Received: by mail-qv1-f45.google.com with SMTP id 6a1803df08f44-6facf4d8ea8so19050096d6.0
-        for <lkmm@lists.linux.dev>; Fri, 11 Jul 2025 08:47:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1752248823; x=1752853623; darn=lists.linux.dev;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :feedback-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=VLMgwaCu/YbQoZ28wKXJbxPWWcQ4iAAOMGkARakw1GA=;
-        b=DIyK9JGRaHie1tNOhxBs6s+9wkPjtLspVxc2R2pSdWIJN2Lvh09edzBzwxFFqWrEHO
-         lIRN4d3LaK+DDOFYn/xAUbE5JsCzwCOKyN0mmilEy3GAQRsvxLTqiQSsnP7dyL5aqoyn
-         Q+bcqt24FO5JDa/Z63Bas+PHrvADi6veJnh+WtvojB6ylI8hBlpRDc7+C7J++B61yF6b
-         OeH+CSUBILT+U9gtEwDYvPEb4yv57rgg57QsfS+mlZjuhp/5GyHy2DBC+ZheZskirbb/
-         dNVzewpDAhz9FVeu9GtOFhve9i9vWdO+YttvAFBzqsC4obM/434EhsKWFXWv6RryjR1U
-         l2lg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1752248823; x=1752853623;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :feedback-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=VLMgwaCu/YbQoZ28wKXJbxPWWcQ4iAAOMGkARakw1GA=;
-        b=LJ6RKuCB2wSOCwjJwnQmrC1/rnf5OU/WJV03dCQdpd6X89no0w4/AggS1KSEkHUZ7U
-         ucdW55zK4efnwkvkbu1Hw11Naecdn+JwndEIG1S3VJmvMeUMWpSUvOGZmA+es6WlzHa/
-         YjUyenltICjT3hUSmdMulPQlJZSYukrMBmWlP9doqtkhG3Z2H6KUe921mB0B5JGpuGlj
-         fgu5lfDdYm4dnl6U2DABW00DLYmLdeoKIPIhDNT7hLwXncWlzgKCG75cjZoP/37khIlW
-         IdujKWU0OWYbshbWey7CriwI15LAcSFXL+kFI34+mif8Ff6oGJP/wwzMg72dSj7gzniX
-         4iNg==
-X-Forwarded-Encrypted: i=1; AJvYcCW8xR9k/lNvqmNfQiqRBXp6rt7F921XIpsCzn/OIrf2QbptifEXmWno67NsyUjB8Naxcgcc@lists.linux.dev
-X-Gm-Message-State: AOJu0YzaVLClLiWLEVktr+lGQt7QLNpZBPnWCyq1jGyDe51i4sES6YpT
-	Rt5fqV4BI94+bybUAoDbcrQtNs4pT3ZMct7Nh9cXu4ah/MSDilmurWDv
-X-Gm-Gg: ASbGncsJGpBB789+RrSi+VSelFHcvE7q/6mtomwyZDoqUU7Ecn6MfRZqiHthYvZdrrW
-	Czspp+cXwKnRhlXrMLvkvFAUPtI6N0Z7s/wjdYHfhuzcgIwaL3eUV5u9W8/SxtqLOtmJbti+haq
-	8y0MNfEAAYEJ0hkiCzEdnacGDe32wXWqrxJcWx3uCdOtvqkEd2UfGDo7lbsLDdXxU9XVdrKKTyS
-	txBKv22RetBoaIeKy3ZhimWBlLN3VSIf/zK975SWPDI7SZk37CRP8KbjJ8iqU0BcEDVgc5Pvtph
-	n1INliGK7ek8eXA2SxX+wwW1SoE1wigv94gDozid1S44DOqXlnxPvN+/Y8e4YzY1rpfZw+KyfAA
-	n5z/DlRCtp9wz/snFQiqy1lOQeS9KPbbz2urTacWCtF2Uc6o/Mxrx/HdIXTm6OKs57Q4PIhcQEr
-	WO3U9czEgj3lydQUKKVneoHJQ=
-X-Google-Smtp-Source: AGHT+IGD27pr09cflx9frzlgFAEaJ4AeFDZGrtrkynny/esKSQ0wpel1jyRetyn3dDVhnw+i2wYpQQ==
-X-Received: by 2002:ad4:5f8e:0:b0:6e8:fe16:4d44 with SMTP id 6a1803df08f44-704a702e122mr56408506d6.31.1752248823001;
-        Fri, 11 Jul 2025 08:47:03 -0700 (PDT)
-Received: from fauth-a2-smtp.messagingengine.com (fauth-a2-smtp.messagingengine.com. [103.168.172.201])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-70497d3d3b0sm20963706d6.80.2025.07.11.08.47.02
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 11 Jul 2025 08:47:02 -0700 (PDT)
-Received: from phl-compute-10.internal (phl-compute-10.phl.internal [10.202.2.50])
-	by mailfauth.phl.internal (Postfix) with ESMTP id C75A2F4006A;
-	Fri, 11 Jul 2025 11:47:01 -0400 (EDT)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-10.internal (MEProxy); Fri, 11 Jul 2025 11:47:01 -0400
-X-ME-Sender: <xms:9TFxaLfoAuUzSgkJdsc_R_Q37-SP3uv9Kwku44mVQJ3GZLdXkpUOzg>
-    <xme:9TFxaD2_-u3Ar8XALMADKUune2_1vpn-MzPQOune0kf2OWcxXJ4xy75cZjID6RGew
-    ZyzAgAWtZjXl0LgTw>
-X-ME-Received: <xmr:9TFxaEDp6SeAaYOlRppcEgQpO34hHcBeZ4M09naATqb1XO9R2vVdsoOwxg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdegfeejvdcutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpeffhffvvefukfhfgggtugfgjgesthekredttddtjeenucfhrhhomhepuehoqhhunhcu
-    hfgvnhhguceosghoqhhunhdrfhgvnhhgsehgmhgrihhlrdgtohhmqeenucggtffrrghtth
-    gvrhhnpeekhedtgfejteetueelveduhfehffevteeitefhleetteetfeejleejfefgudel
-    ueenucffohhmrghinhepfhhfihdrrhhsnecuvehluhhsthgvrhfuihiivgeptdenucfrrg
-    hrrghmpehmrghilhhfrhhomhepsghoqhhunhdomhgvshhmthhprghuthhhphgvrhhsohhn
-    rghlihhthidqieelvdeghedtieegqddujeejkeehheehvddqsghoqhhunhdrfhgvnhhgpe
-    epghhmrghilhdrtghomhesfhhigihmvgdrnhgrmhgvpdhnsggprhgtphhtthhopedvledp
-    mhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepmhhighhuvghlrdhojhgvuggrrdhsrg
-    hnughonhhishesghhmrghilhdrtghomhdprhgtphhtthhopehlohhsshhinheskhgvrhhn
-    vghlrdhorhhgpdhrtghpthhtoheplhhinhhugidqkhgvrhhnvghlsehvghgvrhdrkhgvrh
-    hnvghlrdhorhhgpdhrtghpthhtoheprhhushhtqdhfohhrqdhlihhnuhigsehvghgvrhdr
-    khgvrhhnvghlrdhorhhgpdhrtghpthhtoheplhhkmhhmsehlihhsthhsrdhlihhnuhigrd
-    guvghvpdhrtghpthhtoheplhhinhhugidqrghrtghhsehvghgvrhdrkhgvrhhnvghlrdho
-    rhhgpdhrtghpthhtohepohhjvggurgeskhgvrhhnvghlrdhorhhgpdhrtghpthhtoheprg
-    hlvgigrdhgrgihnhhorhesghhmrghilhdrtghomhdprhgtphhtthhopehgrghrhiesghgr
-    rhihghhuohdrnhgvth
-X-ME-Proxy: <xmx:9TFxaOTDrVx2RvfOXizuR7D4-A2mjWI5QXuLzjPPv0kLentSBirg9g>
-    <xmx:9TFxaGJmncVZFV-1QKB_Nb0K9S8jOxb8MgO8oaKdnLQNkhwkzmV1VQ>
-    <xmx:9TFxaFGl6-Vbgrec-C2j0Vt0fjwxrXiL99rnXZlYsm_Dv9ZWSQwUag>
-    <xmx:9TFxaNLUSMzLAe60re4pibZTX_gx_PClVURYLpeHJYljl8Qt_92v-A>
-    <xmx:9TFxaJ5SQvmd-G7SG5iqcO4NXyJoSb-R3vnngkJ4Ouy0qmv_dxeM5C8D>
-Feedback-ID: iad51458e:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 11 Jul 2025 11:47:01 -0400 (EDT)
-Date: Fri, 11 Jul 2025 08:46:59 -0700
-From: Boqun Feng <boqun.feng@gmail.com>
-To: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
-Cc: Benno Lossin <lossin@kernel.org>, linux-kernel@vger.kernel.org,
-	rust-for-linux@vger.kernel.org, lkmm@lists.linux.dev,
-	linux-arch@vger.kernel.org, Miguel Ojeda <ojeda@kernel.org>,
-	Alex Gaynor <alex.gaynor@gmail.com>, Gary Guo <gary@garyguo.net>,
-	=?iso-8859-1?Q?Bj=F6rn?= Roy Baron <bjorn3_gh@protonmail.com>,
-	Andreas Hindborg <a.hindborg@kernel.org>,
-	Alice Ryhl <aliceryhl@google.com>, Trevor Gross <tmgross@umich.edu>,
-	Danilo Krummrich <dakr@kernel.org>, Will Deacon <will@kernel.org>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Wedson Almeida Filho <wedsonaf@gmail.com>,
-	Viresh Kumar <viresh.kumar@linaro.org>,	Lyude Paul <lyude@redhat.com>,
- Ingo Molnar <mingo@kernel.org>,	Mitchell Levy <levymitchell0@gmail.com>,
-	"Paul E. McKenney" <paulmck@kernel.org>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Alan Stern <stern@rowland.harvard.edu>,
-	Matthew Wilcox <willy@infradead.org>
-Subject: Re: [PATCH v6 9/9] rust: sync: atomic: Add Atomic<{usize,isize}>
-Message-ID: <aHEx85VKv4F_9S61@Mac.home>
-References: <20250710060052.11955-1-boqun.feng@gmail.com>
- <20250710060052.11955-10-boqun.feng@gmail.com>
- <DB93Q0CXTA0G.37LQP5VCP9IGP@kernel.org>
- <CANiq72m9AeqFKHrRniQ5Nr9vPv2MmUMHFTuuj5ydmqo+OYn60A@mail.gmail.com>
- <aHEasoyGKJrjYFzw@Mac.home>
- <CANiq72kvZ7-fMoE9g7SBUrBZy4QMbSL1p8KgBqGhOkenrsr=3w@mail.gmail.com>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="UEvXuqzN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37011C4CEED;
+	Fri, 11 Jul 2025 17:40:50 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1752255654;
+	bh=Z5h8RYJc6k17AEf7UTbWHnSOM2I8FCkIKpXNIERJo78=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+	b=UEvXuqzNsjkR9n9ms5hU7W4gRqcQOTFDIMNJfU/Mk4UVCDaKfkzCI893GKZx9DIAo
+	 qdt4OvG0eBTuEjiINckV9baYfNAgqRE2a2pqn1yoDRHy7nD7eO/7I80Q1LJ2jtSIsI
+	 vlkx7iHkzfOc1q3umC23An6lHW2kRxmnAIiz9KUTCy4wi2XifdjsQg9y49fgyfSZ6y
+	 TvvEOCYZgZit6f/jFA2PwTV5h0be8ZewiOWw31vMyYRc+mTz5joOrbbucZgBNBjuc3
+	 zxLgsNCW9R3CltpYWl0vtEQlvShg/v01SXWTlv8AFFrL6BQpzssSO7M3qmRJioVfps
+	 mP3tvhoeldj0g==
+Date: Fri, 11 Jul 2025 19:40:47 +0200
+From: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+To: Donald Hunter <donald.hunter@gmail.com>
+Cc: Linux Doc Mailing List <linux-doc@vger.kernel.org>, Jonathan Corbet
+ <corbet@lwn.net>, "Akira Yokosawa" <akiyks@gmail.com>, "Breno Leitao"
+ <leitao@debian.org>, "David S. Miller" <davem@davemloft.net>, "Eric
+ Dumazet" <edumazet@google.com>, "Ignacio Encinas Rubio"
+ <ignacio@iencinas.com>, "Jan Stancek" <jstancek@redhat.com>, "Marco Elver"
+ <elver@google.com>, "Paolo Abeni" <pabeni@redhat.com>, "Randy Dunlap"
+ <rdunlap@infradead.org>, "Ruben Wauters" <rubenru09@aol.com>, "Shuah Khan"
+ <skhan@linuxfoundation.org>, Jakub Kicinski <kuba@kernel.org>, Simon Horman
+ <horms@kernel.org>, joel@joelfernandes.org,
+ linux-kernel-mentees@lists.linux.dev, linux-kernel@vger.kernel.org,
+ lkmm@lists.linux.dev, netdev@vger.kernel.org, peterz@infradead.org,
+ stern@rowland.harvard.edu
+Subject: Re: [PATCH v9 12/13] docs: parser_yaml.py: add support for line
+ numbers from the parser
+Message-ID: <20250711194047.4be0df4c@foz.lan>
+In-Reply-To: <m2ecun5a3a.fsf@gmail.com>
+References: <cover.1752076293.git.mchehab+huawei@kernel.org>
+	<3b18b30b1b50b01a014fd4b5a38423e529cde2fb.1752076293.git.mchehab+huawei@kernel.org>
+	<m2zfdc5ltn.fsf@gmail.com>
+	<m2ms9c5din.fsf@gmail.com>
+	<20250710195757.02e8844a@sal.lan>
+	<m2ecun5a3a.fsf@gmail.com>
+X-Mailer: Claws Mail 4.3.1 (GTK 3.24.49; x86_64-redhat-linux-gnu)
 Precedence: bulk
 X-Mailing-List: lkmm@lists.linux.dev
 List-Id: <lkmm.lists.linux.dev>
 List-Subscribe: <mailto:lkmm+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:lkmm+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CANiq72kvZ7-fMoE9g7SBUrBZy4QMbSL1p8KgBqGhOkenrsr=3w@mail.gmail.com>
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 
-On Fri, Jul 11, 2025 at 04:40:15PM +0200, Miguel Ojeda wrote:
-> On Fri, Jul 11, 2025 at 4:07 PM Boqun Feng <boqun.feng@gmail.com> wrote:
-> >
-> > Thanks Miguel.
-> >
-> > Maybe we can do even better: having a type alias mapping to the exact
-> > i{32,64,128} based on kernel configs? Like
-> >
-> > (in kernel/lib.rs or ffi.rs)
-> >
-> > // Want to buy a better name ;-)
-> > #[cfg(CONFIG_128BIT)]
-> > type isize_mapping = i128;
-> > #[cfg(CONFIG_64BIT)]
-> > type isize_mapping = i64;
-> > #[cfg(not(any(CONFIG_128BIT, CONFIG_64BIT)))]
-> > type isize_mapping = i32;
-> >
-> > similar for usize.
-> >
-> > Thoughts?
+Em Fri, 11 Jul 2025 10:51:37 +0100
+Donald Hunter <donald.hunter@gmail.com> escreveu:
+
+> Mauro Carvalho Chehab <mchehab+huawei@kernel.org> writes:
 > 
-> Yeah, I wondered about that too, but I don't know how common it will
-> be (so you may want to keep it local anyway), and I wasn't sure what
-
-Sounds good, I will put it locally.
-
-> to call it either, because e.g. something like `isize_mapping` sounds
-> like we are talking about `c_long`.
+> > Em Thu, 10 Jul 2025 15:25:20 +0100
+> > Donald Hunter <donald.hunter@gmail.com> escreveu:
+> >  
+> >> Donald Hunter <donald.hunter@gmail.com> writes:
+> >>   
+> >> >>              # Parse message with RSTParser
+> >> >> -            for i, line in enumerate(msg.split('\n')):
+> >> >> -                result.append(line, document.current_source, i)
+> >> >> +            lineoffset = 0;
+> >> >> +            for line in msg.split('\n'):
+> >> >> +                match = self.re_lineno.match(line)
+> >> >> +                if match:
+> >> >> +                    lineoffset = int(match.group(1))
+> >> >> +                    continue
+> >> >> +
+> >> >> +                result.append(line, document.current_source, lineoffset)    
+> >> >
+> >> > I expect this would need to be source=document.current_source, offset=lineoffset    
+> >> 
+> >> Ignore that. I see it's not kwargs. It's just the issue below.
+> >>   
+> >> >>              rst_parser = RSTParser()
+> >> >>              rst_parser.parse('\n'.join(result), document)    
+> >> >
+> >> > But anyway this discards any line information by just concatenating the
+> >> > lines together again.    
+> >> 
+> >> Looks to me like there's no Parser() API that works with ViewList() so
+> >> it would be necessary to directly use the docutils RSTStateMachine() for
+> >> this approach to work.  
+> >
+> > It sounds so.
+> >
+> > The enclosed patch seems to address it:
+> >
+> > 	$ make cleandocs; make SPHINXDIRS="netlink/specs" htmldocs
+> > 	...
+> > 	Using alabaster theme
+> > 	source directory: netlink/specs
+> > 	Using Python kernel-doc
+> > 	/new_devel/v4l/docs/Documentation/netlink/specs/rt-neigh.yaml:13: ERROR: Unknown directive type "bogus".
+> >
+> > 	.. bogus:: [docutils]
+> >
+> > Please notice that I added a hunk there to generate the error, just
+> > to make easier to test - I'll drop it at the final version, and add
+> > the proper reported-by/closes/... tags once you test it.
+> >
+> > Regards,
+> > Mauro  
 > 
-> What we want is a Rust fixed-width integer of the same size of `isize`
-> -- so I think you should try to pick a word that evokes a bit that
-> part. Something like `fixed_isize` or words like `underlying` or
-> `repr` perhaps?
+> Awesome!
 > 
+> Tested-by: Donald Hunter <donald.hunter@gmail.com>
+> 
+> Patch comments below.
+> 
+> > [PATCH RFC] sphinx: parser_yaml.py: preserve line numbers
+> >
+> > Instead of converting viewlist to text, use it directly, if
+> > docutils supports it.
+> >
+> > Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+> >
+> > diff --git a/Documentation/netlink/specs/rt-neigh.yaml b/Documentation/netlink/specs/rt-neigh.yaml
+> > index e9cba164e3d1..937d2563f151 100644
+> > --- a/Documentation/netlink/specs/rt-neigh.yaml
+> > +++ b/Documentation/netlink/specs/rt-neigh.yaml
+> > @@ -11,6 +11,7 @@ doc:
+> >  definitions:
+> >    -
+> >      name: ndmsg
+> > +    doc: ".. bogus::"
+> >      type: struct
+> >      members:
+> >        -
+> > diff --git a/Documentation/sphinx/parser_yaml.py b/Documentation/sphinx/parser_yaml.py
+> > index 1602b31f448e..2a2faaf759ef 100755
+> > --- a/Documentation/sphinx/parser_yaml.py
+> > +++ b/Documentation/sphinx/parser_yaml.py
+> > @@ -11,7 +11,9 @@ import sys
+> >  
+> >  from pprint import pformat
+> >  
+> > +from docutils import nodes, statemachine  
+> 
+> nodes is not used
 
-I end up calling it `isize_atomic_repr`, and create the diff as below:
+I dropped it on patch 14/13.
 
------------->8
-diff --git a/rust/kernel/sync/atomic.rs b/rust/kernel/sync/atomic.rs
-index 7ff87b2b49d6..bb0d3d49e3f7 100644
---- a/rust/kernel/sync/atomic.rs
-+++ b/rust/kernel/sync/atomic.rs
-@@ -53,14 +53,21 @@ fn delta_into_repr(d: Self::Delta) -> Self::Repr {
-     }
- }
+> 
+> >  from docutils.parsers.rst import Parser as RSTParser  
+> 
+> This import is no longer needed
 
-+#[allow(non_camel_case_types)]
-+#[cfg(not(CONFIG_64BIT))]
-+type isize_atomic_repr = i32;
-+#[allow(non_camel_case_types)]
-+#[cfg(CONFIG_64BIT)]
-+type isize_atomic_repr = i64;
-+
-+crate::static_assert!(core::mem::size_of::<isize>() == core::mem::size_of::<isize_atomic_repr>());
-+crate::static_assert!(core::mem::align_of::<isize>() == core::mem::align_of::<isize_atomic_repr>());
-+
- // SAFETY: For 32bit kernel, `isize` has the same size and alignment with `i32` and is round-trip
- // transmutable to it, for 64bit kernel `isize` has the same size and alignment with `i64` and is
- // round-trip transmutable to it.
- unsafe impl generic::AllowAtomic for isize {
--    #[cfg(not(CONFIG_64BIT))]
--    type Repr = i32;
--    #[cfg(CONFIG_64BIT)]
--    type Repr = i64;
-+    type Repr = isize_atomic_repr;
- }
+I'll drop on a next spin.
+> 
+> > +from docutils.parsers.rst import states
+> >  from docutils.statemachine import ViewList
+> >  
+> >  from sphinx.util import logging
+> > @@ -66,10 +68,24 @@ class YamlParser(Parser):  
+> 
+> I'm wondering if it makes much sense for this to inherit from Parser any
+> more?
 
- // SAFETY: `isize` is always sound to transmute back from `i32` or `i64` when their sizes are the
+Yes. It still needs other things from the Parser class.
 
+> >          result = ViewList()
+> >  
+> > +        tab_width = 8
+> > +
+> > +        self.state_classes = states.state_classes
+> > +        self.initial_state = 'Body'
+> > +
+> > +        self.statemachine = states.RSTStateMachine(
+> > +              state_classes=self.state_classes,
+> > +              initial_state=self.initial_state,
+> > +              debug=document.reporter.debug_flag)  
+> 
+> I don't think 'self.' is needed for any of these. They can be local to
+> the method. You could just inline states.state_classes and 'Body' into
+> the parameter list.
 
-Seems good?
+I dropped from most stuff, but self.statemachine is still needed.
 
-Regards,
-Boqun
+I suspect that because of some other stuff inside the Parser class.
 
-> Cheers,
-> Miguel
+> 
+> > +
+> >          try:
+> >              # Parse message with RSTParser  
+> 
+> Comment is out of date.
+> 
+> >              lineoffset = 0;  
+> 
+> Rogue semicolon
+
+I dropped at patch 14/13.
+
+> 
+> > -            for line in msg.split('\n'):
+> > +
+> > +            lines = statemachine.string2lines(msg, tab_width,
+> > +                                            convert_whitespace=True)
+> > +
+> > +            for line in lines:
+> >                  match = self.re_lineno.match(line)
+> >                  if match:
+> >                      lineoffset = int(match.group(1))
+> > @@ -77,12 +93,7 @@ class YamlParser(Parser):
+> >  
+> >                  result.append(line, document.current_source, lineoffset)
+> >  
+> > -            # Fix backward compatibility with docutils < 0.17.1
+> > -            if "tab_width" not in vars(document.settings):
+> > -                document.settings.tab_width = 8
+> > -
+> > -            rst_parser = RSTParser()
+> > -            rst_parser.parse('\n'.join(result), document)
+> > +            self.statemachine.run(result, document, inliner=None)
+> >  
+> >          except Exception as e:  
+> 
+> I think you could catch StateMachineError here.
+
+Good point. will try that.
+
+> >              document.reporter.error("YAML parsing error: %s" % pformat(e))  
+> 
+> Can you change this to an f"" string.
+
+I prefer f-strings as well, but usually logger classes are recommended
+to use the old way. I guess this came from a previous check with pylint.
+
+Thanks,
+Mauro

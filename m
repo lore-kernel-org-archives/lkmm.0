@@ -1,73 +1,73 @@
-Received: from mail-qt1-f173.google.com (mail-qt1-f173.google.com [209.85.160.173])
+Received: from mail-qk1-f177.google.com (mail-qk1-f177.google.com [209.85.222.177])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01BCD2D97A2
-	for <lkmm@lists.linux.dev>; Fri, 11 Jul 2025 13:51:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C45A32D77EB
+	for <lkmm@lists.linux.dev>; Fri, 11 Jul 2025 13:58:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752241875; cv=none; b=kwliyGzYILw2dL0NMrNGUc4wxLJ+Iz9cj+uc5xW9cncGju2uLoJGrZHeeoGgI7uydSHgqbuqumOOebKToqrDyj0OASmlorvlhNMGjbkMlbZ9b3Oqe8YWEjUaBOR4kj+mVdxwu9v5SphR33D5zk5882d7nGPwct4mrXUeTUP7mi0=
+	t=1752242328; cv=none; b=qHgNyhauEPvS0RI4V8HZy8FJeicafT6fZGAQgTZs7ry0SMZDFUuy9p0JZ/1Rqih04GDlt3el/50XL1NegPZPni5rGu6oZFPz/padna2AXZVJ1QWVi6XPKVT1HjR1vTu3jmqrTMjUCP5rjV+OSRA91Z5SqAzR4Kf8bniG8It1KDg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752241875; c=relaxed/simple;
-	bh=VhA4dbbRgYBOcUaTz+c7NrVJIROm/R3rHh4CcKNyzi8=;
+	s=arc-20240116; t=1752242328; c=relaxed/simple;
+	bh=OMImzd5St3+4oJum8FOTYfx97qpQjt+/rd8JkDqKBnQ=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=dUWIibbTp2Hxv/14QpoPhB4UPY867K+jAUbdyQvfZmOF9AV5DQnXi+7J8Lcl5yuSNZDGnLT5hqikLRe1TBZn5wCRFq7gy4Sap8+SAMgT5cMFCIKHCmLSZY7rmz4P1DKEwTzqquYwLZWk+orirjKr0YVC3FTJFV+A4AgqHpJZ3r4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=bJtDViP2; arc=none smtp.client-ip=209.85.160.173
+	 Content-Type:Content-Disposition:In-Reply-To; b=LH5gAlAXYS3b8CVzu5hoDERcn/mxNiJDx45vESHS0dy+cHdl9vJGV2BeS0VJ92LHyaMggLhiKE6EKP2d1pZ0B3b2BBaQvBXI/SGAUnk6mh2B+QyfY3u8JyVLLcGT1HujEz4fEbbfvkevlLfj2brimX8ndftOMUqJpY7nroLtrmw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=D7Ig3EOy; arc=none smtp.client-ip=209.85.222.177
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bJtDViP2"
-Received: by mail-qt1-f173.google.com with SMTP id d75a77b69052e-4a6f0bcdf45so25463781cf.0
-        for <lkmm@lists.linux.dev>; Fri, 11 Jul 2025 06:51:13 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="D7Ig3EOy"
+Received: by mail-qk1-f177.google.com with SMTP id af79cd13be357-7dfd667e539so58018385a.2
+        for <lkmm@lists.linux.dev>; Fri, 11 Jul 2025 06:58:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1752241873; x=1752846673; darn=lists.linux.dev;
+        d=gmail.com; s=20230601; t=1752242326; x=1752847126; darn=lists.linux.dev;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:feedback-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=TsPSR2XmtkCGfmNXHOX1skWOOfQss8KuN6l1/rksPTs=;
-        b=bJtDViP2W4s7Fwls2TRcEUu4wOmJe1SU3fNvtDVuII11ama8I7UlJ8RerlaZkJhDfN
-         b6Rv9ILYLFd2Te4rGEMJ4AkLJ/93MnzegTp4+vsn6pi6ZhA12TQG6nI3lBsXsXyS3zMq
-         5vg+LHCG3DSdgbgdM8vH60CiT2X2z7Ol6JgiZPCVZ/5Bhv24PsGfyISVZELm8MpopRbx
-         sDBgddwIZi6GrU+Crq9/T44PyfRY0YIoi5to7fjRenjkXNwxpoRrZY6V+zZe46Tp8xOZ
-         ouhp8psszpeQjCT2ZqUip8K6P1DAbLgPemj4HI9wHVBR+7Fir7rl08fHneKcpptcJiJ1
-         phQg==
+        bh=jbB1R0UF+o1ox6MiAWxgQBqNVgm6z/q3Tj8d+69HVOg=;
+        b=D7Ig3EOyFpIU9kRpv1BJVdVB54gd9ywlEM4zkv97+6+kTrLJj9PFHoay0Mgcekk7/r
+         80Qh64GE0029H38cQwZXOqxnw1K2ZxFr/um8RCIztDVdfyjDni+EmFf0ysKwuFLawEgs
+         Ry8FCJ4eVej+lMVj7NkTghoSZMYUzkEXvdhBHjfkci23Lb5TnHMEDh6w23mr2K8vfNCW
+         k8ZqyUvlR966G0ZQR0v55cpK71BxtxtgFi3Fl151ipnsawWLQ5bBDAp90Skok5xNjluJ
+         xBEZ37iCIgkWit2Cr2d6h9YO/mbAUTz4Abtx32A8Z+G8W+9CPOCy5/9Zx5IOaEmBDkIN
+         avmg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1752241873; x=1752846673;
+        d=1e100.net; s=20230601; t=1752242326; x=1752847126;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:feedback-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=TsPSR2XmtkCGfmNXHOX1skWOOfQss8KuN6l1/rksPTs=;
-        b=C5zvyRGVcLisDP/2cpqojs3akmCK950jTPnwIxgVBLHjxxcui4LHPPTeHCQ/vD1Mm9
-         wDlzfdopIDoEt1s6+XBlupN2c6SVmaRuSkiYa4EQj9oCZYwBzXmy8rP8IC15ACQiwLnv
-         nlK6JU16ZDmFEYeKZULNnDwq1+BhvmKl4jQNiUpUj/qHALwSnyST7gxVm4Yz7u6Jl2wO
-         G1rtC9VSxf26f3uOmhxWx0FyKI+sIgUGONJggL2Y4Yggd2f6KV/ZAi9M21hPL640k1vh
-         rANcKGlm8bg3eiHpkGAe9584tZ9q+5H+WsLN+vgAfdK/kUEfI9JEuUAVGiY4VFG4h2dd
-         9PJA==
-X-Forwarded-Encrypted: i=1; AJvYcCXzlRpA7aFks+NExGIcJHB6qSjlB1ixNLpMhv54fscyuGBWNtFt4f10k2oRe15q0PCP7j5X@lists.linux.dev
-X-Gm-Message-State: AOJu0Yz9sUSe4kr/5zt8F+lvwKsBsjiKEG6ijhVIES0uclSsVnmijLhg
-	CLqRUoTgESa4cgksTrJoPB+2EfiTbtE9k/BoaV3E37zDJ50eoTULbOiB
-X-Gm-Gg: ASbGnctwR5kw1SYx4D/eR6Z4GHpuvOUBHzRwuvspBy1PEOTpu8wsb9PwHF/s6gsH1xK
-	sBMkio2aC2bQrowvFBc4o1OjEO0DImYWKmD7aHZum7vaTwgyugaD21fEwGFGAx6Temn9XqocyiG
-	q+Trs04nvcmeF0IjlPOYQbJEmLNPy3T0glI1mt2bQ+L6ijtzhN6kpEvOwsSzHCHtqwe98T4Mml3
-	FpdAoV/sjcL9C8D+KcEFYsPJzNf2iOjf1CsQ9QdP4oTEm+05FgttcUe4YSgUhH/lrbFmtmV3B4G
-	UP2rgaLSTPlGre8xC4jN5IDy7hkEWM8f18mSij4XUy3+6ca/upLJlH8hDVXg0WzpTgG/i2tvbQa
-	FXY5RpQk9MLZ5j2Iv71OCGdLLKZCcS3oyZoI1am4NRzlUy9OCQHpjqT/ggDIST1JqO73HosVOXZ
-	WDf+Z42oTbmaSD
-X-Google-Smtp-Source: AGHT+IG3j/mYxUHwTH0mxjQzJmi5wM/B/2jJ7NoKNHSKvwfZfcpJKZZ0N//i1HDkgCQ/ZVvMkY8kaQ==
-X-Received: by 2002:a05:622a:15d5:b0:4a7:f9ab:7895 with SMTP id d75a77b69052e-4a9fb85a364mr59155491cf.4.1752241872555;
-        Fri, 11 Jul 2025 06:51:12 -0700 (PDT)
+        bh=jbB1R0UF+o1ox6MiAWxgQBqNVgm6z/q3Tj8d+69HVOg=;
+        b=YmxrVLMTZIJHnzSaDAWDyXxSvXoK7BsepgF7rT8HsT/eu/u6oY6WmIvmg6Dp7MSUZS
+         RBX95SdOoCHIpZBC64MHkTA7eX4XERfBb39THCC1HZQ2+/NTu967Z74XYJj0ECT4bCtI
+         9mDKp5kehVBforFenaPtdum6C/iJZUFOa2mK6HzAeBk5iNlgnfTNL2ZgS8t0dcIRLugb
+         mcqfpfrPQ1++AcrB0MrA6QG4iTezDKgBHZGwndwSqS9xWCyzai2b99O3nUz2JkuSQ1lv
+         F+LJybMFSnO4HryykdiL3fqmqnD0hfKqCTsqbaUg5ACc5pmICxJqa9Uuvt6DkoCep790
+         Xl7A==
+X-Forwarded-Encrypted: i=1; AJvYcCUJHSSmZyhjEKEpelHXFlEJ8RROUc3Aulj7SIdu1leFKwUYBPFx9hD3anw8QKuOxCZXTXJ2@lists.linux.dev
+X-Gm-Message-State: AOJu0Ywcg8bF4Lhqbx6xi/B9YyGxmvFY+v9eYDEeezv2ol/vl7OCU/5y
+	Ia/EARZxFiSDkAJsYFd+1ar+yKa2YgetO+BFlwfl5fI9HiiTZ3Ta5HuA
+X-Gm-Gg: ASbGncueT5L4aK4/16Qa+cd0iCkeI4E7u31hS4oCgRb9rdXB0d/fTunQrjOozsEZ/d2
+	aBkH/8TBGSBBQh779UOYGFrMgLsGmNJKo1bo9orlhtF9LTis3y2kK+JstPpOEmaqsNB6qDHwb6b
+	SjidvNvJUDpXlc28LqI0xbloxkMKTGtZY0GLyomu6ODiHpGlotixbsCj9NInU444RUhkNlAjp9s
+	Ti5oRPhZJqBiCXXt8yOC3rTjIaZaqV4hH7liQjZgwxPrbOLB+NAHJt7uUCh2Z4q+3MhqJQBxr7t
+	8KDEXD8dUFQvtMSRpE1FwKfe4lNElYfAqAEjP4uT1/5iPAmCZAKa1VkrRilEg8GQ6jpRliINV1S
+	mMbF83mPLs6Ln5A2TcwpYjg0QstCkEt360jQ+RqYme7WXUKmCQ0NRK1sRfj0DycmyBzKe8m0q6O
+	upkCstzVCwMDQ5gm058INDqHY=
+X-Google-Smtp-Source: AGHT+IGYsuwtcaD9p2qDFZIxYfEles6z9LH1aIfFLJPEix8UE5nR53U/JeQa/L99WJAyA5fMWvRKnQ==
+X-Received: by 2002:a05:620a:454e:b0:7d3:913e:802e with SMTP id af79cd13be357-7de0709ba58mr438503285a.41.1752242325406;
+        Fri, 11 Jul 2025 06:58:45 -0700 (PDT)
 Received: from fauth-a2-smtp.messagingengine.com (fauth-a2-smtp.messagingengine.com. [103.168.172.201])
-        by smtp.gmail.com with ESMTPSA id d75a77b69052e-4ab04d910desm6281831cf.9.2025.07.11.06.51.11
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-7dcde32bfa7sm223207085a.55.2025.07.11.06.58.43
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 11 Jul 2025 06:51:11 -0700 (PDT)
-Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
-	by mailfauth.phl.internal (Postfix) with ESMTP id E4103F40066;
-	Fri, 11 Jul 2025 09:51:10 -0400 (EDT)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-01.internal (MEProxy); Fri, 11 Jul 2025 09:51:10 -0400
-X-ME-Sender: <xms:zhZxaKTEY5U6c6-_3YyteOJniubYemra0aIgWHSprXHT3_pZzke0aw>
-    <xme:zhZxaBR7JwdG7QGEZOBQI4QeI9TSQ3VKT4i9MVx9JGDDrq0MbjsFxfUgnOXTO8AcL
-    5MNKyRYtqHSvDSqiA>
-X-ME-Received: <xmr:zhZxaMa-4paHWzWkXrjNawC6kruDLPCCMKQJhprkgO3ptlwOjTdGkobVFQ>
+        Fri, 11 Jul 2025 06:58:44 -0700 (PDT)
+Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
+	by mailfauth.phl.internal (Postfix) with ESMTP id BAC67F40066;
+	Fri, 11 Jul 2025 09:58:43 -0400 (EDT)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-03.internal (MEProxy); Fri, 11 Jul 2025 09:58:43 -0400
+X-ME-Sender: <xms:kxhxaLlsV-anhNMiiyUlFT22U9-9LUCCQZNTr4woWaphIem-uTcXzA>
+    <xme:kxhxaAXqRJHEnyBVsTvZkqos9D2BzY_CwrKC4JwQHOMcOSHC8kM7L5OpgG-790LN5
+    fNsr3zuwMnjjmxMHw>
+X-ME-Received: <xmr:kxhxaGOBQxt9FWosXRZ_hg6wfSWqBhirRoMMWi4m3dgHmjPvTyTJ6hSvvA>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdegfeeglecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
     ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
@@ -87,15 +87,15 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdegfeeglecutefuodetgg
     pegrlhgvgidrghgrhihnohhrsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghgrrhihse
     hgrghrhihguhhordhnvghtpdhrtghpthhtohepsghjohhrnhefpghghhesphhrohhtohhn
     mhgrihhlrdgtohhm
-X-ME-Proxy: <xmx:zhZxaFjIaiy3xPKeX89dY2CnVso02CcRHAZ6H-bY4j5chU29C0n1Fg>
-    <xmx:zhZxaBi1jZJ7WSKFHml3JNgnciAGNRFFk0_a2NGpKqyJNE1l5Pm_Vg>
-    <xmx:zhZxaLLBzQItEUnD5qoXsWMEqjwIuNI7l76Sj1l9YNPFmYb_9ySjgg>
-    <xmx:zhZxaIVuakmfosevnFBxyDrY9TH7fm6Jz4CqAjyqJ8JD62rYJZq2zg>
-    <xmx:zhZxaN1t5hd4nS0wzZcm9R61A2WLCP-yZjx72mnuzcXa9yl5_uellnkB>
+X-ME-Proxy: <xmx:kxhxaDGzMgemcgwMEXssPgVR4J4mm63RviZPLA2049MJNzFnHKlcUg>
+    <xmx:kxhxaH2ptwQuN7CKH-2WJ8OdcFC21z16fjUyZJFPxmAXoMnW2y9C3w>
+    <xmx:kxhxaLOOWTN36ezpGe6XeIrguqFKu5iAs7doiq57r9UcZIdnOyNUwA>
+    <xmx:kxhxaPKdC2pDWJPM2kY1dui55WKKi0Ay5NPfbut5g-3-CmuWmT_Fww>
+    <xmx:kxhxaEaNnwsDaJILvhrkG4sW7x2jetU14s0hhM4uy53WktXBz_oNSdnZ>
 Feedback-ID: iad51458e:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 11 Jul 2025 09:51:10 -0400 (EDT)
-Date: Fri, 11 Jul 2025 06:51:09 -0700
+ 11 Jul 2025 09:58:43 -0400 (EDT)
+Date: Fri, 11 Jul 2025 06:58:42 -0700
 From: Boqun Feng <boqun.feng@gmail.com>
 To: Benno Lossin <lossin@kernel.org>
 Cc: linux-kernel@vger.kernel.org, rust-for-linux@vger.kernel.org,
@@ -118,12 +118,10 @@ Cc: linux-kernel@vger.kernel.org, rust-for-linux@vger.kernel.org,
 	Thomas Gleixner <tglx@linutronix.de>,
 	Alan Stern <stern@rowland.harvard.edu>
 Subject: Re: [PATCH v6 4/9] rust: sync: atomic: Add generic atomics
-Message-ID: <aHEWze8p40qeNBr_@Mac.home>
+Message-ID: <aHEYkg5K7koUohRo@Mac.home>
 References: <20250710060052.11955-1-boqun.feng@gmail.com>
  <20250710060052.11955-5-boqun.feng@gmail.com>
  <DB92I10114UN.33MAFJVWIX4AB@kernel.org>
- <aHEQKBT68xvqIIjW@Mac.home>
- <DB99JZ3XMHZS.3N0GLG94JJSA9@kernel.org>
 Precedence: bulk
 X-Mailing-List: lkmm@lists.linux.dev
 List-Id: <lkmm.lists.linux.dev>
@@ -132,88 +130,83 @@ List-Unsubscribe: <mailto:lkmm+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <DB99JZ3XMHZS.3N0GLG94JJSA9@kernel.org>
+In-Reply-To: <DB92I10114UN.33MAFJVWIX4AB@kernel.org>
 
-On Fri, Jul 11, 2025 at 03:34:47PM +0200, Benno Lossin wrote:
-> On Fri Jul 11, 2025 at 3:22 PM CEST, Boqun Feng wrote:
-> > On Fri, Jul 11, 2025 at 10:03:07AM +0200, Benno Lossin wrote:
-> > [...]
-> >> > +
-> >> > +    /// Returns a pointer to the underlying atomic variable.
-> >> > +    ///
-> >> > +    /// Extra safety requirement on using the return pointer: the operations done via the pointer
-> >> > +    /// cannot cause data races defined by [`LKMM`].
-> >> 
-> >> I don't think this is correct. I could create an atomic and then share
-> >> it with the C side via this function, since I have exclusive access, the
-> >> writes to this pointer don't need to be atomic.
-> >> 
-> >
-> > that's why it says "the operations done via the pointer cannot cause
-> > data races .." instead of saying "it must be atomic".
+On Fri, Jul 11, 2025 at 10:03:07AM +0200, Benno Lossin wrote:
+> On Thu Jul 10, 2025 at 8:00 AM CEST, Boqun Feng wrote:
+> > diff --git a/rust/kernel/sync/atomic/generic.rs b/rust/kernel/sync/atomic/generic.rs
+> > new file mode 100644
+> > index 000000000000..e044fe21b128
+> > --- /dev/null
+> > +++ b/rust/kernel/sync/atomic/generic.rs
+> > @@ -0,0 +1,289 @@
+> > +// SPDX-License-Identifier: GPL-2.0
+> > +
+> > +//! Generic atomic primitives.
+> > +
+> > +use super::ops::*;
+> > +use super::ordering::*;
+> > +use crate::build_error;
+> > +use core::cell::UnsafeCell;
+> > +
+> > +/// A generic atomic variable.
+[...]
 > 
-> Ah right I misread... But then the safety requirement is redundant? Data
-> races are already UB...
+> > +///
+> > +/// # Guarantees
+> > +///
+> > +/// Doing an atomic operation while holding a reference of [`Self`] won't cause a data race,
+> > +/// this is guaranteed by the safety requirement of [`Self::from_ptr()`] and the extra safety
+> > +/// requirement of the usage on pointers returned by [`Self::as_ptr()`].
 > 
-> >> We also don't document additional postconditions like this... If you
-> >
-> > Please see how Rust std document their `as_ptr()`:
-> >
-> > 	https://doc.rust-lang.org/std/sync/atomic/struct.AtomicI32.html#method.as_ptr
-> >
-> > It mentions that "Doing non-atomic reads and writes on the resulting
-> > integer can be a data race." (although the document is a bit out of
-> > date, since non-atomic read and atomic read are no longer data race now,
-> > see [1])
+> I'd rather think we turn this into an invariant that says any operations
+> on `self.0` through a shared reference is atomic.
 > 
-> That's very different from the comment you wrote though. It's not an
-> additional safety requirement, but rather a note to users of the API
-> that they should be careful with the returned pointer.
+[...]
+> > +/// unit-only enums:
 > 
-> > I think we can use the similar document structure here: providing more
-> > safety requirement on the returning pointers, and...
-> >
-> >> really would have to do it like this (which you shouldn't given the
-> >> example above), you would have to make this function `unsafe`, otherwise
-> >> there is no way to ensure that people adhere to it (since it isn't part
-> >> of the safety docs).
-> >> 
-> >
-> > ...since dereferencing pointers is always `unsafe`, users need to avoid
-> > data races anyway, hence this is just additional information that helps
-> > reasoning.
-> 
-> I disagree.
-> 
-> As mentioned above, data races are already forbidden for raw pointers.
-> We should indeed add a note that says that non-atomic operations might
-> result in data races. But that's very different from adding an
-> additional safety requirement for using the pointer.
-> 
-> And I don't think that we can add additional safety requirements to
-> dereferencing a raw pointer without an additional `unsafe` block.
+> What are "unit-only" enums? Do you mean enums that don't have associated
+> data?
 > 
 
-So all your disagreement is about the "extra safety requirement" part?
-How about I drop that:
+Yes, I used the term mentioned at:
 
-    /// Returns a pointer to the underlying atomic `T`.
-    pub const fn as_ptr(&self) -> *mut T {
-        self.0.get()
-    }
+	https://doc.rust-lang.org/reference/items/enumerations.html#r-items.enum.unit-only
 
-? I tried to add something additional information:
+> > +///
+> > +/// ```
+> > +/// #[repr(i32)]
+> > +/// enum State { Init = 0, Working = 1, Done = 2, }
+> > +/// ```
+> > +///
+> > +/// # Safety
+> > +///
+> > +/// - [`Self`] must have the same size and alignment as [`Self::Repr`].
+> > +/// - [`Self`] and [`Self::Repr`] must have the [round-trip transmutability].
+[...]
+> > +        let a = self.as_ptr().cast::<T::Repr>();
+> > +
+> > +        // SAFETY:
+> > +        // - For calling the atomic_read*() function:
+> > +        //   - `a` is a valid pointer for the function per the CAST justification above.
+> > +        //   - Per the type guarantees, the following atomic operation won't cause data races.
+> 
+> Which type guarantees? `Self`?
+> 
 
-/// Note that non-atomic reads and writes via the returned pointer may
-/// cause data races if racing with atomic reads and writes per [LKMM].
+The above "# Guarantees" of `Atomic<T>`, but yeah I think it should be
+"# Invariants".
 
-but that seems redundant, because as you said, data races are UB anyway.
-
-Thoughts?
-
-Regards,
-Boqun
-
-> ---
-> Cheers,
-> Benno
+> > +        // - For extra safety requirement of usage on pointers returned by `self.as_ptr()`:
+> > +        //   - Atomic operations are used here.
+> > +        let v = unsafe {
+> > +            match Ordering::TYPE {
+> > +                OrderingType::Relaxed => T::Repr::atomic_read(a),
+> > +                OrderingType::Acquire => T::Repr::atomic_read_acquire(a),
+> > +                _ => build_error!("Wrong ordering"),
+> > +            }
+> > +        };
+> > +
+> > +        // SAFETY: The atomic variable holds a valid `T`, so `v` is a valid bit pattern of `T`,
+> > +        // therefore it's safe to call `from_repr()`.
+[...]

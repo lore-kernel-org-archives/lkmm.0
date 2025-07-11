@@ -1,185 +1,538 @@
-Received: from mail-qv1-f45.google.com (mail-qv1-f45.google.com [209.85.219.45])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A09A1155C87
-	for <lkmm@lists.linux.dev>; Fri, 11 Jul 2025 02:31:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CDC21A0BE0;
+	Fri, 11 Jul 2025 08:03:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752201115; cv=none; b=GpnfQz2N1xOjeFD+MnrbiHjsEp9L6GaL0W04zYBdqOwa7YLGPm2LPbU2VUkJQQcjvJ2gVRSSA+AlQW5ets1x28+YN3hgVn6DqZ/x3GqAwcqknObBWr/Io7mL2qhsmRh5LTlXwZLxdA4CuCI5Qe69LYVJJHD3zJo9NNyPPiaUoKc=
+	t=1752220994; cv=none; b=GkeR9oKw5dRslNbu7HMp6jVR8DLMP8du4tGMsyDEkM9U17Sn8s1RVKfIY3YHywloKiKDvPLVkFZmxDzwiiKXJGF3lZzWRhhqgc57mUHO/ObVrXZGuXizAQGL1tqeT8MA/NiCtJ5g8zawPeLDaIE32qmDysqILI6FBGTNAUXzZL0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752201115; c=relaxed/simple;
-	bh=qoMv3I/wvYY0fBc/km+29iL2QTJH+hPrK/s0FOHTlyY=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=P7kpSAjf9xartRi/f3Wa6Q7vFdzEYeUGgkceC9Ba478z54Axx7BU4N765snRYetYWKTAPmbwA16jzixd2dECKMCSIUjGynFC9697N8nd5seQYv0Mp5te2swJ/BfUyClHWm2t5hxRkZURS4hay/q2yG06CB/gntb046fuCp2EY3w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=bmNf05OF; arc=none smtp.client-ip=209.85.219.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1752220994; c=relaxed/simple;
+	bh=q5kzjw4pdZnlOm1O17X4pF0mstSdCM/tt79sh7n2vWo=;
+	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
+	 References:In-Reply-To; b=brAUAhclM0O4uTO9g64+2XGiU/mCFMl2Sg/T+k78EW2kWgkEmxO57I0dbet2Jx2pFsjGNM6PzQ2iIOHiPOPeoR/zAnV4MBwxPGDPrqUkrKj0zqQeAki30sSXNlEz0H5GPaD5EcpoebixiD0A6K9wrTX2RaP7hVp5UObs34JMRlQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=kkzR4m+5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bmNf05OF"
-Received: by mail-qv1-f45.google.com with SMTP id 6a1803df08f44-6fabb948e5aso19079656d6.1
-        for <lkmm@lists.linux.dev>; Thu, 10 Jul 2025 19:31:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1752201112; x=1752805912; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:feedback-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=/hpxRkNYRuqENsjSxqDYk0zNqW0LZ1+U3jypHB6kGXw=;
-        b=bmNf05OF3knlPXlaRMtrEguryPRSjfmt7f/3bX5e04FERrqYWWn4Yj2zlVpCl2y/Op
-         xZJi3p85ujHny2momzyA9Yi/IWfefswuPz68lvDNt8pjvNIUASXOqlTIn/G790EDifKa
-         vvg6bXifIY/APk88IyuA1PFXc/nFTUtliagCARAym9hEVQy3hyZ0bmy8IbV+Lupm9kSa
-         F8PL3esHFuX1/ZvCu4jHtmlPr55wmAXqhzzWWKJHHXcRYc/Ttbj0ozTnsSvM9zEQvKyb
-         QUReZSUKRulW87LG48kXIfejqUvBcUDEt9zHpwRELST3xLc8ntj4561h0KG95bBfX/P+
-         BCNg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1752201112; x=1752805912;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:feedback-id:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=/hpxRkNYRuqENsjSxqDYk0zNqW0LZ1+U3jypHB6kGXw=;
-        b=OAG6slbPTl4pVvibEYgsBMZ4KzHvKmikPMjevd8mULzh9GCnYnnNYkimx3TM4yPP3S
-         TPQP4i9fjyi/Nzo/wi/bTQ6R+Gx39r1uIX4oJuqf44fL0OY3NSVOxLrX1w1Ov2+0WCVr
-         3PLjVjQTqAsJxmAgRYkoDGQpedSRceL/B6x+ieNcG4q911hc79gSVvUGVj+VQBtRtalv
-         MTMk6MY44LyE5DdLxxW3XwFc434NIu7dZTgWYEUlf2qdK58BtotvpSBiL3TW116fz31A
-         fz1zSTrAA89OGBaiwEnSzRgL+6Tx0wOZxT1RZ2B59MFy7tRYYKVRbhXbvuPzZicvM5xP
-         uK6A==
-X-Forwarded-Encrypted: i=1; AJvYcCXC3biR68DyB7ssXcICuOeTDJtXTUjcpsJzzKq4P0hOclxRZGSkzCmZGoC9fhUeOjmPxgW8@lists.linux.dev
-X-Gm-Message-State: AOJu0Yy3yYT2hAyBQPtu43hztSTHfcHqsAjmHecK2MXpAA+J0gGL17F2
-	uTzJ+/5F+fI5tSvUnhGO31dkVJuPJx9fQth+InmwTGoJQ5DNvaZGuOSg
-X-Gm-Gg: ASbGnctVJJXjvP1JoRdyl4mA98QE/tji1hlwC/pfIeEVQqLEcpT88YAsG3sQxqSgDsQ
-	8HvvBYSFOgtB3UaXblkRJw7XOj5hhIuIA2HjqiguitM9aQyept/yE/VFwUBO1bM2CkD49r12LGH
-	LvQ2bRCknUNz6PhuBCtXdOuFi/uv4ZqnGEVSwB5Rtna4HbxwCTb9IG5dqL3hcG+/eAdkjbIP0kP
-	R2aIkC17BV1vq16jfNg/w/pY8ibMUweEHkWpowK1MCPCWOaNce5aOwUGaxGUjzAsxFaJbDeK+64
-	2sSCKI9FN79IUEnvggRunMZju4xVYqNjhZ5Ljq2q3cXgaDh8MHYqWWpNdn5cMbnYSm7PqkHf3tS
-	N2MjFxKbrHZFpBNufl9ByYxV7Xx1G2aKKE4Q7F7fQbf6BajMVVpTjpM4kG5nE0851KWMCaFlvWw
-	gCsG7QWyjyvyYa
-X-Google-Smtp-Source: AGHT+IE4R+kXFovwAQJmZ+v8jqidWY5K2h3e6hQAjYhhgIxztQTNavaWz/IaBUBUvPNaZ4bACtvsYA==
-X-Received: by 2002:a05:6214:da9:b0:6ff:1665:44ef with SMTP id 6a1803df08f44-704a4216423mr26754716d6.22.1752201112490;
-        Thu, 10 Jul 2025 19:31:52 -0700 (PDT)
-Received: from fauth-a2-smtp.messagingengine.com (fauth-a2-smtp.messagingengine.com. [103.168.172.201])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-704979e40b6sm15319656d6.46.2025.07.10.19.31.51
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 10 Jul 2025 19:31:52 -0700 (PDT)
-Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
-	by mailfauth.phl.internal (Postfix) with ESMTP id 82CAAF40068;
-	Thu, 10 Jul 2025 22:31:51 -0400 (EDT)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-06.internal (MEProxy); Thu, 10 Jul 2025 22:31:51 -0400
-X-ME-Sender: <xms:l3dwaDjCBzuIOtKkXwkkM9WAlS73Aq5nkFvKXN93XoYOd_TT0zh62g>
-    <xme:l3dwaLgIRA1-AMiQ0EzhaINKPj0JsaLuaCEgUuRY_GfugsSsDP579a3VQ4LZCRAaQ
-    y99gtIJlKhWZUNTWw>
-X-ME-Received: <xmr:l3dwaJG9HUf_YlBzMNT7McDBjDlJXoRHWb5JSBXPMHkttbPdWfzwumJTJg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdegvdduvdcutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpeffhffvvefukfhfgggtuggjsehttdertddttddvnecuhfhrohhmpeeuohhquhhnucfh
-    vghnghcuoegsohhquhhnrdhfvghnghesghhmrghilhdrtghomheqnecuggftrfgrthhtvg
-    hrnhephfetvdfgtdeukedvkeeiteeiteejieehvdetheduudejvdektdekfeegvddvhedt
-    necuffhomhgrihhnpehkvghrnhgvlhdrohhrghenucevlhhushhtvghrufhiiigvpedtne
-    curfgrrhgrmhepmhgrihhlfhhrohhmpegsohhquhhnodhmvghsmhhtphgruhhthhhpvghr
-    shhonhgrlhhithihqdeiledvgeehtdeigedqudejjeekheehhedvqdgsohhquhhnrdhfvg
-    hngheppehgmhgrihhlrdgtohhmsehfihigmhgvrdhnrghmvgdpnhgspghrtghpthhtohep
-    vdeipdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehlvghithgrohesuggvsghirg
-    hnrdhorhhgpdhrtghpthhtoheplhhinhhugidqkhgvrhhnvghlsehvghgvrhdrkhgvrhhn
-    vghlrdhorhhgpdhrtghpthhtoheprhgtuhesvhhgvghrrdhkvghrnhgvlhdrohhrghdprh
-    gtphhtthhopehlkhhmmheslhhishhtshdrlhhinhhugidruggvvhdprhgtphhtthhopehp
-    vghtvghriiesihhnfhhrrgguvggrugdrohhrghdprhgtphhtthhopehmihhnghhosehkvg
-    hrnhgvlhdrohhrghdprhgtphhtthhopeifihhllheskhgvrhhnvghlrdhorhhgpdhrtghp
-    thhtoheplhhonhhgmhgrnhesrhgvughhrghtrdgtohhmpdhrtghpthhtohepuggrvhgvse
-    hsthhgohhlrggsshdrnhgvth
-X-ME-Proxy: <xmx:l3dwaODRLba5tSugkVy_SP5N2J9lXjZmT8GsRr6JY6JsnQms934OMw>
-    <xmx:l3dwaF_ia8kPFVbnpkmLR4iT8OTaym4i5NUU--E2eeO-jcBew5COPg>
-    <xmx:l3dwaBh4NeApwlomub9O-GiDghFI1ejzHhFcw_iXo7b9xP8SvotDxA>
-    <xmx:l3dwaOZKDnHFn1g8IKD4re89LI2ZFnt6ibBZvi-GRMte1sPEOTWeWA>
-    <xmx:l3dwaDTgLKUwWlkHjAJaVOemsmbbyA_i2h9K6eiqi-pfk682wMDdl4KD>
-Feedback-ID: iad51458e:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 10 Jul 2025 22:31:50 -0400 (EDT)
-Date: Thu, 10 Jul 2025 19:31:50 -0700
-From: Boqun Feng <boqun.feng@gmail.com>
-To: Breno Leitao <leitao@debian.org>
-Cc: linux-kernel@vger.kernel.org, rcu@vger.kernel.org, lkmm@lists.linux.dev,
-	Peter Zijlstra <peterz@infradead.org>,
-	Ingo Molnar <mingo@kernel.org>, Will Deacon <will@kernel.org>,
-	Waiman Long <longman@redhat.com>,
-	Davidlohr Bueso <dave@stgolabs.net>,
-	"Paul E. McKenney" <paulmck@kernel.org>,
-	Josh Triplett <josh@joshtriplett.org>,
-	Frederic Weisbecker <frederic@kernel.org>,
-	Neeraj Upadhyay <neeraj.upadhyay@kernel.org>,
-	Joel Fernandes <joelagnelf@nvidia.com>,
-	Uladzislau Rezki <urezki@gmail.com>,
-	Steven Rostedt <rostedt@goodmis.org>,
-	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
-	Lai Jiangshan <jiangshanlai@gmail.com>,
-	Zqiang <qiang.zhang@linux.dev>, aeh@meta.com,
-	netdev@vger.kernel.org, edumazet@google.com, jhs@mojatatu.com,
-	kernel-team@meta.com, Erik Lundgren <elundgren@meta.com>
-Subject: Re: [PATCH 8/8] locking/lockdep: Use shazptr to protect the key
- hashlist
-Message-ID: <aHB3lh4zkh8g5H1T@Mac.home>
-References: <20250625031101.12555-1-boqun.feng@gmail.com>
- <20250625031101.12555-9-boqun.feng@gmail.com>
- <i3mukc6vgwrp3cy5eis2inyms7f5b4a6pel4cvvdx6jlxrij2g@wgrnkstlifv3>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="kkzR4m+5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23CF9C4CEED;
+	Fri, 11 Jul 2025 08:03:08 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1752220993;
+	bh=q5kzjw4pdZnlOm1O17X4pF0mstSdCM/tt79sh7n2vWo=;
+	h=Date:Cc:Subject:From:To:References:In-Reply-To:From;
+	b=kkzR4m+5JpsKlfx5a0BWgL8es5hW0oaj8naNBScNdVP6hyKhTHurQDEouumHWDjgX
+	 eNAQnwuW4E1hmImXPXezPqVj+awaEqYEknSBc+TYO/UQ+ZRovLKoJj1gqrm/8rBbYr
+	 TlxwQMt6pj9Mx8pt2WFgO276fw0PBQuQUEd5c4OmPSVHA4b5SPQVW9+RdXTALaSEhI
+	 INo0qRD08pRaDJcw2JUUHl/xZu7CUTVq39Gwt4mhR6eBiDihYixuA4XZd9Y1E4GoJ+
+	 aJla0vC27lAxdL9WH9xXpu3OQAsXWtLQhjtgagETdwt/m/rPEI52hnLOZLAoF+qjCL
+	 BohyOuU0BubaQ==
 Precedence: bulk
 X-Mailing-List: lkmm@lists.linux.dev
 List-Id: <lkmm.lists.linux.dev>
 List-Subscribe: <mailto:lkmm+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:lkmm+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <i3mukc6vgwrp3cy5eis2inyms7f5b4a6pel4cvvdx6jlxrij2g@wgrnkstlifv3>
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Fri, 11 Jul 2025 10:03:07 +0200
+Message-Id: <DB92I10114UN.33MAFJVWIX4AB@kernel.org>
+Cc: "Miguel Ojeda" <ojeda@kernel.org>, "Alex Gaynor"
+ <alex.gaynor@gmail.com>, "Gary Guo" <gary@garyguo.net>,
+ =?utf-8?q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, "Andreas
+ Hindborg" <a.hindborg@kernel.org>, "Alice Ryhl" <aliceryhl@google.com>,
+ "Trevor Gross" <tmgross@umich.edu>, "Danilo Krummrich" <dakr@kernel.org>,
+ "Will Deacon" <will@kernel.org>, "Peter Zijlstra" <peterz@infradead.org>,
+ "Mark Rutland" <mark.rutland@arm.com>, "Wedson Almeida Filho"
+ <wedsonaf@gmail.com>, "Viresh Kumar" <viresh.kumar@linaro.org>, "Lyude
+ Paul" <lyude@redhat.com>, "Ingo Molnar" <mingo@kernel.org>, "Mitchell Levy"
+ <levymitchell0@gmail.com>, "Paul E. McKenney" <paulmck@kernel.org>, "Greg
+ Kroah-Hartman" <gregkh@linuxfoundation.org>, "Linus Torvalds"
+ <torvalds@linux-foundation.org>, "Thomas Gleixner" <tglx@linutronix.de>,
+ "Alan Stern" <stern@rowland.harvard.edu>
+Subject: Re: [PATCH v6 4/9] rust: sync: atomic: Add generic atomics
+From: "Benno Lossin" <lossin@kernel.org>
+To: "Boqun Feng" <boqun.feng@gmail.com>, <linux-kernel@vger.kernel.org>,
+ <rust-for-linux@vger.kernel.org>, <lkmm@lists.linux.dev>,
+ <linux-arch@vger.kernel.org>
+X-Mailer: aerc 0.20.1
+References: <20250710060052.11955-1-boqun.feng@gmail.com>
+ <20250710060052.11955-5-boqun.feng@gmail.com>
+In-Reply-To: <20250710060052.11955-5-boqun.feng@gmail.com>
 
-On Thu, Jul 10, 2025 at 07:06:09AM -0700, Breno Leitao wrote:
-> Hello Boqun,
-> 
-> On Tue, Jun 24, 2025 at 08:11:01PM -0700, Boqun Feng wrote:
-> > Erik Lundgren and Breno Leitao reported [1] a case where
-> > lockdep_unregister_key() can be called from time critical code pathes
-> > where rntl_lock() may be held. And the synchronize_rcu() in it can slow
-> > down operations such as using tc to replace a qdisc in a network device.
-> > 
-> > In fact the synchronize_rcu() in lockdep_unregister_key() is to wait for
-> > all is_dynamic_key() callers to finish so that removing a key from the
-> > key hashlist, and we can use shazptr to protect the hashlist as well.
-> > 
-> > Compared to the proposed solution which replaces synchronize_rcu() with
-> > synchronize_rcu_expedited(), using shazptr here can achieve the
-> > same/better synchronization time without the need to send IPI. Hence use
-> > shazptr here.
-> > 
-> > Reported-by: Erik Lundgren <elundgren@meta.com>
-> > Reported-by: Breno Leitao <leitao@debian.org>
-> > Link: https://lore.kernel.org/all/20250321-lockdep-v1-1-78b732d195fb@debian.org/ [1]
-> > Signed-off-by: Boqun Feng <boqun.feng@gmail.com>
-> 
-> First of all, thanks for working to fix the origianl issue. I've been
-> able to test this in my host, and the gain is impressive.
-> 
-> Before:
-> 
->          # time /usr/sbin/tc qdisc replace dev eth0 root handle 0x1234: mq
->          real    0m13.195s
->          user    0m0.001s
->          sys     0m2.746s
-> 	
-> With your patch:
-> 
-> 	#  time /usr/sbin/tc qdisc replace dev eth0 root handle 0x1234: mq
-> 	real	0m0.135s
-> 	user	0m0.002s
-> 	sys	0m0.116s
-> 
-> 	#  time /usr/sbin/tc qdisc replace dev eth0 root handle 0x1: mq
-> 	real	0m0.127s
-> 	user	0m0.001s
-> 	sys	0m0.112s
-> 
-> Please add the following to the series:
-> 
-> Tested-by: Breno Leitao <leitao@debian.org>
+On Thu Jul 10, 2025 at 8:00 AM CEST, Boqun Feng wrote:
+> diff --git a/rust/kernel/sync/atomic/generic.rs b/rust/kernel/sync/atomic=
+/generic.rs
+> new file mode 100644
+> index 000000000000..e044fe21b128
+> --- /dev/null
+> +++ b/rust/kernel/sync/atomic/generic.rs
+> @@ -0,0 +1,289 @@
+> +// SPDX-License-Identifier: GPL-2.0
+> +
+> +//! Generic atomic primitives.
+> +
+> +use super::ops::*;
+> +use super::ordering::*;
+> +use crate::build_error;
+> +use core::cell::UnsafeCell;
+> +
+> +/// A generic atomic variable.
 
-Thanks! Will apply ;-)
+How about we copy upstream rust on this:
 
-Regards,
-Boqun
+    A memory location which can be safely modified from multiple threads.
+
+> +///
+> +/// `T` must impl [`AllowAtomic`], that is, an [`AtomicImpl`] has to be =
+chosen.
+
+s/impl/implement/
+
+I don't really think this sentence is that valuable... I think you could
+mention several things before this:
+
+* compatibility with LKMM (or that it is implemented through LKMM
+  atomics)
+* "what is an atomic"
+* how big (relative to `T`) is this type? what about alignment?
+
+> +///
+> +/// # Examples
+> +///
+> +/// A customized type stored in [`Atomic`]:
+> +///
+> +/// ```rust
+> +/// use kernel::sync::atomic::{generic::AllowAtomic, Atomic, Relaxed};
+> +///
+> +/// #[derive(Clone, Copy, PartialEq, Eq)]
+> +/// #[repr(i32)]
+> +/// enum State {
+> +///     Uninit =3D 0,
+> +///     Working =3D 1,
+> +///     Done =3D 2,
+> +/// };
+> +///
+> +/// // SAFETY: `State` and `i32` has the same size and alignment, and it=
+'s round-trip
+> +/// // transmutable to `i32`.
+> +/// unsafe impl AllowAtomic for State {
+> +///     type Repr =3D i32;
+> +/// }
+> +///
+> +/// let s =3D Atomic::new(State::Uninit);
+> +///
+> +/// assert_eq!(State::Uninit, s.load(Relaxed));
+> +/// ```
+
+This example doesn't really seem like a good idea on this type... Maybe
+on `AllowAtomic` instead? This type should just have examples of how to
+use `Atomic<T>`.
+
+> +///
+> +/// # Guarantees
+> +///
+> +/// Doing an atomic operation while holding a reference of [`Self`] won'=
+t cause a data race,
+> +/// this is guaranteed by the safety requirement of [`Self::from_ptr()`]=
+ and the extra safety
+> +/// requirement of the usage on pointers returned by [`Self::as_ptr()`].
+
+I'd rather think we turn this into an invariant that says any operations
+on `self.0` through a shared reference is atomic.
+
+> +#[repr(transparent)]
+> +pub struct Atomic<T: AllowAtomic>(UnsafeCell<T>);
+> +
+> +// SAFETY: `Atomic<T>` is safe to share among execution contexts because=
+ all accesses are atomic.
+> +unsafe impl<T: AllowAtomic> Sync for Atomic<T> {}
+> +
+> +/// Types that support basic atomic operations.
+> +///
+> +/// # Round-trip transmutability
+
+This can stay here for the moment, but it should probably be somewhere
+more central.
+
+> +///
+> +/// Implementing [`AllowAtomic`] requires that the type is round-trip tr=
+ansmutable to its
+> +/// representation:
+
+I would remove this sentence and just define round-trip transmutability
+in a standalone fashion.
+
+> +///
+> +/// - Any value of [`Self`] must be sound to [`transmute()`] to a [`Self=
+::Repr`], and this also
+> +///   means that a pointer to [`Self`] can be treated as a pointer to [`=
+Self::Repr`] for reading.
+> +/// - If a value of [`Self::Repr`] is a result a [`transmute()`] from a =
+[`Self`], it must be
+> +///   sound to [`transmute()`] the value back to a [`Self`].
+
+This seems a bit verbose. How about this:
+
+    `T` is round-trip transmutable to `U` if and only if all of these prope=
+rties hold:
+    * Any valid bit pattern for `T` is also a valid bit pattern for `U`.
+    * Transmuting a value of type `T` to `U` and then to `T` again yields a=
+ value that is in all aspects
+      equivalent to the original value.
+
+> +///
+> +/// This essentially means a valid bit pattern of `T: AllowAtomic` has t=
+o be a valid bit pattern
+> +/// of `T::Repr`. This is needed because [`Atomic<T: AllowAtomic>`] oper=
+ates on `T::Repr` to
+> +/// implement atomic operations on `T`.
+> +///
+> +/// Note that this is more relaxed than bidirectional transmutability (i=
+.e. [`transmute()`] is
+> +/// always sound between `T` and `T::Repr`) because of the support for a=
+tomic variables over
+
+s/between `T` and `T::Repr`/from `T` to `T::Repr` and back/
+
+> +/// unit-only enums:
+
+What are "unit-only" enums? Do you mean enums that don't have associated
+data?
+
+> +///
+> +/// ```
+> +/// #[repr(i32)]
+> +/// enum State { Init =3D 0, Working =3D 1, Done =3D 2, }
+> +/// ```
+> +///
+> +/// # Safety
+> +///
+> +/// - [`Self`] must have the same size and alignment as [`Self::Repr`].
+> +/// - [`Self`] and [`Self::Repr`] must have the [round-trip transmutabil=
+ity].
+
+s/have the/be/
+s/transmutability/transmutable/
+
+> +///
+> +/// # Limitations
+> +///
+> +/// Because C primitives are used to implement the atomic operations, an=
+d a C function requires a
+> +/// valid object of a type to operate on (i.e. no `MaybeUninit<_>`), hen=
+ce at the Rust <-> C
+> +/// surface, only types with no uninitialized bits can be passed. As a r=
+esult, types like `(u8,
+> +/// u16)` (a tuple with a `MaybeUninit` hole in it) are currently not su=
+pported. Note that
+> +/// technically these types can be supported if some APIs are removed fo=
+r them and the inner
+> +/// implementation is tweaked, but the justification of support such a t=
+ype is not strong enough at
+> +/// the moment. This should be resolved if there is an implementation fo=
+r `MaybeUninit<i32>` as
+> +/// `AtomicImpl`.
+> +///
+> +/// [`transmute()`]: core::mem::transmute
+> +/// [round-trip transmutability]: AllowAtomic#round-trip-transmutability
+> +pub unsafe trait AllowAtomic: Sized + Send + Copy {
+> +    /// The backing atomic implementation type.
+> +    type Repr: AtomicImpl;
+> +}
+> +
+> +#[inline(always)]
+> +const fn into_repr<T: AllowAtomic>(v: T) -> T::Repr {
+> +    // SAFETY: Per the safety requirement of `AllowAtomic`, the transmut=
+e operation is sound.
+> +    unsafe { core::mem::transmute_copy(&v) }
+> +}
+> +
+> +/// # Safety
+> +///
+> +/// `r` must be a valid bit pattern of `T`.
+> +#[inline(always)]
+> +const unsafe fn from_repr<T: AllowAtomic>(r: T::Repr) -> T {
+> +    // SAFETY: Per the safety requirement of the function, the transmute=
+ operation is sound.
+> +    unsafe { core::mem::transmute_copy(&r) }
+> +}
+> +
+> +impl<T: AllowAtomic> Atomic<T> {
+> +    /// Creates a new atomic.
+
+s/atomic/atomic `T`/
+
+> +    pub const fn new(v: T) -> Self {
+> +        Self(UnsafeCell::new(v))
+> +    }
+> +
+> +    /// Creates a reference to [`Self`] from a pointer.
+
+s/[`Self`]/an atomic `T`/
+
+> +    ///
+> +    /// # Safety
+> +    ///
+> +    /// - `ptr` has to be a valid pointer.
+
+s/has to be a/is/
+s/pointer//
+
+> +    /// - `ptr` has to be valid for both reads and writes for the whole =
+lifetime `'a`.
+
+s/has to be/is/
+s/both//
+s/the whole lifetime//
+
+> +    /// - For the duration of `'a`, other accesses to the object cannot =
+cause data races (defined
+
+s/the object/`*ptr`/
+s/cannot/must not/
+
+> +    ///   by [`LKMM`]) against atomic operations on the returned referen=
+ce. Note that if all other
+> +    ///   accesses are atomic, then this safety requirement is trivially=
+ fulfilled.
+> +    ///
+> +    /// [`LKMM`]: srctree/tools/memory-model
+> +    ///
+> +    /// # Examples
+> +    ///
+> +    /// Using [`Atomic::from_ptr()`] combined with [`Atomic::load()`] or=
+ [`Atomic::store()`] can
+> +    /// achieve the same functionality as `READ_ONCE()`/`smp_load_acquir=
+e()` or
+> +    /// `WRITE_ONCE()`/`smp_store_release()` in C side:
+> +    ///
+> +    /// ```rust
+
+`rust` is the default, so you can just omit it.
+
+> +    /// # use kernel::types::Opaque;
+> +    /// use kernel::sync::atomic::{Atomic, Relaxed, Release};
+> +    ///
+> +    /// // Assume there is a C struct `Foo`.
+
+s/F/f/
+
+> +    /// mod cbindings {
+> +    ///     #[repr(C)]
+> +    ///     pub(crate) struct foo { pub(crate) a: i32, pub(crate) b: i32=
+ }
+
+Why not format this normally?
+
+> +    /// }
+> +    ///
+> +    /// let tmp =3D Opaque::new(cbindings::foo { a: 1, b: 2});
+
+Missing space before `}`.
+
+> +    ///
+> +    /// // struct foo *foo_ptr =3D ..;
+> +    /// let foo_ptr =3D tmp.get();
+> +    ///
+> +    /// // SAFETY: `foo_ptr` is a valid pointer, and `.a` is in bounds.
+> +    /// let foo_a_ptr =3D unsafe { &raw mut (*foo_ptr).a };
+> +    ///
+> +    /// // a =3D READ_ONCE(foo_ptr->a);
+> +    /// //
+> +    /// // SAFETY: `foo_a_ptr` is a valid pointer for read, and all acce=
+sses on it is atomic, so no
+> +    /// // data race.
+> +    /// let a =3D unsafe { Atomic::from_ptr(foo_a_ptr) }.load(Relaxed);
+> +    /// # assert_eq!(a, 1);
+> +    ///
+> +    /// // smp_store_release(&foo_ptr->a, 2);
+> +    /// //
+> +    /// // SAFETY: `foo_a_ptr` is a valid pointer for write, and all acc=
+esses on it is atomic, so
+> +    /// // no data race.
+> +    /// unsafe { Atomic::from_ptr(foo_a_ptr) }.store(2, Release);
+> +    /// ```
+> +    ///
+> +    /// However, this should be only used when communicating with C side=
+ or manipulating a C struct.
+> +    pub unsafe fn from_ptr<'a>(ptr: *mut T) -> &'a Self
+> +    where
+> +        T: Sync,
+> +    {
+> +        // CAST: `T` is transparent to `Atomic<T>`.
+> +        // SAFETY: Per function safety requirement, `ptr` is a valid poi=
+nter and the object will
+> +        // live long enough. It's safe to return a `&Atomic<T>` because =
+function safety requirement
+> +        // guarantees other accesses won't cause data races.
+> +        unsafe { &*ptr.cast::<Self>() }
+> +    }
+> +
+> +    /// Returns a pointer to the underlying atomic variable.
+> +    ///
+> +    /// Extra safety requirement on using the return pointer: the operat=
+ions done via the pointer
+> +    /// cannot cause data races defined by [`LKMM`].
+
+I don't think this is correct. I could create an atomic and then share
+it with the C side via this function, since I have exclusive access, the
+writes to this pointer don't need to be atomic.
+
+We also don't document additional postconditions like this... If you
+really would have to do it like this (which you shouldn't given the
+example above), you would have to make this function `unsafe`, otherwise
+there is no way to ensure that people adhere to it (since it isn't part
+of the safety docs).
+
+> +    ///
+> +    /// [`LKMM`]: srctree/tools/memory-model
+> +    pub const fn as_ptr(&self) -> *mut T {
+> +        self.0.get()
+> +    }
+> +
+> +    /// Returns a mutable reference to the underlying atomic variable.
+> +    ///
+> +    /// This is safe because the mutable reference of the atomic variabl=
+e guarantees the exclusive
+> +    /// access.
+> +    pub fn get_mut(&mut self) -> &mut T {
+> +        // SAFETY: `self.as_ptr()` is a valid pointer to `T`. `&mut self=
+` guarantees the exclusive
+> +        // access, so it's safe to reborrow mutably.
+> +        unsafe { &mut *self.as_ptr() }
+> +    }
+> +}
+> +
+> +impl<T: AllowAtomic> Atomic<T>
+> +where
+> +    T::Repr: AtomicHasBasicOps,
+> +{
+> +    /// Loads the value from the atomic variable.
+
+s/variable/`T`/
+
+> +    ///
+> +    /// # Examples
+> +    ///
+> +    /// Simple usages:
+
+I would remove this.
+
+> +    ///
+> +    /// ```rust
+> +    /// use kernel::sync::atomic::{Atomic, Relaxed};
+> +    ///
+> +    /// let x =3D Atomic::new(42i32);
+> +    ///
+> +    /// assert_eq!(42, x.load(Relaxed));
+> +    ///
+> +    /// let x =3D Atomic::new(42i64);
+> +    ///
+> +    /// assert_eq!(42, x.load(Relaxed));
+> +    /// ```
+> +    #[doc(alias("atomic_read", "atomic64_read"))]
+> +    #[inline(always)]
+> +    pub fn load<Ordering: AcquireOrRelaxed>(&self, _: Ordering) -> T {
+> +        // CAST: Per the safety requirement of `AllowAtomic`, a valid po=
+inter of `T` is also a
+> +        // valid pointer of `T::Repr`.
+
+Well not exactly... The cast is fine due to the round-trip
+transmutability, but you're not allowed to write arbitrary values to it.
+Only values that are transmutable to `T`. So it is valid for reads and
+valid for writes of values transmutable to `T`.
+
+> +        let a =3D self.as_ptr().cast::<T::Repr>();
+> +
+> +        // SAFETY:
+> +        // - For calling the atomic_read*() function:
+> +        //   - `a` is a valid pointer for the function per the CAST just=
+ification above.
+> +        //   - Per the type guarantees, the following atomic operation w=
+on't cause data races.
+
+Which type guarantees? `Self`?
+
+> +        // - For extra safety requirement of usage on pointers returned =
+by `self.as_ptr()`:
+> +        //   - Atomic operations are used here.
+> +        let v =3D unsafe {
+> +            match Ordering::TYPE {
+> +                OrderingType::Relaxed =3D> T::Repr::atomic_read(a),
+> +                OrderingType::Acquire =3D> T::Repr::atomic_read_acquire(=
+a),
+> +                _ =3D> build_error!("Wrong ordering"),
+> +            }
+> +        };
+> +
+> +        // SAFETY: The atomic variable holds a valid `T`, so `v` is a va=
+lid bit pattern of `T`,
+> +        // therefore it's safe to call `from_repr()`.
+
+    // SAFETY: `v` comes from reading `a` which was derived from `self.as_p=
+tr()` which points at a
+    // valid `T`.
+
+> +        unsafe { from_repr(v) }
+> +    }
+> +
+> +    /// Stores a value to the atomic variable.
+
+s/variable/`T`/
+
+> +    ///
+> +    /// # Examples
+> +    ///
+> +    /// ```rust
+> +    /// use kernel::sync::atomic::{Atomic, Relaxed};
+> +    ///
+> +    /// let x =3D Atomic::new(42i32);
+> +    ///
+> +    /// assert_eq!(42, x.load(Relaxed));
+> +    ///
+> +    /// x.store(43, Relaxed);
+> +    ///
+> +    /// assert_eq!(43, x.load(Relaxed));
+> +    /// ```
+> +    #[doc(alias("atomic_set", "atomic64_set"))]
+> +    #[inline(always)]
+> +    pub fn store<Ordering: ReleaseOrRelaxed>(&self, v: T, _: Ordering) {
+> +        let v =3D into_repr(v);
+> +        // CAST: Per the safety requirement of `AllowAtomic`, a valid po=
+inter of `T` is also a
+> +        // valid pointer of `T::Repr`.
+
+Ditto.
+
+> +        let a =3D self.as_ptr().cast::<T::Repr>();
+> +
+> +        // SAFETY:
+> +        // - For calling the atomic_set*() function:
+> +        //   - `a` is a valid pointer for the function per the CAST just=
+ification above.
+> +        //   - Per the type guarantees, the following atomic operation w=
+on't cause data races.
+> +        // - For extra safety requirement of usage on pointers returned =
+by `self.as_ptr()`:
+> +        //   - Atomic operations are used here.
+> +        // - For the bit validity of `Atomic<T>`:
+> +        //   - `v` is a valid bit pattern of `T`, so it's sound to store=
+ it in an `Atomic<T>`.
+
+Ditto.
+
+---
+Cheers,
+Benno
+
+> +        unsafe {
+> +            match Ordering::TYPE {
+> +                OrderingType::Relaxed =3D> T::Repr::atomic_set(a, v),
+> +                OrderingType::Release =3D> T::Repr::atomic_set_release(a=
+, v),
+> +                _ =3D> build_error!("Wrong ordering"),
+> +            }
+> +        };
+> +    }
+> +}
+

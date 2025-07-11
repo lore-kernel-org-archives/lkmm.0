@@ -1,159 +1,219 @@
-Received: from mail-pl1-f181.google.com (mail-pl1-f181.google.com [209.85.214.181])
+Received: from mail-qt1-f173.google.com (mail-qt1-f173.google.com [209.85.160.173])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3ED546F073
-	for <lkmm@lists.linux.dev>; Fri, 11 Jul 2025 13:45:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01BCD2D97A2
+	for <lkmm@lists.linux.dev>; Fri, 11 Jul 2025 13:51:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752241547; cv=none; b=hXiFo10zGYNFEj7aCRDJ6NVc4OGwd7dfeTFQEJfmkdpUP+S/xx0b6HHArV5tZAe4Tf7/u/tdgk5OGmCi46R4pjuqEe97XnIBy8YhEAj8GslqUjz1vAMHELUtmzBDj3P2HZy534od0wTiKasjcr3ztD280PAdEndFVA2LxgXKP68=
+	t=1752241875; cv=none; b=kwliyGzYILw2dL0NMrNGUc4wxLJ+Iz9cj+uc5xW9cncGju2uLoJGrZHeeoGgI7uydSHgqbuqumOOebKToqrDyj0OASmlorvlhNMGjbkMlbZ9b3Oqe8YWEjUaBOR4kj+mVdxwu9v5SphR33D5zk5882d7nGPwct4mrXUeTUP7mi0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752241547; c=relaxed/simple;
-	bh=3jTI8lmVPJdNIpsEXo25Ia6BaFfUuorZSAB0PZFfdNY=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=ALnYVqT18aXiH2WUiMXIDpPeiXF4hRZpQSUeNCyjVq09Vtl1rHrd/yA4YjsJ41dpV5/IbUlNBtl28P2hSTqmdstYryIApSLcCm7ZtErhMX+rGHDuJMqueQVzeDMee5k0j+iFcN7FM5mQX4fdhJ2Tptg6iOWYoNSYwYICY+a1fAI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=RRGJJsQJ; arc=none smtp.client-ip=209.85.214.181
+	s=arc-20240116; t=1752241875; c=relaxed/simple;
+	bh=VhA4dbbRgYBOcUaTz+c7NrVJIROm/R3rHh4CcKNyzi8=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=dUWIibbTp2Hxv/14QpoPhB4UPY867K+jAUbdyQvfZmOF9AV5DQnXi+7J8Lcl5yuSNZDGnLT5hqikLRe1TBZn5wCRFq7gy4Sap8+SAMgT5cMFCIKHCmLSZY7rmz4P1DKEwTzqquYwLZWk+orirjKr0YVC3FTJFV+A4AgqHpJZ3r4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=bJtDViP2; arc=none smtp.client-ip=209.85.160.173
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RRGJJsQJ"
-Received: by mail-pl1-f181.google.com with SMTP id d9443c01a7336-2355360ea88so3216305ad.2
-        for <lkmm@lists.linux.dev>; Fri, 11 Jul 2025 06:45:46 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bJtDViP2"
+Received: by mail-qt1-f173.google.com with SMTP id d75a77b69052e-4a6f0bcdf45so25463781cf.0
+        for <lkmm@lists.linux.dev>; Fri, 11 Jul 2025 06:51:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1752241545; x=1752846345; darn=lists.linux.dev;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=cqaeziKytPI8w8vAt41vJYQ/P2vPeYWtQ7a6fagfqLI=;
-        b=RRGJJsQJ+G3HSgw3HjKrdhGH8nkoQPvu3H/Ee7bVJNtdKd4FpXgNSwdGNqM26VINBM
-         Qkuvfq1chFxAFt5W1OLT7gcIOm1fvq0KbOrobrA+DoCNzHVgX1qwD0aiKdP76MdSRYUX
-         HQTU2u3MzLmkg/yNS8ms/at4xK4ORTE0thXNRsFDy6OXHDFvhor4YSOe3rxsRkEYnQfs
-         BlbrHMAf2X/SWpxa/x+4TuZG0FdeDlhF01Lx2qtUbf3z+0h18tn75NIAjFIPqKc28rfE
-         KNFC9WtIGrTobAnYJCRAQZKjLVyCim+cHoIWpWlOhw4sB/VHWW1WUu+p/ABsTFxrhwcd
-         UmWg==
+        d=gmail.com; s=20230601; t=1752241873; x=1752846673; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:feedback-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=TsPSR2XmtkCGfmNXHOX1skWOOfQss8KuN6l1/rksPTs=;
+        b=bJtDViP2W4s7Fwls2TRcEUu4wOmJe1SU3fNvtDVuII11ama8I7UlJ8RerlaZkJhDfN
+         b6Rv9ILYLFd2Te4rGEMJ4AkLJ/93MnzegTp4+vsn6pi6ZhA12TQG6nI3lBsXsXyS3zMq
+         5vg+LHCG3DSdgbgdM8vH60CiT2X2z7Ol6JgiZPCVZ/5Bhv24PsGfyISVZELm8MpopRbx
+         sDBgddwIZi6GrU+Crq9/T44PyfRY0YIoi5to7fjRenjkXNwxpoRrZY6V+zZe46Tp8xOZ
+         ouhp8psszpeQjCT2ZqUip8K6P1DAbLgPemj4HI9wHVBR+7Fir7rl08fHneKcpptcJiJ1
+         phQg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1752241545; x=1752846345;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=cqaeziKytPI8w8vAt41vJYQ/P2vPeYWtQ7a6fagfqLI=;
-        b=qqtpYyq+713Rib4pBD3GxSoa/yEiZkhhRnCTEn0wlAlrE1RnjLdWjLIXqSkBhMA1lw
-         esgn1SgEcDNoPVitqYD4sIp7qjajwPmXGIgfxZj9da+CUM00HRgBRBXI0h9GtSjx8Lfs
-         W5/enX3wJv5ESPSTcTwI4bDqB3/x3FA8QKL3j592P5cZIDnqzacExaDWr6O2EkqyFutI
-         PljTAwR9U3AqXsp+puTCGptTH+3VtnXo15f+zwwFUbOlDex1YwEe/GumHnUmU4+nJA6r
-         yIw49LVlU4V83ZeAWf++4FwA7QvHo6iopxI/7YhyV6TTQe/YWmIwXa/qOOhOx2Dnw25U
-         xwRQ==
-X-Forwarded-Encrypted: i=1; AJvYcCWhX9OwBKXJ05lKPnmXKpz5OkP+WpyZAtProJ2K1L912u6dx+xQh7d7xJ9j9SYPZsbnJQy6@lists.linux.dev
-X-Gm-Message-State: AOJu0YwU2PYJCUgGAhj1b+Sw/grgd61v80HDv2gGjoyyVux/MoiMkfeP
-	KcNepzMWNjpKr7BXAmmQuOc7me75J4mPBaR3HhoJYxweuJ4S5ZBJdlbodcytf6NThaBV1YrrJQo
-	+0kUP8qrO+qEHR+AlvyXMHEpPmuVDwzM=
-X-Gm-Gg: ASbGncvYtMYQuQAAsbftoBnD2VlG9w42a/TTWsN0CSKMA05ATftTokjl7I45+F0ugNG
-	NCausn9iTlsxTFXamKMoyEVnNxgi/MsYxrB1W9VyzJ5/DLh11XyrNTNvB/iJ5oxSzzPqFOgdMJc
-	7IUhCSgtcz004TKVDYXaFv69ShyQeEnKaiLZPysBD0NnTdQnl7oGOLMS6Y8tl7HpdVY8Y0c7n4n
-	RAizhwr
-X-Google-Smtp-Source: AGHT+IFV5Q6XDMeNyxbrDaCqcTK/9CG4eq2MIFX5PPvQTMRtWGgXyj0wXcXbQyG2lvhVf12L4lT6ldVNfl1A8tpHFxU=
-X-Received: by 2002:a17:902:e742:b0:234:bfe3:c4a3 with SMTP id
- d9443c01a7336-23def6f8af8mr14692945ad.0.1752241545448; Fri, 11 Jul 2025
- 06:45:45 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1752241873; x=1752846673;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:feedback-id:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=TsPSR2XmtkCGfmNXHOX1skWOOfQss8KuN6l1/rksPTs=;
+        b=C5zvyRGVcLisDP/2cpqojs3akmCK950jTPnwIxgVBLHjxxcui4LHPPTeHCQ/vD1Mm9
+         wDlzfdopIDoEt1s6+XBlupN2c6SVmaRuSkiYa4EQj9oCZYwBzXmy8rP8IC15ACQiwLnv
+         nlK6JU16ZDmFEYeKZULNnDwq1+BhvmKl4jQNiUpUj/qHALwSnyST7gxVm4Yz7u6Jl2wO
+         G1rtC9VSxf26f3uOmhxWx0FyKI+sIgUGONJggL2Y4Yggd2f6KV/ZAi9M21hPL640k1vh
+         rANcKGlm8bg3eiHpkGAe9584tZ9q+5H+WsLN+vgAfdK/kUEfI9JEuUAVGiY4VFG4h2dd
+         9PJA==
+X-Forwarded-Encrypted: i=1; AJvYcCXzlRpA7aFks+NExGIcJHB6qSjlB1ixNLpMhv54fscyuGBWNtFt4f10k2oRe15q0PCP7j5X@lists.linux.dev
+X-Gm-Message-State: AOJu0Yz9sUSe4kr/5zt8F+lvwKsBsjiKEG6ijhVIES0uclSsVnmijLhg
+	CLqRUoTgESa4cgksTrJoPB+2EfiTbtE9k/BoaV3E37zDJ50eoTULbOiB
+X-Gm-Gg: ASbGnctwR5kw1SYx4D/eR6Z4GHpuvOUBHzRwuvspBy1PEOTpu8wsb9PwHF/s6gsH1xK
+	sBMkio2aC2bQrowvFBc4o1OjEO0DImYWKmD7aHZum7vaTwgyugaD21fEwGFGAx6Temn9XqocyiG
+	q+Trs04nvcmeF0IjlPOYQbJEmLNPy3T0glI1mt2bQ+L6ijtzhN6kpEvOwsSzHCHtqwe98T4Mml3
+	FpdAoV/sjcL9C8D+KcEFYsPJzNf2iOjf1CsQ9QdP4oTEm+05FgttcUe4YSgUhH/lrbFmtmV3B4G
+	UP2rgaLSTPlGre8xC4jN5IDy7hkEWM8f18mSij4XUy3+6ca/upLJlH8hDVXg0WzpTgG/i2tvbQa
+	FXY5RpQk9MLZ5j2Iv71OCGdLLKZCcS3oyZoI1am4NRzlUy9OCQHpjqT/ggDIST1JqO73HosVOXZ
+	WDf+Z42oTbmaSD
+X-Google-Smtp-Source: AGHT+IG3j/mYxUHwTH0mxjQzJmi5wM/B/2jJ7NoKNHSKvwfZfcpJKZZ0N//i1HDkgCQ/ZVvMkY8kaQ==
+X-Received: by 2002:a05:622a:15d5:b0:4a7:f9ab:7895 with SMTP id d75a77b69052e-4a9fb85a364mr59155491cf.4.1752241872555;
+        Fri, 11 Jul 2025 06:51:12 -0700 (PDT)
+Received: from fauth-a2-smtp.messagingengine.com (fauth-a2-smtp.messagingengine.com. [103.168.172.201])
+        by smtp.gmail.com with ESMTPSA id d75a77b69052e-4ab04d910desm6281831cf.9.2025.07.11.06.51.11
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 11 Jul 2025 06:51:11 -0700 (PDT)
+Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
+	by mailfauth.phl.internal (Postfix) with ESMTP id E4103F40066;
+	Fri, 11 Jul 2025 09:51:10 -0400 (EDT)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-01.internal (MEProxy); Fri, 11 Jul 2025 09:51:10 -0400
+X-ME-Sender: <xms:zhZxaKTEY5U6c6-_3YyteOJniubYemra0aIgWHSprXHT3_pZzke0aw>
+    <xme:zhZxaBR7JwdG7QGEZOBQI4QeI9TSQ3VKT4i9MVx9JGDDrq0MbjsFxfUgnOXTO8AcL
+    5MNKyRYtqHSvDSqiA>
+X-ME-Received: <xmr:zhZxaMa-4paHWzWkXrjNawC6kruDLPCCMKQJhprkgO3ptlwOjTdGkobVFQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdegfeeglecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+    hrpeffhffvvefukfhfgggtuggjsehttdertddttddvnecuhfhrohhmpeeuohhquhhnucfh
+    vghnghcuoegsohhquhhnrdhfvghnghesghhmrghilhdrtghomheqnecuggftrfgrthhtvg
+    hrnhepjeeihfdtuedvgedvtddufffggeefhefgtdeivdevveelvefhkeehffdtkeeihedv
+    necuffhomhgrihhnpehruhhsthdqlhgrnhhgrdhorhhgnecuvehluhhsthgvrhfuihiivg
+    eptdenucfrrghrrghmpehmrghilhhfrhhomhepsghoqhhunhdomhgvshhmthhprghuthhh
+    phgvrhhsohhnrghlihhthidqieelvdeghedtieegqddujeejkeehheehvddqsghoqhhunh
+    drfhgvnhhgpeepghhmrghilhdrtghomhesfhhigihmvgdrnhgrmhgvpdhnsggprhgtphht
+    thhopedvjedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtoheplhhoshhsihhnsehkvg
+    hrnhgvlhdrohhrghdprhgtphhtthhopehlihhnuhigqdhkvghrnhgvlhesvhhgvghrrdhk
+    vghrnhgvlhdrohhrghdprhgtphhtthhopehruhhsthdqfhhorhdqlhhinhhugiesvhhgvg
+    hrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehlkhhmmheslhhishhtshdrlhhinhhu
+    gidruggvvhdprhgtphhtthhopehlihhnuhigqdgrrhgthhesvhhgvghrrdhkvghrnhgvlh
+    drohhrghdprhgtphhtthhopehojhgvuggrsehkvghrnhgvlhdrohhrghdprhgtphhtthho
+    pegrlhgvgidrghgrhihnohhrsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghgrrhihse
+    hgrghrhihguhhordhnvghtpdhrtghpthhtohepsghjohhrnhefpghghhesphhrohhtohhn
+    mhgrihhlrdgtohhm
+X-ME-Proxy: <xmx:zhZxaFjIaiy3xPKeX89dY2CnVso02CcRHAZ6H-bY4j5chU29C0n1Fg>
+    <xmx:zhZxaBi1jZJ7WSKFHml3JNgnciAGNRFFk0_a2NGpKqyJNE1l5Pm_Vg>
+    <xmx:zhZxaLLBzQItEUnD5qoXsWMEqjwIuNI7l76Sj1l9YNPFmYb_9ySjgg>
+    <xmx:zhZxaIVuakmfosevnFBxyDrY9TH7fm6Jz4CqAjyqJ8JD62rYJZq2zg>
+    <xmx:zhZxaN1t5hd4nS0wzZcm9R61A2WLCP-yZjx72mnuzcXa9yl5_uellnkB>
+Feedback-ID: iad51458e:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 11 Jul 2025 09:51:10 -0400 (EDT)
+Date: Fri, 11 Jul 2025 06:51:09 -0700
+From: Boqun Feng <boqun.feng@gmail.com>
+To: Benno Lossin <lossin@kernel.org>
+Cc: linux-kernel@vger.kernel.org, rust-for-linux@vger.kernel.org,
+	lkmm@lists.linux.dev, linux-arch@vger.kernel.org,
+	Miguel Ojeda <ojeda@kernel.org>,
+	Alex Gaynor <alex.gaynor@gmail.com>, Gary Guo <gary@garyguo.net>,
+	=?iso-8859-1?Q?Bj=F6rn?= Roy Baron <bjorn3_gh@protonmail.com>,
+	Andreas Hindborg <a.hindborg@kernel.org>,
+	Alice Ryhl <aliceryhl@google.com>, Trevor Gross <tmgross@umich.edu>,
+	Danilo Krummrich <dakr@kernel.org>, Will Deacon <will@kernel.org>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Wedson Almeida Filho <wedsonaf@gmail.com>,
+	Viresh Kumar <viresh.kumar@linaro.org>,
+	Lyude Paul <lyude@redhat.com>, Ingo Molnar <mingo@kernel.org>,
+	Mitchell Levy <levymitchell0@gmail.com>,
+	"Paul E. McKenney" <paulmck@kernel.org>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Alan Stern <stern@rowland.harvard.edu>
+Subject: Re: [PATCH v6 4/9] rust: sync: atomic: Add generic atomics
+Message-ID: <aHEWze8p40qeNBr_@Mac.home>
+References: <20250710060052.11955-1-boqun.feng@gmail.com>
+ <20250710060052.11955-5-boqun.feng@gmail.com>
+ <DB92I10114UN.33MAFJVWIX4AB@kernel.org>
+ <aHEQKBT68xvqIIjW@Mac.home>
+ <DB99JZ3XMHZS.3N0GLG94JJSA9@kernel.org>
 Precedence: bulk
 X-Mailing-List: lkmm@lists.linux.dev
 List-Id: <lkmm.lists.linux.dev>
 List-Subscribe: <mailto:lkmm+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:lkmm+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20250710060052.11955-1-boqun.feng@gmail.com> <20250710060052.11955-10-boqun.feng@gmail.com>
- <DB93Q0CXTA0G.37LQP5VCP9IGP@kernel.org>
-In-Reply-To: <DB93Q0CXTA0G.37LQP5VCP9IGP@kernel.org>
-From: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
-Date: Fri, 11 Jul 2025 15:45:32 +0200
-X-Gm-Features: Ac12FXyFrHk4Z1-8N4fJ4rpIjk16rCRk0lkV3gm2SvE-JFQCE4Eus7CzluwDG1Q
-Message-ID: <CANiq72m9AeqFKHrRniQ5Nr9vPv2MmUMHFTuuj5ydmqo+OYn60A@mail.gmail.com>
-Subject: Re: [PATCH v6 9/9] rust: sync: atomic: Add Atomic<{usize,isize}>
-To: Benno Lossin <lossin@kernel.org>
-Cc: Boqun Feng <boqun.feng@gmail.com>, linux-kernel@vger.kernel.org, 
-	rust-for-linux@vger.kernel.org, lkmm@lists.linux.dev, 
-	linux-arch@vger.kernel.org, Miguel Ojeda <ojeda@kernel.org>, 
-	Alex Gaynor <alex.gaynor@gmail.com>, Gary Guo <gary@garyguo.net>, 
-	=?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, 
-	Andreas Hindborg <a.hindborg@kernel.org>, Alice Ryhl <aliceryhl@google.com>, 
-	Trevor Gross <tmgross@umich.edu>, Danilo Krummrich <dakr@kernel.org>, Will Deacon <will@kernel.org>, 
-	Peter Zijlstra <peterz@infradead.org>, Mark Rutland <mark.rutland@arm.com>, 
-	Wedson Almeida Filho <wedsonaf@gmail.com>, Viresh Kumar <viresh.kumar@linaro.org>, 
-	Lyude Paul <lyude@redhat.com>, Ingo Molnar <mingo@kernel.org>, 
-	Mitchell Levy <levymitchell0@gmail.com>, "Paul E. McKenney" <paulmck@kernel.org>, 
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Linus Torvalds <torvalds@linux-foundation.org>, 
-	Thomas Gleixner <tglx@linutronix.de>, Alan Stern <stern@rowland.harvard.edu>, 
-	Matthew Wilcox <willy@infradead.org>
-Content-Type: multipart/mixed; boundary="000000000000e0c02e0639a78652"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <DB99JZ3XMHZS.3N0GLG94JJSA9@kernel.org>
 
---000000000000e0c02e0639a78652
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+On Fri, Jul 11, 2025 at 03:34:47PM +0200, Benno Lossin wrote:
+> On Fri Jul 11, 2025 at 3:22 PM CEST, Boqun Feng wrote:
+> > On Fri, Jul 11, 2025 at 10:03:07AM +0200, Benno Lossin wrote:
+> > [...]
+> >> > +
+> >> > +    /// Returns a pointer to the underlying atomic variable.
+> >> > +    ///
+> >> > +    /// Extra safety requirement on using the return pointer: the operations done via the pointer
+> >> > +    /// cannot cause data races defined by [`LKMM`].
+> >> 
+> >> I don't think this is correct. I could create an atomic and then share
+> >> it with the C side via this function, since I have exclusive access, the
+> >> writes to this pointer don't need to be atomic.
+> >> 
+> >
+> > that's why it says "the operations done via the pointer cannot cause
+> > data races .." instead of saying "it must be atomic".
+> 
+> Ah right I misread... But then the safety requirement is redundant? Data
+> races are already UB...
+> 
+> >> We also don't document additional postconditions like this... If you
+> >
+> > Please see how Rust std document their `as_ptr()`:
+> >
+> > 	https://doc.rust-lang.org/std/sync/atomic/struct.AtomicI32.html#method.as_ptr
+> >
+> > It mentions that "Doing non-atomic reads and writes on the resulting
+> > integer can be a data race." (although the document is a bit out of
+> > date, since non-atomic read and atomic read are no longer data race now,
+> > see [1])
+> 
+> That's very different from the comment you wrote though. It's not an
+> additional safety requirement, but rather a note to users of the API
+> that they should be careful with the returned pointer.
+> 
+> > I think we can use the similar document structure here: providing more
+> > safety requirement on the returning pointers, and...
+> >
+> >> really would have to do it like this (which you shouldn't given the
+> >> example above), you would have to make this function `unsafe`, otherwise
+> >> there is no way to ensure that people adhere to it (since it isn't part
+> >> of the safety docs).
+> >> 
+> >
+> > ...since dereferencing pointers is always `unsafe`, users need to avoid
+> > data races anyway, hence this is just additional information that helps
+> > reasoning.
+> 
+> I disagree.
+> 
+> As mentioned above, data races are already forbidden for raw pointers.
+> We should indeed add a note that says that non-atomic operations might
+> result in data races. But that's very different from adding an
+> additional safety requirement for using the pointer.
+> 
+> And I don't think that we can add additional safety requirements to
+> dereferencing a raw pointer without an additional `unsafe` block.
+> 
 
-On Fri, Jul 11, 2025 at 11:00=E2=80=AFAM Benno Lossin <lossin@kernel.org> w=
-rote:
->
-> Do we have a static assert with these cfgs that `isize` has the same
-> size as these?
->
-> If not, then it would probably make sense to add them now.
+So all your disagreement is about the "extra safety requirement" part?
+How about I drop that:
 
-Yeah, according to e.g. Matthew et al., we may end up with 128-bit
-pointers in the kernel fairly soon (e.g. a decade):
+    /// Returns a pointer to the underlying atomic `T`.
+    pub const fn as_ptr(&self) -> *mut T {
+        self.0.get()
+    }
 
-    https://lwn.net/Articles/908026/
+? I tried to add something additional information:
 
-I rescued part of what I wrote in the old `mod assumptions` which I
-never got to send back then -- most of the `static_asserts` are
-redundant now that we define directly the types in the `ffi` crate (I
-mean, we could still assert that `size_of::<c_char>() =3D=3D 1` and so on,
-but they are essentially a tautology now), so I adapted the comments.
-Please see below (draft).
+/// Note that non-atomic reads and writes via the returned pointer may
+/// cause data races if racing with atomic reads and writes per [LKMM].
 
-Cheers,
-Miguel
+but that seems redundant, because as you said, data races are UB anyway.
 
---000000000000e0c02e0639a78652
-Content-Type: text/x-patch; charset="US-ASCII"; 
-	name="0001-rust-ffi-assert-sizes-and-clarify-128-bit-situation.patch"
-Content-Disposition: attachment; 
-	filename="0001-rust-ffi-assert-sizes-and-clarify-128-bit-situation.patch"
-Content-Transfer-Encoding: base64
-Content-ID: <f_mcyv696x0>
-X-Attachment-Id: f_mcyv696x0
+Thoughts?
 
-RnJvbSBhZmQ1OGYzODA4YmQ0MWNmYjkyYmYxYWNkZjJhMTkwODFhNDM5Y2EzIE1vbiBTZXAgMTcg
-MDA6MDA6MDAgMjAwMQpGcm9tOiBNaWd1ZWwgT2plZGEgPG9qZWRhQGtlcm5lbC5vcmc+CkRhdGU6
-IEZyaSwgMTEgSnVsIDIwMjUgMTU6Mjc6MjcgKzAyMDAKU3ViamVjdDogW1BBVENIXSBydXN0OiBm
-Zmk6IGFzc2VydCBzaXplcyBhbmQgY2xhcmlmeSAxMjgtYml0IHNpdHVhdGlvbgoKTGluazogaHR0
-cHM6Ly9sd24ubmV0L0FydGljbGVzLzkwODAyNi8KU2lnbmVkLW9mZi1ieTogTWlndWVsIE9qZWRh
-IDxvamVkYUBrZXJuZWwub3JnPgotLS0KIHJ1c3QvZmZpLnJzIHwgMzIgKysrKysrKysrKysrKysr
-KysrKysrKysrKysrKysrKysKIDEgZmlsZSBjaGFuZ2VkLCAzMiBpbnNlcnRpb25zKCspCgpkaWZm
-IC0tZ2l0IGEvcnVzdC9mZmkucnMgYi9ydXN0L2ZmaS5ycwppbmRleCBkNjBhYWQ3OTJhZjQuLmJi
-ZGE1NmMyOGNhOCAxMDA2NDQKLS0tIGEvcnVzdC9mZmkucnMKKysrIGIvcnVzdC9mZmkucnMKQEAg
-LTM4LDExICszOCw0MyBAQCBtYWNyb19ydWxlcyEgYWxpYXMgewogCiAgICAgLy8gSW4gdGhlIGtl
-cm5lbCwgYGludHB0cl90YCBpcyBkZWZpbmVkIHRvIGJlIGBsb25nYCBpbiBhbGwgcGxhdGZvcm1z
-LCBzbyB3ZSBjYW4gbWFwIHRoZSB0eXBlIHRvCiAgICAgLy8gYGlzaXplYC4KKyAgICAvLworICAg
-IC8vIEl0IGlzIGxpa2VseSB0aGF0IHRoZSBhc3N1bXB0aW9uIHRoYXQgYGxvbmdgIGlzIHRoZSBz
-aXplIG9mIGEgQ1BVIHJlZ2lzdGVyL3BvaW50ZXIgd2lsbCBzdGF5CisgICAgLy8gd2hlbiBzdXBw
-b3J0IGZvciAxMjgtYml0IGFyY2hpdGVjdHVyZXMgaXMgYWRkZWQsIHRodXMgdGhlc2Ugd2lsbCBz
-dGlsbCBtYXBwZWQgdG8gYHtpLHV9c2l6ZWAuCiAgICAgY19sb25nID0gaXNpemU7CiAgICAgY191
-bG9uZyA9IHVzaXplOwogCisgICAgLy8gU2luY2UgYGxvbmdgIHdpbGwgbGlrZWx5IGJlIDEyOC1i
-aXQgZm9yIDEyOC1iaXQgYXJjaGl0ZWN0dXJlcywgYGxvbmcgbG9uZ2Agd2lsbCBsaWtlbHkgYmUK
-KyAgICAvLyBpbmNyZWFzZWQuIFRodXMgdGhlc2UgbWF5IGhhcHBlbiB0byBiZSBlaXRoZXIgNjQt
-Yml0IG9yIDEyOC1iaXQgaW4gdGhlIGZ1dHVyZSwgYW5kIHRodXMgbmV3CisgICAgLy8gY29kZSBz
-aG91bGQgYXZvaWQgcmVseWluZyBvbiB0aGVtIGJlaW5nIDY0LWJpdC4KICAgICBjX2xvbmdsb25n
-ID0gaTY0OwogICAgIGNfdWxvbmdsb25nID0gdTY0OwogfQogCisvLyBUaHVzLCBgbG9uZ2AgbWF5
-IGJlIDMyLWJpdCwgNjQtYml0IG9yIDEyOC1iaXQuCitjb25zdCBfOiAoKSA9IHsKKyAgICBhc3Nl
-cnQhKAorICAgICAgICBjb3JlOjptZW06OnNpemVfb2Y6OjxjX2xvbmc+KCkKKyAgICAgICAgICAg
-ID09IGlmIGNmZyEoQ09ORklHXzEyOEJJVCkgeworICAgICAgICAgICAgICAgIGNvcmU6Om1lbTo6
-c2l6ZV9vZjo6PHUxMjg+KCkKKyAgICAgICAgICAgIH0gZWxzZSBpZiBjZmchKENPTkZJR182NEJJ
-VCkgeworICAgICAgICAgICAgICAgIGNvcmU6Om1lbTo6c2l6ZV9vZjo6PHU2ND4oKQorICAgICAg
-ICAgICAgfSBlbHNlIHsKKyAgICAgICAgICAgICAgICBjb3JlOjptZW06OnNpemVfb2Y6Ojx1MzI+
-KCkKKyAgICAgICAgICAgIH0KKyAgICApOworfTsKKworLy8gQW5kIGBsb25nIGxvbmdgIG1heSBi
-ZSA2NC1iaXQgb3IgMTI4LWJpdC4KK2NvbnN0IF86ICgpID0geworICAgIGFzc2VydCEoCisgICAg
-ICAgIGNvcmU6Om1lbTo6c2l6ZV9vZjo6PGNfbG9uZ2xvbmc+KCkKKyAgICAgICAgICAgID09IGlm
-IGNmZyEoQ09ORklHXzY0QklUKSB7CisgICAgICAgICAgICAgICAgY29yZTo6bWVtOjpzaXplX29m
-Ojo8dTY0PigpCisgICAgICAgICAgICB9IGVsc2UgeworICAgICAgICAgICAgICAgIGNvcmU6Om1l
-bTo6c2l6ZV9vZjo6PHUxMjg+KCkKKyAgICAgICAgICAgIH0KKyAgICApOworfTsKKwogcHViIHVz
-ZSBjb3JlOjpmZmk6OmNfdm9pZDsKCmJhc2UtY29tbWl0OiBkN2I4ZjhlMjA4MTNmMDE3OWQ4ZWY1
-MTk1NDFhMzUyN2U3NjYxZDNhCi0tIAoyLjUwLjEKCg==
---000000000000e0c02e0639a78652--
+Regards,
+Boqun
+
+> ---
+> Cheers,
+> Benno

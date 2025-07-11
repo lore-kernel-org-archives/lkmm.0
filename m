@@ -1,95 +1,164 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE9811A5B99;
-	Fri, 11 Jul 2025 08:15:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41A9518D;
+	Fri, 11 Jul 2025 08:37:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752221724; cv=none; b=Xt76YNvXt+V38PvHBFdlZo/vvMjbLDkvkRk3Twk4sHaT9L1Xh4qcS5aFcmuerYUMC0Pf3vPvxP9home2Gi4qmm2jcW3GVxNcfk27Qz9REoyCLOAmJu07RS70eZAZNN3zcsWqnhwGYIg+rnOB9xG4IYqs+N7hWNQZ8J0LwcPhQ3Y=
+	t=1752223049; cv=none; b=ATdC5B8f9fjSR4Z/oEzI4EqbJ+yPLIKXIxycKfp71vW/Hptc+W5bYQ9GvzHvzoddTU9uQBZxXMCPU5AAIakF1AIJEqh+OlyBRysbCgLgvoFVXqnZ6AiK70O/49EODP5XHH8NBodcprDQ81aoBE9f+nOJgXIBUkJ3BAY3gPQYjS8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752221724; c=relaxed/simple;
-	bh=MdlvamzqR242whEfiL7qVmBGWnd92BiQRP9xljkyRVM=;
-	h=Mime-Version:Content-Type:Date:Message-Id:Subject:From:To:Cc:
-	 References:In-Reply-To; b=GZbG++adxwrpVDSSB/02O1qpPGK1C87QLA7/YCFK3suVY5KoKqNOV87eEDCG5ODZ+DejDk8SJ9aqR2oeGnDt32VQqEd27MCuBp99NlowsAxkUk6xye9E6UBa1u1nYcwH3l3/xLuwFLvuOwSYCc2a+iGlq0JuFwd0IuNSRnxmRLU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=EaT0U+td; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1752223049; c=relaxed/simple;
+	bh=OHCIgiPuGTOLfp8ArVy61aLbLOSN/ySRGK+gWTBkLBU=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=CEivNZbl4eyYC8HoDhlmpsfkhplal+htTtXDOKWBcQPV02qbTYFEYfMWrxiRLygHvAhLaztfgN+K3GUgfJS64DP2kEYKHq3xUxMSd60Tm5+cD7VkmMboJ4AG/vXWtZvUaT8KiS3ZUh4aK0O1LStBV7lhS7FeZ9x9HlaUkjJWdek=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ThKvuZwq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="EaT0U+td"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE862C4CEED;
-	Fri, 11 Jul 2025 08:15:19 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ThKvuZwq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 118FDC4CEED;
+	Fri, 11 Jul 2025 08:37:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1752221724;
-	bh=MdlvamzqR242whEfiL7qVmBGWnd92BiQRP9xljkyRVM=;
-	h=Date:Subject:From:To:Cc:References:In-Reply-To:From;
-	b=EaT0U+tdfBpDCGPtDKQKdvVxcnrOIpjzTJm6UEmUMwxPR2XaFzGbkho3DtsJiyVTE
-	 cGaqFt/OK9b6VCrYwDdnDP3zkp7gwJ1bX+EjCR2O2CXzyWOTep5jxW5VsIFtJtxXke
-	 cH6y6yNVvN7mI2i9p9LlBn2/oHL4NAcw7iqZeSpG7LkgaPI56GCumaWaXAp+oigRe1
-	 AZMcI4sfIKLIdgIaKgt9QacVKuswGoRHEp8q+mPB5nccOmV3wtMn8xZCk9tS4xo4lp
-	 ioW572vK21Ju30YwMY7mFXKhDvlb4noC7g47iYREbargre8QWKEvxZfz0d/cTnlXjm
-	 OaJAX7i6xWXhQ==
+	s=k20201202; t=1752223049;
+	bh=OHCIgiPuGTOLfp8ArVy61aLbLOSN/ySRGK+gWTBkLBU=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=ThKvuZwqdhuC5eWcMREi5ebn4Hmn8EDthtu/b4le/mSaNIBuNYYylhL6n4PDhDmwr
+	 pZFAawYh3d/ut4Qn1EMA3rLfjFwZilVks1Cy1aoRcPGg86XlABdrTbwOzA7tgqYaI5
+	 KR3mnMI6irZwn3I6+9LKtn4rQfiMPqxmiBI7sWTEhg0uFl3HYenoT2vT+9d7n92RyX
+	 6A1Gaeah2C+NOV3jPlZGcwB15BM89zYPBsGwby2yvWiDUkINI/u8OLWJqpB3JfXkOL
+	 WkDSFMf57nXRT/JkfsOMM25KTIEXZJBYj/+fH4hGGGcdrk9+sHU2Wn6QvYBA0r0Gl5
+	 gfKjee6RjqbYg==
+Received: from mchehab by mail.kernel.org with local (Exim 4.98.2)
+	(envelope-from <mchehab+huawei@kernel.org>)
+	id 1ua9G3-0000000FXSq-0eVb;
+	Fri, 11 Jul 2025 10:37:27 +0200
+From: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+To: Linux Doc Mailing List <linux-doc@vger.kernel.org>,
+	Jonathan Corbet <corbet@lwn.net>
+Cc: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
+	"Akira Yokosawa" <akiyks@gmail.com>,
+	"Breno Leitao" <leitao@debian.org>,
+	"David S. Miller" <davem@davemloft.net>,
+	"Donald Hunter" <donald.hunter@gmail.com>,
+	"Eric Dumazet" <edumazet@google.com>,
+	"Ignacio Encinas Rubio" <ignacio@iencinas.com>,
+	"Jan Stancek" <jstancek@redhat.com>,
+	"Marco Elver" <elver@google.com>,
+	"Mauro Carvalho Chehab" <mchehab+huawei@kernel.org>,
+	"Paolo Abeni" <pabeni@redhat.com>,
+	"Randy Dunlap" <rdunlap@infradead.org>,
+	"Ruben Wauters" <rubenru09@aol.com>,
+	"Shuah Khan" <skhan@linuxfoundation.org>,
+	joel@joelfernandes.org,
+	linux-kernel-mentees@lists.linux.dev,
+	linux-kernel@vger.kernel.org,
+	lkmm@lists.linux.dev,
+	netdev@vger.kernel.org,
+	peterz@infradead.org,
+	stern@rowland.harvard.edu
+Subject: [PATCH v9 14/13] sphinx: parser_yaml.py: fix line numbers information
+Date: Fri, 11 Jul 2025 10:36:23 +0200
+Message-ID: <4d1e0f5283ae1c6874cef272c5760035eb51278a.1752222934.git.mchehab+huawei@kernel.org>
+X-Mailer: git-send-email 2.50.0
+In-Reply-To: <cover.1752076293.git.mchehab+huawei@kernel.org>
+References: <cover.1752076293.git.mchehab+huawei@kernel.org>
 Precedence: bulk
 X-Mailing-List: lkmm@lists.linux.dev
 List-Id: <lkmm.lists.linux.dev>
 List-Subscribe: <mailto:lkmm+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:lkmm+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Fri, 11 Jul 2025 10:15:17 +0200
-Message-Id: <DB92RCJX0C6E.352SUWSV7VBE9@kernel.org>
-Subject: Re: [PATCH v6 2/9] rust: sync: Add basic atomic operation mapping
- framework
-From: "Benno Lossin" <lossin@kernel.org>
-To: "Boqun Feng" <boqun.feng@gmail.com>
-Cc: <linux-kernel@vger.kernel.org>, <rust-for-linux@vger.kernel.org>,
- <lkmm@lists.linux.dev>, <linux-arch@vger.kernel.org>, "Miguel Ojeda"
- <ojeda@kernel.org>, "Alex Gaynor" <alex.gaynor@gmail.com>, "Gary Guo"
- <gary@garyguo.net>, =?utf-8?q?Bj=C3=B6rn_Roy_Baron?=
- <bjorn3_gh@protonmail.com>, "Andreas Hindborg" <a.hindborg@kernel.org>,
- "Alice Ryhl" <aliceryhl@google.com>, "Trevor Gross" <tmgross@umich.edu>,
- "Danilo Krummrich" <dakr@kernel.org>, "Will Deacon" <will@kernel.org>,
- "Peter Zijlstra" <peterz@infradead.org>, "Mark Rutland"
- <mark.rutland@arm.com>, "Wedson Almeida Filho" <wedsonaf@gmail.com>,
- "Viresh Kumar" <viresh.kumar@linaro.org>, "Lyude Paul" <lyude@redhat.com>,
- "Ingo Molnar" <mingo@kernel.org>, "Mitchell Levy"
- <levymitchell0@gmail.com>, "Paul E. McKenney" <paulmck@kernel.org>, "Greg
- Kroah-Hartman" <gregkh@linuxfoundation.org>, "Linus Torvalds"
- <torvalds@linux-foundation.org>, "Thomas Gleixner" <tglx@linutronix.de>,
- "Alan Stern" <stern@rowland.harvard.edu>
-X-Mailer: aerc 0.20.1
-References: <20250710060052.11955-1-boqun.feng@gmail.com>
- <20250710060052.11955-3-boqun.feng@gmail.com>
- <DB8BQGJNFDAY.BGQ8CZSFFOLH@kernel.org> <aG_Yah5FFHcA3IZy@Mac.home>
- <DB8HQLY48DFX.3PBBUTQLV14PC@kernel.org> <aG_nT3H8J-h2qwr5@Mac.home>
- <DB8MAQC4V57F.1GGYO1PNPOV2X@kernel.org> <aHAiqhPe5OwVioUe@tardis-2.local>
-In-Reply-To: <aHAiqhPe5OwVioUe@tardis-2.local>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+Sender: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 
-On Thu Jul 10, 2025 at 10:29 PM CEST, Boqun Feng wrote:
-> On Thu, Jul 10, 2025 at 09:21:17PM +0200, Benno Lossin wrote:
->> On Thu Jul 10, 2025 at 6:16 PM CEST, Boqun Feng wrote:
->> > At least the rustdoc has safety section for each function. ;-)
->>=20
->> I don't usually use rustdoc to read function safety sections. Instead I
->> jump to their definition and read the code.
->>=20
->
-> Understood. It's probalby the first time we use macros to generate a few
-> unsafe functions, so this is something new.
->
-> But let me ask you a question, as a programmer yourself, when you run
-> into a code base, and see something repeat in a similar pattern for 10+
-> times, what's your instinct? You would try to combine the them together,
-> right? That's why duplication seems not compelling to me. But surely, we
-> don't need to draw conclusion right now, however that's my opinion.
+As reported by Donald, this code:
 
-It all depends, if the definition never changes for a long time, I don't
-mind the duplication. It's probably more effort to write macros to then
-have less overall code.
+	rst_parser = RSTParser()
+	rst_parser.parse('\n'.join(result), document)
 
-It also makes it harder to read especially wrt safety docs. So if you
-think you will have to make constant tweaks & additions to these, then
-we should go a macro-heavy route. But if not, then I think making it
-more readable is the way to go.
+breaks line parsing. As an alternative, I tested a variant of it:
 
+	rst_parser.parse(result, document)
+
+but still line number was not preserved. As Donald noted,
+standard Parser classes don't have a direct mechanism to preserve
+line numbers from ViewList().
+
+So, instead, let's use a mechanism similar to what we do already at
+kerneldoc.py: call the statemachine mechanism directly there.
+
+I double-checked when states and statemachine were introduced:
+both were back in 2002. I also tested doc build with docutils 0.16
+and 0.21.2. It worked with both, so it seems to be stable enough
+for our needs.
+
+Reported-by: Donald Hunter <donald.hunter@gmail.com>
+Closes: https://lore.kernel.org/linux-doc/m24ivk78ng.fsf@gmail.com/T/#u
+Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 ---
-Cheers,
-Benno
+
+PS.: I'm opting to send this as 14/13 to avoid respanning the entire
+series again just due to this extra change.
+
+ Documentation/sphinx/parser_yaml.py | 21 ++++++++++++++-------
+ 1 file changed, 14 insertions(+), 7 deletions(-)
+
+diff --git a/Documentation/sphinx/parser_yaml.py b/Documentation/sphinx/parser_yaml.py
+index 1602b31f448e..634d84a202fc 100755
+--- a/Documentation/sphinx/parser_yaml.py
++++ b/Documentation/sphinx/parser_yaml.py
+@@ -11,7 +11,9 @@ import sys
+ 
+ from pprint import pformat
+ 
++from docutils import statemachine
+ from docutils.parsers.rst import Parser as RSTParser
++from docutils.parsers.rst import states
+ from docutils.statemachine import ViewList
+ 
+ from sphinx.util import logging
+@@ -56,6 +58,8 @@ class YamlParser(Parser):
+ 
+     re_lineno = re.compile(r"\.\. LINENO ([0-9]+)$")
+ 
++    tab_width = 8
++
+     def rst_parse(self, inputstring, document, msg):
+         """
+         Receives a ReST content that was previously converted by the
+@@ -66,10 +70,18 @@ class YamlParser(Parser):
+ 
+         result = ViewList()
+ 
++        self.statemachine = states.RSTStateMachine(state_classes=states.state_classes,
++                                                   initial_state='Body',
++                                                   debug=document.reporter.debug_flag)
++
+         try:
+             # Parse message with RSTParser
+             lineoffset = 0;
+-            for line in msg.split('\n'):
++
++            lines = statemachine.string2lines(msg, self.tab_width,
++                                              convert_whitespace=True)
++
++            for line in lines:
+                 match = self.re_lineno.match(line)
+                 if match:
+                     lineoffset = int(match.group(1))
+@@ -77,12 +89,7 @@ class YamlParser(Parser):
+ 
+                 result.append(line, document.current_source, lineoffset)
+ 
+-            # Fix backward compatibility with docutils < 0.17.1
+-            if "tab_width" not in vars(document.settings):
+-                document.settings.tab_width = 8
+-
+-            rst_parser = RSTParser()
+-            rst_parser.parse('\n'.join(result), document)
++            self.statemachine.run(result, document)
+ 
+         except Exception as e:
+             document.reporter.error("YAML parsing error: %s" % pformat(e))
+-- 
+2.50.0
+
+

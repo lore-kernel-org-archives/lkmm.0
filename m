@@ -1,74 +1,74 @@
-Received: from mail-qk1-f169.google.com (mail-qk1-f169.google.com [209.85.222.169])
+Received: from mail-qt1-f170.google.com (mail-qt1-f170.google.com [209.85.160.170])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CAC518DF6E
-	for <lkmm@lists.linux.dev>; Fri, 11 Jul 2025 19:26:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 372E72F3655
+	for <lkmm@lists.linux.dev>; Fri, 11 Jul 2025 19:51:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752261969; cv=none; b=kek8IfhNb9KY0MROrExKSPqGkneIhMPxueAwaH6itBzcC4O2FT5CZ9mI5wuMp7nOMPpLP0e6P3Mk4GLaK9gUFnUf9mDHs9grM5EhbqkwUbN/SYKTebW0wuH1ANME7pAA/oHDBx3gzXZXOOicZS1tkRxS+kkBLVmAdrbAKgMfI2k=
+	t=1752263511; cv=none; b=qR4hB7HWVd2IoDlmsx/lSB8+dhlSk31mqizhVZfSrtpNjVIV0v067FvX5Q7SdAKBsazbnqWq/RBrmUuD604WZq4mhfj32ehRqi0W8y/v8m16smzHis1SPULGqrp0DWgihZWFRvha3uryrxWd6EfG4OHdl35asaHtb+ZxOCERI7w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752261969; c=relaxed/simple;
-	bh=Nj2/9SXax7e+BLCGe4rwQQy+Qk8F42MdceTDjpf/rDk=;
+	s=arc-20240116; t=1752263511; c=relaxed/simple;
+	bh=dGpy3ADwM3rHOkm1xnXgVCqTRurvKQ73fjJdVhSmrfE=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=c6U5WeMIcRtYwTZZRrGqBrSG1vFdqActbJGWpJsnz3eyueEButMJpX0VK280b6B/LKWZ1iTd7Njk5WedyLnu+Z3Bf2qS0LLPUtLLOzS2PNYgLYmu0/QsQpPuadtc5ru5auP1k8uZ+EFOX/HZHwZMwnroaoAnSfX1SjkWpvKnSc8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=MSKO2Lbz; arc=none smtp.client-ip=209.85.222.169
+	 Content-Type:Content-Disposition:In-Reply-To; b=cH6nG5hnzrO0HsxiNRGaxG8D24i+ydRHbBQ3Rx2OwHlsAw3P3xw5hKIGr+j56dUT9QU4h1SYmnLXfZDBVXuFb3wsdjuanhyZtvbKTtmn85CotW5dji+e9MGGk3jDHBpw1TUNvhTubAZxyKh8e5Y6VzUf9mmerQchnyDkJ2oSbQE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ipbE83vO; arc=none smtp.client-ip=209.85.160.170
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MSKO2Lbz"
-Received: by mail-qk1-f169.google.com with SMTP id af79cd13be357-7dfff5327fbso99072185a.1
-        for <lkmm@lists.linux.dev>; Fri, 11 Jul 2025 12:26:07 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ipbE83vO"
+Received: by mail-qt1-f170.google.com with SMTP id d75a77b69052e-4a43afb04a7so21107151cf.0
+        for <lkmm@lists.linux.dev>; Fri, 11 Jul 2025 12:51:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1752261966; x=1752866766; darn=lists.linux.dev;
+        d=gmail.com; s=20230601; t=1752263509; x=1752868309; darn=lists.linux.dev;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:feedback-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=JwfSF5Ou0Fh5wm9fluMBnRsZ0sojeKWafBTdf2xAt2w=;
-        b=MSKO2LbziZAzqemaNBWUAVt/u99MpbINQm1QW2eM35/bVGgIK+GMOn30VPMhkVmEwn
-         OjoIeWdHnx4X/KB4AQBgodycFWcut0zEICjB6Ho/9H4L2PWqyzJ19mNsIJLipDsrdUIG
-         AWignpsTFnwgZOaZkYo7lwrxWXqXdxFGs7j+vjTLHUu2a8OOc3OCkm50FixwmvyAXJD2
-         Ph8+URznBohEdp43RDEKBMD3g5p1MWro+NIeNbS0ZucX94pyY1YUEiEby7BBWqDE9Q5m
-         HvfRIWr2i8qmhCvbFEvtoFFeDYRYrRFpSzNOf9UV0vjBBsnRavw4MNkl9YIH6d65+0MS
-         TSXA==
+        bh=7eIsVVz+Zj4/hQ0nCPWaAmy6Mmh9tpn0xByP7zOmsGA=;
+        b=ipbE83vOrJg75dvE5a43eO1uZKQa1SKbwIuo+WDZ0w1WgWATqw1TN7ROAXGeBNpF4w
+         H5T3fAQKl91IMJZUUnXcgT2HbOBEfXDG5jvpflNOfe8UFBDvlRnv7467vEacYBq1wjPU
+         bc+69hsaqkHHsrDQhQB8idvSoBcAhDZSulcp49DYPk1UyFiObu6QmeI6fTza9lypRRG3
+         hELPLyLiEsNTtxrPdQ2TIG+X0F7czzROnnGEJ8pbtVpv25yFn+jm5MdqBQIs4r0xi4sJ
+         vPmrwqxKWvYgGVRKOI3tHaWEagFvF437Ruu7BrviSTWn9v/yb5KsbXY2ODstnw/LZ12/
+         bf0g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1752261966; x=1752866766;
+        d=1e100.net; s=20230601; t=1752263509; x=1752868309;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:feedback-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=JwfSF5Ou0Fh5wm9fluMBnRsZ0sojeKWafBTdf2xAt2w=;
-        b=qXwOLxQEeZi51HsUvbeA5LWul7x7I0A2DlevZZfKFgOKh5VRb8uMnEgXftgY6DeJve
-         ufoW3a/Mst4SxcalYDfs9zR7N/IJ77aJb81Lz297azbcEnbKTxksEdi0L2eCRGzaF4Tx
-         fwqwA97CZeFwDjXVEBB2xeXspjRN6o5NNmt+HTZLCmpQ2e3dSYse3aJ5iQ7OL5Gx0nA2
-         PBga2eLlIxFiC5TFzK0DaNXBTEfzj+fb6kY39kP2CwksiuGKZ1/e+XYPiVEPfn2SMefw
-         HxwYY8nP0O1M0Ix6gviN6CsYdSSTtAta2DgFRjznGYRaxUYC9JaFDKjokf6VYI5uI/MG
-         1DRw==
-X-Forwarded-Encrypted: i=1; AJvYcCVAW++vZu5JQp42MD+3seorYBpWBIRl1Id0bRO2Hasoi0CK9PZz9y+tUCV0KMspWlvW5G0Q@lists.linux.dev
-X-Gm-Message-State: AOJu0YwePM+LRW4oWWImqfd0vIHf6Ttklq+qrrFUxpWyU0cPHmZNr+qG
-	A9va8fIQnloNLeboWQlTmqY/oqGX3v+vQrMc4SWnqnxhVaf7TqipMtiK
-X-Gm-Gg: ASbGncs8FZeQTMUZ6Q1wmWZ8BrX4Zf8UMo+NB+obuWIuEHGbw0u5/bI1yQ+2rx30DTv
-	TqNFF9gvV0VBqD4TBx4+hDM5SZRR1nSUe2yfvFdRCe7o15d/prx33KWOFjr+4qIeZ5Vm5xehWB0
-	vnhFpY8l7QBnEwsTGf8pwIuaB3WPus55ENgX9AE5nQiAP0sMtPTOK1Ix+uLaJKaAnmXbGsR1SPY
-	D8Jl/m9U7lDChKxV+dlOhgJf1BFPwSm2ePKLccqISuzI/Yg03sBkx+sccBSs8qmDme+84HeG+Qk
-	DlxKwUzUMfHxgO6rd0gMeYxOWtySgjhaBZs35icEBsEXrq7uhqq35kkzZP2jUp87A9jyv0+T3AU
-	Kv49qlLroAoIOTxyVXdcy8EfWZjeA0PSQiJO/a+wYISNWLb5/37q+fEeFda9TBbMs5EYb/25+er
-	9bO6Djf8ErzI1k
-X-Google-Smtp-Source: AGHT+IEe54GCWKEIEGuTF82+GhJW28o7mntY39+AcMUpIh0AY0EaceOmMdD3EnQvJES3Xw4UwW2hfg==
-X-Received: by 2002:a05:620a:1a2a:b0:7cd:ca60:7bdc with SMTP id af79cd13be357-7ddec83adfdmr874233285a.48.1752261966090;
-        Fri, 11 Jul 2025 12:26:06 -0700 (PDT)
+        bh=7eIsVVz+Zj4/hQ0nCPWaAmy6Mmh9tpn0xByP7zOmsGA=;
+        b=QpSNfQa+nk0uExNhdWADPLflGu+cyjDsBUCZuuJdGbf0YPqDVhzAqCZ+8NyK0j5qQM
+         lp2rOcIjUZQW9MDG8hpyByrTJCrXj2M+ka6JMffQWgwx3CGNHX/GtoKcvpp9VXugUpOu
+         6jEB4CxNbnAOcuTmRxnCRRQ2gYrOOkc98X93uGddUg3P3Pkc0+9PpA0ASDXEun9hLUy/
+         t1HNBhprSV+WPQmNFSAKkbuRxvg2nJ5cSH7LgOTClNsdez/aGHyPQVrxIwZCkti5UnbQ
+         hffbiafgdvz8B3GZSTxcfSQDLlPjDjVRByc8sMCGgGd9XYJJAq9+zlNXEAnVHGt/sOJS
+         3rLw==
+X-Forwarded-Encrypted: i=1; AJvYcCXGJgy+6tSZ9ogBNpki39NaCYiiBJsPliO2cDm7msn3wjocKqHPxx5vzu21gtcLn17TAcM1@lists.linux.dev
+X-Gm-Message-State: AOJu0YwnR5ESHFwHgM93cH2A/BM1R8u3BAho5xYCAoLKE3z6J4F9NvAn
+	yRBhWH4i0uZBa9iPKE/tC3hSrf1owj0AuzddkEJ9tarJ0AvVJyXnX1as
+X-Gm-Gg: ASbGnct+pNnjGnkmQ7ZWuscgQOjG3uSkRVrVe3hYdv3wAbidpknM3katk+rCtcVE0Mv
+	SAc6nFiiKq/INL5lpfYddpSWjGyneYs+EaPFzwwHcB0XZfSGg+Z7z8Ett6MPkNPqkhSNdO5G8dS
+	5z2H2OztaJi5rzVXCl/dU4it1bjitAOG3u8ZtrdbHTexC3ER9wGfqRQ9fLSPdaeZ0irmdLuuHR8
+	4xXo0UxUs+qzm7WTI305Q5gCJCrJhVCt+TBDiM4gI1KdVSGPriGmgu8ne5NmYPghL5lz5RN8Yry
+	0udsyYLpD3/ZlMPzQgFAT8xkaP2T/i3Su1Y7110Hm8ozJrZns6szWcr9IBEScPzsc8whlfx7YXi
+	Qt/iZSvCzdiWoyTjUcmskOFIQQ3pD+3H5NpICvGY7ezJjhcJM/GOUZTbwHJ+ktGSws9Tvn6rNaE
+	Uhp8xWZUhQKPTX
+X-Google-Smtp-Source: AGHT+IFjF9Q+ILRFfbLq9/A+BNVpPwLxZ8g+g9WrQt/SnctUC6LOM/izS0XuFctOsoedPo+l5Ys6qQ==
+X-Received: by 2002:a05:622a:653:b0:494:7ca0:2ff with SMTP id d75a77b69052e-4aa35dc5b8dmr60315151cf.15.1752263508891;
+        Fri, 11 Jul 2025 12:51:48 -0700 (PDT)
 Received: from fauth-a2-smtp.messagingengine.com (fauth-a2-smtp.messagingengine.com. [103.168.172.201])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-704979b48bdsm23045806d6.28.2025.07.11.12.26.05
+        by smtp.gmail.com with ESMTPSA id d75a77b69052e-4a9edeee300sm24203831cf.73.2025.07.11.12.51.47
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 11 Jul 2025 12:26:05 -0700 (PDT)
-Received: from phl-compute-02.internal (phl-compute-02.phl.internal [10.202.2.42])
-	by mailfauth.phl.internal (Postfix) with ESMTP id CAABEF40066;
-	Fri, 11 Jul 2025 15:26:04 -0400 (EDT)
+        Fri, 11 Jul 2025 12:51:48 -0700 (PDT)
+Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
+	by mailfauth.phl.internal (Postfix) with ESMTP id 54965F40066;
+	Fri, 11 Jul 2025 15:51:47 -0400 (EDT)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-02.internal (MEProxy); Fri, 11 Jul 2025 15:26:04 -0400
-X-ME-Sender: <xms:TGVxaEr3t-y0z3XbQJS5uzsszc86CQxpphas6KuDseyXVuXOyGTPGQ>
-    <xme:TGVxaMIvioDaOOA2igtomooNDMlwuGV8q2LGQbo8SHxVB1Bmuyp_vqXBVq4U20Ec4
-    GQMpfZsBLY5iiwdcw>
-X-ME-Received: <xmr:TGVxaNwApmjLEjY-H2oQhTCl8aZ9BiXyygvgn9IY9m0TB9uIbV34KgN6CyvLhFPnoChCzFwX7SUzXtgHBxvO99D7h3U>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdeggeduhecutefuodetggdotefrod
+  by phl-compute-06.internal (MEProxy); Fri, 11 Jul 2025 15:51:47 -0400
+X-ME-Sender: <xms:U2txaCjpbyh1P3LJlAM4CdYX7gsj8z_BYPA5mfzFEch79Msb8Xq0Yw>
+    <xme:U2txaEif0a0SeBtVpS0Cq3PuKMOVQ88cAbb4IUXzscvH_lK_qTaC4eSPSB3Ry01mE
+    6BbsZC3arkxmSs6gA>
+X-ME-Received: <xmr:U2txaOrgyuEaNq_IGIw_2Tvsy9UbJNf_V21iasjuqGUYFVPmKyTMujIgFcTwN8nUoYoG7IzBWC7d_wqKzajDFvUM0VU>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdeggedvudcutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
     ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
     hrpeffhffvvefukfhfgggtuggjsehttdertddttddvnecuhfhrohhmpeeuohhquhhnucfh
@@ -86,15 +86,15 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdeggeduhecutefuodetgg
     gvlhdrohhrghdprhgtphhtthhopegrlhgvgidrghgrhihnohhrsehgmhgrihhlrdgtohhm
     pdhrtghpthhtohepghgrrhihsehgrghrhihguhhordhnvghtpdhrtghpthhtohepsghjoh
     hrnhefpghghhesphhrohhtohhnmhgrihhlrdgtohhm
-X-ME-Proxy: <xmx:TGVxaLavNepknuDm-QvASV8tWdMIZsevdvKaRVxnaEcKLJFeR0BX2Q>
-    <xmx:TGVxaB6seHyJc022EtIc6Y1isic1FIUjMOdneqUcH56R8LiXkz6F-g>
-    <xmx:TGVxaEBTUKPM-iqLtc-n_fBKjSj91raYcofBFUmbu4mD9Sv2JweqNQ>
-    <xmx:TGVxaPv7r0ITUwP3NzMR5WT11V0J5EREL9VJwknJ_eeTgIsSx18KsA>
-    <xmx:TGVxaButY3S48qkXy9UX3a6JPI8IckyslmdVOOwu-jkXHFz6nzGBVeUd>
+X-ME-Proxy: <xmx:U2txaKypHVG1UC1eHp9JmKWHu9y2DgbrKBIlzihHPI2DwYPj2qt1nQ>
+    <xmx:U2txaNwdmXpZUsveFcnnxiSdr7zWGDm-sNCVhgp1q96IxBsKQvqXZQ>
+    <xmx:U2txaCZ1eZwo9r3-lY1Q388f_V9t83KaTr_Mo3fc7HnSn6ttttclOg>
+    <xmx:U2txaOkOsAEFrzrqVuSBzRIx-rxS4EVB5_TORlPsNUGJc9vuKlIwHw>
+    <xmx:U2txaHGQ1a9slMntFQA51w6TZFVdijZZgEpx9Y1_ReW0KUolvqJFnhw8>
 Feedback-ID: iad51458e:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 11 Jul 2025 15:26:04 -0400 (EDT)
-Date: Fri, 11 Jul 2025 12:26:03 -0700
+ 11 Jul 2025 15:51:46 -0400 (EDT)
+Date: Fri, 11 Jul 2025 12:51:45 -0700
 From: Boqun Feng <boqun.feng@gmail.com>
 To: Benno Lossin <lossin@kernel.org>
 Cc: linux-kernel@vger.kernel.org, rust-for-linux@vger.kernel.org,
@@ -116,13 +116,14 @@ Cc: linux-kernel@vger.kernel.org, rust-for-linux@vger.kernel.org,
 	Linus Torvalds <torvalds@linux-foundation.org>,
 	Thomas Gleixner <tglx@linutronix.de>,
 	Alan Stern <stern@rowland.harvard.edu>
-Subject: Re: [PATCH v6 8/9] rust: sync: Add memory barriers
-Message-ID: <aHFlS96FTRgS0dH_@tardis-2.local>
+Subject: Re: [PATCH v6 6/9] rust: sync: atomic: Add the framework of
+ arithmetic operations
+Message-ID: <aHFrUa3VWaKTe0xr@tardis-2.local>
 References: <20250710060052.11955-1-boqun.feng@gmail.com>
- <20250710060052.11955-9-boqun.feng@gmail.com>
- <DB93NWEAK46D.2YW5P9MSAWVCN@kernel.org>
- <aHESYzVOTCwADqpP@Mac.home>
- <DB9GF0U3JJWL.3FQFMRTBO52C1@kernel.org>
+ <20250710060052.11955-7-boqun.feng@gmail.com>
+ <DB93KSS3F3AK.3R9RFOHJ4FSAQ@kernel.org>
+ <aHEiE0OoA3w1FmCp@Mac.home>
+ <DB9GDOR3AY9B.21YFXYHE4F0MP@kernel.org>
 Precedence: bulk
 X-Mailing-List: lkmm@lists.linux.dev
 List-Id: <lkmm.lists.linux.dev>
@@ -131,64 +132,148 @@ List-Unsubscribe: <mailto:lkmm+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <DB9GF0U3JJWL.3FQFMRTBO52C1@kernel.org>
+In-Reply-To: <DB9GDOR3AY9B.21YFXYHE4F0MP@kernel.org>
 
-On Fri, Jul 11, 2025 at 08:57:27PM +0200, Benno Lossin wrote:
-> On Fri Jul 11, 2025 at 3:32 PM CEST, Boqun Feng wrote:
-> > On Fri, Jul 11, 2025 at 10:57:48AM +0200, Benno Lossin wrote:
-> > [...]
-> >> > +}
-> >> > +
-> >> > +/// A full memory barrier.
-> >> > +///
-> >> > +/// A barrier that prevents compiler and CPU from reordering memory accesses across the barrier.
-> >> > +pub fn smp_mb() {
-> >> > +    if cfg!(CONFIG_SMP) {
-> >> > +        // SAFETY: `smp_mb()` is safe to call.
-> >> > +        unsafe {
-> >> > +            bindings::smp_mb();
+On Fri, Jul 11, 2025 at 08:55:42PM +0200, Benno Lossin wrote:
+[...]
+> >> The generic allows you to implement it multiple times with different
+> >> meanings, for example:
 > >> 
-> >> Does this really work? How does the Rust compiler know this is a memory
-> >> barrier?
+> >>     pub struct Nanos(u64);
+> >>     pub struct Micros(u64);
+> >>     pub struct Millis(u64);
 > >> 
-> >
-> > - Without INLINE_HELPER, this is an FFI call, it's safe to assume that
-> >   Rust compiler would treat it as a compiler barrier and in smp_mb() a
-> >   real memory barrier instruction will be executed. 
-> >
-> > - With INLINE_HELPER, this will be inlined as an asm block with "memory"
-> >   as clobber, and LLVM will know it's a compiler memory barrier, and the
-> >   real memory barrier instruction guarantees it's a memory barrier at
-> >   CPU reordering level as well.
-> >
-> > Think about this, SpinLock and Mutex need memory barriers for critical
-> > section, if this doesn't work, then SpinLock and Mutex don't work
-> > either, then we have a bigger problem ;-)
+> >>     impl AllowAtomic for Nanos {
+> >>         type Repr = i64;
 > 
-> By "this not working" I meant that he barrier would be too strong :)
+> By the way, I find this a bit unfortunate... I think it would be nice to
+> be able to use `u64` and `u32` as reprs too.
 > 
-> So essentially without INLINE_HELPER, all barriers in this file are the
-> same, but with it, we get less strict ones?
 
-Not the same, each barrier function may generate a different hardware
-instruction ;-)
+I don't think that's necessary, because actually a MaybeUninit<i32> and 
+MaybeUninit<i64> would cover all the cases, and even with `u64` and
+`u32` being reprs, you still need to trasmute somewhere for non integer
+types. But I'm also open to support them, let's discuss this later
+separately ;-)
 
-I would say for a Rust function (e.g. smp_mb()), the difference between
-with and without INLINE_HELPER is:
+> Maybe we can add an additional trait `AtomicRepr` that gets implemented
+> by all integer types and then we can use that in the `Repr` instead.
+> 
+> This should definitely be a future patch series though.
+> 
+> >>     }
+> >> 
+> >>     impl AtomicAdd<Millis> for Nanos {
+> >>         fn rhs_into_repr(rhs: Millis) -> i64 {
+> >>             transmute(rhs.0 * 1000_000)
+> >
+> > We probably want to use `as` in real code?
+> 
+> I thought that `as` would panic on over/underflow... But it doesn't and
+> indeed just converts between the two same-sized types.
+> 
+> By the way, should we ask for `Repr` to always be of the same size as
+> `Self` when implementing `AllowAtomic`?
+> 
+> That might already be implied from the round-trip transmutability:
+> * `Self` can't have a smaller size, because transmuting `Self` into
+>   `Repr` would result in uninit bytes.
+> * `Repr` can't have a smaller size, because then transmuting a `Repr`
+>   (that was once a `Self`) back into `Self` will result in uninit bytes
+> 
+> We probably should mention this in the docs somewhere?
+> 
 
-- with INLINE_HELPER enabled, they behave exactly like a C function
-  calling a C smp_mb().
+We have it already as the first safety requirement of `AllowAtomic`:
 
-- without INLINE_HELPER enabled, they behave like a C function calling 
-  a function that never inlined:
+/// # Safety
+///
+/// - [`Self`] must have the same size and alignment as [`Self::Repr`].
 
-  void outofline_smp_mb(void)
-  {
-    smp_mb();
-  }
+Actually at the beginning, I missed the round-trip transmutablity
+(thanks to you and Gary for bring that up), that's only safe requirement
+I thought I needed ;-)
 
-  It might be stronger than the "with INLINE_HELPER" case but both are
-  correct regarding memory ordering.
+> >>         }
+> >>     }
+> >> 
+> >>     impl AtomicAdd<Micros> for Nanos {
+> >>         fn rhs_into_repr(rhs: Micros) -> i64 {
+> >>             transmute(rhs.0 * 1000)
+> >>         }
+> >>     }
+> >> 
+> >>     impl AtomicAdd<Nanos> for Nanos {
+> >>         fn rhs_into_repr(rhs: Nanos) -> i64 {
+> >>             transmute(rhs.0)
+> >>         }
+> >>     }
+> >> 
+> >> For the safety requirement on the `AtomicAdd` trait, we might just
+> >> require bi-directional transmutability... Or can you imagine a case
+> >> where that is not guaranteed, but a weaker form is?
+> >
+> > I have a case that I don't think it's that useful, but it's similar to
+> > the `Micros` and `Millis` above, an `Even<T>` where `Even<i32>` is a
+> > `i32` but it's always an even number ;-) So transmute<i32, Even<i32>>()
+> > is not always sound. Maybe we could add a "TODO" in the safety section
+> > of `AtomicAdd`, and revisit this later? Like:
+> >
+> > /// (in # Safety)
+> > /// TODO: The safety requirement may be tightened to bi-directional
+> > /// transmutability. 
+> >
+> > And maybe also add the `Even` example there?
+> 
+> Ahh that's interesting... I don't think the comment in the tightening
+> direction makes sense, either we start out with bi-directional
+> transmutability, or we don't do it at all.
+> 
+> I think an `Even` example is motivation enough to have it. So let's not
+> tighten it. But I think we should improve the safety requirement:
+> 
+>     /// The valid bit patterns of `Self` must be a superset of the bit patterns reachable through
+>     /// addition on any values of type [`Self::Repr`] obtained by transmuting values of type `Self`.
+> 
+> or
+>     
+>     /// Adding any two values of type [`Self::Repr`] obtained through transmuting values of type `Self`
+>     /// must yield a value with a bit pattern also valid for `Self`.
+> 
+> I feel like the second one sounds better.
+> 
+
+Me too! Let's use it then. Combining with your `AtomicAdd<Rhs>`
+proposal:
+
+    /// # Safety
+    ///
+    /// Adding any:
+    /// - one being the value of [`Self::Repr`] obtained through transmuting value of type `Self`,
+    /// - the other being the value of [`Self::Delta`] obtained through conversion of `rhs_into_delta()`,
+    /// must yield a value with a bit pattern also valid for `Self`.
+    pub unsafe trait AtomicAdd<Rhs>: AllowAtomic {
+        type Delta = Self::Repr;
+        fn rhs_into_delta(rhs: Rhs) -> Delta;
+    }
+
+Note that I have to provide a `Delta` (or better named as `ReprDelta`?)
+because of when pointer support is added, atomic addition is between
+a `*mut ()` and a `isize`, not two `*mut()`.
+
+> Also is overflowing an atomic variable UB in LKMM? Because if it is,
+
+No, all atomic arithmetic operations are wrapping, I did add a comment
+in Atomic::add() and Atomic::fetch_add() saying that. This also aligns
+with Rust std atomic behaviors.
+
+> then `struct MultipleOf<const M: u64>(u64)` is also something that would
+> be supported. Otherwise only powers of two would be supported.
+
+Yeah, seems we can only support PowerOfTwo<integer>.
+
+(but technically you can detect overflow for those value-returning
+atomics, but let's think about that later if there is a user)
 
 Regards,
 Boqun

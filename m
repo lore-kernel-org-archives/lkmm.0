@@ -1,101 +1,100 @@
-Received: from mail-qt1-f171.google.com (mail-qt1-f171.google.com [209.85.160.171])
+Received: from mail-qk1-f169.google.com (mail-qk1-f169.google.com [209.85.222.169])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E72DE24DCE6
-	for <lkmm@lists.linux.dev>; Mon, 14 Jul 2025 15:32:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFFB725D1FE
+	for <lkmm@lists.linux.dev>; Mon, 14 Jul 2025 15:34:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752507175; cv=none; b=piwrm+/YEvXNKJCCYh0z9jfox/xVkZBK2DOReDrO3wtoEEUao1/hj/7EhxCjHNBbJudtvu9eWwLVaCi8L03kzTVnp80lHGtmyUCj17A00NKiyjmluqo9zE2MVJBOVn7n91yFW3Sktx5W8/xsgz/qOakCd4NMjlRfYXKbyquRZHQ=
+	t=1752507255; cv=none; b=J5j7jWOvqMfPYqLAf8Ant0/iFEc/hv8AWtMwNZDlyULyzt7qum1KRciFNNhQtDVhOBeNM1Oaw8JIltKioJcfMtOB5UHzblbl/1ENmV4kQ/PKM8/1BM0vdiMJcibVuW5v4/fHg0WxaVyZPNYKWsXuIzKQAbzv7PouZWSMvqqEUdA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752507175; c=relaxed/simple;
-	bh=/koeKlB/k0Uouo8pgg2T7oltVBCEzdoq4Vld2kRYayM=;
+	s=arc-20240116; t=1752507255; c=relaxed/simple;
+	bh=g+O+Onw4EEFGOhr3iVz4F85RgpHcqoS4Sf24nG8i2RY=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=EbFLbJzK4hetUPYct+m0UV+zzON/aa5CDJappt8MjwqzmlSi+fszdzVoo+P1dGKgxvmmnjSwk1GcT9iE4CRhQaQqSXN+LcmdlN4aF6ujQHVz5pFK70dgBlNR65YrRUrRPsrH9j5CDvzSuMVxfrQmQWloiAv1jw2QNTUOSo3n4qQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=aZsTGGt4; arc=none smtp.client-ip=209.85.160.171
+	 Content-Type:Content-Disposition:In-Reply-To; b=Xg6Kv214XkjY5dAHYglaHqYDELLNxhSBh4wfv3xr8uGdqcRD+Cce4i21kttpg4kqUbkAvrFhjZ+kkqPi1pGLvfZH+EzzzkoNjcZ2xsEhyC/z0R48ddpLrq9Ej8RNrHIIp74J7HgSxokzBSfBut05JA6HclaCTiRdo8fSoHOpoZU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=GYnKAQsL; arc=none smtp.client-ip=209.85.222.169
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="aZsTGGt4"
-Received: by mail-qt1-f171.google.com with SMTP id d75a77b69052e-4ab380b8851so21866591cf.2
-        for <lkmm@lists.linux.dev>; Mon, 14 Jul 2025 08:32:53 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GYnKAQsL"
+Received: by mail-qk1-f169.google.com with SMTP id af79cd13be357-7e095510a6cso272951085a.1
+        for <lkmm@lists.linux.dev>; Mon, 14 Jul 2025 08:34:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1752507173; x=1753111973; darn=lists.linux.dev;
+        d=gmail.com; s=20230601; t=1752507253; x=1753112053; darn=lists.linux.dev;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:feedback-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=5MfFqiSzZREdMyVsNgIAfk4F76Kub2bUvM9+BkEQL8A=;
-        b=aZsTGGt495MFl0vrz/4TTM1LOpKXQawn6n5yQxpc9IToujtrk6Lc7cqBzxwve1R+sF
-         jenJi2h3tgcfzt2vaAiY5Jg5iKLV8ZIJx7o4R/ElA8mBK/NlwnGobufTsiNJzkt3ObN2
-         2I1uv+LFVffwrVlNyh1J439eBt6GtGkVMQnhnFdaODBv07QJh+udHspupfx7lr9MTIqA
-         XRabAafp2OCgPiYDFeMBOcqbpOgDoyTcZ+Y0WC2p8QqESQtJkU80AhJRjaxeM2jYLgYu
-         vJS1d/wOduB6nQN/+9zaXjP/zgHnFBnEVk+Oru0H/kIzdxttODP3VdAYMuu/1OcmQxxw
-         1G3w==
+        bh=y1ah1KiBYa+nQwV3ZRjbCEW6rsly24N5LKmoT4ikCOg=;
+        b=GYnKAQsLhXj8UV7hQCja937eJDP1gUmfsxbpEso5oAEANTGRbVmw9BGdeDkaN7jcnE
+         Wq9DK+V0S6TCJhg0/SSKSLd9en2Apm/BtpzVVGOZpNowuHMVaHxmNNeu/8j1ukk1XsJA
+         EJMkCgvSoQI9y5YbXv7B4IAtfgkZhcFjZIjtKiN0rtIhgfzooryMTEdaZGU7I9/wB0+1
+         pyi9BSpX53+DxaDuh8cmC/lxIVSZeX+9s43UJil6glrizQ5WgByFp9JcJtqt1D/Pdm4g
+         ghdTSjTMWOfLGdtJEkCU4qC8P+UCCP7ylOHC8FJxRnAMdUCWBqppZ1FXERvjEW/To1Se
+         Hdsg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1752507173; x=1753111973;
+        d=1e100.net; s=20230601; t=1752507253; x=1753112053;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:feedback-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=5MfFqiSzZREdMyVsNgIAfk4F76Kub2bUvM9+BkEQL8A=;
-        b=IiZ3AAk76XHce+YM59czcswqweH8NlIdK6nn3kSBEu7YzYRhSEyzGTXd0WBGGnfVtF
-         xn1DKNe2BI/cbudd+r0TrCN9X5i5BQb4AZOZomMceMgxSqAaRT1oWxeoI/jn260yAu4M
-         aHac0mFlhZdbwZY5aUPEzmvYd8fLwhCvdH3CemC+7n2bJUrH3MZjHtTK7q2pb4UmZN9A
-         jwZq/B4zsZq7SI5sTZhy+VB4sqXL+lnI49/xawSY9I6nh28MAleozYRin+nCAHnEACwV
-         s8fgXoUjlvhlPxiC+7MSDigCmJp7Nw0K+AlNsZ/0Qf6s/PJNLzqGES8LPiq8YkGv3w+a
-         0h/A==
-X-Forwarded-Encrypted: i=1; AJvYcCUj2Vxpq0rz+hCzeVT3TXWfh1yB55BGI8oOYBkMpgRtSTwsx06gMlFddvKf3b3iKSzRWrSd@lists.linux.dev
-X-Gm-Message-State: AOJu0YzObEBgZrCag9CTRhXq/t/cOGqBw7JE0nT1gdrF2Mz+FG9iASrB
-	rZzR0uu4gkb4/AG9zkX1cD6I3ypFsyx889eGqJ75+0IupF9SPsEI3O5m
-X-Gm-Gg: ASbGncu/bzmOYpQwiSKVHkI8gtKyDKL5+5FnhcDMW1Mc/uFVbxD4be1w86XgGuwxLgO
-	gMTPgJUbotDGGkH58q6QV/qqX82kwOA6omeE34GrAVjZmE3YATCX3ajmieE/83kz+lzIjSBSJlz
-	uNI2cw2lyfO1ahn/xh/5WUFauYEREXlxe7bLJflNVM29scX+OefZZRVe8A/+TX6Ohp+UcgOiAyt
-	7DiXSO3krE1BtYpGVdTnd9+Zw6+Bsz3Qh3OQi6lyhKDcGJ5MBX1GWL4gzGxbhAffQq8Tanqqr86
-	zd3Igdf1QnezLnFnpYeCG5siz4sFcPhsGTa/2vL6M8U6RvczdFWu0xuNaBcMNTUNI2nKNRwCoSs
-	9sZYbGN9i/UKhXi+WVUtF5Hm9HfYi2JLJe1iAGmwIzVRV9njOSC0KGAjnkarvkHU7eV/42szpIr
-	3uL7Xe9/SQLDMX
-X-Google-Smtp-Source: AGHT+IEiE/KhsLnwDtozknIyhsymCObeRf1LTZcI6ldZd1GqTFKQ2x8AfKPsdKBm3mDZ2dcM+KQJ6A==
-X-Received: by 2002:a05:622a:838c:b0:4ab:38c1:f9a9 with SMTP id d75a77b69052e-4ab38c1fc7emr172803891cf.19.1752507172595;
-        Mon, 14 Jul 2025 08:32:52 -0700 (PDT)
+        bh=y1ah1KiBYa+nQwV3ZRjbCEW6rsly24N5LKmoT4ikCOg=;
+        b=nU7i0j0LtA876rhmzJ8z3SOxod9kh5DFrrkCGzmMH5vbsXl0CSYNqVJ8BymJQVAYan
+         oEoQSm/H5USVltV8XkcsY1LJPHwxl1ioTPNnFIDlWPLZQZNTDvQQFIgO6QFzTIAZ3sZw
+         FeF6MtxT8x6fu7AXvz2ICce2c+VvGjuMrABXxTCq2sR4WVS65IaQa22rKjJRl7ZIOMmZ
+         BRrEx5Ju9GAIUWgq/xWtOuVK6FhYRjtXsCKn3mDQ2wxK3xgNePwigU/hBpIxsKGbikIU
+         G4PNDPAymz8F2AAyiNrOYCCJwcw0fyACwl4QzwF3wGcbpMIa3gj5eru5k5uI/DoLgKLj
+         eWwQ==
+X-Forwarded-Encrypted: i=1; AJvYcCVmCFp5CW6jfL2/lJKr1P766EQZcss8T41Y5fBfkApMSPLoMKb8fcsNk8JMY9JKZfXjyVF5@lists.linux.dev
+X-Gm-Message-State: AOJu0YxLOKIHV0zO5VPg6JK5sVVh5sqYul2gIMrxnElbWZeJZ5BXlKZh
+	9wXaz8ee33Cn7nnrK2KYgNII7KvrVxccdDs4QU6ikqrEOWaHVl3Pp/vo
+X-Gm-Gg: ASbGncuECUYT04c3eLbXVmso0SBEcr9Sb0Kw/j5/e9FASOuCXGCKfAnizAd6ZpcOXYl
+	8e3OZ8hZNu8qMGBVRnugaKcl5sjX3reLLh/w7Q6OqlP5OwGVkmHRYXlOKuhoRhWQuYUJ2L4bzH7
+	q9Kx1AwSlPX5rwTrx1OyVasolp8/JEBL0FDFS9odd2f2w+rNGgd64K5uPBHTzjJpW8YUdEqncQ3
+	NQOYl7BRgIxYmIPac37TlLmqmVqVNJ9N2yOMmVgKqkf1Uu/0VxmjH4r8vgQBxJJHfdEXD7moQlc
+	5TASBAl+5lm5KXCRKvXKXg682RmQhb7AhM0EQi9d9xiVALNMtgnk0fQibookI+1V/5RRWTPndur
+	FKosR5e7JY50g2pHMHl+I4W3lszvRirYVdcxl2k9/h3VjHYo6THIo0zajqR0m1sVLH9frniAmeM
+	oFUaNwWETbYNZ0
+X-Google-Smtp-Source: AGHT+IFmUKHtXtb7dpJhb3zmSZ1eVrPeDqvK2CSHNEiPnxRXmpl4kr66ZO7VxCg9aDpOs9IfcA6Fkg==
+X-Received: by 2002:a05:620a:3190:b0:7d4:4b9b:3eed with SMTP id af79cd13be357-7de05769905mr2084229985a.25.1752507252602;
+        Mon, 14 Jul 2025 08:34:12 -0700 (PDT)
 Received: from fauth-a1-smtp.messagingengine.com (fauth-a1-smtp.messagingengine.com. [103.168.172.200])
-        by smtp.gmail.com with ESMTPSA id d75a77b69052e-4ab3f1c9a2csm30869951cf.67.2025.07.14.08.32.51
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-7049799e407sm48780616d6.23.2025.07.14.08.34.11
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 14 Jul 2025 08:32:52 -0700 (PDT)
-Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
-	by mailfauth.phl.internal (Postfix) with ESMTP id 83594F40066;
-	Mon, 14 Jul 2025 11:32:51 -0400 (EDT)
+        Mon, 14 Jul 2025 08:34:12 -0700 (PDT)
+Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
+	by mailfauth.phl.internal (Postfix) with ESMTP id 74DFDF40066;
+	Mon, 14 Jul 2025 11:34:11 -0400 (EDT)
 Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-04.internal (MEProxy); Mon, 14 Jul 2025 11:32:51 -0400
-X-ME-Sender: <xms:IyN1aNZhQdTXlEwdUFRK6ixe11IsrGl9xQrPhCYt2MdciWQg-2N87A>
-    <xme:IyN1aF5V1ixT0MErGGOpS8ZDHhBAE-ASyclvhtA7ANSPsYQFZaeFm_Fo_jKMk6mpv
-    TW-gZDXrO6Ol2FAcw>
-X-ME-Received: <xmr:IyN1aEgsrCJ6UmyqHs1It-LK9ZJdmCqOQl4JHFw0IhhkfW6kCIniW78zqw>
+  by phl-compute-06.internal (MEProxy); Mon, 14 Jul 2025 11:34:11 -0400
+X-ME-Sender: <xms:cyN1aHmQVSMW2S2kEq1pJPrebkugzUZZx7YSPkqXy92gzTKnBgbOjQ>
+    <xme:cyN1aMWimFINoAGnOsd9k2-95HuuNjyfZvtfXxt3C144lclHGnYiYmH2XP1GkvWtR
+    FfmAOs2ELA7odHkGQ>
+X-ME-Received: <xmr:cyN1aCOr5XRn66xwYrCaGaBmW8Mw1sEOEIic3APIUkO34OXuYJTEcin3Ig>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdehvdefvdcutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
     ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
     hrpeffhffvvefukfhfgggtuggjsehttdertddttddvnecuhfhrohhmpeeuohhquhhnucfh
     vghnghcuoegsohhquhhnrdhfvghnghesghhmrghilhdrtghomheqnecuggftrfgrthhtvg
-    hrnhepjeeihfdtuedvgedvtddufffggeefhefgtdeivdevveelvefhkeehffdtkeeihedv
-    necuffhomhgrihhnpehruhhsthdqlhgrnhhgrdhorhhgnecuvehluhhsthgvrhfuihiivg
-    eptdenucfrrghrrghmpehmrghilhhfrhhomhepsghoqhhunhdomhgvshhmthhprghuthhh
-    phgvrhhsohhnrghlihhthidqieelvdeghedtieegqddujeejkeehheehvddqsghoqhhunh
-    drfhgvnhhgpeepghhmrghilhdrtghomhesfhhigihmvgdrnhgrmhgvpdhnsggprhgtphht
-    thhopedvjedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtoheplhhoshhsihhnsehkvg
-    hrnhgvlhdrohhrghdprhgtphhtthhopehlihhnuhigqdhkvghrnhgvlhesvhhgvghrrdhk
-    vghrnhgvlhdrohhrghdprhgtphhtthhopehruhhsthdqfhhorhdqlhhinhhugiesvhhgvg
-    hrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehlkhhmmheslhhishhtshdrlhhinhhu
-    gidruggvvhdprhgtphhtthhopehlihhnuhigqdgrrhgthhesvhhgvghrrdhkvghrnhgvlh
-    drohhrghdprhgtphhtthhopehojhgvuggrsehkvghrnhgvlhdrohhrghdprhgtphhtthho
-    pegrlhgvgidrghgrhihnohhrsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghgrrhihse
-    hgrghrhihguhhordhnvghtpdhrtghpthhtohepsghjohhrnhefpghghhesphhrohhtohhn
-    mhgrihhlrdgtohhm
-X-ME-Proxy: <xmx:IyN1aLI0aVk-31eig95s5X5IAwTfkC5opzO7TVO4o63Dxltb7RQpig>
-    <xmx:IyN1aGqzMj-aS-jBspJ99eptAKv-u_tP7EK0_blC3OdjvfW1sdhgUA>
-    <xmx:IyN1aJy2I1GGOeidWxfmC4_5la-hcr47Jg_T8wBKUXoDfP8TVg_o6w>
-    <xmx:IyN1aCfyxZHOaUh4scxy2MoqYe5CypGeJlzZFysocpLyN3her6pRcg>
-    <xmx:IyN1aNcFefTTQUTDjPW2XSJEq3GHvRHfEVHYBNt7FwOijMbUp8n62MlX>
+    hrnhephedugfduffffteeutddvheeuveelvdfhleelieevtdeguefhgeeuveeiudffiedv
+    necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepsghoqh
+    hunhdomhgvshhmthhprghuthhhphgvrhhsohhnrghlihhthidqieelvdeghedtieegqddu
+    jeejkeehheehvddqsghoqhhunhdrfhgvnhhgpeepghhmrghilhdrtghomhesfhhigihmvg
+    drnhgrmhgvpdhnsggprhgtphhtthhopedvjedpmhhouggvpehsmhhtphhouhhtpdhrtghp
+    thhtoheplhhoshhsihhnsehkvghrnhgvlhdrohhrghdprhgtphhtthhopehlihhnuhigqd
+    hkvghrnhgvlhesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehruhhsthdq
+    fhhorhdqlhhinhhugiesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehlkh
+    hmmheslhhishhtshdrlhhinhhugidruggvvhdprhgtphhtthhopehlihhnuhigqdgrrhgt
+    hhesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehojhgvuggrsehkvghrnh
+    gvlhdrohhrghdprhgtphhtthhopegrlhgvgidrghgrhihnohhrsehgmhgrihhlrdgtohhm
+    pdhrtghpthhtohepghgrrhihsehgrghrhihguhhordhnvghtpdhrtghpthhtohepsghjoh
+    hrnhefpghghhesphhrohhtohhnmhgrihhlrdgtohhm
+X-ME-Proxy: <xmx:cyN1aPH5wN_4PmpthNSngTdrYOPJjgSl15y13eQUJj_aQD9DH9kFGA>
+    <xmx:cyN1aD1J3MVqK-QZtu3f2ou6mS4vPSyPB9KByu2qLhsCR4qjF8R-wQ>
+    <xmx:cyN1aHMTeBwM7TrQisU8VdSZ1GfDbQmh4LIhCesL8I_3ljXaHCvUGA>
+    <xmx:cyN1aLKjTvhAQH3Na9-PBi3nibRPE6UbgVpON2CqydagPKOgBL6Lnw>
+    <xmx:cyN1aAaAU6I6XSTTQYdwSmB3rGmKKNGqPScIUTdw_qwz8-ZlwVgyLlI4>
 Feedback-ID: iad51458e:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 14 Jul 2025 11:32:50 -0400 (EDT)
-Date: Mon, 14 Jul 2025 08:32:49 -0700
+ 14 Jul 2025 11:34:10 -0400 (EDT)
+Date: Mon, 14 Jul 2025 08:34:09 -0700
 From: Boqun Feng <boqun.feng@gmail.com>
 To: Benno Lossin <lossin@kernel.org>
 Cc: linux-kernel@vger.kernel.org, rust-for-linux@vger.kernel.org,
@@ -117,13 +116,14 @@ Cc: linux-kernel@vger.kernel.org, rust-for-linux@vger.kernel.org,
 	Linus Torvalds <torvalds@linux-foundation.org>,
 	Thomas Gleixner <tglx@linutronix.de>,
 	Alan Stern <stern@rowland.harvard.edu>
-Subject: Re: [PATCH v7 4/9] rust: sync: atomic: Add generic atomics
-Message-ID: <aHUjIQlqphtgVP2g@Mac.home>
+Subject: Re: [PATCH v7 2/9] rust: sync: Add basic atomic operation mapping
+ framework
+Message-ID: <aHUjcSI_r0rYdTwc@Mac.home>
 References: <20250714053656.66712-1-boqun.feng@gmail.com>
- <20250714053656.66712-5-boqun.feng@gmail.com>
- <DBBPI9ZJVO64.3A83G118BMVLI@kernel.org>
- <aHUSgXW9A6LzjBIS@Mac.home>
- <DBBVD70MASPW.2LUTJ51Y6SGMI@kernel.org>
+ <20250714053656.66712-3-boqun.feng@gmail.com>
+ <DBBOXLF23VVA.2T3U6GBOZ3Y20@kernel.org>
+ <aHUJYTv4_wsatAw5@Mac.home>
+ <DBBV9KHTEM3E.3T10KY9JN754X@kernel.org>
 Precedence: bulk
 X-Mailing-List: lkmm@lists.linux.dev
 List-Id: <lkmm.lists.linux.dev>
@@ -132,64 +132,55 @@ List-Unsubscribe: <mailto:lkmm+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <DBBVD70MASPW.2LUTJ51Y6SGMI@kernel.org>
+In-Reply-To: <DBBV9KHTEM3E.3T10KY9JN754X@kernel.org>
 
-On Mon, Jul 14, 2025 at 05:05:40PM +0200, Benno Lossin wrote:
-[...]
-> >> >  //!
-> >> >  //! [`LKMM`]: srctree/tools/memory-model/
-> >> >  
-> >> > +pub mod generic;
+On Mon, Jul 14, 2025 at 05:00:56PM +0200, Benno Lossin wrote:
+> On Mon Jul 14, 2025 at 3:42 PM CEST, Boqun Feng wrote:
+> > On Mon, Jul 14, 2025 at 12:03:11PM +0200, Benno Lossin wrote:
+> > [...]
+> >> > +declare_and_impl_atomic_methods!(
+> >> > +    /// Basic atomic operations
+> >> > +    pub trait AtomicHasBasicOps {
 > >> 
-> >> Hmm, maybe just re-export the stuff? I don't think there's an advantage
-> >> to having the generic module be public.
+> >> I think we should drop the `Has` from the names. So this one can just be
+> >> `AtomicBasicOps`. Or how about `BasicAtomic`, or `AtomicBase`?
 > >> 
 > >
-> > If `generic` is not public, then in the kernel::sync::atomic page, it
-> > won't should up, and there is no mentioning of struct `Atomic` either.
+> > Actually, given your feedback to `ordering::Any` vs `core::any::Any`,
+> > I think it makes more sense to keep the current names ;-) These are only
+> > trait names to describe what operations do an `AtomicImpl` has, and they
+> > should be used only in atomic mod, so naming them a bit longer is not a
+> > problem. And by doing so, we free the better names `BasicAtomic` or
+> > `AtomicBase` for other future usages.
 > >
-> > If I made it public and also re-export the `Atomic`, there would be a
-> > "Re-export" section mentioning all the re-exports, so I will keep
-> > `generic` unless you have some tricks that I don't know.
+> > Best I could do is `AtomicBasicOps` or `HasAtomicBasicOps`.
 > 
-> Just use `#[doc(inline)]` :)
+> But you are already in the `ops` namespace, so by your argument you
+> could just use `ops::BasicAtomic` :)
 > 
->     https://doc.rust-lang.org/rustdoc/write-documentation/the-doc-attribute.html#inline-and-no_inline
+> I'm fine with `AtomicBasicOps`.
 > 
-> > Also I feel it's a bit naturally that `AllowAtomic` and `AllowAtomicAdd`
-> > stay under `generic` (instead of re-export them at `atomic` mod level)
-> > because they are about the generic part of `Atomic`, right?
+> >> > +declare_and_impl_atomic_methods!(
+> >> > +    /// Atomic arithmetic operations
+> >> > +    pub trait AtomicHasArithmeticOps {
+> >> 
+> >> Forgot to rename this one to `Add`? I think `AtomicAdd` sounds best for
+> >
+> > No, because at the `AtomicImpl` level, it's easy to know whether a type
+> > has all the arithmetic operations or none (also the `Delta` type should
+> > be known). But I don't have opinions on renaming it to `AtomicAddOps` or
+> > `HasAtomicAddOps`.
 > 
-> Why is that more natural? It only adds an extra path layer in any import
-> for atomics.
+> Ahh right yeah this makes sense. So let's use `AtomicArithmeticOps` if
+> you insist on the `Ops` part.
 > 
 
-Exactly, users need to go through extra steps if they want to use the
-"generic" part of the atomic, and I think that makes user more aware of
-what they are essentially doing:
-
-- If you want to use the predefined types for atomic, just
-
-  use kernel::sync::atomic::Atomic;
-
-  and just operate on an `Atomic<_>`.
-
-- If you want to bring your own type for atomic operations, you need to
-
-  use kernel::sync::atomic::generic::AllowAtomic;
-
-  (essentially you go into the "generic" part of the atomic)
-
-  and provide your own implementation for `AllowAtomic` and then you
-  could use it for your own type.
-
-I feel it's natural because for extra features you fetch more modules
-in.
+Done with AtomicBasicOps AtomicExchangeOps and AtomicArithmeticOps ;-)
+Thank you!
 
 Regards,
 Boqun
 
-> Unless you at some point want to add `concrete::Atomic<T>` etc, I would
-> just re-export them.
-> 
-[...]
+> ---
+> Cheers,
+> Benno

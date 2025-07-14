@@ -1,101 +1,100 @@
-Received: from mail-qt1-f182.google.com (mail-qt1-f182.google.com [209.85.160.182])
+Received: from mail-qt1-f178.google.com (mail-qt1-f178.google.com [209.85.160.178])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC1A7A48
-	for <lkmm@lists.linux.dev>; Sun, 13 Jul 2025 19:51:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A931E16FF37
+	for <lkmm@lists.linux.dev>; Mon, 14 Jul 2025 04:20:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752436295; cv=none; b=dRv40ShAdY2U4ejrpjH8b8UUsQtDdfNN2up/tgkjydCRIVS9VvWZ6MMdWOKO1nbfkV1InYDc+WmcgEatSt29CVV3lYdguTkauM+A4L7Gbj1Jk7lswXG/x+pkYqxKZ2HHy73uNTOR+zwfsXq/EmWuqs8fkyHuKbQY65O5jmJ5SVU=
+	t=1752466856; cv=none; b=TFuZrfDo8yH3ubtN3mzJCg4Oys+mPNRJwDlrjiMhNZ/ziICxlCmehTGDAGNPfzGjlwhI2Q/CHHbl0ynY/+HyIKyW9ng5rkKHJ9C3oJJKubbcFLY8OwejgZhTPresT9QFOknEUfI5krNTz70DfB4coU7hH9PgmXJGWs4pmUg5HU0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752436295; c=relaxed/simple;
-	bh=nPQlDFSW9RIxdadQENtLULpU4fV5OoVXBUZbBVLLTY0=;
+	s=arc-20240116; t=1752466856; c=relaxed/simple;
+	bh=SuP+qQVi/MxIQB/1CDIRKWnHRBYowFHJSKjU7kuP458=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ScbbPIqCt03k2uYXQYa0hTfe+168BdEi1yan61ZYK4rJnTW3adUNC9MwoUka2wON2sXwsVeOHD92vP5cAASCDVFy1PHmpa7ZsGX//QXU/8NLCwKIyqVcJyHspsUkL9Rs/ziBSgU5kbzZp91AM8xrULHl8jmptBkR94YkeWVooro=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=fdaln1rL; arc=none smtp.client-ip=209.85.160.182
+	 Content-Type:Content-Disposition:In-Reply-To; b=M9N8AT/iKTlwsPSigcYOaUCz6XPAG9Ld7vo0s5z36Go+tm7IDOoR0VnmNNFNqrNPToyhZRXB2qhXbvflfTUSE+8SkZrATc7VphA/ZM155MwZShw9AzMIu0O2dhuucpLmtycgETb5fp4N1sDmamjZYH3g/Q+zUx8FihBkr2zPqNw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Jn6Iz8nt; arc=none smtp.client-ip=209.85.160.178
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fdaln1rL"
-Received: by mail-qt1-f182.google.com with SMTP id d75a77b69052e-4ab3802455eso24332071cf.2
-        for <lkmm@lists.linux.dev>; Sun, 13 Jul 2025 12:51:33 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Jn6Iz8nt"
+Received: by mail-qt1-f178.google.com with SMTP id d75a77b69052e-4a58f79d6e9so51223771cf.2
+        for <lkmm@lists.linux.dev>; Sun, 13 Jul 2025 21:20:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1752436293; x=1753041093; darn=lists.linux.dev;
+        d=gmail.com; s=20230601; t=1752466853; x=1753071653; darn=lists.linux.dev;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:feedback-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=IiYEGXk9WPqZkAOxoDJG4bxHhit6SmV7DwavSK2behs=;
-        b=fdaln1rLwt5lUQcxrEHwhRqb6fAAHe9B03P8krChZQ5c0aqXNoXsKxy1NkwKw0nwAI
-         Cp3KhyA00MrUy+YMfgi7CZxcFiAvrPi57X2Jwct/SbycSPhLVwmEx11nzcsMLP/Sa0L9
-         uOJFHqqEBca/9GzFWEPD6nVBqpZzZ27WMljcAQk/imq/6zO2Z8Mv+bdk2YSvW19Bf8dm
-         brmpAO44ok8bbxWbiFjxrYfdVwpyrgswPGP7otY8sgDOCmljsfM/3CQV0iFJ6roif6oX
-         8WlJijYXBSLYkYMBJnJMb6kke8OxqKkXcIB8u+YRGD9aGP2GgGVV5EXo9lnABxIBhn6x
-         apkQ==
+        bh=n7KPUZRfwzKm6vhoXm+OjqDoe1jPCZoU1nC9eh6TlIU=;
+        b=Jn6Iz8ntnmXSdMNmZVfJZy8SeZgP8P7/tnSHRc2iwyqC7yFgW9THrn3rsi1uyiY5bN
+         chZFcxm/ms3oXa4LOFSYuy3f6CWVh8DmyjkzIwKBcVCuAdiqNXj3oYC0xtXv2vtcDDQb
+         N4bzGFISd5LeXB2WL3kf6xUGeVQmA8L++E1UNz2l203ngTK+E2czeWtkY9KdcbXpTg93
+         +t1QKL22zCgFjcVzOfo7n8WISMC86SWM1oq092Iy39Z3Dt3hEdedkQm9hSH40iZuKJGp
+         Xet9q9yPyhm7FIV/wEgvE53HEc00bv6aU0Bi/W/emEHFTrE08xO19mgmLg3VZOYj7Lr0
+         Kd8g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1752436293; x=1753041093;
+        d=1e100.net; s=20230601; t=1752466853; x=1753071653;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:feedback-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=IiYEGXk9WPqZkAOxoDJG4bxHhit6SmV7DwavSK2behs=;
-        b=hIRcX+CSjxYRTpHa6CI60NB/kS2FNk7Vsq2IaHdA3G6U68qRR42WXZ/igecIV6tYFP
-         V3cvvqLtcOYvy1/zsq0V3xNuMjZEd2/SJTF2Zbo1OAvsLVKPdvF2xHoF+/tuusaHhQeO
-         vBBFADZnOH34Q62wn+y4lHxePj/jroPUZgZpYXAzDAWHAnFRRXLxkePyIZLpQmsa2/2p
-         w4WVhXza0m6WXiesNerzRJuAqvP//gpr7z81qdjMvkxwG/s7sJu0FmFX5bya8Z62dc3t
-         5Mt2ZYdUlKf16FdaYZ4zwAfpFQFeh/k5Yo49rNjh9x3aQqwUt+vSMSIMHfJU9k4mVrc9
-         Agtw==
-X-Forwarded-Encrypted: i=1; AJvYcCXOBUbptuWona1ZpcZfUEhvVoVCjmgZIMm9gJh4toC3T4g0fZMGWavOe+BoZxpL6GULxb1X@lists.linux.dev
-X-Gm-Message-State: AOJu0YzjNWwGB/sSQir/sc3JWKTGmMNS75SY9IZGL8j7IYLUYlp9Onbq
-	QEq0abFaItKSsFQb7yr39jqLRjafqX8hfLDSeR/Dth8XDy4Ax8Gwj1jQ
-X-Gm-Gg: ASbGnct2kdK7dllwi8B5DA2L5y7Yd4k3UN3tnBPq3ZxsskCGR36sDmP/98DqgiEmV0L
-	gDViwvwdAdJcSMYkfOXzsrDtq62ggrhsUZt5pR4/H9LzfVL22XxIwweap8Bc/VzOKhgZ46Af8my
-	9SAnCnkbZMog/3xTp2w1ihYJyiwjOewwaeDn11jb23Ymdn2KYHemm0pw0ImMNQulLtJ1jH6DA2a
-	lohPWLYWSRSb8zY7Zv3/Coil9U8XJGFcdwnV43apvhadRXr1dXd254UWsKcxQ4KTGgLSvaQDp3s
-	I6/9zvf58pCQQperoILlBHb30GfN5gVPWB2haspbwS6UkY3Mj1byXyeJ0frYzc/ln324ShBNQmi
-	rjZRV82wvxesn6NeKXjM3RvBQP55u3AaYk7RQ2BMZGq25BbGB4TyOr5Ot2Fik71mT0t6yWi484Q
-	nn1vPSYht6vEhciJMJP81gU/w=
-X-Google-Smtp-Source: AGHT+IH5xDylD/6MZCspt9o4GAG8jxcNA6PZtUrSOr3+k0K3lrw0sxOp16rSOwxUVU5CIJaT09n7Kw==
-X-Received: by 2002:a05:622a:10e:b0:4a6:f416:48b6 with SMTP id d75a77b69052e-4a9fb92e587mr186226371cf.28.1752436292525;
-        Sun, 13 Jul 2025 12:51:32 -0700 (PDT)
+        bh=n7KPUZRfwzKm6vhoXm+OjqDoe1jPCZoU1nC9eh6TlIU=;
+        b=iFnZ+F/qj84NqpO54MmQoWL9RRTkvDhTkKCkpyY9GC/Wvam4U+lWYajlVVnLqasXk6
+         UPorWnUWaaRoZRjVwGkqHcGoaNqxSRYhIwC9Boc53K+ntlZaYElDxNEiId/+x0hc/Nyg
+         /XoxRk2YrYa9PdRX+QVMkKKKMeOnWdFuPMVbZ1p1c/KHaJOZXzjJbW7NSwqx28BkOWFr
+         mmCjJ3LWtw8c1Cfa3sJVLJmSTcckOChREJ+OycR+gDO9q0d+bEuEbPwkZ5mkVTBKP97o
+         c0NHVyYb3JUQHHyTaHg/MmpXTxwfsYiig75XjF11AS043YKinCvaozPGM/QomGAuDECe
+         qOmQ==
+X-Forwarded-Encrypted: i=1; AJvYcCXS4CGt4xQbj4YTZZdRD6vl79hpxZ1230M0Xwcup4JyVQ6SCoH4NZE15PJa/a72Yh0YJrD2@lists.linux.dev
+X-Gm-Message-State: AOJu0YzGiRROZHXr4pP6oD6il4Ff9a5YhlAJ9S25tKXKr6C4XqwRVEcq
+	wOzxwdL+8Py1e7fyJc3eVIrrFqZw2qivZpcpkfBkgOIf+Ae5v+VhDWKt
+X-Gm-Gg: ASbGncuQGT9VUSIeob5n1m9Eeb4MixmF4K5PxKn33OPy74/Y5iTHxtSh8yggnIChco1
+	QLJOA208/1uG5hEPK7Mc/Bx2wMCi0C/EOwM7Ky01Xt4+MKt6PplTQk3t1rm/BTJ+JO19GxATPs+
+	qyNCXjzumSCYDi8V2WoQDyn2lR05u/GjcsljqRGDNnGAhSkxtYgK2LCW/exSaXkyukHznaO+To6
+	GH3P/I3GMH0LeEnXDAgtPrAaYrPVD+f4Dai7JVt8JKuvNWWwCrSHvHjAiE8Jmeky4h7PloElx08
+	e556OV1ST2XulBvisPJPZk98MsZc7pdj3ygz9/5JJU+7AnaaPqNNiQr6NKPzFgdYSrZ/WGkLJRC
+	5hUwoMgcATa9v7o1vhyLcQ3vQ/NyZ5bcKPBfI3ZmyUF/WcKJa9Je+KtqiFZmuY2EvwHe2Hh8DZ/
+	/q8rbYAIiKe32Q
+X-Google-Smtp-Source: AGHT+IHDDJtu8kjLF/zH3u5N6Plv3lcX73uCNtxm0f/WjVKubUEQQc4jhA6eH6Rs5519YEmB38XtbQ==
+X-Received: by 2002:ad4:5945:0:b0:704:9618:51d with SMTP id 6a1803df08f44-704a7065aacmr172694506d6.39.1752466853319;
+        Sun, 13 Jul 2025 21:20:53 -0700 (PDT)
 Received: from fauth-a1-smtp.messagingengine.com (fauth-a1-smtp.messagingengine.com. [103.168.172.200])
-        by smtp.gmail.com with ESMTPSA id d75a77b69052e-4a9ededcd5fsm42418971cf.68.2025.07.13.12.51.31
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-70497d39450sm42915536d6.75.2025.07.13.21.20.52
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 13 Jul 2025 12:51:32 -0700 (PDT)
-Received: from phl-compute-07.internal (phl-compute-07.phl.internal [10.202.2.47])
-	by mailfauth.phl.internal (Postfix) with ESMTP id 39322F40066;
-	Sun, 13 Jul 2025 15:51:31 -0400 (EDT)
+        Sun, 13 Jul 2025 21:20:52 -0700 (PDT)
+Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
+	by mailfauth.phl.internal (Postfix) with ESMTP id C2CE5F40068;
+	Mon, 14 Jul 2025 00:20:51 -0400 (EDT)
 Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-07.internal (MEProxy); Sun, 13 Jul 2025 15:51:31 -0400
-X-ME-Sender: <xms:Qw50aDyQsGYzFN43RjiBN1oLYKEL1H9n3OLwQ4tHNN6VZDivnKHXgw>
-    <xme:Qw50aMy65KPpd0jrB-Zrf03GOwr7o1Kw5QSdulxhr6wpYY9tTJzp4LCrO2hemwXeG
-    rODEhGtnN0hGD39LA>
-X-ME-Received: <xmr:Qw50aB4wVqiDti74aw21J6npBQJbyYRFrEU3LlpimRjZU1fP3lybfEH0cg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdegleeliecutefuodetggdotefrod
+  by phl-compute-05.internal (MEProxy); Mon, 14 Jul 2025 00:20:51 -0400
+X-ME-Sender: <xms:o4V0aKiB1Yw7Ddrs-kWGfndprpgdgr2L4ZwzQ1bpn3xOScxnW6O2kQ>
+    <xme:o4V0aMiNFkqdufkeyTRzHerJ32MkF7t-qTIVUX8DLu3rg7sM6jRmbbBVMvhspcwOI
+    VJwbZM5_uDHTD6gmg>
+X-ME-Received: <xmr:o4V0aGptazfK8y3G3bHmO2t0DIBwc0Ognkz1pQIMmEt5dYQJaZYAULhgcA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdehtdelkecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
     ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
     hrpeffhffvvefukfhfgggtuggjsehttdertddttddvnecuhfhrohhmpeeuohhquhhnucfh
     vghnghcuoegsohhquhhnrdhfvghnghesghhmrghilhdrtghomheqnecuggftrfgrthhtvg
-    hrnhepgfffkeduheeliefhkeehfefhueefffevleevkeffvdfhvdejgeeggeevieetjefh
-    necuffhomhgrihhnpehvrghluhgvrdhsrghfvghthienucevlhhushhtvghrufhiiigvpe
-    dtnecurfgrrhgrmhepmhgrihhlfhhrohhmpegsohhquhhnodhmvghsmhhtphgruhhthhhp
-    vghrshhonhgrlhhithihqdeiledvgeehtdeigedqudejjeekheehhedvqdgsohhquhhnrd
-    hfvghngheppehgmhgrihhlrdgtohhmsehfihigmhgvrdhnrghmvgdpnhgspghrtghpthht
-    ohepvdejpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehlohhsshhinheskhgvrh
-    hnvghlrdhorhhgpdhrtghpthhtoheplhhinhhugidqkhgvrhhnvghlsehvghgvrhdrkhgv
-    rhhnvghlrdhorhhgpdhrtghpthhtoheprhhushhtqdhfohhrqdhlihhnuhigsehvghgvrh
-    drkhgvrhhnvghlrdhorhhgpdhrtghpthhtoheplhhkmhhmsehlihhsthhsrdhlihhnuhig
-    rdguvghvpdhrtghpthhtoheplhhinhhugidqrghrtghhsehvghgvrhdrkhgvrhhnvghlrd
-    horhhgpdhrtghpthhtohepohhjvggurgeskhgvrhhnvghlrdhorhhgpdhrtghpthhtohep
-    rghlvgigrdhgrgihnhhorhesghhmrghilhdrtghomhdprhgtphhtthhopehgrghrhiesgh
-    grrhihghhuohdrnhgvthdprhgtphhtthhopegsjhhorhhnfegpghhhsehprhhothhonhhm
-    rghilhdrtghomh
-X-ME-Proxy: <xmx:Qw50aNAahx-9azlJQvPLFtMp7OgKC8pVTXQpcMJeeRBzRI0zno-nyw>
-    <xmx:Qw50aDCiVJ50W0sS6E_53UE-6sPPEOzX0V67DVpjhEQq-cpd4zCSww>
-    <xmx:Qw50aOpEpCGAvR9EsZpH-Ag3m23HDOBNpGXJKvDGBf9xqi4fIMHxIA>
-    <xmx:Qw50aF2dRKwWV5bRVPmNAOv3PtFef-_PfjfpjiXdMoHuTBFuWoj1dw>
-    <xmx:Qw50aNVvArT2iKsw2cWK16gvHiBWPc5sWIL_HmuqW-enS28Rsqc4vjvZ>
+    hrnhephedugfduffffteeutddvheeuveelvdfhleelieevtdeguefhgeeuveeiudffiedv
+    necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepsghoqh
+    hunhdomhgvshhmthhprghuthhhphgvrhhsohhnrghlihhthidqieelvdeghedtieegqddu
+    jeejkeehheehvddqsghoqhhunhdrfhgvnhhgpeepghhmrghilhdrtghomhesfhhigihmvg
+    drnhgrmhgvpdhnsggprhgtphhtthhopedvjedpmhhouggvpehsmhhtphhouhhtpdhrtghp
+    thhtoheplhhoshhsihhnsehkvghrnhgvlhdrohhrghdprhgtphhtthhopehlihhnuhigqd
+    hkvghrnhgvlhesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehruhhsthdq
+    fhhorhdqlhhinhhugiesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehlkh
+    hmmheslhhishhtshdrlhhinhhugidruggvvhdprhgtphhtthhopehlihhnuhigqdgrrhgt
+    hhesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehojhgvuggrsehkvghrnh
+    gvlhdrohhrghdprhgtphhtthhopegrlhgvgidrghgrhihnohhrsehgmhgrihhlrdgtohhm
+    pdhrtghpthhtohepghgrrhihsehgrghrhihguhhordhnvghtpdhrtghpthhtohepsghjoh
+    hrnhefpghghhesphhrohhtohhnmhgrihhlrdgtohhm
+X-ME-Proxy: <xmx:o4V0aCx8tIrHfRplnrskijHUbnjmpbNmW6HQXSp3MqqCbl2dGVu6Sw>
+    <xmx:o4V0aFy-744haymfbCRLccCE2OUtfmYIzSVyeymjGwgmyHIbByiZIg>
+    <xmx:o4V0aKbLjg8NsprenSkNmhPeXiNXzO378ZXxij6O6bhpTn9N15w8jA>
+    <xmx:o4V0aGnjfOsVAqLEaOGud3_0YQJQHJ1DbIekyMfBTdy0tpC1dB3OkA>
+    <xmx:o4V0aPEK9yjyqaJ155JtUU2KwuH3hswo_x5ZsYn5jREZow-089i7qi-2>
 Feedback-ID: iad51458e:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
- 13 Jul 2025 15:51:30 -0400 (EDT)
-Date: Sun, 13 Jul 2025 12:51:24 -0700
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 14 Jul 2025 00:20:51 -0400 (EDT)
+Date: Sun, 13 Jul 2025 21:20:50 -0700
 From: Boqun Feng <boqun.feng@gmail.com>
 To: Benno Lossin <lossin@kernel.org>
 Cc: linux-kernel@vger.kernel.org, rust-for-linux@vger.kernel.org,
@@ -117,11 +116,17 @@ Cc: linux-kernel@vger.kernel.org, rust-for-linux@vger.kernel.org,
 	Linus Torvalds <torvalds@linux-foundation.org>,
 	Thomas Gleixner <tglx@linutronix.de>,
 	Alan Stern <stern@rowland.harvard.edu>
-Subject: Re: [PATCH v6 4/9] rust: sync: atomic: Add generic atomics
-Message-ID: <aHQOPPhTRI2mcEKq@tardis-2.local>
+Subject: Re: [PATCH v6 6/9] rust: sync: atomic: Add the framework of
+ arithmetic operations
+Message-ID: <aHSFosU8tS1Oqj4l@Mac.home>
 References: <20250710060052.11955-1-boqun.feng@gmail.com>
- <20250710060052.11955-5-boqun.feng@gmail.com>
- <DB92I10114UN.33MAFJVWIX4AB@kernel.org>
+ <20250710060052.11955-7-boqun.feng@gmail.com>
+ <DB93KSS3F3AK.3R9RFOHJ4FSAQ@kernel.org>
+ <aHEiE0OoA3w1FmCp@Mac.home>
+ <DB9GDOR3AY9B.21YFXYHE4F0MP@kernel.org>
+ <aHFrUa3VWaKTe0xr@tardis-2.local>
+ <DB9J3GBDB2UK.2OHWT5AI5DXFD@kernel.org>
+ <aHGAhbmgsb9f3ImR@tardis-2.local>
 Precedence: bulk
 X-Mailing-List: lkmm@lists.linux.dev
 List-Id: <lkmm.lists.linux.dev>
@@ -130,88 +135,51 @@ List-Unsubscribe: <mailto:lkmm+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <DB92I10114UN.33MAFJVWIX4AB@kernel.org>
+In-Reply-To: <aHGAhbmgsb9f3ImR@tardis-2.local>
 
-On Fri, Jul 11, 2025 at 10:03:07AM +0200, Benno Lossin wrote:
+On Fri, Jul 11, 2025 at 02:22:13PM -0700, Boqun Feng wrote:
 [...]
-> > +/// # Round-trip transmutability
-[...]
-> > +///
-> > +/// This essentially means a valid bit pattern of `T: AllowAtomic` has to be a valid bit pattern
-> > +/// of `T::Repr`. This is needed because [`Atomic<T: AllowAtomic>`] operates on `T::Repr` to
-> > +/// implement atomic operations on `T`.
-> > +///
-> > +/// Note that this is more relaxed than bidirectional transmutability (i.e. [`transmute()`] is
-> > +/// always sound between `T` and `T::Repr`) because of the support for atomic variables over
+> > >     pub unsafe trait AtomicAdd<Rhs>: AllowAtomic {
+> > >         type Delta = Self::Repr;
+> > >         fn rhs_into_delta(rhs: Rhs) -> Delta;
+> > >     }
+> > >
+> > > Note that I have to provide a `Delta` (or better named as `ReprDelta`?)
+> > > because of when pointer support is added, atomic addition is between
+> > > a `*mut ()` and a `isize`, not two `*mut()`.
+> > 
+> > Makes sense, but we don't have default associated types yet :(
+> > 
 > 
-> s/between `T` and `T::Repr`/from `T` to `T::Repr` and back/
+> Oops, we are lucky enough to only have a few types to begin with ;-)
+> Maybe we can use `#[derive(AtomicAdd)] to select the default delta type
+> later.
 > 
 
-Hmm.. I'm going to keep the "between" form, because here we are talking
-about bi-directional transmutability, "from .. to .. and back" sounds
-like describing round-trip transmutability.
+Turn out I could give `AtomcImpl` an associate type:
 
-I also re-aranged the doc comment a bit:
+    pub trait AtomicImpl: Sealed {
+    	type Delta;
+    }
 
-/// Types that support basic atomic operations.
-///
-/// # Round-trip transmutability
-///
-/// `T` is round-trip transmutable to `U` if and only if both of these properties hold:
-///
-/// - Any valid bit pattern for `T` is also a valid bit pattern for `U`.
-/// - Transmuting (e.g. using [`transmute()`]) a value of type `T` to `U` and then to `T` again
-///   yields a value that is in all aspects equivalent to the original value.
-///
-/// # Safety
-///
-/// - [`Self`] must have the same size and alignment as [`Self::Repr`].
-/// - [`Self`] must be [round-trip transmutable] to  [`Self::Repr`].
-///
-/// Note that this is more relaxed than requiring the bi-directional transmutability (i.e.
-/// [`transmute()`] is always sound between `U` to `T`) because of the support for atomic variables
-/// over unit-only enums, see [Examples].
-///
-/// # Limitations
-///
-/// ...
-///
-/// # Examples
-///
-/// A unit-only enum that implements [`AllowAtomic`]:
-///
-/// ```
-/// use kernel::sync::atomic::{generic::AllowAtomic, Atomic, Relaxed};
-///
-/// #[derive(Clone, Copy, PartialEq, Eq)]
-/// #[repr(i32)]
-/// enum State {
-///     Uninit = 0,
-///     Working = 1,
-///     Done = 2,
-/// };
-///
-/// ...
-/// ```
-/// [`transmute()`]: core::mem::transmute
-/// [round-trip transmutable]: AllowAtomic#round-trip-transmutability
-/// [Examples]: AllowAtomic#examples
+and then
 
-Thanks!
+    pub unsafe trait AllowAtomicAdd<Rhs = Self>: AllowAtomic {
+        /// Converts `Rhs` into the `Delta` type of the atomic implementation.
+        fn rhs_into_delta(rhs: Rhs) -> <Self::Repr as AtomicImpl>::Delta;
+    }
+
+(Yeah, I named it `AllowAtomicAdd` ;-))
+
+and I only need to provide `Delta` for three types (i32, i64 and *mut
+()).
+
+BTW, since atomic arithmetic is wrapping, do we want things like `impl
+AllowAtomicAdd<u32> for i32`, similar to the concept of
+`i32::wrapping_add_unsigned()` ;-)
 
 Regards,
 Boqun
 
-> > +/// unit-only enums:
-> 
-> What are "unit-only" enums? Do you mean enums that don't have associated
-> data?
-> 
-> > +///
-> > +/// ```
-> > +/// #[repr(i32)]
-> > +/// enum State { Init = 0, Working = 1, Done = 2, }
-> > +/// ```
-[...]
-> > +pub unsafe trait AllowAtomic: Sized + Send + Copy {
-[...]
+> Regards,
+> Boqun

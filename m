@@ -1,74 +1,74 @@
-Received: from mail-qk1-f171.google.com (mail-qk1-f171.google.com [209.85.222.171])
+Received: from mail-qk1-f174.google.com (mail-qk1-f174.google.com [209.85.222.174])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44FC1255F33
-	for <lkmm@lists.linux.dev>; Mon, 14 Jul 2025 13:43:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA2D4139E
+	for <lkmm@lists.linux.dev>; Mon, 14 Jul 2025 13:47:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752500584; cv=none; b=MeLaZgzsekMe2u8ItqA2zBjs4rC8xH7xUzeeVslbHGidhjfzyGFChDSSoZl4rCh3lskgsn4jNQ0nMUzfktU4Ig3sFfiesvwC0zov4BMv/4c/YCGqQ8JaTFcIyTuxwSdt/RJNdzbU+w5cvTPEDA+9Yh5nN69mW3bZSGxJu0ayK7g=
+	t=1752500849; cv=none; b=Px+Zu89SFRhImoWCiC+QL9xNE9MILhcm6NnFIjGVPVZaA0hCXxoXH29VLm4DWCfc46qxs7jWnETNHVlk0Ro2FI00dHHfhxjwFl4K9HDUbdKI35k1Xakn5tj243xygHbWoCWK8gD8JQxyYsp0WD3UHswHsgKyhaxs63bEen6E6Vo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752500584; c=relaxed/simple;
-	bh=WPxyElylVhF0iPQIfxiTW4zQCOTfAgY1wQytxJ2fMiY=;
+	s=arc-20240116; t=1752500849; c=relaxed/simple;
+	bh=Olq+q1hlsZvSCxl6oX0NqRMgS/hv5fLjRTZshMpP0o4=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=d3KkAWgCzFD9whjt8NynJp/NAkoRr3qA67+AQyH3U6aiM1liJyC2IiGoEgASUaaE9hrFj/fpdkU/rB+E/CVlH4kAvAtUWy0KPtKNPK6zNXUpQZHoh5bcDGFYwKXtIFrRlOZbfz+nCfTGr4HVg5s2cCPepFt610boPzoUz/H2DA8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=msLrzced; arc=none smtp.client-ip=209.85.222.171
+	 Content-Type:Content-Disposition:In-Reply-To; b=RCH2TMeo3fhb26LcmsZk6tdaIV2+FIuB4qDDsG7HsH+0enYRol1fdRsd2EBr8VIan/vUuDqeNvNmBoX6iI/QDFKpp0Mf88bsM3aN5AXib/WwhLBuVZYibo3jRJU2gDcYYE+0btcgPp0M5U+BLTrsgqmK3IILOCfaFAmlqZjCWnE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=RxLFBru2; arc=none smtp.client-ip=209.85.222.174
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="msLrzced"
-Received: by mail-qk1-f171.google.com with SMTP id af79cd13be357-7e32cf22fdfso58177585a.0
-        for <lkmm@lists.linux.dev>; Mon, 14 Jul 2025 06:43:02 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RxLFBru2"
+Received: by mail-qk1-f174.google.com with SMTP id af79cd13be357-7de159778d4so231413285a.1
+        for <lkmm@lists.linux.dev>; Mon, 14 Jul 2025 06:47:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1752500581; x=1753105381; darn=lists.linux.dev;
+        d=gmail.com; s=20230601; t=1752500847; x=1753105647; darn=lists.linux.dev;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:feedback-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=fjFmGdXaAaiu0Ffhi5wpwHapt3S54QcOxUCblcGZllY=;
-        b=msLrzcedyg/VoZ/HJlOrDIDR7MjVgNKqR/BSF+7k3ckVdMXDvc+EX5OCuQxhOP2Z1B
-         wok7dWZCUvCx/he+xneXZohkN8fsUHGI6vW01ccq3U/qAdv8nWJr4nbI/rVVEaRYstGC
-         Cb4TuAjzi+wNs70AqGiEKL9gKrWOuWkmJ/Z7RZEf5JSpZxvtSTLZuDaFxC4nfHy5iR7P
-         SOh830u3cJ7dP+x3pfTpsYKyftEJBnwZKyqDTEnWFZoBlQqLoitzkYESvu2OL6ZrU+n6
-         X0RkPhfdKVupFaT+R/W5df8z6ochYloK+3Nbwt9c6LlIW5dA/Dgyq/C1cvZSjPEfcKlj
-         3IMA==
+        bh=g3j4m+MGxK9NH+sARTNaIEHxLP5Gbuav9zslDuXdpPU=;
+        b=RxLFBru23Ptvfpxt6DTcnjiFQgNKu6i20iPpzY9A+972UW7MSsNb1NfTtcAekuGSj7
+         9owioQNOVMIRi2oy0TDcxtMDBDfXSAAnybv56OZzRBWpjwQex7JYB6uvK51aASIjpf+t
+         eplhDIIIzR4xI/xczBZ7zNxQ9yPwlhx215HDX6BEBJaq51c96EcocIvq99uvCAXMQ//H
+         VO45qzhb9WUw5QAmXJseVv/Ri9lCf/R51ifcvTMbIrWu+z40OqDjLoFNoayb14vkSN5M
+         UBaajkD6IReOKDP36oSldcmM4HLPmZ+/d8uYswynOHa0MDHl2slhoU4h2NtBU0y3jS4p
+         LQ9Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1752500581; x=1753105381;
+        d=1e100.net; s=20230601; t=1752500847; x=1753105647;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:feedback-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=fjFmGdXaAaiu0Ffhi5wpwHapt3S54QcOxUCblcGZllY=;
-        b=rm0W4AfzWus7+cULRm0C5BSn+teaUApALc+d7gsBpIIeqpHr2vghIhEBkrGktZnxsY
-         uO/fyE+0ORZtTdE3UzoYruIXZa0oGyfFdGTRIAd1bdIhi0c4FHKgFDg/ZvlaQQ4TqY5b
-         rdPxMuFvhf34sMuS0dJj4+xkpXywPsW5U+xMKSF09J0bAzAgPMM+MEXM9CRyUp9HzuCN
-         0w8aWteWzRSMMJSTfv2+7mF4VzrPburmf6rYZhwTaET5oilp5YjuSAzeiSQ29zenQg3O
-         X1+930f3zD6HNRJ18bjNCVTAbDPAkC5JLXr2oyb6g0twBHThJI7l+esVtxVTO2Q+ewbv
-         XSMg==
-X-Forwarded-Encrypted: i=1; AJvYcCVDm34HR5RXmiI9UKksZBkZl6usUD1C+Wmq0/ZPo3XdONCmffPoy6pjSKUebQKzbLIi+6tS@lists.linux.dev
-X-Gm-Message-State: AOJu0Ywn70IWbjbWa0f1gi4yUC8CDpYqOvY05QUAWHulLwvwGHXlJWQG
-	9CbM6lWxrTRMXEGFzRpP1MbLNtiSNSJFY9Vq1yQTZWoKej0ZwMGjRPqj
-X-Gm-Gg: ASbGncvXzHV9GHhdeGtQAhKX8+5kwvICaBO+QuLeR2I6lNFWT0vWJ+spyyTMLwAYS9f
-	NEXc176mqLLeKUC5pctg6fqXWisns63H2kdg5hT6OdMTMkXEOOCeve/yEAyVONzTU/Q7x/o34Sf
-	z/TvdoyV3CGcwFg+WQtg3nuxyp27TY33KgC8svUwAWn2EyoV/u1bPwYfHo253IoRx8aJ+oJdtgz
-	gx7L1WNrG5hSmkHF7XWjnVk6b42SGI2TkOcLKl0MI1okxsFIRsJp/PdmQNsyNYV2EZJGCyNnJdS
-	3OW5kM3GqRutePYTOADgzErFLTO43qsIDjHc0zR8Mgy8SJWDAe+Pc7QROB5qXagOER0JNN2C7BO
-	uU3HsAPFi3Es5/rxcNjRPEMO6YJjuAbPNbthHSv8GGJDwyPt1B45ua17CLmGDMUC3Idf4NYTjzI
-	MRvNLpP0e8dQbKNglqC+YgKNE=
-X-Google-Smtp-Source: AGHT+IGweO7G/7uSENn+QjmTqlnddwl29V+sT1o5JO9dLO+3x1eM5WrtlkMDznQvp7BWQT0CzFOjIQ==
-X-Received: by 2002:a05:620a:29d4:b0:7e3:3276:99f with SMTP id af79cd13be357-7e332760bdamr202722385a.53.1752500580777;
-        Mon, 14 Jul 2025 06:43:00 -0700 (PDT)
+        bh=g3j4m+MGxK9NH+sARTNaIEHxLP5Gbuav9zslDuXdpPU=;
+        b=iTuWCOkUhtJhGg3rcAbE+3xhNSgzumJWkzowEfswE3QB+EB7WMAnHX/bMH3wQyU5Hg
+         BlkgI34OJ15uTpBxTO+Lh5sHZkX3TfPZoXCVOQNjdkNZ8ScSH7VTgAgrGBWsXjwsIPas
+         Y/NWTmijloFX1MlJzx3zDBiCQhVwjoc5H8NDRQPHwcISUPeBGRsPlxYPvLsMY/WZ1Lng
+         lcG8mVGB7j4ZxssxSTuo7EyQ3ZU0MJX0M/IbDoKtuvYLgeefcd/rpu5Kpee2XrgpAhNl
+         X9RO/RgK9XQc/DSmnbAmyaF8G50nng+pdoGchbMY4YmSPH7ZMTdZ+dYbOqiv9tEmRr7f
+         cu9w==
+X-Forwarded-Encrypted: i=1; AJvYcCUc2CfLzeri7VFGON52z67l/v4xnOA6rlA/fcNeRk5oyQyl6S7GXQ8nY7J3QhpO5X7EUGiD@lists.linux.dev
+X-Gm-Message-State: AOJu0YzikwwrUN4xGNJHjTLX0WiUdqX1z8oAWbUY5aUx262ttx2BB2Xv
+	wc6Pd7ONIfB+LXGBBk/PGeMUpPBqqtHiIRdv0COuztt0Lu+ryXhF7jId
+X-Gm-Gg: ASbGncvCN8OtFsGKyTgXjByNKQw3GzwJKLvlJCzxKZJVVK14LMYujPAIZh4ay1tfh6P
+	RGabx48ZkcRi7KrqNJFo7zy8gmVLH9sqnUQZNq8VB66E7ALPY4T2eQhV0B+2jEbbdAvaHJX8kQC
+	PBD2aDgb27zQcxdvXNlPMY2rItSx8PxxRdQB7U1zLqQHACGwJtFBA8D51zcVB6iFvpmb8BaHi+Z
+	ZeUt60vO0SWGjrA22+kQ/W9ZOd5/pYeCQeTxsAjRX8qnvw47F2U/wbCT66KRZZwvsGYB+wOHCVd
+	ltLpGRhcmaG+Kt3F7MBU9hRMkOYPYZUX2Aw/yrzGHoLF3yO+4x497REvWpmqwEnk2Iujmrad5K9
+	n2s77MkV/9bZ83skr3mI98FvCpLsKbIEsOfTNFL2UTbxK+z+/sbRDNQJr8kj+eDukpRTly48gcz
+	TxbN071br9ms6x
+X-Google-Smtp-Source: AGHT+IHo28sU146jMqRyWUoeKa8Yk5IwPxZWxFAwdDfLIIABL6lkMYs53Nt2rNNPIXEDcgl9CfZFhQ==
+X-Received: by 2002:a05:6214:2263:b0:704:846b:5f53 with SMTP id 6a1803df08f44-704a42b14f8mr240353746d6.25.1752500846500;
+        Mon, 14 Jul 2025 06:47:26 -0700 (PDT)
 Received: from fauth-a2-smtp.messagingengine.com (fauth-a2-smtp.messagingengine.com. [103.168.172.201])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-7dcdc0f7d1csm510687285a.39.2025.07.14.06.42.59
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-704b394b6f5sm23848676d6.12.2025.07.14.06.47.25
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 14 Jul 2025 06:43:00 -0700 (PDT)
-Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
-	by mailfauth.phl.internal (Postfix) with ESMTP id 78D0FF40066;
-	Mon, 14 Jul 2025 09:42:59 -0400 (EDT)
+        Mon, 14 Jul 2025 06:47:25 -0700 (PDT)
+Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
+	by mailfauth.phl.internal (Postfix) with ESMTP id 32369F40066;
+	Mon, 14 Jul 2025 09:47:25 -0400 (EDT)
 Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-01.internal (MEProxy); Mon, 14 Jul 2025 09:42:59 -0400
-X-ME-Sender: <xms:Ywl1aDg6ZR-Pt-egYF0cEU0wN5VrH3Wc8d2tBgrBdgNGnhIReYEK4A>
-    <xme:Ywl1aBiD2dUlnpJoC8tg4CZjOCDUfwJZMU4VkEOc89Ww_fXgexZyx_II5sZy5RUz1
-    oqJYTCw24cXszNALw>
-X-ME-Received: <xmr:Ywl1aHrAk2faanmnCGwYF7v4EfNsJNWcFfiNE0RxBYPu047YGRLbl95oxg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdehvddutdcutefuodetggdotefrod
+  by phl-compute-05.internal (MEProxy); Mon, 14 Jul 2025 09:47:25 -0400
+X-ME-Sender: <xms:bQp1aBiDBYppdzCwS6cNCIufgkY6XF5ZrSFeFMqkWYygHKGoVKCM4w>
+    <xme:bQp1aHjKEazCF_cFWoU4WNX9XmH8iMYfsr5GHR4xLYVdVIC_gvrjnQlLz40Cwo1UO
+    JbnNR8Vceoq0wtqJw>
+X-ME-Received: <xmr:bQp1aFpkKjojUIvRAKhztRMi5OAhdVj1LxYuHALuhTFm4SoaRHAE9TUh-w>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdehvdduudcutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
     ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
     hrpeffhffvvefukfhfgggtuggjsehttdertddttddvnecuhfhrohhmpeeuohhquhhnucfh
@@ -86,15 +86,15 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdehvddutdcutefuodetgg
     gvlhdrohhrghdprhgtphhtthhopegrlhgvgidrghgrhihnohhrsehgmhgrihhlrdgtohhm
     pdhrtghpthhtohepghgrrhihsehgrghrhihguhhordhnvghtpdhrtghpthhtohepsghjoh
     hrnhefpghghhesphhrohhtohhnmhgrihhlrdgtohhm
-X-ME-Proxy: <xmx:Ywl1aPw5QLkQ8h8wN2AGHXMiG97DGE0zF_b0nFyuFM2NDibE_pfKOg>
-    <xmx:Ywl1aOxvuEi3bZcmwu4wxtg9u3KRto60ks8oM57Robcf1EHUb-71Pw>
-    <xmx:Ywl1aPbFSQoykG1EAzIuyNZKY8gf5duiOR5uYRVx6qypdNKAS7aT9g>
-    <xmx:Ywl1aHlXvctT_p98-Ps8pUe1bWN_092kyk3UjuKjXn8s64OkZnHskQ>
-    <xmx:Ywl1aMHVbmuDUlU3-8uBw6DYzNXRCHFWgcqAIKh7Xh5SXujsZ_qu2Ycf>
+X-ME-Proxy: <xmx:bQp1aFxAHw3eOmeq7mO212W6QCGo8bgCQsCyXOg0vlLt3kHpdYHfPA>
+    <xmx:bQp1aMxm6H5LUvqSBBMl7MMw2__QVBaFB6sMV039M9EDTCctRaTE1w>
+    <xmx:bQp1aFYjAwtvYTvtc0HfkJ7Q_626o--RfyzgfqRtmLRPJgQ3FyR55w>
+    <xmx:bQp1aFlZDvmi2K_VOJE-ZZkU6MoUzpd5frDNYzY8plmd4FfxQR0OCA>
+    <xmx:bQp1aCHiG3nnjcqPTSBcGxzV-K6dOBX6NP0ZYop2ujIZDueJ7R0vW1j1>
 Feedback-ID: iad51458e:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 14 Jul 2025 09:42:58 -0400 (EDT)
-Date: Mon, 14 Jul 2025 06:42:57 -0700
+ 14 Jul 2025 09:47:24 -0400 (EDT)
+Date: Mon, 14 Jul 2025 06:47:23 -0700
 From: Boqun Feng <boqun.feng@gmail.com>
 To: Benno Lossin <lossin@kernel.org>
 Cc: linux-kernel@vger.kernel.org, rust-for-linux@vger.kernel.org,
@@ -116,12 +116,11 @@ Cc: linux-kernel@vger.kernel.org, rust-for-linux@vger.kernel.org,
 	Linus Torvalds <torvalds@linux-foundation.org>,
 	Thomas Gleixner <tglx@linutronix.de>,
 	Alan Stern <stern@rowland.harvard.edu>
-Subject: Re: [PATCH v7 2/9] rust: sync: Add basic atomic operation mapping
- framework
-Message-ID: <aHUJYTv4_wsatAw5@Mac.home>
+Subject: Re: [PATCH v7 9/9] rust: sync: atomic: Add Atomic<{usize,isize}>
+Message-ID: <aHUKayPmRrAOd9JM@Mac.home>
 References: <20250714053656.66712-1-boqun.feng@gmail.com>
- <20250714053656.66712-3-boqun.feng@gmail.com>
- <DBBOXLF23VVA.2T3U6GBOZ3Y20@kernel.org>
+ <20250714053656.66712-10-boqun.feng@gmail.com>
+ <DBBQ9SLMWA2K.33BWRE1ME65MG@kernel.org>
 Precedence: bulk
 X-Mailing-List: lkmm@lists.linux.dev
 List-Id: <lkmm.lists.linux.dev>
@@ -130,140 +129,36 @@ List-Unsubscribe: <mailto:lkmm+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <DBBOXLF23VVA.2T3U6GBOZ3Y20@kernel.org>
+In-Reply-To: <DBBQ9SLMWA2K.33BWRE1ME65MG@kernel.org>
 
-On Mon, Jul 14, 2025 at 12:03:11PM +0200, Benno Lossin wrote:
-[...]
-> > +declare_and_impl_atomic_methods!(
-> > +    /// Basic atomic operations
-> > +    pub trait AtomicHasBasicOps {
-> 
-> I think we should drop the `Has` from the names. So this one can just be
-> `AtomicBasicOps`. Or how about `BasicAtomic`, or `AtomicBase`?
-> 
-
-Actually, given your feedback to `ordering::Any` vs `core::any::Any`,
-I think it makes more sense to keep the current names ;-) These are only
-trait names to describe what operations do an `AtomicImpl` has, and they
-should be used only in atomic mod, so naming them a bit longer is not a
-problem. And by doing so, we free the better names `BasicAtomic` or
-`AtomicBase` for other future usages.
-
-Best I could do is `AtomicBasicOps` or `HasAtomicBasicOps`.
-
-> > +        /// Atomic read (load).
-> > +        ///
-> > +        /// # Safety
-> > +        /// - `ptr` is aligned to [`align_of::<Self>()`].
-> > +        /// - `ptr` is valid for reads.
-> > +        ///
-> > +        /// [`align_of::<Self>()`]: core::mem::align_of
-> > +        unsafe fn read[acquire](ptr: *mut Self) -> Self {
-> > +            bindings::#call(ptr.cast())
-> > +        }
+On Mon, Jul 14, 2025 at 01:06:08PM +0200, Benno Lossin wrote:
+> On Mon Jul 14, 2025 at 7:36 AM CEST, Boqun Feng wrote:
+> > +// Defines an internal type that always maps to the integer type which has the same size alignment
+> > +// as `isize` and `usize`, and `isize` and `usize` are always bi-directional transmutable to
+> > +// `isize_atomic_repr`, which also always implements `AtomicImpl`.
+> > +#[allow(non_camel_case_types)]
+> > +#[cfg(not(CONFIG_64BIT))]
+> > +type isize_atomic_repr = i32;
+> > +#[allow(non_camel_case_types)]
+> > +#[cfg(CONFIG_64BIT)]
+> > +type isize_atomic_repr = i64;
 > > +
-> > +        /// Atomic set (store).
-> > +        ///
-> > +        /// # Safety
-> > +        /// - `ptr` is aligned to [`align_of::<Self>()`].
-> > +        /// - `ptr` is valid for writes.
-> > +        ///
-> > +        /// [`align_of::<Self>()`]: core::mem::align_of
-> > +        unsafe fn set[release](ptr: *mut Self, v: Self) {
-> > +            bindings::#call(ptr.cast(), v)
-> > +        }
-> > +    }
-> > +);
-> > +
-> > +declare_and_impl_atomic_methods!(
-> > +    /// Exchange and compare-and-exchange atomic operations
-> > +    pub trait AtomicHasXchgOps {
+> > +// Ensure size and alignment requirements are checked.
+> > +crate::static_assert!(core::mem::size_of::<isize>() == core::mem::size_of::<isize_atomic_repr>());
+> > +crate::static_assert!(core::mem::align_of::<isize>() == core::mem::align_of::<isize_atomic_repr>());
+> > +crate::static_assert!(core::mem::size_of::<usize>() == core::mem::size_of::<isize_atomic_repr>());
+> > +crate::static_assert!(core::mem::align_of::<usize>() == core::mem::align_of::<isize_atomic_repr>());
 > 
-> Same here `AtomicXchgOps` or `AtomicExchangeOps` or `AtomicExchange`?
-> (I would prefer to not abbreviate it to `Xchg`)
+> This is fine for now, but I would prefer for this to go into an
+> `assumptions` module like Miguel proposed some time ago.
 > 
 
-The "Xchg" -> "Exchange" part seems fine to me.
-
-> > +        /// Atomic exchange.
-> > +        ///
-> > +        /// Atomically updates `*ptr` to `v` and returns the old value.
-> > +        ///
-> > +        /// # Safety
-> > +        /// - `ptr` is aligned to [`align_of::<Self>()`].
-> > +        /// - `ptr` is valid for reads and writes.
-> > +        ///
-> > +        /// [`align_of::<Self>()`]: core::mem::align_of
-> > +        unsafe fn xchg[acquire, release, relaxed](ptr: *mut Self, v: Self) -> Self {
-> > +            bindings::#call(ptr.cast(), v)
-> > +        }
-> > +
-> > +        /// Atomic compare and exchange.
-> > +        ///
-> > +        /// If `*ptr` == `*old`, atomically updates `*ptr` to `new`. Otherwise, `*ptr` is not
-> > +        /// modified, `*old` is updated to the current value of `*ptr`.
-> > +        ///
-> > +        /// Return `true` if the update of `*ptr` occured, `false` otherwise.
-> > +        ///
-> > +        /// # Safety
-> > +        /// - `ptr` is aligned to [`align_of::<Self>()`].
-> > +        /// - `ptr` is valid for reads and writes.
-> > +        /// - `old` is aligned to [`align_of::<Self>()`].
-> > +        /// - `old` is valid for reads and writes.
-> > +        ///
-> > +        /// [`align_of::<Self>()`]: core::mem::align_of
-> > +        unsafe fn try_cmpxchg[acquire, release, relaxed](ptr: *mut Self, old: *mut Self, new: Self) -> bool {
-> > +            bindings::#call(ptr.cast(), old, new)
-> > +        )}
-> > +    }
-> > +);
-> > +
-> > +declare_and_impl_atomic_methods!(
-> > +    /// Atomic arithmetic operations
-> > +    pub trait AtomicHasArithmeticOps {
-> 
-> Forgot to rename this one to `Add`? I think `AtomicAdd` sounds best for
-
-No, because at the `AtomicImpl` level, it's easy to know whether a type
-has all the arithmetic operations or none (also the `Delta` type should
-be known). But I don't have opinions on renaming it to `AtomicAddOps` or
-`HasAtomicAddOps`.
+Well, sure. Also if `assumptions` or other core kernel mod can provide
+a definition similar to `isize_atomic_repr`, I'm happy to use it.
 
 Regards,
 Boqun
 
-> this one.
-> 
 > ---
 > Cheers,
 > Benno
-> 
-> > +        /// Atomic add (wrapping).
-> > +        ///
-> > +        /// Atomically updates `*ptr` to `(*ptr).wrapping_add(v)`.
-> > +        ///
-> > +        /// # Safety
-> > +        /// - `ptr` is aligned to `align_of::<Self>()`.
-> > +        /// - `ptr` is valid for reads and writes.
-> > +        ///
-> > +        /// [`align_of::<Self>()`]: core::mem::align_of
-> > +        unsafe fn add[](ptr: *mut Self, v: Self::Delta) {
-> > +            bindings::#call(v, ptr.cast())
-> > +        }
-> > +
-> > +        /// Atomic fetch and add (wrapping).
-> > +        ///
-> > +        /// Atomically updates `*ptr` to `(*ptr).wrapping_add(v)`, and returns the value of `*ptr`
-> > +        /// before the update.
-> > +        ///
-> > +        /// # Safety
-> > +        /// - `ptr` is aligned to `align_of::<Self>()`.
-> > +        /// - `ptr` is valid for reads and writes.
-> > +        ///
-> > +        /// [`align_of::<Self>()`]: core::mem::align_of
-> > +        unsafe fn fetch_add[acquire, release, relaxed](ptr: *mut Self, v: Self::Delta) -> Self {
-> > +            bindings::#call(v, ptr.cast())
-> > +        }
-> > +    }
-> > +);
-> 

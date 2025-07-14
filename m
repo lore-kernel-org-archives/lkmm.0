@@ -1,222 +1,105 @@
-Received: from mail-qv1-f54.google.com (mail-qv1-f54.google.com [209.85.219.54])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E61C3246BBA
-	for <lkmm@lists.linux.dev>; Mon, 14 Jul 2025 14:59:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF36C257448;
+	Mon, 14 Jul 2025 15:01:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752505175; cv=none; b=neev9SQUmGEqcNaZnB8P25cr8ZeTIJdbnfNEZdGgUdP7SDG/m0AeOkQZKCBOy0KCY8nrgPUAUaqq+YcKav69c1/8i99zFguWBx9FFjL3d/cU664XF+BI18Qx7c02wVZDvEgKpySV+FPZh+1x4bbHudK9JWpvem9OtBP08vlN5OQ=
+	t=1752505264; cv=none; b=EpVRENszCmiWVauKuleV31NSq/xTunefkTV8+yJiV4bRUk0hSnS6fxf54GGUbGRCzLtV0dPExJPMR9aKqeAoFvqZJguOVmhFrWJZXWKaZm44vIoK1sk7mL4TTVLqgLZHBBo4Sdb2cJQ2C0UcfTrkt3SIVOhocA6/PqQ+/rVZqe4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752505175; c=relaxed/simple;
-	bh=gnPNfGNhvz8u1TxFQVMlnCmvFMjVfxzTigxWK8CCFAo=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=IHzz8n7gIMGgGrxOfFc9TJNGYg+KbYMMt4wMkTy3JG+OtHMd/A6a5BtYpK0qZ+Egackxn38+p3oM3kW1uFD8PT0SCgy6linKiBI0sqIjHtIl0tEZvLjUaCksJDkK5XczMho8wPImn1zEsQEiZrA1SPq98wRUtkQM/X1zCvIKPxs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=JqPxm+33; arc=none smtp.client-ip=209.85.219.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1752505264; c=relaxed/simple;
+	bh=qlPgUQU/gaN/1eOKsYk2wqbQmVMaMdbCfXW0TEFe5So=;
+	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
+	 References:In-Reply-To; b=J95n5vSIbec8LzATFnA1gSDOxB7JuytT55QZrUpBAUI5WTn7R+rNi8XDpix7yp7ngZisV6MsogAZ4wjH5Dlr6B5RTHiixUDzkrtRNYsM5aWZOrruFSlBXp+997V69xV+xFyNR9lTJwl2cr7IDs1Ga3og46wN5y7c3q7XFV1uGsY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=DwsLD6pf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JqPxm+33"
-Received: by mail-qv1-f54.google.com with SMTP id 6a1803df08f44-6fabe9446a0so36416026d6.2
-        for <lkmm@lists.linux.dev>; Mon, 14 Jul 2025 07:59:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1752505173; x=1753109973; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:feedback-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Emm0Lj04Ala0s2Dvnm1J6cHglimWIHUYLnLqb+co8Ck=;
-        b=JqPxm+33uvtf8Vi5uGZqFxdtLoF45CA93P8xL0kBah9/3ST4fovPLofuae2qemzGb8
-         B2Q4wvXG4/9wuFZ0W/dGynTcSo2QITVWczEMo02dzjdYjk037j8TlhUT+LEFtu5L3wud
-         JdmCL7teghST05n7m3HVdpEaQXI3/vJ+QtPuv2fkuAywPZ+w+wc75abpBZdOPw19OBVb
-         rjuVRy4vEAATjenZrB8gOU23mVmdpQAmMOYctg/rjhjCQ1HfTPyaMAapKGBxly/EBrGm
-         Yv3765pDTKzTFOnr/9RKnsVA82u3UQUHpoBW1KibrNuAM7pEt03ol8syGEZrnZzelqGL
-         IgsA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1752505173; x=1753109973;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:feedback-id:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=Emm0Lj04Ala0s2Dvnm1J6cHglimWIHUYLnLqb+co8Ck=;
-        b=lfLYZyowdi9FUKarzGSTZhPc+R4bx8vNwnmPA9ZpmarVTMwmQ0pt91Cf3W8EBqoT2q
-         gSiWK58ssubZv3Q2xXfiXW/IiRUhAT9S9Oe62l44hss34SKuH0o2KBlyYlY+FaPJY+n4
-         awUnz8DGfN8EekK01UOop663KktQf0sfWagR9avpgWh0NyXdy8sXWMoBX1orul+jIR/1
-         ikNglYz9wBEiC7X0sXDMHW8HNtOGVYfMZmvNJNcYWcs56Z6btWfmCnvdjrAK2DuC7r/7
-         M9Ix3IVH869kKHL1vrTtjSSj4NPhCh/lORnDruVzamiWhdtrq5eKoA0dlmfjs4SWN+7X
-         5RPw==
-X-Forwarded-Encrypted: i=1; AJvYcCU9qsAMa6xsXyLBkovFki81ojcqv+mUfk5RX4L9XvCrQ/qczJ9cpaAGWEt3Cq4+zLHLHaOp@lists.linux.dev
-X-Gm-Message-State: AOJu0Yy8pZCqL1TbYFSEOrkzrytvrpwNjU8OvzlhqESh5vszV3SIJo/r
-	PQrcaUiOyyBI4yDjkZETTFzVjEhYRoCQiG7xzbAgvfsXV/mlHtRdgX6n
-X-Gm-Gg: ASbGncsoSid1YrR/NrREc6Bxch2K0txEv60Yfrz9TMjWVZrvOJYKQ422CBTNl7WA9u7
-	sM3ljqXhZoikt3hI2RU+fPyJOk4RSrKtKYBCMQMEfdq/XMQZznZgeKHxc0au6/VbOr4/QhTRWDg
-	NDQjaddWQOgm8smcuWgUDnu2J3YeoI1JwI6wv7D7jQbZPmUjIShYXNDXqlP810vrn3k6O2w/wl5
-	bKDCH2wvqDk6nVFx9KqHcQTsR+nNMAKkKyFQomGf+llhbMFNgWgFZKbYiKhHjRvYrRpGCDcOsaf
-	1HvDqRZGcR3DEjJPL+TVJeWFG6KOkf6XEAqPlYZi7PAAoBVPueb/vc7zxDKkF3LIBVsAAiQnR40
-	tP1DFmLEjVxFOOx2SvSrwTvl1DokOEg/Iz5ABc3ORubG8wPKkSU08qLUS/Bi95nNVZe2lBnPQZp
-	kZP9aZp0qAy3Ok
-X-Google-Smtp-Source: AGHT+IEN00Lo4cBd6OwqcL4wVIeZqi3JBwRUPiSstExgyXkxrdsPV1jT8r+HnbjYVBvAiR/AWrB76w==
-X-Received: by 2002:a05:6214:f6f:b0:6fd:24e8:7b04 with SMTP id 6a1803df08f44-704a399524amr204039356d6.33.1752505172434;
-        Mon, 14 Jul 2025 07:59:32 -0700 (PDT)
-Received: from fauth-a1-smtp.messagingengine.com (fauth-a1-smtp.messagingengine.com. [103.168.172.200])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-70497d39c9dsm47646236d6.66.2025.07.14.07.59.31
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 14 Jul 2025 07:59:31 -0700 (PDT)
-Received: from phl-compute-07.internal (phl-compute-07.phl.internal [10.202.2.47])
-	by mailfauth.phl.internal (Postfix) with ESMTP id 37821F40066;
-	Mon, 14 Jul 2025 10:59:31 -0400 (EDT)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-07.internal (MEProxy); Mon, 14 Jul 2025 10:59:31 -0400
-X-ME-Sender: <xms:Uxt1aFVrB1b9a65mM4HncjklN42eaCeYIqtMLk7twC7mStzpeMMU-Q>
-    <xme:Uxt1aHF6xD0N25-uQwxrGtiNrvTdqOE2CwT84bumWZZewDXRN3c3NhHJcyNULOsJD
-    4vCV4sZRxI7obTdwg>
-X-ME-Received: <xmr:Uxt1aF8H5fT_ce_BycXPBBPvUw1-0xqmM5N797Vzr2TnlpRt5A5C1DZ7Ug>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdehvddvhecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpeffhffvvefukfhfgggtuggjsehttdertddttddvnecuhfhrohhmpeeuohhquhhnucfh
-    vghnghcuoegsohhquhhnrdhfvghnghesghhmrghilhdrtghomheqnecuggftrfgrthhtvg
-    hrnhephfetvdfgtdeukedvkeeiteeiteejieehvdetheduudejvdektdekfeegvddvhedt
-    necuffhomhgrihhnpehkvghrnhgvlhdrohhrghenucevlhhushhtvghrufhiiigvpedtne
-    curfgrrhgrmhepmhgrihhlfhhrohhmpegsohhquhhnodhmvghsmhhtphgruhhthhhpvghr
-    shhonhgrlhhithihqdeiledvgeehtdeigedqudejjeekheehhedvqdgsohhquhhnrdhfvg
-    hngheppehgmhgrihhlrdgtohhmsehfihigmhgvrdhnrghmvgdpnhgspghrtghpthhtohep
-    vdejpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehlohhsshhinheskhgvrhhnvg
-    hlrdhorhhgpdhrtghpthhtoheplhhinhhugidqkhgvrhhnvghlsehvghgvrhdrkhgvrhhn
-    vghlrdhorhhgpdhrtghpthhtoheprhhushhtqdhfohhrqdhlihhnuhigsehvghgvrhdrkh
-    gvrhhnvghlrdhorhhgpdhrtghpthhtoheplhhkmhhmsehlihhsthhsrdhlihhnuhigrdgu
-    vghvpdhrtghpthhtoheplhhinhhugidqrghrtghhsehvghgvrhdrkhgvrhhnvghlrdhorh
-    hgpdhrtghpthhtohepohhjvggurgeskhgvrhhnvghlrdhorhhgpdhrtghpthhtoheprghl
-    vgigrdhgrgihnhhorhesghhmrghilhdrtghomhdprhgtphhtthhopehgrghrhiesghgrrh
-    ihghhuohdrnhgvthdprhgtphhtthhopegsjhhorhhnfegpghhhsehprhhothhonhhmrghi
-    lhdrtghomh
-X-ME-Proxy: <xmx:Uxt1aH0nqdtKBZvCAN9D2L86sDCr5vqgfF2PUzbw8g1v-6tSC14lsw>
-    <xmx:Uxt1aNl1swUhAY-1NAx43kNqACFPpgRYlV5FP1AVyuzngKBAto_15g>
-    <xmx:Uxt1aN85-gTrsC92OXjm1ngaNClxF9lR7_14s3_bChRk03f3MQ3PbQ>
-    <xmx:Uxt1aK4HzvkQqrlcqDP09uYidPt4KrBWYVMNeMKpMJOaeCYGBCuTjg>
-    <xmx:Uxt1aFJ6tW0cornniR3noqwb9WCuh3W4e6yqBrHQQ30jNoWDQr3iU-pu>
-Feedback-ID: iad51458e:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 14 Jul 2025 10:59:30 -0400 (EDT)
-Date: Mon, 14 Jul 2025 07:59:29 -0700
-From: Boqun Feng <boqun.feng@gmail.com>
-To: Benno Lossin <lossin@kernel.org>
-Cc: linux-kernel@vger.kernel.org, rust-for-linux@vger.kernel.org,
-	lkmm@lists.linux.dev, linux-arch@vger.kernel.org,
-	Miguel Ojeda <ojeda@kernel.org>,
-	Alex Gaynor <alex.gaynor@gmail.com>, Gary Guo <gary@garyguo.net>,
-	=?iso-8859-1?Q?Bj=F6rn?= Roy Baron <bjorn3_gh@protonmail.com>,
-	Andreas Hindborg <a.hindborg@kernel.org>,
-	Alice Ryhl <aliceryhl@google.com>, Trevor Gross <tmgross@umich.edu>,
-	Danilo Krummrich <dakr@kernel.org>, Will Deacon <will@kernel.org>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Wedson Almeida Filho <wedsonaf@gmail.com>,
-	Viresh Kumar <viresh.kumar@linaro.org>,
-	Lyude Paul <lyude@redhat.com>, Ingo Molnar <mingo@kernel.org>,
-	Mitchell Levy <levymitchell0@gmail.com>,
-	"Paul E. McKenney" <paulmck@kernel.org>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Alan Stern <stern@rowland.harvard.edu>
-Subject: Re: [PATCH v7 3/9] rust: sync: atomic: Add ordering annotation types
-Message-ID: <aHUbUZZ-8Z9kspds@Mac.home>
-References: <20250714053656.66712-1-boqun.feng@gmail.com>
- <20250714053656.66712-4-boqun.feng@gmail.com>
- <DBBP3E8PZ81U.2O0QHK1GQXKX2@kernel.org>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="DwsLD6pf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2ECF0C4CEED;
+	Mon, 14 Jul 2025 15:00:59 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1752505264;
+	bh=qlPgUQU/gaN/1eOKsYk2wqbQmVMaMdbCfXW0TEFe5So=;
+	h=Date:Cc:Subject:From:To:References:In-Reply-To:From;
+	b=DwsLD6pfMNv6iSpp5bwEirf2B3wAn4wDyj/KxDP8QEgCYPrKvmkYD3uE08iKwsZvs
+	 xRahWKq3KPO8UVrdBtjZkn26b0Bq5qcApQ5I6XlmOQHDl+g5eOuPfxdkegi7q4Hm9g
+	 cr36clIKsrR+5hX03rNgVXMj05uqNoL6zknNS+xEHJ1LK2UkKhiTJaYIsumHSkAypf
+	 SuhqYNewp7UOdPRngqYDccz3WakbIG8nGOTWqqhL9oCR7yQpSAUiGcowoXb7V78FJ5
+	 kaIYXO3YREcwa8Eu/6FnkjU0a2PUilHgtrxA4rzgh3aztJsSMBWOmoiWrmNL9GraCU
+	 XjT9XrrjxNDUg==
 Precedence: bulk
 X-Mailing-List: lkmm@lists.linux.dev
 List-Id: <lkmm.lists.linux.dev>
 List-Subscribe: <mailto:lkmm+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:lkmm+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <DBBP3E8PZ81U.2O0QHK1GQXKX2@kernel.org>
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Mon, 14 Jul 2025 17:00:56 +0200
+Message-Id: <DBBV9KHTEM3E.3T10KY9JN754X@kernel.org>
+Cc: <linux-kernel@vger.kernel.org>, <rust-for-linux@vger.kernel.org>,
+ <lkmm@lists.linux.dev>, <linux-arch@vger.kernel.org>, "Miguel Ojeda"
+ <ojeda@kernel.org>, "Alex Gaynor" <alex.gaynor@gmail.com>, "Gary Guo"
+ <gary@garyguo.net>, =?utf-8?q?Bj=C3=B6rn_Roy_Baron?=
+ <bjorn3_gh@protonmail.com>, "Andreas Hindborg" <a.hindborg@kernel.org>,
+ "Alice Ryhl" <aliceryhl@google.com>, "Trevor Gross" <tmgross@umich.edu>,
+ "Danilo Krummrich" <dakr@kernel.org>, "Will Deacon" <will@kernel.org>,
+ "Peter Zijlstra" <peterz@infradead.org>, "Mark Rutland"
+ <mark.rutland@arm.com>, "Wedson Almeida Filho" <wedsonaf@gmail.com>,
+ "Viresh Kumar" <viresh.kumar@linaro.org>, "Lyude Paul" <lyude@redhat.com>,
+ "Ingo Molnar" <mingo@kernel.org>, "Mitchell Levy"
+ <levymitchell0@gmail.com>, "Paul E. McKenney" <paulmck@kernel.org>, "Greg
+ Kroah-Hartman" <gregkh@linuxfoundation.org>, "Linus Torvalds"
+ <torvalds@linux-foundation.org>, "Thomas Gleixner" <tglx@linutronix.de>,
+ "Alan Stern" <stern@rowland.harvard.edu>
+Subject: Re: [PATCH v7 2/9] rust: sync: Add basic atomic operation mapping
+ framework
+From: "Benno Lossin" <lossin@kernel.org>
+To: "Boqun Feng" <boqun.feng@gmail.com>
+X-Mailer: aerc 0.20.1
+References: <20250714053656.66712-1-boqun.feng@gmail.com>
+ <20250714053656.66712-3-boqun.feng@gmail.com>
+ <DBBOXLF23VVA.2T3U6GBOZ3Y20@kernel.org> <aHUJYTv4_wsatAw5@Mac.home>
+In-Reply-To: <aHUJYTv4_wsatAw5@Mac.home>
 
-On Mon, Jul 14, 2025 at 12:10:46PM +0200, Benno Lossin wrote:
-> On Mon Jul 14, 2025 at 7:36 AM CEST, Boqun Feng wrote:
-> > Preparation for atomic primitives. Instead of a suffix like _acquire, a
-> > method parameter along with the corresponding generic parameter will be
-> > used to specify the ordering of an atomic operations. For example,
-> > atomic load() can be defined as:
-> >
-> > 	impl<T: ...> Atomic<T> {
-> > 	    pub fn load<O: AcquireOrRelaxed>(&self, _o: O) -> T { ... }
-> > 	}
-> >
-> > and acquire users would do:
-> >
-> > 	let r = x.load(Acquire);
-> >
-> > relaxed users:
-> >
-> > 	let r = x.load(Relaxed);
-> >
-> > doing the following:
-> >
-> > 	let r = x.load(Release);
-> >
-> > will cause a compiler error.
-> >
-> > Compared to suffixes, it's easier to tell what ordering variants an
-> > operation has, and it also make it easier to unify the implementation of
-> > all ordering variants in one method via generic. The `TYPE` associate
-> > const is for generic function to pick up the particular implementation
-> > specified by an ordering annotation.
-> >
-> > Reviewed-by: Alice Ryhl <aliceryhl@google.com>
-> > Signed-off-by: Boqun Feng <boqun.feng@gmail.com>
-> > ---
-> > Benno, please take a good and if you want to provide your Reviewed-by
-> > for this one. I didn't apply your Reviewed-by because I used
-> > `ordering::Any` instead of `AnyOrdering`, I think you're Ok with it [1],
-> > but I could be wrong. Thanks!
-> >
-> > [1]: https://lore.kernel.org/rust-for-linux/DB8M91D7KIT4.14W69YK7108ND@kernel.org/
-> 
-> > +/// The trait bound for annotating operations that support any ordering.
-> > +pub trait Any: internal::Sealed {
-> 
-> How about we just name this `Ordering`? Because that's what it is :)
-> 
+On Mon Jul 14, 2025 at 3:42 PM CEST, Boqun Feng wrote:
+> On Mon, Jul 14, 2025 at 12:03:11PM +0200, Benno Lossin wrote:
+> [...]
+>> > +declare_and_impl_atomic_methods!(
+>> > +    /// Basic atomic operations
+>> > +    pub trait AtomicHasBasicOps {
+>>=20
+>> I think we should drop the `Has` from the names. So this one can just be
+>> `AtomicBasicOps`. Or how about `BasicAtomic`, or `AtomicBase`?
+>>=20
+>
+> Actually, given your feedback to `ordering::Any` vs `core::any::Any`,
+> I think it makes more sense to keep the current names ;-) These are only
+> trait names to describe what operations do an `AtomicImpl` has, and they
+> should be used only in atomic mod, so naming them a bit longer is not a
+> problem. And by doing so, we free the better names `BasicAtomic` or
+> `AtomicBase` for other future usages.
+>
+> Best I could do is `AtomicBasicOps` or `HasAtomicBasicOps`.
 
-Seems OK to me, I then also followed Gary's suggestion:
+But you are already in the `ops` namespace, so by your argument you
+could just use `ops::BasicAtomic` :)
 
-	https://lore.kernel.org/rust-for-linux/20250621121842.0c3ca452.gary@garyguo.net/
+I'm fine with `AtomicBasicOps`.
 
-and dropped `RelaxedOnly` trait.
+>> > +declare_and_impl_atomic_methods!(
+>> > +    /// Atomic arithmetic operations
+>> > +    pub trait AtomicHasArithmeticOps {
+>>=20
+>> Forgot to rename this one to `Add`? I think `AtomicAdd` sounds best for
+>
+> No, because at the `AtomicImpl` level, it's easy to know whether a type
+> has all the arithmetic operations or none (also the `Delta` type should
+> be known). But I don't have opinions on renaming it to `AtomicAddOps` or
+> `HasAtomicAddOps`.
 
-> That sadly means you can't do
-> 
->     fn foo<Ordering: Ordering>() {}
->            --------  ^^^^^^^^ not a trait
->            |
->            found this type parameter
-> 
-> But you can still do
-> 
->     fn foo<O: Ordering>(_: O) {}
-> 
-> If we don't have the ordering module public and instead re-export from
+Ahh right yeah this makes sense. So let's use `AtomicArithmeticOps` if
+you insist on the `Ops` part.
 
-Keeping ordering mod public helps rustdoc readers to find the module and
-read the module documentation (where is the best place to explain each
-ordering), and also I made `Relaxed`, `Acquire`, `Release` and `Full`
-refer to the module documentation in their doc, making `ordering` mod
-private would cause rustdoc issues.
-
-Regards,
-Boqun
-
-> atomic, you could also write:
-> 
->     fn foo<Ordering: atomic::Ordering>(_: Ordering) {}
-> 
-> If you want it to be extra clear. What do you think?
-> 
-> ---
-> Cheers,
-> Benno
-> 
-> > +    /// Describes the exact memory ordering.
-> > +    const TYPE: OrderingType;
-> > +}
+---
+Cheers,
+Benno

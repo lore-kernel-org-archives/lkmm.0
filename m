@@ -1,186 +1,152 @@
-Received: from mail-qk1-f169.google.com (mail-qk1-f169.google.com [209.85.222.169])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from r-passerv.ralfj.de (r-passerv.ralfj.de [109.230.236.95])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFFB725D1FE
-	for <lkmm@lists.linux.dev>; Mon, 14 Jul 2025 15:34:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5D2623BF9B
+	for <lkmm@lists.linux.dev>; Mon, 14 Jul 2025 15:49:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=109.230.236.95
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752507255; cv=none; b=J5j7jWOvqMfPYqLAf8Ant0/iFEc/hv8AWtMwNZDlyULyzt7qum1KRciFNNhQtDVhOBeNM1Oaw8JIltKioJcfMtOB5UHzblbl/1ENmV4kQ/PKM8/1BM0vdiMJcibVuW5v4/fHg0WxaVyZPNYKWsXuIzKQAbzv7PouZWSMvqqEUdA=
+	t=1752508182; cv=none; b=RjsEvELnRyylo8qO/6jGVivg9NDwzbocyV4cgZjDRDgrQhliKdceztuH9rhVu8ZGyXQcAdCDIwccCJs7ivydFMQBjEFDCGPytrjNf0STr4ZPBMUC7OCw33elbIfJVBf7Sc+PYArNC33MKJSyyETG/8WtpqCSzI0WJ0ZXhAdoP5Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752507255; c=relaxed/simple;
-	bh=g+O+Onw4EEFGOhr3iVz4F85RgpHcqoS4Sf24nG8i2RY=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Xg6Kv214XkjY5dAHYglaHqYDELLNxhSBh4wfv3xr8uGdqcRD+Cce4i21kttpg4kqUbkAvrFhjZ+kkqPi1pGLvfZH+EzzzkoNjcZ2xsEhyC/z0R48ddpLrq9Ej8RNrHIIp74J7HgSxokzBSfBut05JA6HclaCTiRdo8fSoHOpoZU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=GYnKAQsL; arc=none smtp.client-ip=209.85.222.169
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1752508182; c=relaxed/simple;
+	bh=MXT6cnk26Vs4zRGiD6Tr/CTODiUVmYGALHN6Q7w7/PA=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=aHhbOc8iHwxYq6GowhWb/AvE/ohJL8j1lPbF4TCWmq6dl1/x/df6+P8AWKTCmHYbJG6+JSXA3KGCVRqLKn0/S6TlBR5CbYeTGHEo3kSqQpiMefew9ZhCnZLW3OwepcigdonX4mHPVzvpV9LHp2tki2gwu6qXGRNsTu4c7LBa+sg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ralfj.de; spf=pass smtp.mailfrom=ralfj.de; dkim=pass (1024-bit key) header.d=ralfj.de header.i=@ralfj.de header.b=wfCsT+lc; arc=none smtp.client-ip=109.230.236.95
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ralfj.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ralfj.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GYnKAQsL"
-Received: by mail-qk1-f169.google.com with SMTP id af79cd13be357-7e095510a6cso272951085a.1
-        for <lkmm@lists.linux.dev>; Mon, 14 Jul 2025 08:34:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1752507253; x=1753112053; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:feedback-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=y1ah1KiBYa+nQwV3ZRjbCEW6rsly24N5LKmoT4ikCOg=;
-        b=GYnKAQsLhXj8UV7hQCja937eJDP1gUmfsxbpEso5oAEANTGRbVmw9BGdeDkaN7jcnE
-         Wq9DK+V0S6TCJhg0/SSKSLd9en2Apm/BtpzVVGOZpNowuHMVaHxmNNeu/8j1ukk1XsJA
-         EJMkCgvSoQI9y5YbXv7B4IAtfgkZhcFjZIjtKiN0rtIhgfzooryMTEdaZGU7I9/wB0+1
-         pyi9BSpX53+DxaDuh8cmC/lxIVSZeX+9s43UJil6glrizQ5WgByFp9JcJtqt1D/Pdm4g
-         ghdTSjTMWOfLGdtJEkCU4qC8P+UCCP7ylOHC8FJxRnAMdUCWBqppZ1FXERvjEW/To1Se
-         Hdsg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1752507253; x=1753112053;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:feedback-id:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=y1ah1KiBYa+nQwV3ZRjbCEW6rsly24N5LKmoT4ikCOg=;
-        b=nU7i0j0LtA876rhmzJ8z3SOxod9kh5DFrrkCGzmMH5vbsXl0CSYNqVJ8BymJQVAYan
-         oEoQSm/H5USVltV8XkcsY1LJPHwxl1ioTPNnFIDlWPLZQZNTDvQQFIgO6QFzTIAZ3sZw
-         FeF6MtxT8x6fu7AXvz2ICce2c+VvGjuMrABXxTCq2sR4WVS65IaQa22rKjJRl7ZIOMmZ
-         BRrEx5Ju9GAIUWgq/xWtOuVK6FhYRjtXsCKn3mDQ2wxK3xgNePwigU/hBpIxsKGbikIU
-         G4PNDPAymz8F2AAyiNrOYCCJwcw0fyACwl4QzwF3wGcbpMIa3gj5eru5k5uI/DoLgKLj
-         eWwQ==
-X-Forwarded-Encrypted: i=1; AJvYcCVmCFp5CW6jfL2/lJKr1P766EQZcss8T41Y5fBfkApMSPLoMKb8fcsNk8JMY9JKZfXjyVF5@lists.linux.dev
-X-Gm-Message-State: AOJu0YxLOKIHV0zO5VPg6JK5sVVh5sqYul2gIMrxnElbWZeJZ5BXlKZh
-	9wXaz8ee33Cn7nnrK2KYgNII7KvrVxccdDs4QU6ikqrEOWaHVl3Pp/vo
-X-Gm-Gg: ASbGncuECUYT04c3eLbXVmso0SBEcr9Sb0Kw/j5/e9FASOuCXGCKfAnizAd6ZpcOXYl
-	8e3OZ8hZNu8qMGBVRnugaKcl5sjX3reLLh/w7Q6OqlP5OwGVkmHRYXlOKuhoRhWQuYUJ2L4bzH7
-	q9Kx1AwSlPX5rwTrx1OyVasolp8/JEBL0FDFS9odd2f2w+rNGgd64K5uPBHTzjJpW8YUdEqncQ3
-	NQOYl7BRgIxYmIPac37TlLmqmVqVNJ9N2yOMmVgKqkf1Uu/0VxmjH4r8vgQBxJJHfdEXD7moQlc
-	5TASBAl+5lm5KXCRKvXKXg682RmQhb7AhM0EQi9d9xiVALNMtgnk0fQibookI+1V/5RRWTPndur
-	FKosR5e7JY50g2pHMHl+I4W3lszvRirYVdcxl2k9/h3VjHYo6THIo0zajqR0m1sVLH9frniAmeM
-	oFUaNwWETbYNZ0
-X-Google-Smtp-Source: AGHT+IFmUKHtXtb7dpJhb3zmSZ1eVrPeDqvK2CSHNEiPnxRXmpl4kr66ZO7VxCg9aDpOs9IfcA6Fkg==
-X-Received: by 2002:a05:620a:3190:b0:7d4:4b9b:3eed with SMTP id af79cd13be357-7de05769905mr2084229985a.25.1752507252602;
-        Mon, 14 Jul 2025 08:34:12 -0700 (PDT)
-Received: from fauth-a1-smtp.messagingengine.com (fauth-a1-smtp.messagingengine.com. [103.168.172.200])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-7049799e407sm48780616d6.23.2025.07.14.08.34.11
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 14 Jul 2025 08:34:12 -0700 (PDT)
-Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
-	by mailfauth.phl.internal (Postfix) with ESMTP id 74DFDF40066;
-	Mon, 14 Jul 2025 11:34:11 -0400 (EDT)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-06.internal (MEProxy); Mon, 14 Jul 2025 11:34:11 -0400
-X-ME-Sender: <xms:cyN1aHmQVSMW2S2kEq1pJPrebkugzUZZx7YSPkqXy92gzTKnBgbOjQ>
-    <xme:cyN1aMWimFINoAGnOsd9k2-95HuuNjyfZvtfXxt3C144lclHGnYiYmH2XP1GkvWtR
-    FfmAOs2ELA7odHkGQ>
-X-ME-Received: <xmr:cyN1aCOr5XRn66xwYrCaGaBmW8Mw1sEOEIic3APIUkO34OXuYJTEcin3Ig>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdehvdefvdcutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpeffhffvvefukfhfgggtuggjsehttdertddttddvnecuhfhrohhmpeeuohhquhhnucfh
-    vghnghcuoegsohhquhhnrdhfvghnghesghhmrghilhdrtghomheqnecuggftrfgrthhtvg
-    hrnhephedugfduffffteeutddvheeuveelvdfhleelieevtdeguefhgeeuveeiudffiedv
-    necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepsghoqh
-    hunhdomhgvshhmthhprghuthhhphgvrhhsohhnrghlihhthidqieelvdeghedtieegqddu
-    jeejkeehheehvddqsghoqhhunhdrfhgvnhhgpeepghhmrghilhdrtghomhesfhhigihmvg
-    drnhgrmhgvpdhnsggprhgtphhtthhopedvjedpmhhouggvpehsmhhtphhouhhtpdhrtghp
-    thhtoheplhhoshhsihhnsehkvghrnhgvlhdrohhrghdprhgtphhtthhopehlihhnuhigqd
-    hkvghrnhgvlhesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehruhhsthdq
-    fhhorhdqlhhinhhugiesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehlkh
-    hmmheslhhishhtshdrlhhinhhugidruggvvhdprhgtphhtthhopehlihhnuhigqdgrrhgt
-    hhesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehojhgvuggrsehkvghrnh
-    gvlhdrohhrghdprhgtphhtthhopegrlhgvgidrghgrhihnohhrsehgmhgrihhlrdgtohhm
-    pdhrtghpthhtohepghgrrhihsehgrghrhihguhhordhnvghtpdhrtghpthhtohepsghjoh
-    hrnhefpghghhesphhrohhtohhnmhgrihhlrdgtohhm
-X-ME-Proxy: <xmx:cyN1aPH5wN_4PmpthNSngTdrYOPJjgSl15y13eQUJj_aQD9DH9kFGA>
-    <xmx:cyN1aD1J3MVqK-QZtu3f2ou6mS4vPSyPB9KByu2qLhsCR4qjF8R-wQ>
-    <xmx:cyN1aHMTeBwM7TrQisU8VdSZ1GfDbQmh4LIhCesL8I_3ljXaHCvUGA>
-    <xmx:cyN1aLKjTvhAQH3Na9-PBi3nibRPE6UbgVpON2CqydagPKOgBL6Lnw>
-    <xmx:cyN1aAaAU6I6XSTTQYdwSmB3rGmKKNGqPScIUTdw_qwz8-ZlwVgyLlI4>
-Feedback-ID: iad51458e:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 14 Jul 2025 11:34:10 -0400 (EDT)
-Date: Mon, 14 Jul 2025 08:34:09 -0700
-From: Boqun Feng <boqun.feng@gmail.com>
-To: Benno Lossin <lossin@kernel.org>
-Cc: linux-kernel@vger.kernel.org, rust-for-linux@vger.kernel.org,
-	lkmm@lists.linux.dev, linux-arch@vger.kernel.org,
-	Miguel Ojeda <ojeda@kernel.org>,
-	Alex Gaynor <alex.gaynor@gmail.com>, Gary Guo <gary@garyguo.net>,
-	=?iso-8859-1?Q?Bj=F6rn?= Roy Baron <bjorn3_gh@protonmail.com>,
-	Andreas Hindborg <a.hindborg@kernel.org>,
-	Alice Ryhl <aliceryhl@google.com>, Trevor Gross <tmgross@umich.edu>,
-	Danilo Krummrich <dakr@kernel.org>, Will Deacon <will@kernel.org>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Wedson Almeida Filho <wedsonaf@gmail.com>,
-	Viresh Kumar <viresh.kumar@linaro.org>,
-	Lyude Paul <lyude@redhat.com>, Ingo Molnar <mingo@kernel.org>,
-	Mitchell Levy <levymitchell0@gmail.com>,
-	"Paul E. McKenney" <paulmck@kernel.org>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Alan Stern <stern@rowland.harvard.edu>
-Subject: Re: [PATCH v7 2/9] rust: sync: Add basic atomic operation mapping
- framework
-Message-ID: <aHUjcSI_r0rYdTwc@Mac.home>
-References: <20250714053656.66712-1-boqun.feng@gmail.com>
- <20250714053656.66712-3-boqun.feng@gmail.com>
- <DBBOXLF23VVA.2T3U6GBOZ3Y20@kernel.org>
- <aHUJYTv4_wsatAw5@Mac.home>
- <DBBV9KHTEM3E.3T10KY9JN754X@kernel.org>
+	dkim=pass (1024-bit key) header.d=ralfj.de header.i=@ralfj.de header.b="wfCsT+lc"
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=ralfj.de; s=mail;
+	t=1752507760; bh=MXT6cnk26Vs4zRGiD6Tr/CTODiUVmYGALHN6Q7w7/PA=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=wfCsT+lcyZPpUl8MEw61/eOpSNg7RA8vglToYyFcdK+4AVUgdmCRgU3WQj83idkXh
+	 vZ6zQwaoFJwAL8HStTCD5nx82J606trAe6u4oGzWO8EQrqN2FpN2NzChC4VsgMCKk7
+	 Rgf+vmh7wrjULp4KeHyBztbWxNEpLvNE1G/C1yws=
+Received: from [IPV6:2001:67c:10ec:5784:8000::87] (2001-67c-10ec-5784-8000--87.net6.ethz.ch [IPv6:2001:67c:10ec:5784:8000::87])
+	by r-passerv.ralfj.de (Postfix) with ESMTPSA id 2567B2054EE3;
+	Mon, 14 Jul 2025 17:42:40 +0200 (CEST)
+Message-ID: <4d373b56-0f36-4f8a-9052-cee38b90f59b@ralfj.de>
+Date: Mon, 14 Jul 2025 17:42:39 +0200
 Precedence: bulk
 X-Mailing-List: lkmm@lists.linux.dev
 List-Id: <lkmm.lists.linux.dev>
 List-Subscribe: <mailto:lkmm+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:lkmm+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <DBBV9KHTEM3E.3T10KY9JN754X@kernel.org>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v6 8/9] rust: sync: Add memory barriers
+To: Boqun Feng <boqun.feng@gmail.com>, Benno Lossin <lossin@kernel.org>
+Cc: linux-kernel@vger.kernel.org, rust-for-linux@vger.kernel.org,
+ lkmm@lists.linux.dev, linux-arch@vger.kernel.org,
+ Miguel Ojeda <ojeda@kernel.org>, Alex Gaynor <alex.gaynor@gmail.com>,
+ Gary Guo <gary@garyguo.net>, =?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?=
+ <bjorn3_gh@protonmail.com>, Andreas Hindborg <a.hindborg@kernel.org>,
+ Alice Ryhl <aliceryhl@google.com>, Trevor Gross <tmgross@umich.edu>,
+ Danilo Krummrich <dakr@kernel.org>, Will Deacon <will@kernel.org>,
+ Peter Zijlstra <peterz@infradead.org>, Mark Rutland <mark.rutland@arm.com>,
+ Wedson Almeida Filho <wedsonaf@gmail.com>,
+ Viresh Kumar <viresh.kumar@linaro.org>, Lyude Paul <lyude@redhat.com>,
+ Ingo Molnar <mingo@kernel.org>, Mitchell Levy <levymitchell0@gmail.com>,
+ "Paul E. McKenney" <paulmck@kernel.org>,
+ Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+ Linus Torvalds <torvalds@linux-foundation.org>,
+ Thomas Gleixner <tglx@linutronix.de>, Alan Stern <stern@rowland.harvard.edu>
+References: <20250710060052.11955-1-boqun.feng@gmail.com>
+ <20250710060052.11955-9-boqun.feng@gmail.com>
+ <DB93NWEAK46D.2YW5P9MSAWVCN@kernel.org> <aHFWCsOfcGLSUPAP@tardis-2.local>
+Content-Language: en-US, de-DE
+From: Ralf Jung <post@ralfj.de>
+In-Reply-To: <aHFWCsOfcGLSUPAP@tardis-2.local>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Mon, Jul 14, 2025 at 05:00:56PM +0200, Benno Lossin wrote:
-> On Mon Jul 14, 2025 at 3:42 PM CEST, Boqun Feng wrote:
-> > On Mon, Jul 14, 2025 at 12:03:11PM +0200, Benno Lossin wrote:
-> > [...]
-> >> > +declare_and_impl_atomic_methods!(
-> >> > +    /// Basic atomic operations
-> >> > +    pub trait AtomicHasBasicOps {
-> >> 
-> >> I think we should drop the `Has` from the names. So this one can just be
-> >> `AtomicBasicOps`. Or how about `BasicAtomic`, or `AtomicBase`?
-> >> 
-> >
-> > Actually, given your feedback to `ordering::Any` vs `core::any::Any`,
-> > I think it makes more sense to keep the current names ;-) These are only
-> > trait names to describe what operations do an `AtomicImpl` has, and they
-> > should be used only in atomic mod, so naming them a bit longer is not a
-> > problem. And by doing so, we free the better names `BasicAtomic` or
-> > `AtomicBase` for other future usages.
-> >
-> > Best I could do is `AtomicBasicOps` or `HasAtomicBasicOps`.
-> 
-> But you are already in the `ops` namespace, so by your argument you
-> could just use `ops::BasicAtomic` :)
-> 
-> I'm fine with `AtomicBasicOps`.
-> 
-> >> > +declare_and_impl_atomic_methods!(
-> >> > +    /// Atomic arithmetic operations
-> >> > +    pub trait AtomicHasArithmeticOps {
-> >> 
-> >> Forgot to rename this one to `Add`? I think `AtomicAdd` sounds best for
-> >
-> > No, because at the `AtomicImpl` level, it's easy to know whether a type
-> > has all the arithmetic operations or none (also the `Delta` type should
-> > be known). But I don't have opinions on renaming it to `AtomicAddOps` or
-> > `HasAtomicAddOps`.
-> 
-> Ahh right yeah this makes sense. So let's use `AtomicArithmeticOps` if
-> you insist on the `Ops` part.
-> 
+Hi all,
 
-Done with AtomicBasicOps AtomicExchangeOps and AtomicArithmeticOps ;-)
-Thank you!
+On 11.07.25 20:20, Boqun Feng wrote:
+> On Fri, Jul 11, 2025 at 10:57:48AM +0200, Benno Lossin wrote:
+>> On Thu Jul 10, 2025 at 8:00 AM CEST, Boqun Feng wrote:
+>>> diff --git a/rust/kernel/sync/barrier.rs b/rust/kernel/sync/barrier.rs
+>>> new file mode 100644
+>>> index 000000000000..df4015221503
+>>> --- /dev/null
+>>> +++ b/rust/kernel/sync/barrier.rs
+>>> @@ -0,0 +1,65 @@
+>>> +// SPDX-License-Identifier: GPL-2.0
+>>> +
+>>> +//! Memory barriers.
+>>> +//!
+>>> +//! These primitives have the same semantics as their C counterparts: and the precise definitions
+>>> +//! of semantics can be found at [`LKMM`].
+>>> +//!
+>>> +//! [`LKMM`]: srctree/tools/memory-model/
+>>> +
+>>> +/// A compiler barrier.
+>>> +///
+>>> +/// A barrier that prevents compiler from reordering memory accesses across the barrier.
+>>> +pub(crate) fn barrier() {
+>>> +    // By default, Rust inline asms are treated as being able to access any memory or flags, hence
+>>> +    // it suffices as a compiler barrier.
+>>
+>> I don't know about this, but it also isn't my area of expertise... I
+>> think I heard Ralf talk about this at Rust Week, but I don't remember...
+>>
+> 
+> Easy, let's Cc Ralf ;-)
+> 
+> Ralf, I believe the question here is:
+> 
+> In kernel C, we define a compiler barrier (barrier()), which is
+> implemented as:
+> 
+> # define barrier() __asm__ __volatile__("": : :"memory")
+> 
+> Now we want to have a Rust version, and I think an empty `asm!()` should
+> be enough as an equivalent as a barrier() in C, because an empty
+> `asm!()` in Rust implies "memory" as the clobber:
+> 
+> 	https://godbolt.org/z/3z3fnWYjs
+> 
+> ?
+> 
+> I know you have some opinions on C++ compiler_fence() [1]. But in LKMM,
+> barrier() and other barriers work for all memory accesses not just
+> atomics, so the problem "So, if your program contains no atomic
+> accesses, but some atomic fences, those fences do nothing." doesn't
+> exist for us. And our barrier() is strictly weaker than other barriers.
+> 
+> And based on my understanding of the consensus on Rust vs LKMM, "do
+> whatever kernel C does and rely on whatever kernel C relies" is the
+> general suggestion, so I think an empty `asm!()` works here. Of course
+> if in practice, we find an issue, I'm happy to look for solutions ;-)
+> 
+> Thoughts?
+> 
+> [1]: https://github.com/rust-lang/unsafe-code-guidelines/issues/347
 
-Regards,
-Boqun
+If I understood correctly, this is about using "compiler barriers" to order 
+volatile accesses that the LKMM uses in lieu of atomic accesses?
+I can't give a principled answer here, unfortunately -- as you know, the mapping 
+of LKMM through the compiler isn't really in a state where we can make 
+principled formal statements. And making principled formal statements is my main 
+expertise so I am a bit out of my depth here. ;)
 
-> ---
-> Cheers,
-> Benno
+So I agree with your 2nd paragraph: I would say just like the fact that you are 
+using volatile accesses in the first place, this falls under "do whatever the C 
+code does, it shouldn't be any more broken in Rust than it is in C".
+
+However, saying that it in general "prevents reordering all memory accesses" is 
+unlikely to be fully correct -- if the compiler can prove that the inline asm 
+block could not possibly have access to a local variable (e.g. because it never 
+had its address taken), its accesses can still be reordered. This applies both 
+to C compilers and Rust compilers. Extra annotations such as `noalias` (or 
+`restrict` in C) can also give rise to reorderings around arbitrary code, 
+including such barriers. This is not a problem for concurrent code since it 
+would anyway be wrong to claim that some pointer doesn't have aliases when it is 
+accessed by multiple threads, but it shows that the framing of barriers in terms 
+of preventing reordering of accesses is too imprecise. That's why the C++ memory 
+model uses a very different framing, and that's why I can't give a definite 
+answer here. :)
+
+Kind regards,
+Ralf
+

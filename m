@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FFCB2D6402;
-	Tue, 15 Jul 2025 09:36:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBADF26E6F1;
+	Tue, 15 Jul 2025 11:21:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752572216; cv=none; b=EzMRiFzsUT5/DzaxgCRJg5kadmuzJBQBWwJHANXRTfou/vWZHtShB6RhZ70N6f+frK8hvNhGNC1Zv1NV0oIAft6wxK8Vdk0gRq2m8WvNbYWnRFONAZnlq62TDMeMEFaX1RX6mkRvxy4XDhPbV9oMSe+Vmb7VD6fvttbp0PZjGVY=
+	t=1752578487; cv=none; b=anu6/SMuDRIkJGF9AY9gbD818vxfWmyvip0cr5JOqWwrlaoOICsJ+geBJQTNbLKIykrBHkbT4cyegOKXIqYdjYXUCCnsnTslbHka9H0sHIqu/o1hGonS6ROFzQaOefs/6NXm3tuxkuK0RyBEnZpb6xDHW07jCrHl6kk55q4Dj0E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752572216; c=relaxed/simple;
-	bh=y62YdeKQb3Brz+vPDdJj6AAr/0IGdUwhUAr08AzvvCM=;
-	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
-	 References:In-Reply-To; b=cxjOSSa1ld1wOQRUvjK14jZq6BEbCmAfu8goKlkjV7teDsCtCUYigJT5oYFD8db6H4xR+76NkQj/inb+gHneznnUFRddfryZ7jnph55wTkvhBs9noRg06qF1fa/0nyHUV+NcRFC+qd2C8RsHFPLmzq3HCENWV+IDF9MsVAj0spk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=robPKuiH; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1752578487; c=relaxed/simple;
+	bh=/VY8qNuYt4dNinHnUlxo11M1DqWGCBPY/iGLGM4TX0k=;
+	h=Mime-Version:Content-Type:Date:Message-Id:To:Cc:Subject:From:
+	 References:In-Reply-To; b=D2IhTjX4hirzSDvpLYSDl1gsrlTp3RSsY47LOtd0qtBvVQkTSn+zOsLjUX9e5eAoqZ8Pb0fSF/RVzJlkc0GTK3e+gA4+IoBsBnVDGKcff2yrJu7cPT7GwHjugCU41dZzSfBM/bBmEaTQD7ppHrO1jGXlbeW7WQf4SKsHzZlRsKI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=geI67ajN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="robPKuiH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 049EDC4CEF5;
-	Tue, 15 Jul 2025 09:36:50 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="geI67ajN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7550EC4CEE3;
+	Tue, 15 Jul 2025 11:21:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1752572216;
-	bh=y62YdeKQb3Brz+vPDdJj6AAr/0IGdUwhUAr08AzvvCM=;
-	h=Date:Cc:Subject:From:To:References:In-Reply-To:From;
-	b=robPKuiHQGjfNsHS936U4Wh0KdyxNe6rQBPxbPs4WcCmJaZECEXUVROdOCxgrXdF3
-	 SbpLQN2KpTfZakdjTgd4c3zNP0TUqlFA5eTGi8YO2u5BX1srqI7WvXZoi4Q2IW/Pk+
-	 Gr5Ngk9c882ZUKNLaIV75TM0BpQfZskSC02fB0g7p+iSJs2rGuUExptnRqYoBDZ32t
-	 tM8p4R54r6bZpIlhV6JPC70qhuUNqSbFZrEd5mcxqCd81LvJSyR8dNfyYm1/u3Xv9b
-	 qLtqee/ZfevZDHAYMxGYJFbWOpMFFqIYun1MPYlAdeDBC1lm7YDJM3IMo6DUekJCVJ
-	 znl9emV8otw1w==
+	s=k20201202; t=1752578487;
+	bh=/VY8qNuYt4dNinHnUlxo11M1DqWGCBPY/iGLGM4TX0k=;
+	h=Date:To:Cc:Subject:From:References:In-Reply-To:From;
+	b=geI67ajNzB1NnjNM/Kwwkcn9Ae6O+GY2Ul7aE+Z1d9tQ+l9tnkhCAsMo/SYmVNpyv
+	 bjvx4daHrY606Gl/qiv/VxeAdZbayYx+2qLmgrVm9IHJXAziicrI805w0dtCrGYC1v
+	 WYtJMEWL0suCEfbwYr2otZM0/gjJ4uCI9jtEW8+ipdw0Zyq+0EXYGa0k02xjJheR+M
+	 oBWYLkz3bu0Q5UJR3UPsBuDZqRq4/HAF7+gPAH7iYv9W01G4yHLgW0vZLlQieu9CFp
+	 10uKjM0nYVgHLQYJDqIle2bpXR67J21LBfmHaUYtQF45Kt86/YC15Y+fs2i1zKTY7c
+	 elWpMfeCpOYWg==
 Precedence: bulk
 X-Mailing-List: lkmm@lists.linux.dev
 List-Id: <lkmm.lists.linux.dev>
@@ -34,92 +34,116 @@ List-Unsubscribe: <mailto:lkmm+unsubscribe@lists.linux.dev>
 Mime-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
 Content-Type: text/plain; charset=UTF-8
-Date: Tue, 15 Jul 2025 11:36:49 +0200
-Message-Id: <DBCIZY29JWTD.1G6AKZ08ZWBQG@kernel.org>
-Cc: <linux-kernel@vger.kernel.org>, <rust-for-linux@vger.kernel.org>,
- <lkmm@lists.linux.dev>, <linux-arch@vger.kernel.org>, "Miguel Ojeda"
- <ojeda@kernel.org>, "Alex Gaynor" <alex.gaynor@gmail.com>, "Gary Guo"
- <gary@garyguo.net>, =?utf-8?q?Bj=C3=B6rn_Roy_Baron?=
- <bjorn3_gh@protonmail.com>, "Andreas Hindborg" <a.hindborg@kernel.org>,
- "Alice Ryhl" <aliceryhl@google.com>, "Trevor Gross" <tmgross@umich.edu>,
- "Danilo Krummrich" <dakr@kernel.org>, "Will Deacon" <will@kernel.org>,
- "Peter Zijlstra" <peterz@infradead.org>, "Mark Rutland"
- <mark.rutland@arm.com>, "Wedson Almeida Filho" <wedsonaf@gmail.com>,
- "Viresh Kumar" <viresh.kumar@linaro.org>, "Lyude Paul" <lyude@redhat.com>,
- "Ingo Molnar" <mingo@kernel.org>, "Mitchell Levy"
+Date: Tue, 15 Jul 2025 13:21:20 +0200
+Message-Id: <DBCL7YUSRMXR.22SMO1P7D5G60@kernel.org>
+To: "Boqun Feng" <boqun.feng@gmail.com>, <linux-kernel@vger.kernel.org>,
+ <rust-for-linux@vger.kernel.org>, <lkmm@lists.linux.dev>,
+ <linux-arch@vger.kernel.org>
+Cc: "Miguel Ojeda" <ojeda@kernel.org>, "Alex Gaynor"
+ <alex.gaynor@gmail.com>, "Gary Guo" <gary@garyguo.net>,
+ =?utf-8?q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, "Andreas
+ Hindborg" <a.hindborg@kernel.org>, "Alice Ryhl" <aliceryhl@google.com>,
+ "Trevor Gross" <tmgross@umich.edu>, "Danilo Krummrich" <dakr@kernel.org>,
+ "Will Deacon" <will@kernel.org>, "Peter Zijlstra" <peterz@infradead.org>,
+ "Mark Rutland" <mark.rutland@arm.com>, "Wedson Almeida Filho"
+ <wedsonaf@gmail.com>, "Viresh Kumar" <viresh.kumar@linaro.org>, "Lyude
+ Paul" <lyude@redhat.com>, "Ingo Molnar" <mingo@kernel.org>, "Mitchell Levy"
  <levymitchell0@gmail.com>, "Paul E. McKenney" <paulmck@kernel.org>, "Greg
  Kroah-Hartman" <gregkh@linuxfoundation.org>, "Linus Torvalds"
  <torvalds@linux-foundation.org>, "Thomas Gleixner" <tglx@linutronix.de>,
  "Alan Stern" <stern@rowland.harvard.edu>
-Subject: Re: [PATCH v7 4/9] rust: sync: atomic: Add generic atomics
+Subject: Re: [PATCH v7 6/9] rust: sync: atomic: Add the framework of
+ arithmetic operations
 From: "Benno Lossin" <lossin@kernel.org>
-To: "Boqun Feng" <boqun.feng@gmail.com>
 X-Mailer: aerc 0.20.1
 References: <20250714053656.66712-1-boqun.feng@gmail.com>
- <20250714053656.66712-5-boqun.feng@gmail.com>
- <DBBPI9ZJVO64.3A83G118BMVLI@kernel.org> <aHUSgXW9A6LzjBIS@Mac.home>
- <DBBVD70MASPW.2LUTJ51Y6SGMI@kernel.org> <aHUjIQlqphtgVP2g@Mac.home>
-In-Reply-To: <aHUjIQlqphtgVP2g@Mac.home>
+ <20250714053656.66712-7-boqun.feng@gmail.com>
+In-Reply-To: <20250714053656.66712-7-boqun.feng@gmail.com>
 
-On Mon Jul 14, 2025 at 5:32 PM CEST, Boqun Feng wrote:
-> On Mon, Jul 14, 2025 at 05:05:40PM +0200, Benno Lossin wrote:
-> [...]
->> >> >  //!
->> >> >  //! [`LKMM`]: srctree/tools/memory-model/
->> >> > =20
->> >> > +pub mod generic;
->> >>=20
->> >> Hmm, maybe just re-export the stuff? I don't think there's an advanta=
-ge
->> >> to having the generic module be public.
->> >>=20
->> >
->> > If `generic` is not public, then in the kernel::sync::atomic page, it
->> > won't should up, and there is no mentioning of struct `Atomic` either.
->> >
->> > If I made it public and also re-export the `Atomic`, there would be a
->> > "Re-export" section mentioning all the re-exports, so I will keep
->> > `generic` unless you have some tricks that I don't know.
->>=20
->> Just use `#[doc(inline)]` :)
->>=20
->>     https://doc.rust-lang.org/rustdoc/write-documentation/the-doc-attrib=
-ute.html#inline-and-no_inline
->>=20
->> > Also I feel it's a bit naturally that `AllowAtomic` and `AllowAtomicAd=
-d`
->> > stay under `generic` (instead of re-export them at `atomic` mod level)
->> > because they are about the generic part of `Atomic`, right?
->>=20
->> Why is that more natural? It only adds an extra path layer in any import
->> for atomics.
->>=20
->
-> Exactly, users need to go through extra steps if they want to use the
-> "generic" part of the atomic, and I think that makes user more aware of
-> what they are essentially doing:
->
-> - If you want to use the predefined types for atomic, just
->
->   use kernel::sync::atomic::Atomic;
->
->   and just operate on an `Atomic<_>`.
->
-> - If you want to bring your own type for atomic operations, you need to
->
->   use kernel::sync::atomic::generic::AllowAtomic;
->
->   (essentially you go into the "generic" part of the atomic)
->
->   and provide your own implementation for `AllowAtomic` and then you
->   could use it for your own type.
->
-> I feel it's natural because for extra features you fetch more modules
-> in.
+On Mon Jul 14, 2025 at 7:36 AM CEST, Boqun Feng wrote:
+> +/// Types that support atomic add operations.
+> +///
+> +/// # Safety
+> +///
+> +/// Wrapping adding any value of type `Self::Repr::Delta` obtained by [`=
+Self::rhs_into_delta()`] to
 
-The same would apply if you had to import `AllowAtomic` from atomic
-directly? I don't really see the value in this.
+I don't like "wrapping adding", either we use "`wrapping_add`" or we use
+some other phrasing.
+
+> +/// any value of type `Self::Repr` obtained through transmuting a value =
+of type `Self` to must
+> +/// yield a value with a bit pattern also valid for `Self`.
+> +pub unsafe trait AllowAtomicAdd<Rhs =3D Self>: AllowAtomic {
+
+Why `Allow*`? I think `AtomicAdd` is better?
+
+> +    /// Converts `Rhs` into the `Delta` type of the atomic implementatio=
+n.
+> +    fn rhs_into_delta(rhs: Rhs) -> <Self::Repr as AtomicImpl>::Delta;
+> +}
+> +
+>  impl<T: AllowAtomic> Atomic<T> {
+>      /// Creates a new atomic `T`.
+>      pub const fn new(v: T) -> Self {
+> @@ -462,3 +474,100 @@ fn try_cmpxchg<Ordering: ordering::Any>(&self, old:=
+ &mut T, new: T, _: Ordering)
+>          ret
+>      }
+>  }
+> +
+> +impl<T: AllowAtomic> Atomic<T>
+> +where
+> +    T::Repr: AtomicHasArithmeticOps,
+> +{
+> +    /// Atomic add.
+> +    ///
+> +    /// Atomically updates `*self` to `(*self).wrapping_add(v)`.
+> +    ///
+> +    /// # Examples
+> +    ///
+> +    /// ```
+> +    /// use kernel::sync::atomic::{Atomic, Relaxed};
+> +    ///
+> +    /// let x =3D Atomic::new(42);
+> +    ///
+> +    /// assert_eq!(42, x.load(Relaxed));
+> +    ///
+> +    /// x.add(12, Relaxed);
+> +    ///
+> +    /// assert_eq!(54, x.load(Relaxed));
+> +    /// ```
+> +    #[inline(always)]
+> +    pub fn add<Rhs, Ordering: ordering::RelaxedOnly>(&self, v: Rhs, _: O=
+rdering)
+> +    where
+> +        T: AllowAtomicAdd<Rhs>,
+> +    {
+> +        let v =3D T::rhs_into_delta(v);
+> +        // CAST: Per the safety requirement of `AllowAtomic`, a valid po=
+inter of `T` is a valid
+> +        // pointer of `T::Repr` for reads and valid for writes of values=
+ transmutable to `T`.
+> +        let a =3D self.as_ptr().cast::<T::Repr>();
+> +
+> +        // `*self` remains valid after `atomic_add()` because of the saf=
+ety requirement of
+> +        // `AllowAtomicAdd`.
+
+This part should be moved to the CAST comment above, since we're not
+only writing a value transmuted from `T` into `*self`.
 
 ---
 Cheers,
 Benno
+
+> +        //
+> +        // SAFETY:
+> +        // - `a` is aligned to `align_of::<T::Repr>()` because of the sa=
+fety requirement of
+> +        //   `AllowAtomic` and the guarantee of `Atomic::as_ptr()`.
+> +        // - `a` is a valid pointer per the CAST justification above.
+> +        unsafe {
+> +            T::Repr::atomic_add(a, v);
+> +        }
+> +    }

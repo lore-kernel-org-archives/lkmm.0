@@ -1,195 +1,100 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj1-f47.google.com (mail-pj1-f47.google.com [209.85.216.47])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E599E219311;
-	Wed, 16 Jul 2025 10:25:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C77E62F5081
+	for <lkmm@lists.linux.dev>; Wed, 16 Jul 2025 12:36:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752661538; cv=none; b=cy8XsXJszyOdCo02/ZOG7Q/zzsBfVMametUMgaoazJEPUPhpk2O1r7w2SxNrfmhNAO3tFWb1hE/SVkPoxFOxn+w2f3jaHSwQpLdB4QtDjsKz6Q/hThWPcLTO+uvbQbzBcVGmbYFgXmYsx4yDlaE+WlRsJ1ZffXc+rcdG+Kklg1A=
+	t=1752669403; cv=none; b=eQLtjg4jCjf/6hKsfgWMR3eR0XjJuH1DP2hFVMH6I1Nnuv+/DAiYdUVB5ULZ/WMiCmt7Vn+qsA5axg6GAX00DJQ4skRTDLjKe7va1Hly1hgOOdQWgj3EIZayzznBvelNiieTEOix+xbMgaXGeUX9gtZFdh3ml8PQZ35+Uoelt4w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752661538; c=relaxed/simple;
-	bh=473mc3MZXvs9Act5kTmKwMLGqXiBcGDDVJRhHEO7Ys4=;
-	h=Mime-Version:Content-Type:Date:Message-Id:Subject:From:To:Cc:
-	 References:In-Reply-To; b=huEFQcEeULFEcY8PpscfujIdxoM8/9rvgoJuAtg4nr1Wqch0AhoNaEc38MeJ2ZfBXnXiC5SQnOQjcRCp3axUB3RkPRVmUfXjhOsk0k/ecHR4ZALbR835bmqbeXjAixZ8BlEhsmxX7goTa1WO/II7e3XRAjm4Xz0ZWytlkECmb18=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=KNXJ7kO7; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1752669403; c=relaxed/simple;
+	bh=wzq636UmBmkRt5jx0MGIBDFLizgfD0NqkzU8lhycQFI=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=JuCZ7j/RbD25hbPTN38GC8eLR84y4e7L77duvKZPGNBki8htWC9M7s0ojcXcCu4BtSQ/cYjSfJHd+4y4+uRznKx4MiYaFQPLEEF4TF8/G0jspudJKO12eYDHHmRc7rc0pB3xYPS8wSQTRGhBr0zBSR2uA+PNGOuQi4tmuRdjjKk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=j/F9jgC7; arc=none smtp.client-ip=209.85.216.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="KNXJ7kO7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9961BC4CEF0;
-	Wed, 16 Jul 2025 10:25:32 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1752661537;
-	bh=473mc3MZXvs9Act5kTmKwMLGqXiBcGDDVJRhHEO7Ys4=;
-	h=Date:Subject:From:To:Cc:References:In-Reply-To:From;
-	b=KNXJ7kO7LGJI1r9yNP4C5/mN2N+02+5CVPLcdykvfjopwfG0v26zIpWZgD6yxB38w
-	 3uAd4qsc82nWkq5rEtBRzuxJ+3m5e35smpBgakpVJxFIlNNM+GlFCo5EfPGNxS2VOR
-	 WsfBneItZkNxuOxeAJz2ttBhQCx/EiXORxXd5H7Dx3u1D9kNirD91xvJUo2EvZn7sh
-	 dWimR4iEevzYjNY3yQWrtGLlTG+s6fU7aAQI4IC6XrN3l4T5+fIuhLXfJlngHHuaHe
-	 eNxS5i9z6tvuEPAz2qTqZe2LEZ7PAtjRQFUFc0BgZfsciquRhhyS1KwKMkVH/T89XH
-	 L/BZb7Ar9O+Yg==
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="j/F9jgC7"
+Received: by mail-pj1-f47.google.com with SMTP id 98e67ed59e1d1-312efc384fcso1041994a91.3
+        for <lkmm@lists.linux.dev>; Wed, 16 Jul 2025 05:36:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1752669401; x=1753274201; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=pbtdeD8Wnwaq/vjh/JXA9wDabfJkPgVSH5AlF8yNHxE=;
+        b=j/F9jgC74A6nClYShMfVG4LG6p7ONQ0GBz9d+yBHKV6yRG7SuVUWAS9BC/HzO/4FNl
+         MpD0S1NPBXWgsZdDxqJYalEIBychS+FcVsQifkrUr1WL1XsKRRJx16YXi2Pa23hpYiUd
+         TpU2K6eW0nF0Xlfoga2N3QpMBfbdS2b645r5GA4dkebj6OtDiYrlNWNPKOiQa/Vuc5db
+         h6sZt2H7sj+g3GEbd9g7iqUddtJrilvpjdL1Y9U26rQ7P+kN0HTcLiNCpGC7lJshGiMY
+         GEB7TbrVYL4Wo3+mi4GnbZ0z/gfjMJO4Fcp84QqELdgA2XTfe82HhFQse6hYKmAlPzcF
+         /GLA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1752669401; x=1753274201;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=pbtdeD8Wnwaq/vjh/JXA9wDabfJkPgVSH5AlF8yNHxE=;
+        b=MxOSYHxmTuosZZjeaD2z7VLdaWpvt9UagMyYcTos9hh5luDvfvX813y270ENK6TpBs
+         gATG4tbAubHuttkncg0dFN+N/r+BCZaXR51OD011vdA70Oag2QUProJW7QUv5xUK7sZN
+         6DwfuYvAHkFA6NvMTMR+4uM9Jx4ijMtqxn9P1khIXR5ny6vLX7MJdMa9jNH/VBVmZPm8
+         9tGBuc/Jk57u7BMKs7ITeLflEtbBTZuhnButIduw5JE96JSZ/pMc/UlY8q9DX4gPXOjj
+         2YqdTt/zCVpfavlW2G1esYeYuCIbg7gZF5pHB72k+19ZdIfUKmX2NZrEVzIIrvxca8vM
+         aJxg==
+X-Forwarded-Encrypted: i=1; AJvYcCUzGv7CF+flOCv4Vh2jkouv+PwaUHA0x/Uljngn52x8Lo3ypzNnaiwMPWaUA1ZtH3WQpuCs@lists.linux.dev
+X-Gm-Message-State: AOJu0Yzu2o3LX7zu7H2+1COSnht6rFWR6OXH5zWzy63oI2Ldqjgf/wXT
+	ZDI32idx4JXS7mZDJchOoTXos9uflbLWbiYmozLz8YPyNPLnccOkyFuSdWax8nLCXYsv1mRtpnX
+	rZjAqDV1uKfOXGlk8zhQZSMv17cL9KHQ=
+X-Gm-Gg: ASbGncvsLWoSrXVRbBCCAKAtHfcXtMv8VIPOTSnwzjg/agEiiSMkAIXzjKNZKBBNAco
+	/7r+i58obFHGxTzVATI277xXfgKWfI/ixr97Q7/mvEhAc26DBl5iUeQ37G6be4YV1+pbZUp8EwC
+	MeIHnbsZI1pAvTxCh9oztlXCayxeMPJfUw3i6cTBO3wBgAKGTI/OW4flGCeC8CQ4WhkG4QJnEjU
+	cEXsQ==
+X-Google-Smtp-Source: AGHT+IH1AfpX3+Ds/zOoz9tipktkM9wtu5kQ1XtmEodOHlUJdQwaip1Keu+KmvTAMMyBv0JDYAk8CTYSo9R9mjAWmxY=
+X-Received: by 2002:a17:90b:2d4c:b0:310:cf92:7899 with SMTP id
+ 98e67ed59e1d1-31c9e760e02mr1521980a91.3.1752669400814; Wed, 16 Jul 2025
+ 05:36:40 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: lkmm@lists.linux.dev
 List-Id: <lkmm.lists.linux.dev>
 List-Subscribe: <mailto:lkmm+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:lkmm+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0
+MIME-Version: 1.0
+References: <20250714053656.66712-1-boqun.feng@gmail.com> <20250714053656.66712-2-boqun.feng@gmail.com>
+ <2025071611-factsheet-sitter-93b6@gregkh>
+In-Reply-To: <2025071611-factsheet-sitter-93b6@gregkh>
+From: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
+Date: Wed, 16 Jul 2025 14:36:27 +0200
+X-Gm-Features: Ac12FXxU7t4f3TmDU6568W4lxU0yBWR1CBpL3V_9M0bVOSQeTwuke3j6Ee5kfVQ
+Message-ID: <CANiq72nCm1-xELn=Z1x1LidKHtjhMtz4FNnakunQ9BqzcS89ew@mail.gmail.com>
+Subject: Re: [PATCH v7 1/9] rust: Introduce atomic API helpers
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: Boqun Feng <boqun.feng@gmail.com>, linux-kernel@vger.kernel.org, 
+	rust-for-linux@vger.kernel.org, lkmm@lists.linux.dev, 
+	linux-arch@vger.kernel.org, Miguel Ojeda <ojeda@kernel.org>, 
+	Alex Gaynor <alex.gaynor@gmail.com>, Gary Guo <gary@garyguo.net>, 
+	=?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, 
+	Benno Lossin <lossin@kernel.org>, Andreas Hindborg <a.hindborg@kernel.org>, 
+	Alice Ryhl <aliceryhl@google.com>, Trevor Gross <tmgross@umich.edu>, 
+	Danilo Krummrich <dakr@kernel.org>, Will Deacon <will@kernel.org>, Peter Zijlstra <peterz@infradead.org>, 
+	Mark Rutland <mark.rutland@arm.com>, Wedson Almeida Filho <wedsonaf@gmail.com>, 
+	Viresh Kumar <viresh.kumar@linaro.org>, Lyude Paul <lyude@redhat.com>, 
+	Ingo Molnar <mingo@kernel.org>, Mitchell Levy <levymitchell0@gmail.com>, 
+	"Paul E. McKenney" <paulmck@kernel.org>, Linus Torvalds <torvalds@linux-foundation.org>, 
+	Thomas Gleixner <tglx@linutronix.de>, Alan Stern <stern@rowland.harvard.edu>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Wed, 16 Jul 2025 12:25:30 +0200
-Message-Id: <DBDENRP6Z2L7.1BU1I3ZTJ21ZY@kernel.org>
-Subject: Re: [PATCH v7 6/9] rust: sync: atomic: Add the framework of
- arithmetic operations
-From: "Benno Lossin" <lossin@kernel.org>
-To: "Boqun Feng" <boqun.feng@gmail.com>
-Cc: <linux-kernel@vger.kernel.org>, <rust-for-linux@vger.kernel.org>,
- <lkmm@lists.linux.dev>, <linux-arch@vger.kernel.org>, "Miguel Ojeda"
- <ojeda@kernel.org>, "Alex Gaynor" <alex.gaynor@gmail.com>, "Gary Guo"
- <gary@garyguo.net>, =?utf-8?q?Bj=C3=B6rn_Roy_Baron?=
- <bjorn3_gh@protonmail.com>, "Andreas Hindborg" <a.hindborg@kernel.org>,
- "Alice Ryhl" <aliceryhl@google.com>, "Trevor Gross" <tmgross@umich.edu>,
- "Danilo Krummrich" <dakr@kernel.org>, "Will Deacon" <will@kernel.org>,
- "Peter Zijlstra" <peterz@infradead.org>, "Mark Rutland"
- <mark.rutland@arm.com>, "Wedson Almeida Filho" <wedsonaf@gmail.com>,
- "Viresh Kumar" <viresh.kumar@linaro.org>, "Lyude Paul" <lyude@redhat.com>,
- "Ingo Molnar" <mingo@kernel.org>, "Mitchell Levy"
- <levymitchell0@gmail.com>, "Paul E. McKenney" <paulmck@kernel.org>, "Greg
- Kroah-Hartman" <gregkh@linuxfoundation.org>, "Linus Torvalds"
- <torvalds@linux-foundation.org>, "Thomas Gleixner" <tglx@linutronix.de>,
- "Alan Stern" <stern@rowland.harvard.edu>
-X-Mailer: aerc 0.20.1
-References: <20250714053656.66712-1-boqun.feng@gmail.com>
- <20250714053656.66712-7-boqun.feng@gmail.com>
- <DBCL7YUSRMXR.22SMO1P7D5G60@kernel.org> <aHZYt3Csy29GF2HM@Mac.home>
- <DBCQUAA42DHH.23BNUVOKS38UI@kernel.org> <aHZ-HP1ErzlERfpI@Mac.home>
- <DBCUJ4RNRNHP.W4QH5QM3TBHU@kernel.org> <aHa2he81nBDgvA5u@tardis-2.local>
-In-Reply-To: <aHa2he81nBDgvA5u@tardis-2.local>
 
-On Tue Jul 15, 2025 at 10:13 PM CEST, Boqun Feng wrote:
-> On Tue, Jul 15, 2025 at 08:39:04PM +0200, Benno Lossin wrote:
-> [...]
->> >> > Hmm.. the CAST comment should explain why a pointer of `T` can be a
->> >> > valid pointer of `T::Repr` because the atomic_add() below is going =
-to
->> >> > read through the pointer and write value back. The comment starting=
- with
->> >> > "`*self`" explains the value written is a valid `T`, therefore
->> >> > conceptually atomic_add() below writes a valid `T` in form of `T::R=
-epr`
->> >> > into `a`.
->> >>=20
->> >> I see, my interpretation was that if we put it on the cast, then the
->> >> operation that `atomic_add` does also is valid.
->> >>=20
->> >> But I think this comment should either be part of the `CAST` or the
->> >> `SAFETY` comment. Going by your interpretation, it would make more se=
-nse
->> >> in the SAFETY one, since there you justify that you're actually writi=
-ng
->> >> a value of type `T`.
->> >>=20
->> >
->> > Hmm.. you're probably right. There are two safety things about
->> > atomic_add():
->> >
->> > - Whether calling it is safe
->> > - Whether the operation on `a` (a pointer to `T` essentially) is safe.
->>=20
->> Well part of calling `T::Repr::atomic_add` is that the pointer is valid.
+On Wed, Jul 16, 2025 at 11:23=E2=80=AFAM Greg Kroah-Hartman
+<gregkh@linuxfoundation.org> wrote:
 >
-> Here by saying "calling `T::Repr::atomic_add`", I think you mean the
-> whole operation, so yeah, we have to consider the validy for `T` of the
-> result.
+> As this is auto-generated, how do we know when to auto-generate it
+> again?  What files does it depend on?  And why can't we just
+> auto-generate it at build time instead of having a static file in the
+> tree that no one knows when to regenerate it?  :)
 
-I meant just the call to `atomic_add`.
+If Boqun confirms that there is no reason not to do that, then I can
+take a look at that.
 
-> But what I'm trying to do is reasoning this in 2 steps:
->
-> First, let's treat it as an `atomic_add(*mut i32, i32)`, then as long as
-> we provide a valid `*mut i32`, it's safe to call.=20
-
-But the thing is, we're not supplying a valid `*mut i32`. Because the
-pointer points to a value that is not actually an `i32`. You're only
-allowed to write certain values and so you basically have to treat it as
-a transmute + write. And so you need to include a justification for this
-transmute in the write itself.=20
-
-For example, if we had `bool: AllowAtomic`, then writing a `2` in store
-would be insta-UB, since we then have a `&UnsafeCell<bool>` pointing at
-`2`.
-
-This is part of library vs language UB, writing `2` into a bool and
-having a reference is language-UB (ie instant UB) and writing a `2` into
-a variable of type `i32` that is somewhere cast to `bool` is library-UB
-(since it will lead to language-UB later).=20
-
-The safety comments become simpler when you use `UnsafeCell<T::Repr>`
-instead :) since that changes this language-UB into library-UB. (the
-only safety comment that is more complex then is `get_mut`, but that's
-only a single one)
-
-If you don't want that, then we can solve this in two ways:
-
-(1) add a guarantee on `atomic_add` (and all other operations) that it
-    will write `*a + v` to `a` and nothing else.
-(2) make the safety requirement only require writes of the addition to
-    be valid.
-
-My preference precedence is: use `T::Repr`, (2) and finally (1). (2)
-will be very wordy on all operations & the safety comments in this file,
-but it's clean from a formal perspective. (1) works by saying "what
-we're supplying is actually not a valid `*mut i32`, but since the
-guarantee of the function ensures that only specific things are written,
-it's fine" which isn't very clean. And the `T::Repr` approach avoids all
-this by just storing value of `T::Repr` circumventing the whole issue.
-Then we only need to justify why we can point a `&mut T` at it and that
-we can do by having an invariant that should be simple to keep.
-
-We probably should talk about this in our meeting :)
-
----
 Cheers,
-Benno
-
-> And second assume we call it with a valid pointer to `T::Repr`, and a
-> delta from `rhs_into_delta()`, then per the safety guarantee of
-> `AllowAtomicAdd`, the value written at the pointer is a valid `T`.
->
-> Based on these, we can prove the whole operation is safe for the given
-> input.
->
->> But it actually isn't valid for all operations, only for the specific
->> one you have here. If we want to be 100% correct, we actually need to
->> change the safety comment of `atomic_add` to say that it only requires
->> the result of `*a + v` to be writable... But that is most likely very
->> annoying... (note that we also have this issue for `store`)
->>=20
->> I'm not too sure on what the right way to do this is. The formal answer
->> is to "just do it right", but then safety comments really just devolve
->> into formally proving the correctness of the program. I think -- for now
->> at least :) -- that we shouldn't do this here & now (since we also have
->> a lot of other code that isn't using normal good safety comments, let
->> alone formally correct ones).
->>=20
->> > How about the following:
->> >
->> >         let v =3D T::rhs_into_delta(v);
->> >         // CAST: Per the safety requirement of `AllowAtomic`, a valid =
-pointer of `T` is a valid
->> >         // pointer of `T::Repr` for reads and valid for writes of valu=
-es transmutable to `T`.
->> >         let a =3D self.as_ptr().cast::<T::Repr>();
->> >
->> >         // `*self` remains valid after `atomic_add()` because of the s=
-afety requirement of
->> >         // `AllowAtomicAdd`.
->> >         //
->> >         // SAFETY:
->> >         // - For calling `atomic_add()`:
->> >         //   - `a` is aligned to `align_of::<T::Repr>()` because of th=
-e safety requirement of
->> >         //   `AllowAtomic` and the guarantee of `Atomic::as_ptr()`.
->> >         //   - `a` is a valid pointer per the CAST justification above=
-.
->> >         // - For accessing `*a`: the value written is transmutable to =
-`T`
->> >         //   due to the safety requirement of `AllowAtomicAdd`.
->> >         unsafe { T::Repr::atomic_add(a, v) };
+Miguel

@@ -1,59 +1,59 @@
-Received: from mail-lf1-f42.google.com (mail-lf1-f42.google.com [209.85.167.42])
+Received: from mail-lf1-f43.google.com (mail-lf1-f43.google.com [209.85.167.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6524085626
-	for <lkmm@lists.linux.dev>; Wed, 16 Jul 2025 12:56:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F1ED28C2CA
+	for <lkmm@lists.linux.dev>; Wed, 16 Jul 2025 12:57:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752670615; cv=none; b=fSLfOO9H6HIBW5YNkBlyW3CBT5Jx0M+bj00/oDHPKZ6pOr3pAbZEVAq6oFvz8druIDocpPjoP6fHZXcRKDKP763bMFo56TYp2YOs5rmUvva9WbzecEIVk7/mrZdtnUCCjt0MFH/QxmmP6cAcvZuTdPZgf7X481wYQlgnMCjkRbg=
+	t=1752670648; cv=none; b=cYEeTIkgcNI0ABmu+dcYZZJoH/hk3RnHmAiDFbADx9YDZB2qmidy0qvBKgowEoZrhczqrAFLADrk6NKIk3WM45Yzn5QVqj0Dau82+SyUOS2SeHZaNv+Vrc+CMgq9+LyjKfDQ2aQkZvWMWRT458II8f8fbq2kgI41RHpGrBkrmvM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752670615; c=relaxed/simple;
-	bh=JXFhF7y50LH11OFGXGNP4jEz7JnvQ9mxz2K9JoGfVx0=;
+	s=arc-20240116; t=1752670648; c=relaxed/simple;
+	bh=m2LnwIGYhLWQq9/vNrmq/h8g1o9AkmJ0CbCqU4PYnxM=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=XN5e7mcSedfwfJ6B9DRUkP5YqlnXYehdxCcULV2bEc5WPxs0f5pwiTZIB1fR+Y9oSfcgnutwX/hiSKA6bbqBzXmoUqfw8HDvpbBgCr2VzW4I0Pb8YeEBJwFlnpY+NUGrO84FEtOvlgihn3YrlzNC8IOPIQBuk9kIAFgKq+pgBQ8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=JX7J2pI2; arc=none smtp.client-ip=209.85.167.42
+	 To:Cc:Content-Type; b=e/aJhiU699Hp+TLVlXIk0M+bwISEljgxPFqJ321SVEZMm2CKp+nlFTJcMpor4w3zHwfPV59g7gb+vdzlXf180vmpKiX6YFEYhnGFx2UVGI6G3BpEC+m01CoMMFGEgwp0qMXxvnDfkVLg6m5IRzJ6Zl6IwBQ411fQCRyKQt1EExE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=D8eCs3fY; arc=none smtp.client-ip=209.85.167.43
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JX7J2pI2"
-Received: by mail-lf1-f42.google.com with SMTP id 2adb3069b0e04-553cbe3e77dso1308294e87.1
-        for <lkmm@lists.linux.dev>; Wed, 16 Jul 2025 05:56:53 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="D8eCs3fY"
+Received: by mail-lf1-f43.google.com with SMTP id 2adb3069b0e04-553b7a3af9aso366052e87.2
+        for <lkmm@lists.linux.dev>; Wed, 16 Jul 2025 05:57:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1752670611; x=1753275411; darn=lists.linux.dev;
+        d=gmail.com; s=20230601; t=1752670645; x=1753275445; darn=lists.linux.dev;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=sV6KjEMkjerMX6Ys9+OdIC5+WGtyITwr6vlurratTs4=;
-        b=JX7J2pI20avy0DB436nlvr5D1PY7n98zGN5ftsH+6IJwlXl+BpfiF9UHea4ELDp6Ac
-         zu8Y2CHuhjlsA6qzbquVw/34VIIjVX9lnVl7xWsdHV0cU1G1BEq2bUUJhs1v0eoRNAGU
-         mZc+uDQpvUEQfIuSWV9hqYUJd65cumlhtvsWSgSxvTxu8oIsx5ScWIsigZ/iQP5t9kVW
-         8cxrcBusKaw8JrAR3FFpYiW7/wWhP9JXn/aFKupkALaO1VWdMc+5bji3682uHT6OxH1K
-         b+zrQ1DuHa2a96cqYfIoksAjbXnu2kFYw2pKDN8PHhL1JOL26gYXUQuKpKmciLqZfZrR
-         H9dg==
+        bh=GnUmwmHd04RAbDihiDJsc+TMOL+rIoUaNraa5eqvF7w=;
+        b=D8eCs3fY3p3MtOIoH6BOe/2kSWeH1fvyK6UvMtabCvlMl5OTseVmvwyKmX/o43xPfa
+         V0PWjSIrpKYvS06eJC1yLEoWtoD7I6Co1znE6HI2p5AJ25C6/rBxZsDjBzh+8OzUxq9T
+         nmW4jQrr6o9V0WKe4hmujal2wzxzR0W/YmLYpNLYA4dVjkPeqX7Zlg2WU3HpmbSR+4NX
+         cwi007A2fMPrVZpYMkJ8ky4UpOVxq3rLa+qZkex87KRie8EpgPrxJ1yHjI2w2kyQrWk6
+         aHFohQ+xzqzj+onjceUqa7yKvoLE+3HrqwToDRgFSdCJowqH6+jJsvv/luTURBev7ufF
+         977Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1752670611; x=1753275411;
+        d=1e100.net; s=20230601; t=1752670645; x=1753275445;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=sV6KjEMkjerMX6Ys9+OdIC5+WGtyITwr6vlurratTs4=;
-        b=cPRxgrIIATl/3ZTmzN8uHz96HSX3GSyIAx0P4lLwla0MtsHwKvLXmFt6F8z3E2eSq0
-         +Ilml1p3ZeKMi8j7bwKMDcFLNz0l3qwLwE36x03XYF6qBt/k8bKUxretXiFE3N8EEVFY
-         4bx+fmwlte4M+h16iGj+vbDwCQRKHJwo/neLY0/yPlY0KPnP/9Sn6zSxZ7st4yE8mUiq
-         wOB0IUBtwrhYVb6BtF91Iu32e5chOmbbAvMhpJtAhc4bUsRxdnGrA1xD/MrhImwel9St
-         a1aa1zgZiV1AQa0sxOpY51laPUMj3g62ZojiIspKIkeuDesI5aJOcFY7lk8hNiJN/tsz
-         /q4w==
-X-Forwarded-Encrypted: i=1; AJvYcCVAuF/nqWxG3SRngRVX2KTbzmpyk/H1kKDlJagwPDazLCuNWfk6op+Zbpk0LSNl7urcUojP@lists.linux.dev
-X-Gm-Message-State: AOJu0Yze3SYn8Mr1bCzuLL2Pq+/TJ3UOpLTiga1QLhj7BbKlXpI+MJPk
-	MwpJd2kbNkqJ5LTs6xWpgCMdIfnZb+JCRPEumThbXMIfnp7LMfsdioPHuRe24enMSA4BFHvhLBt
-	NVKb48BzstYBRRrAxJhP6uLIPdtUV4a4=
-X-Gm-Gg: ASbGnctJg6lAcafh//XyvH6JK7GWAa3dwDzWKzLnI0NW2OB+SEuOvjWkFw2u1cnIica
-	mYzzYLngttA2X5gMi69Hz7HC0jtGFjXejK9uarWekKjU+L09GHMniMPsytWjUlpU/IPLuBC7C+u
-	kyandUniXwi7m3gQH3oxwejaIDxL2ixxUfqvr+U8EWB2l96eHX7mEqi6Z70YDNmUwqC8b0wim/L
-	IxOojIIqAGhlvLl
-X-Google-Smtp-Source: AGHT+IFB8L+gxRBikQfJzkahGzv4HPkHtLZ/WKBOXCMXHBbA5uchb6f/SmPkczeGbdyYpczvg4dxuhsdDOq3/+sQdug=
-X-Received: by 2002:a05:6512:1389:b0:553:6514:669e with SMTP id
- 2adb3069b0e04-55a233add23mr375618e87.14.1752670611310; Wed, 16 Jul 2025
- 05:56:51 -0700 (PDT)
+        bh=GnUmwmHd04RAbDihiDJsc+TMOL+rIoUaNraa5eqvF7w=;
+        b=dLCdiRCa9sR8z24lkruhWzc3JXWa0BwMPXw7GZiKzcdRy+swQwhKc19m6LwiiydftD
+         q1nJ9EcS2ro9uURLtOvsD14q/Ay7fqjVIrVksGLfm3UCoX7Cy4WYyHBBajwmU9N9JaEU
+         WNqoRCjQk1nS3F9LhwSHxRBsGQdDw5Y9PDqvcSqODfq6LLg6KefZebjL+yaDlYqQb7zq
+         hEH8qQ5U/FflnfrIkT60l78GYYOjy2RlfHwRMN7OOGu8ijWFePGev6zuvSZg02B+Dn8p
+         k/D3NtZmA4HnzwQ17nDFiu9vDQsNqmUEKkzW+V+jf9nBP8AfCMbQzfiUOzhjzCI3MUF2
+         FxYg==
+X-Forwarded-Encrypted: i=1; AJvYcCVsc4QmIYW0EvusQzC47reMMjLiUwFMJqrTDnT6b/KKyWGluPfPnkihNFy2YLnyP1HKEwvH@lists.linux.dev
+X-Gm-Message-State: AOJu0Ywao4jDu+bZs+LM/wWeK0p4KMCPTnM8lv+M6rC71OGeUZnqPJAL
+	qG1WWt5ro0mGEyd/B6UHyNh2IijkoLCJh/H6Iy42FHlHmyvqRFUum9SFwAyUC02pojk1iWsxFzF
+	FK+HI5A6YCqmvOduzJwsVjVTMdSOaGCc=
+X-Gm-Gg: ASbGncuQ2ZFbjdA+FCj0UtUwr9F8+XFTa6wK0v8+Okg9UENijXm96F42aQ6pWDEnHXv
+	HdSOMkrzFYWW6ShGQpJ9GB4IESVaxeUwMTa7S+Dwqx/5rtZ8tAFl7FVjIqLHJsFhic+7z4NqdT9
+	fi98Ojtmtkxt75B0y6Gw3rWAlXNt81WDfKiHI22I3YdTXDSYWGQDYBSgY5lcXLUmMvVey3i538y
+	NQf9w==
+X-Google-Smtp-Source: AGHT+IHg75d3gVVHrcM/53JCe0JWtEDOc+JkT8umOlD84lSgO0oBWv54W8RcNo6KapvHj4vSpgUVoGscVjFYDN0Vl4M=
+X-Received: by 2002:a05:6512:1313:b0:554:f76a:bab8 with SMTP id
+ 2adb3069b0e04-55a233d6c0dmr354370e87.15.1752670644558; Wed, 16 Jul 2025
+ 05:57:24 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: lkmm@lists.linux.dev
 List-Id: <lkmm.lists.linux.dev>
@@ -62,14 +62,15 @@ List-Unsubscribe: <mailto:lkmm+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 References: <20250714053656.66712-1-boqun.feng@gmail.com> <20250714053656.66712-2-boqun.feng@gmail.com>
  <2025071611-factsheet-sitter-93b6@gregkh> <20250716124713.GW905792@noisy.programming.kicks-ass.net>
-In-Reply-To: <20250716124713.GW905792@noisy.programming.kicks-ass.net>
+ <2025071651-daylong-brunette-ed9e@gregkh>
+In-Reply-To: <2025071651-daylong-brunette-ed9e@gregkh>
 From: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
-Date: Wed, 16 Jul 2025 14:56:37 +0200
-X-Gm-Features: Ac12FXymJy4M2DTBP9I0YHojvaWeqyESc3dLQe_rOXV0Z6gmdWn8o4HiedYjw9g
-Message-ID: <CANiq72ms11yfBVjfpV9PH6LZ3g72-Wd=5dwda3ULxc0PTnP=NA@mail.gmail.com>
+Date: Wed, 16 Jul 2025 14:57:09 +0200
+X-Gm-Features: Ac12FXw_Z0jSZPqLajQHzSS9go_boufb3ia_2RqCm041xzqV0b0NUKvb3yFhI9g
+Message-ID: <CANiq72kn1MQqY8MXaR9bnSYD=Wo7yC4Wxcq0p0Z4w2K=_dDpiw@mail.gmail.com>
 Subject: Re: [PATCH v7 1/9] rust: Introduce atomic API helpers
-To: Peter Zijlstra <peterz@infradead.org>
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Boqun Feng <boqun.feng@gmail.com>, 
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: Peter Zijlstra <peterz@infradead.org>, Boqun Feng <boqun.feng@gmail.com>, 
 	linux-kernel@vger.kernel.org, rust-for-linux@vger.kernel.org, 
 	lkmm@lists.linux.dev, linux-arch@vger.kernel.org, 
 	Miguel Ojeda <ojeda@kernel.org>, Alex Gaynor <alex.gaynor@gmail.com>, Gary Guo <gary@garyguo.net>, 
@@ -85,25 +86,15 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Boqun Feng <boqun.feng@gmai
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Wed, Jul 16, 2025 at 2:47=E2=80=AFPM Peter Zijlstra <peterz@infradead.or=
-g> wrote:
+On Wed, Jul 16, 2025 at 2:54=E2=80=AFPM Greg Kroah-Hartman
+<gregkh@linuxfoundation.org> wrote:
 >
-> It depends on the scripts/atomic/* bits. They hardly if ever change. We
-> do it this way because:
->
->  - generating these files every build is 'slow'-ish;
->  - code navigation suffers;
->  - Linus asked for this.
->
-> Specifically, pretty much the entire atomic_*() namespace would
-> disappear from ctags / code-browsing-tool-of-choice if we would not
-> check in these files.
+> Ah, ok, that makes sense in a sad way.  As long as someone knows to
+> regenerate these files when needed, hopefully when the C files change
+> someone knows to update these rust ones...
 
-Makes sense, thanks. The Rust helpers one may not be the end of the
-world in terms of code navigation (since people will use the Rust
-abstractions and nobody should call the helpers from C), but since it
-is just 1 more script in the list, I think it is best to keep it as it
-is.
+IIUC, the line added in `scripts/atomic/gen-atomics.sh` will make sure
+it happens at the same time, right?
 
 Cheers,
 Miguel

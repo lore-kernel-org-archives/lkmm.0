@@ -1,293 +1,178 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C1CD2253E4;
-	Thu, 17 Jul 2025 20:29:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E885EEBB;
+	Thu, 17 Jul 2025 20:56:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752784193; cv=none; b=AbEXOZMScrrLZMliIZM7yajKeTT1hC4CPLn8aGlsS8jBRBazEUwbaTg0CBNCUzeCXKuQ8Mg/Mn0kZxQdVx2Cmx8rs6cW0fLRj5jzDvAvR2A1NjzjYldtRzNKfM6jhh59OHy+cFXoGhB00uOHRjtwe7NEtThobYpDS807S1ff44s=
+	t=1752785810; cv=none; b=V1K0nhOSrIG2WKFOrR0Xe9KS719kwwfoyhwiIP7PF5YDy25WSSOH/2/tJNdNBeZs9sQHsFBx2B2cYYQv6KBmPPpYPaHIKNuIweMfaGsuWJI6x+W8Zv9peGVKaf9ZdCpe+tWMwbhPmHF8BWbwipOhQC4Y1Npygg/DKbVnTCBpBSc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752784193; c=relaxed/simple;
-	bh=q8eKevXXi+UQ1OwFBOXGgOAL2sn/edb+P2x0UDs5fKY=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=c8to3We2VtsNpuTWHJB4yplQvl9xbxUwR9Nvl7LZ9/sA51l5dauHuCmqLGgPEOKf6buXVmhyry2t+KRA3M3rGu0sh8PbImvp0zvLM8m2RWFGu5DR39YW5mJzNDht+PkDv2jFbd1eDOYoBOYu/QTw76ZeKFEHNMgpxY1xBS314uo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=d+i09C/R; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1752785810; c=relaxed/simple;
+	bh=Ys203Svg62wgyIV0TPHIA8gLtygtPUojKJwCWhI3mMs=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=bv0iWPGPx2yAdd6Yn3tusdTzfbwXW4uI58BNQJ827a2vM7bp9JODKPBeFY3lKC+UvWhorsJi1jYN2n/JVyGPebT2N2Yshyo5gi1cH7HlFc6HfdogdniPbcOJNpxHCLgKL08G0wWzD1q5NLHVaRHV+G+eKNYhU/TxKPQbp8BrcGw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=rWA/cVgw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="d+i09C/R"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E24BC4CEE3;
-	Thu, 17 Jul 2025 20:29:52 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="rWA/cVgw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48843C4CEE3;
+	Thu, 17 Jul 2025 20:56:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1752784192;
-	bh=q8eKevXXi+UQ1OwFBOXGgOAL2sn/edb+P2x0UDs5fKY=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=d+i09C/R+8o4J/2j6CW0+DVpc4NDnNYt9863nRnffuBeGEbkm0Nwgci/v2axWWwP7
-	 SJfAy/K4l24Jn6St9TtdI8/oceR54KczEnj4PnFLJCy4sDmthCrmEqUL/0sIs0EYUu
-	 At6Q8YR40GX+fiJ8Qb+AR4mw9bKqZXhiUl9KaalHsplkEd/cmkt2Ep7OIfsGBbUPrp
-	 WZn5yoGN7Qf/4QZj8OcCg3EKwThrmkeYDOyWxbUMa5Accj2YDD1V/DdJXzo26e79Sr
-	 +0HjXM2J6vGd+MHb4j8Zpc0v1Ye0CZ+LEkKcPgYGbQkKAZQlDkqX+epPYYpdIV5DEl
-	 1HZ08FQCQSWsA==
-From: Puranjay Mohan <puranjay@kernel.org>
-To: Madhavan Srinivasan <maddy@linux.ibm.com>,
-	Michael Ellerman <mpe@ellerman.id.au>,
-	Nicholas Piggin <npiggin@gmail.com>,
-	Christophe Leroy <christophe.leroy@csgroup.eu>,
-	Alexei Starovoitov <ast@kernel.org>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Andrii Nakryiko <andrii@kernel.org>,
-	Martin KaFai Lau <martin.lau@linux.dev>,
-	Eduard Zingerman <eddyz87@gmail.com>,
-	Song Liu <song@kernel.org>,
-	Yonghong Song <yonghong.song@linux.dev>,
-	John Fastabend <john.fastabend@gmail.com>,
-	KP Singh <kpsingh@kernel.org>,
-	Stanislav Fomichev <sdf@fomichev.me>,
-	Hao Luo <haoluo@google.com>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Hari Bathini <hbathini@linux.ibm.com>,
-	Naveen N Rao <naveen@kernel.org>,
-	Mykola Lysenko <mykolal@fb.com>,
-	Puranjay Mohan <puranjay@kernel.org>,
-	Peilin Ye <yepeilin@google.com>,
-	Kumar Kartikeya Dwivedi <memxor@gmail.com>
-Cc: linuxppc-dev@lists.ozlabs.org,
-	linux-kernel@vger.kernel.org,
-	bpf@vger.kernel.org,
-	"Paul E . McKenney" <paulmck@kernel.org>,
-	lkmm@lists.linux.dev
-Subject: [PATCH RESEND bpf-next 1/1] powerpc64/bpf: Add jit support for load_acquire and store_release
-Date: Thu, 17 Jul 2025 20:29:17 +0000
-Message-ID: <20250717202935.29018-2-puranjay@kernel.org>
-X-Mailer: git-send-email 2.47.1
-In-Reply-To: <20250717202935.29018-1-puranjay@kernel.org>
+	s=k20201202; t=1752785809;
+	bh=Ys203Svg62wgyIV0TPHIA8gLtygtPUojKJwCWhI3mMs=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:From;
+	b=rWA/cVgwaGrm6pq4B7i4gDgcU3D87a0eBpWBu6FZZv6GNu/oXL0sn2F7la8RX9keL
+	 ZIaOeZynH3rSAnQr7/ivnd9PGS8+RxmcNv7IqrApDqvJqViLlUEF/a+vIRWMtN3L0v
+	 VM/T8+IiOeS6/oba0yONX3gEq6E5ZJHPQQf5/3VXBcXoCm4SG56nnjD0x3ygYC9uU4
+	 VqWtTn4aaJQ6x53maV01dTbDeTI94kdV875y9BOY6yvUEg6Ip8QOfCumfCnINkJwHI
+	 aJweomH1oTn2dEaoxKbr+ft7C1RdnxvFMD3+5tgWKhHpIbXdFsiO7fir+0B6ws+nS1
+	 C4NK478mZE6wA==
+From: <puranjay@kernel.org>
+To: Madhavan Srinivasan <maddy@linux.ibm.com>, Michael Ellerman
+ <mpe@ellerman.id.au>, Nicholas Piggin <npiggin@gmail.com>, Christophe
+ Leroy <christophe.leroy@csgroup.eu>, Alexei Starovoitov <ast@kernel.org>,
+ Daniel Borkmann <daniel@iogearbox.net>, Andrii Nakryiko
+ <andrii@kernel.org>, Martin KaFai Lau <martin.lau@linux.dev>, Eduard
+ Zingerman <eddyz87@gmail.com>, Song Liu <song@kernel.org>, Yonghong Song
+ <yonghong.song@linux.dev>, John Fastabend <john.fastabend@gmail.com>, KP
+ Singh <kpsingh@kernel.org>, Stanislav Fomichev <sdf@fomichev.me>, Hao Luo
+ <haoluo@google.com>, Jiri Olsa <jolsa@kernel.org>, Hari Bathini
+ <hbathini@linux.ibm.com>, Naveen N Rao <naveen@kernel.org>, Mykola Lysenko
+ <mykolal@fb.com>, Peilin Ye <yepeilin@google.com>, Kumar Kartikeya Dwivedi
+ <memxor@gmail.com>
+Cc: linuxppc-dev@lists.ozlabs.org, linux-kernel@vger.kernel.org,
+ bpf@vger.kernel.org, "Paul E . McKenney" <paulmck@kernel.org>,
+ lkmm@lists.linux.dev
+Subject: Re: [PATCH RESEND bpf-next 1/1] powerpc64/bpf: Add jit support for
+ load_acquire and store_release
+In-Reply-To: <20250717202935.29018-2-puranjay@kernel.org>
 References: <20250717202935.29018-1-puranjay@kernel.org>
+ <20250717202935.29018-2-puranjay@kernel.org>
+Date: Thu, 17 Jul 2025 20:56:45 +0000
+Message-ID: <mb61pfreuy1rm.fsf@kernel.org>
 Precedence: bulk
 X-Mailing-List: lkmm@lists.linux.dev
 List-Id: <lkmm.lists.linux.dev>
 List-Subscribe: <mailto:lkmm+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:lkmm+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 
-Add JIT support for the load_acquire and store_release instructions. The
-implementation is similar to the kernel where:
+Puranjay Mohan <puranjay@kernel.org> writes:
 
-        load_acquire  => plain load -> lwsync
-        store_release => lwsync -> plain store
+Somehow the cover letter for this patch was missed, adding it here:
 
-To test the correctness of the implementation, following selftests were
-run:
+To test the functionality of these special instructions, a tool called
+blitmus[0] was used to convert the following baseline litmus test[1] to bpf
+programs:
 
-  [fedora@linux-kernel bpf]$ sudo ./test_progs -a \
-  verifier_load_acquire,verifier_store_release,atomics
-  #11/1    atomics/add:OK
-  #11/2    atomics/sub:OK
-  #11/3    atomics/and:OK
-  #11/4    atomics/or:OK
-  #11/5    atomics/xor:OK
-  #11/6    atomics/cmpxchg:OK
-  #11/7    atomics/xchg:OK
-  #11      atomics:OK
-  #519/1   verifier_load_acquire/load-acquire, 8-bit:OK
-  #519/2   verifier_load_acquire/load-acquire, 8-bit @unpriv:OK
-  #519/3   verifier_load_acquire/load-acquire, 16-bit:OK
-  #519/4   verifier_load_acquire/load-acquire, 16-bit @unpriv:OK
-  #519/5   verifier_load_acquire/load-acquire, 32-bit:OK
-  #519/6   verifier_load_acquire/load-acquire, 32-bit @unpriv:OK
-  #519/7   verifier_load_acquire/load-acquire, 64-bit:OK
-  #519/8   verifier_load_acquire/load-acquire, 64-bit @unpriv:OK
-  #519/9   verifier_load_acquire/load-acquire with uninitialized
-  src_reg:OK
-  #519/10  verifier_load_acquire/load-acquire with uninitialized src_reg
-  @unpriv:OK
-  #519/11  verifier_load_acquire/load-acquire with non-pointer src_reg:OK
-  #519/12  verifier_load_acquire/load-acquire with non-pointer src_reg
-  @unpriv:OK
-  #519/13  verifier_load_acquire/misaligned load-acquire:OK
-  #519/14  verifier_load_acquire/misaligned load-acquire @unpriv:OK
-  #519/15  verifier_load_acquire/load-acquire from ctx pointer:OK
-  #519/16  verifier_load_acquire/load-acquire from ctx pointer @unpriv:OK
-  #519/17  verifier_load_acquire/load-acquire with invalid register R15:OK
-  #519/18  verifier_load_acquire/load-acquire with invalid register R15
-  @unpriv:OK
-  #519/19  verifier_load_acquire/load-acquire from pkt pointer:OK
-  #519/20  verifier_load_acquire/load-acquire from flow_keys pointer:OK
-  #519/21  verifier_load_acquire/load-acquire from sock pointer:OK
-  #519     verifier_load_acquire:OK
-  #556/1   verifier_store_release/store-release, 8-bit:OK
-  #556/2   verifier_store_release/store-release, 8-bit @unpriv:OK
-  #556/3   verifier_store_release/store-release, 16-bit:OK
-  #556/4   verifier_store_release/store-release, 16-bit @unpriv:OK
-  #556/5   verifier_store_release/store-release, 32-bit:OK
-  #556/6   verifier_store_release/store-release, 32-bit @unpriv:OK
-  #556/7   verifier_store_release/store-release, 64-bit:OK
-  #556/8   verifier_store_release/store-release, 64-bit @unpriv:OK
-  #556/9   verifier_store_release/store-release with uninitialized
-  src_reg:OK
-  #556/10  verifier_store_release/store-release with uninitialized src_reg
-  @unpriv:OK
-  #556/11  verifier_store_release/store-release with uninitialized
-  dst_reg:OK
-  #556/12  verifier_store_release/store-release with uninitialized dst_reg
-  @unpriv:OK
-  #556/13  verifier_store_release/store-release with non-pointer
-  dst_reg:OK
-  #556/14  verifier_store_release/store-release with non-pointer dst_reg
-  @unpriv:OK
-  #556/15  verifier_store_release/misaligned store-release:OK
-  #556/16  verifier_store_release/misaligned store-release @unpriv:OK
-  #556/17  verifier_store_release/store-release to ctx pointer:OK
-  #556/18  verifier_store_release/store-release to ctx pointer @unpriv:OK
-  #556/19  verifier_store_release/store-release, leak pointer to stack:OK
-  #556/20  verifier_store_release/store-release, leak pointer to stack
-  @unpriv:OK
-  #556/21  verifier_store_release/store-release, leak pointer to map:OK
-  #556/22  verifier_store_release/store-release, leak pointer to map
-  @unpriv:OK
-  #556/23  verifier_store_release/store-release with invalid register
-  R15:OK
-  #556/24  verifier_store_release/store-release with invalid register R15
-  @unpriv:OK
-  #556/25  verifier_store_release/store-release to pkt pointer:OK
-  #556/26  verifier_store_release/store-release to flow_keys pointer:OK
-  #556/27  verifier_store_release/store-release to sock pointer:OK
-  #556     verifier_store_release:OK
-  Summary: 3/55 PASSED, 0 SKIPPED, 0 FAILED
+ C MP+poonceonces
 
-Signed-off-by: Puranjay Mohan <puranjay@kernel.org>
----
- arch/powerpc/include/asm/ppc-opcode.h        |  1 +
- arch/powerpc/net/bpf_jit_comp64.c            | 82 ++++++++++++++++++++
- tools/testing/selftests/bpf/progs/bpf_misc.h |  3 +-
- 3 files changed, 85 insertions(+), 1 deletion(-)
+ (*
+  * Result: Sometimes
+  *
+  * Can the counter-intuitive message-passing outcome be prevented with
+  * no ordering at all?
+  *)
 
-diff --git a/arch/powerpc/include/asm/ppc-opcode.h b/arch/powerpc/include/asm/ppc-opcode.h
-index 4312bcb913a42..8053b24afc395 100644
---- a/arch/powerpc/include/asm/ppc-opcode.h
-+++ b/arch/powerpc/include/asm/ppc-opcode.h
-@@ -425,6 +425,7 @@
- #define PPC_RAW_SC()			(0x44000002)
- #define PPC_RAW_SYNC()			(0x7c0004ac)
- #define PPC_RAW_ISYNC()			(0x4c00012c)
-+#define PPC_RAW_LWSYNC()		(0x7c2004ac)
- 
- /*
-  * Define what the VSX XX1 form instructions will look like, then add
-diff --git a/arch/powerpc/net/bpf_jit_comp64.c b/arch/powerpc/net/bpf_jit_comp64.c
-index a25a6ffe7d7cc..025524378443e 100644
---- a/arch/powerpc/net/bpf_jit_comp64.c
-+++ b/arch/powerpc/net/bpf_jit_comp64.c
-@@ -409,6 +409,71 @@ asm (
- "		blr				;"
- );
- 
-+static int emit_atomic_ld_st(const struct bpf_insn insn, struct codegen_context *ctx, u32 *image)
-+{
-+	u32 code = insn.code;
-+	u32 dst_reg = bpf_to_ppc(insn.dst_reg);
-+	u32 src_reg = bpf_to_ppc(insn.src_reg);
-+	u32 size = BPF_SIZE(code);
-+	u32 tmp1_reg = bpf_to_ppc(TMP_REG_1);
-+	u32 tmp2_reg = bpf_to_ppc(TMP_REG_2);
-+	s16 off = insn.off;
-+	s32 imm = insn.imm;
-+
-+	switch (imm) {
-+	case BPF_LOAD_ACQ:
-+		switch (size) {
-+		case BPF_B:
-+			EMIT(PPC_RAW_LBZ(dst_reg, src_reg, off));
-+			break;
-+		case BPF_H:
-+			EMIT(PPC_RAW_LHZ(dst_reg, src_reg, off));
-+			break;
-+		case BPF_W:
-+			EMIT(PPC_RAW_LWZ(dst_reg, src_reg, off));
-+			break;
-+		case BPF_DW:
-+			if (off % 4) {
-+				EMIT(PPC_RAW_LI(tmp1_reg, off));
-+				EMIT(PPC_RAW_LDX(dst_reg, src_reg, tmp1_reg));
-+			} else {
-+				EMIT(PPC_RAW_LD(dst_reg, src_reg, off));
-+			}
-+			break;
-+		}
-+		EMIT(PPC_RAW_LWSYNC());
-+		break;
-+	case BPF_STORE_REL:
-+		EMIT(PPC_RAW_LWSYNC());
-+		switch (size) {
-+		case BPF_B:
-+			EMIT(PPC_RAW_STB(src_reg, dst_reg, off));
-+			break;
-+		case BPF_H:
-+			EMIT(PPC_RAW_STH(src_reg, dst_reg, off));
-+			break;
-+		case BPF_W:
-+			EMIT(PPC_RAW_STW(src_reg, dst_reg, off));
-+			break;
-+		case BPF_DW:
-+			if (off % 4) {
-+				EMIT(PPC_RAW_LI(tmp2_reg, off));
-+				EMIT(PPC_RAW_STDX(src_reg, dst_reg, tmp2_reg));
-+			} else {
-+				EMIT(PPC_RAW_STD(src_reg, dst_reg, off));
-+			}
-+			break;
-+		}
-+		break;
-+	default:
-+		pr_err_ratelimited("unexpected atomic load/store op code %02x\n",
-+				   imm);
-+		return -EINVAL;
-+	}
-+
-+	return 0;
-+}
-+
- /* Assemble the body code between the prologue & epilogue */
- int bpf_jit_build_body(struct bpf_prog *fp, u32 *image, u32 *fimage, struct codegen_context *ctx,
- 		       u32 *addrs, int pass, bool extra_pass)
-@@ -898,8 +963,25 @@ int bpf_jit_build_body(struct bpf_prog *fp, u32 *image, u32 *fimage, struct code
- 		/*
- 		 * BPF_STX ATOMIC (atomic ops)
- 		 */
-+		case BPF_STX | BPF_ATOMIC | BPF_B:
-+		case BPF_STX | BPF_ATOMIC | BPF_H:
- 		case BPF_STX | BPF_ATOMIC | BPF_W:
- 		case BPF_STX | BPF_ATOMIC | BPF_DW:
-+			if (bpf_atomic_is_load_store(&insn[i])) {
-+				ret = emit_atomic_ld_st(insn[i], ctx, image);
-+				if (ret)
-+					return ret;
-+
-+				if (size != BPF_DW && insn_is_zext(&insn[i + 1]))
-+					addrs[++i] = ctx->idx * 4;
-+				break;
-+			} else if (size == BPF_B || size == BPF_H) {
-+				pr_err_ratelimited(
-+					"eBPF filter atomic op code %02x (@%d) unsupported\n",
-+					code, i);
-+				return -EOPNOTSUPP;
-+			}
-+
- 			save_reg = tmp2_reg;
- 			ret_reg = src_reg;
- 
-diff --git a/tools/testing/selftests/bpf/progs/bpf_misc.h b/tools/testing/selftests/bpf/progs/bpf_misc.h
-index 530752ddde8e4..c1cfd297aabf1 100644
---- a/tools/testing/selftests/bpf/progs/bpf_misc.h
-+++ b/tools/testing/selftests/bpf/progs/bpf_misc.h
-@@ -229,7 +229,8 @@
- 
- #if __clang_major__ >= 18 && defined(ENABLE_ATOMICS_TESTS) &&		\
- 	(defined(__TARGET_ARCH_arm64) || defined(__TARGET_ARCH_x86) ||	\
--	 (defined(__TARGET_ARCH_riscv) && __riscv_xlen == 64))
-+	 (defined(__TARGET_ARCH_riscv) && __riscv_xlen == 64)) || \
-+	  (defined(__TARGET_ARCH_powerpc))
- #define CAN_USE_LOAD_ACQ_STORE_REL
- #endif
- 
--- 
-2.47.1
+ {}
 
+ P0(int *buf, int *flag)
+ {
+         WRITE_ONCE(*buf, 1);
+         WRITE_ONCE(*flag, 1);
+ }
+
+ P1(int *buf, int *flag)
+ {
+         int r0;
+         int r1;
+
+         r0 = READ_ONCE(*flag);
+         r1 = READ_ONCE(*buf);
+ }
+
+ exists (1:r0=1 /\ 1:r1=0) (* Bad outcome. *)
+
+Running the generated bpf program shows that the bad outcome is possible on
+powerpc:
+
+ [fedora@linux-kernel blitmus]$ sudo ./mp_poonceonces
+ Starting litmus test with configuration:
+   Test: MP+poonceonces
+   Iterations: 4100
+
+ Test MP+poonceonces Allowed
+ Histogram (4 states)
+ 21548375 :>1:r0=0; 1:r1=0;
+ 301187   :>1:r0=0; 1:r1=1;
+ 337147   *>1:r0=1; 1:r1=0;
+ 18813291 :>1:r0=1; 1:r1=1;
+ Ok
+
+ Witnesses
+ Positive: 337147, Negative: 40662853
+ Condition exists (1:r0=1 /\ 1:r1=0) is validated
+ Observation MP+poonceonces Sometimes 337147 40662853
+ Time MP+poonceonces 13.48
+
+ Thu Jul 17 18:12:51 UTC
+
+Now the second write and the first read is converted to store_release and
+load_acquire and it gives us the following litmus test[2]
+
+ C MP+pooncerelease+poacquireonce
+
+ (*
+  * Result: Never
+  *
+  * This litmus test demonstrates that smp_store_release() and
+  * smp_load_acquire() provide sufficient ordering for the message-passing
+  * pattern.
+  *)
+
+ {}
+
+ P0(int *buf, int *flag)
+ {
+         WRITE_ONCE(*buf, 1);
+         smp_store_release(flag, 1);
+ }
+
+ P1(int *buf, int *flag)
+ {
+         int r0;
+         int r1;
+
+         r0 = smp_load_acquire(flag);
+         r1 = READ_ONCE(*buf);
+ }
+
+ exists (1:r0=1 /\ 1:r1=0) (* Bad outcome. *)
+
+
+Running the generated bpf program shows that the bad outcome is *not* possible
+on powerpc with the implementation in this patch:
+
+ [fedora@linux-kernel blitmus]$ sudo ./mp_pooncerelease_poacquireonce
+ Starting litmus test with configuration:
+   Test: MP+pooncerelease+poacquireonce
+   Iterations: 4100
+
+ Test MP+pooncerelease+poacquireonce Allowed
+ Histogram (3 states)
+ 21036021 :>1:r0=0; 1:r1=0;
+ 14488694 :>1:r0=0; 1:r1=1;
+ 5475285  :>1:r0=1; 1:r1=1;
+ No
+
+ Witnesses
+ Positive: 0, Negative: 41000000
+ Condition exists (1:r0=1 /\ 1:r1=0) is NOT validated
+ Observation MP+pooncerelease+poacquireonce Never 0 41000000
+ Time MP+pooncerelease+poacquireonce 13.74
+
+ Thu Jul 17 18:13:40 UTC
+
+[0] https://github.com/puranjaymohan/blitmus
+[1] https://github.com/puranjaymohan/blitmus/blob/main/litmus_tests/MP%2Bpoonceonces.litmus
+[2] https://github.com/puranjaymohan/blitmus/blob/main/litmus_tests/MP%2Bpooncerelease%2Bpoacquireonce.litmus

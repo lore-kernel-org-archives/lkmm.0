@@ -1,36 +1,65 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qt1-f175.google.com (mail-qt1-f175.google.com [209.85.160.175])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A63701E5B63;
-	Wed, 23 Jul 2025 17:27:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA5B3221F2F
+	for <lkmm@lists.linux.dev>; Wed, 23 Jul 2025 19:25:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753291670; cv=none; b=UCoZJLIfOdjXKaYxTo4TmFwdW2H3quyt5MMZDzBkJxhMntuS7bKpGMpO6Jrqc/m5h7KO6mds77vNk4YydyaoTF7IR6J4EHIXAkutLuoAABbpOQCTAlYid/S60dgVF1BGLaMCcrvReFPbbMCuvOgAEjaomm6qGSl6qweSXEvT+TY=
+	t=1753298721; cv=none; b=ssHQU4bwn0h5AMu438VG/Pjf6KrK6XciAAjJQ9FiE1mZM8MsbvGDKXAIS2KJpFdXM0NN6l6r246FRqSrdeETCEbz1VMglBY7wt6IaXQwIl1GVTjubGdrabkhqJvxKnFwf7q8TkYGZ4di6MFGbu4Nd5oEkWgaYu4EbE5c/rVBbdQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753291670; c=relaxed/simple;
-	bh=qx3flbpVTB16XarLcPllBskgnmI/m+3CCQd9sozjRog=;
+	s=arc-20240116; t=1753298721; c=relaxed/simple;
+	bh=BkbfST8VnkNe2dA/eG0x4Zv7iq6xINXAglN3NoSKfys=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Yi6Up8ApLSeEB2wOsSeSTb/Qin3UlONz7mkPD5k8SoOTBsKPvn2b7YuJfM5PyQakHdGLnPFiXlcuu2Owu8KrSmjxcgZz26SCg/8Kz3TLuKG/esIcQDMmDSWAaSx1jtCrr//yy0UJabS6itmSbXVZBAZWzBkiYdnYldQAr7mQGdQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=npMUJDyH; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type:Content-Disposition:In-Reply-To; b=QByzR2xDwdv8UbQRCr+oW34kiZl/qaIb0NL1ykAGRaIDhMDnZw083yAOnjADI5XXoDwzc62lCOtqycxdKNFBxcGuJQh3FfamBZ5yfDSykIcjkw9lCSR7hHfexUtC+yGVt0PXZqAnIX/ABLRS41Und8evinDgQGsjIYORAychoG4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=rowland.harvard.edu; spf=fail smtp.mailfrom=g.harvard.edu; dkim=pass (2048-bit key) header.d=rowland.harvard.edu header.i=@rowland.harvard.edu header.b=RLyGWI0O; arc=none smtp.client-ip=209.85.160.175
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=rowland.harvard.edu
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=g.harvard.edu
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="npMUJDyH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D31BC4CEE7;
-	Wed, 23 Jul 2025 17:27:50 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1753291670;
-	bh=qx3flbpVTB16XarLcPllBskgnmI/m+3CCQd9sozjRog=;
-	h=Date:From:To:Cc:Subject:Reply-To:References:In-Reply-To:From;
-	b=npMUJDyHQ8L49bPjLwhal3lEZRpRRzDpbcu0oxa/KNlIA8QZpwMGYpPj+xFCdxa5d
-	 rFl/FNd+Bz63JeSsdpaVybpLDcbwthtTonFkH3S1tBtV2clrn3P0vsHuUUsEDUzo8L
-	 Sy+7SUm6rLW3rIsajLeTXAnqdihWqFnqm4Cqjz3mpN45vwf8+ssi02XEKyMm48Z6VK
-	 TjUbxUypfn/eSv1uuQALd/W/inWc/MkfE9LhiHA7jCv8bBngj01PHlDcm0lfDdBfxt
-	 suAhNTbBAIeJw/a4S/pOrjjjBo5B4ZmEqO5Yk2Y3fUNfaTQ9o30LpMB9/cKFEA6bDg
-	 IdGVGdY+dVarA==
-Received: by paulmck-ThinkPad-P17-Gen-1.home (Postfix, from userid 1000)
-	id C5409CE0AD1; Wed, 23 Jul 2025 10:27:49 -0700 (PDT)
-Date: Wed, 23 Jul 2025 10:27:49 -0700
-From: "Paul E. McKenney" <paulmck@kernel.org>
-To: Alan Stern <stern@rowland.harvard.edu>
+	dkim=pass (2048-bit key) header.d=rowland.harvard.edu header.i=@rowland.harvard.edu header.b="RLyGWI0O"
+Received: by mail-qt1-f175.google.com with SMTP id d75a77b69052e-4ab82eb33f9so4224181cf.3
+        for <lkmm@lists.linux.dev>; Wed, 23 Jul 2025 12:25:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=rowland.harvard.edu; s=google; t=1753298717; x=1753903517; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=ja0+u1t4v2GnYrO6vfHRjNkhPG9aXnqYbT0ae6BB0O8=;
+        b=RLyGWI0OssPTQDQmEs/21UdL1d3iCa60fnP2I1wgoefIkumumg+McsESnYUTFctRy2
+         c4FjOj2BK38rEOwqUHF+sBf3Q/2efWyfCOgnm6Z/v8BkfAUNhWCt1Bgj85TFE2Zp6QdE
+         3VRnWyPEiBy3bGaLmbSFZ2NkqS7oqojw2umv4LmfYlMOw8tHu76YfHCm+m6VBeQ+hTkY
+         jICqWZgmRqzW5XYpD73Cfhz7Rrzt4yo5vBBgAs7s+COQ4S9lHYlkJIY7En43GlcnZP4L
+         beN7RK9fzADYIHxgYCYVDdsBfoEiRfuTXGe5fCJ1zfsGj1mwBpFwAAtoXjp7Olfdrqw0
+         CQyg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1753298717; x=1753903517;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=ja0+u1t4v2GnYrO6vfHRjNkhPG9aXnqYbT0ae6BB0O8=;
+        b=g+Qu/fBfOJx3dHswa7qKzx3wq44/oTpRkCTi+ZJeO2PcKZpyTBtYlD+gejF4M1lvMU
+         aWdza6Dti8N+1TVPSo77bGl7rAzNMVTYndDIN2IYR0+OLMs2Kix4FNFVwcf60QS88rdS
+         wyjFPn6Oez37JVFh83IUxtjHX0hFEVug0VtaBWOoQnwr9SeUG8xnShiwz9Dvc36aYqmG
+         ZgJ+VgEev+FL1YEqGCZZnBJFGyx2OzQGoYg5hE06RWzkPkti2G16hexBoj2bsz+BoiyH
+         IqKh5qMk+Hd+XSaBZ8JRoGoDHukv6GmmyiZ03U4p70MvUQLiaSvTNSLLQwBo9AnsOKz8
+         RH4g==
+X-Forwarded-Encrypted: i=1; AJvYcCWcue8v25+UZLTwq0HjqMMhiOrYhk9SCdahgxMmuSXKiRZflGGualylB2cH1QYRVyGBlfjX@lists.linux.dev
+X-Gm-Message-State: AOJu0YwS7IoQP4va5M+9Qe4qqk/2oePQenB8qhLKc+P/9I9u5yw075mD
+	puEZWX6PfFl/tP4aToRm1/7RHdLmTb6kWYaQFZRRnTVa4XSj5D4++osr313oCEmC/Q==
+X-Gm-Gg: ASbGnct49ixmEFtOs73RfbgGpmx+7Ogfe50kpP7B65lWeoCBrPSyvLVAQL1ZaQKsxN+
+	EzTFSgEjNXyfRaFw+LIwe5g+DAtjH3Irx3LZM6eceAY3UBGq/WwfVjZohD0pZXOBYFsWXDpZLAA
+	t4yqevpdkc4NrlH7MRoW7FEVD7o7QxsIMd+hyFghdQ2s8eAsxHh2q0KXYSzfj7jsBzRwNyY/W/Z
+	5SIUJZZvZHo7W6z+9g43ybegCmHPDhzKedoHn8tjQaZvZoX+9H9FFDiE69HVARyjW3lZVoQyvrF
+	p8GHBUIQ6pTDCFXzZp3F0GByybcMf9qSXoKfHw2tcM0uz4GwhE5SSOsoPm6Ew5frov1E7dQJepX
+	6r1mWy60D9IJkZH3BYPlMq6c7vSiEvPa4r/RQU8DVj8JUlBZhMJS7cproOj0SjgiuPQ==
+X-Google-Smtp-Source: AGHT+IG8vOZUCry43fkriuOa/tnIX5d5irFl/w/P6a2uToDSFLiTZ8ufd5Tr7TYG4+WypOiZc7k5eA==
+X-Received: by 2002:ac8:5913:0:b0:4ab:9551:3b4d with SMTP id d75a77b69052e-4ae6dfe9242mr49397451cf.54.1753298717332;
+        Wed, 23 Jul 2025 12:25:17 -0700 (PDT)
+Received: from rowland.harvard.edu ([2607:fb60:1011:2006:3d4c:de64:63d3:50b5])
+        by smtp.gmail.com with ESMTPSA id d75a77b69052e-4abb499fcd2sm70834141cf.17.2025.07.23.12.25.16
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 23 Jul 2025 12:25:16 -0700 (PDT)
+Date: Wed, 23 Jul 2025 15:25:13 -0400
+From: Alan Stern <stern@rowland.harvard.edu>
+To: "Paul E. McKenney" <paulmck@kernel.org>
 Cc: Jonas Oberhauser <jonas.oberhauser@huaweicloud.com>,
 	parri.andrea@gmail.com, will@kernel.org, peterz@infradead.org,
 	boqun.feng@gmail.com, npiggin@gmail.com, dhowells@redhat.com,
@@ -40,11 +69,9 @@ Cc: Jonas Oberhauser <jonas.oberhauser@huaweicloud.com>,
 	linux-kernel@vger.kernel.org, lkmm@lists.linux.dev,
 	hernan.poncedeleon@huaweicloud.com
 Subject: Re: [RFC] tools/memory-model: Rule out OOTA
-Message-ID: <5470d186-7c75-4ead-81de-71f9d6b4c58f@paulmck-laptop>
-Reply-To: paulmck@kernel.org
+Message-ID: <b9c250b2-e4c0-4e8f-b37c-b51d93b980f0@rowland.harvard.edu>
 References: <20250106214003.504664-1-jonas.oberhauser@huaweicloud.com>
  <6fb01aea-f7b4-4f38-82b9-fd6c360514fc@paulmck-laptop>
- <abafbf9b-d13d-4389-82fe-501810388a10@rowland.harvard.edu>
 Precedence: bulk
 X-Mailing-List: lkmm@lists.linux.dev
 List-Id: <lkmm.lists.linux.dev>
@@ -53,85 +80,80 @@ List-Unsubscribe: <mailto:lkmm+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <abafbf9b-d13d-4389-82fe-501810388a10@rowland.harvard.edu>
+In-Reply-To: <6fb01aea-f7b4-4f38-82b9-fd6c360514fc@paulmck-laptop>
 
-On Wed, Jul 23, 2025 at 01:13:35PM -0400, Alan Stern wrote:
-> On Tue, Jul 22, 2025 at 05:43:16PM -0700, Paul E. McKenney wrote:
-> > On Mon, Jan 06, 2025 at 10:40:03PM +0100, Jonas Oberhauser wrote:
-> > > The current LKMM allows out-of-thin-air (OOTA), as evidenced in the following
-> > > example shared on this list a few years ago:
-> > 
-> > Apologies for being slow, but I have finally added the litmus tests in
-> > this email thread to the https://github.com/paulmckrcu/litmus repo.
-> > 
-> > It is quite likely that I have incorrectly intuited the missing portions
-> > of the litmus tests, especially the two called out in the commit log
-> > below.  If you have time, please do double-check.
-> 
-> I didn't look very closely when this first came out...
-> 
-> > --- /dev/null
-> > +++ b/manual/oota/C-AS-OOTA-2.litmus
-> > @@ -0,0 +1,33 @@
-> > +C C-AS-OOTA-2
-> > +
-> > +(*
-> > + * Result: Always
-> > + *
-> > + * If we were using C-language relaxed atomics instead of volatiles,
-> > + * the compiler *could* eliminate the first WRITE_ONCE() in each process,
-> > + * then also each process's local variable, thus having an undefined value
-> > + * for each of those local variables.  But this cannot happen given that
-> > + * we are using Linux-kernel _ONCE() primitives.
-> > + *
-> > + * https://lore.kernel.org/all/c2ae9bca-8526-425e-b9b5-135004ad59ad@rowland.harvard.edu/
-> > + *)
-> > +
-> > +{}
-> > +
-> > +P0(int *a, int *b)
-> > +{
-> > +	int r0 = READ_ONCE(*a);
-> > +
-> > +	WRITE_ONCE(*b, r0);
-> > +	WRITE_ONCE(*b, 2);
-> > +}
-> > +
-> > +P1(int *a, int *b)
-> > +{
-> > +	int r1 = READ_ONCE(*b);
-> > +
-> > +	WRITE_ONCE(*a, r0);
-> 
-> This should be r1 instead of r0.
+On Tue, Jul 22, 2025 at 05:43:16PM -0700, Paul E. McKenney wrote:
+>     Also, C-JO-OOTA-7.litmus includes a "*r2 = a" statement that makes herd7
+>     very unhappy.  On the other hand, initializing registers to the address
+>     of a variable is straight forward, as shown in the resulting litmus test.
 
-Ah, good eyes, thank you!
+...
 
-With that change, I still get "Always" as shown below.  Which I believe
-makes sense, given that LKMM deals with volatile atomics in contrast to
-the C++ relaxed atomics that you were discussing in the email.
+> diff --git a/manual/oota/C-JO-OOTA-7.litmus b/manual/oota/C-JO-OOTA-7.litmus
+> new file mode 100644
+> index 00000000..31c0b8ae
+> --- /dev/null
+> +++ b/manual/oota/C-JO-OOTA-7.litmus
+> @@ -0,0 +1,47 @@
+> +C C-JO-OOTA-7
+> +
+> +(*
+> + * Result: Never
+> + *
+> + * But LKMM finds the all-ones result, due to OOTA on r2.
+> + *
+> + * https://lore.kernel.org/all/1147ad3e-e3ad-4fa1-9a63-772ba136ea9a@huaweicloud.com/
+> + *)
+> +
+> +{
+> +	0:r2=a;
+> +	1:r2=b;
+> +}
 
-Please let me know if I am still missing something.
+In this litmus test a and b are never assigned any values, so they
+always contain 0.
 
-> > +	WRITE_ONCE(*a, 2);
-> > +}
-> > +
-> > +exists ((0:r0=0 \/ 0:r0=2) /\ (1:r1=0 \/ 1:r1=2))
-> 
-> Alan
+> +
+> +P0(int *a, int *b, int *x, int *y)
+> +{
+> +	int r1;
+> +	int r2;
+> +
+> +	r1 = READ_ONCE(*x);
+> +	smp_rmb();
+> +	if (r1 == 1) {
+> +		r2 = READ_ONCE(*a);
 
-------------------------------------------------------------------------
+If this executes then r2 now contains 0.
 
-$ herd7 -conf linux-kernel.cfg ~/paper/scalability/LWNLinuxMM/litmus/manual/oota/C-AS-OOTA-2.litmus
-Test C-AS-OOTA-2 Allowed
-States 3
-0:r0=0; 1:r1=0;
-0:r0=0; 1:r1=2;
-0:r0=2; 1:r1=0;
-Ok
-Witnesses
-Positive: 5 Negative: 0
-Condition exists ((0:r0=0 \/ 0:r0=2) /\ (1:r1=0 \/ 1:r1=2))
-Observation C-AS-OOTA-2 Always 5 0
-Time C-AS-OOTA-2 0.01
-Hash=7b4c046bc861c102997a87e32907fa80
+> +	}
+> +	*r2 = a;
+
+And so what is supposed to happen here?  No wonder herd7 is unhappy!
+
+> +	smp_wmb();
+> +	WRITE_ONCE(*y, 1);
+> +}
+> +
+> +P1(int *a, int *b, int *x, int *y)
+> +{
+> +	int r1;
+> +	int r2;
+> +
+> +	r1 = READ_ONCE(*y);
+> +	smp_rmb();
+> +	if (r1 == 1) {
+> +		r2 = READ_ONCE(*b);
+> +	}
+> +	*r2 = b;
+
+Same here.
+
+> +	smp_wmb();
+> +	WRITE_ONCE(*x, 1);
+> +}
+> +
+> +locations [0:r2;1:r2]
+> +exists (0:r1=1 /\ 1:r1=1)
+
+Alan

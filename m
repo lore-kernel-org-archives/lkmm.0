@@ -1,165 +1,571 @@
-Received: from mail-ed1-f46.google.com (mail-ed1-f46.google.com [209.85.208.46])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B21A21E25E3
-	for <lkmm@lists.linux.dev>; Sat, 19 Jul 2025 07:08:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E5268472;
+	Wed, 23 Jul 2025 00:43:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752908928; cv=none; b=hFYn6U9GAjZdn1wZBHvtL+PNPpDN70ST9ubEYispsCBUwCvk51Wh+lOHxpo5aFV6Omgj3SXcAmrzLW9f8HQ9hp80SvA5t0QYnM/lJVa6nFNBlAa09yPPDrawN1Q1X3axgar+ncu7vTXvhWfYD6/7zhSXuL1INLv3b5MOK9dY/oE=
+	t=1753231397; cv=none; b=RX9sjddMG9MJeN3B9sTKR0UHuAzD217HyZ4h+9gPw3Rn2TlQKq/pOMoY91YYtDLUJjCwta7dvsW2uQSvzAPoQDjLzezDc+/yKzsXmSbVhy9lydU+EE8gG9mGV5JCtpOkde+JJd2sgXGoExdRaOBalydLFAwIVMlxqqTNOXtK4QM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752908928; c=relaxed/simple;
-	bh=vufT61B0JmqwAIxP7VPqMs0HC4W5rnfofR5tYibjGiE=;
+	s=arc-20240116; t=1753231397; c=relaxed/simple;
+	bh=nAEF7ePfhhwZdfBf+TaCKYd86bXhGrrJieY/d3oV8+4=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=KuepfvtDx32JoxNpqspd/m5q2xPTwQdONgHoWXkla9/qKcHGxihOQ/dn23IzI+hhVnWC6+nlcsX/Dp0SHC/CyMbzKBP0GfYmPdXIIFQci05F43rIIccOwZcOY0AiGhfF/o0rTiENpl6CifP218MYqjfLVXEAkhr42XGSVJHF+cg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=UfIfgwmO; arc=none smtp.client-ip=209.85.208.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	 Content-Type:Content-Disposition:In-Reply-To; b=PwLz6YR3gJSQCF0H93YZUNyasyYoeDHkcd2lRBkPfyWsnznJjDEEaZqUeYo+bvD1m2E1jXx252EwOMQcfdFlC8AeKputYWFELF2+WJOmMaziFF2MRV6Lv2cW9S6D9vSw/iB1uWLEzpyNQUwUXKYiCFCdftVnX6R3ay2OvdlIPII=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WyqQwFAh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="UfIfgwmO"
-Received: by mail-ed1-f46.google.com with SMTP id 4fb4d7f45d1cf-60c6fea6742so5874644a12.1
-        for <lkmm@lists.linux.dev>; Sat, 19 Jul 2025 00:08:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1752908925; x=1753513725; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=UT5HypfoUTQWMwocYzVj5Hl5OahvJzyO3VxVcUyzP0k=;
-        b=UfIfgwmOQokSmCR58NwsWMT18HXw5L7XsoCM2JbODJgKFNJuiDx0/x/aAeGPXBzL4V
-         auEGYuHfvWXAH4SlcX5OaJmB1jGgcZ79H75gvftushQmT848c1i0URKVw0b7PWCjg/BC
-         8KSc2wnjTvVVVqBK//GNyhxHQyInn0z5wMcP5JrxhCgg+/BfJKp7abtYEDZgPLYBKfIL
-         JgQVOveDgX5/UEX3/Tfcw/NZICjCUH6+cjAra4hcx+3Gm5uVS6AzZHmnpCiKbOHzuR+Z
-         CNPYV5nFdm/Ki+u7HfAtKq56tnTKXLJJ/XI2vzjYIolxm2l3p7A01ASMNALGeVES8oUR
-         hrQA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1752908925; x=1753513725;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=UT5HypfoUTQWMwocYzVj5Hl5OahvJzyO3VxVcUyzP0k=;
-        b=U56CfxFcb6LnM+cgkErsyh2sxL1oaMatEpqYgZa7+NdXEKxwFU8Ji34u+EVJVqfCjw
-         /KxpdRdpsC/l2ZDnYBiBz74ULujN7jbYY6mTIrIAuWzQUqZEbgXHBeeKy04BdYyJ8zkO
-         4b4Ez0jyB2xOmg+1afUUikGynLwYW7Bcw4Ty8v7ULMM3/b1Ww1kAexT+0pWqYKsCf8kv
-         8i5ILlwpqyiaDMgfXmj79pfIEt8zLrIwl6ZTSrbWOoLt+9YCN075yW8qhY1qdiVwdpNQ
-         aDfcAp07P+JsCc9rlpfl2MpaMyxJdUPLb7y9Gq3K1OK9CEY/fZ7pJFgEamHZJg6eXifU
-         Eh6A==
-X-Forwarded-Encrypted: i=1; AJvYcCUizzeQ8dJyFbZbA63KwgKyVexuPyK/jc9bISFQufuHAMHdt3oaEeIEeAX6DHaEYgH8xaSY@lists.linux.dev
-X-Gm-Message-State: AOJu0YzB8AMdsDetaFKwuzyXDjfYiq+yRulhLnBxIgK99ACIxaaosHuY
-	Lvgh3pdHtFJrlwvGJ2hMnhmKI+q7wjSv17iphGiSbkcq6FozXiDlVh9D
-X-Gm-Gg: ASbGncvmPFcVMEw+TzCOqOWIbxMCDcldC3wgXbWlBA7IGq2zx0SWi5pHy1TfqNNl5vb
-	fmbbGUADb3zTBQNp+2KGWGDllxzNSPF+1yaRuH7GPC4hdB/0+8HJfhiyw3MUKcOyu1zmhqhezlu
-	nUYCxlvhhL/+F1w9XFqk0oeAxxYgAvkt1cLC+8RxwS1o07shrudN6zKbV9jugUKCW35gs7XuYR6
-	71q3sCdW6fNm4q+QVdRmPRzR6uaWXEdq2HYiTEEKmiy4Mfmw1j+bonHd1STrVVUl9GcNz4qiGl8
-	Fyyp0pj0y2Ktp9NjY8xO9DlHGagdYCcYl5yfqp3b9PlzMzGX14IDvpaUEIba+HBqqPZ+6/FwQ+9
-	ufuU4N6cZRXwn+veXb6IjxQ==
-X-Google-Smtp-Source: AGHT+IFThgtoJuSP5FXWdNpEpQ5czog6sgr2fMyqs2egrXeD+Pi/tn7lPVEjYiDM63dPY9Wul0I/mA==
-X-Received: by 2002:a17:907:7208:b0:ad5:8412:1c9 with SMTP id a640c23a62f3a-aec6a674779mr480258166b.59.1752908924588;
-        Sat, 19 Jul 2025 00:08:44 -0700 (PDT)
-Received: from archie.me ([103.124.138.155])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-aec6c7d8357sm253986566b.52.2025.07.19.00.08.42
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 19 Jul 2025 00:08:42 -0700 (PDT)
-Received: by archie.me (Postfix, from userid 1000)
-	id 87B73423BF32; Sat, 19 Jul 2025 14:08:38 +0700 (WIB)
-Date: Sat, 19 Jul 2025 14:08:38 +0700
-From: Bagas Sanjaya <bagasdotme@gmail.com>
-To: Vegard Nossum <vegard.nossum@oracle.com>,
-	Peter Zijlstra <peterz@infradead.org>
-Cc: Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-	Linux Documentation <linux-doc@vger.kernel.org>,
-	Linux RCU <rcu@vger.kernel.org>,
-	Linux CPU Architectures Development <linux-arch@vger.kernel.org>,
-	Linux LKMM <lkmm@lists.linux.dev>, Linux KVM <kvm@vger.kernel.org>,
-	"Paul E. McKenney" <paulmck@kernel.org>,
-	Frederic Weisbecker <frederic@kernel.org>,
-	Neeraj Upadhyay <neeraj.upadhyay@kernel.org>,
-	Joel Fernandes <joelagnelf@nvidia.com>,
-	Josh Triplett <josh@joshtriplett.org>,
-	Boqun Feng <boqun.feng@gmail.com>,
-	Uladzislau Rezki <urezki@gmail.com>,
-	Steven Rostedt <rostedt@goodmis.org>,
-	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
-	Lai Jiangshan <jiangshanlai@gmail.com>,
-	Zqiang <qiang.zhang@linux.dev>, Jonathan Corbet <corbet@lwn.net>,
-	Alan Stern <stern@rowland.harvard.edu>,
-	Andrea Parri <parri.andrea@gmail.com>,
-	Will Deacon <will@kernel.org>, Nicholas Piggin <npiggin@gmail.com>,
-	David Howells <dhowells@redhat.com>,
-	Jade Alglave <j.alglave@ucl.ac.uk>,
-	Luc Maranget <luc.maranget@inria.fr>,
-	Akira Yokosawa <akiyks@gmail.com>,
-	Daniel Lustig <dlustig@nvidia.com>,
-	Mark Rutland <mark.rutland@arm.com>, Ingo Molnar <mingo@redhat.com>,
-	Waiman Long <longman@redhat.com>,
-	Paolo Bonzini <pbonzini@redhat.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Tejun Heo <tj@kernel.org>,
-	"Mike Rapoport (Microsoft)" <rppt@kernel.org>,
-	Changyuan Lyu <changyuanl@google.com>,
-	Dan Williams <dan.j.williams@intel.com>, Xavier <xavier_qy@163.com>,
-	Randy Dunlap <rdunlap@infradead.org>,
-	Maarten Lankhorst <dev@lankhorst.se>,
-	Christian Brauner <brauner@kernel.org>
-Subject: Re: [PATCH 0/4] Convert atomic_*.txt and memory-barriers.txt to reST
-Message-ID: <aHtEdoj_qgpq9NNa@archie.me>
-References: <20250717080617.35577-1-bagasdotme@gmail.com>
- <20250717105554.GA1479557@noisy.programming.kicks-ass.net>
- <aHjd-oisajaKW_Z5@archie.me>
- <65735554-0420-4af7-881d-5243b83a3eb6@oracle.com>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WyqQwFAh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DCE2AC4CEEB;
+	Wed, 23 Jul 2025 00:43:16 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1753231396;
+	bh=nAEF7ePfhhwZdfBf+TaCKYd86bXhGrrJieY/d3oV8+4=;
+	h=Date:From:To:Cc:Subject:Reply-To:References:In-Reply-To:From;
+	b=WyqQwFAhev+zOidJYf7rLOaSA77kabBtJtGQMEIS7VLUof87F0+QLdclsPS11A/NN
+	 BwntfrrbmY1pxO0VlBjEY1BDDTUDgV0Ru+lYvkIZ2nwaqQLA/eWerYZ+avcGB5GoF3
+	 lkkEwZvhpM/YqEZyA4+Cwb+2pAvIpY3RfWF+ZlkN7XDX09lKXZSYkaweD55uqgZ9Cs
+	 YBTPGkO2AtgrXqwsaIweca450Orq2rQEkfnK7LUtlTb3RBZf3FUxI77holwnjohIA4
+	 wBewv8V6ReLlVM7YQ5vYWFsl74+8ijYPgMROMhSz8G93n2fUvBf02znjNE54GPYF3c
+	 IhfRPg//I31qA==
+Received: by paulmck-ThinkPad-P17-Gen-1.home (Postfix, from userid 1000)
+	id 898D6CE0DEC; Tue, 22 Jul 2025 17:43:16 -0700 (PDT)
+Date: Tue, 22 Jul 2025 17:43:16 -0700
+From: "Paul E. McKenney" <paulmck@kernel.org>
+To: Jonas Oberhauser <jonas.oberhauser@huaweicloud.com>
+Cc: stern@rowland.harvard.edu, parri.andrea@gmail.com, will@kernel.org,
+	peterz@infradead.org, boqun.feng@gmail.com, npiggin@gmail.com,
+	dhowells@redhat.com, j.alglave@ucl.ac.uk, luc.maranget@inria.fr,
+	akiyks@gmail.com, dlustig@nvidia.com, joel@joelfernandes.org,
+	urezki@gmail.com, quic_neeraju@quicinc.com, frederic@kernel.org,
+	linux-kernel@vger.kernel.org, lkmm@lists.linux.dev,
+	hernan.poncedeleon@huaweicloud.com
+Subject: Re: [RFC] tools/memory-model: Rule out OOTA
+Message-ID: <6fb01aea-f7b4-4f38-82b9-fd6c360514fc@paulmck-laptop>
+Reply-To: paulmck@kernel.org
+References: <20250106214003.504664-1-jonas.oberhauser@huaweicloud.com>
 Precedence: bulk
 X-Mailing-List: lkmm@lists.linux.dev
 List-Id: <lkmm.lists.linux.dev>
 List-Subscribe: <mailto:lkmm+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:lkmm+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="2gLgncKtdrrHipxb"
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <65735554-0420-4af7-881d-5243b83a3eb6@oracle.com>
+In-Reply-To: <20250106214003.504664-1-jonas.oberhauser@huaweicloud.com>
 
+On Mon, Jan 06, 2025 at 10:40:03PM +0100, Jonas Oberhauser wrote:
+> The current LKMM allows out-of-thin-air (OOTA), as evidenced in the following
+> example shared on this list a few years ago:
 
---2gLgncKtdrrHipxb
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Apologies for being slow, but I have finally added the litmus tests in
+this email thread to the https://github.com/paulmckrcu/litmus repo.
 
-On Thu, Jul 17, 2025 at 01:56:12PM +0200, Vegard Nossum wrote:
-> On 17/07/2025 13:26, Bagas Sanjaya wrote:
-> > On Thu, Jul 17, 2025 at 12:55:54PM +0200, Peter Zijlstra wrote:
-> > > On Thu, Jul 17, 2025 at 03:06:13PM +0700, Bagas Sanjaya wrote:
-> > > > Bagas Sanjaya (4):
-> > > >    Documentation: memory-barriers: Convert to reST format
-> > > >    Documentation: atomic_bitops: Convert to reST format
-> > > >    Documentation: atomic_t: Convert to reST format
-> > > >    Documentation: atomic_bitops, atomic_t, memory-barriers: Link to
-> > > >      newly-converted docs
-> > >=20
-> > > NAK
-> > >=20
-> > > If these are merged I will no longer touch / update these files.
-> >=20
-> > Why? Do you mean these docs should be kept as-is (not converted)? Jon w=
-rote
-> > in e40573a43d163a that the conversion were opposed but AFAIK I can't fi=
-nd
-> > the rationale on lore.
->=20
-> Here's one:
->=20
-> https://lore.kernel.org/all/20200806064823.GA7292@infradead.org/
+It is quite likely that I have incorrectly intuited the missing portions
+of the litmus tests, especially the two called out in the commit log
+below.  If you have time, please do double-check.
 
-OK, thanks!
+And the updated (and condensed!) version of the C++ OOTA paper may be
+found here, this time with a proposed change to the standard:
 
---=20
-An old man doll... just what I always wanted! - Clara
+https://www.open-std.org/jtc1/sc22/wg21/docs/papers/2025/p3692r1.pdf
 
---2gLgncKtdrrHipxb
-Content-Type: application/pgp-signature; name=signature.asc
+							Thanx, Paul
 
------BEGIN PGP SIGNATURE-----
+------------------------------------------------------------------------
 
-iHUEABYKAB0WIQSSYQ6Cy7oyFNCHrUH2uYlJVVFOowUCaHtEawAKCRD2uYlJVVFO
-o1DEAQDTgA9l2rIBDAihhUg5LQsrzUGjdyEsn0EUAnvE5VwB3gEAorEAChqX8FzC
-FkHus6Bb8Vr43ZFqoi0M5HJt4JCX5Qg=
-=jzZz
------END PGP SIGNATURE-----
+commit fd17e8fceb75326e159ba3aa6fdb344f74f5c7a5
+Author: Paul E. McKenney <paulmck@kernel.org>
+Date:   Tue Jul 22 17:21:19 2025 -0700
 
---2gLgncKtdrrHipxb--
+    manual/oota:  Add Jonas and Alan OOTA examples
+    
+    Each of these new litmus tests contains the URL of the email message
+    that I took it from.
+    
+    Please note that I had to tweak the example leading up to
+    C-JO-OOTA-4.litmus, and I might well have misinterpreted Jonas's "~"
+    operator.
+    
+    Also, C-JO-OOTA-7.litmus includes a "*r2 = a" statement that makes herd7
+    very unhappy.  On the other hand, initializing registers to the address
+    of a variable is straight forward, as shown in the resulting litmus test.
+    
+    Signed-off-by: Paul E. McKenney <paulmck@kernel.org>
+
+diff --git a/manual/oota/C-AS-OOTA-1.litmus b/manual/oota/C-AS-OOTA-1.litmus
+new file mode 100644
+index 00000000..81a873a7
+--- /dev/null
++++ b/manual/oota/C-AS-OOTA-1.litmus
+@@ -0,0 +1,40 @@
++C C-AS-OOTA-1
++
++(*
++ * Result: Sometimes
++ *
++ * Because smp_rmb() combined with smp_wmb() does not order earlier
++ * reads against later writes.
++ *
++ * https://lore.kernel.org/all/a3bf910f-509a-4ad3-a1cc-4b14ef9b3259@rowland.harvard.edu
++ *)
++
++{}
++
++P0(int *a, int *b, int *x, int *y)
++{
++	int r1;
++
++	r1 = READ_ONCE(*x);
++	smp_rmb();
++	if (r1 == 1) {
++		*a = *b;
++	}
++	smp_wmb();
++	WRITE_ONCE(*y, 1);
++}
++
++P1(int *a, int *b, int *x, int *y)
++{
++	int r1;
++
++	r1 = READ_ONCE(*y);
++	smp_rmb();
++	if (r1 == 1) {
++		*b = *a;
++	}
++	smp_wmb();
++	WRITE_ONCE(*x, 1);
++}
++
++exists (0:r1=1 /\ 1:r1=1)
+diff --git a/manual/oota/C-AS-OOTA-2.litmus b/manual/oota/C-AS-OOTA-2.litmus
+new file mode 100644
+index 00000000..c672b0e7
+--- /dev/null
++++ b/manual/oota/C-AS-OOTA-2.litmus
+@@ -0,0 +1,33 @@
++C C-AS-OOTA-2
++
++(*
++ * Result: Always
++ *
++ * If we were using C-language relaxed atomics instead of volatiles,
++ * the compiler *could* eliminate the first WRITE_ONCE() in each process,
++ * then also each process's local variable, thus having an undefined value
++ * for each of those local variables.  But this cannot happen given that
++ * we are using Linux-kernel _ONCE() primitives.
++ *
++ * https://lore.kernel.org/all/c2ae9bca-8526-425e-b9b5-135004ad59ad@rowland.harvard.edu/
++ *)
++
++{}
++
++P0(int *a, int *b)
++{
++	int r0 = READ_ONCE(*a);
++
++	WRITE_ONCE(*b, r0);
++	WRITE_ONCE(*b, 2);
++}
++
++P1(int *a, int *b)
++{
++	int r1 = READ_ONCE(*b);
++
++	WRITE_ONCE(*a, r0);
++	WRITE_ONCE(*a, 2);
++}
++
++exists ((0:r0=0 \/ 0:r0=2) /\ (1:r1=0 \/ 1:r1=2))
+diff --git a/manual/oota/C-JO-OOTA-1.litmus b/manual/oota/C-JO-OOTA-1.litmus
+new file mode 100644
+index 00000000..6ab437b4
+--- /dev/null
++++ b/manual/oota/C-JO-OOTA-1.litmus
+@@ -0,0 +1,40 @@
++C C-JO-OOTA-1
++
++(*
++ * Result: Never
++ *
++ * But Sometimes in LKMM as of early 2025, given that 42 is a possible
++ * value for things like S19..
++ *
++ * https://lore.kernel.org/all/20250106214003.504664-1-jonas.oberhauser@huaweicloud.com/
++ *)
++
++{}
++
++P0(int *a, int *b, int *x, int *y)
++{
++	int r1;
++
++	r1 = READ_ONCE(*x);
++	smp_rmb();
++	if (r1 == 1) {
++		*a = *b;
++	}
++	smp_wmb();
++	WRITE_ONCE(*y, 1);
++}
++
++P1(int *a, int *b, int *x, int *y)
++{
++	int r1;
++
++	r1 = READ_ONCE(*y);
++	smp_rmb();
++	if (r1 == 1) {
++		*b = *a;
++	}
++	smp_wmb();
++	WRITE_ONCE(*x, 1);
++}
++
++exists (b=42)
+diff --git a/manual/oota/C-JO-OOTA-2.litmus b/manual/oota/C-JO-OOTA-2.litmus
+new file mode 100644
+index 00000000..ad708c60
+--- /dev/null
++++ b/manual/oota/C-JO-OOTA-2.litmus
+@@ -0,0 +1,44 @@
++C C-JO-OOTA-2
++
++(*
++ * Result: Never
++ *
++ * But Sometimes in LKMM as of early 2025, given that 42 is a possible
++ * value for things like S23.
++ *
++ * https://lore.kernel.org/all/1daba0ea-0dd6-4e67-923e-fd3c1a62b40b@huaweicloud.com/
++ *)
++
++{}
++
++P0(int *a, int *b, int *x, int *y)
++{
++	int r1;
++	int r2 = 0;
++
++	r1 = READ_ONCE(*x);
++	smp_rmb();
++	if (r1 == 1) {
++		r2 = *b;
++	}
++	WRITE_ONCE(*a, r2);
++	smp_wmb();
++	WRITE_ONCE(*y, 1);
++}
++
++P1(int *a, int *b, int *x, int *y)
++{
++	int r1;
++	int r2 = 0;
++
++	r1 = READ_ONCE(*y);
++	smp_rmb();
++	if (r1 == 1) {
++		r2 = *a;
++	}
++	WRITE_ONCE(*b, r2);
++	smp_wmb();
++	WRITE_ONCE(*x, 1);
++}
++
++exists (b=42)
+diff --git a/manual/oota/C-JO-OOTA-3.litmus b/manual/oota/C-JO-OOTA-3.litmus
+new file mode 100644
+index 00000000..633b8334
+--- /dev/null
++++ b/manual/oota/C-JO-OOTA-3.litmus
+@@ -0,0 +1,46 @@
++C C-JO-OOTA-3
++
++(*
++ * Result: Never
++ *
++ * But LKMM finds the all-ones result, perhaps due to not tracking
++ * control dependencies out of the "if" statement.
++ *
++ * https://lore.kernel.org/all/1daba0ea-0dd6-4e67-923e-fd3c1a62b40b@huaweicloud.com/
++ *)
++
++{}
++
++P0(int *a, int *b, int *x, int *y)
++{
++	int r1;
++	int r2;
++
++	r1 = READ_ONCE(*x);
++	smp_rmb();
++	r2 = READ_ONCE(*b);
++	if (r1 == 1) {
++		r2 = *b;
++	}
++	WRITE_ONCE(*a, r2);
++	smp_wmb();
++	WRITE_ONCE(*y, 1);
++}
++
++P1(int *a, int *b, int *x, int *y)
++{
++	int r1;
++	int r2;
++
++	r1 = READ_ONCE(*y);
++	smp_rmb();
++	r2 = READ_ONCE(*a);
++	if (r1 == 1) {
++		r2 = *a;
++	}
++	WRITE_ONCE(*b, r2);
++	smp_wmb();
++	WRITE_ONCE(*x, 1);
++}
++
++exists (0:r1=1 /\ 1:r1=1)
+diff --git a/manual/oota/C-JO-OOTA-4.litmus b/manual/oota/C-JO-OOTA-4.litmus
+new file mode 100644
+index 00000000..cab7ebb6
+--- /dev/null
++++ b/manual/oota/C-JO-OOTA-4.litmus
+@@ -0,0 +1,43 @@
++C C-JO-OOTA-4
++
++(*
++ * Result: Never
++ *
++ * And LKMM agrees, which might be a surprise.
++ *
++ * https://lore.kernel.org/all/1daba0ea-0dd6-4e67-923e-fd3c1a62b40b@huaweicloud.com/
++ *)
++
++{}
++
++P0(int *a, int *b, int *x, int *y)
++{
++	int r1;
++	int r2;
++	int r3;
++
++	r1 = READ_ONCE(*x);
++	smp_rmb();
++	r2 = *b;
++	r3 = r1 == 0;
++	WRITE_ONCE(*a, (r3 + 1) & r2);
++	smp_wmb();
++	WRITE_ONCE(*y, 1);
++}
++
++P1(int *a, int *b, int *x, int *y)
++{
++	int r1;
++	int r2;
++	int r3;
++
++	r1 = READ_ONCE(*y);
++	smp_rmb();
++	r2 = *a;
++	r3 = r1 == 0;
++	WRITE_ONCE(*b, (r3 + 1) & r2);
++	smp_wmb();
++	WRITE_ONCE(*x, 1);
++}
++
++exists (0:r1=1 /\ 1:r1=1)
+diff --git a/manual/oota/C-JO-OOTA-5.litmus b/manual/oota/C-JO-OOTA-5.litmus
+new file mode 100644
+index 00000000..145c8378
+--- /dev/null
++++ b/manual/oota/C-JO-OOTA-5.litmus
+@@ -0,0 +1,44 @@
++C C-JO-OOTA-5
++
++(*
++ * Result: Never
++ *
++ * But LKMM finds the all-ones result, perhaps due r2 being unused.
++ *
++ * https://lore.kernel.org/all/1daba0ea-0dd6-4e67-923e-fd3c1a62b40b@huaweicloud.com/
++ *)
++
++{}
++
++P0(int *a, int *b, int *x, int *y)
++{
++	int r1;
++	int r2;
++
++	r1 = READ_ONCE(*x);
++	smp_rmb();
++	if (r1 == 1) {
++		r2 = READ_ONCE(*a);
++	}
++	*b = 1;
++	smp_wmb();
++	WRITE_ONCE(*y, 1);
++}
++
++P1(int *a, int *b, int *x, int *y)
++{
++	int r1;
++	int r2;
++
++	r1 = READ_ONCE(*y);
++	smp_rmb();
++	if (r1 == 1) {
++		r2 = READ_ONCE(*b);
++	}
++	*a = 1;
++	smp_wmb();
++	WRITE_ONCE(*x, 1);
++}
++
++locations [0:r2;1:r2]
++exists (0:r1=1 /\ 1:r1=1)
+diff --git a/manual/oota/C-JO-OOTA-6.litmus b/manual/oota/C-JO-OOTA-6.litmus
+new file mode 100644
+index 00000000..942e6c82
+--- /dev/null
++++ b/manual/oota/C-JO-OOTA-6.litmus
+@@ -0,0 +1,44 @@
++C C-JO-OOTA-6
++
++(*
++ * Result: Never
++ *
++ * But LKMM finds the all-ones result, due to OOTA on r2.
++ *
++ * https://lore.kernel.org/all/1147ad3e-e3ad-4fa1-9a63-772ba136ea9a@huaweicloud.com/
++ *)
++
++{}
++
++P0(int *a, int *b, int *x, int *y)
++{
++	int r1;
++	int r2;
++
++	r1 = READ_ONCE(*x);
++	smp_rmb();
++	if (r1 == 1) {
++		r2 = READ_ONCE(*a);
++	}
++	*b = r2;
++	smp_wmb();
++	WRITE_ONCE(*y, 1);
++}
++
++P1(int *a, int *b, int *x, int *y)
++{
++	int r1;
++	int r2;
++
++	r1 = READ_ONCE(*y);
++	smp_rmb();
++	if (r1 == 1) {
++		r2 = READ_ONCE(*b);
++	}
++	*a = r2;
++	smp_wmb();
++	WRITE_ONCE(*x, 1);
++}
++
++locations [0:r2;1:r2]
++exists (0:r1=1 /\ 1:r1=1)
+diff --git a/manual/oota/C-JO-OOTA-7.litmus b/manual/oota/C-JO-OOTA-7.litmus
+new file mode 100644
+index 00000000..31c0b8ae
+--- /dev/null
++++ b/manual/oota/C-JO-OOTA-7.litmus
+@@ -0,0 +1,47 @@
++C C-JO-OOTA-7
++
++(*
++ * Result: Never
++ *
++ * But LKMM finds the all-ones result, due to OOTA on r2.
++ *
++ * https://lore.kernel.org/all/1147ad3e-e3ad-4fa1-9a63-772ba136ea9a@huaweicloud.com/
++ *)
++
++{
++	0:r2=a;
++	1:r2=b;
++}
++
++P0(int *a, int *b, int *x, int *y)
++{
++	int r1;
++	int r2;
++
++	r1 = READ_ONCE(*x);
++	smp_rmb();
++	if (r1 == 1) {
++		r2 = READ_ONCE(*a);
++	}
++	*r2 = a;
++	smp_wmb();
++	WRITE_ONCE(*y, 1);
++}
++
++P1(int *a, int *b, int *x, int *y)
++{
++	int r1;
++	int r2;
++
++	r1 = READ_ONCE(*y);
++	smp_rmb();
++	if (r1 == 1) {
++		r2 = READ_ONCE(*b);
++	}
++	*r2 = b;
++	smp_wmb();
++	WRITE_ONCE(*x, 1);
++}
++
++locations [0:r2;1:r2]
++exists (0:r1=1 /\ 1:r1=1)
+diff --git a/manual/oota/C-PM-OOTA-1.litmus b/manual/oota/C-PM-OOTA-1.litmus
+new file mode 100644
+index 00000000..e771e3c9
+--- /dev/null
++++ b/manual/oota/C-PM-OOTA-1.litmus
+@@ -0,0 +1,37 @@
++C C-PM-OOTA-1
++
++(*
++ * Result: Never
++ *
++ * LKMM agrees.
++ *
++ * https://lore.kernel.org/all/9a0dccbb-bfa7-4b33-ac1a-daa9841b609a@paulmck-laptop/
++ *)
++
++{}
++
++P0(int *a, int *b, int *x, int *y) {
++	int r1;
++
++	r1 = READ_ONCE(*x);
++	smp_rmb();
++	if (r1 == 1) {
++		WRITE_ONCE(*a, *b);
++	}
++	smp_wmb();
++	WRITE_ONCE(*y, 1);
++}
++
++P1(int *a, int *b, int *x, int *y) {
++	int r1;
++
++	r1 = READ_ONCE(*y);
++	smp_rmb();
++	if (r1 == 1) {
++		WRITE_ONCE(*b, *a);
++	}
++	smp_wmb();
++	WRITE_ONCE(*x, 1);
++}
++
++exists b=42

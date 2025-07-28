@@ -1,34 +1,34 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C17192741C2;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D557A27465B;
 	Mon, 28 Jul 2025 16:02:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753718542; cv=none; b=Jj8ocLNtAeJurhFXDF3CXHskg1ETeGYQQPZbLkAHvw3TaB7i1vcDs1aaM0o4nZi5Ztsj+Kx7FDXrbrDvMzG/gLZ4GoBYBDBvRRnogPKEb2LQkyAAXhmdUZzS7re0iQgUKYalgp5HD9yLp6h6VZXwbJ3O3at018JkKsKc5dMKZIc=
+	t=1753718543; cv=none; b=BchIJpoA/G0m9B8vuNI8e82tlhckkJAm94+L5ExK8SRRY2yM+4JP/VlW0UvqH8x4xB2W52vi75ORA+9FL/Nb/C5Xs9r/NraXYyD99USu0Wnobk11ut9srV9yImns0XWMuSL0HZhmjqMtJXRjCJng+W5LHCflHEaMlgk/JJBN/ME=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753718542; c=relaxed/simple;
-	bh=/8GKUg/hE6EZzmvBGeqtvN5XqiYkoQRfu9Nd+64B7DM=;
+	s=arc-20240116; t=1753718543; c=relaxed/simple;
+	bh=jowhmr+KipOArxfk6mh3f69ZIZNViQ4HOjhtbsGep+s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TTfucKgjp/swqIuxjgXHtLvewWtA3VL0GYngopJOiZq04XVyjlwqbll0nts8bXl0twNxX0ZifVCEg1acFk4UpT+eEzrxTih/aeAG9+eTtWRDw4R+2hbKTn/JDx12AxhJZpe0/N6/wq2nEXN1Dppi+iPqUKUe3aJ/Mrg9u8dWNCI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dXJSLu6L; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eHA9ZPtSWcM4XhuN1n0RaKLLWm+EZVy9M++R1yYorbcWEKv7US4XBypaTodqovVQlNVSVMFSJhkAXLDDM0XY6Z266CCi5yOn0ASi+lHdXh19vY/bSj6MNDl51zHqsjm2Zd2x/5o2OUv3thpItM/by0AtfJdLTcKhAOQ7Vb20htM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Y/LjokCZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dXJSLu6L"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3865DC2BC87;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Y/LjokCZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A807C4CEFC;
 	Mon, 28 Jul 2025 16:02:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1753718542;
-	bh=/8GKUg/hE6EZzmvBGeqtvN5XqiYkoQRfu9Nd+64B7DM=;
+	bh=jowhmr+KipOArxfk6mh3f69ZIZNViQ4HOjhtbsGep+s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dXJSLu6LcGij5t1mTm16tztOBw7o78gJBAacpUCeCkX6tUKYT4GjlZbIzWHYIpUAA
-	 nybwD/1FjADUS3DODns7P1MwMwuNDLtfFUtEh7Pnb4x/7fuSuALk2TGQm2NeUQpcWw
-	 Luh6NXdK1ZOMYxEO+7ysOe5/31dh2Uqg6KIjKSQ8iLh86trwXhKn04WxbN0mddq3Ki
-	 abs3u2qVI4gmcWQtbOgxvAgvYWOxZHOsW4eAJSfTrBOObqABB+T856ZOHXKEpr1Vk1
-	 rpPXEhmijg6lyDz4ovQUpueDQwWDPpKBIxoQ8itWmURbtTHmEmtciwSAQ2OWG0PUF4
-	 +aMJypVaoo1wQ==
+	b=Y/LjokCZoaE0bTjy1GzZOIxDi/El7KW7GD1BZOOPvLVTmquFM7ghBX82fm9UxsSHB
+	 WxNo7Ub4lyC19v5QrUkDqtAOAO9DWFPSpLkCLOrYIGKsxdpzUfvWFjVr0r3bp6J5vR
+	 MulQfzHyc2/aVUdkLRPkHpICanVh0MylAiPo8srsmeYq04nCV+OfRw4BomQL7GNIyN
+	 jtuR3HcFkMYrf+sSWH3o1KBUw5wQ4mXbVcf6B9dHVH8xv8n1qiyGS7wes9a/DptaWH
+	 GBDTNHA3Hdls71vTXs29fHFd6XCPxM7MtCsm/gu2xptvrGegaC4brgjtvTaZp4ATsO
+	 Eq5A+9zV61XLA==
 Received: from mchehab by mail.kernel.org with local (Exim 4.98.2)
 	(envelope-from <mchehab@kernel.org>)
-	id 1ugQIq-00000000GdH-2IKi;
+	id 1ugQIq-00000000Gd2-1l9X;
 	Mon, 28 Jul 2025 18:02:16 +0200
 From: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 To: "Message-ID :" <cover.1752076293.git.mchehab+huawei@kernel.org>,
@@ -56,9 +56,9 @@ Cc: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
 	netdev@vger.kernel.org,
 	peterz@infradead.org,
 	stern@rowland.harvard.edu
-Subject: [PATCH v10 13/14] docs: parser_yaml.py: fix backward compatibility with old docutils
-Date: Mon, 28 Jul 2025 18:02:06 +0200
-Message-ID: <9715e41c91302e2b8a9baf349903f3fcff726295.1753718185.git.mchehab+huawei@kernel.org>
+Subject: [PATCH v10 08/14] tools: ynl_gen_rst.py: drop support for generating index files
+Date: Mon, 28 Jul 2025 18:02:01 +0200
+Message-ID: <051ddbdd5b0c77126bc391c97014ae6b18bc4b82.1753718185.git.mchehab+huawei@kernel.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <cover.1753718185.git.mchehab+huawei@kernel.org>
 References: <cover.1753718185.git.mchehab+huawei@kernel.org>
@@ -71,33 +71,68 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Sender: Mauro Carvalho Chehab <mchehab@kernel.org>
 
-As reported by Akira, older docutils versions are not compatible
-with the way some Sphinx versions send tab_width. Add a code to
-address it.
+As we're now using an index file with a glob, there's no need
+to generate index files anymore.
 
-Reported-by: Akira Yokosawa <akiyks@gmail.com>
-Closes: https://lore.kernel.org/linux-doc/598b2cb7-2fd7-4388-96ba-2ddf0ab55d2a@gmail.com/
-Tested-by: Akira Yokosawa <akiyks@gmail.com>
 Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+Reviewed-by: Donald Hunter <donald.hunter@gmail.com>
 ---
- Documentation/sphinx/parser_yaml.py | 4 ++++
- 1 file changed, 4 insertions(+)
+ tools/net/ynl/pyynl/ynl_gen_rst.py | 28 ----------------------------
+ 1 file changed, 28 deletions(-)
 
-diff --git a/Documentation/sphinx/parser_yaml.py b/Documentation/sphinx/parser_yaml.py
-index 8288e2ff7c7c..1602b31f448e 100755
---- a/Documentation/sphinx/parser_yaml.py
-+++ b/Documentation/sphinx/parser_yaml.py
-@@ -77,6 +77,10 @@ class YamlParser(Parser):
+diff --git a/tools/net/ynl/pyynl/ynl_gen_rst.py b/tools/net/ynl/pyynl/ynl_gen_rst.py
+index 010315fad498..90ae19aac89d 100755
+--- a/tools/net/ynl/pyynl/ynl_gen_rst.py
++++ b/tools/net/ynl/pyynl/ynl_gen_rst.py
+@@ -31,9 +31,6 @@ def parse_arguments() -> argparse.Namespace:
  
-                 result.append(line, document.current_source, lineoffset)
+     # Index and input are mutually exclusive
+     group = parser.add_mutually_exclusive_group()
+-    group.add_argument(
+-        "-x", "--index", action="store_true", help="Generate the index page"
+-    )
+     group.add_argument("-i", "--input", help="YAML file name")
  
-+            # Fix backward compatibility with docutils < 0.17.1
-+            if "tab_width" not in vars(document.settings):
-+                document.settings.tab_width = 8
-+
-             rst_parser = RSTParser()
-             rst_parser.parse('\n'.join(result), document)
+     args = parser.parse_args()
+@@ -63,27 +60,6 @@ def write_to_rstfile(content: str, filename: str) -> None:
+         rst_file.write(content)
  
+ 
+-def generate_main_index_rst(parser: YnlDocGenerator, output: str) -> None:
+-    """Generate the `networking_spec/index` content and write to the file"""
+-    lines = []
+-
+-    lines.append(parser.fmt.rst_header())
+-    lines.append(parser.fmt.rst_label("specs"))
+-    lines.append(parser.fmt.rst_title("Netlink Family Specifications"))
+-    lines.append(parser.fmt.rst_toctree(1))
+-
+-    index_dir = os.path.dirname(output)
+-    logging.debug("Looking for .rst files in %s", index_dir)
+-    for filename in sorted(os.listdir(index_dir)):
+-        base, ext = os.path.splitext(filename)
+-        if filename == "index.rst" or ext not in [".rst", ".yaml"]:
+-            continue
+-        lines.append(f"   {base}\n")
+-
+-    logging.debug("Writing an index file at %s", output)
+-    write_to_rstfile("".join(lines), output)
+-
+-
+ def main() -> None:
+     """Main function that reads the YAML files and generates the RST files"""
+ 
+@@ -102,10 +78,6 @@ def main() -> None:
+ 
+         write_to_rstfile(content, args.output)
+ 
+-    if args.index:
+-        # Generate the index RST file
+-        generate_main_index_rst(parser, args.output)
+-
+ 
+ if __name__ == "__main__":
+     main()
 -- 
 2.49.0
 

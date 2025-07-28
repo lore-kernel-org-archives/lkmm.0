@@ -1,34 +1,34 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB8EA27466A;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD0B227466F;
 	Mon, 28 Jul 2025 16:02:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753718543; cv=none; b=pI5wmgkPvvDCs9q6SyzH7fXNF3U0uklutnkBvhcA0LvRN6gqZLPZlmVsmbnqhnY2f7kTy8AmoO8YeXEUGVumzaF+9MeT2LpQ1bRJJK0PfjXIBDVSkAECg/6LeHuve/qgxjaLA3P5dmIB9J9WHce9CTBJvmAB/ua3HHH5WSGYZ+M=
+	t=1753718543; cv=none; b=qjIVlX0XQnL8D6y8yzgUjg9ciTQFvtE372viMxmDafn6peiuA0n3fDDAgJaqYfTx1iv3TuHQEctEFdR8DjYdyaqyGFqEGVgZaeeAxKDkcgfPcE61nXJiD4b33tkI0WChmBJCGCzHXit6ercFPkrpSwydAEG+vpyvGa4gpApxqGA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1753718543; c=relaxed/simple;
-	bh=otVjsBKFUHYlcqJjnUpXdq/CVdL2g8H+2Ln8zBoihTA=;
+	bh=gCUujhjF05O4bN0j1mBzTOE2gqunIOFmC86Oe+w0BHo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RQkV7tlxfWp9N888CnllH6CgwdT6WB3K7qpXoLfMs4Ooiv/6LHHLqof3z/rIyLWjAiazjURNdRKakmCi/WDo7aJ1EfKXr32LeFCGp1TbjCxnoIuOGtkRio2O1YTkWJtK0H5GL8KFQQlK7JPCpRp566cMysVo9MKY2v//9zL9rzE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=hviABLWC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WCgZs1LcmDE6pYGAcwEVaURJBdzZ+EDynrHY0XytTvVpnOAE9IIeagxAa+RbY2R6sgzLk9Zhx6y4uLp5NN550Rl6+Xuswp2YjG5sk2sG1pWc/imtSMJOXxF5qextMT1ZN1JuWj0ENP+jl6PhypWqmRLKoIN0Ff1rIPr/Enp3N0w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=MhyUot7d; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="hviABLWC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C575C2BC9E;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="MhyUot7d"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 288D8C19421;
 	Mon, 28 Jul 2025 16:02:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1753718542;
-	bh=otVjsBKFUHYlcqJjnUpXdq/CVdL2g8H+2Ln8zBoihTA=;
+	bh=gCUujhjF05O4bN0j1mBzTOE2gqunIOFmC86Oe+w0BHo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hviABLWC3B52o465dGrJRSUARhJjIIcXjrDVvjfZ9P7qdrnp8t/+baZ0QPKmAEDFr
-	 RADNjM8I866j6YAahmRBkX+ZCgc6jqPh03WbwZbkNjrnDOQg8FV948eJf/gsom88wQ
-	 LTOrrvR8UfyH0XIODexiVGhv8wJGUTnRvKfLfIEI4eXseGdyXWI/4FmgM4SOeSx5Mp
-	 JqXZVnF8rN/9ufxg6q1qhyqFCyMe24khFdrw49s56BhcUqIFUwHmPHIMW4K5m9SCB9
-	 dfq6G7sms29QlNY/GRwt1FIg98J6p74cmI9FkFGkcaXxCenqYCTZOazYUmmGR/z04w
-	 GI+oNKvug0hDg==
+	b=MhyUot7diHCj3qYbkq7B/N+cAWFftX02PcIh1z4wUmKdBmpPjG84d2W8JWsXEovXT
+	 /EddXGkmVpD+4JSBkblik2RjwSL4k1RUq11DLRxFKVKqgslhZpKjOPb0JmiSr2o0DL
+	 WXvZ+ycdfqbtw/YUnJInsEH41vfURuM7r8VtEpB647nPUI+Ut0hTVPrEtsMC8wBeU7
+	 xLGG4DZJ5SHyiYgBSfbfUvlyG7PQK5vM8yegV+BZ9SQxBhrqWuozamdOmjjro0Wn6Q
+	 7K7tw73Z9fjY1x2GtqbEJ8cmSI5ZBV6U30xIscIOWtj6shFR6z61/nbzh1a5QYsTnc
+	 +qLBeA5CISELQ==
 Received: from mchehab by mail.kernel.org with local (Exim 4.98.2)
 	(envelope-from <mchehab@kernel.org>)
-	id 1ugQIq-00000000GdE-2C4A;
+	id 1ugQIq-00000000Gcz-1eY4;
 	Mon, 28 Jul 2025 18:02:16 +0200
 From: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 To: "Message-ID :" <cover.1752076293.git.mchehab+huawei@kernel.org>,
@@ -56,9 +56,9 @@ Cc: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
 	netdev@vger.kernel.org,
 	peterz@infradead.org,
 	stern@rowland.harvard.edu
-Subject: [PATCH v10 12/14] docs: parser_yaml.py: add support for line numbers from the parser
-Date: Mon, 28 Jul 2025 18:02:05 +0200
-Message-ID: <cd076f2569155e2f8787cc05038f3c91595a4924.1753718185.git.mchehab+huawei@kernel.org>
+Subject: [PATCH v10 07/14] docs: uapi: netlink: update netlink specs link
+Date: Mon, 28 Jul 2025 18:02:00 +0200
+Message-ID: <ebe56a5bf949d0173d9103dcfceccc05a47da247.1753718185.git.mchehab+huawei@kernel.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <cover.1753718185.git.mchehab+huawei@kernel.org>
 References: <cover.1753718185.git.mchehab+huawei@kernel.org>
@@ -71,111 +71,42 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Sender: Mauro Carvalho Chehab <mchehab@kernel.org>
 
-Instead of printing line numbers from the temp converted ReST
-file, get them from the original source.
+With the recent parser_yaml extension, and the removal of the
+auto-generated ReST source files, the location of netlink
+specs changed.
+
+Update uAPI accordingly.
 
 Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+Reviewed-by: Donald Hunter <donald.hunter@gmail.com>
 ---
- Documentation/sphinx/parser_yaml.py      | 12 ++++++++++--
- tools/net/ynl/pyynl/lib/doc_generator.py | 16 ++++++++++++----
- 2 files changed, 22 insertions(+), 6 deletions(-)
+ Documentation/userspace-api/netlink/index.rst | 2 +-
+ Documentation/userspace-api/netlink/specs.rst | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/Documentation/sphinx/parser_yaml.py b/Documentation/sphinx/parser_yaml.py
-index fa2e6da17617..8288e2ff7c7c 100755
---- a/Documentation/sphinx/parser_yaml.py
-+++ b/Documentation/sphinx/parser_yaml.py
-@@ -54,6 +54,8 @@ class YamlParser(Parser):
+diff --git a/Documentation/userspace-api/netlink/index.rst b/Documentation/userspace-api/netlink/index.rst
+index c1b6765cc963..83ae25066591 100644
+--- a/Documentation/userspace-api/netlink/index.rst
++++ b/Documentation/userspace-api/netlink/index.rst
+@@ -18,4 +18,4 @@ Netlink documentation for users.
  
-     netlink_parser = YnlDocGenerator()
+ See also:
+  - :ref:`Documentation/core-api/netlink.rst <kernel_netlink>`
+- - :ref:`Documentation/networking/netlink_spec/index.rst <specs>`
++ - :ref:`Documentation/netlink/specs/index.rst <specs>`
+diff --git a/Documentation/userspace-api/netlink/specs.rst b/Documentation/userspace-api/netlink/specs.rst
+index 1b50d97d8d7c..debb4bfca5c4 100644
+--- a/Documentation/userspace-api/netlink/specs.rst
++++ b/Documentation/userspace-api/netlink/specs.rst
+@@ -15,7 +15,7 @@ kernel headers directly.
+ Internally kernel uses the YAML specs to generate:
  
-+    re_lineno = re.compile(r"\.\. LINENO ([0-9]+)$")
-+
-     def rst_parse(self, inputstring, document, msg):
-         """
-         Receives a ReST content that was previously converted by the
-@@ -66,8 +68,14 @@ class YamlParser(Parser):
+  - the C uAPI header
+- - documentation of the protocol as a ReST file - see :ref:`Documentation/networking/netlink_spec/index.rst <specs>`
++ - documentation of the protocol as a ReST file - see :ref:`Documentation/netlink/specs/index.rst <specs>`
+  - policy tables for input attribute validation
+  - operation tables
  
-         try:
-             # Parse message with RSTParser
--            for i, line in enumerate(msg.split('\n')):
--                result.append(line, document.current_source, i)
-+            lineoffset = 0;
-+            for line in msg.split('\n'):
-+                match = self.re_lineno.match(line)
-+                if match:
-+                    lineoffset = int(match.group(1))
-+                    continue
-+
-+                result.append(line, document.current_source, lineoffset)
- 
-             rst_parser = RSTParser()
-             rst_parser.parse('\n'.join(result), document)
-diff --git a/tools/net/ynl/pyynl/lib/doc_generator.py b/tools/net/ynl/pyynl/lib/doc_generator.py
-index 658759a527a6..403abf1a2eda 100644
---- a/tools/net/ynl/pyynl/lib/doc_generator.py
-+++ b/tools/net/ynl/pyynl/lib/doc_generator.py
-@@ -158,9 +158,11 @@ class YnlDocGenerator:
-     def parse_do(self, do_dict: Dict[str, Any], level: int = 0) -> str:
-         """Parse 'do' section and return a formatted string"""
-         lines = []
-+        if LINE_STR in do_dict:
-+            lines.append(self.fmt.rst_lineno(do_dict[LINE_STR]))
-+
-         for key in do_dict.keys():
-             if key == LINE_STR:
--                lines.append(self.fmt.rst_lineno(do_dict[key]))
-                 continue
-             lines.append(self.fmt.rst_paragraph(self.fmt.bold(key), level + 1))
-             if key in ['request', 'reply']:
-@@ -187,13 +189,15 @@ class YnlDocGenerator:
-         lines = []
- 
-         for operation in operations:
-+            if LINE_STR in operation:
-+                lines.append(self.fmt.rst_lineno(operation[LINE_STR]))
-+
-             lines.append(self.fmt.rst_section(namespace, 'operation',
-                                               operation["name"]))
-             lines.append(self.fmt.rst_paragraph(operation["doc"]) + "\n")
- 
-             for key in operation.keys():
-                 if key == LINE_STR:
--                    lines.append(self.fmt.rst_lineno(operation[key]))
-                     continue
- 
-                 if key in preprocessed:
-@@ -253,10 +257,12 @@ class YnlDocGenerator:
-         lines = []
- 
-         for definition in defs:
-+            if LINE_STR in definition:
-+                lines.append(self.fmt.rst_lineno(definition[LINE_STR]))
-+
-             lines.append(self.fmt.rst_section(namespace, 'definition', definition["name"]))
-             for k in definition.keys():
-                 if k == LINE_STR:
--                    lines.append(self.fmt.rst_lineno(definition[k]))
-                     continue
-                 if k in preprocessed + ignored:
-                     continue
-@@ -284,6 +290,9 @@ class YnlDocGenerator:
-             lines.append(self.fmt.rst_section(namespace, 'attribute-set',
-                                               entry["name"]))
-             for attr in entry["attributes"]:
-+                if LINE_STR in attr:
-+                    lines.append(self.fmt.rst_lineno(attr[LINE_STR]))
-+
-                 type_ = attr.get("type")
-                 attr_line = attr["name"]
-                 if type_:
-@@ -294,7 +303,6 @@ class YnlDocGenerator:
- 
-                 for k in attr.keys():
-                     if k == LINE_STR:
--                        lines.append(self.fmt.rst_lineno(attr[k]))
-                         continue
-                     if k in preprocessed + ignored:
-                         continue
 -- 
 2.49.0
 

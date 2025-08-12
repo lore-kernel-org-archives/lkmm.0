@@ -1,138 +1,102 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67E8A182B4;
-	Tue, 12 Aug 2025 08:04:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F21C2E8DEF;
+	Tue, 12 Aug 2025 09:29:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754985860; cv=none; b=qFDVzfsAjTHRnukfEnZw/Uw/ceNlbZw77dB3XmACHSqBRwEfpEIXb/93Of0DaZeSLKBq+Aza8xMUc3iupxMoRvym27oOhY+1W/7lFcHEncEi6EGGgCFnNeAnpRpfomTNTCRryZYRWV8/FFOyAXBOH2DwRDreSoCsCbD3S3kLfTY=
+	t=1754990999; cv=none; b=JvDCsns3Rb+ZeU5UUeJoq4ZufduC/nA4YR1Zo9p7zBCciqViFjlU54QI2KKTuO36e/Z66jSFMWbF0P7+ANDQW8sH2PPBA52SS6dSVvO0Ph//X5SLwUfxMmmHpIZM+fp1W+81ROC2fHiC4Jt/fvBPJeKrlwqx4aKktjaxJKIVrNs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754985860; c=relaxed/simple;
-	bh=CmsqAWCDgpYx/WtLNPYOAeyzDquaNc5otZlS8cdWDtI=;
-	h=Mime-Version:Content-Type:Date:Message-Id:Subject:From:To:Cc:
-	 References:In-Reply-To; b=DfTNfXwCj2I56iqz0zXDad3eC8k8uHlOD1wtITNk/MREmHSfjkPcqaLuT2OzdWgvJ8jbJXv4oBSGY7UL8GVCFmrCIvd+vSNMDp+BXa7pBFmOgtW/Qo8r6F9/tOUuCWeXfb+dCUH0VT2pp+KfePgYJIVpKXKsOebVgUoRRg4qnDI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=SY8TMvAb; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1754990999; c=relaxed/simple;
+	bh=cl13ks3RMDMRkenBirnwLiT2Adt0+X+IQNuEJFe/zlk=;
+	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=rMn2IsxzLTKlISGFsPvKgWad7NXOO4iR6j3rZqVHdLoKV8HCYl0KNfxTIJOlu5R/okGvBSfrAddro3XCJvgym89Uxjy3+v1BsrPxgayANIzMmxVLw1iuMSb+gnDSae7aKYKyMqjMGndHLMjWII6Spsut5wbJC+mwaQ3nVhKZJRc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=MvfpCxXs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="SY8TMvAb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30A69C4CEF0;
-	Tue, 12 Aug 2025 08:04:14 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="MvfpCxXs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63DBAC4CEF0;
+	Tue, 12 Aug 2025 09:29:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1754985858;
-	bh=CmsqAWCDgpYx/WtLNPYOAeyzDquaNc5otZlS8cdWDtI=;
-	h=Date:Subject:From:To:Cc:References:In-Reply-To:From;
-	b=SY8TMvAbvChDBZi6AmEP32jwY8okHVwKfZXk1d4NqMlhvmgZO6MpTGRKhzsuzKpoH
-	 Jm4p4JbZjnzRu4RdkDL15DrstzfmVzePw3hv9RjH0zAic/xiPKABAu8Y1jcW7GD65v
-	 S5LVBQCDAgJxd88xB5QR9stlfm9GFLt+ZDdI3gUcrTJl1giQ4lo2R7fvptUieWjCS7
-	 uUGJi8hJWqL57TfUe4V4WvvVy7gG+NsEanQzkesfWl27YeKXXwfC6ybZiZ7/29fdDK
-	 VQvmdlBjg8d6WNXN5MAUpCuCe454wuYyyaawzUEstRcxu/A8rhJ9wpdMVTpkxUH/xp
-	 ZpsALwl3cVr7w==
+	s=k20201202; t=1754990998;
+	bh=cl13ks3RMDMRkenBirnwLiT2Adt0+X+IQNuEJFe/zlk=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+	b=MvfpCxXspMYE27SmyghqGuBXQlOP4OBMm4AUikjzBeTJqd8Rzo79mARKyhtBiWej/
+	 Lc+6ZwZkG4JSSIEXGWW1dQ92lVtiLc7hM/I7Yqb16MnEgOwOi8oSqZEGcmkCYCewhL
+	 2qrcznGaUHYmY0qpS8xfTRWx1yt/n0oiKsX/byfrxkgzGM4j6UNCCe60QpCQkZOigQ
+	 3qIFKlMYjOqWsPFGFxU6uw5RFUwXlDmXeJzLTbhXJYedsvF96cH4QiHbV1/Z1l/tJb
+	 IlkV2E5Mcn5djqW/CzLHlxqBIYvC7GOXNVQkIWBfRSEDzhhnjE3fGUySydT81mH7Yq
+	 LWqYpnVzcgHSQ==
+Date: Tue, 12 Aug 2025 11:29:50 +0200
+From: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+To: Jakub Kicinski <kuba@kernel.org>
+Cc: Jonathan Corbet <corbet@lwn.net>, Linux Doc Mailing List
+ <linux-doc@vger.kernel.org>, linux-kernel@vger.kernel.org, Akira Yokosawa
+ <akiyks@gmail.com>, "David S. Miller" <davem@davemloft.net>, Ignacio
+ Encinas Rubio <ignacio@iencinas.com>, Marco Elver <elver@google.com>, Shuah
+ Khan <skhan@linuxfoundation.org>, Donald Hunter <donald.hunter@gmail.com>,
+ Eric Dumazet <edumazet@google.com>, Jan Stancek <jstancek@redhat.com>,
+ Paolo Abeni <pabeni@redhat.com>, Ruben Wauters <rubenru09@aol.com>,
+ joel@joelfernandes.org, linux-kernel-mentees@lists.linux.dev,
+ lkmm@lists.linux.dev, netdev@vger.kernel.org, peterz@infradead.org,
+ stern@rowland.harvard.edu, Breno Leitao <leitao@debian.org>, Randy Dunlap
+ <rdunlap@infradead.org>, Simon Horman <horms@kernel.org>
+Subject: Re: [PATCH v10 00/14] Don't generate netlink .rst files inside
+ $(srctree)
+Message-ID: <20250812112950.0de576fc@foz.lan>
+In-Reply-To: <20250811175648.04ccd9de@kernel.org>
+References: <cover.1753718185.git.mchehab+huawei@kernel.org>
+	<87ms85daya.fsf@trenco.lwn.net>
+	<20250811175648.04ccd9de@kernel.org>
+X-Mailer: Claws Mail 4.3.1 (GTK 3.24.49; x86_64-redhat-linux-gnu)
 Precedence: bulk
 X-Mailing-List: lkmm@lists.linux.dev
 List-Id: <lkmm.lists.linux.dev>
 List-Subscribe: <mailto:lkmm+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:lkmm+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Tue, 12 Aug 2025 10:04:12 +0200
-Message-Id: <DC0AKAL1LW84.MR2RFTMX1H61@kernel.org>
-Subject: Re: [PATCH v8 6/9] rust: sync: atomic: Add the framework of
- arithmetic operations
-From: "Benno Lossin" <lossin@kernel.org>
-To: "Boqun Feng" <boqun.feng@gmail.com>, <linux-kernel@vger.kernel.org>,
- <rust-for-linux@vger.kernel.org>, <lkmm@lists.linux.dev>,
- <linux-arch@vger.kernel.org>
-Cc: "Miguel Ojeda" <ojeda@kernel.org>, "Alex Gaynor"
- <alex.gaynor@gmail.com>, "Gary Guo" <gary@garyguo.net>,
- =?utf-8?q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, "Andreas
- Hindborg" <a.hindborg@kernel.org>, "Alice Ryhl" <aliceryhl@google.com>,
- "Trevor Gross" <tmgross@umich.edu>, "Danilo Krummrich" <dakr@kernel.org>,
- "Will Deacon" <will@kernel.org>, "Peter Zijlstra" <peterz@infradead.org>,
- "Mark Rutland" <mark.rutland@arm.com>, "Wedson Almeida Filho"
- <wedsonaf@gmail.com>, "Viresh Kumar" <viresh.kumar@linaro.org>, "Lyude
- Paul" <lyude@redhat.com>, "Ingo Molnar" <mingo@kernel.org>, "Mitchell Levy"
- <levymitchell0@gmail.com>, "Paul E. McKenney" <paulmck@kernel.org>, "Greg
- Kroah-Hartman" <gregkh@linuxfoundation.org>, "Linus Torvalds"
- <torvalds@linux-foundation.org>, "Thomas Gleixner" <tglx@linutronix.de>,
- "Alan Stern" <stern@rowland.harvard.edu>
-X-Mailer: aerc 0.20.1
-References: <20250719030827.61357-1-boqun.feng@gmail.com>
- <20250719030827.61357-7-boqun.feng@gmail.com>
-In-Reply-To: <20250719030827.61357-7-boqun.feng@gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 
-On Sat Jul 19, 2025 at 5:08 AM CEST, Boqun Feng wrote:
-> One important set of atomic operations is the arithmetic operations,
-> i.e. add(), sub(), fetch_add(), add_return(), etc. However it may not
-> make senses for all the types that `AtomicType` to have arithmetic
-> operations, for example a `Foo(u32)` may not have a reasonable add() or
-> sub(), plus subword types (`u8` and `u16`) currently don't have
-> atomic arithmetic operations even on C side and might not have them in
-> the future in Rust (because they are usually suboptimal on a few
-> architecures). Therefore the plan is to add a few subtraits of
-> `AtomicType` describing which types have and can do atomic arithemtic
-> operations.
->
-> One trait `AtomicAdd` is added, and only add() and fetch_add() are
-> added. The rest will be added in the future.
->
-> Reviewed-by: Alice Ryhl <aliceryhl@google.com>
-> Signed-off-by: Boqun Feng <boqun.feng@gmail.com>
+On Mon, 11 Aug 2025 17:56:55 -0700
+Jakub Kicinski <kuba@kernel.org> wrote:
 
-Reviewed-by: Benno Lossin <lossin@kernel.org>
+> On Mon, 11 Aug 2025 11:28:45 -0600 Jonathan Corbet wrote:
+> > Mauro Carvalho Chehab <mchehab+huawei@kernel.org> writes:  
+> > > That's the v10 version of the parser-yaml series, addressing a couple of
+> > > issues raised by Donald.
+> > >
+> > > It should apply cleanly on the top of docs-next, as I just rebased on
+> > > the top of docs/docs-next.
+> > >
+> > > Please merge it via your tree, as I have another patch series that will
+> > > depend on this one.    
+> > 
+> > I intend to do that shortly unless I hear objections; are the netdev
+> > folks OK with this work going through docs-next?  
+> 
+> No objections.
+> 
+> Would you be willing to apply these on top of -rc1, and create a merge
+> commit? YNL is fairly active, if there's a conflict we may be testing
+> our luck if Linus has to resolve Python conflicts.
+> 
+> Happy to do that on our end (we have a script:)), or perhaps Mauro could
+> apply and send us both a PR?
 
-> ---
->  rust/kernel/sync/atomic.rs           | 93 +++++++++++++++++++++++++++-
->  rust/kernel/sync/atomic/predefine.rs | 14 +++++
->  2 files changed, 105 insertions(+), 2 deletions(-)
->
-> diff --git a/rust/kernel/sync/atomic.rs b/rust/kernel/sync/atomic.rs
-> index 793134aeaac1..e3a30b6aaee4 100644
-> --- a/rust/kernel/sync/atomic.rs
-> +++ b/rust/kernel/sync/atomic.rs
-> @@ -16,7 +16,6 @@
->  //!
->  //! [`LKMM`]: srctree/tools/memory-model/
-> =20
-> -#[allow(dead_code, unreachable_pub)]
->  mod internal;
->  pub mod ordering;
->  mod predefine;
-> @@ -25,7 +24,7 @@
->  pub use ordering::{Acquire, Full, Relaxed, Release};
-> =20
->  use crate::build_error;
-> -use internal::{AtomicBasicOps, AtomicExchangeOps, AtomicRepr};
-> +use internal::{AtomicArithmeticOps, AtomicBasicOps, AtomicExchangeOps, A=
-tomicRepr};
->  use ordering::OrderingType;
-> =20
->  /// A memory location which can be safely modified from multiple executi=
-on contexts.
-> @@ -115,6 +114,18 @@ pub unsafe trait AtomicType: Sized + Send + Copy {
->      type Repr: AtomicImpl;
->  }
-> =20
-> +/// Types that support atomic add operations.
-> +///
-> +/// # Safety
-> +///
-> +/// `wrapping_add` any value of type `Self::Repr::Delta` obtained by [`S=
-elf::rhs_into_delta()`] to
+Whatever works best for you. In case you decide for the PR, I'm sending 
+one right now for you both. It is on a stable signed tag:
 
-Can you add a normal comment TODO here:
+	https://git.kernel.org/pub/scm/linux/kernel/git/mchehab/linux-docs.git/tag/?h=docs/v6.17-1
 
-    // TODO: properly define `wrapping_add` in this context.
+So, if both of you pick from it, we should be able to avoid conflicts on
+the next merge window, as I don't have any patches changing the Sphinx
+yaml parser plugin nor netlink tools.
 
----
-Cheers,
-Benno
+It should be noticed that I have a patch series that does a major 
+cleanup at Documentation/Makefile. It is based after this series.
 
-> +/// any value of type `Self::Repr` obtained through transmuting a value =
-of type `Self` to must
-> +/// yield a value with a bit pattern also valid for `Self`.
-> +pub unsafe trait AtomicAdd<Rhs =3D Self>: AtomicType {
-> +    /// Converts `Rhs` into the `Delta` type of the atomic implementatio=
-n.
-> +    fn rhs_into_delta(rhs: Rhs) -> <Self::Repr as AtomicImpl>::Delta;
-> +}
-> +
+So, better to have the series merged at linux-docs to avoid merge
+conflicts at linux-next and during the next merge window.
+
+Thanks,
+Mauro

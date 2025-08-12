@@ -1,80 +1,106 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0800229B21;
-	Tue, 12 Aug 2025 00:56:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00DBF2C3265;
+	Tue, 12 Aug 2025 07:52:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754960217; cv=none; b=Cryy6QG08zjVwjawCxlH+1LP5L9U2CesLnyzW9ePVSl4QBuNXj9Z+k2SFn7vZK9/uOf4EkrZqaS+MkkJkesfZezMkw1hJbBmWDRxQ14BuUU5QycGUcMGmIbZJWN5Wcm6gjPOY9JDmaVSgQrucSLVS73Qca6Ccwqm3olkG+OJgjU=
+	t=1754985129; cv=none; b=Ke3PY3H2uOIExh16/HuoJ/YOk+Wok7Bz11Tkvgpm5MoydMNFHyP0ICRgIghkC90A4dFllX2DdGUJehSQX19Zn386N9drdfxv7Xp62tlQ/MurPQddHFUY7+E81Fb5dXqlNN/pqFqpCnCVmumIeEwrLuy861PBSpIZgAy0dvsXsHI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754960217; c=relaxed/simple;
-	bh=w6RoAic6vmLc6hitiMVy67ml85p5T/2lzJYTlNxsFf8=;
-	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=tstkjC8+R/cLCmN1BFKR2hufLRl4O9GevRbJ+XIuZ6GfTayWKyPX3DL89wlpvTpoGPMdHVO3XnAIkA0mDsv1s1yV44b5HiorjpViHLttC1huG4/ZEV/XMMzrPnp93gC2vkCfRV+MgEWXdViwyjkmx6v+/oZAnFTbNe+q7mOH/zc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZL5ZkKr0; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1754985129; c=relaxed/simple;
+	bh=qgQAoR+vutUrtVmv5wZSsH+LMxvRPCpEfXZhDCBOfQA=;
+	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
+	 References:In-Reply-To; b=YS75CPZE/X1Fw5I4abIlfrkwjsLyYVSuSwBVIVyKehAxwTjADG/YZeJpd5oBfHFinqqeAPNK92UAWgl8jz3KTk3zTurELtaowDf1VAlA9amGa5SCxOyDCajYwACUKjEkVg0z+uMgc90vDWDjTgOWc10VJhBTpPvoMK9BTVsokdA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZmXMYz8D; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZL5ZkKr0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 573D7C4CEED;
-	Tue, 12 Aug 2025 00:56:56 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZmXMYz8D"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A974CC4CEF0;
+	Tue, 12 Aug 2025 07:52:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1754960217;
-	bh=w6RoAic6vmLc6hitiMVy67ml85p5T/2lzJYTlNxsFf8=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-	b=ZL5ZkKr0Oy9ZMeRuwLucq3F8Ej8wzuDfCQfSDU1GkBrDqLAed1wyDLkBIW98IYCIV
-	 zJmN9yUnzOo5tRhfwKKRiB5ZYgnZJjdRXSiXbMYtnkshSQ2wf3V6AGplesrinHrSXv
-	 3jpoFWcDpBHMgAO4JqvBpiZD+Scx21C1kObewD4/1zeQrenvwH8h+CCUQHid2UJ3Jp
-	 MWSIzb9ITMMttgqFStJcMvXAYM7pljobcED1a7kOU3mTek72dyBZaPwfrPoe1UocdT
-	 x/Z3DWXqbISsDflw6bRrTzzant1FIbjZgUMJzjHGKT7P2FinAGFfCBaYrjmg+L6iAl
-	 3PbixuRh5CrpQ==
-Date: Mon, 11 Aug 2025 17:56:55 -0700
-From: Jakub Kicinski <kuba@kernel.org>
-To: Jonathan Corbet <corbet@lwn.net>
-Cc: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>, Linux Doc Mailing
- List <linux-doc@vger.kernel.org>, linux-kernel@vger.kernel.org, Akira
- Yokosawa <akiyks@gmail.com>, "David S. Miller" <davem@davemloft.net>,
- Ignacio Encinas Rubio <ignacio@iencinas.com>, Marco Elver
- <elver@google.com>, Shuah Khan <skhan@linuxfoundation.org>, Donald Hunter
- <donald.hunter@gmail.com>, Eric Dumazet <edumazet@google.com>, Jan Stancek
- <jstancek@redhat.com>, Paolo Abeni <pabeni@redhat.com>, Ruben Wauters
- <rubenru09@aol.com>, joel@joelfernandes.org,
- linux-kernel-mentees@lists.linux.dev, lkmm@lists.linux.dev,
- netdev@vger.kernel.org, peterz@infradead.org, stern@rowland.harvard.edu,
- Breno Leitao <leitao@debian.org>, Randy Dunlap <rdunlap@infradead.org>,
- Simon Horman <horms@kernel.org>
-Subject: Re: [PATCH v10 00/14] Don't generate netlink .rst files inside
- $(srctree)
-Message-ID: <20250811175648.04ccd9de@kernel.org>
-In-Reply-To: <87ms85daya.fsf@trenco.lwn.net>
-References: <cover.1753718185.git.mchehab+huawei@kernel.org>
-	<87ms85daya.fsf@trenco.lwn.net>
+	s=k20201202; t=1754985128;
+	bh=qgQAoR+vutUrtVmv5wZSsH+LMxvRPCpEfXZhDCBOfQA=;
+	h=Date:Cc:Subject:From:To:References:In-Reply-To:From;
+	b=ZmXMYz8DAHXC2ZensZbqZXo4k9FGbqI12Brc4z3yBpiIMRXkQpF3+0munXj2HXx75
+	 2Hfsq4BTAr1dByt59L++ZXBspVKcLa1QLW2AmQWlnFpOc+STs4u9tsKbaK4ez0qN+G
+	 4OKeC/PjjWPfmOcDy+a4XEcfRQ+vLBMLkPF5Q/EzNe7Gl5Z4OdasP1HS5nKLntLEF3
+	 qmit20+Y/seoFA7mgYoXwJdZXYUNOuo48XAcqKb+1HJAOR4WcLSb0TD8qoEV0Gvv2K
+	 CAKoRa3zxzmsV7ui6p8v4IVch1oBJirDqhsRldH6p0z0fhIQnCg+LKoHxejCwV+R8X
+	 cT+1qfQD3UbaA==
 Precedence: bulk
 X-Mailing-List: lkmm@lists.linux.dev
 List-Id: <lkmm.lists.linux.dev>
 List-Subscribe: <mailto:lkmm+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:lkmm+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Tue, 12 Aug 2025 09:52:02 +0200
+Message-Id: <DC0AAYXV7UEP.IAFKSR5OURDP@kernel.org>
+Cc: "Miguel Ojeda" <ojeda@kernel.org>, "Alex Gaynor"
+ <alex.gaynor@gmail.com>, "Gary Guo" <gary@garyguo.net>,
+ =?utf-8?q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, "Andreas
+ Hindborg" <a.hindborg@kernel.org>, "Alice Ryhl" <aliceryhl@google.com>,
+ "Trevor Gross" <tmgross@umich.edu>, "Danilo Krummrich" <dakr@kernel.org>,
+ "Will Deacon" <will@kernel.org>, "Peter Zijlstra" <peterz@infradead.org>,
+ "Mark Rutland" <mark.rutland@arm.com>, "Wedson Almeida Filho"
+ <wedsonaf@gmail.com>, "Viresh Kumar" <viresh.kumar@linaro.org>, "Lyude
+ Paul" <lyude@redhat.com>, "Ingo Molnar" <mingo@kernel.org>, "Mitchell Levy"
+ <levymitchell0@gmail.com>, "Paul E. McKenney" <paulmck@kernel.org>, "Greg
+ Kroah-Hartman" <gregkh@linuxfoundation.org>, "Linus Torvalds"
+ <torvalds@linux-foundation.org>, "Thomas Gleixner" <tglx@linutronix.de>,
+ "Alan Stern" <stern@rowland.harvard.edu>
+Subject: Re: [PATCH v8 3/9] rust: sync: atomic: Add ordering annotation
+ types
+From: "Benno Lossin" <lossin@kernel.org>
+To: "Boqun Feng" <boqun.feng@gmail.com>, <linux-kernel@vger.kernel.org>,
+ <rust-for-linux@vger.kernel.org>, <lkmm@lists.linux.dev>,
+ <linux-arch@vger.kernel.org>
+X-Mailer: aerc 0.20.1
+References: <20250719030827.61357-1-boqun.feng@gmail.com>
+ <20250719030827.61357-4-boqun.feng@gmail.com>
+In-Reply-To: <20250719030827.61357-4-boqun.feng@gmail.com>
 
-On Mon, 11 Aug 2025 11:28:45 -0600 Jonathan Corbet wrote:
-> Mauro Carvalho Chehab <mchehab+huawei@kernel.org> writes:
-> > That's the v10 version of the parser-yaml series, addressing a couple of
-> > issues raised by Donald.
-> >
-> > It should apply cleanly on the top of docs-next, as I just rebased on
-> > the top of docs/docs-next.
-> >
-> > Please merge it via your tree, as I have another patch series that will
-> > depend on this one.  
-> 
-> I intend to do that shortly unless I hear objections; are the netdev
-> folks OK with this work going through docs-next?
+On Sat Jul 19, 2025 at 5:08 AM CEST, Boqun Feng wrote:
+> Preparation for atomic primitives. Instead of a suffix like _acquire, a
+> method parameter along with the corresponding generic parameter will be
+> used to specify the ordering of an atomic operations. For example,
+> atomic load() can be defined as:
+>
+> 	impl<T: ...> Atomic<T> {
+> 	    pub fn load<O: AcquireOrRelaxed>(&self, _o: O) -> T { ... }
+> 	}
+>
+> and acquire users would do:
+>
+> 	let r =3D x.load(Acquire);
+>
+> relaxed users:
+>
+> 	let r =3D x.load(Relaxed);
+>
+> doing the following:
+>
+> 	let r =3D x.load(Release);
+>
+> will cause a compiler error.
+>
+> Compared to suffixes, it's easier to tell what ordering variants an
+> operation has, and it also make it easier to unify the implementation of
+> all ordering variants in one method via generic. The `TYPE` associate
+> const is for generic function to pick up the particular implementation
+> specified by an ordering annotation.
+>
+> Reviewed-by: Alice Ryhl <aliceryhl@google.com>
+> Signed-off-by: Boqun Feng <boqun.feng@gmail.com>
 
-No objections.
+Reviewed-by: Benno Lossin <lossin@kernel.org>
 
-Would you be willing to apply these on top of -rc1, and create a merge
-commit? YNL is fairly active, if there's a conflict we may be testing
-our luck if Linus has to resolve Python conflicts.
+---
+Cheers,
+Benno
 
-Happy to do that on our end (we have a script:)), or perhaps Mauro could
-apply and send us both a PR?
+> ---
+>  rust/kernel/sync/atomic.rs          |   2 +
+>  rust/kernel/sync/atomic/ordering.rs | 104 ++++++++++++++++++++++++++++
+>  2 files changed, 106 insertions(+)
+>  create mode 100644 rust/kernel/sync/atomic/ordering.rs

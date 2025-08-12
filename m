@@ -1,83 +1,80 @@
-Received: from ms.lwn.net (ms.lwn.net [45.79.88.28])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DE802C08B2;
-	Mon, 11 Aug 2025 17:28:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.79.88.28
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0800229B21;
+	Tue, 12 Aug 2025 00:56:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754933329; cv=none; b=dMoRcQQS8bAus4I2skYQ1XvkhqFMzm2kT9a8JYeyqLegDuGGtmKt4YxQOlhhrXruZwXiyVu3IKfUTgZMicnwzgFKK+zKxtVcyeNBAsl/0+MDrIkG4D5hdk/5D6WzSLGOrZTVoLRNdJrZVCkwl0d9+lX96dShow03OgSFzESioxw=
+	t=1754960217; cv=none; b=Cryy6QG08zjVwjawCxlH+1LP5L9U2CesLnyzW9ePVSl4QBuNXj9Z+k2SFn7vZK9/uOf4EkrZqaS+MkkJkesfZezMkw1hJbBmWDRxQ14BuUU5QycGUcMGmIbZJWN5Wcm6gjPOY9JDmaVSgQrucSLVS73Qca6Ccwqm3olkG+OJgjU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754933329; c=relaxed/simple;
-	bh=RPFcFE4EjC9KYsFIk0oZqJD9FwqQTkyfdIYsheVQ7dI=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=c6te+xEQdfSCwkhLwjAoLRnzN4MwqTUHnLbK3vlPPGP7JsqQhDwTGWd/hNR/McougjOjeGZLfd+ts9TZEFWBk1JECy7gZpGS1Nnyd8039L2Q1dwv3NRU/pf8FgmlAH8Ry+EH95rv6kgkXwldtJaxCS6LJDwiWCXUtGxC/41YoAU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lwn.net; spf=pass smtp.mailfrom=lwn.net; dkim=pass (2048-bit key) header.d=lwn.net header.i=@lwn.net header.b=iaUXdOqB; arc=none smtp.client-ip=45.79.88.28
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lwn.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=lwn.net
+	s=arc-20240116; t=1754960217; c=relaxed/simple;
+	bh=w6RoAic6vmLc6hitiMVy67ml85p5T/2lzJYTlNxsFf8=;
+	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=tstkjC8+R/cLCmN1BFKR2hufLRl4O9GevRbJ+XIuZ6GfTayWKyPX3DL89wlpvTpoGPMdHVO3XnAIkA0mDsv1s1yV44b5HiorjpViHLttC1huG4/ZEV/XMMzrPnp93gC2vkCfRV+MgEWXdViwyjkmx6v+/oZAnFTbNe+q7mOH/zc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZL5ZkKr0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=lwn.net header.i=@lwn.net header.b="iaUXdOqB"
-DKIM-Filter: OpenDKIM Filter v2.11.0 ms.lwn.net A8F4C40AD2
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=lwn.net; s=20201203;
-	t=1754933326; bh=RPFcFE4EjC9KYsFIk0oZqJD9FwqQTkyfdIYsheVQ7dI=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:From;
-	b=iaUXdOqBX6NARwSaVj/lNohmgcpyQuRPIIc3rKWM9IlCdHDkx4m52x4o3fF/sP8M5
-	 CWgNzopgRSIClfb9ZWyDL8IStghlpX4UnzhAp7WJ9uY0P691gbGVRKX9Aj9RBSkDv7
-	 E8/fa8xBuVMu6uuubmK4yjHIxVf/wunv2tcQVvo3DaAW6Hkjllfs/UWc/xO8G1ppWR
-	 sVwsSl97i+uPvExtCpSjINMuQVMMvYgcqpzbqp33RB966xnWiFP9mw0s/GnJnkQJrt
-	 zU3j4w3JBBKEdoZvjO7wDjiEuvE99kBw4CCM/m/e5Vewh+/+fViUw1xsPs5BM2uJLd
-	 5sw4llWg9H/CQ==
-Received: from localhost (unknown [IPv6:2601:280:4600:2da9::1fe])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	by ms.lwn.net (Postfix) with ESMTPSA id A8F4C40AD2;
-	Mon, 11 Aug 2025 17:28:46 +0000 (UTC)
-From: Jonathan Corbet <corbet@lwn.net>
-To: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>, "Message-ID :"
- <cover.1752076293.git.mchehab+huawei@kernel.org>, Linux Doc Mailing List
- <linux-doc@vger.kernel.org>
-Cc: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
- linux-kernel@vger.kernel.org, Akira Yokosawa <akiyks@gmail.com>, "David S.
- Miller" <davem@davemloft.net>, Ignacio Encinas Rubio
- <ignacio@iencinas.com>, Marco Elver <elver@google.com>, Shuah Khan
- <skhan@linuxfoundation.org>, Donald Hunter <donald.hunter@gmail.com>, Eric
- Dumazet <edumazet@google.com>, Jan Stancek <jstancek@redhat.com>, Paolo
- Abeni <pabeni@redhat.com>, Ruben Wauters <rubenru09@aol.com>,
- joel@joelfernandes.org, linux-kernel-mentees@lists.linux.dev,
- lkmm@lists.linux.dev, netdev@vger.kernel.org, peterz@infradead.org,
- stern@rowland.harvard.edu, Breno Leitao <leitao@debian.org>, Randy Dunlap
- <rdunlap@infradead.org>, Jakub Kicinski <kuba@kernel.org>, Simon Horman
- <horms@kernel.org>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZL5ZkKr0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 573D7C4CEED;
+	Tue, 12 Aug 2025 00:56:56 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1754960217;
+	bh=w6RoAic6vmLc6hitiMVy67ml85p5T/2lzJYTlNxsFf8=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+	b=ZL5ZkKr0Oy9ZMeRuwLucq3F8Ej8wzuDfCQfSDU1GkBrDqLAed1wyDLkBIW98IYCIV
+	 zJmN9yUnzOo5tRhfwKKRiB5ZYgnZJjdRXSiXbMYtnkshSQ2wf3V6AGplesrinHrSXv
+	 3jpoFWcDpBHMgAO4JqvBpiZD+Scx21C1kObewD4/1zeQrenvwH8h+CCUQHid2UJ3Jp
+	 MWSIzb9ITMMttgqFStJcMvXAYM7pljobcED1a7kOU3mTek72dyBZaPwfrPoe1UocdT
+	 x/Z3DWXqbISsDflw6bRrTzzant1FIbjZgUMJzjHGKT7P2FinAGFfCBaYrjmg+L6iAl
+	 3PbixuRh5CrpQ==
+Date: Mon, 11 Aug 2025 17:56:55 -0700
+From: Jakub Kicinski <kuba@kernel.org>
+To: Jonathan Corbet <corbet@lwn.net>
+Cc: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>, Linux Doc Mailing
+ List <linux-doc@vger.kernel.org>, linux-kernel@vger.kernel.org, Akira
+ Yokosawa <akiyks@gmail.com>, "David S. Miller" <davem@davemloft.net>,
+ Ignacio Encinas Rubio <ignacio@iencinas.com>, Marco Elver
+ <elver@google.com>, Shuah Khan <skhan@linuxfoundation.org>, Donald Hunter
+ <donald.hunter@gmail.com>, Eric Dumazet <edumazet@google.com>, Jan Stancek
+ <jstancek@redhat.com>, Paolo Abeni <pabeni@redhat.com>, Ruben Wauters
+ <rubenru09@aol.com>, joel@joelfernandes.org,
+ linux-kernel-mentees@lists.linux.dev, lkmm@lists.linux.dev,
+ netdev@vger.kernel.org, peterz@infradead.org, stern@rowland.harvard.edu,
+ Breno Leitao <leitao@debian.org>, Randy Dunlap <rdunlap@infradead.org>,
+ Simon Horman <horms@kernel.org>
 Subject: Re: [PATCH v10 00/14] Don't generate netlink .rst files inside
  $(srctree)
-In-Reply-To: <cover.1753718185.git.mchehab+huawei@kernel.org>
+Message-ID: <20250811175648.04ccd9de@kernel.org>
+In-Reply-To: <87ms85daya.fsf@trenco.lwn.net>
 References: <cover.1753718185.git.mchehab+huawei@kernel.org>
-Date: Mon, 11 Aug 2025 11:28:45 -0600
-Message-ID: <87ms85daya.fsf@trenco.lwn.net>
+	<87ms85daya.fsf@trenco.lwn.net>
 Precedence: bulk
 X-Mailing-List: lkmm@lists.linux.dev
 List-Id: <lkmm.lists.linux.dev>
 List-Subscribe: <mailto:lkmm+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:lkmm+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 
-Mauro Carvalho Chehab <mchehab+huawei@kernel.org> writes:
+On Mon, 11 Aug 2025 11:28:45 -0600 Jonathan Corbet wrote:
+> Mauro Carvalho Chehab <mchehab+huawei@kernel.org> writes:
+> > That's the v10 version of the parser-yaml series, addressing a couple of
+> > issues raised by Donald.
+> >
+> > It should apply cleanly on the top of docs-next, as I just rebased on
+> > the top of docs/docs-next.
+> >
+> > Please merge it via your tree, as I have another patch series that will
+> > depend on this one.  
+> 
+> I intend to do that shortly unless I hear objections; are the netdev
+> folks OK with this work going through docs-next?
 
-> Hi Jon,
->
-> That's the v10 version of the parser-yaml series, addressing a couple of
-> issues raised by Donald.
->
-> It should apply cleanly on the top of docs-next, as I just rebased on
-> the top of docs/docs-next.
->
-> Please merge it via your tree, as I have another patch series that will
-> depend on this one.
+No objections.
 
-I intend to do that shortly unless I hear objections; are the netdev
-folks OK with this work going through docs-next?
+Would you be willing to apply these on top of -rc1, and create a merge
+commit? YNL is fairly active, if there's a conflict we may be testing
+our luck if Linus has to resolve Python conflicts.
 
-Thanks,
-
-jon
+Happy to do that on our end (we have a script:)), or perhaps Mauro could
+apply and send us both a PR?

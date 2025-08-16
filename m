@@ -1,101 +1,100 @@
-Received: from mail-qt1-f176.google.com (mail-qt1-f176.google.com [209.85.160.176])
+Received: from mail-qk1-f182.google.com (mail-qk1-f182.google.com [209.85.222.182])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52FA323AE9A
-	for <lkmm@lists.linux.dev>; Sat, 16 Aug 2025 16:10:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D9B16EB79
+	for <lkmm@lists.linux.dev>; Sat, 16 Aug 2025 16:11:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755360627; cv=none; b=mpChUMkqtS54rbCyPGXWBsxTwMgYXib0uHh5BxfMMBqtdNyURr0fat0Xt8aTCeW6AdGnjuVYxljquXxOqnqVbi2l82O0We5iQjaCxNHa5mqxaxHikuuAiDMTlpeqbTcjFL+1AQSP6/qE5QskyS7EigTEBzrzfsTRtQ/mZdxXqGI=
+	t=1755360715; cv=none; b=Rh+3kvyeZ0ibpih1cB4C2zyKUhJsJIKl3uAdvalSS0N1vvV60S90NSd6+NR5LCe/smBpLP4r8M56q/NzafDUPYI3aylFmgg9aNI+y/FUstTFt7c22gEpBGs+jVVy8m12u/fkvAx8pJTMfYlqtMBLYgy/nssnQ13BYjjm9reT50s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755360627; c=relaxed/simple;
-	bh=IUaTF+NFDqwsFAta5s9Kk+XUn0JlCEzmJ8Sm0Gdx7lg=;
+	s=arc-20240116; t=1755360715; c=relaxed/simple;
+	bh=EtMfV6kWwY7RpKSzy6jCkyzXpqZ6kO6pRgQEXOPNW1Y=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=bBwvdzHm6X/tI3xcFNfndo7rAltMP4nFSGAGi6cRBr1V9QRd0L+NWfB25a1PlHyeOEX6Hlh+vNOkwxJnreoOLmwzSawfJ9wysGPex8w/zCxCb6qaUKIKNdcEiVpxUFlZjMeF8DFdWzZpc5z7nsJlsIS0VIhrvdJ6ejAD5KGoap0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=flx9RHEG; arc=none smtp.client-ip=209.85.160.176
+	 Content-Type:Content-Disposition:In-Reply-To; b=F2M6TooMaZaKPJC7OtZ3QnqcCk1iSkptQwtQevdO3QXYXoo5ezX+Cjd2NCGZVCC/V1O+HVvDBLzTHx1qEstpxtN7MUXEMYZPRv5IouxAXMrknU9rXFMm0V0WoY8QyP6+PnJHmHbLoB+gJoj0Cy0mceUy0L6dNGN0HH9cGncMXKY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=If3pu0cX; arc=none smtp.client-ip=209.85.222.182
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="flx9RHEG"
-Received: by mail-qt1-f176.google.com with SMTP id d75a77b69052e-4b0faa6601cso41251081cf.1
-        for <lkmm@lists.linux.dev>; Sat, 16 Aug 2025 09:10:25 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="If3pu0cX"
+Received: by mail-qk1-f182.google.com with SMTP id af79cd13be357-7e8706df76bso425592685a.3
+        for <lkmm@lists.linux.dev>; Sat, 16 Aug 2025 09:11:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1755360624; x=1755965424; darn=lists.linux.dev;
+        d=gmail.com; s=20230601; t=1755360712; x=1755965512; darn=lists.linux.dev;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:feedback-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=sg/mieQTPz9vtPLm51BfuUqCjgPFftVnx3T2UKgvrvA=;
-        b=flx9RHEGDBXPwKejRjM3eWxqVWHVkC39s3vNsgqw6zLsuLeUZujQFzKdqGajas98kd
-         jlx+2SPq5TDA8Meiyi58qxL1aNuFJz+XXD2oYtdtdD37MCU8rZ6+ppvxid0cfUGjU8c/
-         541Sc6B27LO1BT/EGA7lk+5Fc6LAw0BJHNSX937HCQFUrxN9wCxsktN5bqGtgW2R9TVl
-         zgecefEtgiScarOPQianfmy3ScB9qWMYRt/nJyy9LKW3yge57WTTWlZ9QnRweF1OZgKh
-         A7QXOWvzkMO1ZShtR3MO1niSD0ri2z4/QOTFNq0pw/sgcq8cDidcwShV1jWdiCNWscx4
-         Clmw==
+        bh=TQSAsVXNS1069qI55AjAFU4SUhFAdBWLay5Yhtg6JU0=;
+        b=If3pu0cXkID6NrNtlgWpGIGVpaExxEhbB+DeTyFGw8rt9nm1qZXjxKWJhdPPBQtRmv
+         CGuDsZx0AA5zs6BRQhP0xFPYFmJorw63+HKGlaqFR2ZhIwEe5mr9Kfd2CVYDHhzOJi+9
+         BYKwhmGgoKcKjY3S8eljanUVIGqurv95kXUzDlYFnDEX7mmtUeJeOWqLOmOzREuMOCap
+         KGCtSJ2NRbVg46CNIJ+KsZ5SSCGCWwxSYraurNdtoWjybqkRvcEewpqEl0+1A4JGtwfn
+         zecpfwk0tfDlvGqNCeSDcBTgIku4Zd78ZQfZuiWubM3m7Pe9t3lI1Nbygn9asECROhCv
+         MI/w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1755360624; x=1755965424;
+        d=1e100.net; s=20230601; t=1755360712; x=1755965512;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:feedback-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=sg/mieQTPz9vtPLm51BfuUqCjgPFftVnx3T2UKgvrvA=;
-        b=hKaGcND8PcLje47IHhNnH2yV/XkMcP9HjQrBYOlPaLBhSa4/CWdMApzLcSOfuJkIqA
-         43sM8H9peuCiUgeFXhfR5R0AVqD91EQhGJGAfgx6ATlEbVDVOILswdtEYoaH3eecung+
-         VNTVgpCt8cC6FSaIdWZxXO3W/4+Qz5gGosNMDh/6hkLoOLswDJAg4D/Ax8wAx8+Twaob
-         2H87+9OtzYGvIaaaLzIiH94IoV5gHQRPtzBNtCrUWcAIeKyUVS3w6oyiOi3bgJaNL8ni
-         65idZOHGk/zrvKfLomiSghpJvjl5I1mlq8jWTUDgs/p62dsiVvFUpjalM9ByGOtn0lGT
-         I5IQ==
-X-Forwarded-Encrypted: i=1; AJvYcCUdRQcARGxjFBxGlXNw/mnH/6V0KPlGGaZY3PhefMDk09dbQjmLl72DI1QAax3A6eEEPmiE@lists.linux.dev
-X-Gm-Message-State: AOJu0Yy8p1LHYDJes+upDzv8GU7OM8l44fJ+vWQu0nHQYq/11BntwMsv
-	N3VjLh/8WqwLMTCcpe8pMWTLZ9JdROZIB3HGbZoEuTeDeDwWeAPhKTIw
-X-Gm-Gg: ASbGncvO+go2+9tdjkSheqOax9EdB8lvfwUGxK0OCNKzLyo1q6lhTaRUDpXEPuvmSf6
-	QXVw4B1Bvvhj+AFj3eoFihXkn+EgvrfLObMxQRvgS4CGpLds6q5M//nF7PY0QAgIEK9lbDFYnxk
-	RE5ilMWEdDb76EbaNUEfhAg9Bm80mMW4p1LrqExlJzQdbrUQRXqh74ptYhTAxv7qPYY24ie/tL7
-	JQG7FTRPrmgrZAhEZWb+S91vD0y1u8WhT5flKw8MuRL4q0p0F/QkeUDc8WXWEftPVkP301sRZsh
-	FYIU3AeJL6DQ+iUPva93+6Pg8Tp4oM1DgABo8WKo+Euv72Muq8Wt8RaG5Lbhemhrk9KGuQBDJGh
-	hAuhT29xK5esa7AgpNn/bWV66Hv3ygY/4dyqTPTYAzckrdNfWkKc4wX0I4sWqudnjzVffuEw+6i
-	/sigUlKZcG7lwPkBmsL6SlE+Hf4+FhUD2Q1Bre6GymqNd8
-X-Google-Smtp-Source: AGHT+IFYZv5YRaAFBtbmtnhCh7ln4coorVbby1YEzxczCjIN9KAFBwrnQ0BFqfrw0CPvusbFLicOpA==
-X-Received: by 2002:a05:620a:471e:b0:7e0:e2d7:e03 with SMTP id af79cd13be357-7e87db77a36mr791075485a.7.1755360624081;
-        Sat, 16 Aug 2025 09:10:24 -0700 (PDT)
+        bh=TQSAsVXNS1069qI55AjAFU4SUhFAdBWLay5Yhtg6JU0=;
+        b=NZC4s3GcIT8LMhcipR/Y5jho145FoL0KfdWn+Ollwen3enlhm3DgQj+hOu0O5jm842
+         auzcm9Xcn5VP11HHwfyJNUrVIfaefW8CZG2LCaN8OOJ2LIA6M89pVxKQev9r0xEK146d
+         8nzYNbtyVbZqAP0vBh/TmOkhxg97CV5oOWH+FssnBlZoUABBQchj9zI5/yuW2CRv3Het
+         9a0UXikXHo8cIHhUAmnntHy0ViB40Y6NqNbQtqWc1t4TO+TZoW45CxASb2S6cZMRmJvJ
+         EjTsrGpp4VClEwBwRg7F7+rmqdiKhdfGdC75ADUWuQnACUuVxaYPXefbsqgTZJ+tbh4Y
+         ks1Q==
+X-Forwarded-Encrypted: i=1; AJvYcCXgWrlnqBbxtloDzii94H9zWR9BfjPs2IQtbXXZkxW6davDQlmMwqS5bSTcUfynN0ChwZRg@lists.linux.dev
+X-Gm-Message-State: AOJu0YxWkIaIlZggjFkekciMBcxi/1OMHc73rZDpN4GYBXr+v0W6emv+
+	Uwa1QCVaQaCx2RaJhF/OFmW/LTw4IjkQ1U6n2ov9a5x28HZShSrD/KKm
+X-Gm-Gg: ASbGncs78tuCl6f/mUAickFBrClJpX/iAHw4pPzmZc9Dh9GOmXJLkVAbv0Fn0GxQwcl
+	kjqpUIRPNnk9QjgOFBWyf18zqIeZPyyQtMObqmyzEc1SleehU+oGRGnA8aHP43kAwXjLnFLA9om
+	y9lRonztDVVrr+SflKTGOfIEobvFIrTHunmX6+QJwGiGx3nyUNMqjj069u4YYwtTzEy9k+EcCdB
+	k7vY2Dr9UBJTmoydfgGjMQGlFPkFp5c+ns5fRaPGopihAIXhkxPhfXgpbyHhACJIq/N1UbY78ci
+	I4TFKNIWq8R4+E6tktbv8F//+GhAcycs2sppQEPuWz71B+m/OiI6HacTv7pyAulwWCy3TKlvNWR
+	pc34qTwdGCadyYkH9eGJHw6MeeE9KBSkkf/x4zvepjwkdEpHKB66VKYZm96dJrjDr9M1EJENcER
+	+T0e1BzRHat0s+0OvA8M1GmNBZh7HbF00tAg==
+X-Google-Smtp-Source: AGHT+IHr8ZShzqXQ/i14KU3FBbPl6pX+JdsCK1CS7YltUGPOZFM0P9Gl2uACBr6tjF0lbZaga/qmTA==
+X-Received: by 2002:a05:620a:bd6:b0:7e8:1dbc:f126 with SMTP id af79cd13be357-7e87e0e1932mr614435285a.32.1755360712255;
+        Sat, 16 Aug 2025 09:11:52 -0700 (PDT)
 Received: from fauth-a2-smtp.messagingengine.com (fauth-a2-smtp.messagingengine.com. [103.168.172.201])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-7e87e1e15besm285785885a.72.2025.08.16.09.10.22
+        by smtp.gmail.com with ESMTPSA id d75a77b69052e-4b120b96b1asm22149831cf.26.2025.08.16.09.11.51
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 16 Aug 2025 09:10:23 -0700 (PDT)
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfauth.phl.internal (Postfix) with ESMTP id AED63F40066;
-	Sat, 16 Aug 2025 12:10:22 -0400 (EDT)
+        Sat, 16 Aug 2025 09:11:51 -0700 (PDT)
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfauth.phl.internal (Postfix) with ESMTP id 3B79CF40066;
+	Sat, 16 Aug 2025 12:11:51 -0400 (EDT)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-06.internal (MEProxy); Sat, 16 Aug 2025 12:10:22 -0400
-X-ME-Sender: <xms:bq2gaNHxhAgGhftN_kkXh6fkv-wcrpIEMLkBwD0RsnK249D7qN4lGw>
-    <xme:bq2gaD0lWoZM1mgofjfuny5OIzW1CVDTuJC1C0ipALvkHHHZG8aYpWEDlFeSlbuiJ
-    _0C457XnqjQXjlDEw>
-X-ME-Received: <xmr:bq2gaDsIIrArzNPtDRIK8Fvka_GneNsyXW0RB408jXnPO5h4ZXvCGngaB4s>
+  by phl-compute-04.internal (MEProxy); Sat, 16 Aug 2025 12:11:51 -0400
+X-ME-Sender: <xms:x62gaLW9mWg5ENPTFlfeqfHH5q0WK6mX_5b7JlsdaARKZXDPchChjQ>
+    <xme:x62gaFPD0cZJLh-8kRVq_kSBxvC5ig41ogZUtIJdUsUGS0TqMrEohkIE3Ji4r6x1o
+    GA-k1p65bomAMp4aQ>
+X-ME-Received: <xmr:x62gaGFmQsu6P2BjO6iXiU-gI5EUQoR_gbEeQGzyQpC9-0wrvh15AtyePx4>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddugeejfedtucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
     rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhepfffhvfevuffkfhggtggujgesthdtrodttddtvdenucfhrhhomhepuehoqhhunhcu
+    gurhepfffhvfevuffkfhggtggujgesthdtredttddtvdenucfhrhhomhepuehoqhhunhcu
     hfgvnhhguceosghoqhhunhdrfhgvnhhgsehgmhgrihhlrdgtohhmqeenucggtffrrghtth
-    gvrhhnpeekjefhvddvheeftdevjeffudevhffgteeigeffgeegveefgfejhedvvdekueei
-    gfenucffohhmrghinhepohhpvghrrghtihhonhhsrdhsrghfvghthienucevlhhushhtvg
-    hrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpegsohhquhhnodhmvghsmhht
-    phgruhhthhhpvghrshhonhgrlhhithihqdeiledvgeehtdeigedqudejjeekheehhedvqd
-    gsohhquhhnrdhfvghngheppehgmhgrihhlrdgtohhmsehfihigmhgvrdhnrghmvgdpnhgs
-    pghrtghpthhtohepvdejpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehlohhssh
-    hinheskhgvrhhnvghlrdhorhhgpdhrtghpthhtoheplhhinhhugidqkhgvrhhnvghlsehv
-    ghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtoheprhhushhtqdhfohhrqdhlihhnuh
-    igsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtoheplhhkmhhmsehlihhsthhs
-    rdhlihhnuhigrdguvghvpdhrtghpthhtoheplhhinhhugidqrghrtghhsehvghgvrhdrkh
-    gvrhhnvghlrdhorhhgpdhrtghpthhtohepohhjvggurgeskhgvrhhnvghlrdhorhhgpdhr
-    tghpthhtoheprghlvgigrdhgrgihnhhorhesghhmrghilhdrtghomhdprhgtphhtthhope
-    hgrghrhiesghgrrhihghhuohdrnhgvthdprhgtphhtthhopegsjhhorhhnfegpghhhsehp
-    rhhothhonhhmrghilhdrtghomh
-X-ME-Proxy: <xmx:bq2gaCktOPYQOVH-9-aacjtfeVjpYoVpCH7CxcLqVh-daB-WdOqEZQ>
-    <xmx:bq2gaBVoQTZXZLgY7od7Bu1-cfF8MbFlg2afyFBvs-7-gxynTEMEtw>
-    <xmx:bq2gaGtFXJDY63JlhanCXkANLGTfFZejV_i6JaQRzy4qkXxPHmtWnQ>
-    <xmx:bq2gaEq6_HWq5SxvoWdSbzvtCuIfbhvWJOR130adu-LiLBW1glexnA>
-    <xmx:bq2gaL6u3zFp2kb9yWPCPqqExMGSsMkWLCw1A-l0_vaoGT0vR_LVvW6y>
+    gvrhhnpeehudfgudffffetuedtvdehueevledvhfelleeivedtgeeuhfegueevieduffei
+    vdenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpegsoh
+    hquhhnodhmvghsmhhtphgruhhthhhpvghrshhonhgrlhhithihqdeiledvgeehtdeigedq
+    udejjeekheehhedvqdgsohhquhhnrdhfvghngheppehgmhgrihhlrdgtohhmsehfihigmh
+    gvrdhnrghmvgdpnhgspghrtghpthhtohepvdejpdhmohguvgepshhmthhpohhuthdprhgt
+    phhtthhopehlohhsshhinheskhgvrhhnvghlrdhorhhgpdhrtghpthhtoheplhhinhhugi
+    dqkhgvrhhnvghlsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtoheprhhushht
+    qdhfohhrqdhlihhnuhigsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtoheplh
+    hkmhhmsehlihhsthhsrdhlihhnuhigrdguvghvpdhrtghpthhtoheplhhinhhugidqrghr
+    tghhsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepohhjvggurgeskhgvrh
+    hnvghlrdhorhhgpdhrtghpthhtoheprghlvgigrdhgrgihnhhorhesghhmrghilhdrtgho
+    mhdprhgtphhtthhopehgrghrhiesghgrrhihghhuohdrnhgvthdprhgtphhtthhopegsjh
+    horhhnfegpghhhsehprhhothhonhhmrghilhdrtghomh
+X-ME-Proxy: <xmx:x62gaO0UpGqIo3BWdmBJv-9G1755Figkjske1r3fU73qDhGF6MraEQ>
+    <xmx:x62gaGPtySw1amOUiigKhB7DjyrTvd-zGv0XXedLc1-rujtD-HP9Xg>
+    <xmx:x62gaOIONn5kFOVqAXTBW-otbE-61KKT1IzAsRAYbg2UkUkf15uqBQ>
+    <xmx:x62gaHZDaQBaK99vmsMSYh-sFRte8dLeT4_o1ZelA0LXVJt8Yvq_BQ>
+    <xmx:x62gaHkQWYEjKOs74b6frLQhBO9o6dsSetGVu5P1hX_jkCobG9JPN9FW>
 Feedback-ID: iad51458e:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sat,
- 16 Aug 2025 12:10:22 -0400 (EDT)
-Date: Sat, 16 Aug 2025 09:10:21 -0700
+ 16 Aug 2025 12:11:50 -0400 (EDT)
+Date: Sat, 16 Aug 2025 09:11:49 -0700
 From: Boqun Feng <boqun.feng@gmail.com>
 To: Benno Lossin <lossin@kernel.org>
 Cc: linux-kernel@vger.kernel.org, rust-for-linux@vger.kernel.org,
@@ -117,12 +116,11 @@ Cc: linux-kernel@vger.kernel.org, rust-for-linux@vger.kernel.org,
 	Linus Torvalds <torvalds@linux-foundation.org>,
 	Thomas Gleixner <tglx@linutronix.de>,
 	Alan Stern <stern@rowland.harvard.edu>
-Subject: Re: [PATCH v8 6/9] rust: sync: atomic: Add the framework of
- arithmetic operations
-Message-ID: <aKCtbSDuJNrtdLNp@tardis-2.local>
+Subject: Re: [PATCH v8 4/9] rust: sync: atomic: Add generic atomics
+Message-ID: <aKCtxVSm9kYD8NcK@tardis-2.local>
 References: <20250719030827.61357-1-boqun.feng@gmail.com>
- <20250719030827.61357-7-boqun.feng@gmail.com>
- <DC0AKAL1LW84.MR2RFTMX1H61@kernel.org>
+ <20250719030827.61357-5-boqun.feng@gmail.com>
+ <DC0AGT8F3JH1.2PZIXKX9AQBWD@kernel.org>
 Precedence: bulk
 X-Mailing-List: lkmm@lists.linux.dev
 List-Id: <lkmm.lists.linux.dev>
@@ -131,23 +129,16 @@ List-Unsubscribe: <mailto:lkmm+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <DC0AKAL1LW84.MR2RFTMX1H61@kernel.org>
+In-Reply-To: <DC0AGT8F3JH1.2PZIXKX9AQBWD@kernel.org>
 
-On Tue, Aug 12, 2025 at 10:04:12AM +0200, Benno Lossin wrote:
+On Tue, Aug 12, 2025 at 09:59:39AM +0200, Benno Lossin wrote:
 > On Sat Jul 19, 2025 at 5:08 AM CEST, Boqun Feng wrote:
-> > One important set of atomic operations is the arithmetic operations,
-> > i.e. add(), sub(), fetch_add(), add_return(), etc. However it may not
-> > make senses for all the types that `AtomicType` to have arithmetic
-> > operations, for example a `Foo(u32)` may not have a reasonable add() or
-> > sub(), plus subword types (`u8` and `u16`) currently don't have
-> > atomic arithmetic operations even on C side and might not have them in
-> > the future in Rust (because they are usually suboptimal on a few
-> > architecures). Therefore the plan is to add a few subtraits of
-> > `AtomicType` describing which types have and can do atomic arithemtic
-> > operations.
+> > To provide using LKMM atomics for Rust code, a generic `Atomic<T>` is
+> > added, currently `T` needs to be Send + Copy because these are the
+> > straightforward usages and all basic types support this.
 > >
-> > One trait `AtomicAdd` is added, and only add() and fetch_add() are
-> > added. The rest will be added in the future.
+> > Implement `AtomicType` for `i32` and `i64`, and so far only basic
+> > operations load() and store() are introduced.
 > >
 > > Reviewed-by: Alice Ryhl <aliceryhl@google.com>
 > > Signed-off-by: Boqun Feng <boqun.feng@gmail.com>
@@ -155,76 +146,35 @@ On Tue, Aug 12, 2025 at 10:04:12AM +0200, Benno Lossin wrote:
 > Reviewed-by: Benno Lossin <lossin@kernel.org>
 > 
 
-Thank you!
+Thanks!
 
 > > ---
-> >  rust/kernel/sync/atomic.rs           | 93 +++++++++++++++++++++++++++-
-> >  rust/kernel/sync/atomic/predefine.rs | 14 +++++
-> >  2 files changed, 105 insertions(+), 2 deletions(-)
-> >
-> > diff --git a/rust/kernel/sync/atomic.rs b/rust/kernel/sync/atomic.rs
-> > index 793134aeaac1..e3a30b6aaee4 100644
-> > --- a/rust/kernel/sync/atomic.rs
-> > +++ b/rust/kernel/sync/atomic.rs
-> > @@ -16,7 +16,6 @@
-> >  //!
-> >  //! [`LKMM`]: srctree/tools/memory-model/
-> >  
-> > -#[allow(dead_code, unreachable_pub)]
-> >  mod internal;
-> >  pub mod ordering;
-> >  mod predefine;
-> > @@ -25,7 +24,7 @@
-> >  pub use ordering::{Acquire, Full, Relaxed, Release};
-> >  
-> >  use crate::build_error;
-> > -use internal::{AtomicBasicOps, AtomicExchangeOps, AtomicRepr};
-> > +use internal::{AtomicArithmeticOps, AtomicBasicOps, AtomicExchangeOps, AtomicRepr};
-> >  use ordering::OrderingType;
-> >  
-> >  /// A memory location which can be safely modified from multiple execution contexts.
-> > @@ -115,6 +114,18 @@ pub unsafe trait AtomicType: Sized + Send + Copy {
-> >      type Repr: AtomicImpl;
-> >  }
-> >  
-> > +/// Types that support atomic add operations.
-> > +///
-> > +/// # Safety
-> > +///
-> > +/// `wrapping_add` any value of type `Self::Repr::Delta` obtained by [`Self::rhs_into_delta()`] to
+> >  rust/kernel/sync/atomic.rs           | 274 +++++++++++++++++++++++++++
+> >  rust/kernel/sync/atomic/predefine.rs |  15 ++
+> >  2 files changed, 289 insertions(+)
+> >  create mode 100644 rust/kernel/sync/atomic/predefine.rs
 > 
-> Can you add a normal comment TODO here:
+> > +/// # Limitations
+> > +///
+> > +/// Because C primitives are used to implement the atomic operations, and a C function requires a
+> > +/// valid object of a type to operate on (i.e. no `MaybeUninit<_>`), hence at the Rust <-> C
+> > +/// surface, only types with all the bits initialized can be passed. As a result, types like `(u8,
+> > +/// u16)` (padding bytes are uninitialized) are currently not supported. Note that technically
+> > +/// these types can be supported if some APIs are removed for them and the inner implementation is
+> > +/// tweaked, but the justification of support such a type is not strong enough at the moment. This
+> > +/// should be resolved if there is an implementation for `MaybeUninit<i32>` as `AtomicImpl`.
 > 
->     // TODO: properly define `wrapping_add` in this context.
+> I'd remove the last sentence, as it makes it sound like one only would
+> have to add that impl and be finished.
+> 
 
-Yeah, this sounds good to me. How do you propose we arrange the normal
-comment with the doc comment, somthing like:
-
-    // TODO: properly define `wrapping_add` in this context.
-    
-    /// Types that support atomic add operations.
-    ///
-    /// # Safety
-    ///
-    /// `wrapping_add` any value of type `Self::Repr::Delta` obtained by [`Self::rhs_into_delta()`] to
-    ...
-    pub unsafe trait AtomicAdd<...> {
-        ...
-    }
+Yeah, sounds good to me, will remove the last sentence starting with
+"Note that technically .."
 
 Regards,
 Boqun
 
-> 
 > ---
 > Cheers,
 > Benno
-> 
-> > +/// any value of type `Self::Repr` obtained through transmuting a value of type `Self` to must
-> > +/// yield a value with a bit pattern also valid for `Self`.
-> > +pub unsafe trait AtomicAdd<Rhs = Self>: AtomicType {
-> > +    /// Converts `Rhs` into the `Delta` type of the atomic implementation.
-> > +    fn rhs_into_delta(rhs: Rhs) -> <Self::Repr as AtomicImpl>::Delta;
-> > +}
-> > +
 > 

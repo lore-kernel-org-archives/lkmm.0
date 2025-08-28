@@ -1,39 +1,39 @@
 Received: from smtpout-03.galae.net (smtpout-03.galae.net [185.246.85.4])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 962012749F1
-	for <lkmm@lists.linux.dev>; Thu, 28 Aug 2025 16:51:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8455E334371
+	for <lkmm@lists.linux.dev>; Thu, 28 Aug 2025 17:03:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.246.85.4
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756399893; cv=none; b=A5KDePng6WreJ58DSzKKhGa8GSAwME/f7b/qjTWrkRfB3MzwW58SSrCJu5J3/SE/ULbvKQwALu4GejynaBtTboIZb/G02TFke6CUMhWT0Rzc3eV6vtfQpLtijrWsAJwExqTs0JJXPmySNpD2PqrMB/0t7veS7l+wkApY0Tffz3A=
+	t=1756400586; cv=none; b=SaWtQBWM1pYGCm6QdyHZq1RH25RVV1ugpwnPpXBu2tv3gjyZ2X3mNk68USaZG9Ax4kq8UsoCNlqzoNhH+h8P12x5BzAF0kI3qWbLmwMRLaWaHP6sx9QiNXlIJzKajjiUTZySnk7tnac4W7YKpjTbxbGMVwxfhdT+qGl0gnTpR5E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756399893; c=relaxed/simple;
-	bh=PVupvUbljqqv0l5EpslMuDT5j7QU3Ufuil+d3qdB5eA=;
+	s=arc-20240116; t=1756400586; c=relaxed/simple;
+	bh=lc4yQLlGQ1ALDQQJS7QLyBBBdQD7Q9TQBdMpceMI9hk=;
 	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=J7lPEMV8kijQt8tUxHS8+BsQX18qAP1E6Xn4GZW6Q8R2HW+TdVHMqPVwwkxAlKB3qd5T4zHaTquNn0c6mKuAALAi8XEbMBW4xusOqTHZmbV9RvkQyC4wXeBqwP/LagaHYCiiFKuEf/2T3KZSPf3ux3M+DBR4bEe3CXZEzqPSe5k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com; spf=pass smtp.mailfrom=bootlin.com; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=LF+gGwKi; arc=none smtp.client-ip=185.246.85.4
+	 MIME-Version:Content-Type; b=nvcb8cBt/zj0ZulNVq+30sqo6Y63/UkaoVz9n1j9WlDNF2SG9eUY49cNMmfC3On0JfTbJNaHkinmYa0mMlBaFhVySm2wEnqeD5kCk5TPXqirWAyw3g+jd7oUvI64vaCI+6oiCOEd7GWpFYDxklxNTGdVzToi2WKX2IXxiC9HBBc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com; spf=pass smtp.mailfrom=bootlin.com; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=K88uUqBi; arc=none smtp.client-ip=185.246.85.4
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bootlin.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="LF+gGwKi"
+	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="K88uUqBi"
 Received: from smtpout-01.galae.net (smtpout-01.galae.net [212.83.139.233])
-	by smtpout-03.galae.net (Postfix) with ESMTPS id 111BA4E40BB1;
-	Thu, 28 Aug 2025 16:51:23 +0000 (UTC)
+	by smtpout-03.galae.net (Postfix) with ESMTPS id DF9BD4E40BBC;
+	Thu, 28 Aug 2025 17:03:01 +0000 (UTC)
 Received: from mail.galae.net (mail.galae.net [212.83.136.155])
-	by smtpout-01.galae.net (Postfix) with ESMTPS id BCAB960303;
-	Thu, 28 Aug 2025 16:51:22 +0000 (UTC)
-Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id 6EEC81C22DDE9;
-	Thu, 28 Aug 2025 18:50:43 +0200 (CEST)
+	by smtpout-01.galae.net (Postfix) with ESMTPS id AA3DF60303;
+	Thu, 28 Aug 2025 17:03:01 +0000 (UTC)
+Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id 21CAF1C22DD92;
+	Thu, 28 Aug 2025 19:02:46 +0200 (CEST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=dkim;
-	t=1756399881; h=from:subject:date:message-id:to:cc:mime-version:content-type:
+	t=1756400580; h=from:subject:date:message-id:to:cc:mime-version:content-type:
 	 content-transfer-encoding:in-reply-to:references;
-	bh=01CLvL+opovfhfkSRyspjEXFZkfbj0TTItWEljkWyHE=;
-	b=LF+gGwKiR4u1aF8x9V/r/FYoaEYM5yIMM4utgdSxggzuD4ceJXDH52EapVHz1dRavntVmb
-	Z/4leyNDKQ3csKFk80uvyyd/e5syNpIg1IV1Xyf2kelhcKowKrG3NfsAdB9M+WJVPpnYd+
-	d85Egg6pS5815TGmco9Nynhhhkjzgm1QF9rqUeHeBm59SlAjT1Fupc4Mnn5VODa3tirg8U
-	n8wDXL4666720TL3hBZMVmYjB9PvgYgev95Id+9yn+IXQE2JDHZq4nbJ8lDujkGkQ/M/oF
-	+wZyBzXCBG/NU6Lt30oQqy+shG9EVxYj5ClTuzgIhroq74/O8htu/GlXU16KSA==
-Date: Thu, 28 Aug 2025 18:50:37 +0200
+	bh=4Vex+Mkvb0GemWYHmwN2TZzE127JKaTead6sfS0g/BY=;
+	b=K88uUqBiCBmZYOXjE7eaX15VQS5Y/Ibuox7+bHeNP1PTVBAlgYC+/JcBeCy6VcGGzpV4pj
+	5No3PKiewSUFyztDWjZSg+SYBIXI2j0TZhjP3cxfVJ88Mx+1bo5P2g9YaAF61MGTFZZkxo
+	D2ihndxTq0UfY28cIyiTH2qPn9Dq1nbuknrDK7XN/4dT/MWkC/sxPuZtqKHDnhflmMF3pn
+	yTMwbfDlvSzkX1GmcMlpSQ1ooW/TrcLB+VoyYLFDB6P4uBwurHDppwCnHU9e7cVR/409Wg
+	JE73AvIf6jwNIVWuXKZmfeRuk+M/VLeO/ev5PyXFvCOiExR3xWCLmP/Cwl9+kQ==
+Date: Thu, 28 Aug 2025 19:02:43 +0200
 From: Kory Maincent <kory.maincent@bootlin.com>
 To: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 Cc: "Message-ID :" <cover.1752076293.git.mchehab+huawei@kernel.org>, Linux
@@ -51,10 +51,11 @@ Cc: "Message-ID :" <cover.1752076293.git.mchehab+huawei@kernel.org>, Linux
  peterz@infradead.org, stern@rowland.harvard.edu
 Subject: Re: [PATCH v10 06/14] docs: use parser_yaml extension to handle
  Netlink specs
-Message-ID: <20250828185037.07873d04@kmaincent-XPS-13-7390>
-In-Reply-To: <4c97889f0674b69f584dedc543a879d227ef5de0.1753718185.git.mchehab+huawei@kernel.org>
+Message-ID: <20250828190243.0d3f74f6@kmaincent-XPS-13-7390>
+In-Reply-To: <20250828185037.07873d04@kmaincent-XPS-13-7390>
 References: <cover.1753718185.git.mchehab+huawei@kernel.org>
 	<4c97889f0674b69f584dedc543a879d227ef5de0.1753718185.git.mchehab+huawei@kernel.org>
+	<20250828185037.07873d04@kmaincent-XPS-13-7390>
 Organization: bootlin
 X-Mailer: Claws Mail 4.2.0 (GTK 3.24.41; x86_64-pc-linux-gnu)
 Precedence: bulk
@@ -67,44 +68,56 @@ Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
 X-Last-TLS-Session-Version: TLSv1.3
 
-Le Mon, 28 Jul 2025 18:01:59 +0200,
-Mauro Carvalho Chehab <mchehab+huawei@kernel.org> a =C3=A9crit :
+Le Thu, 28 Aug 2025 18:50:37 +0200,
+Kory Maincent <kory.maincent@bootlin.com> a =C3=A9crit :
 
-> Instead of manually calling ynl_gen_rst.py, use a Sphinx extension.
-> This way, no .rst files would be written to the Kernel source
-> directories.
+> Le Mon, 28 Jul 2025 18:01:59 +0200,
+> Mauro Carvalho Chehab <mchehab+huawei@kernel.org> a =C3=A9crit :
 >=20
-> We are using here a toctree with :glob: property. This way, there
-> is no need to touch the netlink/specs/index.rst file every time
-> a new Netlink spec is added/renamed/removed.
+> > Instead of manually calling ynl_gen_rst.py, use a Sphinx extension.
+> > This way, no .rst files would be written to the Kernel source
+> > directories.
+> >=20
+> > We are using here a toctree with :glob: property. This way, there
+> > is no need to touch the netlink/specs/index.rst file every time
+> > a new Netlink spec is added/renamed/removed. =20
+>=20
+> ...
+>=20
+> > diff --git a/Documentation/networking/index.rst
+> > b/Documentation/networking/index.rst index ac90b82f3ce9..b7a4969e9bc9 1=
+00644
+> > --- a/Documentation/networking/index.rst
+> > +++ b/Documentation/networking/index.rst
+> > @@ -57,7 +57,7 @@ Contents:
+> >     filter
+> >     generic-hdlc
+> >     generic_netlink
+> > -   netlink_spec/index
+> > +   ../netlink/specs/index =20
+>=20
+> Faced a doc build warning that say netlink_spec/index.rst is not used.
+>=20
+> $ git grep netlink_spec
+> Documentation/networking/mptcp.rst:netlink_spec/mptcp_pm.rst.
+> Documentation/translations/zh_CN/networking/index.rst:*   netlink_spec/in=
+dex
+>=20
+> I think we can remove the whole directory and change these, right?
 
-...
+Oops just saw that is was some local leftover. This first warning get remov=
+ed
+with a clean tree.
+=20
+> Also got a doc build warning that says netlink/specs/index is not existing
+> even if it exists. Maybe a sphinx parsing issue ?!
 
-> diff --git a/Documentation/networking/index.rst
-> b/Documentation/networking/index.rst index ac90b82f3ce9..b7a4969e9bc9 100=
-644
-> --- a/Documentation/networking/index.rst
-> +++ b/Documentation/networking/index.rst
-> @@ -57,7 +57,7 @@ Contents:
->     filter
->     generic-hdlc
->     generic_netlink
-> -   netlink_spec/index
-> +   ../netlink/specs/index
 
-Faced a doc build warning that say netlink_spec/index.rst is not used.
+>=20
+> Regards,
 
-$ git grep netlink_spec
-Documentation/networking/mptcp.rst:netlink_spec/mptcp_pm.rst.
-Documentation/translations/zh_CN/networking/index.rst:*   netlink_spec/index
 
-I think we can remove the whole directory and change these, right?
 
-Also got a doc build warning that says netlink/specs/index is not existing =
-even
-if it exists. Maybe a sphinx parsing issue ?!
-
-Regards,
 --=20
 K=C3=B6ry Maincent, Bootlin
 Embedded Linux and kernel engineering

@@ -1,119 +1,111 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from smtpout-03.galae.net (smtpout-03.galae.net [185.246.85.4])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF8F91B4247;
-	Mon, 18 Aug 2025 22:49:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 962012749F1
+	for <lkmm@lists.linux.dev>; Thu, 28 Aug 2025 16:51:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.246.85.4
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755557369; cv=none; b=uKX8smAZwpfdzgUL5l3fU9CtLxCmafEYPGhiUxpAOqHDG6XsJ/2k5YpWLqiITy+woNVG41EPtcjtwKOuoskvrzo09gahM+zuQMJZItXk/BUeL2gth1Mekhp+tRCpsG/JqFgH6Z5JJqCwfBt2Nnlht1j60QDZfJFzT12//Wc6IIo=
+	t=1756399893; cv=none; b=A5KDePng6WreJ58DSzKKhGa8GSAwME/f7b/qjTWrkRfB3MzwW58SSrCJu5J3/SE/ULbvKQwALu4GejynaBtTboIZb/G02TFke6CUMhWT0Rzc3eV6vtfQpLtijrWsAJwExqTs0JJXPmySNpD2PqrMB/0t7veS7l+wkApY0Tffz3A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755557369; c=relaxed/simple;
-	bh=e8raUYSx+kB5duYi2EeS2q/qnA85lKxEqn2nshSlYrs=;
-	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
-	 References:In-Reply-To; b=Xy4AO//IZm1vj/kRpBAFr4CbqOTP6VC4mjE9p4284LKSQxW1sM4J/+1Mzkrf8sTyjC9AKZTRyXBOlwoBjpxcqoHdGkVPe1j5zY8wtg7HWmwZZ5L24fmGRNhRfigRg1+Gvlb3NeSq3evfI2bse2FQUY/JxPdvkuNqGtyIWRslCw4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=kVHeeeAt; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1756399893; c=relaxed/simple;
+	bh=PVupvUbljqqv0l5EpslMuDT5j7QU3Ufuil+d3qdB5eA=;
+	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=J7lPEMV8kijQt8tUxHS8+BsQX18qAP1E6Xn4GZW6Q8R2HW+TdVHMqPVwwkxAlKB3qd5T4zHaTquNn0c6mKuAALAi8XEbMBW4xusOqTHZmbV9RvkQyC4wXeBqwP/LagaHYCiiFKuEf/2T3KZSPf3ux3M+DBR4bEe3CXZEzqPSe5k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com; spf=pass smtp.mailfrom=bootlin.com; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=LF+gGwKi; arc=none smtp.client-ip=185.246.85.4
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bootlin.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="kVHeeeAt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DCEC1C4CEEB;
-	Mon, 18 Aug 2025 22:49:23 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1755557368;
-	bh=e8raUYSx+kB5duYi2EeS2q/qnA85lKxEqn2nshSlYrs=;
-	h=Date:Cc:Subject:From:To:References:In-Reply-To:From;
-	b=kVHeeeAtKZTMPzraDJRX8+GreH31xIDktiuKOIY+U6VzjLxjw7jQHtCZI4C/8YEyk
-	 3PlBVC0jcUzIm0BJdmYHjhZROeq9wYH2qf832/pqjyDg/VdOqxLpncoeCAuPxXPA4L
-	 DmLNLp37EnKwcxGr1lkg14cGnJGUOxgT3Kt5IVYyh3h7y5VBBKbryWG7rB827fT9iQ
-	 RufMvrNznuNqoI8kB4nsc5gv/+WNHLbC4jPJ9kpvjRL0N1iNiJIePhmzViMWIkFzri
-	 sXgkzbjnZ2aLlH7qLRmzJnLNvvNTqddHrhfbsh1rqz714Wco60qxaSTEH/86Sh/hgn
-	 gDrQ3wCAzMChw==
+	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="LF+gGwKi"
+Received: from smtpout-01.galae.net (smtpout-01.galae.net [212.83.139.233])
+	by smtpout-03.galae.net (Postfix) with ESMTPS id 111BA4E40BB1;
+	Thu, 28 Aug 2025 16:51:23 +0000 (UTC)
+Received: from mail.galae.net (mail.galae.net [212.83.136.155])
+	by smtpout-01.galae.net (Postfix) with ESMTPS id BCAB960303;
+	Thu, 28 Aug 2025 16:51:22 +0000 (UTC)
+Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id 6EEC81C22DDE9;
+	Thu, 28 Aug 2025 18:50:43 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=dkim;
+	t=1756399881; h=from:subject:date:message-id:to:cc:mime-version:content-type:
+	 content-transfer-encoding:in-reply-to:references;
+	bh=01CLvL+opovfhfkSRyspjEXFZkfbj0TTItWEljkWyHE=;
+	b=LF+gGwKiR4u1aF8x9V/r/FYoaEYM5yIMM4utgdSxggzuD4ceJXDH52EapVHz1dRavntVmb
+	Z/4leyNDKQ3csKFk80uvyyd/e5syNpIg1IV1Xyf2kelhcKowKrG3NfsAdB9M+WJVPpnYd+
+	d85Egg6pS5815TGmco9Nynhhhkjzgm1QF9rqUeHeBm59SlAjT1Fupc4Mnn5VODa3tirg8U
+	n8wDXL4666720TL3hBZMVmYjB9PvgYgev95Id+9yn+IXQE2JDHZq4nbJ8lDujkGkQ/M/oF
+	+wZyBzXCBG/NU6Lt30oQqy+shG9EVxYj5ClTuzgIhroq74/O8htu/GlXU16KSA==
+Date: Thu, 28 Aug 2025 18:50:37 +0200
+From: Kory Maincent <kory.maincent@bootlin.com>
+To: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+Cc: "Message-ID :" <cover.1752076293.git.mchehab+huawei@kernel.org>, Linux
+ Doc Mailing List <linux-doc@vger.kernel.org>, "Akira Yokosawa"
+ <akiyks@gmail.com>, "Breno Leitao" <leitao@debian.org>, "David S. Miller"
+ <davem@davemloft.net>, "Donald Hunter" <donald.hunter@gmail.com>, "Eric
+ Dumazet" <edumazet@google.com>, "Ignacio Encinas Rubio"
+ <ignacio@iencinas.com>, "Jakub Kicinski" <kuba@kernel.org>, "Jan Stancek"
+ <jstancek@redhat.com>, "Jonathan Corbet" <corbet@lwn.net>, "Marco Elver"
+ <elver@google.com>, "Paolo Abeni" <pabeni@redhat.com>, "Randy Dunlap"
+ <rdunlap@infradead.org>, "Ruben Wauters" <rubenru09@aol.com>, "Shuah Khan"
+ <skhan@linuxfoundation.org>, "Simon Horman" <horms@kernel.org>,
+ joel@joelfernandes.org, linux-kernel-mentees@lists.linux.dev,
+ linux-kernel@vger.kernel.org, lkmm@lists.linux.dev, netdev@vger.kernel.org,
+ peterz@infradead.org, stern@rowland.harvard.edu
+Subject: Re: [PATCH v10 06/14] docs: use parser_yaml extension to handle
+ Netlink specs
+Message-ID: <20250828185037.07873d04@kmaincent-XPS-13-7390>
+In-Reply-To: <4c97889f0674b69f584dedc543a879d227ef5de0.1753718185.git.mchehab+huawei@kernel.org>
+References: <cover.1753718185.git.mchehab+huawei@kernel.org>
+	<4c97889f0674b69f584dedc543a879d227ef5de0.1753718185.git.mchehab+huawei@kernel.org>
+Organization: bootlin
+X-Mailer: Claws Mail 4.2.0 (GTK 3.24.41; x86_64-pc-linux-gnu)
 Precedence: bulk
 X-Mailing-List: lkmm@lists.linux.dev
 List-Id: <lkmm.lists.linux.dev>
 List-Subscribe: <mailto:lkmm+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:lkmm+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
+MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Date: Tue, 19 Aug 2025 00:49:22 +0200
-Message-Id: <DC5X5AJHD5XZ.1QNTV43HZ2F9L@kernel.org>
-Cc: <linux-kernel@vger.kernel.org>, <rust-for-linux@vger.kernel.org>,
- <lkmm@lists.linux.dev>, <linux-arch@vger.kernel.org>, "Miguel Ojeda"
- <ojeda@kernel.org>, "Alex Gaynor" <alex.gaynor@gmail.com>, "Gary Guo"
- <gary@garyguo.net>, =?utf-8?q?Bj=C3=B6rn_Roy_Baron?=
- <bjorn3_gh@protonmail.com>, "Andreas Hindborg" <a.hindborg@kernel.org>,
- "Alice Ryhl" <aliceryhl@google.com>, "Trevor Gross" <tmgross@umich.edu>,
- "Danilo Krummrich" <dakr@kernel.org>, "Will Deacon" <will@kernel.org>,
- "Peter Zijlstra" <peterz@infradead.org>, "Mark Rutland"
- <mark.rutland@arm.com>, "Wedson Almeida Filho" <wedsonaf@gmail.com>,
- "Viresh Kumar" <viresh.kumar@linaro.org>, "Lyude Paul" <lyude@redhat.com>,
- "Ingo Molnar" <mingo@kernel.org>, "Mitchell Levy"
- <levymitchell0@gmail.com>, "Paul E. McKenney" <paulmck@kernel.org>, "Greg
- Kroah-Hartman" <gregkh@linuxfoundation.org>, "Linus Torvalds"
- <torvalds@linux-foundation.org>, "Thomas Gleixner" <tglx@linutronix.de>,
- "Alan Stern" <stern@rowland.harvard.edu>
-Subject: Re: [PATCH v8 6/9] rust: sync: atomic: Add the framework of
- arithmetic operations
-From: "Benno Lossin" <lossin@kernel.org>
-To: "Boqun Feng" <boqun.feng@gmail.com>
-X-Mailer: aerc 0.20.1
-References: <20250719030827.61357-1-boqun.feng@gmail.com>
- <20250719030827.61357-7-boqun.feng@gmail.com>
- <DC0AKAL1LW84.MR2RFTMX1H61@kernel.org> <aKCtbSDuJNrtdLNp@tardis-2.local>
- <DC43RPUDBY6M.1TGSQKJV9BKSF@kernel.org> <aKFGtzQnUdH4zUGD@tardis-2.local>
-In-Reply-To: <aKFGtzQnUdH4zUGD@tardis-2.local>
+Content-Transfer-Encoding: quoted-printable
+X-Last-TLS-Session-Version: TLSv1.3
 
-On Sun Aug 17, 2025 at 5:04 AM CEST, Boqun Feng wrote:
-> On Sat, Aug 16, 2025 at 09:35:26PM +0200, Benno Lossin wrote:
->> On Sat Aug 16, 2025 at 6:10 PM CEST, Boqun Feng wrote:
->> > On Tue, Aug 12, 2025 at 10:04:12AM +0200, Benno Lossin wrote:
->> >> On Sat Jul 19, 2025 at 5:08 AM CEST, Boqun Feng wrote:
->> >> > +/// Types that support atomic add operations.
->> >> > +///
->> >> > +/// # Safety
->> >> > +///
->> >> > +/// `wrapping_add` any value of type `Self::Repr::Delta` obtained =
-by [`Self::rhs_into_delta()`] to
->> >>=20
->> >> Can you add a normal comment TODO here:
->> >>=20
->> >>     // TODO: properly define `wrapping_add` in this context.
->> >
->> > Yeah, this sounds good to me. How do you propose we arrange the normal
->> > comment with the doc comment, somthing like:
->> >
->> >     // TODO: properly define `wrapping_add` in this context.
->> >    =20
->> >     /// Types that support atomic add operations.
->> >     ///
->> >     /// # Safety
->> >     ///
->> >     /// `wrapping_add` any value of type `Self::Repr::Delta` obtained =
-by [`Self::rhs_into_delta()`] to
->> >     ...
->> >     pub unsafe trait AtomicAdd<...> {
->> >         ...
->> >     }
->>=20
->>=20
->> Inline maybe?
->>=20
->>     /// Types that support atomic add operations.
->>     ///
->>     /// # Safety
->>     ///
->>     // TODO: properly define `wrapping_add` in this context:
->
-> The colon looks a bit weird to me. I would replace that with a period,
-> i.e.
->
->      // TODO: properly define `wrapping_add` in the following comment.
->      /// `wrapping_add` any value of type `Self::Repr::Delta` obtained by=
- [`Self::rhs_into_delta()`] to
->
-> Thoughts?
+Le Mon, 28 Jul 2025 18:01:59 +0200,
+Mauro Carvalho Chehab <mchehab+huawei@kernel.org> a =C3=A9crit :
 
-Also works for me :)
+> Instead of manually calling ynl_gen_rst.py, use a Sphinx extension.
+> This way, no .rst files would be written to the Kernel source
+> directories.
+>=20
+> We are using here a toctree with :glob: property. This way, there
+> is no need to touch the netlink/specs/index.rst file every time
+> a new Netlink spec is added/renamed/removed.
 
----
-Cheers,
-Benno
+...
+
+> diff --git a/Documentation/networking/index.rst
+> b/Documentation/networking/index.rst index ac90b82f3ce9..b7a4969e9bc9 100=
+644
+> --- a/Documentation/networking/index.rst
+> +++ b/Documentation/networking/index.rst
+> @@ -57,7 +57,7 @@ Contents:
+>     filter
+>     generic-hdlc
+>     generic_netlink
+> -   netlink_spec/index
+> +   ../netlink/specs/index
+
+Faced a doc build warning that say netlink_spec/index.rst is not used.
+
+$ git grep netlink_spec
+Documentation/networking/mptcp.rst:netlink_spec/mptcp_pm.rst.
+Documentation/translations/zh_CN/networking/index.rst:*   netlink_spec/index
+
+I think we can remove the whole directory and change these, right?
+
+Also got a doc build warning that says netlink/specs/index is not existing =
+even
+if it exists. Maybe a sphinx parsing issue ?!
+
+Regards,
+--=20
+K=C3=B6ry Maincent, Bootlin
+Embedded Linux and kernel engineering
+https://bootlin.com

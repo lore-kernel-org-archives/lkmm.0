@@ -1,73 +1,73 @@
-Received: from mail-qv1-f54.google.com (mail-qv1-f54.google.com [209.85.219.54])
+Received: from mail-qv1-f42.google.com (mail-qv1-f42.google.com [209.85.219.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9631C26A0DD
-	for <lkmm@lists.linux.dev>; Fri,  5 Sep 2025 04:41:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE97F26C3B3
+	for <lkmm@lists.linux.dev>; Fri,  5 Sep 2025 04:41:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757047318; cv=none; b=nAXYjoXYGHE/d5vO0cZcgMW005s9449J5uOG9LNv1WynI0L0H7MvX1o8bIr2hVLiTDV7Krp1k6itn7XVVtLgD4/aA73dDB1UqRR4tUbLFEXlInCs4tuuyPk9CZSR+EZw+yF7dxmxU5hgDZF5cO29E949YZgdHYcgDfWlVJfqke4=
+	t=1757047319; cv=none; b=Yfg9MHThkAO1mlFL9wmlk4ejT2Nkj7+ArbCSft5coUx0lJnAXGBjW2zWApRb5x676VfQQsm9qTL7AEiPJElG30scSU2RWvHW0tuJA8on/eTGCO+GFs+gV+xkPb5IS+Ss/efgZatgdXl3fcCnVaD2mfmF4bLNVlNFRZaIJUzvNvE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757047318; c=relaxed/simple;
-	bh=rqwRzAym8TL2VAc6twmOgth3V52HkvGaPDgGP66Qezs=;
+	s=arc-20240116; t=1757047319; c=relaxed/simple;
+	bh=iRuh/R6i6zrXEshxNZI6ZNhqUyjyGviBVHoFaK4WBaM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ffM77blkVP+d2XxOLmfKVyxct8qIk2fZuOJwDFzj04qsqdhY/Lf2ZCI2oSgUhdI7qOqrX2/KqkKuIhJNcGUtUkIXhsz7taioo/ntwzrcwHhHtq6T9rYPR8A1LmLfR5yXP/xVXdeIJUeaaDYotW/Z8NF8uyu4D/kPtTcGaIEbtZk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=gL1w6HyK; arc=none smtp.client-ip=209.85.219.54
+	 MIME-Version; b=Zeuk9KfV8/22JsKA1mkLsmX0SJl2RUE+Ti50zW4DQOFy8dgFueXJIsSXahOxMU/H6Ncc1aGZnj5ZU5PK8uoiJ4H/Dsd0uPjYXT4O0/8NRfMqS/ZNnpBVL15RWdtxQkCPwrCYBdzsiMh83Bt4JNtjwwyr8bR9Xrc9+/MMQEsVojE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=I9eQOUlK; arc=none smtp.client-ip=209.85.219.42
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gL1w6HyK"
-Received: by mail-qv1-f54.google.com with SMTP id 6a1803df08f44-724e9a1812bso15605826d6.0
-        for <lkmm@lists.linux.dev>; Thu, 04 Sep 2025 21:41:55 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="I9eQOUlK"
+Received: by mail-qv1-f42.google.com with SMTP id 6a1803df08f44-72374d6a6caso18663206d6.0
+        for <lkmm@lists.linux.dev>; Thu, 04 Sep 2025 21:41:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1757047314; x=1757652114; darn=lists.linux.dev;
+        d=gmail.com; s=20230601; t=1757047316; x=1757652116; darn=lists.linux.dev;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:feedback-id:from:to:cc:subject
          :date:message-id:reply-to;
-        bh=RZ4jyqAebdFk40dMhQCeBc/em7Z7GJAy4Tky878tJlA=;
-        b=gL1w6HyK0kJGVxFalViNDWM6olUp30BQK50tf7812WMmCIggCCe2Imn91zpYCDR8pQ
-         H4Kc9zjyTwthZDPj6IAoJ/bV/aQ/3q9rvprUwSTadxKoXXV135BdVTuHsrKwID798Lwx
-         rpLaLua9155fkABnTZRzQCD5GmisIv4zySMdeWyLdqv22wX9B/gR4+rcZXCjWamiMwKq
-         9mflf7Yvvg7BTTB3A9cuh735CudyCZLOpEvcXIVwGcePXBdPNgJTa4eSt7YYboynkfr4
-         nohVbvJ9iBn6a7ACwQZC6UbxkdkbsCDJWQBqqHepitUF3WfPIeJxM/+p+hlEAdTsXXOi
-         u3/A==
+        bh=6Oha5IBZzZ1/TS20qhGnIJGMno2KT/vwjiVwVvZTsu0=;
+        b=I9eQOUlKwd6+9h5uy5KYuHCTinT7CEen9dl8EZ4+RpmFo+UBgOZz5JjLep2Wb184JA
+         Ck8U8bP0uDIWmpiNPZ2RWE1+4jJyroNF+/8yFY/oc9dWPfp9YHy8Zmv++PfSQAdPM7uv
+         pTH+qPR2G/fpJaRtSWaVVnkpmGN+ST3IeiSh3JyVaMcS9bDDQ/lfMq9tVD2ytkLwYx1I
+         jtD7hXBIgTkUpu3B4/sa7ECH8mE7f9sYcprP333pPHs3Y8VFO9nTp+Ga65hP7hHR7KnL
+         jjXcXvhe3ZUn8InYBOYzZLwWTygzT4Xa17MC6qxrUGMWtFzdg8D/HVXubH2WFMgXBPsJ
+         woRQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1757047314; x=1757652114;
+        d=1e100.net; s=20230601; t=1757047316; x=1757652116;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:feedback-id:x-gm-message-state
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=RZ4jyqAebdFk40dMhQCeBc/em7Z7GJAy4Tky878tJlA=;
-        b=dvI9xrIcP8S7QzeLj0e+a1hTTMcf/lyCm+lobgX3uLZCWtyQCrPsm3AAwORszV/FEQ
-         RUyEN07qZn5Yo8CVhQsN0aUb/okq0PYlnKuQ9xWo1BpvIDP/oaVXePYFmnP6zmWozFbL
-         57fDVTy+3q9i87hUn8UbCBrUpzGfvr9Se2b78G5pVPek6ZblgJZXkn+F+WgFZQZl/H7A
-         xuYUFuO/n1pWjNAfo9GpKFa6Awf5uUlgjk1kHGcdFOKAyHWAJwHeiFBrOvPSlf97+3/b
-         9/P6GhKaOje5a497EILE73DqxY4//vpbIRXg1YYsW1DG7EUNyXHeIA2MkYCnGgZPr/3d
-         34iw==
-X-Forwarded-Encrypted: i=1; AJvYcCUUzA8Po5g+0S3yk8kpzDja9b7jVm9hAR3b3lETTfMw2KKk1q/A8BMzITZcSsoTPPG11elc@lists.linux.dev
-X-Gm-Message-State: AOJu0YyLH8PNKgJQwZLP98VC0YyRnUydLA2q1h7wMf6snTXdzADeN6bB
-	Ntn5VohoMDHZqFo9eKeE1ejwWAtif2MqiueJkl+v/o/tS+evhDE2OGzc
-X-Gm-Gg: ASbGncsX7YpgUbMZjx/cLHyNAXShX7eYyGtcMhVCu7qDoRuB4epXw+m2FAgLgrPME2u
-	L82wsmV659lXKY3R1UzQUmubDpfeDveoM7lThKWqh7MZfTmcxlNNBqdM8hwhEf6jte0qhhmK0hr
-	MQSjQqwrr4asAMMeoPr1cdQnFuqjkiNiReszIm47IrFhUbwQQDLReJxc2LVADfuRYpVxOxpG8Ev
-	tI1j4XA0OPLMmKAb6e69JSIldjghHmZQVKM026yHArl5lfzraGVjcrGZA2uIFLSCZV4EIKGYbvm
-	PjcWi6/Vw7TL3h9yqokoGwEPfOZ5p/YI7mPzc+1M5vrWf92PHdAt/xlT15xp+Bl6fmFXK0qpp1m
-	yJCbjZLQAftQEti9irstqV5w4+MSu8Hf4/63s+hus+zH59Z7mhQhnyRcqNVqFbksQlrUd/hMtZg
-	yhIbPc4ImW/tr0sOQIyjGL3lOrBC0s0uF7AA==
-X-Google-Smtp-Source: AGHT+IHC5WKTYzhLeEpox8p85DRt8ZTciM306YARQtb9LiiwFMwDkaHh3Qd+eJ3+8ypPKRCp4OpqXg==
-X-Received: by 2002:ad4:4ba3:0:b0:71f:b221:9aa9 with SMTP id 6a1803df08f44-72bc365b6e0mr22245536d6.29.1757047314297;
-        Thu, 04 Sep 2025 21:41:54 -0700 (PDT)
+        bh=6Oha5IBZzZ1/TS20qhGnIJGMno2KT/vwjiVwVvZTsu0=;
+        b=SmxKCiBqFjtMqeDkL2wmNoNLUrlSHnuXtyLUbjEsjNoP9makoV/tP4gIoIPZR3wfop
+         lLxAuBuelsNq0tUUMpnawjHWaDjMrWMw8snuBWOj1OKtrC9qxSbp6y++Guy6WIWCJYpa
+         v2xJuRjcnoxpbeLF84TCNztQFXlaAc/EmgEeoJUr6JQUwzFqqnX2YS1hvelWWHJs8f6s
+         ofUXFtO0gIrJnQe1yRLAIY7r/eMDE1PWlyFiDMmFfl8CQsCRnWhFR+JMshyRQc3FMVwW
+         pMwE0TK/lmobir47oOdiSkWKiiY5RAW//z2wsIb3hz9zmLM0Z0AiXnKDXeIjjf/7KKaW
+         yyMA==
+X-Forwarded-Encrypted: i=1; AJvYcCVDw4EYCzj+O3crMe8jR/K/ID8TLelZPlUEABZJgne+VHpXYUMPfROdQHVW87wVZtGesZC+@lists.linux.dev
+X-Gm-Message-State: AOJu0Yzeo3OiY0gu2JTGyRCY4qTm8XoJTog88kpBC+TyoQnUytcnO94U
+	6nzVRf1LLQ4VvalY2MZopjZ7aiCrNKwdwuhe5plZuQDU5Av+EAQcUB5Q
+X-Gm-Gg: ASbGncuh8ueUqKsi456/NYlO0IdtEhGfvX48d3kNLOaeRsY07KzmoKHZ8rYLDbN8k9T
+	2jwlZXnlfSfDiAZ3QHSlwDlKev7OvtcjDiRo8xVzfMmk0lyX19n0eBmNbNETow2eIsF5PqX2xT+
+	4uf8qs8HpqpAov5W8zyIv9+qahc247RelsmU9oxH9JlCrj961XYx015X001SLKwaUw6pcNjpjPM
+	g0RPo8uy8tOPvE+bHOSkMGgPBn53Gk1zn8bFlWL6RScrykgBCqlxjvOEAVBwvazR9Gcjz3nAYd4
+	uWncETSV4U/+o/tUC0oFSeBCEpqnNAD5Y0y80N7p0aI3+JVf+qE1eYEXaG9ODgbhsAItEyglzi8
+	+A1tP9Kte/xFHd2W5ng34G8B/tfh+K884JpnKlvvWZTb7xkP/UgTQgQgRW+5tGdGalQSIY+QVy2
+	MHkpBfsbdL4WNObKer19LjHYA=
+X-Google-Smtp-Source: AGHT+IGp92/iYizOniu71fnmqCFw193dcOQ0UOkJic6YQctnsEts+grtrBjYUz+15IcHHiQ+QEP3/A==
+X-Received: by 2002:a05:6214:cc3:b0:722:48f8:66a with SMTP id 6a1803df08f44-72248f806bemr136948076d6.28.1757047315709;
+        Thu, 04 Sep 2025 21:41:55 -0700 (PDT)
 Received: from fauth-a2-smtp.messagingengine.com (fauth-a2-smtp.messagingengine.com. [103.168.172.201])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-720ac16deffsm58118856d6.12.2025.09.04.21.41.53
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-720b4666156sm58559096d6.39.2025.09.04.21.41.55
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 04 Sep 2025 21:41:53 -0700 (PDT)
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfauth.phl.internal (Postfix) with ESMTP id 6EF63F40066;
-	Fri,  5 Sep 2025 00:41:53 -0400 (EDT)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-03.internal (MEProxy); Fri, 05 Sep 2025 00:41:53 -0400
-X-ME-Sender: <xms:EWq6aIboi5c2GjXEsrnXebpsLTFyMa6TmpoDWF0Wo3ydvCw9VoX7hg>
-    <xme:EWq6aBFMFtJtFoVfgk-qFoXmauUCCWnSyiH9EnacMQroxp4EFjyjh6oB4Ds__zAG-
-    Qh-DkEeeK_feZayUg>
-X-ME-Received: <xmr:EWq6aEuT9KwvmHF2-6uhpnKEyVbebz7VD1jPDzPiCctOmO-9H7AyNEQjTZS1_960RyB9NGLzi5sSKCZwIwh5ErbmlnvlEhUL>
+        Thu, 04 Sep 2025 21:41:55 -0700 (PDT)
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfauth.phl.internal (Postfix) with ESMTP id DDE70F40066;
+	Fri,  5 Sep 2025 00:41:54 -0400 (EDT)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-05.internal (MEProxy); Fri, 05 Sep 2025 00:41:54 -0400
+X-ME-Sender: <xms:Emq6aKoTNnwi7RuoU_FyPUkKyoF-zYBKe09n5fw4YV5HlyuR3YR3jA>
+    <xme:Emq6aGUCfQ4_0JYMyhu4kbNg6B_mdS1gL6Vz3IiLzV7GCi0B8d-ikxXAK1UAGPmfZ
+    bYtM-fNbs5FifzJ3w>
+X-ME-Received: <xmr:Emq6aA-t75nOvATv31xAgAB4oE_6tLhcsuxPqsWD7TsO6-yn8mUaxOIeKxqtnnEs9qKuRFmTmmTxOz6Ra-5i4OnCKDjzVDek>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdejleeiucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceurghi
     lhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujfgurh
@@ -86,14 +86,14 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdejleeiucetufdoteggod
     hmrghrkhdrrhhuthhlrghnugesrghrmhdrtghomhdprhgtphhtthhopehmihhnghhosehk
     vghrnhgvlhdrohhrghdprhgtphhtthhopehtghhlgieslhhinhhuthhrohhnihigrdguvg
     dprhgtphhtthhopehprghulhhmtghksehkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:EWq6aPLRB6_x7TepPlpphNqgc1zpwsgkBvH0P0xrgBGiHR3-KvW-aw>
-    <xmx:EWq6aKNmZ7T6qHcpF6uKQnTIF_0pNRy9AaQ2JMf-nMn-WHTuv_n3cA>
-    <xmx:EWq6aPZGS7hXQBfbRhGsw_S6KrDbLkZVPe72PMWWppAxKRrjImT9GA>
-    <xmx:EWq6aOzupKIkuXsz3Ic8JHd79RmpoqKKKbAzNk-VFL0gUf16Hei-nw>
-    <xmx:EWq6aDHQK9dwLyGhqbpeWPFK9UwvzRDGkjhdcZNUR7mcpWSmGTmEhVsi>
+X-ME-Proxy: <xmx:Emq6aGbix-ehMY3LBeqZh_XtLAhHR2zVmP8Gg_69l_C3yHEz_Y1HJA>
+    <xmx:Emq6aAeg5i-2knWUfSYt-83maOOTsTXXUv-ZlNYvBdJf-N6OnQvkIA>
+    <xmx:Emq6aIqONjtzm3tGYVvPsKyk8l_wxCY2wRvWiB9riailjxALxIqXNg>
+    <xmx:Emq6aPBgkReJdF4TC_CgnSaIsjI8txam3yEBJS1xID4R3hZ7VdocRw>
+    <xmx:Emq6aOXz96HKGAqBwbPqilfwZer1be0KqVAu_mB38gXIWVblqrqs6U21>
 Feedback-ID: iad51458e:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 5 Sep 2025 00:41:51 -0400 (EDT)
+ 5 Sep 2025 00:41:54 -0400 (EDT)
 From: Boqun Feng <boqun.feng@gmail.com>
 To: rust-for-linux@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
@@ -115,9 +115,9 @@ Cc: "Will Deacon" <will@kernel.org>,
 	"Danilo Krummrich" <dakr@kernel.org>,
 	"Andreas Hindborg" <a.hindborg@kernel.org>,
 	Boqun Feng <boqun.feng@gmail.com>
-Subject: [PATCH 01/14] rust: Introduce atomic API helpers
-Date: Thu,  4 Sep 2025 21:41:28 -0700
-Message-ID: <20250905044141.77868-2-boqun.feng@gmail.com>
+Subject: [PATCH 02/14] rust: sync: Add basic atomic operation mapping framework
+Date: Thu,  4 Sep 2025 21:41:29 -0700
+Message-ID: <20250905044141.77868-3-boqun.feng@gmail.com>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250905044141.77868-1-boqun.feng@gmail.com>
 References: <20250905044141.77868-1-boqun.feng@gmail.com>
@@ -129,1167 +129,374 @@ List-Unsubscribe: <mailto:lkmm+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-In order to support LKMM atomics in Rust, add rust_helper_* for atomic
-APIs. These helpers ensure the implementation of LKMM atomics in Rust is
-the same as in C. This could save the maintenance burden of having two
-similar atomic implementations in asm.
+Preparation for generic atomic implementation. To unify the
+implementation of a generic method over `i32` and `i64`, the C side
+atomic methods need to be grouped so that in a generic method, they can
+be referred as <type>::<method>, otherwise their parameters and return
+value are different between `i32` and `i64`, which would require using
+`transmute()` to unify the type into a `T`.
 
-Originally-by: Mark Rutland <mark.rutland@arm.com>
+Introduce `AtomicImpl` to represent a basic type in Rust that has the
+direct mapping to an atomic implementation from C. Use a sealed trait to
+restrict `AtomicImpl` to only support `i32` and `i64` for now.
+
+Further, different methods are put into different `*Ops` trait groups,
+and this is for the future when smaller types like `i8`/`i16` are
+supported but only with a limited set of API (e.g. only set(), load(),
+xchg() and cmpxchg(), no add() or sub() etc).
+
+While the atomic mod is introduced, documentation is also added for
+memory models and data races.
+
+Also bump my role to the maintainer of ATOMIC INFRASTRUCTURE to reflect
+my responsibility on the Rust atomic mod.
+
 Reviewed-by: Alice Ryhl <aliceryhl@google.com>
+Reviewed-by: Benno Lossin <lossin@kernel.org>
 Signed-off-by: Boqun Feng <boqun.feng@gmail.com>
-Link: https://lore.kernel.org/all/20250719030827.61357-2-boqun.feng@gmail.com/
+Link: https://lore.kernel.org/all/20250719030827.61357-3-boqun.feng@gmail.com/
 ---
- rust/helpers/atomic.c                     | 1040 +++++++++++++++++++++
- rust/helpers/helpers.c                    |    1 +
- scripts/atomic/gen-atomics.sh             |    1 +
- scripts/atomic/gen-rust-atomic-helpers.sh |   67 ++
- 4 files changed, 1109 insertions(+)
- create mode 100644 rust/helpers/atomic.c
- create mode 100755 scripts/atomic/gen-rust-atomic-helpers.sh
+ MAINTAINERS                         |   4 +-
+ rust/kernel/sync.rs                 |   1 +
+ rust/kernel/sync/atomic.rs          |  22 +++
+ rust/kernel/sync/atomic/internal.rs | 265 ++++++++++++++++++++++++++++
+ 4 files changed, 291 insertions(+), 1 deletion(-)
+ create mode 100644 rust/kernel/sync/atomic.rs
+ create mode 100644 rust/kernel/sync/atomic/internal.rs
 
-diff --git a/rust/helpers/atomic.c b/rust/helpers/atomic.c
-new file mode 100644
-index 000000000000..cf06b7ef9a1c
---- /dev/null
-+++ b/rust/helpers/atomic.c
-@@ -0,0 +1,1040 @@
-+// SPDX-License-Identifier: GPL-2.0
-+
-+// Generated by scripts/atomic/gen-rust-atomic-helpers.sh
-+// DO NOT MODIFY THIS FILE DIRECTLY
-+
-+/*
-+ * This file provides helpers for the various atomic functions for Rust.
-+ */
-+#ifndef _RUST_ATOMIC_API_H
-+#define _RUST_ATOMIC_API_H
-+
-+#include <linux/atomic.h>
-+
-+// TODO: Remove this after INLINE_HELPERS support is added.
-+#ifndef __rust_helper
-+#define __rust_helper
-+#endif
-+
-+__rust_helper int
-+rust_helper_atomic_read(const atomic_t *v)
-+{
-+	return atomic_read(v);
-+}
-+
-+__rust_helper int
-+rust_helper_atomic_read_acquire(const atomic_t *v)
-+{
-+	return atomic_read_acquire(v);
-+}
-+
-+__rust_helper void
-+rust_helper_atomic_set(atomic_t *v, int i)
-+{
-+	atomic_set(v, i);
-+}
-+
-+__rust_helper void
-+rust_helper_atomic_set_release(atomic_t *v, int i)
-+{
-+	atomic_set_release(v, i);
-+}
-+
-+__rust_helper void
-+rust_helper_atomic_add(int i, atomic_t *v)
-+{
-+	atomic_add(i, v);
-+}
-+
-+__rust_helper int
-+rust_helper_atomic_add_return(int i, atomic_t *v)
-+{
-+	return atomic_add_return(i, v);
-+}
-+
-+__rust_helper int
-+rust_helper_atomic_add_return_acquire(int i, atomic_t *v)
-+{
-+	return atomic_add_return_acquire(i, v);
-+}
-+
-+__rust_helper int
-+rust_helper_atomic_add_return_release(int i, atomic_t *v)
-+{
-+	return atomic_add_return_release(i, v);
-+}
-+
-+__rust_helper int
-+rust_helper_atomic_add_return_relaxed(int i, atomic_t *v)
-+{
-+	return atomic_add_return_relaxed(i, v);
-+}
-+
-+__rust_helper int
-+rust_helper_atomic_fetch_add(int i, atomic_t *v)
-+{
-+	return atomic_fetch_add(i, v);
-+}
-+
-+__rust_helper int
-+rust_helper_atomic_fetch_add_acquire(int i, atomic_t *v)
-+{
-+	return atomic_fetch_add_acquire(i, v);
-+}
-+
-+__rust_helper int
-+rust_helper_atomic_fetch_add_release(int i, atomic_t *v)
-+{
-+	return atomic_fetch_add_release(i, v);
-+}
-+
-+__rust_helper int
-+rust_helper_atomic_fetch_add_relaxed(int i, atomic_t *v)
-+{
-+	return atomic_fetch_add_relaxed(i, v);
-+}
-+
-+__rust_helper void
-+rust_helper_atomic_sub(int i, atomic_t *v)
-+{
-+	atomic_sub(i, v);
-+}
-+
-+__rust_helper int
-+rust_helper_atomic_sub_return(int i, atomic_t *v)
-+{
-+	return atomic_sub_return(i, v);
-+}
-+
-+__rust_helper int
-+rust_helper_atomic_sub_return_acquire(int i, atomic_t *v)
-+{
-+	return atomic_sub_return_acquire(i, v);
-+}
-+
-+__rust_helper int
-+rust_helper_atomic_sub_return_release(int i, atomic_t *v)
-+{
-+	return atomic_sub_return_release(i, v);
-+}
-+
-+__rust_helper int
-+rust_helper_atomic_sub_return_relaxed(int i, atomic_t *v)
-+{
-+	return atomic_sub_return_relaxed(i, v);
-+}
-+
-+__rust_helper int
-+rust_helper_atomic_fetch_sub(int i, atomic_t *v)
-+{
-+	return atomic_fetch_sub(i, v);
-+}
-+
-+__rust_helper int
-+rust_helper_atomic_fetch_sub_acquire(int i, atomic_t *v)
-+{
-+	return atomic_fetch_sub_acquire(i, v);
-+}
-+
-+__rust_helper int
-+rust_helper_atomic_fetch_sub_release(int i, atomic_t *v)
-+{
-+	return atomic_fetch_sub_release(i, v);
-+}
-+
-+__rust_helper int
-+rust_helper_atomic_fetch_sub_relaxed(int i, atomic_t *v)
-+{
-+	return atomic_fetch_sub_relaxed(i, v);
-+}
-+
-+__rust_helper void
-+rust_helper_atomic_inc(atomic_t *v)
-+{
-+	atomic_inc(v);
-+}
-+
-+__rust_helper int
-+rust_helper_atomic_inc_return(atomic_t *v)
-+{
-+	return atomic_inc_return(v);
-+}
-+
-+__rust_helper int
-+rust_helper_atomic_inc_return_acquire(atomic_t *v)
-+{
-+	return atomic_inc_return_acquire(v);
-+}
-+
-+__rust_helper int
-+rust_helper_atomic_inc_return_release(atomic_t *v)
-+{
-+	return atomic_inc_return_release(v);
-+}
-+
-+__rust_helper int
-+rust_helper_atomic_inc_return_relaxed(atomic_t *v)
-+{
-+	return atomic_inc_return_relaxed(v);
-+}
-+
-+__rust_helper int
-+rust_helper_atomic_fetch_inc(atomic_t *v)
-+{
-+	return atomic_fetch_inc(v);
-+}
-+
-+__rust_helper int
-+rust_helper_atomic_fetch_inc_acquire(atomic_t *v)
-+{
-+	return atomic_fetch_inc_acquire(v);
-+}
-+
-+__rust_helper int
-+rust_helper_atomic_fetch_inc_release(atomic_t *v)
-+{
-+	return atomic_fetch_inc_release(v);
-+}
-+
-+__rust_helper int
-+rust_helper_atomic_fetch_inc_relaxed(atomic_t *v)
-+{
-+	return atomic_fetch_inc_relaxed(v);
-+}
-+
-+__rust_helper void
-+rust_helper_atomic_dec(atomic_t *v)
-+{
-+	atomic_dec(v);
-+}
-+
-+__rust_helper int
-+rust_helper_atomic_dec_return(atomic_t *v)
-+{
-+	return atomic_dec_return(v);
-+}
-+
-+__rust_helper int
-+rust_helper_atomic_dec_return_acquire(atomic_t *v)
-+{
-+	return atomic_dec_return_acquire(v);
-+}
-+
-+__rust_helper int
-+rust_helper_atomic_dec_return_release(atomic_t *v)
-+{
-+	return atomic_dec_return_release(v);
-+}
-+
-+__rust_helper int
-+rust_helper_atomic_dec_return_relaxed(atomic_t *v)
-+{
-+	return atomic_dec_return_relaxed(v);
-+}
-+
-+__rust_helper int
-+rust_helper_atomic_fetch_dec(atomic_t *v)
-+{
-+	return atomic_fetch_dec(v);
-+}
-+
-+__rust_helper int
-+rust_helper_atomic_fetch_dec_acquire(atomic_t *v)
-+{
-+	return atomic_fetch_dec_acquire(v);
-+}
-+
-+__rust_helper int
-+rust_helper_atomic_fetch_dec_release(atomic_t *v)
-+{
-+	return atomic_fetch_dec_release(v);
-+}
-+
-+__rust_helper int
-+rust_helper_atomic_fetch_dec_relaxed(atomic_t *v)
-+{
-+	return atomic_fetch_dec_relaxed(v);
-+}
-+
-+__rust_helper void
-+rust_helper_atomic_and(int i, atomic_t *v)
-+{
-+	atomic_and(i, v);
-+}
-+
-+__rust_helper int
-+rust_helper_atomic_fetch_and(int i, atomic_t *v)
-+{
-+	return atomic_fetch_and(i, v);
-+}
-+
-+__rust_helper int
-+rust_helper_atomic_fetch_and_acquire(int i, atomic_t *v)
-+{
-+	return atomic_fetch_and_acquire(i, v);
-+}
-+
-+__rust_helper int
-+rust_helper_atomic_fetch_and_release(int i, atomic_t *v)
-+{
-+	return atomic_fetch_and_release(i, v);
-+}
-+
-+__rust_helper int
-+rust_helper_atomic_fetch_and_relaxed(int i, atomic_t *v)
-+{
-+	return atomic_fetch_and_relaxed(i, v);
-+}
-+
-+__rust_helper void
-+rust_helper_atomic_andnot(int i, atomic_t *v)
-+{
-+	atomic_andnot(i, v);
-+}
-+
-+__rust_helper int
-+rust_helper_atomic_fetch_andnot(int i, atomic_t *v)
-+{
-+	return atomic_fetch_andnot(i, v);
-+}
-+
-+__rust_helper int
-+rust_helper_atomic_fetch_andnot_acquire(int i, atomic_t *v)
-+{
-+	return atomic_fetch_andnot_acquire(i, v);
-+}
-+
-+__rust_helper int
-+rust_helper_atomic_fetch_andnot_release(int i, atomic_t *v)
-+{
-+	return atomic_fetch_andnot_release(i, v);
-+}
-+
-+__rust_helper int
-+rust_helper_atomic_fetch_andnot_relaxed(int i, atomic_t *v)
-+{
-+	return atomic_fetch_andnot_relaxed(i, v);
-+}
-+
-+__rust_helper void
-+rust_helper_atomic_or(int i, atomic_t *v)
-+{
-+	atomic_or(i, v);
-+}
-+
-+__rust_helper int
-+rust_helper_atomic_fetch_or(int i, atomic_t *v)
-+{
-+	return atomic_fetch_or(i, v);
-+}
-+
-+__rust_helper int
-+rust_helper_atomic_fetch_or_acquire(int i, atomic_t *v)
-+{
-+	return atomic_fetch_or_acquire(i, v);
-+}
-+
-+__rust_helper int
-+rust_helper_atomic_fetch_or_release(int i, atomic_t *v)
-+{
-+	return atomic_fetch_or_release(i, v);
-+}
-+
-+__rust_helper int
-+rust_helper_atomic_fetch_or_relaxed(int i, atomic_t *v)
-+{
-+	return atomic_fetch_or_relaxed(i, v);
-+}
-+
-+__rust_helper void
-+rust_helper_atomic_xor(int i, atomic_t *v)
-+{
-+	atomic_xor(i, v);
-+}
-+
-+__rust_helper int
-+rust_helper_atomic_fetch_xor(int i, atomic_t *v)
-+{
-+	return atomic_fetch_xor(i, v);
-+}
-+
-+__rust_helper int
-+rust_helper_atomic_fetch_xor_acquire(int i, atomic_t *v)
-+{
-+	return atomic_fetch_xor_acquire(i, v);
-+}
-+
-+__rust_helper int
-+rust_helper_atomic_fetch_xor_release(int i, atomic_t *v)
-+{
-+	return atomic_fetch_xor_release(i, v);
-+}
-+
-+__rust_helper int
-+rust_helper_atomic_fetch_xor_relaxed(int i, atomic_t *v)
-+{
-+	return atomic_fetch_xor_relaxed(i, v);
-+}
-+
-+__rust_helper int
-+rust_helper_atomic_xchg(atomic_t *v, int new)
-+{
-+	return atomic_xchg(v, new);
-+}
-+
-+__rust_helper int
-+rust_helper_atomic_xchg_acquire(atomic_t *v, int new)
-+{
-+	return atomic_xchg_acquire(v, new);
-+}
-+
-+__rust_helper int
-+rust_helper_atomic_xchg_release(atomic_t *v, int new)
-+{
-+	return atomic_xchg_release(v, new);
-+}
-+
-+__rust_helper int
-+rust_helper_atomic_xchg_relaxed(atomic_t *v, int new)
-+{
-+	return atomic_xchg_relaxed(v, new);
-+}
-+
-+__rust_helper int
-+rust_helper_atomic_cmpxchg(atomic_t *v, int old, int new)
-+{
-+	return atomic_cmpxchg(v, old, new);
-+}
-+
-+__rust_helper int
-+rust_helper_atomic_cmpxchg_acquire(atomic_t *v, int old, int new)
-+{
-+	return atomic_cmpxchg_acquire(v, old, new);
-+}
-+
-+__rust_helper int
-+rust_helper_atomic_cmpxchg_release(atomic_t *v, int old, int new)
-+{
-+	return atomic_cmpxchg_release(v, old, new);
-+}
-+
-+__rust_helper int
-+rust_helper_atomic_cmpxchg_relaxed(atomic_t *v, int old, int new)
-+{
-+	return atomic_cmpxchg_relaxed(v, old, new);
-+}
-+
-+__rust_helper bool
-+rust_helper_atomic_try_cmpxchg(atomic_t *v, int *old, int new)
-+{
-+	return atomic_try_cmpxchg(v, old, new);
-+}
-+
-+__rust_helper bool
-+rust_helper_atomic_try_cmpxchg_acquire(atomic_t *v, int *old, int new)
-+{
-+	return atomic_try_cmpxchg_acquire(v, old, new);
-+}
-+
-+__rust_helper bool
-+rust_helper_atomic_try_cmpxchg_release(atomic_t *v, int *old, int new)
-+{
-+	return atomic_try_cmpxchg_release(v, old, new);
-+}
-+
-+__rust_helper bool
-+rust_helper_atomic_try_cmpxchg_relaxed(atomic_t *v, int *old, int new)
-+{
-+	return atomic_try_cmpxchg_relaxed(v, old, new);
-+}
-+
-+__rust_helper bool
-+rust_helper_atomic_sub_and_test(int i, atomic_t *v)
-+{
-+	return atomic_sub_and_test(i, v);
-+}
-+
-+__rust_helper bool
-+rust_helper_atomic_dec_and_test(atomic_t *v)
-+{
-+	return atomic_dec_and_test(v);
-+}
-+
-+__rust_helper bool
-+rust_helper_atomic_inc_and_test(atomic_t *v)
-+{
-+	return atomic_inc_and_test(v);
-+}
-+
-+__rust_helper bool
-+rust_helper_atomic_add_negative(int i, atomic_t *v)
-+{
-+	return atomic_add_negative(i, v);
-+}
-+
-+__rust_helper bool
-+rust_helper_atomic_add_negative_acquire(int i, atomic_t *v)
-+{
-+	return atomic_add_negative_acquire(i, v);
-+}
-+
-+__rust_helper bool
-+rust_helper_atomic_add_negative_release(int i, atomic_t *v)
-+{
-+	return atomic_add_negative_release(i, v);
-+}
-+
-+__rust_helper bool
-+rust_helper_atomic_add_negative_relaxed(int i, atomic_t *v)
-+{
-+	return atomic_add_negative_relaxed(i, v);
-+}
-+
-+__rust_helper int
-+rust_helper_atomic_fetch_add_unless(atomic_t *v, int a, int u)
-+{
-+	return atomic_fetch_add_unless(v, a, u);
-+}
-+
-+__rust_helper bool
-+rust_helper_atomic_add_unless(atomic_t *v, int a, int u)
-+{
-+	return atomic_add_unless(v, a, u);
-+}
-+
-+__rust_helper bool
-+rust_helper_atomic_inc_not_zero(atomic_t *v)
-+{
-+	return atomic_inc_not_zero(v);
-+}
-+
-+__rust_helper bool
-+rust_helper_atomic_inc_unless_negative(atomic_t *v)
-+{
-+	return atomic_inc_unless_negative(v);
-+}
-+
-+__rust_helper bool
-+rust_helper_atomic_dec_unless_positive(atomic_t *v)
-+{
-+	return atomic_dec_unless_positive(v);
-+}
-+
-+__rust_helper int
-+rust_helper_atomic_dec_if_positive(atomic_t *v)
-+{
-+	return atomic_dec_if_positive(v);
-+}
-+
-+__rust_helper s64
-+rust_helper_atomic64_read(const atomic64_t *v)
-+{
-+	return atomic64_read(v);
-+}
-+
-+__rust_helper s64
-+rust_helper_atomic64_read_acquire(const atomic64_t *v)
-+{
-+	return atomic64_read_acquire(v);
-+}
-+
-+__rust_helper void
-+rust_helper_atomic64_set(atomic64_t *v, s64 i)
-+{
-+	atomic64_set(v, i);
-+}
-+
-+__rust_helper void
-+rust_helper_atomic64_set_release(atomic64_t *v, s64 i)
-+{
-+	atomic64_set_release(v, i);
-+}
-+
-+__rust_helper void
-+rust_helper_atomic64_add(s64 i, atomic64_t *v)
-+{
-+	atomic64_add(i, v);
-+}
-+
-+__rust_helper s64
-+rust_helper_atomic64_add_return(s64 i, atomic64_t *v)
-+{
-+	return atomic64_add_return(i, v);
-+}
-+
-+__rust_helper s64
-+rust_helper_atomic64_add_return_acquire(s64 i, atomic64_t *v)
-+{
-+	return atomic64_add_return_acquire(i, v);
-+}
-+
-+__rust_helper s64
-+rust_helper_atomic64_add_return_release(s64 i, atomic64_t *v)
-+{
-+	return atomic64_add_return_release(i, v);
-+}
-+
-+__rust_helper s64
-+rust_helper_atomic64_add_return_relaxed(s64 i, atomic64_t *v)
-+{
-+	return atomic64_add_return_relaxed(i, v);
-+}
-+
-+__rust_helper s64
-+rust_helper_atomic64_fetch_add(s64 i, atomic64_t *v)
-+{
-+	return atomic64_fetch_add(i, v);
-+}
-+
-+__rust_helper s64
-+rust_helper_atomic64_fetch_add_acquire(s64 i, atomic64_t *v)
-+{
-+	return atomic64_fetch_add_acquire(i, v);
-+}
-+
-+__rust_helper s64
-+rust_helper_atomic64_fetch_add_release(s64 i, atomic64_t *v)
-+{
-+	return atomic64_fetch_add_release(i, v);
-+}
-+
-+__rust_helper s64
-+rust_helper_atomic64_fetch_add_relaxed(s64 i, atomic64_t *v)
-+{
-+	return atomic64_fetch_add_relaxed(i, v);
-+}
-+
-+__rust_helper void
-+rust_helper_atomic64_sub(s64 i, atomic64_t *v)
-+{
-+	atomic64_sub(i, v);
-+}
-+
-+__rust_helper s64
-+rust_helper_atomic64_sub_return(s64 i, atomic64_t *v)
-+{
-+	return atomic64_sub_return(i, v);
-+}
-+
-+__rust_helper s64
-+rust_helper_atomic64_sub_return_acquire(s64 i, atomic64_t *v)
-+{
-+	return atomic64_sub_return_acquire(i, v);
-+}
-+
-+__rust_helper s64
-+rust_helper_atomic64_sub_return_release(s64 i, atomic64_t *v)
-+{
-+	return atomic64_sub_return_release(i, v);
-+}
-+
-+__rust_helper s64
-+rust_helper_atomic64_sub_return_relaxed(s64 i, atomic64_t *v)
-+{
-+	return atomic64_sub_return_relaxed(i, v);
-+}
-+
-+__rust_helper s64
-+rust_helper_atomic64_fetch_sub(s64 i, atomic64_t *v)
-+{
-+	return atomic64_fetch_sub(i, v);
-+}
-+
-+__rust_helper s64
-+rust_helper_atomic64_fetch_sub_acquire(s64 i, atomic64_t *v)
-+{
-+	return atomic64_fetch_sub_acquire(i, v);
-+}
-+
-+__rust_helper s64
-+rust_helper_atomic64_fetch_sub_release(s64 i, atomic64_t *v)
-+{
-+	return atomic64_fetch_sub_release(i, v);
-+}
-+
-+__rust_helper s64
-+rust_helper_atomic64_fetch_sub_relaxed(s64 i, atomic64_t *v)
-+{
-+	return atomic64_fetch_sub_relaxed(i, v);
-+}
-+
-+__rust_helper void
-+rust_helper_atomic64_inc(atomic64_t *v)
-+{
-+	atomic64_inc(v);
-+}
-+
-+__rust_helper s64
-+rust_helper_atomic64_inc_return(atomic64_t *v)
-+{
-+	return atomic64_inc_return(v);
-+}
-+
-+__rust_helper s64
-+rust_helper_atomic64_inc_return_acquire(atomic64_t *v)
-+{
-+	return atomic64_inc_return_acquire(v);
-+}
-+
-+__rust_helper s64
-+rust_helper_atomic64_inc_return_release(atomic64_t *v)
-+{
-+	return atomic64_inc_return_release(v);
-+}
-+
-+__rust_helper s64
-+rust_helper_atomic64_inc_return_relaxed(atomic64_t *v)
-+{
-+	return atomic64_inc_return_relaxed(v);
-+}
-+
-+__rust_helper s64
-+rust_helper_atomic64_fetch_inc(atomic64_t *v)
-+{
-+	return atomic64_fetch_inc(v);
-+}
-+
-+__rust_helper s64
-+rust_helper_atomic64_fetch_inc_acquire(atomic64_t *v)
-+{
-+	return atomic64_fetch_inc_acquire(v);
-+}
-+
-+__rust_helper s64
-+rust_helper_atomic64_fetch_inc_release(atomic64_t *v)
-+{
-+	return atomic64_fetch_inc_release(v);
-+}
-+
-+__rust_helper s64
-+rust_helper_atomic64_fetch_inc_relaxed(atomic64_t *v)
-+{
-+	return atomic64_fetch_inc_relaxed(v);
-+}
-+
-+__rust_helper void
-+rust_helper_atomic64_dec(atomic64_t *v)
-+{
-+	atomic64_dec(v);
-+}
-+
-+__rust_helper s64
-+rust_helper_atomic64_dec_return(atomic64_t *v)
-+{
-+	return atomic64_dec_return(v);
-+}
-+
-+__rust_helper s64
-+rust_helper_atomic64_dec_return_acquire(atomic64_t *v)
-+{
-+	return atomic64_dec_return_acquire(v);
-+}
-+
-+__rust_helper s64
-+rust_helper_atomic64_dec_return_release(atomic64_t *v)
-+{
-+	return atomic64_dec_return_release(v);
-+}
-+
-+__rust_helper s64
-+rust_helper_atomic64_dec_return_relaxed(atomic64_t *v)
-+{
-+	return atomic64_dec_return_relaxed(v);
-+}
-+
-+__rust_helper s64
-+rust_helper_atomic64_fetch_dec(atomic64_t *v)
-+{
-+	return atomic64_fetch_dec(v);
-+}
-+
-+__rust_helper s64
-+rust_helper_atomic64_fetch_dec_acquire(atomic64_t *v)
-+{
-+	return atomic64_fetch_dec_acquire(v);
-+}
-+
-+__rust_helper s64
-+rust_helper_atomic64_fetch_dec_release(atomic64_t *v)
-+{
-+	return atomic64_fetch_dec_release(v);
-+}
-+
-+__rust_helper s64
-+rust_helper_atomic64_fetch_dec_relaxed(atomic64_t *v)
-+{
-+	return atomic64_fetch_dec_relaxed(v);
-+}
-+
-+__rust_helper void
-+rust_helper_atomic64_and(s64 i, atomic64_t *v)
-+{
-+	atomic64_and(i, v);
-+}
-+
-+__rust_helper s64
-+rust_helper_atomic64_fetch_and(s64 i, atomic64_t *v)
-+{
-+	return atomic64_fetch_and(i, v);
-+}
-+
-+__rust_helper s64
-+rust_helper_atomic64_fetch_and_acquire(s64 i, atomic64_t *v)
-+{
-+	return atomic64_fetch_and_acquire(i, v);
-+}
-+
-+__rust_helper s64
-+rust_helper_atomic64_fetch_and_release(s64 i, atomic64_t *v)
-+{
-+	return atomic64_fetch_and_release(i, v);
-+}
-+
-+__rust_helper s64
-+rust_helper_atomic64_fetch_and_relaxed(s64 i, atomic64_t *v)
-+{
-+	return atomic64_fetch_and_relaxed(i, v);
-+}
-+
-+__rust_helper void
-+rust_helper_atomic64_andnot(s64 i, atomic64_t *v)
-+{
-+	atomic64_andnot(i, v);
-+}
-+
-+__rust_helper s64
-+rust_helper_atomic64_fetch_andnot(s64 i, atomic64_t *v)
-+{
-+	return atomic64_fetch_andnot(i, v);
-+}
-+
-+__rust_helper s64
-+rust_helper_atomic64_fetch_andnot_acquire(s64 i, atomic64_t *v)
-+{
-+	return atomic64_fetch_andnot_acquire(i, v);
-+}
-+
-+__rust_helper s64
-+rust_helper_atomic64_fetch_andnot_release(s64 i, atomic64_t *v)
-+{
-+	return atomic64_fetch_andnot_release(i, v);
-+}
-+
-+__rust_helper s64
-+rust_helper_atomic64_fetch_andnot_relaxed(s64 i, atomic64_t *v)
-+{
-+	return atomic64_fetch_andnot_relaxed(i, v);
-+}
-+
-+__rust_helper void
-+rust_helper_atomic64_or(s64 i, atomic64_t *v)
-+{
-+	atomic64_or(i, v);
-+}
-+
-+__rust_helper s64
-+rust_helper_atomic64_fetch_or(s64 i, atomic64_t *v)
-+{
-+	return atomic64_fetch_or(i, v);
-+}
-+
-+__rust_helper s64
-+rust_helper_atomic64_fetch_or_acquire(s64 i, atomic64_t *v)
-+{
-+	return atomic64_fetch_or_acquire(i, v);
-+}
-+
-+__rust_helper s64
-+rust_helper_atomic64_fetch_or_release(s64 i, atomic64_t *v)
-+{
-+	return atomic64_fetch_or_release(i, v);
-+}
-+
-+__rust_helper s64
-+rust_helper_atomic64_fetch_or_relaxed(s64 i, atomic64_t *v)
-+{
-+	return atomic64_fetch_or_relaxed(i, v);
-+}
-+
-+__rust_helper void
-+rust_helper_atomic64_xor(s64 i, atomic64_t *v)
-+{
-+	atomic64_xor(i, v);
-+}
-+
-+__rust_helper s64
-+rust_helper_atomic64_fetch_xor(s64 i, atomic64_t *v)
-+{
-+	return atomic64_fetch_xor(i, v);
-+}
-+
-+__rust_helper s64
-+rust_helper_atomic64_fetch_xor_acquire(s64 i, atomic64_t *v)
-+{
-+	return atomic64_fetch_xor_acquire(i, v);
-+}
-+
-+__rust_helper s64
-+rust_helper_atomic64_fetch_xor_release(s64 i, atomic64_t *v)
-+{
-+	return atomic64_fetch_xor_release(i, v);
-+}
-+
-+__rust_helper s64
-+rust_helper_atomic64_fetch_xor_relaxed(s64 i, atomic64_t *v)
-+{
-+	return atomic64_fetch_xor_relaxed(i, v);
-+}
-+
-+__rust_helper s64
-+rust_helper_atomic64_xchg(atomic64_t *v, s64 new)
-+{
-+	return atomic64_xchg(v, new);
-+}
-+
-+__rust_helper s64
-+rust_helper_atomic64_xchg_acquire(atomic64_t *v, s64 new)
-+{
-+	return atomic64_xchg_acquire(v, new);
-+}
-+
-+__rust_helper s64
-+rust_helper_atomic64_xchg_release(atomic64_t *v, s64 new)
-+{
-+	return atomic64_xchg_release(v, new);
-+}
-+
-+__rust_helper s64
-+rust_helper_atomic64_xchg_relaxed(atomic64_t *v, s64 new)
-+{
-+	return atomic64_xchg_relaxed(v, new);
-+}
-+
-+__rust_helper s64
-+rust_helper_atomic64_cmpxchg(atomic64_t *v, s64 old, s64 new)
-+{
-+	return atomic64_cmpxchg(v, old, new);
-+}
-+
-+__rust_helper s64
-+rust_helper_atomic64_cmpxchg_acquire(atomic64_t *v, s64 old, s64 new)
-+{
-+	return atomic64_cmpxchg_acquire(v, old, new);
-+}
-+
-+__rust_helper s64
-+rust_helper_atomic64_cmpxchg_release(atomic64_t *v, s64 old, s64 new)
-+{
-+	return atomic64_cmpxchg_release(v, old, new);
-+}
-+
-+__rust_helper s64
-+rust_helper_atomic64_cmpxchg_relaxed(atomic64_t *v, s64 old, s64 new)
-+{
-+	return atomic64_cmpxchg_relaxed(v, old, new);
-+}
-+
-+__rust_helper bool
-+rust_helper_atomic64_try_cmpxchg(atomic64_t *v, s64 *old, s64 new)
-+{
-+	return atomic64_try_cmpxchg(v, old, new);
-+}
-+
-+__rust_helper bool
-+rust_helper_atomic64_try_cmpxchg_acquire(atomic64_t *v, s64 *old, s64 new)
-+{
-+	return atomic64_try_cmpxchg_acquire(v, old, new);
-+}
-+
-+__rust_helper bool
-+rust_helper_atomic64_try_cmpxchg_release(atomic64_t *v, s64 *old, s64 new)
-+{
-+	return atomic64_try_cmpxchg_release(v, old, new);
-+}
-+
-+__rust_helper bool
-+rust_helper_atomic64_try_cmpxchg_relaxed(atomic64_t *v, s64 *old, s64 new)
-+{
-+	return atomic64_try_cmpxchg_relaxed(v, old, new);
-+}
-+
-+__rust_helper bool
-+rust_helper_atomic64_sub_and_test(s64 i, atomic64_t *v)
-+{
-+	return atomic64_sub_and_test(i, v);
-+}
-+
-+__rust_helper bool
-+rust_helper_atomic64_dec_and_test(atomic64_t *v)
-+{
-+	return atomic64_dec_and_test(v);
-+}
-+
-+__rust_helper bool
-+rust_helper_atomic64_inc_and_test(atomic64_t *v)
-+{
-+	return atomic64_inc_and_test(v);
-+}
-+
-+__rust_helper bool
-+rust_helper_atomic64_add_negative(s64 i, atomic64_t *v)
-+{
-+	return atomic64_add_negative(i, v);
-+}
-+
-+__rust_helper bool
-+rust_helper_atomic64_add_negative_acquire(s64 i, atomic64_t *v)
-+{
-+	return atomic64_add_negative_acquire(i, v);
-+}
-+
-+__rust_helper bool
-+rust_helper_atomic64_add_negative_release(s64 i, atomic64_t *v)
-+{
-+	return atomic64_add_negative_release(i, v);
-+}
-+
-+__rust_helper bool
-+rust_helper_atomic64_add_negative_relaxed(s64 i, atomic64_t *v)
-+{
-+	return atomic64_add_negative_relaxed(i, v);
-+}
-+
-+__rust_helper s64
-+rust_helper_atomic64_fetch_add_unless(atomic64_t *v, s64 a, s64 u)
-+{
-+	return atomic64_fetch_add_unless(v, a, u);
-+}
-+
-+__rust_helper bool
-+rust_helper_atomic64_add_unless(atomic64_t *v, s64 a, s64 u)
-+{
-+	return atomic64_add_unless(v, a, u);
-+}
-+
-+__rust_helper bool
-+rust_helper_atomic64_inc_not_zero(atomic64_t *v)
-+{
-+	return atomic64_inc_not_zero(v);
-+}
-+
-+__rust_helper bool
-+rust_helper_atomic64_inc_unless_negative(atomic64_t *v)
-+{
-+	return atomic64_inc_unless_negative(v);
-+}
-+
-+__rust_helper bool
-+rust_helper_atomic64_dec_unless_positive(atomic64_t *v)
-+{
-+	return atomic64_dec_unless_positive(v);
-+}
-+
-+__rust_helper s64
-+rust_helper_atomic64_dec_if_positive(atomic64_t *v)
-+{
-+	return atomic64_dec_if_positive(v);
-+}
-+
-+#endif /* _RUST_ATOMIC_API_H */
-+// 615a0e0c98b5973a47fe4fa65e92935051ca00ed
-diff --git a/rust/helpers/helpers.c b/rust/helpers/helpers.c
-index 7cf7fe95e41d..7053f9245759 100644
---- a/rust/helpers/helpers.c
-+++ b/rust/helpers/helpers.c
-@@ -7,6 +7,7 @@
-  * Sorted alphabetically.
-  */
+diff --git a/MAINTAINERS b/MAINTAINERS
+index daf520a13bdf..37a753ec2aca 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -3989,7 +3989,7 @@ F:	drivers/input/touchscreen/atmel_mxt_ts.c
+ ATOMIC INFRASTRUCTURE
+ M:	Will Deacon <will@kernel.org>
+ M:	Peter Zijlstra <peterz@infradead.org>
+-R:	Boqun Feng <boqun.feng@gmail.com>
++M:	Boqun Feng <boqun.feng@gmail.com>
+ R:	Mark Rutland <mark.rutland@arm.com>
+ L:	linux-kernel@vger.kernel.org
+ S:	Maintained
+@@ -3998,6 +3998,8 @@ F:	arch/*/include/asm/atomic*.h
+ F:	include/*/atomic*.h
+ F:	include/linux/refcount.h
+ F:	scripts/atomic/
++F:	rust/kernel/sync/atomic.rs
++F:	rust/kernel/sync/atomic/
  
-+#include "atomic.c"
- #include "auxiliary.c"
- #include "blk.c"
- #include "bug.c"
-diff --git a/scripts/atomic/gen-atomics.sh b/scripts/atomic/gen-atomics.sh
-index 5b98a8307693..02508d0d6fe4 100755
---- a/scripts/atomic/gen-atomics.sh
-+++ b/scripts/atomic/gen-atomics.sh
-@@ -11,6 +11,7 @@ cat <<EOF |
- gen-atomic-instrumented.sh      linux/atomic/atomic-instrumented.h
- gen-atomic-long.sh              linux/atomic/atomic-long.h
- gen-atomic-fallback.sh          linux/atomic/atomic-arch-fallback.h
-+gen-rust-atomic-helpers.sh      ../rust/helpers/atomic.c
- EOF
- while read script header args; do
- 	/bin/sh ${ATOMICDIR}/${script} ${ATOMICTBL} ${args} > ${LINUXDIR}/include/${header}
-diff --git a/scripts/atomic/gen-rust-atomic-helpers.sh b/scripts/atomic/gen-rust-atomic-helpers.sh
-new file mode 100755
-index 000000000000..45b1e100ed7c
+ ATTO EXPRESSSAS SAS/SATA RAID SCSI DRIVER
+ M:	Bradley Grove <linuxdrivers@attotech.com>
+diff --git a/rust/kernel/sync.rs b/rust/kernel/sync.rs
+index 00f9b558a3ad..7e962e5429d2 100644
+--- a/rust/kernel/sync.rs
++++ b/rust/kernel/sync.rs
+@@ -11,6 +11,7 @@
+ 
+ mod arc;
+ pub mod aref;
++pub mod atomic;
+ pub mod completion;
+ mod condvar;
+ pub mod lock;
+diff --git a/rust/kernel/sync/atomic.rs b/rust/kernel/sync/atomic.rs
+new file mode 100644
+index 000000000000..b9f2f4780073
 --- /dev/null
-+++ b/scripts/atomic/gen-rust-atomic-helpers.sh
-@@ -0,0 +1,67 @@
-+#!/bin/sh
-+# SPDX-License-Identifier: GPL-2.0
-+
-+ATOMICDIR=$(dirname $0)
-+
-+. ${ATOMICDIR}/atomic-tbl.sh
-+
-+#gen_proto_order_variant(meta, pfx, name, sfx, order, atomic, int, arg...)
-+gen_proto_order_variant()
-+{
-+	local meta="$1"; shift
-+	local pfx="$1"; shift
-+	local name="$1"; shift
-+	local sfx="$1"; shift
-+	local order="$1"; shift
-+	local atomic="$1"; shift
-+	local int="$1"; shift
-+
-+	local atomicname="${atomic}_${pfx}${name}${sfx}${order}"
-+
-+	local ret="$(gen_ret_type "${meta}" "${int}")"
-+	local params="$(gen_params "${int}" "${atomic}" "$@")"
-+	local args="$(gen_args "$@")"
-+	local retstmt="$(gen_ret_stmt "${meta}")"
-+
-+cat <<EOF
-+__rust_helper ${ret}
-+rust_helper_${atomicname}(${params})
-+{
-+	${retstmt}${atomicname}(${args});
-+}
-+
-+EOF
-+}
-+
-+cat << EOF
++++ b/rust/kernel/sync/atomic.rs
+@@ -0,0 +1,22 @@
 +// SPDX-License-Identifier: GPL-2.0
 +
-+// Generated by $0
-+// DO NOT MODIFY THIS FILE DIRECTLY
++//! Atomic primitives.
++//!
++//! These primitives have the same semantics as their C counterparts: and the precise definitions of
++//! semantics can be found at [`LKMM`]. Note that Linux Kernel Memory (Consistency) Model is the
++//! only model for Rust code in kernel, and Rust's own atomics should be avoided.
++//!
++//! # Data races
++//!
++//! [`LKMM`] atomics have different rules regarding data races:
++//!
++//! - A normal write from C side is treated as an atomic write if
++//!   CONFIG_KCSAN_ASSUME_PLAIN_WRITES_ATOMIC=y.
++//! - Mixed-size atomic accesses don't cause data races.
++//!
++//! [`LKMM`]: srctree/tools/memory-model/
 +
-+/*
-+ * This file provides helpers for the various atomic functions for Rust.
-+ */
-+#ifndef _RUST_ATOMIC_API_H
-+#define _RUST_ATOMIC_API_H
++#[allow(dead_code, unreachable_pub)]
++mod internal;
 +
-+#include <linux/atomic.h>
++pub use internal::AtomicImpl;
+diff --git a/rust/kernel/sync/atomic/internal.rs b/rust/kernel/sync/atomic/internal.rs
+new file mode 100644
+index 000000000000..6fdd8e59f45b
+--- /dev/null
++++ b/rust/kernel/sync/atomic/internal.rs
+@@ -0,0 +1,265 @@
++// SPDX-License-Identifier: GPL-2.0
 +
-+// TODO: Remove this after INLINE_HELPERS support is added.
-+#ifndef __rust_helper
-+#define __rust_helper
-+#endif
++//! Atomic internal implementations.
++//!
++//! Provides 1:1 mapping to the C atomic operations.
 +
-+EOF
++use crate::bindings;
++use crate::macros::paste;
++use core::cell::UnsafeCell;
 +
-+grep '^[a-z]' "$1" | while read name meta args; do
-+	gen_proto "${meta}" "${name}" "atomic" "int" ${args}
-+done
++mod private {
++    /// Sealed trait marker to disable customized impls on atomic implementation traits.
++    pub trait Sealed {}
++}
 +
-+grep '^[a-z]' "$1" | while read name meta args; do
-+	gen_proto "${meta}" "${name}" "atomic64" "s64" ${args}
-+done
++// `i32` and `i64` are only supported atomic implementations.
++impl private::Sealed for i32 {}
++impl private::Sealed for i64 {}
 +
-+cat <<EOF
-+#endif /* _RUST_ATOMIC_API_H */
-+EOF
++/// A marker trait for types that implement atomic operations with C side primitives.
++///
++/// This trait is sealed, and only types that have directly mapping to the C side atomics should
++/// impl this:
++///
++/// - `i32` maps to `atomic_t`.
++/// - `i64` maps to `atomic64_t`.
++pub trait AtomicImpl: Sized + Send + Copy + private::Sealed {
++    /// The type of the delta in arithmetic or logical operations.
++    ///
++    /// For example, in `atomic_add(ptr, v)`, it's the type of `v`. Usually it's the same type of
++    /// [`Self`], but it may be different for the atomic pointer type.
++    type Delta;
++}
++
++// `atomic_t` implements atomic operations on `i32`.
++impl AtomicImpl for i32 {
++    type Delta = Self;
++}
++
++// `atomic64_t` implements atomic operations on `i64`.
++impl AtomicImpl for i64 {
++    type Delta = Self;
++}
++
++/// Atomic representation.
++#[repr(transparent)]
++pub struct AtomicRepr<T: AtomicImpl>(UnsafeCell<T>);
++
++impl<T: AtomicImpl> AtomicRepr<T> {
++    /// Creates a new atomic representation `T`.
++    pub const fn new(v: T) -> Self {
++        Self(UnsafeCell::new(v))
++    }
++
++    /// Returns a pointer to the underlying `T`.
++    ///
++    /// # Guarantees
++    ///
++    /// The returned pointer is valid and properly aligned (i.e. aligned to [`align_of::<T>()`]).
++    pub const fn as_ptr(&self) -> *mut T {
++        // GUARANTEE: `self.0` is an `UnsafeCell<T>`, therefore the pointer returned by `.get()`
++        // must be valid and properly aligned.
++        self.0.get()
++    }
++}
++
++// This macro generates the function signature with given argument list and return type.
++macro_rules! declare_atomic_method {
++    (
++        $(#[doc=$doc:expr])*
++        $func:ident($($arg:ident : $arg_type:ty),*) $(-> $ret:ty)?
++    ) => {
++        paste!(
++            $(#[doc = $doc])*
++            fn [< atomic_ $func >]($($arg: $arg_type,)*) $(-> $ret)?;
++        );
++    };
++    (
++        $(#[doc=$doc:expr])*
++        $func:ident [$variant:ident $($rest:ident)*]($($arg_sig:tt)*) $(-> $ret:ty)?
++    ) => {
++        paste!(
++            declare_atomic_method!(
++                $(#[doc = $doc])*
++                [< $func _ $variant >]($($arg_sig)*) $(-> $ret)?
++            );
++        );
++
++        declare_atomic_method!(
++            $(#[doc = $doc])*
++            $func [$($rest)*]($($arg_sig)*) $(-> $ret)?
++        );
++    };
++    (
++        $(#[doc=$doc:expr])*
++        $func:ident []($($arg_sig:tt)*) $(-> $ret:ty)?
++    ) => {
++        declare_atomic_method!(
++            $(#[doc = $doc])*
++            $func($($arg_sig)*) $(-> $ret)?
++        );
++    }
++}
++
++// This macro generates the function implementation with given argument list and return type, and it
++// will replace "call(...)" expression with "$ctype _ $func" to call the real C function.
++macro_rules! impl_atomic_method {
++    (
++        ($ctype:ident) $func:ident($($arg:ident: $arg_type:ty),*) $(-> $ret:ty)? {
++            $unsafe:tt { call($($c_arg:expr),*) }
++        }
++    ) => {
++        paste!(
++            #[inline(always)]
++            fn [< atomic_ $func >]($($arg: $arg_type,)*) $(-> $ret)? {
++                // TODO: Ideally we want to use the SAFETY comments written at the macro invocation
++                // (e.g. in `declare_and_impl_atomic_methods!()`, however, since SAFETY comments
++                // are just comments, and they are not passed to macros as tokens, therefore we
++                // cannot use them here. One potential improvement is that if we support using
++                // attributes as an alternative for SAFETY comments, then we can use that for macro
++                // generating code.
++                //
++                // SAFETY: specified on macro invocation.
++                $unsafe { bindings::[< $ctype _ $func >]($($c_arg,)*) }
++            }
++        );
++    };
++    (
++        ($ctype:ident) $func:ident[$variant:ident $($rest:ident)*]($($arg_sig:tt)*) $(-> $ret:ty)? {
++            $unsafe:tt { call($($arg:tt)*) }
++        }
++    ) => {
++        paste!(
++            impl_atomic_method!(
++                ($ctype) [< $func _ $variant >]($($arg_sig)*) $( -> $ret)? {
++                    $unsafe { call($($arg)*) }
++            }
++            );
++        );
++        impl_atomic_method!(
++            ($ctype) $func [$($rest)*]($($arg_sig)*) $( -> $ret)? {
++                $unsafe { call($($arg)*) }
++            }
++        );
++    };
++    (
++        ($ctype:ident) $func:ident[]($($arg_sig:tt)*) $( -> $ret:ty)? {
++            $unsafe:tt { call($($arg:tt)*) }
++        }
++    ) => {
++        impl_atomic_method!(
++            ($ctype) $func($($arg_sig)*) $(-> $ret)? {
++                $unsafe { call($($arg)*) }
++            }
++        );
++    }
++}
++
++// Delcares $ops trait with methods and implements the trait for `i32` and `i64`.
++macro_rules! declare_and_impl_atomic_methods {
++    ($(#[$attr:meta])* $pub:vis trait $ops:ident {
++        $(
++            $(#[doc=$doc:expr])*
++            fn $func:ident [$($variant:ident),*]($($arg_sig:tt)*) $( -> $ret:ty)? {
++                $unsafe:tt { bindings::#call($($arg:tt)*) }
++            }
++        )*
++    }) => {
++        $(#[$attr])*
++        $pub trait $ops: AtomicImpl {
++            $(
++                declare_atomic_method!(
++                    $(#[doc=$doc])*
++                    $func[$($variant)*]($($arg_sig)*) $(-> $ret)?
++                );
++            )*
++        }
++
++        impl $ops for i32 {
++            $(
++                impl_atomic_method!(
++                    (atomic) $func[$($variant)*]($($arg_sig)*) $(-> $ret)? {
++                        $unsafe { call($($arg)*) }
++                    }
++                );
++            )*
++        }
++
++        impl $ops for i64 {
++            $(
++                impl_atomic_method!(
++                    (atomic64) $func[$($variant)*]($($arg_sig)*) $(-> $ret)? {
++                        $unsafe { call($($arg)*) }
++                    }
++                );
++            )*
++        }
++    }
++}
++
++declare_and_impl_atomic_methods!(
++    /// Basic atomic operations
++    pub trait AtomicBasicOps {
++        /// Atomic read (load).
++        fn read[acquire](a: &AtomicRepr<Self>) -> Self {
++            // SAFETY: `a.as_ptr()` is valid and properly aligned.
++            unsafe { bindings::#call(a.as_ptr().cast()) }
++        }
++
++        /// Atomic set (store).
++        fn set[release](a: &AtomicRepr<Self>, v: Self) {
++            // SAFETY: `a.as_ptr()` is valid and properly aligned.
++            unsafe { bindings::#call(a.as_ptr().cast(), v) }
++        }
++    }
++);
++
++declare_and_impl_atomic_methods!(
++    /// Exchange and compare-and-exchange atomic operations
++    pub trait AtomicExchangeOps {
++        /// Atomic exchange.
++        ///
++        /// Atomically updates `*a` to `v` and returns the old value.
++        fn xchg[acquire, release, relaxed](a: &AtomicRepr<Self>, v: Self) -> Self {
++            // SAFETY: `a.as_ptr()` is valid and properly aligned.
++            unsafe { bindings::#call(a.as_ptr().cast(), v) }
++        }
++
++        /// Atomic compare and exchange.
++        ///
++        /// If `*a` == `*old`, atomically updates `*a` to `new`. Otherwise, `*a` is not
++        /// modified, `*old` is updated to the current value of `*a`.
++        ///
++        /// Return `true` if the update of `*a` occurred, `false` otherwise.
++        fn try_cmpxchg[acquire, release, relaxed](
++            a: &AtomicRepr<Self>, old: &mut Self, new: Self
++        ) -> bool {
++            // SAFETY: `a.as_ptr()` is valid and properly aligned. `core::ptr::from_mut(old)`
++            // is valid and properly aligned.
++            unsafe { bindings::#call(a.as_ptr().cast(), core::ptr::from_mut(old), new) }
++        }
++    }
++);
++
++declare_and_impl_atomic_methods!(
++    /// Atomic arithmetic operations
++    pub trait AtomicArithmeticOps {
++        /// Atomic add (wrapping).
++        ///
++        /// Atomically updates `*a` to `(*a).wrapping_add(v)`.
++        fn add[](a: &AtomicRepr<Self>, v: Self::Delta) {
++            // SAFETY: `a.as_ptr()` is valid and properly aligned.
++            unsafe { bindings::#call(v, a.as_ptr().cast()) }
++        }
++
++        /// Atomic fetch and add (wrapping).
++        ///
++        /// Atomically updates `*a` to `(*a).wrapping_add(v)`, and returns the value of `*a`
++        /// before the update.
++        fn fetch_add[acquire, release, relaxed](a: &AtomicRepr<Self>, v: Self::Delta) -> Self {
++            // SAFETY: `a.as_ptr()` is valid and properly aligned.
++            unsafe { bindings::#call(v, a.as_ptr().cast()) }
++        }
++    }
++);
 -- 
 2.51.0
 

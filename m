@@ -1,73 +1,73 @@
-Received: from mail-qv1-f47.google.com (mail-qv1-f47.google.com [209.85.219.47])
+Received: from mail-qv1-f54.google.com (mail-qv1-f54.google.com [209.85.219.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79E632773C1
-	for <lkmm@lists.linux.dev>; Fri,  5 Sep 2025 04:42:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E35927A114
+	for <lkmm@lists.linux.dev>; Fri,  5 Sep 2025 04:42:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757047326; cv=none; b=fhNtDJBYRpdXVUAujlWjR01qpuYZm1jmvoH7BsyWM97JtyXSvaUbH6L189/6wJ6MFJMgSwckq8JxCQrU7zWpYCMQmnSh17VZ2PwrLmRsyoogPG36Ll4dCCrv17YIU57dkWg7CRC6+P3bfi5ic4ZhZBG/AZM+bRXq0D0lkTpIFP4=
+	t=1757047329; cv=none; b=EHJZprUX8IHKpLGbVPapTBlnpQBYXvKBIxwNH/B5q8Yl6TTILb1hXR9vNArUwCEcWsHTpHZfV0nN40a0OOp4N0EB5irsCOPaAbpRPupzqc2ktvnoOKTxiiF1l8yfK1jsu8Z5tTqF+cPJR27AkCTzOvL1AeyhlJg3WZu5WL9W/0U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757047326; c=relaxed/simple;
-	bh=cIwCw8ri5yu72PQ+HU7IQjAWQp4V6hhuqnXQUXgcnmM=;
+	s=arc-20240116; t=1757047329; c=relaxed/simple;
+	bh=MFj734UHEc4mrv5vGKChrUUgs2IjOTEw9riI8z/uVVk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DX3XiQ1xu8GZmOZHmwhphHB3WeTNzeW808MuOS0eEfT4VzIptI2LTpGLNW27Aor3oPzrqxMeimFg4Q304/eBErOo5RcTPI8YKmx2/Kbp3bF0PUKrGJajX+efUqEaeggkKVGqQ9KKo5JirP+QsiAYa1aYcgmjROX0XFmHDKzeqUw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=RB/K6Vep; arc=none smtp.client-ip=209.85.219.47
+	 MIME-Version; b=W3bU9wqWWjSD1XZ+qYUwToQqXYzwOxxTNxZstauEJuSj8gfI4dRXyLv9YRjxdzrZAnbLv77ccbc5F3zAOWTZ0H4SurwLker2fzfJyZQZJKWkq3BEjyUlCaTaeFkA/msYwLVhgp3WXpAcZ0rKvd8RqEq9DN9D5QOsd7XBHkGHg54=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=MnppN/lP; arc=none smtp.client-ip=209.85.219.54
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RB/K6Vep"
-Received: by mail-qv1-f47.google.com with SMTP id 6a1803df08f44-72238e9f8ffso15138496d6.2
-        for <lkmm@lists.linux.dev>; Thu, 04 Sep 2025 21:42:04 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MnppN/lP"
+Received: by mail-qv1-f54.google.com with SMTP id 6a1803df08f44-70ba7aa131fso19967576d6.2
+        for <lkmm@lists.linux.dev>; Thu, 04 Sep 2025 21:42:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1757047323; x=1757652123; darn=lists.linux.dev;
+        d=gmail.com; s=20230601; t=1757047326; x=1757652126; darn=lists.linux.dev;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:feedback-id:from:to:cc:subject
          :date:message-id:reply-to;
-        bh=jGRXCvAdf9rQDwGdmHhB4qan/VLBpVYM9P1wrloCxm8=;
-        b=RB/K6VepbeacEoOpO6gp/a60vAQHf0bPs89AOOHDa/IwgH+I6FgA2FLDozvj0cm8Q1
-         CtQAGU2fGzwPwW27mDbXr9i2QQ90DyjkkUw6NbyT7drqFg80X/kPwNE33vpUsR1nUH51
-         mM6ugyzX97ZTHmHnvcZDTrISltuQlUE5jTuA3Xduv12iMUk7nT2gEqswdpBz0pz+IkHP
-         yQT+GL+4N1NRtz5lKxIHF/ZKV8dxL/DUag8oCyL37f5r2whPapZSScbZye/kDOaUzkHQ
-         8oDf0dfKkzuKimyQuICDYaVd34fpTeISH6FA4xwb9a+4Fi1+neoOEcJEUOPy+iubEqqN
-         Oy1w==
+        bh=VMnDnVriN8OAFoEq3t7tKLFn2G8p60n2QFdWgNUyXAc=;
+        b=MnppN/lPR9sV/7vEXj2vOe8St/+Az6mGvnV5VTOmjBoLWpUMzEqkGbsBOWHXLgIYVA
+         IucYZpY4eGAOL1N6wwukalkiQhIq9F7CVb3BmAuTGsCH70+ZtcZ2YvCiKtbtwCqgQgIq
+         0qe9AzhvJZAzjHydKRSKhg5LyubavzL03me2OVwynHHG2WoItgPsEM0rRxaiqbAVjDqR
+         fv1DSidrc/XuR5SRxtDqQPFomDPq+1pgOZsJjLcFgu3L+PYx9qPfVVIuxQ3uZyAeMNEp
+         lvuzYjA040AIKWqiCoHwEZgWSOdpTAK60P99St+RSlpsniutjw0EEqfPB8yE5sVfa3ui
+         P1Ew==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1757047323; x=1757652123;
+        d=1e100.net; s=20230601; t=1757047326; x=1757652126;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:feedback-id:x-gm-message-state
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=jGRXCvAdf9rQDwGdmHhB4qan/VLBpVYM9P1wrloCxm8=;
-        b=iSmCTX3F4hsG04L/QcJppLx9nP71s2qKzDNzjYVCWq9RD/LMRMYZVxMFTNnpeD+qST
-         guAc0U64tS9o4zAEB0BoqA4Pt5o6ZkuyO6WG6op1X/U6OtrLdZyyj0pxSntvGCWwoZjT
-         +6/JLc+ESazbCbEJ9Cv8bmuVu/cIjzDHaLKPe85Cu3cEJqTfeU7fHokcUse1+QRf75xS
-         0SvVqdW3o5vAdw12Awsz2y0vo6ybZRitNqTPyOebkycfvoWk4ZfaPN4E56S9vl459MEH
-         Mxm5CyxU6W2YxYkDjMlaYo5Ovb7oV4LzyvIzDxG+tlMIRy4wnrGS4gAiBD4F942Jz0Ik
-         dZPw==
-X-Forwarded-Encrypted: i=1; AJvYcCXKhRjebORqQg05fi1z1OdJbx3hwT+CcmM73yiy6wJ6d1Zys5EWFZNXuHDc4+K6glSGFQti@lists.linux.dev
-X-Gm-Message-State: AOJu0YwsGC4GsGhDI3vMRjvzycOkHh8nVsLk9APePhvM4+AN/zLUvye+
-	LraiOHfaYTEW4IcH7UWOBqtSLVL0S8LJXdH6D/ONiC3B8ZTICUdzofzx
-X-Gm-Gg: ASbGncvNr7dhWV2gEEJdZPbMzFScFCYX52+M1Uwma47wG7IXnoRruTaa4WYBDR604ch
-	UxtVVqYJq1+A7miuoo2G8ZDFIHPIjiSlR/UbfYRG76lXriPuRgL4fSdBizsfLSFMp782V6R8dBi
-	C6IAsg0VNUlASIv8Gks5aB/lx+VL6K4SjGWEAgpu1wGkn8s89YNQD4YJo7lYJq97leUTE6H9v/N
-	KakSfzKDsH2V6RrtEAPcCN61nlrMaSCjMgMzn+PFgO3AgGPUrjdpYzD4hlvdgAAF+QefV7/V5MB
-	ZfU2rolzKK/b+R5GL2lNumZpMsuhPLB1bAkMdDGkIZOLUZH9kz+CBRgiy1Ul6gwOEbGpJLgJL5a
-	GugYbfbS63uoN7lf8dmmvrwxz2y+D5OO+BmIdKsGU3SklVm8XNWyHqaLBfPn6+muBDpXbx2yDOW
-	iIJga/P42gEiCQbXbygMCfuTM=
-X-Google-Smtp-Source: AGHT+IHeGa/hifMiPYeAI3f5yPt/m/6tT3nOmmo9PQP22OrVz0iXxYDTUnjYb/5mNd+7VqNF/FpgJw==
-X-Received: by 2002:a05:6214:2282:b0:710:9749:aeb8 with SMTP id 6a1803df08f44-7109749b4b8mr204940256d6.14.1757047323400;
-        Thu, 04 Sep 2025 21:42:03 -0700 (PDT)
+        bh=VMnDnVriN8OAFoEq3t7tKLFn2G8p60n2QFdWgNUyXAc=;
+        b=nBIBzSwK/v3S6FIPNtrO5MRC2i9QX5WGsje9l/DFT1Ml2/79HDu+F4ztBiKcFNrGln
+         7tc6zlup9IHWFfxStYwIDP231GdkXjju6JML32lu5V37DgtzMKkr+Xcxzp1v5TG5luTB
+         WTjkaW/OK6x449VG0xDbvjKzFi5oHlY1TTWPSZSoSitov7uvezAE4bjL5xLDSjGCg5UR
+         bPO5sxrvnNzoO8FW87YgayGmT++8XI6fr94G9OFppdV/735/4PQoQnMewFqcbxN7ENMX
+         HqQB8TMy4RTUBGDakHeH0leWA/d6IXB6vChSDbHZFT74GJ5y0rQ3bjaA+r+nsCgOW33Z
+         LcfQ==
+X-Forwarded-Encrypted: i=1; AJvYcCVOlFeqq+ojH2Lg3qsD+Vt7Y9n48+LAj86LMOWRViBzQYayUtBeOvgWZubwX1Uh5xpRUDVi@lists.linux.dev
+X-Gm-Message-State: AOJu0YzIvCaiA8NcXTWWNZOWnCrw1RNnJ0yM4BZNb8R+Ah3+s1hCujm9
+	GV1lLiwgbHANOhsWT8GzBV1/lBKtWyGpv/451bjbxv5DY5kErOoavrF1
+X-Gm-Gg: ASbGnculRz4FvdNdcef5XSYl8Gg1SkoHM9nW0NHKsn4K3AOuv2hm4/Ga1B25kuUZBaW
+	xYcH9Od8zXPVD6wOpeCcKPSCa08lbu6p1zyMOyLe/cvOxgKtyp+GHlDsZE9+c8Ak0uOf20O8iWt
+	/xfMjN76e3++MOHLb+LuEtUk90v9kWVkM+AT3TwKh2BOveMOZQHwz70Me9DnwnFBPmOdXE6kKRD
+	IWkuBYNuX3ba5YD+DBhp3B6JomwF/LOQq5ayPe5M8TlZvYn1qRg1neL7+HlkhRBFgnpnqMmGUnE
+	iBk/jajsDkajZDGvmngEX1QBcYkXelTlyrZj1sIQjTg6lbvHcKvR5qILtBF6WO15gaAtmiLNNGK
+	RvX1x/Lf8mb9R/nmZGdeSk4x0XlKAcdZJKoTxjESkN8dx42aElMXD5b+FE58LV6Q98EBWwbHhqQ
+	dkku8lV4OUr1bQI6HXWDkDg9cimdDmVfh5Sg==
+X-Google-Smtp-Source: AGHT+IHWGPwGtPYiAZg8AM6Wt/5qiuYqsUpzah7cVw8Saj4YNowV/zqQ65a60VBO+cYV8TS/LkkohQ==
+X-Received: by 2002:a05:6214:76b:b0:717:4378:b604 with SMTP id 6a1803df08f44-7174378d2c8mr231227846d6.58.1757047325880;
+        Thu, 04 Sep 2025 21:42:05 -0700 (PDT)
 Received: from fauth-a2-smtp.messagingengine.com (fauth-a2-smtp.messagingengine.com. [103.168.172.201])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-720b4665fcbsm58231246d6.37.2025.09.04.21.42.02
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-720b6c07573sm59727786d6.71.2025.09.04.21.42.05
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 04 Sep 2025 21:42:03 -0700 (PDT)
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfauth.phl.internal (Postfix) with ESMTP id 8D79AF40066;
-	Fri,  5 Sep 2025 00:42:02 -0400 (EDT)
+        Thu, 04 Sep 2025 21:42:05 -0700 (PDT)
+Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
+	by mailfauth.phl.internal (Postfix) with ESMTP id 1A734F40066;
+	Fri,  5 Sep 2025 00:42:05 -0400 (EDT)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-04.internal (MEProxy); Fri, 05 Sep 2025 00:42:02 -0400
-X-ME-Sender: <xms:Gmq6aGenpJ8Mhwj7VxJqwjCUMBiJv5Ia5j7k0Upg9pejOzj-UBIj5w>
-    <xme:Gmq6aN63iZU88Ss0bazI1YtXhSKZJyFAdOTgWbUQkjKZhNWgOcALiAfFSJI0SkMUG
-    vIEypeqLWKNXTpPKA>
-X-ME-Received: <xmr:Gmq6aJSn775DA1rsHIrnFYyRmzTczUMHMrQzx3hyI6C_IlmIAIUgqs0HQ1N6zKF5I8uF9TqnojXHRdI4ViJkZkyn-SR_opKJ>
+  by phl-compute-09.internal (MEProxy); Fri, 05 Sep 2025 00:42:05 -0400
+X-ME-Sender: <xms:HGq6aLi7wTHa5enCTg1s_T9Oonbm2n66DJ9zblGir0w7Xbp4YJJiLA>
+    <xme:HGq6aFsk2OQlg4ECP166IoXbm0a_kgG_CcZOjfHogifd3fV9tOli41XxbzR-elOrE
+    ijWwMhXxZKu5Hfn1Q>
+X-ME-Received: <xmr:HGq6aM0mCGKewZLMvmNnesfVhWXJEBNDoSaxA1mrW8UvTgR14aadO792BGiVGHQvn2wrYb-wfcN6_n-KZwXZkAXOlg-QLTT2>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdejleehucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceurghi
     lhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujfgurh
@@ -86,14 +86,14 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdejleehucetufdoteggod
     hmrghrkhdrrhhuthhlrghnugesrghrmhdrtghomhdprhgtphhtthhopehmihhnghhosehk
     vghrnhgvlhdrohhrghdprhgtphhtthhopehtghhlgieslhhinhhuthhrohhnihigrdguvg
     dprhgtphhtthhopehprghulhhmtghksehkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:Gmq6aAcLdew77S6MnTrqXZGh0vN-gluanLUCvUE6mIdX1oxxWKsoaA>
-    <xmx:Gmq6aJSSjdKy4w_l8uCUNMnUTlNKKVjvs64hkxB95-SyVY7oD7Zrvw>
-    <xmx:Gmq6aJOCMlpYhdlrOqkeIakYoWq6hlwb-H_Am6jliAxqEetlgSk6Sg>
-    <xmx:Gmq6aMVeZGwPC2SwbuzWe9CDgmRRGg58Ut3Flsl3KYsPdC8ThEttlw>
-    <xmx:Gmq6aJZlNwastp4sma6krpJBzfBIEjGFJLmy-6b8SXNDlK_6y1wVJdT_>
+X-ME-Proxy: <xmx:HWq6aExsvBYwCajNrtyP8C1dT0uTul20oI636BE2OsHgi8gvs0SykA>
+    <xmx:HWq6aPX68XX4dR3KJuNEU0zxqBIEbj64O1BOSnqgFhr6Gh-WR8V2KA>
+    <xmx:HWq6aOAZJnliUPq9QFE8qyOLScJ5TfQ740fcn3Opb6bgVL7fRUlTwA>
+    <xmx:HWq6aI74BrU7LtPvuhS_HAJEOqEo4NUoksQmFMri-JoP7DdW4HMLcQ>
+    <xmx:HWq6aCt26RxH5PVAdiMYISerVh7No_mRXC7uJJJ9wNBElW7tFbVmW5pd>
 Feedback-ID: iad51458e:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 5 Sep 2025 00:42:01 -0400 (EDT)
+ 5 Sep 2025 00:42:03 -0400 (EDT)
 From: Boqun Feng <boqun.feng@gmail.com>
 To: rust-for-linux@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
@@ -115,9 +115,9 @@ Cc: "Will Deacon" <will@kernel.org>,
 	"Danilo Krummrich" <dakr@kernel.org>,
 	"Andreas Hindborg" <a.hindborg@kernel.org>,
 	Boqun Feng <boqun.feng@gmail.com>
-Subject: [PATCH 07/14] rust: sync: atomic: Add Atomic<u{32,64}>
-Date: Thu,  4 Sep 2025 21:41:34 -0700
-Message-ID: <20250905044141.77868-8-boqun.feng@gmail.com>
+Subject: [PATCH 08/14] rust: sync: atomic: Add Atomic<{usize,isize}>
+Date: Thu,  4 Sep 2025 21:41:35 -0700
+Message-ID: <20250905044141.77868-9-boqun.feng@gmail.com>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250905044141.77868-1-boqun.feng@gmail.com>
 References: <20250905044141.77868-1-boqun.feng@gmail.com>
@@ -129,123 +129,129 @@ List-Unsubscribe: <mailto:lkmm+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Add generic atomic support for basic unsigned types that have an
-`AtomicImpl` with the same size and alignment.
-
-Unit tests are added including Atomic<i32> and Atomic<i64>.
+Add generic atomic support for `usize` and `isize`. Note that instead of
+mapping directly to `atomic_long_t`, the represention type
+(`AtomicType::Repr`) is selected based on CONFIG_64BIT. This reduces
+the necessity of creating `atomic_long_*` helpers, which could save
+the binary size of kernel if inline helpers are not available. To do so,
+an internal type `isize_atomic_repr` is defined, it's `i32` in 32bit
+kernel and `i64` in 64bit kernel.
 
 Reviewed-by: Alice Ryhl <aliceryhl@google.com>
 Reviewed-by: Andreas Hindborg <a.hindborg@kernel.org>
 Reviewed-by: Benno Lossin <lossin@kernel.org>
 Signed-off-by: Boqun Feng <boqun.feng@gmail.com>
-Link: https://lore.kernel.org/all/20250719030827.61357-8-boqun.feng@gmail.com/
+Link: https://lore.kernel.org/all/20250719030827.61357-9-boqun.feng@gmail.com/
 ---
- rust/kernel/sync/atomic/predefine.rs | 95 ++++++++++++++++++++++++++++
- 1 file changed, 95 insertions(+)
+ rust/kernel/sync/atomic/predefine.rs | 53 +++++++++++++++++++++++++---
+ 1 file changed, 49 insertions(+), 4 deletions(-)
 
 diff --git a/rust/kernel/sync/atomic/predefine.rs b/rust/kernel/sync/atomic/predefine.rs
-index a6e5883be7cb..d0875812f6ad 100644
+index d0875812f6ad..45a17985cda4 100644
 --- a/rust/kernel/sync/atomic/predefine.rs
 +++ b/rust/kernel/sync/atomic/predefine.rs
-@@ -27,3 +27,98 @@ fn rhs_into_delta(rhs: i64) -> i64 {
-         rhs
+@@ -2,6 +2,9 @@
+ 
+ //! Pre-defined atomic types
+ 
++use crate::static_assert;
++use core::mem::{align_of, size_of};
++
+ // SAFETY: `i32` has the same size and alignment with itself, and is round-trip transmutable to
+ // itself.
+ unsafe impl super::AtomicType for i32 {
+@@ -28,6 +31,35 @@ fn rhs_into_delta(rhs: i64) -> i64 {
      }
  }
+ 
++// Defines an internal type that always maps to the integer type which has the same size alignment
++// as `isize` and `usize`, and `isize` and `usize` are always bi-directional transmutable to
++// `isize_atomic_repr`, which also always implements `AtomicImpl`.
++#[allow(non_camel_case_types)]
++#[cfg(not(CONFIG_64BIT))]
++type isize_atomic_repr = i32;
++#[allow(non_camel_case_types)]
++#[cfg(CONFIG_64BIT)]
++type isize_atomic_repr = i64;
 +
-+// SAFETY: `u32` and `i32` has the same size and alignment, and `u32` is round-trip transmutable to
-+// `i32`.
-+unsafe impl super::AtomicType for u32 {
-+    type Repr = i32;
++// Ensure size and alignment requirements are checked.
++static_assert!(size_of::<isize>() == size_of::<isize_atomic_repr>());
++static_assert!(align_of::<isize>() == align_of::<isize_atomic_repr>());
++static_assert!(size_of::<usize>() == size_of::<isize_atomic_repr>());
++static_assert!(align_of::<usize>() == align_of::<isize_atomic_repr>());
++
++// SAFETY: `isize` has the same size and alignment with `isize_atomic_repr`, and is round-trip
++// transmutable to `isize_atomic_repr`.
++unsafe impl super::AtomicType for isize {
++    type Repr = isize_atomic_repr;
 +}
 +
-+// SAFETY: The wrapping add result of two `i32`s is a valid `u32`.
-+unsafe impl super::AtomicAdd<u32> for u32 {
-+    fn rhs_into_delta(rhs: u32) -> i32 {
-+        rhs as i32
++// SAFETY: The wrapping add result of two `isize_atomic_repr`s is a valid `usize`.
++unsafe impl super::AtomicAdd<isize> for isize {
++    fn rhs_into_delta(rhs: isize) -> isize_atomic_repr {
++        rhs as isize_atomic_repr
 +    }
 +}
 +
-+// SAFETY: `u64` and `i64` has the same size and alignment, and `u64` is round-trip transmutable to
-+// `i64`.
-+unsafe impl super::AtomicType for u64 {
-+    type Repr = i64;
+ // SAFETY: `u32` and `i32` has the same size and alignment, and `u32` is round-trip transmutable to
+ // `i32`.
+ unsafe impl super::AtomicType for u32 {
+@@ -54,6 +86,19 @@ fn rhs_into_delta(rhs: u64) -> i64 {
+     }
+ }
+ 
++// SAFETY: `usize` has the same size and alignment with `isize_atomic_repr`, and is round-trip
++// transmutable to `isize_atomic_repr`.
++unsafe impl super::AtomicType for usize {
++    type Repr = isize_atomic_repr;
 +}
 +
-+// SAFETY: The wrapping add result of two `i64`s is a valid `u64`.
-+unsafe impl super::AtomicAdd<u64> for u64 {
-+    fn rhs_into_delta(rhs: u64) -> i64 {
-+        rhs as i64
++// SAFETY: The wrapping add result of two `isize_atomic_repr`s is a valid `usize`.
++unsafe impl super::AtomicAdd<usize> for usize {
++    fn rhs_into_delta(rhs: usize) -> isize_atomic_repr {
++        rhs as isize_atomic_repr
 +    }
 +}
 +
-+use crate::macros::kunit_tests;
-+
-+#[kunit_tests(rust_atomics)]
-+mod tests {
-+    use super::super::*;
-+
-+    // Call $fn($val) with each $type of $val.
-+    macro_rules! for_each_type {
-+        ($val:literal in [$($type:ty),*] $fn:expr) => {
-+            $({
-+                let v: $type = $val;
-+
-+                $fn(v);
-+            })*
-+        }
-+    }
-+
-+    #[test]
-+    fn atomic_basic_tests() {
-+        for_each_type!(42 in [i32, i64, u32, u64] |v| {
-+            let x = Atomic::new(v);
-+
-+            assert_eq!(v, x.load(Relaxed));
-+        });
-+    }
-+
-+    #[test]
-+    fn atomic_xchg_tests() {
-+        for_each_type!(42 in [i32, i64, u32, u64] |v| {
-+            let x = Atomic::new(v);
-+
-+            let old = v;
-+            let new = v + 1;
-+
-+            assert_eq!(old, x.xchg(new, Full));
-+            assert_eq!(new, x.load(Relaxed));
-+        });
-+    }
-+
-+    #[test]
-+    fn atomic_cmpxchg_tests() {
-+        for_each_type!(42 in [i32, i64, u32, u64] |v| {
-+            let x = Atomic::new(v);
-+
-+            let old = v;
-+            let new = v + 1;
-+
-+            assert_eq!(Err(old), x.cmpxchg(new, new, Full));
-+            assert_eq!(old, x.load(Relaxed));
-+            assert_eq!(Ok(old), x.cmpxchg(old, new, Relaxed));
-+            assert_eq!(new, x.load(Relaxed));
-+        });
-+    }
-+
-+    #[test]
-+    fn atomic_arithmetic_tests() {
-+        for_each_type!(42 in [i32, i64, u32, u64] |v| {
-+            let x = Atomic::new(v);
-+
-+            assert_eq!(v, x.fetch_add(12, Full));
-+            assert_eq!(v + 12, x.load(Relaxed));
-+
-+            x.add(13, Relaxed);
-+
-+            assert_eq!(v + 25, x.load(Relaxed));
-+        });
-+    }
-+}
+ use crate::macros::kunit_tests;
+ 
+ #[kunit_tests(rust_atomics)]
+@@ -73,7 +118,7 @@ macro_rules! for_each_type {
+ 
+     #[test]
+     fn atomic_basic_tests() {
+-        for_each_type!(42 in [i32, i64, u32, u64] |v| {
++        for_each_type!(42 in [i32, i64, u32, u64, isize, usize] |v| {
+             let x = Atomic::new(v);
+ 
+             assert_eq!(v, x.load(Relaxed));
+@@ -82,7 +127,7 @@ fn atomic_basic_tests() {
+ 
+     #[test]
+     fn atomic_xchg_tests() {
+-        for_each_type!(42 in [i32, i64, u32, u64] |v| {
++        for_each_type!(42 in [i32, i64, u32, u64, isize, usize] |v| {
+             let x = Atomic::new(v);
+ 
+             let old = v;
+@@ -95,7 +140,7 @@ fn atomic_xchg_tests() {
+ 
+     #[test]
+     fn atomic_cmpxchg_tests() {
+-        for_each_type!(42 in [i32, i64, u32, u64] |v| {
++        for_each_type!(42 in [i32, i64, u32, u64, isize, usize] |v| {
+             let x = Atomic::new(v);
+ 
+             let old = v;
+@@ -110,7 +155,7 @@ fn atomic_cmpxchg_tests() {
+ 
+     #[test]
+     fn atomic_arithmetic_tests() {
+-        for_each_type!(42 in [i32, i64, u32, u64] |v| {
++        for_each_type!(42 in [i32, i64, u32, u64, isize, usize] |v| {
+             let x = Atomic::new(v);
+ 
+             assert_eq!(v, x.fetch_add(12, Full));
 -- 
 2.51.0
 

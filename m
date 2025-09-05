@@ -1,124 +1,220 @@
-Received: from smtpout-03.galae.net (smtpout-03.galae.net [185.246.85.4])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qk1-f178.google.com (mail-qk1-f178.google.com [209.85.222.178])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8455E334371
-	for <lkmm@lists.linux.dev>; Thu, 28 Aug 2025 17:03:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.246.85.4
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0016E75809
+	for <lkmm@lists.linux.dev>; Fri,  5 Sep 2025 04:41:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756400586; cv=none; b=SaWtQBWM1pYGCm6QdyHZq1RH25RVV1ugpwnPpXBu2tv3gjyZ2X3mNk68USaZG9Ax4kq8UsoCNlqzoNhH+h8P12x5BzAF0kI3qWbLmwMRLaWaHP6sx9QiNXlIJzKajjiUTZySnk7tnac4W7YKpjTbxbGMVwxfhdT+qGl0gnTpR5E=
+	t=1757047314; cv=none; b=sRdx5pC8dahy1X1LahbaM7xE3nPneXgy0mPhnYcLosv1As7oqItRYykAQaK1sadfFYOP2ZTQJcl+lSOPjlNQ+60I6Fa3jG+3OceR0nLF/t9A60BNpesRG27ht8dpbrq6e6jJDuKVgIftE/RhGuTj4E/g4lUE2q3gIAois+vY3LY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756400586; c=relaxed/simple;
-	bh=lc4yQLlGQ1ALDQQJS7QLyBBBdQD7Q9TQBdMpceMI9hk=;
-	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=nvcb8cBt/zj0ZulNVq+30sqo6Y63/UkaoVz9n1j9WlDNF2SG9eUY49cNMmfC3On0JfTbJNaHkinmYa0mMlBaFhVySm2wEnqeD5kCk5TPXqirWAyw3g+jd7oUvI64vaCI+6oiCOEd7GWpFYDxklxNTGdVzToi2WKX2IXxiC9HBBc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com; spf=pass smtp.mailfrom=bootlin.com; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=K88uUqBi; arc=none smtp.client-ip=185.246.85.4
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bootlin.com
+	s=arc-20240116; t=1757047314; c=relaxed/simple;
+	bh=dOujAILrYNLnd6mktzPkLSL1VedSe4cDzRKHdKEYxdY=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=GPTmgA6o34fF/elMgdZQ3iWN0eRR+URBZZlrbJYy6PoIy4GIQRfLCHnyRWacfD9YqMAE0qAxFzpOQPe7K7E8sCWQ5tmibKmk7yUgH1igwXJ2f/W/6zJ0FO0R7XThuXvMKaPwfMPPb4LNH8BwAmiWgXyaDbLj/dR8Cbv7JhiWlnY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Jusns3at; arc=none smtp.client-ip=209.85.222.178
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="K88uUqBi"
-Received: from smtpout-01.galae.net (smtpout-01.galae.net [212.83.139.233])
-	by smtpout-03.galae.net (Postfix) with ESMTPS id DF9BD4E40BBC;
-	Thu, 28 Aug 2025 17:03:01 +0000 (UTC)
-Received: from mail.galae.net (mail.galae.net [212.83.136.155])
-	by smtpout-01.galae.net (Postfix) with ESMTPS id AA3DF60303;
-	Thu, 28 Aug 2025 17:03:01 +0000 (UTC)
-Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id 21CAF1C22DD92;
-	Thu, 28 Aug 2025 19:02:46 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=dkim;
-	t=1756400580; h=from:subject:date:message-id:to:cc:mime-version:content-type:
-	 content-transfer-encoding:in-reply-to:references;
-	bh=4Vex+Mkvb0GemWYHmwN2TZzE127JKaTead6sfS0g/BY=;
-	b=K88uUqBiCBmZYOXjE7eaX15VQS5Y/Ibuox7+bHeNP1PTVBAlgYC+/JcBeCy6VcGGzpV4pj
-	5No3PKiewSUFyztDWjZSg+SYBIXI2j0TZhjP3cxfVJ88Mx+1bo5P2g9YaAF61MGTFZZkxo
-	D2ihndxTq0UfY28cIyiTH2qPn9Dq1nbuknrDK7XN/4dT/MWkC/sxPuZtqKHDnhflmMF3pn
-	yTMwbfDlvSzkX1GmcMlpSQ1ooW/TrcLB+VoyYLFDB6P4uBwurHDppwCnHU9e7cVR/409Wg
-	JE73AvIf6jwNIVWuXKZmfeRuk+M/VLeO/ev5PyXFvCOiExR3xWCLmP/Cwl9+kQ==
-Date: Thu, 28 Aug 2025 19:02:43 +0200
-From: Kory Maincent <kory.maincent@bootlin.com>
-To: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-Cc: "Message-ID :" <cover.1752076293.git.mchehab+huawei@kernel.org>, Linux
- Doc Mailing List <linux-doc@vger.kernel.org>, "Akira Yokosawa"
- <akiyks@gmail.com>, "Breno Leitao" <leitao@debian.org>, "David S. Miller"
- <davem@davemloft.net>, "Donald Hunter" <donald.hunter@gmail.com>, "Eric
- Dumazet" <edumazet@google.com>, "Ignacio Encinas Rubio"
- <ignacio@iencinas.com>, "Jakub Kicinski" <kuba@kernel.org>, "Jan Stancek"
- <jstancek@redhat.com>, "Jonathan Corbet" <corbet@lwn.net>, "Marco Elver"
- <elver@google.com>, "Paolo Abeni" <pabeni@redhat.com>, "Randy Dunlap"
- <rdunlap@infradead.org>, "Ruben Wauters" <rubenru09@aol.com>, "Shuah Khan"
- <skhan@linuxfoundation.org>, "Simon Horman" <horms@kernel.org>,
- joel@joelfernandes.org, linux-kernel-mentees@lists.linux.dev,
- linux-kernel@vger.kernel.org, lkmm@lists.linux.dev, netdev@vger.kernel.org,
- peterz@infradead.org, stern@rowland.harvard.edu
-Subject: Re: [PATCH v10 06/14] docs: use parser_yaml extension to handle
- Netlink specs
-Message-ID: <20250828190243.0d3f74f6@kmaincent-XPS-13-7390>
-In-Reply-To: <20250828185037.07873d04@kmaincent-XPS-13-7390>
-References: <cover.1753718185.git.mchehab+huawei@kernel.org>
-	<4c97889f0674b69f584dedc543a879d227ef5de0.1753718185.git.mchehab+huawei@kernel.org>
-	<20250828185037.07873d04@kmaincent-XPS-13-7390>
-Organization: bootlin
-X-Mailer: Claws Mail 4.2.0 (GTK 3.24.41; x86_64-pc-linux-gnu)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Jusns3at"
+Received: by mail-qk1-f178.google.com with SMTP id af79cd13be357-805a1931a15so179560685a.1
+        for <lkmm@lists.linux.dev>; Thu, 04 Sep 2025 21:41:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1757047312; x=1757652112; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:feedback-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=pKFnRjrto/8fRt992djHn7ZdYab4e/fUAwuvCl3Wt/c=;
+        b=Jusns3atomOfVq0WILeMEllFArr9aa8xluLzu/22jz+wtNzP7mJ4QecQqLNTZGcWiy
+         aMVKQ1WGarXc+BI8K9VMZzE7AVfnoBoP37MY/R0gbya7xwmLVrI9U/Lu3aSj60x0qvg2
+         VB2MN8rkHsAXnIK0WRZ3pfYFYBsjqk9BGOvfBk4djMKlXlPAhSchM084vEHSD48vvw/z
+         2IZ6Nzh8NB9ihYbP2FfdWZ4ZbYjCKTx01iro1qRCCnhIcVlFJqdM1eIodajYOS8nb2uN
+         XLC+OH8UN1ZE4BehRffp5/qBnHLlURoI0v800Phwd4jZRt3nSwNMO00G83qY1JvTbKI1
+         y/Fg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1757047312; x=1757652112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:feedback-id:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=pKFnRjrto/8fRt992djHn7ZdYab4e/fUAwuvCl3Wt/c=;
+        b=I/lrr2abkZwLmYi7zrJO5XbxBTEwb6BI8PxaqT7YEXwcmALuBX6/0P56b6yXjUUd1t
+         SXdRcrtcQYXTfwYrberzdahp0ahug7dj+iWuXSPdG9Ihk1hIN3RkF7KnT7VTLv3lMo4c
+         MeCNhJTicNZuseomd5FVQkbSjfpQo59+CRCHsYYH2DWRaa1bloR0UxTV03MRYxy9SR8R
+         IHA0ZyK9wZhcz6oYBRZ/8Zro46f2khKRM79AkHfrPylR2gz++ftM/4hRPgpx03k3ib+T
+         kp5cKbDPedUYRdNOT3mT5yMjuQhwEmA6sCY2dY82zmijFe+zZ8UNWwbDYvbFGAiTE1Ti
+         sQig==
+X-Forwarded-Encrypted: i=1; AJvYcCXMoJxM5ECX9EgdBEBZGwwOuPJvRTr7vMVCELynhqy1iE+Si/g72x5OaW2JII/cD+fLmjDL@lists.linux.dev
+X-Gm-Message-State: AOJu0Yw7oZSwLHeVNNTmS7zjG440wFlw+1jgvduci7la/rQyMdgy1AGb
+	58mbQtS75htH0l3C0Ew1wyoPYt/nglK4CeU7edqFuCM5QFjQ1uZQUmLI
+X-Gm-Gg: ASbGncsEq32nK4EDctvcDadxpCns8rbFwXCmc79gjH26ncAO9rkwXW2fI8aYx4l05QU
+	x2wnsSoQXAVVG/GgBQGDchtYF8E/fqXOQkstqAq4Tnh60sw0uzaEIwVi3f287e9oOOG85PbEuez
+	0SVTe3Im5WZOub4sAnlAVZOmk+/t/AH81KFML4uOHBaozW3H1DnY3NSTQns8e4OkD7m0JImnz2p
+	WsNsklSS6iuy19GMfh5LkfR8RsHvtcSrXLHiTXgjpFSgQwvR+yWJPmaMpqYiugvbRCbkqiBQz11
+	e5iFFKWeiTml19NkO4Igtv6nwfn0SB6/OM960rOuhTrGkhGXv/UXCpKjfTevREAtmEYudOF6YRq
+	gHi3UpTEQ1QcvB5FY3nrQww3Z7g53YwIzSOvmBc0D2ZSaxrjKewji29XjiafG/kmbbkniw1ODdM
+	ABdMD76G6tHPf/J0UnLFK1b8AmpbwnoMGeeg==
+X-Google-Smtp-Source: AGHT+IFyqWonBS5STZmVBihKaHT99VqRyAV/gjzTCE3LtKMX7HrGPwzK4WgWuG2/VBz1rL7DUH3vnA==
+X-Received: by 2002:a05:620a:4442:b0:7ee:22e9:4558 with SMTP id af79cd13be357-7ff2b97c4bbmr2712469185a.51.1757047311796;
+        Thu, 04 Sep 2025 21:41:51 -0700 (PDT)
+Received: from fauth-a2-smtp.messagingengine.com (fauth-a2-smtp.messagingengine.com. [103.168.172.201])
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-80aaaa1dbeesm394442685a.33.2025.09.04.21.41.50
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 04 Sep 2025 21:41:51 -0700 (PDT)
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfauth.phl.internal (Postfix) with ESMTP id 9BBBFF40066;
+	Fri,  5 Sep 2025 00:41:50 -0400 (EDT)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-01.internal (MEProxy); Fri, 05 Sep 2025 00:41:50 -0400
+X-ME-Sender: <xms:Dmq6aK4CH2RcLQMivVdMcpqy3qg2ELUhggtz7vRY_yRgQcFBsGlsgA>
+    <xme:Dmq6aCRidy3RIZW7kf3IK1fYdJyu8Ird0w5u0aEGSr8OtxFlulJ-YilWV2B6prWnB
+    OEk3vhzDu02lP5GSQ>
+X-ME-Received: <xmr:Dmq6aFfanMpWK10Q9fYuZgj_eLa07Ob25VR3H6NhkNB7MtneBHPSEW_f4LniZ-8N__Q1i0ZIPfwKGhInSpycmbGrlMVjyHh1>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdejleehucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceurghi
+    lhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujfgurh
+    ephffvvefufffkofgggfestdekredtredttdenucfhrhhomhepuehoqhhunhcuhfgvnhhg
+    uceosghoqhhunhdrfhgvnhhgsehgmhgrihhlrdgtohhmqeenucggtffrrghtthgvrhhnpe
+    eggeeukeeghfevudektdevjeehhfekffevueefudeivdelteeltdekheejgfeiveenucff
+    ohhmrghinhepkhgvrhhnvghlrdhorhhgnecuvehluhhsthgvrhfuihiivgeptdenucfrrg
+    hrrghmpehmrghilhhfrhhomhepsghoqhhunhdomhgvshhmthhprghuthhhphgvrhhsohhn
+    rghlihhthidqieelvdeghedtieegqddujeejkeehheehvddqsghoqhhunhdrfhgvnhhgpe
+    epghhmrghilhdrtghomhesfhhigihmvgdrnhgrmhgvpdhnsggprhgtphhtthhopedvtddp
+    mhhouggvpehsmhhtphhouhhtpdhrtghpthhtoheprhhushhtqdhfohhrqdhlihhnuhigse
+    hvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtoheplhhinhhugidqkhgvrhhnvghl
+    sehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtoheplhhkmhhmsehlihhsthhsrd
+    hlihhnuhigrdguvghvpdhrtghpthhtohepfihilhhlsehkvghrnhgvlhdrohhrghdprhgt
+    phhtthhopehpvghtvghriiesihhnfhhrrgguvggrugdrohhrghdprhgtphhtthhopehmrg
+    hrkhdrrhhuthhlrghnugesrghrmhdrtghomhdprhgtphhtthhopehmihhnghhosehkvghr
+    nhgvlhdrohhrghdprhgtphhtthhopehtghhlgieslhhinhhuthhrohhnihigrdguvgdprh
+    gtphhtthhopehprghulhhmtghksehkvghrnhgvlhdrohhrgh
+X-ME-Proxy: <xmx:Dmq6aKS3gqtpEoAiSjsjg7ubkJRs5SidyclsSs4FQvUMYmGYd3_6CQ>
+    <xmx:Dmq6aGOqnwSDFgkMYv_dlGLkSv9ZxROm0GJ8aK8dHHHQash7pQI7AQ>
+    <xmx:Dmq6aFUyYyITCA5-XznSN78k81VVubQzoPbq7T0UyVzADnasYr61kQ>
+    <xmx:Dmq6aObZil66OkSu1lIoeBX0Ntzgs963pGECyJ0GkRFV_uSil3_-RQ>
+    <xmx:Dmq6aCscvfIgMPODVmfBCDOit9YehzNOOkuJOCdBOs9u0KuGB-k2w54P>
+Feedback-ID: iad51458e:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 5 Sep 2025 00:41:50 -0400 (EDT)
+From: Boqun Feng <boqun.feng@gmail.com>
+To: rust-for-linux@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	lkmm@lists.linux.dev
+Cc: "Will Deacon" <will@kernel.org>,
+	"Peter Zijlstra" <peterz@infradead.org>,
+	"Mark Rutland" <mark.rutland@arm.com>,
+	"Ingo Molnar" <mingo@kernel.org>,
+	"Thomas Gleixner" <tglx@linutronix.de>,
+	"Paul E. McKenney" <paulmck@kernel.org>,
+	stern@rowland.harvard.edu,
+	"Miguel Ojeda" <ojeda@kernel.org>,
+	alex.gaynor@gmail.com,
+	"Gary Guo" <gary@garyguo.net>,
+	=?UTF-8?q?Bj=C3=B6rn=20Roy=20Baron?= <bjorn3_gh@protonmail.com>,
+	"Benno Lossin" <lossin@kernel.org>,
+	"Alice Ryhl" <aliceryhl@google.com>,
+	"Trevor Gross" <tmgross@umich.edu>,
+	"Danilo Krummrich" <dakr@kernel.org>,
+	"Andreas Hindborg" <a.hindborg@kernel.org>,
+	Boqun Feng <boqun.feng@gmail.com>
+Subject: [GIT PULL] [PATCH 00/14] Rust atomic changes for v6.18
+Date: Thu,  4 Sep 2025 21:41:27 -0700
+Message-ID: <20250905044141.77868-1-boqun.feng@gmail.com>
+X-Mailer: git-send-email 2.51.0
 Precedence: bulk
 X-Mailing-List: lkmm@lists.linux.dev
 List-Id: <lkmm.lists.linux.dev>
 List-Subscribe: <mailto:lkmm+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:lkmm+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-X-Last-TLS-Session-Version: TLSv1.3
+Content-Transfer-Encoding: 8bit
 
-Le Thu, 28 Aug 2025 18:50:37 +0200,
-Kory Maincent <kory.maincent@bootlin.com> a =C3=A9crit :
+Hi Will, Peter and Mark,
 
-> Le Mon, 28 Jul 2025 18:01:59 +0200,
-> Mauro Carvalho Chehab <mchehab+huawei@kernel.org> a =C3=A9crit :
->=20
-> > Instead of manually calling ynl_gen_rst.py, use a Sphinx extension.
-> > This way, no .rst files would be written to the Kernel source
-> > directories.
-> >=20
-> > We are using here a toctree with :glob: property. This way, there
-> > is no need to touch the netlink/specs/index.rst file every time
-> > a new Netlink spec is added/renamed/removed. =20
->=20
-> ...
->=20
-> > diff --git a/Documentation/networking/index.rst
-> > b/Documentation/networking/index.rst index ac90b82f3ce9..b7a4969e9bc9 1=
-00644
-> > --- a/Documentation/networking/index.rst
-> > +++ b/Documentation/networking/index.rst
-> > @@ -57,7 +57,7 @@ Contents:
-> >     filter
-> >     generic-hdlc
-> >     generic_netlink
-> > -   netlink_spec/index
-> > +   ../netlink/specs/index =20
->=20
-> Faced a doc build warning that say netlink_spec/index.rst is not used.
->=20
-> $ git grep netlink_spec
-> Documentation/networking/mptcp.rst:netlink_spec/mptcp_pm.rst.
-> Documentation/translations/zh_CN/networking/index.rst:*   netlink_spec/in=
-dex
->=20
-> I think we can remove the whole directory and change these, right?
+I'm sending this pull request containing Rust atomic changes to tip
+tree. You can find the technical details below, but most importantly we
+got a new reviewer for ATOMIC INFRASTRUCTURE that can help maintaining
+the code. Welcome Gary!
 
-Oops just saw that is was some local leftover. This first warning get remov=
-ed
-with a clean tree.
-=20
-> Also got a doc build warning that says netlink/specs/index is not existing
-> even if it exists. Maybe a sphinx parsing issue ?!
+Similar to other pull requests of myself to the tip tree, this pull
+request is sent in form as patch series as well, in case that I missed
+something and changes are needed in some patch.
 
+Thanks!
 
->=20
-> Regards,
+The following changes since commit c17b750b3ad9f45f2b6f7e6f7f4679844244f0b9:
 
+  Linux 6.17-rc2 (2025-08-17 15:22:10 -0700)
 
+are available in the Git repository at:
 
---=20
-K=C3=B6ry Maincent, Bootlin
-Embedded Linux and kernel engineering
-https://bootlin.com
+  https://git.kernel.org/pub/scm/linux/kernel/git/boqun/linux.git/ tags/rust-atomic.2025.09.04a
+
+for you to fetch changes up to f9bd1b3774be140762af2fec9c415b4a11746c48:
+
+  MAINTAINERS: update atomic infrastructure entry to include Rust (2025-09-01 19:15:53 -0700)
+
+----------------------------------------------------------------
+Rust atomic changes for v6.18:
+
+- Add initial support for generic LKMM atomic variables in Rust. This
+  ensures Rust and C side are using the same memory model when
+  communicating with each other, and would unblock a few more
+  fine-grained concurrent core on Rust side.
+
+- Add the wrapper for `refcount_t` in Rust. This avoids using customized
+  reference counting solution on Rust side (e.g. in `block::mq`).
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCAAdFiEEj5IosQTPz8XU1wRHSXnow7UH+rgFAmi6YvwACgkQSXnow7UH
++rh/kgf+LruO9gn49QAzDE4T7kf9rP/z4ocie8sxMtED5J0vw12PAVa0UERQyB4m
+756O0GSFKwESJMjLUifBslkt64k8x8hQ+XHYH/WPe/Rm7Ku4kf1zsTO9Mt0xA5qr
+c5OgnLxR3T2L+1x8rEus8lPnExyX0G0b1/H1XjR+rvZAP1enwcLNyGFV3fNfAYNJ
+cMpkGCMFM9wc5dpzDx89ttw49I8yuy+Cmf/eTtm1YDWQgzYVEycF8jTkFqYykIax
+jMcZC0a1Lqrn1pLbxCZ5UEM9vxJREv46xBW6iKSkH5RWlbLo2gqMJbixYvkLtgBP
+AbtrUtsyIx4Rw0nPEZ880Nce/LdhUw==
+=Kuix
+-----END PGP SIGNATURE-----
+
+----------------------------------------------------------------
+Boqun Feng (9):
+      rust: Introduce atomic API helpers
+      rust: sync: Add basic atomic operation mapping framework
+      rust: sync: atomic: Add ordering annotation types
+      rust: sync: atomic: Add generic atomics
+      rust: sync: atomic: Add atomic {cmp,}xchg operations
+      rust: sync: atomic: Add the framework of arithmetic operations
+      rust: sync: atomic: Add Atomic<u{32,64}>
+      rust: sync: atomic: Add Atomic<{usize,isize}>
+      rust: sync: Add memory barriers
+
+Gary Guo (5):
+      rust: implement `kernel::sync::Refcount`
+      rust: make `Arc::into_unique_or_drop` associated function
+      rust: convert `Arc` to use `Refcount`
+      rust: block: convert `block::mq` to use `Refcount`
+      MAINTAINERS: update atomic infrastructure entry to include Rust
+
+ MAINTAINERS                               |    6 +-
+ rust/helpers/atomic.c                     | 1040 +++++++++++++++++++++++++++++
+ rust/helpers/barrier.c                    |   18 +
+ rust/helpers/helpers.c                    |    2 +
+ rust/helpers/refcount.c                   |   10 +
+ rust/kernel/block/mq/operations.rs        |    7 +-
+ rust/kernel/block/mq/request.rs           |   73 +-
+ rust/kernel/sync.rs                       |    4 +
+ rust/kernel/sync/arc.rs                   |   55 +-
+ rust/kernel/sync/atomic.rs                |  551 +++++++++++++++
+ rust/kernel/sync/atomic/internal.rs       |  265 ++++++++
+ rust/kernel/sync/atomic/ordering.rs       |  104 +++
+ rust/kernel/sync/atomic/predefine.rs      |  169 +++++
+ rust/kernel/sync/barrier.rs               |   61 ++
+ rust/kernel/sync/refcount.rs              |  113 ++++
+ scripts/atomic/gen-atomics.sh             |    1 +
+ scripts/atomic/gen-rust-atomic-helpers.sh |   67 ++
+ 17 files changed, 2454 insertions(+), 92 deletions(-)
+ create mode 100644 rust/helpers/atomic.c
+ create mode 100644 rust/helpers/barrier.c
+ create mode 100644 rust/kernel/sync/atomic.rs
+ create mode 100644 rust/kernel/sync/atomic/internal.rs
+ create mode 100644 rust/kernel/sync/atomic/ordering.rs
+ create mode 100644 rust/kernel/sync/atomic/predefine.rs
+ create mode 100644 rust/kernel/sync/barrier.rs
+ create mode 100644 rust/kernel/sync/refcount.rs
+ create mode 100755 scripts/atomic/gen-rust-atomic-helpers.sh

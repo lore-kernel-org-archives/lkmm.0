@@ -1,74 +1,45 @@
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
+Received: from mailgw.kylinos.cn (mailgw.kylinos.cn [124.126.103.232])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1ADBF32D5DA
-	for <lkmm@lists.linux.dev>; Tue, 16 Sep 2025 16:58:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.129.124
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 964EC2D05D
+	for <lkmm@lists.linux.dev>; Wed, 17 Sep 2025 10:51:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=124.126.103.232
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758041941; cv=none; b=qrq7IUQ0UvG/EfijvEJcC5QmIxDZiqgQfs1U9hPxnvSuFOo0B/xhvkmiJK+aoqmtxQNyscCHgeMYl4Bavx/F+cbSNAGGklGzeoNRvo7iV1pjIZ5gAi9YUGVkykO7RIGRNlY+27wU4+ZDaa9DVktK4YUIveu8g8LdlatzdqRA5aQ=
+	t=1758106292; cv=none; b=s5wx5tvv1YCuA1qTMPGHMNJyxV1Znbimsr6XPwQrBLA+CNhKGpi1iVJo4YhowSrjqw3R+MS2dnqIpCFG5B/TjWJ2giEXGueqVrv0izFumpLGySyvBo2+m8BWgmT4E8BrS4Q+MlmTZMOFmXWywVSJPnV3kVviT2xh1swYqkAqCBk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758041941; c=relaxed/simple;
-	bh=1ESSDa9T5TZiLkRJ/FOm3n3uUjBAWGWKFOXKlYOnIc4=;
-	h=From:Message-ID:Date:MIME-Version:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=LUUK8qwDhj5JxIJ8fptAa4eWjIdJ2JovtN77Y5AzXbhvBi8mJNTzK1r94HO2yLySl3ZzxwjWbrRN3oykvJ1AcgdLEr2VkBIvcSOXrkZszLdl4f9F+1HOiiQoKAIsmAhkqS6QQQWafmDF2CoELmgJl0nwkXBD71Zs1I2NXONONXQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=COKWnnlP; arc=none smtp.client-ip=170.10.129.124
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="COKWnnlP"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1758041938;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=V/EZc4VD3I6Rvd/hwPueys9LNwaukhCSs8uHwuxzrAI=;
-	b=COKWnnlPOwnFtQjC46qEtjLXrK2/eV+ZT49zVq4CvAzk9dZFtd6O6BpJt2fWRogtL0PLQK
-	xhF/BTnJhMDJQNja2jxt3rI/2TlaYouazvFQ0wMRLC/ZpwqUBORj2sk6JITO6UzS7xhUSX
-	/2IzgP5J8BMv1cjF2wu7uhHxYA+zClg=
-Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com
- [209.85.219.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-625-Wxbsj12SMWay5qwNq38NWA-1; Tue, 16 Sep 2025 12:58:57 -0400
-X-MC-Unique: Wxbsj12SMWay5qwNq38NWA-1
-X-Mimecast-MFC-AGG-ID: Wxbsj12SMWay5qwNq38NWA_1758041937
-Received: by mail-qv1-f72.google.com with SMTP id 6a1803df08f44-77766aadfd4so34200686d6.1
-        for <lkmm@lists.linux.dev>; Tue, 16 Sep 2025 09:58:57 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1758041937; x=1758646737;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:subject:user-agent:mime-version:date:message-id:from
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=V/EZc4VD3I6Rvd/hwPueys9LNwaukhCSs8uHwuxzrAI=;
-        b=GxPMBJ/znuEm92nIYR2tGQsi1QTZMI9JOXK3Kdr8Uj42OBIRG2PpyFBFDeELVM71D4
-         oCdDeBp8MGgIFrx9r+hYb/xO7ZTvNgxfGQa/zil3hILREEfsRD5V8cg+uH+ECCJW7l2c
-         8s1+twZyutbhk0GtrS9Pm/OaVm7tDBvce+v+7RuEdBhO8MlbUN7zNu52AAR0nqFhBw82
-         SRn+uObPYr4oVTr9vK9zF2aylLJtxC98V/sL+vUhMojKBDvXgQxyw44kFwiniaCtYWzq
-         xPNI86/CujcKq6npuQL37TqXIoyGIPHY5uE49r+TIG/PwvzbldTsEoQ6xA8YwK0sN6PM
-         91wQ==
-X-Forwarded-Encrypted: i=1; AJvYcCWD9NVUrNaFah5q8x3SI5QNdlMsIoFNfAp3s3rkSsS1X64UMkJ6EqTgn/M6Na5bIVk/bdx2@lists.linux.dev
-X-Gm-Message-State: AOJu0YyDCTSilQUlpDgSBTYgUaP1QpS06XvEnu2uB9/+eC5JiBm1TLrQ
-	e+wvB62xnCztceP5/u97u5AZJWVrDscCc3jpMeZScERmLv7Mwja3ZZYjSFVdgkYmMtkv8m8A8p2
-	wtDQVAHgbCWLATj3XWhq7G6OzTGEzJLeCTlM/2JcDNDD+QVaWEvTnvQk=
-X-Gm-Gg: ASbGnctMZXq25Bdor7v5Wd81CzoLY7sQ/yDbuImjbS2aNVdrK73gBmQEVqeLKQpzehH
-	kFFFriJFo+fFu2zEBFXjtyGjUczL/eZiak/oLv1r7hiADEj28Q7GAKavm1XhHJLLgu1PtMRXpQL
-	bNzzI8zmheR59OzdIw0BASoRC8COd8IAP4RHJGaJcjieuO55tSaF3xTLET/m5o89UDrNgowAYGw
-	qVKsBnwKvEEt0QiF4pwcYmJA/1FrPpburOeauPtMW/kWc2q3ThnUSOlFEFi/OTtGDXNfNF2EO+W
-	NETsKhp07CSNDYLRqiMuAHFEhnZrgzNLhq3ExwmWzRcPa5JjC9hTGxYqBnqLLSilpYgn6vqVT02
-	LwDeyOKZ6uA==
-X-Received: by 2002:a05:6214:e85:b0:758:2117:887a with SMTP id 6a1803df08f44-767c5622e1bmr202158776d6.58.1758041937108;
-        Tue, 16 Sep 2025 09:58:57 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGxei0FEEqUvZjdq9XLJMNLngrWTypPoizScTxs9as/2F2uiQ+je0ZPIhRgPrZ72mzjcrKQNw==
-X-Received: by 2002:a05:6214:e85:b0:758:2117:887a with SMTP id 6a1803df08f44-767c5622e1bmr202158396d6.58.1758041936534;
-        Tue, 16 Sep 2025 09:58:56 -0700 (PDT)
-Received: from ?IPV6:2601:188:c180:4250:ecbe:130d:668d:951d? ([2601:188:c180:4250:ecbe:130d:668d:951d])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-7843978ab05sm37136006d6.30.2025.09.16.09.58.55
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 16 Sep 2025 09:58:56 -0700 (PDT)
-From: Waiman Long <llong@redhat.com>
-X-Google-Original-From: Waiman Long <longman@redhat.com>
-Message-ID: <f971b01a-2d76-4511-8880-0f4de2a042d9@redhat.com>
-Date: Tue, 16 Sep 2025 12:58:54 -0400
+	s=arc-20240116; t=1758106292; c=relaxed/simple;
+	bh=CHubr+gz/8SeH2ipxwdDKf6GGQvYOWnJ694fs9NTuo4=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=UR5exgfUWBAajzHnrVjer55MG0BTeC8U4ZMxclv998qNvxE2CN453f/f8wZugWKGQuJ0cuVZ46UpZjytPPj+/x1HH3fF2L6JgkBsmvLgg9u3RDI9zbfXsI+5cErj2qgj6nV9a5k6tjS+XV0lUWujGcRkaDPXmU+nSTvc0InnbLY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kylinos.cn; spf=pass smtp.mailfrom=kylinos.cn; arc=none smtp.client-ip=124.126.103.232
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kylinos.cn
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kylinos.cn
+X-UUID: 403277e093b411f0b29709d653e92f7d-20250917
+X-CID-P-RULE: Release_Ham
+X-CID-O-INFO: VERSION:1.1.45,REQID:a6d723f1-d286-4965-b2a4-2108b27af4c6,IP:0,U
+	RL:0,TC:0,Content:0,EDM:0,RT:0,SF:0,FILE:0,BULK:0,RULE:Release_Ham,ACTION:
+	release,TS:0
+X-CID-META: VersionHash:6493067,CLOUDID:ae52444b68201e296db1878e51f33df7,BulkI
+	D:nil,BulkQuantity:0,Recheck:0,SF:80|81|82|83|102,TC:nil,Content:0|50,EDM:
+	-3,IP:nil,URL:99|1,File:nil,RT:nil,Bulk:nil,QS:nil,BEC:nil,COL:0,OSI:0,OSA
+	:0,AV:0,LES:1,SPR:NO,DKR:0,DKP:0,BRR:0,BRE:0,ARC:0
+X-CID-BVR: 0,NGT
+X-CID-BAS: 0,NGT,0,_
+X-CID-FACTOR: TF_CID_SPAM_SNR,TF_CID_SPAM_ULS
+X-UUID: 403277e093b411f0b29709d653e92f7d-20250917
+Received: from mail.kylinos.cn [(10.44.16.175)] by mailgw.kylinos.cn
+	(envelope-from <pengyu@kylinos.cn>)
+	(Generic MTA)
+	with ESMTP id 245116275; Wed, 17 Sep 2025 18:51:22 +0800
+Received: from mail.kylinos.cn (localhost [127.0.0.1])
+	by mail.kylinos.cn (NSMail) with SMTP id A658EE009009;
+	Wed, 17 Sep 2025 18:51:22 +0800 (CST)
+X-ns-mid: postfix-68CA92AA-57447578
+Received: from [10.42.20.31] (unknown [10.42.20.31])
+	by mail.kylinos.cn (NSMail) with ESMTPA id 6AB64E009008;
+	Wed, 17 Sep 2025 18:51:19 +0800 (CST)
+Message-ID: <31861b75-02ee-495e-b839-15d7510bf7c6@kylinos.cn>
+Date: Wed, 17 Sep 2025 18:51:18 +0800
 Precedence: bulk
 X-Mailing-List: lkmm@lists.linux.dev
 List-Id: <lkmm.lists.linux.dev>
@@ -76,67 +47,158 @@ List-Subscribe: <mailto:lkmm+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:lkmm+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
+From: pengyu <pengyu@kylinos.cn>
 Subject: Re: [PATCH] locking/qspinlock: use xchg with _mb in slowpath for
  arm64
-To: Peter Zijlstra <peterz@infradead.org>, pengyu <pengyu@kylinos.cn>
-Cc: mingo@redhat.com, will@kernel.org, boqun.feng@gmail.com,
+To: Will Deacon <will@kernel.org>, Peter Zijlstra <peterz@infradead.org>
+Cc: mingo@redhat.com, boqun.feng@gmail.com, longman@redhat.com,
  linux-kernel@vger.kernel.org, Mark Rutland <mark.rutland@arm.com>,
  t.haas@tu-bs.de, parri.andrea@gmail.com, j.alglave@ucl.ac.uk,
  luc.maranget@inria.fr, paulmck@kernel.org, jonas.oberhauser@huaweicloud.com,
  r.maseli@tu-bs.de, lkmm@lists.linux.dev, stern@rowland.harvard.edu
 References: <20250916033903.3374794-1-pengyu@kylinos.cn>
  <20250916141032.GJ3245006@noisy.programming.kicks-ass.net>
-In-Reply-To: <20250916141032.GJ3245006@noisy.programming.kicks-ass.net>
-X-Mimecast-Spam-Score: 0
-X-Mimecast-MFC-PROC-ID: Ym9F7QQOFfB10YbC9Vecq0d_1wRx8nXGxHYwdc1DeKs_1758041937
-X-Mimecast-Originator: redhat.com
+ <aMmJlv8JrzyHRCxR@willie-the-truck>
 Content-Language: en-US
+In-Reply-To: <aMmJlv8JrzyHRCxR@willie-the-truck>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: quoted-printable
 
-On 9/16/25 10:10 AM, Peter Zijlstra wrote:
-> On Tue, Sep 16, 2025 at 11:39:03AM +0800, pengyu wrote:
->> From: Yu Peng <pengyu@kylinos.cn>
+On 9/17/25 00:00, Will Deacon wrote:
+> On Tue, Sep 16, 2025 at 04:10:32PM +0200, Peter Zijlstra wrote:
+>> On Tue, Sep 16, 2025 at 11:39:03AM +0800, pengyu wrote:
+>>> From: Yu Peng <pengyu@kylinos.cn>
+>>>
+>>> A hardlock detected on arm64: rq->lock was released, but a CPU
+>>> blocked at mcs_node->locked and timed out.
+>>>
+>>> We found xchg_tail and atomic_try_cmpxchg_relaxed used _relaxed
+>>> versions without memory barriers. Suspected insufficient coherence
+>>> guarantees on some arm64 microarchitectures, potentially leading to
+>>> the following issues occurred:
+>>>
+>>> CPU0:                                           CPU1:
+>>> // Set tail to CPU0
+>>> old =3D xchg_tail(lock, tail);
+>>>
+>>> //CPU0 read tail is itself
+>>> if ((val & _Q_TAIL_MASK) =3D=3D tail)
+>>>                                                  // CPU1 exchanges th=
+e tail
+>>>                                                  old =3D xchg_tail(lo=
+ck, tail)
+>>> //assuming CPU0 not see tail change
+>>> atomic_try_cmpxchg_relaxed(
+>>> 	  &lock->val, &val, _Q_LOCKED_VAL)
+>>> //released without notifying CPU1
+>>> goto release;
+>>>                                                  //hardlock detected
+>>>                                                  arch_mcs_spin_lock_c=
+ontended(
+>>>                                                        &node->locked)
+>>>
+>>> Therefore, xchg_tail and atomic_try_cmpxchg using _mb to replace _rel=
+axed.
 >>
->> A hardlock detected on arm64: rq->lock was released, but a CPU
->> blocked at mcs_node->locked and timed out.
+>> Yeah, no. We do not apply patches based on suspicion. And we most
+>> certainly do not sprinkle #ifdef ARM64 in generic code.
+>=20
+> Absolutely.
+>=20
+>> There is this thread:
 >>
->> We found xchg_tail and atomic_try_cmpxchg_relaxed used _relaxed
->> versions without memory barriers. Suspected insufficient coherence
->> guarantees on some arm64 microarchitectures, potentially leading to
->> the following issues occurred:
+>>    https://lkml.kernel.org/r/cb83e3e4-9e22-4457-bf61-5614cc4396ad@tu-b=
+s.de
 >>
->> CPU0:                                           CPU1:
->> // Set tail to CPU0
->> old = xchg_tail(lock, tail);
+>> Which is also concerned with xchg_tail(). Reading back, I'm not sure
+>> we've ever heard back from ARM on whether that extra ;si was correct o=
+r
+>> not, Will?
+>=20
+> It's still under discussion with the Arm architects but it was _very_
+> close to concluding last time we met and I wouldn't worry about it for
+> the purposes of this report.
+>=20
+>> Anyway, as Waiman already asked, please state your exact ARM64
+>> microarch.
 >>
->> //CPU0 read tail is itself
->> if ((val & _Q_TAIL_MASK) == tail)
->>                                                  // CPU1 exchanges the tail
->>                                                  old = xchg_tail(lock, tail)
->> //assuming CPU0 not see tail change
->> atomic_try_cmpxchg_relaxed(
->> 	  &lock->val, &val, _Q_LOCKED_VAL)
->> //released without notifying CPU1
->> goto release;
->>                                                  //hardlock detected
->>                                                  arch_mcs_spin_lock_contended(
->>                                                        &node->locked)
+>> Barring the ;si, the above thread suggests that they can prove the cod=
+e
+>> correct with the below change, does that resolve your problem?
 >>
->> Therefore, xchg_tail and atomic_try_cmpxchg using _mb to replace _relaxed.
-> Yeah, no. We do not apply patches based on suspicion. And we most
-> certainly do not sprinkle #ifdef ARM64 in generic code.
->
-> There is this thread:
->
->    https://lkml.kernel.org/r/cb83e3e4-9e22-4457-bf61-5614cc4396ad@tu-bs.de
+>> Other than that, I'm going to have to leave this to Will and co.
+>=20
+> I'll take a look but it's light on details.
+>=20
+> Will
 
-Ah, I was not cc'ed on this email thread. That is why I was not aware of 
-this discussion about xchg_tail(). It is an interesting read.
 
-Anyway, this particular problem may be about the clarity of the arm64 
-memory model and whether any microarch's strictly follow it or not.
+Yes, this issue occurred on a kunpeng920 96-core machine and only
+affected a small number of systems that had been running for over a
+year.
 
-Cheers,
-Longman
+Vmcore Analysis:
+=E2=80=A2 Panic triggered by CPU 83 detecting a hard lockup at
+     queued_spin_lock_slowpath+0x1d8/0x320.
+
+=E2=80=A2 Corresponding code:
+     arch_mcs_spin_lock_contended(&node->locked);
+
+=E2=80=A2 The qspinlock involved was the rq lock, which showed a cleared =
+state:
+     crash> rq.lock,cpu ffffad96ff2907c0
+       lock =3D {
+         raw_lock =3D {
+           {
+             val =3D {
+               counter =3D 0
+             },
+             {
+               locked =3D 0 '\000',
+               pending =3D 0 '\000'
+             },
+             {
+               locked_pending =3D 0,
+               tail =3D 0
+             }
+           }
+         }
+       },
+       cpu =3D 50,
+
+=E2=80=A2 CPU 83=E2=80=99s MCS node remained in a locked=3D0 state, with =
+no previous
+node found in the qnodes list.
+     crash> p qnodes:83
+     per_cpu(qnodes, 83) =3D $292 =3D
+      {{
+         mcs =3D {
+           next =3D 0x0,
+           locked =3D 0,
+           count =3D 1
+         }
+       },
+     crash> p qnodes | grep 83
+       [83]: ffffadd6bf7914c0
+     crash> p qnodes:all | grep ffffadd6bf7914c0
+     crash>
+
+=E2=80=A2 Since rq->lock was cleared, no CPU could notify CPU 83.
+
+This issue has occurred multiple times, but the root cause remains
+unclear. We suspect that CPU 83 may have failed to enqueue itself,
+potentially due to a failure in the xchg_tail atomic operation.
+
+It has been noted that the _relaxed version is used in xchx_tail, and we
+are uncertain whether this could lead to visibility issues=E2=80=94for ex=
+ample,
+if CPU 83 modifies lock->tail, but other CPUs fail to observe the
+change.
+
+We are also checking if this is related=EF=BC=9A
+     https://lkml.kernel.org/r/cb83e3e4-9e22-4457-bf61-5614cc4396ad@tu-bs=
+.de
+
+
+
 

@@ -1,99 +1,100 @@
-Received: from mail-qv1-f48.google.com (mail-qv1-f48.google.com [209.85.219.48])
+Received: from mail-qt1-f173.google.com (mail-qt1-f173.google.com [209.85.160.173])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53EBA2EDD74
-	for <lkmm@lists.linux.dev>; Fri, 19 Sep 2025 09:13:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F30672EFDBE
+	for <lkmm@lists.linux.dev>; Fri, 19 Sep 2025 09:13:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758273184; cv=none; b=ZJOKXmq+yBeAzxJXqwsIYF1Jr6l6P/yObMrRsA8gUydo+6LtX9CwYqnNRMDxAVp6KMr8W0BqFlEeSBIdhPbc+bLDQM63OJMTJ3WNt7ax0U4FaulI+aHjzJ5+quwirKhwgiU+zuf+w0LiJ/Vi5NbdY/TDDO8ftFnGBDRZlUIQUUg=
+	t=1758273192; cv=none; b=IGsgRJGA+L9a061je2W/DiQwyz5JHm6HMJ4wHVuLR0vsgh9sDFnudMGaSE1JfFzN4UrHjXeybSsali35mGxVcCvlnZ+x70pByIat73C6OzDyaeTj15W4jEn+QcOCxBMuC1GtyvhAGiANvdWUoysmqxjy0FMiHvxlf0vuWI4dYdg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758273184; c=relaxed/simple;
-	bh=QweTAqxNpSrDrK2q0/RR+kdBUV2hZvkvOnc1TJn8Yck=;
+	s=arc-20240116; t=1758273192; c=relaxed/simple;
+	bh=Lzovmfm5FiaEorEh9d/YkmbdKQ4FW9Q9fpLfGCU4K1Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NP2J82Rkj0tO8lDehiJYvtzT3DAXlcaShoaozrGnQRSxv8qv92eai9TxAWVL6wyc3lc/421PHBt2Aoy7w+yjQAtSQuBGNZ0+nZTAg+zG+st7AthcfQwHKsd9ionNm/8nIBIym1UqHeGFjuVp8FSbFqAJ5IB+NQcLVEc/3odDmWo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=HVluxaAY; arc=none smtp.client-ip=209.85.219.48
+	 MIME-Version; b=ZvkHc5OARgQcQvhfIGUm4bIxupBXQvmJEUl1LNrmc8KT+9qyIwMTee6/hpzxHZiMwlMN3hZOIXf1wJJIbDUnh3yv8A4RkRaTjy+qTT3f30k0s4H0UV7HIWFNJDHz6wwUmHtVaevCU2RzF3UuTVcbbclH1Zm+79EK+VOQYq8J4Hk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=HJNwQaWx; arc=none smtp.client-ip=209.85.160.173
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HVluxaAY"
-Received: by mail-qv1-f48.google.com with SMTP id 6a1803df08f44-796fe71deecso11310236d6.1
-        for <lkmm@lists.linux.dev>; Fri, 19 Sep 2025 02:13:03 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HJNwQaWx"
+Received: by mail-qt1-f173.google.com with SMTP id d75a77b69052e-4b61161c32eso28993521cf.3
+        for <lkmm@lists.linux.dev>; Fri, 19 Sep 2025 02:13:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1758273182; x=1758877982; darn=lists.linux.dev;
+        d=gmail.com; s=20230601; t=1758273187; x=1758877987; darn=lists.linux.dev;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:feedback-id:from:to:cc:subject
          :date:message-id:reply-to;
-        bh=K70gfC2VGaXawlZrrSZ8hp0QF5eghAVmIXEzCCUkbN4=;
-        b=HVluxaAYVPUsqNw8nuEyuBiYB+NBNuTi1FUN8j5VZ1NYfpjZFEw+xIX7tdRK2sweOj
-         QfoZGTidXWmssd6ScrseCmJxxxzij241gBM0gG412wW06II0GnHZGJKcBYiN6JQcG6AO
-         h+LLYWPFfFq/egwhCeILIE7U9kUDc7yeteMVxx26Tcrpyst7IEKq2bcJrzQVpY//Q1Yi
-         O8jQRHgD8RnHAVmZ5LZN8UljlFdKKYmHQijtRmfQfNWZiMqmQgjD2DrhCyzCNbLLPYkl
-         DHh7Fut01H5umhxiMniz8ohcr6x87tax0DouWnyNxOy61pAOJschHKFV+UBgXPq7N9m0
-         sOAQ==
+        bh=kIwF6rXqWhVto9ZPqUAqlWxtbpHvuz3MRQbuOi5HJu4=;
+        b=HJNwQaWxqLx/NViL0xwZNfNnN2P388CfQhgEU59hbajZeBdvSfsWv4hKhU4oYKjMeZ
+         +eHijHMrHFIokpxcDNiiSyXGVlSpUclziiHudnZza/jDfNl7Oo+l6y6kmc4x99MJ42uT
+         px6jILpv8ThSjhYLxrzjR4rP8k6WZdUUG/UUwkUotBBKPVTlbyPafaSHZKoEq4taMoTu
+         ECDYRZd2+EryTzw4GIEglmjk79lzcz0hgGRznkkkfoxxUe7pB8t/odAMjK7RlIcTPj+K
+         KWSiOKsO06r29D9msMvBlyll/ebcqS1jnKeH2M8teou/qvjMpMH2hE0Hm7N2vRjyGYHo
+         fgsw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1758273182; x=1758877982;
+        d=1e100.net; s=20230601; t=1758273187; x=1758877987;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:feedback-id:x-gm-message-state
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=K70gfC2VGaXawlZrrSZ8hp0QF5eghAVmIXEzCCUkbN4=;
-        b=TucDmzM6MurbjB1Pvu+/zVerC2Z1AzRJxgSTWuib6EB5EI9WsujAVNQyCrOUdDVZ6U
-         ByEd19kLyPwyj28/7bVE7IqPOLi7Z3SI0aAffFqpGowSSjEvxtqI0yta5mSjr5NMSst8
-         aj5LZXmG1QnscmOi4hFFDVekI4g8z6CDRcp12tdpEhcPVhlTTBQMmqz8aSCovqjZOvsU
-         8ZV4JtbSQA9BoRUfp8UfOHtCoZsCXFkgCDC1Qf82QD0+gPqU3Ve9XNzQEuK0n2JlOjT1
-         KseClXYBZV7AHE0fXk0dVTzrTyHkMknnNxm8dv5Xpy7+q5gqhfDIQolgtzcb40OfF2D6
-         O2Qw==
-X-Forwarded-Encrypted: i=1; AJvYcCWmzZ9NTKCKs1DvJ4DmrhcNjIWfsXeR6N9h5Pgx2l1JEkwZ2ppSw/+Hb7I5J4iVEEZmirkb@lists.linux.dev
-X-Gm-Message-State: AOJu0YyeyKAhZ9p5v+Ns7GLyB4CXjLeovBl0s6yHaNsrRDIhXRpCne0c
-	85I73sYkRqel4uvzIp36dDti9RAtsdZsl9sA+InB0M/B0/hHN1VttWCf
-X-Gm-Gg: ASbGncuP84Ja+A7YCsBNZVAHCSt6w5w0o3mhvurLW4WIkqrVImWr3EdqrfASsCqSU2q
-	+L+Gn7VHli3g9lH9Hf6pFe+BLLtOKMTX1VyYyYsCl9ncIG7b36HWis2KRbj+nN+nGCJRoKv7oik
-	ShlBZCNx0lzg4/7OZajC1sJvbojCXTJq+ot3rrq6EMyCRdOHhFdsOysGPJtNkIsT8Va+32Yhrhn
-	V3io6GaTOK6yeWd39xmp7uR7z3FzU56kNi7Fy1FL1W0AMBSj13ghU9DLQMoz8xbx0TW+LynUljT
-	UOgM3X7juLLTmIsMg2Z3NmhrnjKaZ2qvEw3jG5tnUFelPDVrNeRDQeuI2MPCzGWy2APQN2EmOGU
-	3EH1/g0msDLX1MEFNglk63YksFIU5Cj6MDXDeHzOpuSeQOKSkCcNrkLbT4D05ZCEhOPpMye+kAF
-	cshf88vTd+0Zbf
-X-Google-Smtp-Source: AGHT+IENO3y1I+WdQckOF9/GGnaAMQ+ul1aKo9ejx3/ulS4DRfGqgjIdtHE0clXgDs5HZit1Tjxilw==
-X-Received: by 2002:a05:6214:29e1:b0:794:6621:6d18 with SMTP id 6a1803df08f44-7991d549c82mr24827026d6.51.1758273182126;
-        Fri, 19 Sep 2025 02:13:02 -0700 (PDT)
+        bh=kIwF6rXqWhVto9ZPqUAqlWxtbpHvuz3MRQbuOi5HJu4=;
+        b=SRyBSpckEX8GK47BybvIVg5v58AWVpkj7qAyVvHJjCj7UUhPyndVkhvbAf5KGROUI4
+         NP1A6pDbrHFFtna4Sa2RHnpIAuyr78eRHNgkAC6ACln+wvap466XM519m+t1Z9pjYgzw
+         XgpjNuUZIZkrNLeHeyYRSywj8vCRn2aGhlVXWz6GVdaGcZrOG9eyuIl+5PESbl3i4zEv
+         bx+kEiF2Db4XOaqUmUnPyh/prGf7Ja+ELQ1+de4YaMMMYyM9cV/Zk16xjfZXbKdIPAzt
+         8sY5uZJF6zxgwYjYIdJg4uqXu8qDjgOxhqi6I16ZlknqIakI9ujIm+SpBPsNCjLP4ZQ7
+         L6Pg==
+X-Forwarded-Encrypted: i=1; AJvYcCVoh5LLFQxkjMbzK2zFhBd5hOhDZIMCc7CvhH155aO8QRM9zS3N32dp3y0DqC5XWxsptcyE@lists.linux.dev
+X-Gm-Message-State: AOJu0Yw8CjmATwvkd1wTvhxFhDSaPrrJNjlJ6fQwXN73KqN8ynAWqpqy
+	MHo4g8wu+pBgq+2/QNsjTl4sXQB6r4rRJNi88nNv/YnSRRRllf0IzE7T
+X-Gm-Gg: ASbGnctXuWLQxPY4FQPV85HD6MkoHoDjUjFmZceg1MW0o11UKtxCoq/ztCfjWkTJ+p7
+	hpYrX46tHVmVKh73rPavB8kC8HA3TQ58Fyiinc7CjoVmU5om1hxIvvdOgBqcqeNeTYjpkgG3knW
+	5YZR7a0wVqZDYN1RVfzgSL4cA4AOM/6rb4gwKy6xN2HtHaVCCoXYckWzq9sRojq1E+DisiZxqVT
+	1xxOpkZydtBK2fNx8zTM/3zfqV7oU8gkpu9P3V5tn3Jj592/dSBVusyq3PdiCEsnPa9uGHbIZzR
+	yxVuhY3VjswIBuWKkHB9HQjOrnUQjYCMn5TA7Al0JwTqON12AZuWbgFsORtySXsTntc9tftZ07S
+	cForeoDfm1lQFpUDr8CEQaYDcicgc7HNziSJGpSSrwGmT/BhSYhqY/DixGkv28UGJtVC/p8XrXJ
+	NB3pOJDjftjL4B
+X-Google-Smtp-Source: AGHT+IGADpUlc4d6GuGOP+3nLljBkz9sqj/QHSoZhghqe3A6PffXI/lWFd81SOfDZ9Hd2vishRWIPA==
+X-Received: by 2002:ac8:5dd1:0:b0:4b4:96a8:f79c with SMTP id d75a77b69052e-4c073c99e35mr31025171cf.79.1758273186690;
+        Fri, 19 Sep 2025 02:13:06 -0700 (PDT)
 Received: from fauth-a2-smtp.messagingengine.com (fauth-a2-smtp.messagingengine.com. [103.168.172.201])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-793474ac8dasm26073756d6.30.2025.09.19.02.13.01
+        by smtp.gmail.com with ESMTPSA id d75a77b69052e-4bda2c6d0c5sm26674071cf.21.2025.09.19.02.13.06
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 19 Sep 2025 02:13:01 -0700 (PDT)
-Received: from phl-compute-12.internal (phl-compute-12.internal [10.202.2.52])
-	by mailfauth.phl.internal (Postfix) with ESMTP id 3316AF40066;
-	Fri, 19 Sep 2025 05:13:01 -0400 (EDT)
+        Fri, 19 Sep 2025 02:13:06 -0700 (PDT)
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfauth.phl.internal (Postfix) with ESMTP id DBC8AF40066;
+	Fri, 19 Sep 2025 05:13:05 -0400 (EDT)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-12.internal (MEProxy); Fri, 19 Sep 2025 05:13:01 -0400
-X-ME-Sender: <xms:nR7NaOLBS26uIfK4Ed8QhVmcyJM3gZFCCmMxb0z1MgGIwt1en81uKw>
-    <xme:nR7NaKY1xYyL1iVWtry5iATJBEL0a2_379ADVTfH2YfVvX59wAGqm9e1g-J8iuH_U
-    Pn08rBAjNBSBvXn_A>
-X-ME-Received: <xmr:nR7NaCTvg4nWwxnNKkQxz-BJwtsomwcfFw9VAZrDGjc5w-EfgdnsvhAH9lhB>
+  by phl-compute-01.internal (MEProxy); Fri, 19 Sep 2025 05:13:05 -0400
+X-ME-Sender: <xms:oR7NaJMN8NIqYmxob3emmAK2QMQoXI8w0UgL_7fSePTA3eCwKW1RkQ>
+    <xme:oR7NaBsiOK2_J3CiVO3uKdiLh9b728UehfAyglLpUQvo5f7A2EC1cF1VtJY59qJ7y
+    7J9cFT8rHp0tSYcBg>
+X-ME-Received: <xmr:oR7NaGUWcuZ9Fiy3wXwYhsNRVQowuvaqTIphspswsW-n7wztpQZIgg6C6zej>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdegkeekvdcutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
     ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
     hrpefhvfevufffkffojghfggfgsedtkeertdertddtnecuhfhrohhmpeeuohhquhhnucfh
     vghnghcuoegsohhquhhnrdhfvghnghesghhmrghilhdrtghomheqnecuggftrfgrthhtvg
-    hrnhepgffhffevhffhvdfgjefgkedvlefgkeegveeuheelhfeivdegffejgfetuefgheei
-    necuffhomhgrihhnpehkvghrnhgvlhdrohhrghenucevlhhushhtvghrufhiiigvpedtne
-    curfgrrhgrmhepmhgrihhlfhhrohhmpegsohhquhhnodhmvghsmhhtphgruhhthhhpvghr
-    shhonhgrlhhithihqdeiledvgeehtdeigedqudejjeekheehhedvqdgsohhquhhnrdhfvg
-    hngheppehgmhgrihhlrdgtohhmsehfihigmhgvrdhnrghmvgdpnhgspghrtghpthhtohep
-    vdefpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehpvghtvghriiesnhhfrhgrug
-    gvrggurdhorhhgpdhrtghpthhtohepmhhinhhgoheskhgvrhhnvghlrdhorhhgpdhrtghp
-    thhtohepthhglhigsehlihhnuhhtrhhonhhigidruggvpdhrtghpthhtoheprhhushhtqd
-    hfohhrqdhlihhnuhigsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtoheplhhi
-    nhhugidqkhgvrhhnvghlsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtoheplh
-    hkmhhmsehlihhsthhsrdhlihhnuhigrdguvghvpdhrtghpthhtohepfihilhhlsehkvghr
-    nhgvlhdrohhrghdprhgtphhtthhopehpvghtvghriiesihhnfhhrrgguvggrugdrohhrgh
-    dprhgtphhtthhopehlohhnghhmrghnsehrvgguhhgrthdrtghomh
-X-ME-Proxy: <xmx:nR7NaCg7YxtMhcv3IoTX_-zd2libnCl4OXYA6_Ds91efm7xQkeJ6dg>
-    <xmx:nR7NaOvv6BU7R_WT2VqJsWX595xDh83Ci6pQZbGQbfzj11JVQeOKOA>
-    <xmx:nR7NaEyipy6jYjepz_2klsuBBZrRw02um3fbtquJ_DrzSOtrbVE2Sw>
-    <xmx:nR7NaMOpas1iBqJn84ZsG6cmaZLeBWsxafdFUkhVYYwd113Ng0MaVw>
-    <xmx:nR7NaO25cC3oRhaNC4wAbHcV2E0rfR4zsyDoWN09ForWCLQKj3Y3A9JB>
+    hrnheptedtteegjeefffeileevheeguddvleekfeeigfevgffhfeetieekgfffhfeiledv
+    necuffhomhgrihhnpehgihhthhhusgdrtghomhdpkhgvrhhnvghlrdhorhhgpdhlohgtkh
+    druggrthgrnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhho
+    mhepsghoqhhunhdomhgvshhmthhprghuthhhphgvrhhsohhnrghlihhthidqieelvdeghe
+    dtieegqddujeejkeehheehvddqsghoqhhunhdrfhgvnhhgpeepghhmrghilhdrtghomhes
+    fhhigihmvgdrnhgrmhgvpdhnsggprhgtphhtthhopedvtddpmhhouggvpehsmhhtphhouh
+    htpdhrtghpthhtohepphgvthgvrhiisehnfhhrrgguvggrugdrohhrghdprhgtphhtthho
+    pehmihhnghhosehkvghrnhgvlhdrohhrghdprhgtphhtthhopehtghhlgieslhhinhhuth
+    hrohhnihigrdguvgdprhgtphhtthhopehruhhsthdqfhhorhdqlhhinhhugiesvhhgvghr
+    rdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehlihhnuhigqdhkvghrnhgvlhesvhhgvg
+    hrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehlkhhmmheslhhishhtshdrlhhinhhu
+    gidruggvvhdprhgtphhtthhopeifihhllheskhgvrhhnvghlrdhorhhgpdhrtghpthhtoh
+    epphgvthgvrhiisehinhhfrhgruggvrggurdhorhhgpdhrtghpthhtoheplhhonhhgmhgr
+    nhesrhgvughhrghtrdgtohhm
+X-ME-Proxy: <xmx:oR7NaAQu4uJyjW7e7z1Oj2ucAAiRAfL6szDlmSejkVLIWYH6jMqy8w>
+    <xmx:oR7NaMIZyAaQOOwbbEN6uiT1dXxQ6TGlNt9WJMXFo00Y4WwrXscIqw>
+    <xmx:oR7NaJ38miBjo4tiIWVqaTyO9madhc_aUBbrT8L5538tgPpb9Kuc7g>
+    <xmx:oR7NaHIzCujDbDjjLbzXT_1WPIgnO_P51Oe8571E7o1EQg2miLHeCA>
+    <xmx:oR7NaBl1ckk6cKCh5DTnvEXjyJ23FYv3bbqfDhl7VL3UWzpt5fzE6UO6>
 Feedback-ID: iad51458e:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 19 Sep 2025 05:13:00 -0400 (EDT)
+ 19 Sep 2025 05:13:04 -0400 (EDT)
 From: Boqun Feng <boqun.feng@gmail.com>
 To: "Peter Zijlstra" <peterz@nfradead.org>,
 	"Ingo Molnar" <mingo@kernel.org>,
@@ -113,14 +114,11 @@ Cc: rust-for-linux@vger.kernel.org,
 	"Trevor Gross" <tmgross@umich.edu>,
 	"Danilo Krummrich" <dakr@kernel.org>,
 	"Andreas Hindborg" <a.hindborg@kernel.org>,
-	Alexander Sverdlin <alexander.sverdlin@siemens.com>,
-	stable@vger.kernel.org,
-	Adrian Freihofer <adrian.freihofer@siemens.com>,
-	"Paul E. McKenney" <paulmck@kernel.org>,
+	Daniel Almeida <daniel.almeida@collabora.com>,
 	Boqun Feng <boqun.feng@gmail.com>
-Subject: [PATCH 1/4] locking/spinlock/debug: Fix data-race in do_raw_write_lock
-Date: Fri, 19 Sep 2025 11:12:38 +0200
-Message-ID: <20250919091241.32138-2-boqun.feng@gmail.com>
+Subject: [PATCH 2/4] rust: lock: guard: Add T: Unpin bound to DerefMut
+Date: Fri, 19 Sep 2025 11:12:39 +0200
+Message-ID: <20250919091241.32138-3-boqun.feng@gmail.com>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250919091241.32138-1-boqun.feng@gmail.com>
 References: <20250919091241.32138-1-boqun.feng@gmail.com>
@@ -132,68 +130,64 @@ List-Unsubscribe: <mailto:lkmm+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-From: Alexander Sverdlin <alexander.sverdlin@siemens.com>
+From: Daniel Almeida <daniel.almeida@collabora.com>
 
-KCSAN reports:
+A core property of pinned types is not handing a mutable reference to
+the inner data in safe code, as this trivially allows that data to be
+moved.
 
-BUG: KCSAN: data-race in do_raw_write_lock / do_raw_write_lock
+Enforce this condition by adding a bound on lock::Guard's DerefMut
+implementation, so that it's only implemented for pinning-agnostic
+types.
 
-write (marked) to 0xffff800009cf504c of 4 bytes by task 1102 on cpu 1:
- do_raw_write_lock+0x120/0x204
- _raw_write_lock_irq
- do_exit
- call_usermodehelper_exec_async
- ret_from_fork
-
-read to 0xffff800009cf504c of 4 bytes by task 1103 on cpu 0:
- do_raw_write_lock+0x88/0x204
- _raw_write_lock_irq
- do_exit
- call_usermodehelper_exec_async
- ret_from_fork
-
-value changed: 0xffffffff -> 0x00000001
-
-Reported by Kernel Concurrency Sanitizer on:
-CPU: 0 PID: 1103 Comm: kworker/u4:1 6.1.111
-
-Commit 1a365e822372 ("locking/spinlock/debug: Fix various data races") has
-adressed most of these races, but seems to be not consistent/not complete.
-
-From do_raw_write_lock() only debug_write_lock_after() part has been
-converted to WRITE_ONCE(), but not debug_write_lock_before() part.
-Do it now.
-
-Cc: stable@vger.kernel.org
-Fixes: 1a365e822372 ("locking/spinlock/debug: Fix various data races")
-Reported-by: Adrian Freihofer <adrian.freihofer@siemens.com>
-Acked-by: Waiman Long <longman@redhat.com>
-Signed-off-by: Alexander Sverdlin <alexander.sverdlin@siemens.com>
-Reviewed-by: Paul E. McKenney <paulmck@kernel.org>
+Link: https://github.com/Rust-for-Linux/linux/issues/1181
+Suggested-by: Benno Lossin <lossin@kernel.org>
+Suggested-by: Boqun Feng <boqun.feng@gmail.com>
+Reviewed-by: Benno Lossin <lossin@kernel.org>
+Reviewed-by: Alice Ryhl <aliceryhl@google.com>
+Signed-off-by: Daniel Almeida <daniel.almeida@collabora.com>
 Signed-off-by: Boqun Feng <boqun.feng@gmail.com>
 ---
 
 Notes:
-    SubmissionLink: https://lore.kernel.org/all/20250826102731.52507-1-alexander.sverdlin@siemens.com/
+    SubmissionLink: https://lore.kernel.org/all/20250828-lock-t-when-t-is-pinned-v2-1-b067c4b93fd6@collabora.com/
 
- kernel/locking/spinlock_debug.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ rust/kernel/sync/lock.rs        | 5 ++++-
+ rust/kernel/sync/lock/global.rs | 5 ++++-
+ 2 files changed, 8 insertions(+), 2 deletions(-)
 
-diff --git a/kernel/locking/spinlock_debug.c b/kernel/locking/spinlock_debug.c
-index 87b03d2e41db..2338b3adfb55 100644
---- a/kernel/locking/spinlock_debug.c
-+++ b/kernel/locking/spinlock_debug.c
-@@ -184,8 +184,8 @@ void do_raw_read_unlock(rwlock_t *lock)
- static inline void debug_write_lock_before(rwlock_t *lock)
- {
- 	RWLOCK_BUG_ON(lock->magic != RWLOCK_MAGIC, lock, "bad magic");
--	RWLOCK_BUG_ON(lock->owner == current, lock, "recursion");
--	RWLOCK_BUG_ON(lock->owner_cpu == raw_smp_processor_id(),
-+	RWLOCK_BUG_ON(READ_ONCE(lock->owner) == current, lock, "recursion");
-+	RWLOCK_BUG_ON(READ_ONCE(lock->owner_cpu) == raw_smp_processor_id(),
- 							lock, "cpu recursion");
+diff --git a/rust/kernel/sync/lock.rs b/rust/kernel/sync/lock.rs
+index 27202beef90c..b482f34bf0ce 100644
+--- a/rust/kernel/sync/lock.rs
++++ b/rust/kernel/sync/lock.rs
+@@ -251,7 +251,10 @@ fn deref(&self) -> &Self::Target {
+     }
  }
  
+-impl<T: ?Sized, B: Backend> core::ops::DerefMut for Guard<'_, T, B> {
++impl<T: ?Sized, B: Backend> core::ops::DerefMut for Guard<'_, T, B>
++where
++    T: Unpin,
++{
+     fn deref_mut(&mut self) -> &mut Self::Target {
+         // SAFETY: The caller owns the lock, so it is safe to deref the protected data.
+         unsafe { &mut *self.lock.data.get() }
+diff --git a/rust/kernel/sync/lock/global.rs b/rust/kernel/sync/lock/global.rs
+index d65f94b5caf2..38b448032799 100644
+--- a/rust/kernel/sync/lock/global.rs
++++ b/rust/kernel/sync/lock/global.rs
+@@ -106,7 +106,10 @@ fn deref(&self) -> &Self::Target {
+     }
+ }
+ 
+-impl<B: GlobalLockBackend> core::ops::DerefMut for GlobalGuard<B> {
++impl<B: GlobalLockBackend> core::ops::DerefMut for GlobalGuard<B>
++where
++    B::Item: Unpin,
++{
+     fn deref_mut(&mut self) -> &mut Self::Target {
+         &mut self.inner
+     }
 -- 
 2.51.0
 

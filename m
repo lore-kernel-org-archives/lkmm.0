@@ -1,63 +1,94 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from pmxout2.rz.tu-bs.de (pmxout2.rz.tu-bs.de [134.169.4.152])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A32E83161B4;
-	Wed,  3 Dec 2025 21:53:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBCF0257852
+	for <lkmm@lists.linux.dev>; Wed, 17 Dec 2025 19:05:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=134.169.4.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764798790; cv=none; b=h+9gUrbgsKuQSmpshTOEFNPisbyBr3K6g1oN04QX4b6dDKa7nre74JR1mGsvo+jRzybYgi3nK0HHOBALNsgWKhuyxd2eDPJJViHrUQm92wUHI+1UJv3fgnuGgt308QcfmgLDE8j2wbXlJXvCNM7wHPesveHSMDZ1HIj3XEBP8Nw=
+	t=1765998339; cv=none; b=Zbv2RYe7xMzq6Db++sxrzFXQYGWrsCPuhtgnuW0Ujus19eJMDji0BvdgXPyM4LW6TCFtI5oAaKKz4vc4fMwOe//HEjxy1Yq5Dg3Ym5gG3b844Htrhn91J6ncgDQ4sD07EhDsVjpA2xN4Ij9lziHrVe9wGPH1GWoa5scJQ5tlEuk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764798790; c=relaxed/simple;
-	bh=8ISyT1lqCSz8cV8y6g7OievDKhkUN1wTceQv3XokVI4=;
-	h=Subject:From:In-Reply-To:References:Message-Id:Date:To:Cc; b=ML+cUpEPr07kM2W3/ZzJlYYPG2bQm6Q99ahhtVXM0KrTueRWpvJDjQsc29G9cRPyu0F6wIRHFNe4gJJzEnX1d1tJ0ck/IvsThbMJlY3JnbFlW+TArbfKybTVgK6I8Uyu4RXGpiTYF9nizLBDKdeMSEnGqyUt63j/gW3E/VVq4qE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ur7vFc7k; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1765998339; c=relaxed/simple;
+	bh=+O5opAMvMYw9gbQqcIzmESWpm5bE6wHXpQKRfAChMl4=;
+	h=Message-ID:Date:MIME-Version:Subject:From:To:CC:References:
+	 In-Reply-To:Content-Type; b=imCbJrbzXELAGTr7pvxb1PW7ILEbkhSLpfkmb8uRI2oKxtViHl8xfsq0YxfQfHmWf/dzNaCOqJBB78ZcI5uq27lVrosUs860jUKvXLvc+3D6vAPydZ0SdcwAz+aBbP7orqZwudio4yj6kncRBFNduCHvFhs+KV+lHoZ//DvBJiM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=tu-bs.de; spf=pass smtp.mailfrom=tu-braunschweig.de; dkim=pass (2048-bit key) header.d=tu-bs.de header.i=@tu-bs.de header.b=C83ZiJlL; arc=none smtp.client-ip=134.169.4.152
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=tu-bs.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=tu-braunschweig.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ur7vFc7k"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84C0CC4CEFB;
-	Wed,  3 Dec 2025 21:53:10 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1764798790;
-	bh=8ISyT1lqCSz8cV8y6g7OievDKhkUN1wTceQv3XokVI4=;
-	h=Subject:From:In-Reply-To:References:Date:To:Cc:From;
-	b=ur7vFc7kNZl77XdeceTRxMR/8KPAahwLo8uhF57Gliz1L/eDUaj1ZEfgTn8gi3v0K
-	 KgSwcMs4QTEonplsEqUBEHYcu7RLlc3DUw7sD6VdNlS8bm1mvxuI3yYfqeEWA0366Z
-	 QKKjaqw1/OMSK+iV6x98qcMHsbc5pTQcGxWbXVv1hyYbvUOFv1+MOXPjqi0AqacOYv
-	 TflJbzoyYNygDrOMbN5HHIN0BjRinjuXy2OSNNwBCM6+9Z8xb6a2feOg3osGjQPG6T
-	 MO+v6N2OVVcGWO1V7UeVm0Jt9P1yLPwkYc7tBEVd6uQzQnx4Yck8zkh9+MS6m1IANE
-	 zKQZgI6VoiZ8Q==
-Received: from [10.30.226.235] (localhost [IPv6:::1])
-	by aws-us-west-2-korg-oddjob-rhel9-1.codeaurora.org (Postfix) with ESMTP id 789C03AA9A81;
-	Wed,  3 Dec 2025 21:50:10 +0000 (UTC)
-Subject: Re: [GIT PULL] LKMM changes for v6.19
-From: pr-tracker-bot@kernel.org
-In-Reply-To: <d1eddaba-8d38-4a91-a05c-33fb286e8f9d@paulmck-laptop>
-References: <d1eddaba-8d38-4a91-a05c-33fb286e8f9d@paulmck-laptop>
-X-PR-Tracked-List-Id: <linux-kernel.vger.kernel.org>
-X-PR-Tracked-Message-Id: <d1eddaba-8d38-4a91-a05c-33fb286e8f9d@paulmck-laptop>
-X-PR-Tracked-Remote: git://git.kernel.org/pub/scm/linux/kernel/git/paulmck/linux-rcu.git tags/lkmm.2025.12.01a
-X-PR-Tracked-Commit-Id: 7f8fcc6f09fb732745b3252f481def76b18fb99c
-X-PR-Merge-Tree: torvalds/linux.git
-X-PR-Merge-Refname: refs/heads/master
-X-PR-Merge-Commit-Id: 4a4e0199378f309fa7259132e1443efe56c1e276
-Message-Id: <176479860911.93177.18423478527890720776.pr-tracker-bot@kernel.org>
-Date: Wed, 03 Dec 2025 21:50:09 +0000
-To: "Paul E. McKenney" <paulmck@kernel.org>
-Cc: torvalds@linux-foundation.org, linux-kernel@vger.kernel.org, lkmm@lists.linux.dev, kernel-team@meta.com, akiyks@gmail.com
+	dkim=pass (2048-bit key) header.d=tu-bs.de header.i=@tu-bs.de header.b="C83ZiJlL"
+X-KumoRef: eyJfQF8iOiJcXF8vIiwicmVjaXBpZW50IjoibGttbUBsaXN0cy5saW51eC5kZXYifQ==
+DKIM-Signature: v=1; a=rsa-sha256; d=tu-bs.de; s=exchange_neu; c=relaxed/relaxed;
+	bh=d0brvDdV879BtZDkbJRmN93ySaqMZ4lI+qtZFdHyR7E=;
+	h=from:from:reply-to:subject:subject:date:date:to:to:cc:cc:resent-date:
+		resent-from:resent-to:resent-cc:in-reply-to:in-reply-to:references:
+		references:list-id:list-help:list-unsubscribe:list-subscribe:list-post:
+		list-owner:list-archive; t=1765998324;
+	b=C83ZiJlLIcxG5s1DllG50ijOIFAlu3w3kfKe3ONDZAkn3rVCFLodZK34iLmPVRH/msXbTiPEl
+	mmC/jJFEwLwLTLrurPiZb71+ZSx1aTW2+ZC7ihZEcAu2kWtir68PFeoOMJkBOjnHh1MlFLvhKNz
+	AZocgkzPSApjA419uGPPrFJUsUtG3exLS9wKIw9fWMI0Jd+iRrN+gwKY+4d6fcetF5J+E/fZEHF
+	SjJcCdTddyiL/qK/Wo/xYsAz6kN20Hg57gkq904WLHbyQbTVxntJQe+Txo6JMYAiV/yIksmEx7g
+	fLKrtAx7h6rZR066BZUi+L2FH5hW9Ysr8ksannbq7vog==;
+Received: from pegasus01.ad.tu-bs.de (134.169.4.141)
+  by kumo1.rz.tu-bs.de (KumoMTA 134.169.4.163) 
+  with ESMTPS (TLSv1_2:TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384)  id 57ca51c7db7b11f0a3257edee6c2bcb2 for <lkmm@lists.linux.dev>;
+  Wed, 17 Dec 2025 19:05:24 +0000
+Received: from Pegasus02.ad.tu-bs.de (2001:638:602:f012::3) by
+ Pegasus01.ad.tu-bs.de (2001:638:602:f012::2) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.35; Wed, 17 Dec 2025 20:05:24 +0100
+Received: from [192.168.178.23] (134.169.9.110) by Pegasus02.ad.tu-bs.de
+ (2001:638:602:f012::3) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.35; Wed, 17 Dec
+ 2025 20:05:23 +0100
+Message-ID: <0f7f3317-7a96-44f2-a3e7-a49f75bcd6aa@tu-bs.de>
+Date: Wed, 17 Dec 2025 20:05:23 +0100
 Precedence: bulk
 X-Mailing-List: lkmm@lists.linux.dev
 List-Id: <lkmm.lists.linux.dev>
 List-Subscribe: <mailto:lkmm+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:lkmm+unsubscribe@lists.linux.dev>
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC] Potential problem in qspinlock due to mixed-size accesses
+From: Thomas Haas <t.haas@tu-bs.de>
+To: Alan Stern <stern@rowland.harvard.edu>, Andrea Parri
+	<parri.andrea@gmail.com>, Will Deacon <will@kernel.org>, Peter Zijlstra
+	<peterz@infradead.org>, Boqun Feng <boqun.feng@gmail.com>, Nicholas Piggin
+	<npiggin@gmail.com>, David Howells <dhowells@redhat.com>, Jade Alglave
+	<j.alglave@ucl.ac.uk>, Luc Maranget <luc.maranget@inria.fr>, "Paul E.
+ McKenney" <paulmck@kernel.org>, Akira Yokosawa <akiyks@gmail.com>, "Daniel
+ Lustig" <dlustig@nvidia.com>, Joel Fernandes <joelagnelf@nvidia.com>,
+	<linux-kernel@vger.kernel.org>, <linux-arch@vger.kernel.org>,
+	<lkmm@lists.linux.dev>
+CC: <hernan.poncedeleon@huaweicloud.com>, <jonas.oberhauser@huaweicloud.com>,
+	"r.maseli@tu-bs.de" <r.maseli@tu-bs.de>
+References: <cb83e3e4-9e22-4457-bf61-5614cc4396ad@tu-bs.de>
+Content-Language: en-US
+In-Reply-To: <cb83e3e4-9e22-4457-bf61-5614cc4396ad@tu-bs.de>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: Pegasus08.ad.tu-bs.de (2001:638:602:f012::9) To
+ Pegasus02.ad.tu-bs.de (2001:638:602:f012::3)
 
-The pull request you sent on Mon, 1 Dec 2025 08:38:11 -0800:
+On 12.06.25 16:55, Thomas Haas wrote:
+> We have been taking a look if mixed-size accesses (MSA) can affect the 
+> correctness of qspinlock.
+> We are focusing on aarch64 which is the only memory model with MSA 
+> support [1].
+> For this we extended the dartagnan [2] tool to support MSA and now it 
+> reports liveness, synchronization, and mutex issues.
 
-> git://git.kernel.org/pub/scm/linux/kernel/git/paulmck/linux-rcu.git tags/lkmm.2025.12.01a
+--- cut off ---
 
-has been merged into torvalds/linux.git:
-https://git.kernel.org/torvalds/c/4a4e0199378f309fa7259132e1443efe56c1e276
+ARM has recently fixed the issue on their side by strengthening the 
+memory model (see 
+https://github.com/herd/herdtools7/commit/2b7921a44a61766e23a1234767d28af696b436a0)
 
-Thank you!
+With the updated ARM-MSA model, Dartagnan does no longer find violations 
+in qspinlock. No patches needed :)
 
--- 
-Deet-doot-dot, I am a bot.
-https://korg.docs.kernel.org/prtracker.html
+With best regards,
+Thomas
+
+
+

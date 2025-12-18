@@ -1,54 +1,54 @@
-Received: from YT3PR01CU008.outbound.protection.outlook.com (mail-canadacentralazon11020118.outbound.protection.outlook.com [52.101.189.118])
+Received: from YT3PR01CU008.outbound.protection.outlook.com (mail-canadacentralazon11020094.outbound.protection.outlook.com [52.101.189.94])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB7E32FCBE5
-	for <lkmm@lists.linux.dev>; Thu, 18 Dec 2025 17:35:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.189.118
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04BCF2DC79A
+	for <lkmm@lists.linux.dev>; Thu, 18 Dec 2025 17:54:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.189.94
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1766079326; cv=fail; b=hQxv/YSZSJfZaV7Q1Va/ZHK6rKESgUjX1byg8rHcQKEdY9+P8h5UP42vCM7OjrpSjQIzdsWpgkTud8T9Rp4pzyDMvi3AyHZIzpOvxxwm4vLMPQ0oCh86lIUmJlJUPaymQwXNdUiO3swbZTSS19BnAnU25ck7G592o/wnbKpD8N0=
+	t=1766080454; cv=fail; b=hBnS9xPirWCOQhTL/nMbGC77iGlC5aS1CrIHK3DiTqADD/V6/HYEq2ckVp+h/hujiQiDh6K4yTAyWYViskNeRJkDS4EpvkwXJk/gWsfmiM9L6GHtlvMK66v3hYc9ajb1xY6IBDZNp/kqrVmUQUfR62FK6b0g3BNZjrJCjZ/qleA=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1766079326; c=relaxed/simple;
-	bh=KmXm0Wwal+LcAM+T/znXhbOF4G1xLk9mcW8ulO18F5E=;
+	s=arc-20240116; t=1766080454; c=relaxed/simple;
+	bh=7ZvCDoxLmwIXDVZBdyDkVuL61S7c8xGW+h+hY4tnZN8=;
 	h=Message-ID:Date:Subject:To:Cc:References:From:In-Reply-To:
-	 Content-Type:MIME-Version; b=VjSa+zg1iXI+uQW8oaZsqKJt7xR0+NsqLnDhlhZeoRPTdFY+c2/1m6DcMth3VwlOvm3AdKvBWJ6qpFvQGk8qyipC6A1Yrximf66lCoV+PGMdNs2VyK7mI5KpuUF0MQKXhxEgQO1on4P5vi395cUhYMc3is8ydEmwbXqaXINqdJE=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=efficios.com; spf=pass smtp.mailfrom=efficios.com; dkim=pass (2048-bit key) header.d=efficios.com header.i=@efficios.com header.b=dfpaEI2v; arc=fail smtp.client-ip=52.101.189.118
+	 Content-Type:MIME-Version; b=kLKP/gIRq5m6qDKR/Jw7WStk6/WGRHmeCke0xtqRNV/ikKvNVqaATx6jEMwaCUOQqLAcuEBjWcvnaJgqsTwaCwZqbZyzScP+GJKFhS6DJ1zvfsy6XJPNqbquYTj2mPPjoCxeejXWF1Q9L2wYr2FdoEkxjIZQkVMwuH9Vl9ywAys=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=efficios.com; spf=pass smtp.mailfrom=efficios.com; dkim=pass (2048-bit key) header.d=efficios.com header.i=@efficios.com header.b=ADLToAb6; arc=fail smtp.client-ip=52.101.189.94
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=efficios.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=efficios.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=efficios.com header.i=@efficios.com header.b="dfpaEI2v"
+	dkim=pass (2048-bit key) header.d=efficios.com header.i=@efficios.com header.b="ADLToAb6"
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=pQtRj9wK18crn3oW/THmgI/Igtwd5nzxycHONKWrs+hOsgWmXsyKMLWLmBvg/hFpP43WRfcqp/xtKEsjVyjfkEk9bLgKGNwcegLIrPd+n2QunmU1Roobk9gkT1H2SZrcam8w5J1y20Wd1cOKyXdIRbrua1TybjsRuIY8uAz++aCBiP3qMqP4uQgq4q/YngO/I7x9zaNyVPBYlydnZYLstCUl6CDgS+BRXkbRu+fkbRac7qLddrksO0J+B1x4FeNRYp48Y4qyZBBkUgxtQzXCCyQ68H847JZTIm0p064oKQGgw7dti7rrVfs55QnlyEhJqWNeEg9L6E28CedqBdjAxw==
+ b=TcAKdcPJRTU7ErAX3lEqjv4dYeCPzTr21juoZe0isNHSmvz8hrMJUfeYX0eaXd7Qy7WNL0PfGoHCdOCNX00n6+edmKPR9E5MZs0y6E2bTsR1oezdXXZnuGBf+PZy4MgCnCGhreGMRwZNXbYxOO53kQBHdSDhCvsrzQIN/929upp/Y9IYLXkk3l2DxkUwbvBFVRJ6ptPCKhRNQ/dChgU2GhhvUKcHgY2pvDrxkygvnCWKOO5vojw4ZUsX30SMWLmOHPu1RHgSpSfUInzYWmyjJ//r7HDWv4wK0L4XFcWN+aNSA7u0Zxfbj1q6qgdRXG2zYYkdccwhBFC7Ou23aTWsEQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=yaC4gd4RyCDBbxUbDKGgVdPuKzlnAtBYXMtq/0VOqhs=;
- b=qgTFIm+LkUHrje1lAT4c30CJvA+IYrKcfxRz8oOWL0zBvBPSCwNbH2ID8iDAmIXg5AGBS/kPDdly+kLBOdOr9RxvOasQ6nKSbd75Etm+g5tFSBDCDwoitcrOMVo8/EDflM/uxakaxMEdqRDehFWiwXbgt0NpARdWsiQ19IgY5sdMV1ceZa7kJcQc3s7eU4/iyVY3vesyspIJ2EhIJ0Wan8arMpTkH6eo1JUj3GfAx2idWqkWX/E0P9lVmTnX+I8lo8GIG16cVQ6Lib4MZaIif/s4h8ugySROpKPufYO80cezqJH3Tii0C6mLS11Bg19QPhtZ1KpPDXnfAWKMCIGJXA==
+ bh=pKEP/rhlhIAzj8GUfe1dbOwqvomiqpqCMHsP+TxyDn0=;
+ b=F67SS4kcTHyUTGctRuK+jFrzFsslwO0chFk4LOmBmdrmobJkS+dbEYmj3/z+rf5XxGZfETNadVv6QaQS+e420B+iAjKFKQaM5CcBXT6D+4TYeen9U6yPHu/YeWlOPlQgrBhc1z1npNXb8S5qxeKlZmZzn6akZu+qBd51jf0CJEkYBlAJmuzlIyNYUYu4LmqswEGEFMgeHUn5/DFixmtMHdIuck9if5f1HPngEZidnuEVuhUGo1QqoWx7sUOQZiy5wAh9mKdeOXQg32GOK18wcHMrQ3GJudmNoIHPdzUIa5EddJqckqnQ4JVxvnxKtvXTihRQvq3UgzrLYjjQZlc/xg==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=efficios.com; dmarc=pass action=none header.from=efficios.com;
  dkim=pass header.d=efficios.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=efficios.com;
  s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=yaC4gd4RyCDBbxUbDKGgVdPuKzlnAtBYXMtq/0VOqhs=;
- b=dfpaEI2vD51HUtNwC8osjy8rWP3A2xapQTgTHyTgEFO+AXKADzg0OxtiaOFUZtikWzKbSspLW79+SvBIw0PbbBQKaPfRthIWHWgKgb/MOPnmXOcN9gyKOP3oQUQN1cMR4gDX56tyrNDfz/5AhgFiPr0LwvRVGCxv6VlfQO64tyXOWwdl8qSDD4syWbalyTGx/qLVjngF1NGlFWXueH9L300OtVaCvuKCaW/RCYl46tDC7AKm6QbVJ+NBB0AxfCssMRAPFUH3SQVVk2Ec1jFh/Hl0iU5/wU4m6Gr9cIeTgZV4aTfbe2tfd43BQsX/nPWr5E40NpAFSheDmY2RsSkfNw==
+ bh=pKEP/rhlhIAzj8GUfe1dbOwqvomiqpqCMHsP+TxyDn0=;
+ b=ADLToAb60gl4LgT1B1jHNpVCceZD+A/t0vy6f+ycghISx14Wfy7/H3buWnjvg2OkK1+VNQS2HGlBRFcNCA/9vKq70KxZUkmRsHVidqBiLIZ4WwRD9+ryMjnNactYH21bJeKwDAN45cDP1GFvS3RpEq2l3lDs+f8PZtsNL8CAMDDFw3NgMVVci0TngCFWrO9On0X0RSUjJmVepy6XLi0cbjCG65JDALe1IkkU2cSvdNqcWLFyO408Y4/uIR5QIiCOuQvizW4T3oiGC2ALNHAld7tmC/nnEgJDvno1siYxrEgSxYDfEBlHjBWbpsfyg6CbqhL5krAnyEXYTiCPy4LTlw==
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=efficios.com;
 Received: from YT2PR01MB9175.CANPRD01.PROD.OUTLOOK.COM (2603:10b6:b01:be::5)
- by YT3PR01MB10605.CANPRD01.PROD.OUTLOOK.COM (2603:10b6:b01:97::5) with
+ by YT2PR01MB8693.CANPRD01.PROD.OUTLOOK.COM (2603:10b6:b01:b5::18) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9434.8; Thu, 18 Dec
- 2025 17:35:20 +0000
+ 2025 17:54:08 +0000
 Received: from YT2PR01MB9175.CANPRD01.PROD.OUTLOOK.COM
  ([fe80::6004:a862:d45d:90c1]) by YT2PR01MB9175.CANPRD01.PROD.OUTLOOK.COM
  ([fe80::6004:a862:d45d:90c1%5]) with mapi id 15.20.9434.001; Thu, 18 Dec 2025
- 17:35:20 +0000
-Message-ID: <fcbc99d0-b7c7-45f7-9cf8-f5d3bfad966e@efficios.com>
-Date: Thu, 18 Dec 2025 12:35:18 -0500
+ 17:54:08 +0000
+Message-ID: <67bbeac3-4158-4eab-b42c-ca31adefef70@efficios.com>
+Date: Thu, 18 Dec 2025 12:54:05 -0500
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH v4 3/4] hazptr: Implement Hazard Pointers
-To: Boqun Feng <boqun.feng@gmail.com>
-Cc: Joel Fernandes <joel@joelfernandes.org>,
- "Paul E. McKenney" <paulmck@kernel.org>, linux-kernel@vger.kernel.org,
+Subject: Re: [RFC PATCH v4 0/4] Hazard Pointers
+To: Joel Fernandes <joel@joelfernandes.org>
+Cc: Boqun Feng <boqun.feng@gmail.com>, "Paul E. McKenney"
+ <paulmck@kernel.org>, linux-kernel@vger.kernel.org,
  Nicholas Piggin <npiggin@gmail.com>, Michael Ellerman <mpe@ellerman.id.au>,
  Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
  Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
@@ -68,15 +68,14 @@ Cc: Joel Fernandes <joel@joelfernandes.org>,
  Jonas Oberhauser <jonas.oberhauser@huaweicloud.com>, rcu@vger.kernel.org,
  linux-mm@kvack.org, lkmm@lists.linux.dev
 References: <20251218014531.3793471-1-mathieu.desnoyers@efficios.com>
- <20251218014531.3793471-4-mathieu.desnoyers@efficios.com>
- <aUO9KRaP0FXpm_l9@tardis-2.local>
+ <54E94704-92C0-4F10-AED9-46DFCA61233B@joelfernandes.org>
 From: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
 Content-Language: en-US
-In-Reply-To: <aUO9KRaP0FXpm_l9@tardis-2.local>
+In-Reply-To: <54E94704-92C0-4F10-AED9-46DFCA61233B@joelfernandes.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: YT4PR01CA0422.CANPRD01.PROD.OUTLOOK.COM
- (2603:10b6:b01:10b::9) To YT2PR01MB9175.CANPRD01.PROD.OUTLOOK.COM
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: YT4PR01CA0384.CANPRD01.PROD.OUTLOOK.COM
+ (2603:10b6:b01:fd::13) To YT2PR01MB9175.CANPRD01.PROD.OUTLOOK.COM
  (2603:10b6:b01:be::5)
 Precedence: bulk
 X-Mailing-List: lkmm@lists.linux.dev
@@ -85,249 +84,291 @@ List-Subscribe: <mailto:lkmm+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:lkmm+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: YT2PR01MB9175:EE_|YT3PR01MB10605:EE_
-X-MS-Office365-Filtering-Correlation-Id: a42a5045-56a8-41eb-11ff-08de3e5bd10c
+X-MS-TrafficTypeDiagnostic: YT2PR01MB9175:EE_|YT2PR01MB8693:EE_
+X-MS-Office365-Filtering-Correlation-Id: f6fdae99-bf8d-49cb-46a9-08de3e5e70e1
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;ARA:13230040|376014|7416014|1800799024|366016;
 X-Microsoft-Antispam-Message-Info:
-	=?utf-8?B?dVV2TlFPdnlXTWMydkIzU0RWUnVrWGdOdHdFZ1RpZmFZZ09PSlR5MjhPV3pY?=
- =?utf-8?B?b2gxTllZYTN0VDZ0UjZSeDB5a3FEUVhvRHh1cFRCdFRSTXB2RjMwR1BxLzd1?=
- =?utf-8?B?T3NGbmZHOWIrMkt1d0pBZS93MGp1RmlvS2VhbCtmUC9STVpRcjU5S2d4bFFu?=
- =?utf-8?B?VlRTU1ovWFM0aHNJOTM0V3ZHSURhSUd3bkRBWk1FWG5RMjNBUDFKbUdWTHc3?=
- =?utf-8?B?b1FWZDNYeEoydG5FSDVOa3ZiNnVqdkFsdStaVld5bVhVdUppQ2pHdGhUdzJN?=
- =?utf-8?B?cElRNGd4YnVIMnlFRW04QXdSWGlNbDdGRmNZc1Uzd2Q1VUpNSTFadTk0RDZy?=
- =?utf-8?B?WjhBSmt4dnVkNEgyOHZZelVObGJMazNwT0RhT1pRNGU2Q2VpOHFmdlJ2WnZD?=
- =?utf-8?B?LzBESWU1TDFlRm1sNCtEY3NUaDlFemloWmdKc1BEN0QrR3NhU2dmYmpaVW9R?=
- =?utf-8?B?YUhmS0w0MVB2VFhWaWVNNWpqSWRrUnlpU0E2Tlg5RW1FSTljSVd2ZXJFV04x?=
- =?utf-8?B?Qml6T1FjQUpOZE0ySmlsai9IMWhpNVlkTlRVSFpoSXdEU21KY3k5RzRLcG5y?=
- =?utf-8?B?S0pyU21sUXN6Q2pLQVgrN2hiUVNpaXY0bnpQcnFGaUxsUCtFNEs0VHF4TXl2?=
- =?utf-8?B?QVRrYkpFanFSbFc4ODFHbk5JcFo2bmt0K3dQUjBDU0k3NFdNZ2NvSzk0T0FT?=
- =?utf-8?B?am82c1ZHU1lobnZkTFlnblU5V3hUZlBJcXQ1eVFBWjJCUzJQakhLZWlCZHdp?=
- =?utf-8?B?WVZhZUdFTEtGUE02dGJabWNPTjF1TDk2V2d2WlFzdHpJMzA5ZjZhS28wSzJu?=
- =?utf-8?B?V3pKQWVoQTJFdGJCaGM4cjBobVlvaVkwOVpqV0dKdlk1WmhDTkYzWEhCNVJS?=
- =?utf-8?B?QU8rU2ZGSWFVcGhmM2hVSlEyZmRqRndUSjJXZVFCY3VNLy9YUVZVVWZqZ09Q?=
- =?utf-8?B?WVhOekpqMHZxOXlSTVdVWTR4TFN4U2pWUThkN2ZCM1VKT1VFUG9pdmhhc2Zk?=
- =?utf-8?B?ZnkzbXFHOWJZT3NvR1h0TTFsSUltQ2hDTlNNdllUM05MNTlKbThZT2gwazlB?=
- =?utf-8?B?VUkyNlRlR1JrbUs0VHdwZUFNS2t4aS9USS9TZFB1VTFmVDZhVlcvc0JUaVdv?=
- =?utf-8?B?Y1FKOGhLMG9kMkYzM2Vyb0VCL0RZV21zRDNTUG5ISnpFQktFUGErZHNJS1o1?=
- =?utf-8?B?eGI5SkFabWRTbFh6T3gyUjlXdWowdUNwU3JEUmdIRTJaTkR3eGt3Ly8rYnVM?=
- =?utf-8?B?UWRoQkxBWFFrTVRzQXRaUDd4ejRSOGV1d3F6V3RhUTdsWnk5OE1DMGVxRnR1?=
- =?utf-8?B?ZlpQYmh6QlV3Zy9ZelJLNkNQS254VDBEdHlFTjFIYTdTdEwwcWNBTXNlQ21q?=
- =?utf-8?B?b1psRm1yTzJFcUdhM1U0RmVtNzY3YmIzZ29WYUhBVnNvZ3E2eUtrZktRUGtW?=
- =?utf-8?B?TVZEUWY1ZXVoTGFhS2FETFFrRjl1eUFSdDFkZC9ETlVwdjBpc2lXRnVzcWJP?=
- =?utf-8?B?Uit5WlNsTUR5Qm1KTTExK0pIcHFTN25YQUNwZEIxcFJ3Qjh3THVXeVZPbjFw?=
- =?utf-8?B?Q2cvbHczdEpwQjFlZDdEQy9lM3hZM2dZTmUxTitBTnA1NEt0ZG9GMjRyS2Fn?=
- =?utf-8?B?ZkVqcS8rZXhJd05QQWN4NTlEaS8yb3g5L09HcmhrbWpLcjRSV2djeWFhMTMv?=
- =?utf-8?B?RmFnSkRRaFRIKzAyQ3Q5b3NobU9DRi8zd1MzVUhxTE9CTlN4VjdYL0pIYWwx?=
- =?utf-8?B?b2ZFdi91aE5YYU9YSWg5b2RtWWpmUHUvV0FOamZXZzRvOEt1RlJnbitMbW5h?=
- =?utf-8?B?clkydTF1SUxnNGEzanEwUXBGbjArdTk3NlBaYlNpbHB6WmlpYUtkQ2pjSENX?=
- =?utf-8?B?dWhhWmE5VHA2dWVsZW1xaFJsT3JSMnI2bk8xN2JJN1VETFE9PQ==?=
+	=?utf-8?B?bTJCRVdick1DblNOQlZMY0JVVkxaYVhZdzB4ZWdGVkF1ZVJDMmN0Vnc5Q2tZ?=
+ =?utf-8?B?S2tId0tRUE92cFJ1b2o3aTE2dk43eUlzZTdPVFdqcldMZDZIck9RM1VGeHhm?=
+ =?utf-8?B?Q0hWZEtaTThnU3ZETDUvWmlXTkEvSTFIdHk4aUxOWFdweFpkWGcrVzBYa0I2?=
+ =?utf-8?B?WnpNQmY5MTJNRFFqQ0kzQUN6dm12Wmp3K3pzM2ZIUDE4VVpEVXlvRmErZWhv?=
+ =?utf-8?B?RnZzcGxpaG1ZU3pMb2ozQVpUZzJKN2hCaGllOUpCM1BwTVJmb3dCbXluUmZw?=
+ =?utf-8?B?T3dLcnN2TmhCRm16YkV5aEIxNzNabmxNOThtN2pZenlTUU1PRVdVb0FpbXZ1?=
+ =?utf-8?B?TXBSa0pnVWJ2S0tSWWdOOVJ4eEhlRjBpU1dyOXE1Nkd4czB4aVlqOEtjUHdX?=
+ =?utf-8?B?Y0V2RldHcmVld24wSHEwck5LRnAxUVNrcUM1VjlNK1NpbmdlcnZIQ3hkN3My?=
+ =?utf-8?B?L1FoeUJ3ZnZINm51Q0hqb3ZPbElxUGlrdXpxZGs4dlIxSXUwcU1Fb3BkSndS?=
+ =?utf-8?B?Rzh1ZFFFWGIwSDhtSWx5STI5bkVhaVFqS0JpV1hVVTBZUi9vQ0VSRlhwN05P?=
+ =?utf-8?B?cTFZYjAvYWpvM0V2bTBtK2hna0RkUEQxRkY0YnkzWlpSeEdUVVZjUjcyUjlV?=
+ =?utf-8?B?b2hGSDhUeS9SRm9Da2NoM2NKWWQxUWNLajl1cjd4MmhXTm0xb3Vab2p4a1Rq?=
+ =?utf-8?B?MVppLy9ob1k0SWZobnFFb3Bma1hSbTlaNTRPT0g5dVI0RTFSaUZ0V0s4a3dI?=
+ =?utf-8?B?SVI0VVNwRkZFamZWd0NxRDgwZnp0aURPQ0J3WFp6S3gwOUdWdFFGR0JpeG43?=
+ =?utf-8?B?REVJcXBsK1JEUUVMZStyWDl6aDRqRVVUYk4wZmsyOGlJSXl3dHdiWWViQkp3?=
+ =?utf-8?B?dkJXWkdvMEY5NjRNZTl1MlFLRkU4d0lmVEtqNnI4V29qVGxadHQ4YnNZdi82?=
+ =?utf-8?B?U1k4T0VIVHY4dHFMSkVSdVBURW9XMmlwb1BSc3o5Kzk5K3drZUZHaUx6VU8y?=
+ =?utf-8?B?WmFJb1F5WFExNlBjWGd0S1ptMFpxREl2U0pQZ01PcjczMmVFdVBUVElkLzQv?=
+ =?utf-8?B?Y3pKT3Yzc2tNRW5EbGlCdytXbVd3aUxqZi9mekxNZkw3YXJHVkQycU1USFhD?=
+ =?utf-8?B?WGdLSlYwWGdlTEhlR2VxQjRDN3cyVWx4QlZsdEVPYlN1elZQbmpjT0xUbEt3?=
+ =?utf-8?B?Q3duQ1d1RG9ncCtZRENkUzlORks0RGQrd05FeTVzQk9OVUtYbEtUODhpVEs0?=
+ =?utf-8?B?bVJjUXJaNGlnM2h6clpmWUxnTms1UXNGZ2QyTzFxWTZweGlpTVBtdnJDclVK?=
+ =?utf-8?B?aHZybC9DWDhaL2hYclA5VDlUeGxHYWpLU3JKVGErVmlncERFZm1EY21ZbVVO?=
+ =?utf-8?B?MkxCR1h2aU9TeEc0c1BoeE9EQk9SMG9UNEVEMkJiQW5mTWNSQ0o1TitTVjRs?=
+ =?utf-8?B?cGpqdk9HbWZjUTZBWDBrR3IwM0J6OHhMYllZR2lNaHVxeGF4Smg2cGs4akd0?=
+ =?utf-8?B?U1JOK3NnRDFCVDFRZWUvMFpGSzJaZVcwMXRSUk9DNlJDYjZmTDlPWDRUQ1V6?=
+ =?utf-8?B?d2tPcFdYbjFTTEtiRWtkL1dWbXpray9VcWhrN0ZrOG5NL0x0N1o2bzBBaGZv?=
+ =?utf-8?B?WTlnSERCU1lmZ0VOWE5iL1J1YnpjdlFMaXB5RExUbFk2Z3Nmcms1bkNrQTFY?=
+ =?utf-8?B?bXc2MmhTaHFOU1pJYW9NbDIzYWV2dUZMeVROQXdIWGZuK25OSGdQVHVmZVBq?=
+ =?utf-8?B?ZWsxblA0UUlWaTBuTUVEU2pDMUl6NDB6cTRVYWlhbE0rYmxnek1wSlJWZG84?=
+ =?utf-8?B?TmdnZzU2VDViVDRaaSt0S1QvY0RHaXFXVU5sbjlRcG0zNDMxMVREdzlBcXc4?=
+ =?utf-8?B?RS9kSkVkMU1pbWxtMzBDdkUrd21qS0tNRXNNTHl4dyt0K0E9PQ==?=
 X-Forefront-Antispam-Report:
 	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:YT2PR01MB9175.CANPRD01.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(13230040)(376014)(7416014)(1800799024)(366016);DIR:OUT;SFP:1102;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	=?utf-8?B?SDBXUE42YXMvSXVmTXdxTjFNQmhCekhZZFhJZlJqb004T2NaZjd0Ukg1UUFB?=
- =?utf-8?B?MkNXVlR3c285WkVYY1Vjem5YdlhlVU8yZ2hIcmZGTjB3ekNEZEkya3ZkRzlp?=
- =?utf-8?B?ZFJ2SkVLdUQ3MXl3V25VM3FCaEFZUHNQQUZESlNoUVU0Y2RtSVhabTZXUkpW?=
- =?utf-8?B?Y3k1VVY2TmI1NEpKUVRudlJqVktUcTgwOGp0UmpZbHlWSWtYNDFtV0NFY08z?=
- =?utf-8?B?YUxGNndKQU1IMnFwUmZrbVFOM1lOaktBS1dkaW13ekd4TnhkOHp0alVnS3JT?=
- =?utf-8?B?clJ3YTZOVUgvN2hUY0pwR0RaZ0d4R3k4bGtPK1JzWmpDZEp0RnVrN1ByNjRq?=
- =?utf-8?B?Z0xKYnJPRUZuSHR1ZTJsSFJyN2k0aEljOXBkdVpOTzJZTFBQZmRaVlJuSFZv?=
- =?utf-8?B?djNRbTZBRHpjbFJzUkVPSjA4WklDaGFaUTdtZXpzalNvZWM1d2g3NG1oVnBJ?=
- =?utf-8?B?TkNJTUo1RE9ZQTE5aHJybEhnQ1NIUFFtNCtPdlhMNDhMSDlvM1JhOGJHc1B6?=
- =?utf-8?B?TWpqWStNQjQ1MUtGNmNTcXJkZVdkb2tURmVnTzBOdUVjcEZZWWhreWY2WTU2?=
- =?utf-8?B?cG5wNEdENDBkYVd5eXlKTVd0OG9qZlFzcVlqV2UzK3BGb1RZb25Sb0RleXZm?=
- =?utf-8?B?a3dnSUErbngrd3pVbmhueFdrdmZPcU51V25RaVUvK3hHUVhSY01XbThMY0Zl?=
- =?utf-8?B?S1p2c1Q2NWY5UW4xbEVhZjN3V2ljcU5WZWthdnBIK1I5VmZ1SUlPSU9MUzFa?=
- =?utf-8?B?YWgzRTE3ZFZtakZobXIrQVlpVXdCTWtOVDQ5dDFlSVZMUkRJZzhiRnN3RzRy?=
- =?utf-8?B?RStBQXdmUyt2My9XdGwwNmhTWlkvVmdQOGZ1TVprWFhTV0dsbC9GMitYTUVi?=
- =?utf-8?B?eFVIWSt1dDNQMmpMTlNud0g1TGo5emxGUnlhM2xReDJaYmFuNW9STGtQeVpn?=
- =?utf-8?B?amhGNjRpTDBGb21IM1VsczdHNjNJQlo0Z1MzZndrRmVrejZtTkVKajY0NVQv?=
- =?utf-8?B?NFk1UStLRUVrTWdSOHRSRmRpS3NONjd0YlpQanFzaW0zWE1FUWhKVXdTK3lw?=
- =?utf-8?B?aXVhMEFST243QldoZTVTMyszTFRPUGlzVmpoSVJWYjlCOEY4WmcwWDFWeEpk?=
- =?utf-8?B?aTZHTzFLa28xc09renMwK09CS3V4bWRhMWJSU2JOd0NQcW9DcmMrVmVEdEhk?=
- =?utf-8?B?RDZ0dkptZ2lXN2xZUmZXcldSUERreS9NVFlZeGxxYkdHWWdoblJoMmhyTzVp?=
- =?utf-8?B?RVJXS3lHZ3N0WVN0RW1ocDVJcUhlbkFYYml4RzdXUm5rR1BXZWYrTzF5bDU5?=
- =?utf-8?B?ZjJLZ0JGVExNU1VVd1huaURKYk1mTmRhOFlIY0xqQTlHSysyUFpJYW1TN0VP?=
- =?utf-8?B?MjkxVmNkWUpvL2VQdU40TXlBNEJtT2krcjJBLzZYaUg0cDAxVjk4OE1icjNP?=
- =?utf-8?B?M05yRXB1SSthc2h3bG5NNHBSZGFBS0cxNmNraUo1eXVtZVpGeEpsRTNOUmoz?=
- =?utf-8?B?dmp1bVdkdi9IU3N6c1RvOE15anhFSkY0VzZvdVNEQ1h6RTd0NEErcUpjbVFE?=
- =?utf-8?B?cy94YmhmaUNBZzFBL1hDQTkyYVNuVkwxY1F5QW5yTFlRV2tHSEdvRkRVSVh1?=
- =?utf-8?B?SExyck5ubXVuOWlES0E2YnFDQ1dEcStBTmgrZUMrNjVobFhDeFdGZGJzYmdW?=
- =?utf-8?B?V3JVU0ttbTRCTElkdnI3SUp4RFNXVlBsNzNmQ1BkKzRUL3BBTVlyZCtDTVJl?=
- =?utf-8?B?cU0yQ01NTDdZOEE4YkRSNVdlc25tY1p6bWI3QkltSUx3OHZ3d0N4d0FVVG1w?=
- =?utf-8?B?YTllMVZvaitaWDlDeHdaVjRybWdzTWlHSWphSGMvSmh1RTN6OXBpMDl1eFVn?=
- =?utf-8?B?YXlSTlZoMkFiVEx5Ti9FUExRaGtpcitjU2c3V3QvMWVUb3NUeC9BanZPY0sr?=
- =?utf-8?B?ejJzQUxwTFFDZzhYZHU1SjZkTHhMNHY4TXkva2MwUjRMQjNsZVVRVkJnRk9z?=
- =?utf-8?B?T3FlQ0FuZ3VER0laSmQ2MWtVU21lUDRqOTBBc2h1TkxGbXRrVGYyeUFSVVoz?=
- =?utf-8?B?TGt4NnZlcUFIczdvZHh2Nlc4SzU1VlZBVnMxK1Ywa2Z5K0I4dlAvQWhoQ1dj?=
- =?utf-8?B?bUltQ3VaQU9YaUZTNitMc0NoWkN4cld3T0NPUUpiS2cyTzNzdzFoT0tnQVBU?=
- =?utf-8?Q?URTVJ2WJfwpb46ugiWs2AFs=3D?=
+	=?utf-8?B?M1U2T3dqWlFDcTdaWldYa0I1cm1RTjhjN1Z0SDRQTzVSSE1aV1pJQ2RjMmN5?=
+ =?utf-8?B?ZGxPdzQ2VSt5S3lNNzZnNzBMRFhCd3JkVWRWSXdlNUNKT2IvVFhoYW5zZUI5?=
+ =?utf-8?B?dDdrcVloNExsY29FMWlnZWlNd1FtbTI3UlpFSGdDb1FDbEJMV0tYZ0R5eHdX?=
+ =?utf-8?B?S05ucHN3VzJLUnptSjFYaTlzaXUxZHhEQmh5dEg3RFQzb0czM2taaGVtRVFD?=
+ =?utf-8?B?OW12U1VHK2VGNHJZYTV4eENnSUhlNU1aVkdtQUt3VVJkRWNoUDRENUN4Szkw?=
+ =?utf-8?B?RTBuVE1EZVcxemtlb29zYUcxWGN0d1FiMUl3a0lMd0dkV2kzclZSUm5pUTUz?=
+ =?utf-8?B?WUJVK1RvSE9QaWJNWXhmRFNvTm9LVGpNdFJpYUR5eVpOL1k0OHFnNlJBR2JS?=
+ =?utf-8?B?V0VlNTA1TGplYkxndFEwUzQreHRsV2RybGpIaFNWWStGeHNNRnkxUzROYUo1?=
+ =?utf-8?B?RU9iSk9ES2dDWWpIbWxRSmZFa3JueXh4NjYydTRzT1FORmk5dC85RVpSR2dW?=
+ =?utf-8?B?QitNWWZtc1QvcW9ta1R5enM4ZUR0eHFzNU93VDVCUzZMT25kbWIrUEp6RXFO?=
+ =?utf-8?B?V2ZyU0xnaExtVkhsZ1V4NFZOeVJ6K3l2QmpYOWJTNDVDeTZQVlpRdEMxd0lr?=
+ =?utf-8?B?SWdwbjNWWmpxT0pxVHdJVGliZi91T1VVQ1dlTGZpNXlWRjNjOWZnWVlmRXFC?=
+ =?utf-8?B?ZmZ3RHdpdnBBdVpzUEp2alI3dW5OMDhSNyt0MUdyT3VENkRWaWZYb0ZESjlP?=
+ =?utf-8?B?YmhVcTVNTGNhVk80ZFRGWGJ6UWxxSEpzSEJXRkx0RTdLZG9UUGIyakcwYnJq?=
+ =?utf-8?B?aDJCb2VjbGZGOU5TY1lDcmdVMVF5OTIrYzdhMWRRUmFReThMNGVyL1BlM0Fa?=
+ =?utf-8?B?Ky9MWDhTVnh0Nit2UGJwOUNaOXkvQmY5Rmx2Zm16ZlBXa1hlTWpnWk5pQjlx?=
+ =?utf-8?B?MVZkUFhTSi9mODlTZDBuaWUyOFZZbWxMMVh3ejJFNTZ3Z3R1eC82VzAxOVhF?=
+ =?utf-8?B?eVBST1dwdTh2RG5BNjROTHRmQzUrUlNyS2p6SmR4Vk4vcW9UeTRybVY3eWVq?=
+ =?utf-8?B?UVBGYjdqTkpMdjRleXdNVnJ3SXJEZVBPK2dQaUVBay9yVzBQV2Z2ZG5rZ0JJ?=
+ =?utf-8?B?K0dCS0U0cUJnMnd6dzEzY0hZNVAzbGdsVEFFOHE2S0xwNGhmczJCTWg0T05S?=
+ =?utf-8?B?WFBGMHNXVUVPUDBJV0lYWGtCWHhQTldzbzBXUm1nL1pQSm5wL0plSUM3R0dI?=
+ =?utf-8?B?Q3gzT3kvZUh6c0hYcEJXUU9MOURINXBCZWxxK2xyTytqUjB4ZHZuMDI0RzBF?=
+ =?utf-8?B?ZGt4RVJsU2w1TUdlUUpMN3BNeXcvUDRLSFhtd1dUWThjbG1za1p1Zk81MVJh?=
+ =?utf-8?B?dm5OVHFqbEpLWnFVekkrMGM3MThoNWNIVTN5ZkVZc2V5M1htZlQ3aDc4cGRa?=
+ =?utf-8?B?M1hqVFFvL3NYUjg3TlYxRDNuZzN2SS9YcWFvcGc4RWtGbkZ6ZlV1R0JOa2Fv?=
+ =?utf-8?B?KzJXd1BQZks3TzgzK3FJN1piU0RVdS85d3E1OEF1OE5VaTMwN2hOSlRhdDVp?=
+ =?utf-8?B?UkU0djFjZlRuTXRzTC9SVFNtNXFzeEN1MnZ3Q216WTJsRTR2NG0zNHpoSkpW?=
+ =?utf-8?B?SytJdm4yekhhKzZUZm52ZTlIL2VHWkUzakY5NEcvT1ZLRitDalZXRGdXYTdY?=
+ =?utf-8?B?b3JEZXpwM093NXdwQmhkYUV3SFVPMEhIaUNxK2JhaGtpWVYzYXBWT1dNYnRF?=
+ =?utf-8?B?RStWb3duaTcwcUtZcjA1NzB3anBIWmtTTm1LbDh5TFpOUGJQVVliNDBaMTdU?=
+ =?utf-8?B?aWRQbWRBdTA0N2tONzNMbFFGZllGNG1ZYTBxMGJHQlBFclFLcnhXSjZMUTA2?=
+ =?utf-8?B?QUtQb3RYbGkvQUtHSlduRVRCU2ZvczAvZTROWWRJckFNeElLQnhGbFhjQmZy?=
+ =?utf-8?B?aUlpUnFEa3UyMWVTeEQxWFRQOG1GTy9SVktKMWQ3Ylk3RmxpNVRpRUgxZG1j?=
+ =?utf-8?B?a1pWWFFSZEk1THZLUEJTTHRRZ0g1QTZaSWVsck8wVmI1VXdURTcxZDdjek9z?=
+ =?utf-8?B?bVdvSWhzTEFQZTZCK1c4am5VSTBUeG81WkI5MXF2dUl0VGZ5QVJSRk5XUXRz?=
+ =?utf-8?B?dUgzOHNvRTNLRlFFcy9jbVB1KzJyQnpXYkhieExZTTB5UHhxMG1QUHBmeFJr?=
+ =?utf-8?Q?x3Wr1C8c/s8kBUsJhLlKmqw=3D?=
 X-OriginatorOrg: efficios.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: a42a5045-56a8-41eb-11ff-08de3e5bd10c
+X-MS-Exchange-CrossTenant-Network-Message-Id: f6fdae99-bf8d-49cb-46a9-08de3e5e70e1
 X-MS-Exchange-CrossTenant-AuthSource: YT2PR01MB9175.CANPRD01.PROD.OUTLOOK.COM
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 18 Dec 2025 17:35:20.4547
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 18 Dec 2025 17:54:07.9094
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 4f278736-4ab6-415c-957e-1f55336bd31e
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: xAiSJydGAn55zsQCvoZn8HhWtNwtP+hI5iyRjNPPVIyqfI+UmwqON99M1Mm8XXYqmy2hEmfq90xsa9u+TIgwZuMEck16HeLNYE7ORXku42A=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: YT3PR01MB10605
+X-MS-Exchange-CrossTenant-UserPrincipalName: sBS6VlaP1f8nFe0KTM/CkHsKz0xF2C1UfsO6i6b/3AsReTGQXgXhGwv4xX3g7DoERFpfFApmmVsi9zBAZbDUFqWi1X31yzV6kpeaEL6lXM4=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: YT2PR01MB8693
 
-On 2025-12-18 03:36, Boqun Feng wrote:
-> On Wed, Dec 17, 2025 at 08:45:30PM -0500, Mathieu Desnoyers wrote:
-[...]
->> +static inline
->> +void *hazptr_acquire(struct hazptr_ctx *ctx, void * const * addr_p)
->> +{
->> +	struct hazptr_slot *slot = NULL;
->> +	void *addr, *addr2;
->> +
->> +	/*
->> +	 * Load @addr_p to know which address should be protected.
->> +	 */
->> +	addr = READ_ONCE(*addr_p);
->> +	for (;;) {
->> +		if (!addr)
->> +			return NULL;
->> +		guard(preempt)();
->> +		if (likely(!hazptr_slot_is_backup(ctx, slot))) {
->> +			slot = hazptr_get_free_percpu_slot();
+On 2025-12-18 05:33, Joel Fernandes wrote:
+> Hi Mathieu,
+> Thanks for posting this.
 > 
-> I need to continue share my concerns about this "allocating slot while
-> protecting" pattern. Here realistically, we will go over a few of the
-> per-CPU hazard pointer slots *every time* instead of directly using a
-> pre-allocated hazard pointer slot.
-
-No, that's not the expected fast-path with CONFIG_PREEMPT_HAZPTR=y
-(introduced in patch 4/4).
-
-With PREEMPT_HAZPTR, using more than one hazard pointer per CPU will
-only happen if there are nested hazard pointer users, which can happen
-due to:
-
-- Holding a hazard pointer across function calls, where another hazard
-   pointer is used.
-- Using hazard pointers from interrupt handlers (note: my current code
-   only does preempt disable, not irq disable, this is something I'd need
-   to change if we wish to acquire/release hazard pointers from interrupt
-   handlers). But even that should be a rare event.
-
-So the fast-path has an initial state where there are no hazard pointers
-in use on the CPU, which means hazptr_acquire() finds its empty slot at
-index 0.
-
-> Could you utilize this[1] to see a
-> comparison of the reader-side performance against RCU/SRCU?
-
-Good point ! Let's see.
-
-On a AMD 2x EPYC 9654 96-Core Processor with 192 cores,
-hyperthreading disabled,
-CONFIG_PREEMPT=y,
-CONFIG_PREEMPT_RCU=y,
-CONFIG_PREEMPT_HAZPTR=y.
-
-scale_type                 ns
------------------------
-hazptr-smp-mb             13.1   <- this implementation
-hazptr-barrier            11.5   <- replace smp_mb() on acquire with barrier(), requires IPIs on synchronize.
-hazptr-smp-mb-hlist       12.7   <- replace per-task hp context and per-cpu overflow lists by hlist.
-rcu                       17.0
-srcu                      20.0
-srcu-fast                  1.5
-rcu-tasks                  0.0
-rcu-trace                  1.7
-refcnt                  1148.0
-rwlock                  1190.0
-rwsem                   4199.3
-lock                   41070.6
-lock-irq               46176.3
-acqrel                     1.1
-
-So only srcu-fast, rcu-tasks, rcu-trace and a plain acqrel
-appear to beat hazptr read-side performance.
-
-[...]
-
->> +/*
->> + * Perform piecewise iteration on overflow list waiting until "addr" is
->> + * not present. Raw spinlock is released and taken between each list
->> + * item and busy loop iteration. The overflow list generation is checked
->> + * each time the lock is taken to validate that the list has not changed
->> + * before resuming iteration or busy wait. If the generation has
->> + * changed, retry the entire list traversal.
->> + */
->> +static
->> +void hazptr_synchronize_overflow_list(struct overflow_list *overflow_list, void *addr)
->> +{
->> +	struct hazptr_backup_slot *backup_slot;
->> +	uint64_t snapshot_gen;
->> +
->> +	raw_spin_lock(&overflow_list->lock);
->> +retry:
->> +	snapshot_gen = overflow_list->gen;
->> +	list_for_each_entry(backup_slot, &overflow_list->head, node) {
->> +		/* Busy-wait if node is found. */
->> +		while (smp_load_acquire(&backup_slot->slot.addr) == addr) { /* Load B */
->> +			raw_spin_unlock(&overflow_list->lock);
->> +			cpu_relax();
+>> On Dec 17, 2025, at 8:45 PM, Mathieu Desnoyers <mathieu.desnoyers@efficios.com> wrote:
+>>
+>> ﻿Hi,
+>>
+>> Here is a revisited version of my Hazard Pointers series. Boqun, Joel,
+>> if you guys have time to try it out with your use-cases it would be
+>> great!
+>>
+>> This new version does the following:
+>>
+>> - It has 8 preallocated hazard pointer slots per CPU (one cache line),
+>> - The hazard pointer user allocates a hazard pointer context variable
+>>   (typically on the stack), which contains the pointer to the slot *and*
+>>   a backup slot,
+>> - When all the per-CPU slots are in use, fallback to the backup slot.
+>>   Chain the backup slot into per-CPU lists, each protected by a raw
+>>   spinlock.
+>> - The hazard pointer synchronize does a piecewise iteration on the
+>>   per-CPU overflow slots lists, releasing the raw spinlock between
+>>   each list item. It uses a 64-bit generation counter to check for
+>>   concurrent list changes, and restart the traversal on generation
+>>   counter mismatch.
+>> - There is a new CONFIG_PREEMPT_HAZPTR config option. When enabled,
+>>   the hazard pointer acquire/release adds and then removes the hazard
+>>   pointer context from a per-task linked list. On context switch, the
+>>   scheduler migrates the per-CPU slots used by the task to the backup
+>>   per-context slots, thus making sure the per-CPU slots are not used
+>>   by preempted and blocked tasks.
 > 
-> I think we should prioritize the scan thread solution [2] instead of
-> busy waiting hazrd pointer updaters, because when we have multiple
-> hazard pointer usages we would want to consolidate the scans from
-> updater side.
+> This last point is another reason why I want the slots to be per task instead of per CPU. It becomes very natural because the hazard pointer is always associated with a task only anyway, not with the CPU (at usecase level). By putting the slot in the task struct, we allow these requirements to flow naturally without requiring any locking or list management.. Did I miss something about the use cases?
 
-I agree that batching scans with a worker thread is a logical next step.
+I start from the hypothesis that scanning all tasks at synchronize
+is likely too slow for a general purpose synchronization algo.
 
-> If so, the whole ->gen can be avoided.
+This is why we have RCU (general purpose) tracking hierarchical per-cpu
+state, and specialized RCU flavors (for tracing and other use-cases)
+using iteration on all tasks.
 
-How would it allow removing the generation trick without causing long
-raw spinlock latencies ?
+One of the highlights of hazard pointers over RCU is its ability to
+know about quiescence of a pointer without waiting for a whole grace
+period. Therefore I went down the route of scanning per-CPU state rather
+than per-task.
 
 > 
-> However this ->gen idea does seem ot resolve another issue for me, I'm
-> trying to make shazptr critical section preemptive by using a per-task
-> backup slot (if you recall, this is your idea from the hallway
-> discussions we had during LPC 2024),
+> I did some measurements about the task-scanning issue, and it is fast in my testing (~1ms/10000 tasks). Any input from you or anyone on what the typical task count distribution is that we are addressing? I also made a rough prototype, and it appears to be simpler with fewer lines of code because I do not need to handle preemption. It just happens naturally.
 
-I honestly did not remember. It's been a whole year! ;-)
+It really depends on the access pattern here. If you want to replace
+refcount decrement and test with hazard pointer synchronize, a delay of
+1ms on each hazptr synchronize is a *lot*.
 
-> and currently I could not make it
-> work because the following sequeue:
-> 
-> 1. CPU 0 already has one pointer protected.
-> 
-> 2. CPU 1 begins the updater scan, and it scans the list of preempted
->     hazard pointer readers, no reader.
-> 
-> 3. CPU 0 does a context switch, it stores the current hazard pointer
->     value to the current task's ->hazard_slot (let's say the task is task
->     A), and add it to the list of preempted hazard pointer readers.
-> 
-> 4. CPU 0 clears its percpu hazptr_slots for the next task (B).
-> 
-> 5. CPU 1 continues the updater scan, and it scans the percpu slot of
->     CPU 0, and finds no reader.
-> 
-> in this situation, updater will miss a reader. But if we add a
-> generation snapshotting at step 2 and generation increment at step 3, I
-> think it'll work.
-> 
-> IMO, if we make this work, it's better than the current backup slot
-> mechanism IMO, because we only need to acquire the lock if context
-> switch happens.
+Of course perhaps this can be batched with a worker thread, but then
+you are back to using more memory due to delayed reclaim, and thus
+closer to RCU.
 
-With PREEMPT_HAZPTR we also only need to acquire the per-cpu overflow
-list raw spinlock on context switch (preemption or blocking). The only
-other case requiring it is hazptr nested usage (more than 8 active
-hazptr) on a thread context + nested irqs.
+> 
+> First of all, we can have a per-task counter that tracks how many hazard pointers are active. If this is zero, then we can simply skip the task instead of wasting cycles scanning all the task slot.
+> Further, we can have a retire list that reuses a single scan to scan all the objects in the retire list, thus reusing the scan cost. This can also assist in asynchronously implementing object retiring via a dedicated thread perhaps with the tasks RCU infrastructure. We can also make this per-task counter a bitmap to speed up scanning potentially.
+> 
+> I am okay with the concept of an overflow list, but if we keep the overflow list at the per-task level instead of the per-CPU level, it is highly unlikely IMO that such an overflow list will be used unless more than, say, eight hazard pointers per task are active at any given time.
+
+The PREEMPT_HAZPTR scheme achieves this as well, with per-CPU scan
+rather than per-task.
+
+> So its lock contention would be rarer than, say, having a per-CPU overflow list. I would say that contention would be incredibly rare because typically hazard pointers are used by multiple tasks, each of which will have its own unique set of slots. Whereas in a per-CPU overflow  approach, we have a higher chance of lock contention, especially when the number of CPUs is low.
+
+Contention on the per-CPU spinlocks would only happen if threads are
+migrated between chaining of their backup slot (either if 8 hazptr
+are in use by the thread, or on context switch), and release. Do
+you expect this type of migration to happen so often as to increase
+contention ?
+
+> 
+> Other than the task-scanning performance issue, what am I missing?
+
+Task-scan performance is the key issue. Also you have to set a limit
+of per-task slots. How would you handle the scenario where a user
+needs more slots than the limit ?
+
+> 
+> Another nice benefit of using per-task hazard pointers is that we can also implement sleeping in hazard pointer sections because we will be scanning for sleeping tasks as well.
+
+The PREEMPT_HAZPTR scheme takes care of this as well. Sleeping with a
+hazptr held will trigger the context switch, and the scheduler will
+simply move the hazard pointer from the per-CPU slot to the backup
+slot. End of story.
+
+> 
+> By contrast, the other approaches I have seen with per-CPU hazard pointers forbid sleeping, since after sleeping a task is no longer associated with its CPU. The other approaches also have a higher likelihood of locking Due to running out of slots.
+
+Except for PREEMPT_HAZPTR. :)
+
+> 
+> Of course I am missing a use case, but I suspect we can find a per-CPU ref-count use case that benefits from this. I am researching use cases when I get time. I think my next task is to find a solid use case for this 
+before doing further development of a solution..
+
+Let me know what you find, I'm very interested!
+
+> 
+> By the way, feedback on the scanning patch:
+> 
+> Can you consider using a per-CPU counter to track the number of active slots per CPU? That way you can ignore CPU slots for CPUs that are not using hazard pointers. Another idea is to skip idle CPUs as well.
+
+I had this in a userspace prototype: a counter of used per-cpu slots.
+But I finally decided against it because it requires extra instructions
+on the fast path, *and* scanning 8 pointers within a single cache line
+on synchronize is really cheap. So I'd need benchmarks to justify adding
+back the counter.
+
+> 
+> Have you also considered any asynchronous use case where maintaining a retired list would assist in RCU-style deferred reclaim of hazard-pointer objects?
+
+This would be a logical next step indeed. I'll have to think
+about this some more.
 
 Thanks,
 
 Mathieu
+
+> 
+> thanks,
+> 
+>   - Joel
+> 
+>>
+>> It is based on v6.18.1.
+>>
+>> Review is very welcome,
+>>
+>> Thanks,
+>>
+>> Mathieu
+>>
+>> Cc: Nicholas Piggin <npiggin@gmail.com>
+>> Cc: Michael Ellerman <mpe@ellerman.id.au>
+>> Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+>> Cc: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+>> Cc: "Paul E. McKenney" <paulmck@kernel.org>
+>> Cc: Will Deacon <will@kernel.org>
+>> Cc: Peter Zijlstra <peterz@infradead.org>
+>> Cc: Boqun Feng <boqun.feng@gmail.com>
+>> Cc: Alan Stern <stern@rowland.harvard.edu>
+>> Cc: John Stultz <jstultz@google.com>
+>> Cc: Neeraj Upadhyay <Neeraj.Upadhyay@amd.com>
+>> Cc: Linus Torvalds <torvalds@linux-foundation.org>
+>> Cc: Andrew Morton <akpm@linux-foundation.org>
+>> Cc: Boqun Feng <boqun.feng@gmail.com>
+>> Cc: Frederic Weisbecker <frederic@kernel.org>
+>> Cc: Joel Fernandes <joel@joelfernandes.org>
+>> Cc: Josh Triplett <josh@joshtriplett.org>
+>> Cc: Uladzislau Rezki <urezki@gmail.com>
+>> Cc: Steven Rostedt <rostedt@goodmis.org>
+>> Cc: Lai Jiangshan <jiangshanlai@gmail.com>
+>> Cc: Zqiang <qiang.zhang1211@gmail.com>
+>> Cc: Ingo Molnar <mingo@redhat.com>
+>> Cc: Waiman Long <longman@redhat.com>
+>> Cc: Mark Rutland <mark.rutland@arm.com>
+>> Cc: Thomas Gleixner <tglx@linutronix.de>
+>> Cc: Vlastimil Babka <vbabka@suse.cz>
+>> Cc: maged.michael@gmail.com
+>> Cc: Mateusz Guzik <mjguzik@gmail.com>
+>> Cc: Jonas Oberhauser <jonas.oberhauser@huaweicloud.com>
+>> Cc: rcu@vger.kernel.org
+>> Cc: linux-mm@kvack.org
+>> Cc: lkmm@lists.linux.dev
+>>
+>> Mathieu Desnoyers (4):
+>>   compiler.h: Introduce ptr_eq() to preserve address dependency
+>>   Documentation: RCU: Refer to ptr_eq()
+>>   hazptr: Implement Hazard Pointers
+>>   hazptr: Migrate per-CPU slots to backup slot on context switch
+>>
+>> Documentation/RCU/rcu_dereference.rst |  38 +++-
+>> include/linux/compiler.h              |  63 +++++++
+>> include/linux/hazptr.h                | 241 ++++++++++++++++++++++++++
+>> include/linux/sched.h                 |   4 +
+>> init/init_task.c                      |   3 +
+>> init/main.c                           |   2 +
+>> kernel/Kconfig.preempt                |  10 ++
+>> kernel/Makefile                       |   2 +-
+>> kernel/fork.c                         |   3 +
+>> kernel/hazptr.c                       | 150 ++++++++++++++++
+>> kernel/sched/core.c                   |   2 +
+>> 11 files changed, 512 insertions(+), 6 deletions(-)
+>> create mode 100644 include/linux/hazptr.h
+>> create mode 100644 kernel/hazptr.c
+>>
+>> --
+>> 2.39.5
+>>
+
 
 -- 
 Mathieu Desnoyers

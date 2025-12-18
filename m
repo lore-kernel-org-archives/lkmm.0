@@ -1,34 +1,33 @@
 Received: from smtpout.efficios.com (smtpout.efficios.com [158.69.130.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DD39212D7C
-	for <lkmm@lists.linux.dev>; Thu, 18 Dec 2025 01:45:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39CB2C2EA
+	for <lkmm@lists.linux.dev>; Thu, 18 Dec 2025 01:45:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=158.69.130.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1766022345; cv=none; b=f8ObCjkcoT5/U+OsBwuXGA27WsDuboOjj2Wnh4ItVb1ZOiiMH9NYIR6LT3aOCROljxyNTXEySKXiA3RwkrCEFD/Ig5gLDo4XOuQ7WVXprsqXIxUXZS4/9STZdT/hIJW9pOz/RWLK+deVryCX2KqMqMsSAYBVhHRzPVkZfaYPwd8=
+	t=1766022346; cv=none; b=vFUPpLFWwD7rOIb1U9F6Wr+TLDz+Y7CBRESCnH1Hmm2cpdMbarfzA2MYBUEq8Aa/AVLGBrDvw4JWSp27u2Vt5KYy6eXZR2dZQG5piRrXkDdARa97Ul+cYDOf1+mITguvg76vrVQ5ahZQO/3ZJm3wEUcnwTZ3i0aT5dtxEAboJGU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1766022345; c=relaxed/simple;
-	bh=l+B/g6f7RhleC2ekTldij0KN3W6/k62nvS/Ew5Vg1Hc=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=htLUiCJ/4joLdXWgr1en9IwpXupwBaHhqgEMQldz6bP1m97koRTpT582LV+UNHr1rlpV6KMohfb4JCbWZpZJ5P47x88GGsOrjIjE/P/Y4XRgHeIu/PB0aBCn9o/eMYAKcnZGfZIoFIz6r0GDrjPtSUL9s9H/KqV1cxFx3C4pxfc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=efficios.com; spf=pass smtp.mailfrom=efficios.com; dkim=pass (2048-bit key) header.d=efficios.com header.i=@efficios.com header.b=kyVLs7X3; arc=none smtp.client-ip=158.69.130.18
+	s=arc-20240116; t=1766022346; c=relaxed/simple;
+	bh=dHQOIdr80bIHg/3MJYLSrGSJkKabRTEpNIxZeMkAs7k=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=GChAVMqec/218G6ZJK9CAZnUKPw75PgTYh6Rae/9v1SkVplRYN7nxki+IdSJILdOO2flsxoqPX+6Jhr+OTQgTOTYQ18dOJfhXMeHkU6kDk22Sj3rQLu0iuPpOu29tqYzsuvtvttxmjxpcO6recP+H/FI7DXghaewphJkIGTRats=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=efficios.com; spf=pass smtp.mailfrom=efficios.com; dkim=pass (2048-bit key) header.d=efficios.com header.i=@efficios.com header.b=E7da4dWj; arc=none smtp.client-ip=158.69.130.18
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=efficios.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=efficios.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=efficios.com header.i=@efficios.com header.b="kyVLs7X3"
+	dkim=pass (2048-bit key) header.d=efficios.com header.i=@efficios.com header.b="E7da4dWj"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=efficios.com;
-	s=smtpout1; t=1766022336;
-	bh=vn0er9+p6UnCJNLLLNpxdEjMk2XaWZJQ9hmQChlIW7U=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kyVLs7X3rMLyjigeHhzCcNXiGVdSv7frHX/fknnCVdTKdR988PUoYGIAVrdg4ErXW
-	 EhoEs8IVEsOHBSeId3DLGyKuocWqj9Y0ycUdXNOOHtkt36qU7HSk+lY+C5pL/C//zn
-	 ls/5ifuj/zRSlz7F//BaFyO3s+gIWXTQHgfoo3mHfqAiP/Lwmg3XVv8WunsjPOGpg0
-	 fOxr7Igt4H1GJIRfrjjYPf71uXhcj/1jU5upuUsWYw1vgn8SIOTPpYnHL0SPALBGJb
-	 y0paEgsVc9Rj82Vmd2mSEmRUjCJK6cHi+A6T/H1REjHwWQYcJM/L5bimqTU0RrBk24
-	 +yaDtUCrI6/1A==
+	s=smtpout1; t=1766022335;
+	bh=R75Ozd7LaHo642pj4EdBSiV+wVzhB/Yr8urL4+DdIig=;
+	h=From:To:Cc:Subject:Date:From;
+	b=E7da4dWjePDgirJQpNDti55t4Lvfx7Jf81vQ36+CkIqgj9MB63WkMUWZyFQ4l1Z+R
+	 fAahGYiBnYSMLbCrrkBDJ6ZjD7ZmXcT4ysvYn/d8WL5Cp84REXy/j6nLFDqEE1hYfZ
+	 7HiwNvgnYjRhN05J51pvo6tSE603MTAPaFVZn8ANCAHtT3lsS1YvEiHihrhFMmnqcQ
+	 8x4/LqCVunc/980kQhAzne7oIli2Lh8Rz/joV08o9AtRTTAi470vfVVLK4AgYrLA2Y
+	 qQKX2wXJsJvbB4Cer/pu1bI7rx+VXl6NmGvluTrGJGf2eHLq4J4nLIfI0ZQZwT0kZL
+	 ks/6qo8Hku2gA==
 Received: from thinkos.internal.efficios.com (unknown [IPv6:2606:6d00:100:4000:a253:d09e:90e7:323f])
-	by smtpout.efficios.com (Postfix) with ESMTPSA id 4dWtm01CZ6zcJy;
-	Wed, 17 Dec 2025 20:45:36 -0500 (EST)
+	by smtpout.efficios.com (Postfix) with ESMTPSA id 4dWtlz1TCCzbmj;
+	Wed, 17 Dec 2025 20:45:35 -0500 (EST)
 From: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
 To: Boqun Feng <boqun.feng@gmail.com>,
 	Joel Fernandes <joel@joelfernandes.org>,
@@ -63,12 +62,10 @@ Cc: linux-kernel@vger.kernel.org,
 	rcu@vger.kernel.org,
 	linux-mm@kvack.org,
 	lkmm@lists.linux.dev
-Subject: [RFC PATCH v4 3/4] hazptr: Implement Hazard Pointers
-Date: Wed, 17 Dec 2025 20:45:30 -0500
-Message-Id: <20251218014531.3793471-4-mathieu.desnoyers@efficios.com>
+Subject: [RFC PATCH v4 0/4] Hazard Pointers
+Date: Wed, 17 Dec 2025 20:45:27 -0500
+Message-Id: <20251218014531.3793471-1-mathieu.desnoyers@efficios.com>
 X-Mailer: git-send-email 2.39.5
-In-Reply-To: <20251218014531.3793471-1-mathieu.desnoyers@efficios.com>
-References: <20251218014531.3793471-1-mathieu.desnoyers@efficios.com>
 Precedence: bulk
 X-Mailing-List: lkmm@lists.linux.dev
 List-Id: <lkmm.lists.linux.dev>
@@ -77,27 +74,41 @@ List-Unsubscribe: <mailto:lkmm+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-This API provides existence guarantees of objects through Hazard
-Pointers [1] (hazptr).
+Hi,
 
-Its main benefit over RCU is that it allows fast reclaim of
-HP-protected pointers without needing to wait for a grace period.
+Here is a revisited version of my Hazard Pointers series. Boqun, Joel,
+if you guys have time to try it out with your use-cases it would be
+great!
 
-This implementation has 8 statically allocated hazard pointer slots per
-cpu for the fast path, and relies on a on-stack backup slot allocated by
-the hazard pointer user as fallback in case no per-cpu slot is
-available.
+This new version does the following:
 
-References:
+- It has 8 preallocated hazard pointer slots per CPU (one cache line),
+- The hazard pointer user allocates a hazard pointer context variable
+  (typically on the stack), which contains the pointer to the slot *and*
+  a backup slot,
+- When all the per-CPU slots are in use, fallback to the backup slot.
+  Chain the backup slot into per-CPU lists, each protected by a raw
+  spinlock.
+- The hazard pointer synchronize does a piecewise iteration on the
+  per-CPU overflow slots lists, releasing the raw spinlock between
+  each list item. It uses a 64-bit generation counter to check for
+  concurrent list changes, and restart the traversal on generation
+  counter mismatch.
+- There is a new CONFIG_PREEMPT_HAZPTR config option. When enabled,
+  the hazard pointer acquire/release adds and then removes the hazard
+  pointer context from a per-task linked list. On context switch, the
+  scheduler migrates the per-CPU slots used by the task to the backup
+  per-context slots, thus making sure the per-CPU slots are not used
+  by preempted and blocked tasks.
 
-[1]: M. M. Michael, "Hazard pointers: safe memory reclamation for
-     lock-free objects," in IEEE Transactions on Parallel and
-     Distributed Systems, vol. 15, no. 6, pp. 491-504, June 2004
+It is based on v6.18.1.
 
-Link: https://lpc.events/event/19/contributions/2082/
-Link: https://lore.kernel.org/lkml/j3scdl5iymjlxavomgc6u5ndg3svhab6ga23dr36o4f5mt333w@7xslvq6b6hmv/
-Link: https://lpc.events/event/18/contributions/1731/
-Signed-off-by: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+Review is very welcome,
+
+Thanks,
+
+Mathieu
+
 Cc: Nicholas Piggin <npiggin@gmail.com>
 Cc: Michael Ellerman <mpe@ellerman.id.au>
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
@@ -130,408 +141,27 @@ Cc: Jonas Oberhauser <jonas.oberhauser@huaweicloud.com>
 Cc: rcu@vger.kernel.org
 Cc: linux-mm@kvack.org
 Cc: lkmm@lists.linux.dev
----
-Changes since v3:
-- Rename hazptr_retire to hazptr_release.
-- Remove domains.
-- Introduce "backup_slot" within hazptr context structure (on stack)
-  to handle slot overflow.
-- Rename hazptr_try_protect to hazptr_acquire.
-- Preallocate 8 per-CPU slots, and rely on caller-provided backup
-  slots (typically on stack) for out-of-slots situations.
 
-Changes since v2:
-- Address Peter Zijlstra's comments.
-- Address Paul E. McKenney's comments.
+Mathieu Desnoyers (4):
+  compiler.h: Introduce ptr_eq() to preserve address dependency
+  Documentation: RCU: Refer to ptr_eq()
+  hazptr: Implement Hazard Pointers
+  hazptr: Migrate per-CPU slots to backup slot on context switch
 
-Changes since v0:
-- Remove slot variable from hp_dereference_allocate().
----
- include/linux/hazptr.h | 182 +++++++++++++++++++++++++++++++++++++++++
- init/main.c            |   2 +
- kernel/Makefile        |   2 +-
- kernel/hazptr.c        | 150 +++++++++++++++++++++++++++++++++
- 4 files changed, 335 insertions(+), 1 deletion(-)
+ Documentation/RCU/rcu_dereference.rst |  38 +++-
+ include/linux/compiler.h              |  63 +++++++
+ include/linux/hazptr.h                | 241 ++++++++++++++++++++++++++
+ include/linux/sched.h                 |   4 +
+ init/init_task.c                      |   3 +
+ init/main.c                           |   2 +
+ kernel/Kconfig.preempt                |  10 ++
+ kernel/Makefile                       |   2 +-
+ kernel/fork.c                         |   3 +
+ kernel/hazptr.c                       | 150 ++++++++++++++++
+ kernel/sched/core.c                   |   2 +
+ 11 files changed, 512 insertions(+), 6 deletions(-)
  create mode 100644 include/linux/hazptr.h
  create mode 100644 kernel/hazptr.c
 
-diff --git a/include/linux/hazptr.h b/include/linux/hazptr.h
-new file mode 100644
-index 000000000000..70c066ddb0f5
---- /dev/null
-+++ b/include/linux/hazptr.h
-@@ -0,0 +1,182 @@
-+// SPDX-FileCopyrightText: 2024 Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
-+//
-+// SPDX-License-Identifier: LGPL-2.1-or-later
-+
-+#ifndef _LINUX_HAZPTR_H
-+#define _LINUX_HAZPTR_H
-+
-+/*
-+ * hazptr: Hazard Pointers
-+ *
-+ * This API provides existence guarantees of objects through hazard
-+ * pointers.
-+ *
-+ * Its main benefit over RCU is that it allows fast reclaim of
-+ * HP-protected pointers without needing to wait for a grace period.
-+ *
-+ * References:
-+ *
-+ * [1]: M. M. Michael, "Hazard pointers: safe memory reclamation for
-+ *      lock-free objects," in IEEE Transactions on Parallel and
-+ *      Distributed Systems, vol. 15, no. 6, pp. 491-504, June 2004
-+ */
-+
-+#include <linux/percpu.h>
-+#include <linux/types.h>
-+#include <linux/cleanup.h>
-+
-+/* 8 slots (each sizeof(void *)) fit in a single cache line. */
-+#define NR_HAZPTR_PERCPU_SLOTS	8
-+
-+/*
-+ * Hazard pointer slot.
-+ */
-+struct hazptr_slot {
-+	void *addr;
-+};
-+
-+struct hazptr_backup_slot {
-+	struct list_head node;
-+	struct hazptr_slot slot;
-+	/* CPU requesting the backup slot. */
-+	int cpu;
-+};
-+
-+struct hazptr_ctx {
-+	struct hazptr_slot *slot;
-+	/* Backup slot in case all per-CPU slots are used. */
-+	struct hazptr_backup_slot backup_slot;
-+};
-+
-+struct hazptr_percpu_slots {
-+	struct hazptr_slot slots[NR_HAZPTR_PERCPU_SLOTS];
-+} ____cacheline_aligned;
-+
-+DECLARE_PER_CPU(struct hazptr_percpu_slots, hazptr_percpu_slots);
-+
-+/*
-+ * hazptr_synchronize: Wait until @addr is released from all slots.
-+ *
-+ * Wait to observe that each slot contains a value that differs from
-+ * @addr before returning.
-+ * Should be called from preemptible context.
-+ */
-+void hazptr_synchronize(void *addr);
-+
-+/*
-+ * hazptr_chain_backup_slot: Chain backup slot into overflow list.
-+ *
-+ * Set backup slot address to @addr, and chain it into the overflow
-+ * list.
-+ */
-+struct hazptr_slot *hazptr_chain_backup_slot(struct hazptr_ctx *ctx);
-+
-+/*
-+ * hazptr_unchain_backup_slot: Unchain backup slot from overflow list.
-+ */
-+void hazptr_unchain_backup_slot(struct hazptr_ctx *ctx);
-+
-+static inline
-+struct hazptr_slot *hazptr_get_free_percpu_slot(void)
-+{
-+	struct hazptr_percpu_slots *percpu_slots = this_cpu_ptr(&hazptr_percpu_slots);
-+	unsigned int idx;
-+
-+	for (idx = 0; idx < NR_HAZPTR_PERCPU_SLOTS; idx++) {
-+		struct hazptr_slot *slot = &percpu_slots->slots[idx];
-+
-+		if (!READ_ONCE(slot->addr))
-+			return slot;
-+	}
-+	/* All slots are in use. */
-+	return NULL;
-+}
-+
-+static inline
-+bool hazptr_slot_is_backup(struct hazptr_ctx *ctx, struct hazptr_slot *slot)
-+{
-+	return slot == &ctx->backup_slot.slot;
-+}
-+
-+/*
-+ * hazptr_acquire: Load pointer at address and protect with hazard pointer.
-+ *
-+ * Load @addr_p, and protect the loaded pointer with hazard pointer.
-+ *
-+ * Returns a non-NULL protected address if the loaded pointer is non-NULL.
-+ * Returns NULL if the loaded pointer is NULL.
-+ *
-+ * On success the protected hazptr slot is stored in @ctx->slot.
-+ */
-+static inline
-+void *hazptr_acquire(struct hazptr_ctx *ctx, void * const * addr_p)
-+{
-+	struct hazptr_slot *slot = NULL;
-+	void *addr, *addr2;
-+
-+	/*
-+	 * Load @addr_p to know which address should be protected.
-+	 */
-+	addr = READ_ONCE(*addr_p);
-+	for (;;) {
-+		if (!addr)
-+			return NULL;
-+		guard(preempt)();
-+		if (likely(!hazptr_slot_is_backup(ctx, slot))) {
-+			slot = hazptr_get_free_percpu_slot();
-+			/*
-+			 * If all the per-CPU slots are already in use, fallback
-+			 * to the backup slot.
-+			 */
-+			if (unlikely(!slot))
-+				slot = hazptr_chain_backup_slot(ctx);
-+		}
-+		WRITE_ONCE(slot->addr, addr);	/* Store B */
-+
-+		/* Memory ordering: Store B before Load A. */
-+		smp_mb();
-+
-+		/*
-+		 * Re-load @addr_p after storing it to the hazard pointer slot.
-+		 */
-+		addr2 = READ_ONCE(*addr_p);	/* Load A */
-+		if (likely(ptr_eq(addr2, addr)))
-+			break;
-+		/*
-+		 * If @addr_p content has changed since the first load,
-+		 * release the hazard pointer and try again.
-+		 */
-+		WRITE_ONCE(slot->addr, NULL);
-+		if (!addr2) {
-+			if (hazptr_slot_is_backup(ctx, slot))
-+				hazptr_unchain_backup_slot(ctx);
-+			return NULL;
-+		}
-+		addr = addr2;
-+	}
-+	ctx->slot = slot;
-+	/*
-+	 * Use addr2 loaded from the second READ_ONCE() to preserve
-+	 * address dependency ordering.
-+	 */
-+	return addr2;
-+}
-+
-+/* Release the protected hazard pointer from @slot. */
-+static inline
-+void hazptr_release(struct hazptr_ctx *ctx, void *addr)
-+{
-+	struct hazptr_slot *slot;
-+
-+	if (!addr)
-+		return;
-+	slot = ctx->slot;
-+	WARN_ON_ONCE(slot->addr != addr);
-+	smp_store_release(&slot->addr, NULL);
-+	if (unlikely(hazptr_slot_is_backup(ctx, slot)))
-+		hazptr_unchain_backup_slot(ctx);
-+}
-+
-+void hazptr_init(void);
-+
-+#endif /* _LINUX_HAZPTR_H */
-diff --git a/init/main.c b/init/main.c
-index 07a3116811c5..858eaa87bde7 100644
---- a/init/main.c
-+++ b/init/main.c
-@@ -104,6 +104,7 @@
- #include <linux/pidfs.h>
- #include <linux/ptdump.h>
- #include <linux/time_namespace.h>
-+#include <linux/hazptr.h>
- #include <net/net_namespace.h>
- 
- #include <asm/io.h>
-@@ -1002,6 +1003,7 @@ void start_kernel(void)
- 	workqueue_init_early();
- 
- 	rcu_init();
-+	hazptr_init();
- 	kvfree_rcu_init();
- 
- 	/* Trace events are available after this */
-diff --git a/kernel/Makefile b/kernel/Makefile
-index 9fe722305c9b..1178907fe0ea 100644
---- a/kernel/Makefile
-+++ b/kernel/Makefile
-@@ -7,7 +7,7 @@ obj-y     = fork.o exec_domain.o panic.o \
- 	    cpu.o exit.o softirq.o resource.o \
- 	    sysctl.o capability.o ptrace.o user.o \
- 	    signal.o sys.o umh.o workqueue.o pid.o task_work.o \
--	    extable.o params.o \
-+	    extable.o params.o hazptr.o \
- 	    kthread.o sys_ni.o nsproxy.o nstree.o nscommon.o \
- 	    notifier.o ksysfs.o cred.o reboot.o \
- 	    async.o range.o smpboot.o ucount.o regset.o ksyms_common.o
-diff --git a/kernel/hazptr.c b/kernel/hazptr.c
-new file mode 100644
-index 000000000000..2ec288bc1132
---- /dev/null
-+++ b/kernel/hazptr.c
-@@ -0,0 +1,150 @@
-+// SPDX-FileCopyrightText: 2024 Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
-+//
-+// SPDX-License-Identifier: LGPL-2.1-or-later
-+
-+/*
-+ * hazptr: Hazard Pointers
-+ */
-+
-+#include <linux/hazptr.h>
-+#include <linux/percpu.h>
-+#include <linux/spinlock.h>
-+#include <linux/list.h>
-+#include <linux/export.h>
-+
-+struct overflow_list {
-+	raw_spinlock_t lock;		/* Lock protecting overflow list and list generation. */
-+	struct list_head head;		/* Overflow list head. */
-+	uint64_t gen;			/* Overflow list generation. */
-+};
-+
-+static DEFINE_PER_CPU(struct overflow_list, percpu_overflow_list);
-+
-+DEFINE_PER_CPU(struct hazptr_percpu_slots, hazptr_percpu_slots);
-+EXPORT_PER_CPU_SYMBOL_GPL(hazptr_percpu_slots);
-+
-+/*
-+ * Perform piecewise iteration on overflow list waiting until "addr" is
-+ * not present. Raw spinlock is released and taken between each list
-+ * item and busy loop iteration. The overflow list generation is checked
-+ * each time the lock is taken to validate that the list has not changed
-+ * before resuming iteration or busy wait. If the generation has
-+ * changed, retry the entire list traversal.
-+ */
-+static
-+void hazptr_synchronize_overflow_list(struct overflow_list *overflow_list, void *addr)
-+{
-+	struct hazptr_backup_slot *backup_slot;
-+	uint64_t snapshot_gen;
-+
-+	raw_spin_lock(&overflow_list->lock);
-+retry:
-+	snapshot_gen = overflow_list->gen;
-+	list_for_each_entry(backup_slot, &overflow_list->head, node) {
-+		/* Busy-wait if node is found. */
-+		while (smp_load_acquire(&backup_slot->slot.addr) == addr) { /* Load B */
-+			raw_spin_unlock(&overflow_list->lock);
-+			cpu_relax();
-+			raw_spin_lock(&overflow_list->lock);
-+			if (overflow_list->gen != snapshot_gen)
-+				goto retry;
-+		}
-+		raw_spin_unlock(&overflow_list->lock);
-+		/*
-+		 * Release raw spinlock, validate generation after
-+		 * re-acquiring the lock.
-+		 */
-+		raw_spin_lock(&overflow_list->lock);
-+		if (overflow_list->gen != snapshot_gen)
-+			goto retry;
-+	}
-+	raw_spin_unlock(&overflow_list->lock);
-+}
-+
-+static
-+void hazptr_synchronize_cpu_slots(int cpu, void *addr)
-+{
-+	struct hazptr_percpu_slots *percpu_slots = per_cpu_ptr(&hazptr_percpu_slots, cpu);
-+	unsigned int idx;
-+
-+	for (idx = 0; idx < NR_HAZPTR_PERCPU_SLOTS; idx++) {
-+		struct hazptr_slot *slot = &percpu_slots->slots[idx];
-+
-+		/* Busy-wait if node is found. */
-+		smp_cond_load_acquire(&slot->addr, VAL != addr); /* Load B */
-+	}
-+}
-+
-+/*
-+ * hazptr_synchronize: Wait until @addr is released from all slots.
-+ *
-+ * Wait to observe that each slot contains a value that differs from
-+ * @addr before returning.
-+ * Should be called from preemptible context.
-+ */
-+void hazptr_synchronize(void *addr)
-+{
-+	int cpu;
-+
-+	/*
-+	 * Busy-wait should only be done from preemptible context.
-+	 */
-+	lockdep_assert_preemption_enabled();
-+
-+	/*
-+	 * Store A precedes hazptr_scan(): it unpublishes addr (sets it to
-+	 * NULL or to a different value), and thus hides it from hazard
-+	 * pointer readers.
-+	 */
-+	if (!addr)
-+		return;
-+	/* Memory ordering: Store A before Load B. */
-+	smp_mb();
-+	/* Scan all CPUs slots. */
-+	for_each_possible_cpu(cpu) {
-+		/* Scan CPU slots. */
-+		hazptr_synchronize_cpu_slots(cpu, addr);
-+		/* Scan backup slots in percpu overflow list. */
-+		hazptr_synchronize_overflow_list(per_cpu_ptr(&percpu_overflow_list, cpu), addr);
-+	}
-+}
-+EXPORT_SYMBOL_GPL(hazptr_synchronize);
-+
-+struct hazptr_slot *hazptr_chain_backup_slot(struct hazptr_ctx *ctx)
-+{
-+	struct overflow_list *overflow_list = this_cpu_ptr(&percpu_overflow_list);
-+	struct hazptr_slot *slot = &ctx->backup_slot.slot;
-+
-+	slot->addr = NULL;
-+
-+	raw_spin_lock(&overflow_list->lock);
-+	overflow_list->gen++;
-+	list_add(&ctx->backup_slot.node, &overflow_list->head);
-+	ctx->backup_slot.cpu = smp_processor_id();
-+	raw_spin_unlock(&overflow_list->lock);
-+	return slot;
-+}
-+EXPORT_SYMBOL_GPL(hazptr_chain_backup_slot);
-+
-+void hazptr_unchain_backup_slot(struct hazptr_ctx *ctx)
-+{
-+	struct overflow_list *overflow_list = per_cpu_ptr(&percpu_overflow_list, ctx->backup_slot.cpu);
-+
-+	raw_spin_lock(&overflow_list->lock);
-+	overflow_list->gen++;
-+	list_del(&ctx->backup_slot.node);
-+	raw_spin_unlock(&overflow_list->lock);
-+}
-+EXPORT_SYMBOL_GPL(hazptr_unchain_backup_slot);
-+
-+void __init hazptr_init(void)
-+{
-+	int cpu;
-+
-+	for_each_possible_cpu(cpu) {
-+		struct overflow_list *overflow_list = per_cpu_ptr(&percpu_overflow_list, cpu);
-+
-+		raw_spin_lock_init(&overflow_list->lock);
-+		INIT_LIST_HEAD(&overflow_list->head);
-+	}
-+}
 -- 
 2.39.5
-

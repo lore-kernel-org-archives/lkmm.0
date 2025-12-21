@@ -1,75 +1,127 @@
-Received: from CY3PR05CU001.outbound.protection.outlook.com (mail-westcentralusazon11013039.outbound.protection.outlook.com [40.93.201.39])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qt1-f178.google.com (mail-qt1-f178.google.com [209.85.160.178])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43B53296BA8
-	for <lkmm@lists.linux.dev>; Fri, 19 Dec 2025 22:39:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.93.201.39
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1766183948; cv=fail; b=YemnhCOfu3KgTQn8PSJtzUo96TTME2jGMjuECtlaIpxC5gxlzbL2nTNUlzyf7o3w0CAhfb1qiQittMnf4UTOjGxb7kCsEJpDkzuWd5dhhRXW0ELTHq8HAbdd7HNefb4WSkSeqOTLnkwNSt8TLUkWbBr8QapDCIAKV4vkpob9xCs=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1766183948; c=relaxed/simple;
-	bh=c65hbip/ZAS3YDgppJPN64bh/8ZsMZ90EjjEUuq61+0=;
-	h=Message-ID:Date:Subject:To:Cc:References:From:In-Reply-To:
-	 Content-Type:MIME-Version; b=jGkPwIXxP33xQzwyaIdo1sBIMHktdb/sLnuz9vcXUfjhMg+DY7j4AFIk7Xue3H1a4LqnVrV9ndLziFohbNYcDp6QoCCNASpzMMy+bVoMIO75bBrjy4oIPFfkK5V6jslZHBb9IMyxxE4Ph3GkmXAKfp/MXYCHakMvk2cRP+RXj6w=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=e2cSsYmr; arc=fail smtp.client-ip=40.93.201.39
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0E2327B34C
+	for <lkmm@lists.linux.dev>; Sun, 21 Dec 2025 09:59:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.178
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1766311156; cv=none; b=fqMRkw+xAB3kz3FdyADfOFO6YWHN4fXikki2wjUHmkDwjP6bMEkhURTa96CRDFjK/79IOpMLxrbMYc4ff0JW5OL0G26yy4Y6dOC+MsXCMlAvwS+oo2m2rfhIIlQNAUWozy9WKc1gP3mnlnoYS1CszgxRtyYvDv8u5ZMU7AuFEHc=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1766311156; c=relaxed/simple;
+	bh=xwKCdQhBtY7sdy8Zz446mEtEqk90qmGnWtG0zOgftIM=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=SSSmJSntO5PIRHVQrHOQy9ToxsGPRMyFwi5sWkU8jhVTju3rE6rc5HfQGEao1FhWzeaYhoM2K1UHLTHGcJDyAevc/f6VwtA4GL4HTbMrxwgVJkKt9mpUrgC570y3kLraFab1TsvWQ93xRlEzNYo9rgmnBqUA5QBd4Giyf+15tSE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=iBLsM3Tw; arc=none smtp.client-ip=209.85.160.178
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="e2cSsYmr"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=eaqDre4m6wj8X0cWI0nuQ5dCqWM22AlivVIkyFCGMxkgdo3tfwfNWBc4mV1h1lLbF94CEBT2jGQGl0W+UNizoc0LM9xTixRfc7ELfr1kLhIY020fZvhirY2ysj9Mj5X+Gn2Lhqpvr2sYYjX3Fvsnpzin4OVl3wuJqEsNQwHNgrX1aIcXDny9YAWIlQhRpJ/CE815hGKVE4F7SliPFUQCzRr9mCTjZxcW1u56FS0Lv8TO7frK0B8ZQ7UlpfGVEXD5qhNzutrhbW+8CxWOntoDPF2yNLIfuWYeUu7WclOWzVoPCEURoE/dC3UnU7zsMmL+TJh+MGPQQ+0RU1+P8qF0tw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=6pNnZMtqE6o4bWUv0MYuR016PgTMnrQIxxjCWFe163M=;
- b=twl48xkHaZBcclvo6LMIYw9BaiTOCPotJx3I3aKi/sGXQH+Ha75UQpBhUf+yMUZbPVXQzPuuvewRTxq5gbn4Qfmg7HqIayURI+XHMec8KI5yDf03PnLmaT77/8+VUapdWDBTrxS5U/xPVmwPSXkPLX+EbAIDutyEngyLbaWKhJN8lFEkz27klnuRY81JYWP2EjSNZud285ha+MTrDWF2kz7bRE2kTmbpWJK/bWnrxwtNnvFyMzb0GJTKW2/uHpOoyscztRKYy1idCU2CW7Vd3OW8RHLlc9ZokkkMTk8z4zNRCcDCOHs+ipmSSfn6YxaqgPsaNBnYiCQKsea6hCwNbg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
- dkim=pass header.d=nvidia.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=6pNnZMtqE6o4bWUv0MYuR016PgTMnrQIxxjCWFe163M=;
- b=e2cSsYmrudZfyySU+voAEXhaUb2TKB18NaHdFeRBKoMt+B36dnc+jR+3bYphzBzGMS/SXipEWVDOU8KzdFmL0STEzCAzk5Ggp1hsf2zNE9TeWcTAlWjr40OMRmjBRza/g532PsxMnnvrMsXJnv0LwLjA2d4g8ttm1S9gmT66r994QlPTjc5ttrBbBzWFGtex2cT5PMjLSOjM7KP4V6tWvEHrGPCUn8/HJ0bGi0VmsuDLq4rru6Hv8orc8T9Tsej6wQcdCZYGK78dT4oBAMkfh1b8bGsp+wVQ/Sy4rGyp77SR6z60uqwPFWdjKqrkRTZHggom6ZqQ07dfLqCjRy+2jg==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nvidia.com;
-Received: from SN7PR12MB8059.namprd12.prod.outlook.com (2603:10b6:806:32b::7)
- by IA0PR12MB8695.namprd12.prod.outlook.com (2603:10b6:208:485::8) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9434.9; Fri, 19 Dec
- 2025 22:39:03 +0000
-Received: from SN7PR12MB8059.namprd12.prod.outlook.com
- ([fe80::4ee2:654e:1fe8:4b91]) by SN7PR12MB8059.namprd12.prod.outlook.com
- ([fe80::4ee2:654e:1fe8:4b91%2]) with mapi id 15.20.9434.009; Fri, 19 Dec 2025
- 22:39:03 +0000
-Message-ID: <38d05c17-c28e-4ec1-be30-e77fd7015b5a@nvidia.com>
-Date: Fri, 19 Dec 2025 17:39:00 -0500
-User-Agent: Mozilla Thunderbird
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="iBLsM3Tw"
+Received: by mail-qt1-f178.google.com with SMTP id d75a77b69052e-4f4c89f8cc6so2807041cf.1
+        for <lkmm@lists.linux.dev>; Sun, 21 Dec 2025 01:59:13 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1766311153; x=1766915953; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:feedback-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=fjHwQCJ+WLLRT0TZamL7R6ZEjyOxsMVMPGjCn4Gr/2c=;
+        b=iBLsM3TwxaXYsSTLHYatfmzOyFcHQII1oUT8RFxhs+YNfLIjI92fE9xWJ7Wapcy+oA
+         amJJYAblkBz+2AdEKQa77EhUGW2EgeWNUIp43BIsoZ8S31UW+sJB8MS9KabttcWmK7N/
+         SNXF5KDIycysub6f9HaqCuIkmFtw+wirTTyYnh/78WBZ0PKQVStchaQ3mGrNSkIlmvVs
+         Gf+e0JolfybIgkRJf5xhhctBWmYpvvaLeiH3XAUeKLEOnqsqnMTxJsQ1XMG4UfCF2aoU
+         /R6dfZoeIqQnVb80xrnV0lohRoWKmIPgw1oOQkILb2eOeWGcqUSPGik4vxwc8iuX7BHQ
+         fYCQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1766311153; x=1766915953;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:feedback-id:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=fjHwQCJ+WLLRT0TZamL7R6ZEjyOxsMVMPGjCn4Gr/2c=;
+        b=iDY91DWZPHkrxgc8uQMn4iob3vIpBtLZ/8nRktK568em5JpvroVYS2lhLeXdjHMFCH
+         T61X+iq5yXrDdaSXnH2oo/dD5JDTdKeP4C3cWJGDvySqSYyZj7dsaY4mnaKgc2ptINLs
+         a/e9ALUpMk5ERCzow/qi1bxVTS7LT2J+BV0WHvSIZJUtJOc8zCzE8w5ojDa2Nc3kqPXe
+         BDX3T5vlhf86JjQAYjGKSTMKY+srB7BKZOeW0K9xFTs2EKAAOsBeuLoIi0KaqvkERwQn
+         t3+5TD8BEqHqlG+vI6JlISeEm5ykUWjb10saRDNWx6WkxiAF4gN2y5TDpZj2UiaogtRZ
+         6F8w==
+X-Forwarded-Encrypted: i=1; AJvYcCUW2bA/a8IEWsBK345rdYQlG0RCMMRgGYzROx5EoQ7PwHITyZ/4CvSdYIxbsre9yAfm+reS@lists.linux.dev
+X-Gm-Message-State: AOJu0YzjPLqkMioqpoaM6cszCg5jyUVTiBQXr0m5fja4eJ+fY523Ff4l
+	1Xk48YP2V6V40gIBbbb6sZgOlw4TIQHXKUSQYINBYhZmH+H1yNnUrGgK
+X-Gm-Gg: AY/fxX4IWgulUklyvZsKZoR4tNmgvoBZI6NIZ/jYMdCBzqgum9bkE0+hAKl9yPmlqVp
+	qqaFykrbUvPG0P7MiTQFuKnsis5Cp5FjV2nXtVHfaL4TEuEvLHUnw+5xqvid578ezHsKyvUIS5u
+	rIYAHZSU3FZXKXbNdXKtCMCTmlUherdqumiuqq6QSyzvg27PiLTFJwSGXmKzG4el3Wd4yp3tzk7
+	QK/i+3zeWSiPbIXOtU67oJrODUdIuenWK0x9LHxtXGeva8GNgCUbjjkAgenkUm18545uPohqh0o
+	VnP3+uvuX6Rw/uQ6QwN/kbnEdy5+dqv0/AbWvOAKUx81TBoba2qRupew1DKPcn8BcHCEPtoJMLK
+	r0sIF2xkyoXflf0TrWyhs+Dg9wpMBIVsCeFhk0OSaFCiPtzEZ2e5QUxkKo9GNoF5YasAmea0XVl
+	jxhCibkxj1p874ar4DavYIOmMHjZJcA2uOvr5E3JnK2wJODswgERjJI4mkFOSAIjye4x8ocrl3C
+	oWFlePZxKyoTl0=
+X-Google-Smtp-Source: AGHT+IGkZ7YmQ4iCIVP39dS3Dspfdfd6jXXAiK+b4cBzlfzo3Zgdyb/boYNxk+mCnLQREZ4Jn+Teag==
+X-Received: by 2002:a05:622a:250:b0:4f3:5346:5d54 with SMTP id d75a77b69052e-4f4abd78d8fmr113519801cf.50.1766311152615;
+        Sun, 21 Dec 2025 01:59:12 -0800 (PST)
+Received: from fauth-a1-smtp.messagingengine.com (fauth-a1-smtp.messagingengine.com. [103.168.172.200])
+        by smtp.gmail.com with ESMTPSA id d75a77b69052e-4f4ac64e43asm54346251cf.26.2025.12.21.01.59.11
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 21 Dec 2025 01:59:12 -0800 (PST)
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+	by mailfauth.phl.internal (Postfix) with ESMTP id 06446F40068;
+	Sun, 21 Dec 2025 04:59:11 -0500 (EST)
+Received: from phl-frontend-04 ([10.202.2.163])
+  by phl-compute-06.internal (MEProxy); Sun, 21 Dec 2025 04:59:11 -0500
+X-ME-Sender: <xms:7sRHaR2N2v5QV0zS7rTjGaMTxsDxXqevcMfxDYvckKrndiHr9nNznw>
+    <xme:7sRHabBBkyoml_p8QsCSVUISTOCodrotwwrFVf2B7-gdeQo-11qe60ozt8uJk-u0T
+    HNU-gARi0H5n7K7phSZiFSuAiofuMLm0OKicd7-IEHjM0akskKMcw>
+X-ME-Received: <xmr:7sRHaaFsv_hcs8DZVZClK1YuwwoTNd4iBxKqdxkoSNNA8ZJmsbqidfjit9pE>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdehfeejiecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+    hrpeffhffvvefukfhfgggtuggjsehttdertddttddvnecuhfhrohhmpeeuohhquhhnucfh
+    vghnghcuoegsohhquhhnrdhfvghnghesghhmrghilhdrtghomheqnecuggftrfgrthhtvg
+    hrnhephedugfduffffteeutddvheeuveelvdfhleelieevtdeguefhgeeuveeiudffiedv
+    necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepsghoqh
+    hunhdomhgvshhmthhprghuthhhphgvrhhsohhnrghlihhthidqieelvdeghedtieegqddu
+    jeejkeehheehvddqsghoqhhunhdrfhgvnhhgpeepghhmrghilhdrtghomhesfhhigihmvg
+    drnhgrmhgvpdhnsggprhgtphhtthhopeefvddpmhhouggvpehsmhhtphhouhhtpdhrtghp
+    thhtohepjhhovghlrghgnhgvlhhfsehnvhhiughirgdrtghomhdprhgtphhtthhopehmrg
+    hthhhivghurdguvghsnhhohigvrhhssegvfhhfihgtihhoshdrtghomhdprhgtphhtthho
+    pehjohgvlhesjhhovghlfhgvrhhnrghnuggvshdrohhrghdprhgtphhtthhopehprghulh
+    hmtghksehkvghrnhgvlhdrohhrghdprhgtphhtthhopehlihhnuhigqdhkvghrnhgvlhes
+    vhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehnphhighhgihhnsehgmhgrih
+    hlrdgtohhmpdhrtghpthhtohepmhhpvgesvghllhgvrhhmrghnrdhiugdrrghupdhrtghp
+    thhtohepghhrvghgkhhhsehlihhnuhigfhhouhhnuggrthhiohhnrdhorhhgpdhrtghpth
+    htohepsghighgvrghshieslhhinhhuthhrohhnihigrdguvg
+X-ME-Proxy: <xmx:7sRHadqKf0RTS3nOePlAQvUozbdkH1E35MAQvZyfuG_bq4zKpklFew>
+    <xmx:7sRHaS1Y2epauX9OBV-y9l-R-Zk5Fbd6FmY3INiJFgdckMvEcL9nFg>
+    <xmx:7sRHaRAPbAze_26JzP05OzQKeAn06Zg5nMbyWgmetanI2Ftb88lQ_w>
+    <xmx:7sRHad_m279CbYEdXqv4sqfsQSdM2Z_3F2PEOvAtMVxacM33U0ReiQ>
+    <xmx:78RHafNWcaktLFSnepHDt1H0rFJluyVrCqzHdfbKcufE0b2QeG9VpLXk>
+Feedback-ID: iad51458e:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
+ 21 Dec 2025 04:59:09 -0500 (EST)
+Date: Sun, 21 Dec 2025 18:59:07 +0900
+From: Boqun Feng <boqun.feng@gmail.com>
+To: Joel Fernandes <joelagnelf@nvidia.com>
+Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
+	Joel Fernandes <joel@joelfernandes.org>,
+	"Paul E. McKenney" <paulmck@kernel.org>,	linux-kernel@vger.kernel.org,
+ Nicholas Piggin <npiggin@gmail.com>,
+	Michael Ellerman <mpe@ellerman.id.au>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
+	Will Deacon <will@kernel.org>,	Peter Zijlstra <peterz@infradead.org>,
+	Alan Stern <stern@rowland.harvard.edu>,	John Stultz <jstultz@google.com>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Frederic Weisbecker <frederic@kernel.org>,
+	Josh Triplett <josh@joshtriplett.org>,
+	Uladzislau Rezki <urezki@gmail.com>,
+	Steven Rostedt <rostedt@goodmis.org>,
+	Lai Jiangshan <jiangshanlai@gmail.com>,
+	Zqiang <qiang.zhang1211@gmail.com>, Ingo Molnar <mingo@redhat.com>,
+	Waiman Long <longman@redhat.com>,	Mark Rutland <mark.rutland@arm.com>,
+	Thomas Gleixner <tglx@linutronix.de>,	Vlastimil Babka <vbabka@suse.cz>,
+ maged.michael@gmail.com,	Mateusz Guzik <mjguzik@gmail.com>,
+ rcu@vger.kernel.org,	linux-mm@kvack.org, lkmm@lists.linux.dev
 Subject: Re: [RFC PATCH v4 3/4] hazptr: Implement Hazard Pointers
-To: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
- Boqun Feng <boqun.feng@gmail.com>
-Cc: Joel Fernandes <joel@joelfernandes.org>,
- "Paul E. McKenney" <paulmck@kernel.org>, linux-kernel@vger.kernel.org,
- Nicholas Piggin <npiggin@gmail.com>, Michael Ellerman <mpe@ellerman.id.au>,
- Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
- Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
- Will Deacon <will@kernel.org>, Peter Zijlstra <peterz@infradead.org>,
- Alan Stern <stern@rowland.harvard.edu>, John Stultz <jstultz@google.com>,
- Neeraj Upadhyay <Neeraj.Upadhyay@amd.com>,
- Linus Torvalds <torvalds@linux-foundation.org>,
- Andrew Morton <akpm@linux-foundation.org>,
- Frederic Weisbecker <frederic@kernel.org>,
- Josh Triplett <josh@joshtriplett.org>, Uladzislau Rezki <urezki@gmail.com>,
- Steven Rostedt <rostedt@goodmis.org>, Lai Jiangshan
- <jiangshanlai@gmail.com>, Zqiang <qiang.zhang1211@gmail.com>,
- Ingo Molnar <mingo@redhat.com>, Waiman Long <longman@redhat.com>,
- Mark Rutland <mark.rutland@arm.com>, Thomas Gleixner <tglx@linutronix.de>,
- Vlastimil Babka <vbabka@suse.cz>, maged.michael@gmail.com,
- Mateusz Guzik <mjguzik@gmail.com>,
- Jonas Oberhauser <jonas.oberhauser@huaweicloud.com>, rcu@vger.kernel.org,
- linux-mm@kvack.org, lkmm@lists.linux.dev
-References: <20251218014531.3793471-1-mathieu.desnoyers@efficios.com>
- <20251218014531.3793471-4-mathieu.desnoyers@efficios.com>
+Message-ID: <aUfE61t5cITwolX7@tardis-2.local>
+References: <20251218014531.3793471-4-mathieu.desnoyers@efficios.com>
  <aUO9KRaP0FXpm_l9@tardis-2.local>
  <fcbc99d0-b7c7-45f7-9cf8-f5d3bfad966e@efficios.com>
  <aURihbmjsKi8m7MO@tardis-2.local>
@@ -78,166 +130,70 @@ References: <20251218014531.3793471-1-mathieu.desnoyers@efficios.com>
  <edbe45b3-0f85-48d2-8d4f-784781a8dee5@efficios.com>
  <6353feeb-c2ab-4ff6-9ea6-04ae5102641d@nvidia.com>
  <6b27f3c3-47f7-402f-aa6c-b564e3db1d6a@efficios.com>
-Content-Language: en-US
-From: Joel Fernandes <joelagnelf@nvidia.com>
-In-Reply-To: <6b27f3c3-47f7-402f-aa6c-b564e3db1d6a@efficios.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: MN0P221CA0028.NAMP221.PROD.OUTLOOK.COM
- (2603:10b6:208:52a::16) To SN7PR12MB8059.namprd12.prod.outlook.com
- (2603:10b6:806:32b::7)
+ <38d05c17-c28e-4ec1-be30-e77fd7015b5a@nvidia.com>
 Precedence: bulk
 X-Mailing-List: lkmm@lists.linux.dev
 List-Id: <lkmm.lists.linux.dev>
 List-Subscribe: <mailto:lkmm+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:lkmm+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: SN7PR12MB8059:EE_|IA0PR12MB8695:EE_
-X-MS-Office365-Filtering-Correlation-Id: 6c1801a9-09e0-4ad6-ee16-08de3f4f6950
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|7416014|376014|1800799024|366016;
-X-Microsoft-Antispam-Message-Info:
-	=?utf-8?B?VUNRdmRJenAyN2dhV3RRUlpOZHM1UFFSQndkRE1ZMVRGN0dqZm1rcHQzRC9X?=
- =?utf-8?B?WEpGUm9nMU54R2hMWk9nMkJXc0hhN2wrVEtVYVpXdTNZTGNpQ1crUzk2M3pE?=
- =?utf-8?B?SFN0YVFGZVNkeFVWUzZ2aDAzNlNiaWFWQjJka0NFSDdXeGdlRWphc2gzQkkx?=
- =?utf-8?B?cEdCRElKZ2lsV21uQkxjenMzOUIzQnBZS1plUkFPZWozRllFU280NkZJTm53?=
- =?utf-8?B?SlE3NW04OCtxK0oyV3lGNEV4YllrUGRXRHZ2TGlGbmJ3ZytPTGhRSDNkMWF2?=
- =?utf-8?B?WHVtZjc3QXNSMFI3b3pxZnJ5MDZmR1F2eDZUNk11U1hYZ055RmdObnp4Kzkr?=
- =?utf-8?B?dERBLzVVc1F0R09SY1RJaGNNaW9YTTVTYmM5Y1ZGZ1loanBTVWI4YjJueDJi?=
- =?utf-8?B?UmZycWFZSnFkOHQ0bGlsSEVqWUJrQlVTdS9HUXplQW5DYXNqeTViYVZWb1lm?=
- =?utf-8?B?RFl5cENhSFkwdlpEZHZzOW9hRVZKRURzaENhWEtQN09INlVoOTZvajV1Tzhx?=
- =?utf-8?B?Qm9LYm1WRVZGYkQ1YlgyNlloQjg0QXZ6a0VzbkllTlFVblludjMycjFOb2dz?=
- =?utf-8?B?VWFhS2R4Vy9oTTdOa0N1WWNWRFcyQXJzNFNKY0JBa2E4YTBzK0dvc0VVS3RZ?=
- =?utf-8?B?YTR0a1ZSUG5na1JRMGt0QmtDMlhCWlJsTjZpeHFUSHBmT3djczFldmdlTkF0?=
- =?utf-8?B?T2lUMHVveFpoRWwyNWJ4VEhwUkpzbEJTYnI3Y2FmMUt2N0Z2TlJNSFVQTENV?=
- =?utf-8?B?eUtaZDlvTmpSQUNLK2g0dHhEWHFPUUFUSmhNSk8xK1ZKK3ZQd2pRZHhnZEVa?=
- =?utf-8?B?VG5UWm9FNW5YSWRzN2UrOHlVRVdvcW1ycTB2aFRJd2V2UndtemtMd1JPeTVS?=
- =?utf-8?B?SjdMbmlHRjliT0NWN0Q2MXNqbVJmZGFnTXBaREp5WldpeEN5cFIrWGlnSzdN?=
- =?utf-8?B?czR3NWxnUjdNbVMrSytVYjg2aTBKcUg2TnVuUXA2a1RUWEs4VDJEb0xuaFlD?=
- =?utf-8?B?c0JJRktCYVU5b3cyVEptaUlGbVRsZmc2cFR6YThpaVo5QmNwcFFtMHNxcmIw?=
- =?utf-8?B?UG5KdmlWSjh4NVl0Mm5BMVJ6eXdmN1oxcEhiNjB3OWd0UGRHdDNUOXN5d2Ns?=
- =?utf-8?B?bGZjTk1NOURhbzYxL2VQZ1k5aERsR3ZTdWhYaExKVWpMbVl5OUI0WlozTjE3?=
- =?utf-8?B?QkJtUXVUZVEzcW5YZ2NHMXl0QmV5QWJQblQ1UFk0TTNPS09uRmRIQ0xUcGhQ?=
- =?utf-8?B?cG1RZ2FMQ2FCaUtjbzNmbCtpZHp3YnEvN2xaU25CRVdpam92OXQveGgwckRP?=
- =?utf-8?B?SExHNEdtOVhYM1FYakd4RS8ra2xDT0lmZmNZbXQzUEZ4OCtIZlF1eXdHZmhi?=
- =?utf-8?B?bDJlQThqTno5ZHhJQVVUejVFb0pDWVppam5EOVd2UTFLVEhRSXo4cVFwZW9C?=
- =?utf-8?B?aVBGK3oxOUk1Q25oODdXMUthd2JaTEgzVFlTQzR1c2lFYUZuT01sVDNnb3JP?=
- =?utf-8?B?OE1RNkY0Y0hnK3ZvRjFDTkwvUXhYT0ZnNVU2MWJ6Qy93QVAxWFFVRmg2Q2t6?=
- =?utf-8?B?STZVa3VKakNaWjBpUEN6NUQwOFUvT3NGVzF6bWtXdTcyUk56c0VUQlRhQ0l2?=
- =?utf-8?B?V2JEQi9USlNiQlp3bjROUkF0Nmh0NFNWVmd1YmNNeTlsNGYyb2YvY2VPZEcw?=
- =?utf-8?B?Q2hpQXJMVU5KVEZ0TExPa0FBZFRpOFl4MlNIRGFPN05MUy9ONUE5Y3ljcGJJ?=
- =?utf-8?B?ZDkrUk5UalhsUkhHTWY1Tm5RQTYrQ080V2ZiNWlzTk91NC9mWVFFZTVHNGY3?=
- =?utf-8?B?QWhUalFJdVpQSDNLVlpZaUFrVS9RV2c3N0RSVnlyRGF1dFNpeTg4clYzZHVT?=
- =?utf-8?B?dUwySG8zeFVEQVMvMThzTHBzSVJMOTFvTkxyaFJZK2MxREZiTlhDTk5pNllT?=
- =?utf-8?Q?hG7yYwGSn/o7S1dLIGani/36iQgBAsiR?=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SN7PR12MB8059.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(7416014)(376014)(1800799024)(366016);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?utf-8?B?NVhsNE9QWmdqalkrT29kVU1JUS9ZYzlCVzRtN0J4c3FUL0dkL2ZsdVBPOFRE?=
- =?utf-8?B?WGloOThmTEd3WnZ2TDV0OEp2Q1kxV0dpWS83U1RtMGpBSnN6eE44VXNGSXlG?=
- =?utf-8?B?OEd6T0p3Z1B0R0U2aFFBUzVyM2M1bUQ5RjVwc01wZDZScy9DdkJvNGtmaWN4?=
- =?utf-8?B?alA2WUk0Zk9JbWpkRDdkN092NHRsbG1kMFFvYmNRc1lTMjlMQ2szTjNqYTdZ?=
- =?utf-8?B?RlMwZFU1SnlVMlJaU2xTMmF1cGFDYUVCREpnVzVBTVp5NkNaaE9EMy9xczRL?=
- =?utf-8?B?MmxxcWEvNkVETzA2S2UwRUszMXlyd1BGVnF6RG90K284YmwwT3BvME92WFFH?=
- =?utf-8?B?dFY1SXRZMDZZTCtSancxc2NuUjlXSW1TSDg0cVIybTBQT05lNWhFT1VudjZU?=
- =?utf-8?B?a2NwdVFsMFc3V1hsTkhuUVFyODcybmhSdTd1c2xFV2VPNUlNOVVxVHBKOFA2?=
- =?utf-8?B?OHFhbXA1Y200UkpwUCszYXlxQmJscXZkVkdIdTM0ZkVSTi94TWhuV0tIbHNI?=
- =?utf-8?B?blp4aCtacjEyYkJVVUJVaGNqNGpKYTJhajArbHJmODh0SThFaGJZR05lWmxU?=
- =?utf-8?B?MzJJd2E4MGlMMUFtYnRJWFd5REl5U2ZJSUp5UUtaYWN5S01ialBFWkVuazU4?=
- =?utf-8?B?c0tIR1NPemRxSnV2d2lCbzVITE5aaFhXTWZ5QmNZWlpuQVZtR2d2bC9QT2Q0?=
- =?utf-8?B?QVJLMm01TitlMWNvb3ZIUUJENGRKbG9JejBUMi9ORk51ZE1iaFhVa2tmN0cz?=
- =?utf-8?B?SUpKRllGZ0RocVROK213MllPME4wL1cwMHBBb1dLTklhUVlsbXV2bkRmSDBG?=
- =?utf-8?B?NHlGakpXOVdIM3pWUWZrbi94MUl1dlU2d2FuTGdQVUluY0xwdFZma0t6NTBN?=
- =?utf-8?B?MU9waHAyTHFMcldsODFGSFNsaThNa1NPTUJ4MGMwMGtMRnROQjlQOGpqaEVi?=
- =?utf-8?B?YXo5R0hMNEhGcGx2SFV6bkxYbnJ3UE95RnNBS3VSOVNhdkJBOXNaclQxMWxO?=
- =?utf-8?B?bWNQeFV1c3FHU1YwakJMRnFGVTlJZVZUU21yMnd5SnA0V20yT1NGaDFrUUNZ?=
- =?utf-8?B?QnorTzNJbGZ0QkFreENKTHg5T05PVzVWNDZXR2JJL0hOMDhoeVdadzdoelB1?=
- =?utf-8?B?c3RTZVZNQzRpZXlnQjNmM1NrNm5YQUlsOS9YYXRhS05jZytrSXI1ZGZ1cTRX?=
- =?utf-8?B?YVVJc3lZRis0MXFUUlNxdkJBSHBRK1pZTnRJMDduTDNQZGVnREhLS1dDQ0JI?=
- =?utf-8?B?ckw0VmRycWxwTnY5RU5xcWl6Qk9OeUpzVXlGeUxEVlEyWXJsbnZiWGU4Q2hL?=
- =?utf-8?B?ZHc3alQ5OUlSbE16VFQrY0Vya3ZWeWtJb21zTDMrY25IUnFVRzNLa2JCMlht?=
- =?utf-8?B?cW4vY2JCdmhhTXdTL0NNakxsZFdBZ3plUExuMmFiZ3hEMlVQVG16enZrREV5?=
- =?utf-8?B?anl0aW11NlRWeklWTEJxSGk1OHlKc21jZzJpaFFIdlVBd2JIYTRFanV2bkwr?=
- =?utf-8?B?a1E5ZmR6WExJQ0dDbjJJOTZHUHFianBlVy9QU1NKaEx6dy9KUmZYbWUvZmlN?=
- =?utf-8?B?WnNDUEUrVlVPZy9rKy9ad2VqVG1HcmVFR3NnK29zVUR5TmFrQm5ITU5UQk90?=
- =?utf-8?B?NGZ4S1hrM21EYmFybDU5ZjJteXJqMC9qWHJrM0x4R3NoTFhRZlRaRXE4Rzdk?=
- =?utf-8?B?aE80aW5RVm5wWFBGTTd5NGZyNFRQb2h5b2djWFF6cUhvSjFFMDlOZmptaXJw?=
- =?utf-8?B?VStNRldGTHdhOHJZQWkxa3c1SjV1TXp5anBzdkkxaFY1ZHBIUEdTMng3dzdR?=
- =?utf-8?B?TkZTVnd1Q3NodkNpTzYyN3YycTltckdLM0htbVQ1bCtVTUtEdFg5T2pUYkpk?=
- =?utf-8?B?aXpucUNmV3NNdVd6dU44aGZzZTBaOSsrMkEzZ0pHSmxlcm11NjFwRUJiY0la?=
- =?utf-8?B?Q21YMEs0ZmhXNlA0MyszSkRpcmpBYjRvQUJaR1cvalZLMGpocDh1eHFTMTRS?=
- =?utf-8?B?eDZMQ3ZmM1FYQ2lISWJOUHgydmExeEhYQU5zT25EL0t6SW9TYVBxZ2FUVVR4?=
- =?utf-8?B?bFQ5N29zbTZDVi9iOVdJcEtwWG9WSWJqOThBUEpxYUVwMCtvZzduOEhqODBF?=
- =?utf-8?B?eThYQ3RZQmVUOG5SQnhrME8yZStjb1BLSDBlcmdRdFB6Sk9JSzg3M2JORzBt?=
- =?utf-8?B?OWpjRlh4ZWJQNm1iTHFrbDZ6cUIzb3ZUaEw5K25MY016cGVyOTJlOWJpNE84?=
- =?utf-8?B?Y3JrMlNRNXdVVS9nNkhaMEZ0ZHM4WlR0SWplbXZya1luNk11SGE4TzhIYU03?=
- =?utf-8?B?WDdFeXc0amVGenpLVVpCcVhjZmgrQUxudkh5Rk1DS05Eb1FGTjdpZz09?=
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 6c1801a9-09e0-4ad6-ee16-08de3f4f6950
-X-MS-Exchange-CrossTenant-AuthSource: SN7PR12MB8059.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 19 Dec 2025 22:39:03.6310
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: WXw08JUWuQb+/unPnetnKDwXHHxRlLhAbAGsuxGVpnT5x5jKhy2iuVVfZYx1BSivSFt/XCJrU/oD8I+WYVTTSg==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: IA0PR12MB8695
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <38d05c17-c28e-4ec1-be30-e77fd7015b5a@nvidia.com>
 
-
-
-On 12/19/2025 5:19 PM, Mathieu Desnoyers wrote:
-> On 2025-12-19 10:42, Joel Fernandes wrote:
->>
->> IMHO the overflow case is "special" and should not happen often, otherwise
->> things are "bad" anyway. I am not sure if this kind of complexity will be worth
->> it unless we know HP forward-progress is a real problem. Also, since HP acquire
->> will be short lived, are we that likely to not get past a temporary shortage of
->> slots?
+On Fri, Dec 19, 2025 at 05:39:00PM -0500, Joel Fernandes wrote:
 > 
-> Given that we have context switch integration which moves the active
-> per-cpu slots to the overflow list, I can see that even not-so-special
-> users which get preempted or block regularly with active per-cpu slots
-> could theoretically end up preventing HP scan progress.
-
-Yeah, I see. That's the 'problem' with the preemption design of this patchset.
-You always have to move it in and out of overflow list on preemption even when
-there is no overflow AFAICS. My idea (which has its own issues) does not require
-that on preemption.
-
-> Providing HP scan progress guarantees is IMO an important aspect to
-> consider if we want to ensure the implementation does not cause subtle
-> HP scan stall when its amount of use will scale up.
-
-Sure. But if you didn't have to deal with a list in the 'normal' case (not over
-saturated slots case), then it wouldn't be that big a deal.
-
->> Perhaps the forward-progress problem should be rephrased to the following?: If a
->> reader hit an overflow slot, it should probably be able to get a non-overflow
->> slot soon, even if hazard pointer slots are over-subscribed.
 > 
-> Those are two distinct forward progress guarantees, and I think both are
-> important:
+> On 12/19/2025 5:19 PM, Mathieu Desnoyers wrote:
+> > On 2025-12-19 10:42, Joel Fernandes wrote:
+> >>
+> >> IMHO the overflow case is "special" and should not happen often, otherwise
+> >> things are "bad" anyway. I am not sure if this kind of complexity will be worth
+> >> it unless we know HP forward-progress is a real problem. Also, since HP acquire
+> >> will be short lived, are we that likely to not get past a temporary shortage of
+> >> slots?
+> > 
+> > Given that we have context switch integration which moves the active
+> > per-cpu slots to the overflow list, I can see that even not-so-special
+> > users which get preempted or block regularly with active per-cpu slots
+> > could theoretically end up preventing HP scan progress.
 > 
-> * Forward progress of HP readers,
-> * Forward progress of HP scan.
+> Yeah, I see. That's the 'problem' with the preemption design of this patchset.
+> You always have to move it in and out of overflow list on preemption even when
+> there is no overflow AFAICS. My idea (which has its own issues) does not require
+> that on preemption.
+> 
+> > Providing HP scan progress guarantees is IMO an important aspect to
+> > consider if we want to ensure the implementation does not cause subtle
+> > HP scan stall when its amount of use will scale up.
+> 
+> Sure. But if you didn't have to deal with a list in the 'normal' case (not over
+> saturated slots case), then it wouldn't be that big a deal.
+> 
 
-Maybe I am missing something, but AFAICS, if the readers and only using slots
-and not locking in normal operation, then the scan also will automatically make
-forward progress. So both are forward progress of readers and scanning related.
-It is your preemption design that requires the locking..
+With PREEPT_HAZPTR, the overflow list will be used if a task gets
+preempted while using hazptrs, without PREEPT_HAZPTR, the overflow list
+will be used if there are more than 8 slots used on the CPU (most likely
+due to task being preempted with a hazptr slot being used). Therefore,
+if this hazptr design it to have a few users and we want to support that
+preemptible hazard pointer read-side section, soon or later we need to
+resolve this scanning racing with readers (in context switches) on
+overflow list issue.
 
-Btw, I thought about the scanning issue with the task-slots idea, and really
-synchronize() is supposed to be a slow-path so I am not fully sure it is that
-much of an issue - again depends on usecase but for per-cpu ref and
-synchronize_rcu(), both are 'slow' anyway. Again depends on usecase. And for the
-async case, it is almost not an issue at all due to the batching/amortization of
-the task scan cost.
+Surely we don't need to have something perfect in day 1, but planning a
+bit ahead won't hurt ;-)
 
-thanks,
+Regards,
+Boqun
 
- - Joel
-
+> >> Perhaps the forward-progress problem should be rephrased to the following?: If a
+> >> reader hit an overflow slot, it should probably be able to get a non-overflow
+> >> slot soon, even if hazard pointer slots are over-subscribed.
+> > 
+> > Those are two distinct forward progress guarantees, and I think both are
+> > important:
+> > 
+> > * Forward progress of HP readers,
+> > * Forward progress of HP scan.
+> 
+[..]

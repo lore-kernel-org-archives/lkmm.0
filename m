@@ -1,79 +1,137 @@
-Received: from gentwo.org (gentwo.org [62.72.0.81])
+Received: from out-174.mta1.migadu.com (out-174.mta1.migadu.com [95.215.58.174])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6F89428827
-	for <lkmm@lists.linux.dev>; Thu, 26 Feb 2026 18:22:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=62.72.0.81
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AE1C32D422
+	for <lkmm@lists.linux.dev>; Fri, 27 Feb 2026 08:06:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772130175; cv=none; b=qYdjMD6xopA2OoDbVKZgG5WdtX3MF0eLeyN1mTSVz3LQsb6fTCTsB1d4hGAldNwFkYVp6KUz9LIRhaQwhLU67MmhQcmL5UHEMiCUn2q9RcyTlep05OX0+d7akMEabqDoOMMlWyQPPderIK7W/4WgwElG3jwDbRhqDVJBBYKu018=
+	t=1772179620; cv=none; b=PX+iLV57Ei5DY2NX8Gk7H4kMVOA0U1UMHQwrOnRmVNlPf4EFT4xF6PuxBga+qJadJDcC8hyvFCSKxoBhjQyyHXGNGCZTgv4WXab7k1v0iivWDImuZ1l5jsTWcaT9s0ITGI/CRtMGRZwl9DCSInEGr7suyfvY9hzD3k/hbkvgTKY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772130175; c=relaxed/simple;
-	bh=+StJ6bSt+9W6TUbjleFHsdNnyzNJCUdR/ufr8IQ3U3U=;
-	h=Date:From:To:cc:Subject:In-Reply-To:Message-ID:References:
-	 MIME-Version:Content-Type; b=GEYZxuAfjDiZLk00p4AZV1N9Q3/gT0WZaK2wzdXiSVzNWKwACnhZoUXbL0+09afF55yKBfYfIrEp7+fgs1dgdpL5zWClp9ZkQ4BbxtNsuUr76zrazClfxbyhVJp7PUul2xRGBtrt+SMV8hbKE5yCgu8VnGUABLEC8o2YpLZ2Ks0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=gentwo.org; spf=pass smtp.mailfrom=gentwo.org; dkim=pass (1024-bit key) header.d=gentwo.org header.i=@gentwo.org header.b=efGiM6fL; arc=none smtp.client-ip=62.72.0.81
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=gentwo.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gentwo.org
+	s=arc-20240116; t=1772179620; c=relaxed/simple;
+	bh=FpnVQRb3GHt6nLCuJBC4UipKjion5rqGF0xAmH46rm0=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=HZXCnp08XRu33W6pYbPDnA7UDhS6DtYhhImE/Wkt/lJxAMoeYmujrujiao5gyjdp65sBp01TcHAvNelUAjzhX7b+/tcYkWc0rS3GT5cRAHzUAztfO++1TuNfSiNhABqVkfr4uT0qJteezgQ3ciSIjH821BUc/MfWL0fO1Nz/UzU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=BH3JEO9B; arc=none smtp.client-ip=95.215.58.174
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=gentwo.org header.i=@gentwo.org header.b="efGiM6fL"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gentwo.org;
-	s=default; t=1772128766;
-	bh=+StJ6bSt+9W6TUbjleFHsdNnyzNJCUdR/ufr8IQ3U3U=;
-	h=Date:From:To:cc:Subject:In-Reply-To:References:From;
-	b=efGiM6fLM8PJs/tFPaYL3iiDbsQuar7zZTJjEZ+Zn8gfukuIHLEP2ob4/BOfCyEC2
-	 TUcfQsC80HMu9jT86HJb+XbZ9qixYCcm0FvcKwD38fYtewT7VX01GElPqWhj5XVnO/
-	 DBYvusA0Rm/GcMnYRnzCWiVy6LJOCKHRIQBwYHEU=
-Received: by gentwo.org (Postfix, from userid 1003)
-	id 20350401EB; Thu, 26 Feb 2026 09:59:26 -0800 (PST)
-Received: from localhost (localhost [127.0.0.1])
-	by gentwo.org (Postfix) with ESMTP id 1ABB3401AF;
-	Thu, 26 Feb 2026 09:59:26 -0800 (PST)
-Date: Thu, 26 Feb 2026 09:59:26 -0800 (PST)
-From: "Christoph Lameter (Ampere)" <cl@gentwo.org>
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="BH3JEO9B"
+Date: Fri, 27 Feb 2026 16:06:37 +0800
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
+	t=1772179617;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=cTeZz0F/xvyPF1EACAmjGDgdsxghstNqLCL/uyUX4X4=;
+	b=BH3JEO9Be6RKFr0ulxlKgajovzOPjD3SVKEk8f7tvapHX/F9vwCYOS/1cfL8VYubbKdHqN
+	KnqNmAcGDfq7Y9h0i2MPyBX6x7MPr3br8N9KQs8X9xELHZZX3rBVjxJKNHf7I7OjM+ujKW
+	zaeW/qL2IbjcwgEdAklxvl60e9BmVnw=
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+From: Hao Li <hao.li@linux.dev>
 To: Harry Yoo <harry.yoo@oracle.com>
-cc: Alan Stern <stern@rowland.harvard.edu>, linux-mm@kvack.org, 
-    Dmitry Vyukov <dvyukov@google.com>, lkmm@lists.linux.dev, 
-    linux-arch@vger.kernel.org, linux-kernel@vger.kernel.org, 
-    Joel Fernandes <joelagnelf@nvidia.com>, Daniel Lustig <dlustig@nvidia.com>, 
-    Akira Yokosawa <akiyks@gmail.com>, "Paul E. McKenney" <paulmck@kernel.org>, 
-    Luc Maranget <luc.maranget@inria.fr>, Jade Alglave <j.alglave@ucl.ac.uk>, 
-    David Howells <dhowells@redhat.com>, Nicholas Piggin <npiggin@gmail.com>, 
-    Boqun Feng <boqun@kernel.org>, Peter Zijlstra <peterz@infradead.org>, 
-    Will Deacon <will@kernel.org>, Andrea Parri <parri.andrea@gmail.com>, 
-    Pedro Falcato <pfalcato@suse.de>, Vlastimil Babka <vbabka@suse.cz>, 
-    David Rientjes <rientjes@google.com>, 
-    Roman Gushchin <roman.gushchin@linux.dev>, Hao Li <hao.li@linux.dev>, 
-    Shakeel Butt <shakeel.butt@linux.dev>, 
-    Venkat Rao Bagalkote <venkat88@linux.ibm.com>, 
-    Mateusz Guzik <mjguzik@gmail.com>, Suren Baghdasaryan <surenb@google.com>, 
-    Marco Elver <elver@google.com>
+Cc: Alan Stern <stern@rowland.harvard.edu>, linux-mm@kvack.org, 
+	Dmitry Vyukov <dvyukov@google.com>, lkmm@lists.linux.dev, linux-arch@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, Joel Fernandes <joelagnelf@nvidia.com>, 
+	Daniel Lustig <dlustig@nvidia.com>, Akira Yokosawa <akiyks@gmail.com>, 
+	"Paul E. McKenney" <paulmck@kernel.org>, Luc Maranget <luc.maranget@inria.fr>, 
+	Jade Alglave <j.alglave@ucl.ac.uk>, David Howells <dhowells@redhat.com>, 
+	Nicholas Piggin <npiggin@gmail.com>, Boqun Feng <boqun@kernel.org>, 
+	Peter Zijlstra <peterz@infradead.org>, Will Deacon <will@kernel.org>, 
+	Andrea Parri <parri.andrea@gmail.com>, Pedro Falcato <pfalcato@suse.de>, 
+	Vlastimil Babka <vbabka@suse.cz>, Christoph Lameter <cl@gentwo.org>, 
+	David Rientjes <rientjes@google.com>, Roman Gushchin <roman.gushchin@linux.dev>, 
+	Shakeel Butt <shakeel.butt@linux.dev>, Venkat Rao Bagalkote <venkat88@linux.ibm.com>, 
+	Mateusz Guzik <mjguzik@gmail.com>, Suren Baghdasaryan <surenb@google.com>, 
+	Marco Elver <elver@google.com>
 Subject: Re: [BUG] Memory ordering between kmalloc() and kfree()? it's
  confusing!
-In-Reply-To: <aaByMLSAIJM8HdbO@hyeyoo>
-Message-ID: <6c08b86f-461c-d484-8556-09e53072113f@gentwo.org>
-References: <aZ_lJAqxh_hNGr_v@hyeyoo> <9dcd02b9-42da-455d-aa08-165e6ff0b921@rowland.harvard.edu> <aaByMLSAIJM8HdbO@hyeyoo>
+Message-ID: <yf7gon3s3efwiwpsdytujnhohnxjc3fgu7oabmia4tbhwqgcs7@rzb7sfy2wrbu>
+References: <aZ_lJAqxh_hNGr_v@hyeyoo>
+ <9dcd02b9-42da-455d-aa08-165e6ff0b921@rowland.harvard.edu>
+ <aaByMLSAIJM8HdbO@hyeyoo>
 Precedence: bulk
 X-Mailing-List: lkmm@lists.linux.dev
 List-Id: <lkmm.lists.linux.dev>
 List-Subscribe: <mailto:lkmm+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:lkmm+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <aaByMLSAIJM8HdbO@hyeyoo>
+X-Migadu-Flow: FLOW_OUT
 
-On Fri, 27 Feb 2026, Harry Yoo wrote:
-
+On Fri, Feb 27, 2026 at 01:17:52AM +0900, Harry Yoo wrote:
+> On Thu, Feb 26, 2026 at 10:45:55AM -0500, Alan Stern wrote:
+> > On Thu, Feb 26, 2026 at 03:35:08PM +0900, Harry Yoo wrote:
+> > > Hello, SLAB, LKMM, and KCSAN folks!
+> > > 
+> > > I'd like to discuss slab's assumption on users regarding memory ordering.
+> > > 
+> > > Recently, I've been investigating an interesting slab memory ordering
+> > > issue [3] [4] in v7.0-rc1, which made me think about memory ordering
+> > > for slab objects.
+> > > 
+> > > But without answering "What does slab expect users to do for correct
+> > > operation?", I kept getting puzzled, and my brain hurt too much :/
+> > > I'm writing things down to stop getting confused :)
+> > > 
+> > > Since I have never thought about this before, my reasoning could be
+> > > partially or entirely incorrect. If so, please kindly let me know.
+> > > 
+> > > # Slab's assumption: Stores to object, its metadata, or struct slab
+> > > # must be visible to the CPU that frees the object, when it is
+> > > # passed to kfree(). It's users' responsibility to guarantee that.
+> > > 
+> > > When the slab allocator allocates an object, it updates its metadata and
+> > > struct slab fields. After allocation, the user of slab updates object's
+> > > content. As long as the object is freed on the same CPU that it was
+> > > allocated, kfree() can see those stores (A CPU must be able to see
+> > > what's in its store buffer), so no problem!
+> > > 
+> > > However, when e.g.) the pointer to object is stored in a shared variable
+> > > and then freed on a different CPU, things become trickier.
+> > > 
+> > > In this case, I think it's fair for the slab allocator to assume that:
+> > > 
+> > >   1) Such stores must involve _at least_ a release barrier
+> > >      (for example, via {cmp,}xchg{,_release}, or smp_store_release())
+> > >      to ensure preceding stores are visible to other CPUs before
+> > >      the pointer store becomes visible, and
+> > > 
+> > >   2) The CPU that frees an object must invoke at least an acquire
+> > >      barrier to ensure that stores to object content / metadata, etc.,
+> > >      are visible to the freeing CPU when it calls kfree().
+> > > 
+> > > Because the slab allocator itself doesn't guarantee that such
+> > > barriers are invoked within the allocator, it relies on users to
+> > > do this when needed.
+> > 
+> > It doesn't?  Then how does the slab allocator guarantee that two 
+> > different CPUs won't try to perform allocations or deallocations from 
+> > the same slab at the same time, messing everything up?
+> 
 > Ah, alloc/free slowpaths do use cmpxchg128 or spinlock and
 > don't mess things up.
->
+> 
 > But fastpath allocs/frees are served from percpu array that is protected
 > by a local_lock. local_lock has a compiler barrier in it, but that's
 > not enough.
 
-Well if objects are coming from different folios then that is an issue.
+Hmm, this memory-ordering issue is indeed pretty mind-bending. I'd like to
+share a few thoughts as well. Happy to be corrected!
 
-The prior slub approach had no per cpu linked lists and restricted
-allocations to the objects of a single page that was only used by a
-specific cpu. locks were used when that page changed. There was no need
-for further synchronization since accesses were known to only refer to a
-single page frame and there was only one cpu accessing.
+For our current problem, I think the key lies in the relative ordering between
+the two variables, stride and obj_exts. To address it, we need to ensure that
+on the writer side, stride is assigned before obj_exts. And on the reader
+side, we need to guarantee that if it can observe the latest value of
+obj_exts, then it must also be able to observe the latest value of stride. If
+this understanding is correct, then even if the slab API caller inserts a
+memory barrier between alloc and free, or uses a spinlock (or any statement
+that provides an equivalent memory-barrier effect), it would only ensure that
+the writes to the pair {stride, obj_exts} as a whole happen-before the reads
+of {stride, obj_exts} as a whole. However, it still wouldn't be able to
+guarantee the ordering between the two variables: stride and obj_exts.
 
+-- 
+Thanks,
+Hao

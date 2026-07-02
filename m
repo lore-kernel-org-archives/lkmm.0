@@ -1,197 +1,103 @@
-Received: from out-186.mta0.migadu.com (out-186.mta0.migadu.com [91.218.175.186])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACD0541B357
-	for <lkmm@lists.linux.dev>; Mon, 29 Jun 2026 16:49:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.186
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DC193537FB;
+	Thu,  2 Jul 2026 04:35:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782751783; cv=none; b=mIzU/7A/SOLRhMOZWWEJN76Qqy0Xz28ye/MHidaAKaES3rzon+3FpUdK9XyW0b4sBYWFXFDbGtm0K1Jy00nYWAvtR1Mi4UYqCQlG8azm72Qek8jeRAl95gVrQErtQHJSnbEhYaTpgCoCJV9wgn16/RJYhcoxSJH3DZVCLnC80mA=
+	t=1782966935; cv=none; b=phYBmv3bSzgIPZIA5oD8JoNpj/dhzH/EfnT71b3Vjbco8mzRMZOB8T6vroLjaf0Sdw3jcHaMB69A4oimZaFqCumXMQRe8VsLCewUkXxbJ8TUpGXgFz4gemKQNla9hlaCR8QESYVtV2laIPKoDUmOCXcInne0HBopvWMRWTN53+U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782751783; c=relaxed/simple;
-	bh=/c/td0l49GrTYIdOiDvTBEx5r+8NUhgWFGP30RpUw5g=;
-	h=MIME-Version:Date:Content-Type:From:Message-ID:Subject:To:Cc:
-	 In-Reply-To:References; b=pJCaC/daW9XcqaK96+o8XgKGZurEYZNvHQ4Wb+iWg1aN5H6WoEQ9MdIHfDzz1cHpqNKA/4/gOEfe7adl6bKMDAyPRYwCrbPYTFKtJLFzynBBLcADqai2NzGkvzVtQv0zj2YrqADGecL05+8dNa91+EM4yhPzs2sBTt+G6q4JIGo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=FL1NklTV; arc=none smtp.client-ip=91.218.175.186
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
+	s=arc-20240116; t=1782966935; c=relaxed/simple;
+	bh=iVwmGLa6f1uDnXVXjo/8Aoy4NOH+YwZf7Zd+O+Dtkgg=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=c8m8mhfJFSS1XAWqlkwpWiZntUmtk+GJTKUnJ9ksZHwZPilOCGhCktpShVps4A3uBEphfPPkjQTvP2F5h+jplIFYIocNQHIpjSwvW+7gE7DulzQ4RnPBNQLI5Isb/MapR+TkhMm6/pXCt97y1zNH1xp4C51xUkHQ8j3heTNnXDU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=hlFNzB7n; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="FL1NklTV"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="hlFNzB7n"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB97E1F00A3D;
+	Thu,  2 Jul 2026 04:35:32 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1782966933;
+	bh=qQ6AcPC+6tAtj4mR79LcDBehZQeOv0pwvXO06/ad9J4=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=hlFNzB7nDQ4wPhvzbuKbP7GlttuU2+McLfPo+tBfpaAbDLr39y3b3z0mZaLOE1eN+
+	 Xo2KpqTODQ1oEMKC6rNpXHgGCK6z9PsUpN5ZzJpQh6WBqWf1yxTen0hhagAsMl4KLh
+	 EOYnlxm6yckhDLSgZkrC8A/X8eChraULH0VifJBljelorzVLYzY3/PH13GiGANpOGa
+	 OqAMGqqGmOgt4xlD07tejTYPjOL2rtlWbwURWVcURymn+zPjDnGA2Z2Sh13RvVLR9n
+	 NT+ShiFAoe5irKBTqEocdhZybA5kduIgLOLlfu9ZFsfvGjKOwuupoz5mDrJYebK/3W
+	 DdaQZz6WuWtkw==
+Received: from phl-compute-11.internal (phl-compute-11.internal [10.202.2.51])
+	by mailfauth.phl.internal (Postfix) with ESMTP id 054CDF4007E;
+	Thu,  2 Jul 2026 00:35:32 -0400 (EDT)
+Received: from phl-frontend-04 ([10.202.2.163])
+  by phl-compute-11.internal (MEProxy); Thu, 02 Jul 2026 00:35:32 -0400
+X-ME-Sender: <xms:k-pFatVPHD-wfdcSt5DDIq0s1NHyp_qvyNMB7Cnk_mAIFVN99cSmmA>
+    <xme:k-pFanQ-sHo2pzbTosB-CFoipUa6MDm1Mo5fd3bLkilkXUlzuJoHlIWY6oJ_7OlAf
+    _HkIch71sdhk7R_vNUGv1UjDNUH-NabtwC2tMUfAweW3CUybftI>
+X-ME-Received: <xmr:k-pFaosQeL-3gUkbDkM8DPrL66eOsQLai29P1S0YNMxBPx_fmkLJi506iGiMHSCphMEaJ9muXD3M0p_XwWBFpaXMw2bkylnL>
+X-ME-Proxy-Cause: dmFkZTGOWROfQ5BeBPMP1RytPcByPAeRGYXaRj56CjJShjBvVAial8V+/PhS9tKRf9j4Ua
+    XZcHmtCjilWnt9dRtPHRHfnBfoErbVRWDu6Z6yvc6r9FWcVn80Zqq/aEldJ98LYAK9xv4T
+    PAy07CxqyOcIe953y1bCgmlQP8fIX8Ckiib7dYq50y7uL+thRqbjSqENvf0nMGGlZMnE/D
+    ARY8TqA7CA75MgyK3o+hv72aa89IkKbCBOdG8ohGu4REqrLaNC2ODUlNduW41yh/gbu9TA
+    Ey+UgG9Pfo6TRFJPTPet4cA8Y89vISFu50HAW82CkBUBzokLysd358b/TKxbZ0Eluhv3b2
+    dmNzxENhqsuBg6lrPSMoCv+wNdjTxXsb2L7kg3NLEfArWJVpZHfy4p09f+XDjEi9GjJymd
+    gMJMdEM+zDF5bp7qgHB4NkEMcKZIKDo9VH1z9ng+qKsjhsyZeEQzeginJsm0oCLGO5RsV8
+    usyj9TY+fHLmM94EJCxWRRud/n3u+jMQHRFHRMm8IqYUKgYQqanOmQd2lVtgruUsC1Om6o
+    dMzpADLMJMe9I/YmRD2bFzN+t89L836nIp2/CSHVwXnudd33/3j+m44k5rFdbn4vdFTB/M
+    j0jBoan9AqnJVUWxoXUwzcBszVsEfsT161gh74B9/VLDpww8pvVfN/2QXoRQ
+X-ME-Proxy: <xmx:k-pFaoYLIT92EgYrSPsjR4GFqeWHIQLZ9F6gCvB8srd-AdWAZkwfAQ>
+    <xmx:k-pFar-gvME-Shrg5pq5qLV9yM-vOcbbi_OPHCav_xDhLmiIevCGEg>
+    <xmx:k-pFaqCvyWS_NQVvrkPPINpbxuja7jrpLRPtqhd6_r6xvj1zqqQebA>
+    <xmx:k-pFanvk_OFE-DDi32qJw2OT5W-9aOrycyM6hPeCbcleNSVjk_8p3Q>
+    <xmx:lOpFakbghDJU3owT6epJUFnsOhG_qLz8TSDD4hmq-L5Z81S_LXG-gFzT>
+Feedback-ID: i8dbe485b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 2 Jul 2026 00:35:31 -0400 (EDT)
+Date: Wed, 1 Jul 2026 21:35:30 -0700
+From: Boqun Feng <boqun@kernel.org>
+To: Gary Guo <gary@garyguo.net>
+Cc: Miguel Ojeda <ojeda@kernel.org>,
+	=?iso-8859-1?Q?Bj=F6rn?= Roy Baron <bjorn3_gh@protonmail.com>,
+	Benno Lossin <lossin@kernel.org>,
+	Andreas Hindborg <a.hindborg@kernel.org>,
+	Alice Ryhl <aliceryhl@google.com>, Trevor Gross <tmgross@umich.edu>,
+	Danilo Krummrich <dakr@kernel.org>, Will Deacon <will@kernel.org>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Alexandre Courbot <acourbot@nvidia.com>,
+	David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+	Alan Stern <stern@rowland.harvard.edu>,
+	Andrea Parri <parri.andrea@gmail.com>,
+	Nicholas Piggin <npiggin@gmail.com>,	David Howells <dhowells@redhat.com>,
+	Jade Alglave <j.alglave@ucl.ac.uk>,	Luc Maranget <luc.maranget@inria.fr>,
+	"Paul E. McKenney" <paulmck@kernel.org>,
+	Akira Yokosawa <akiyks@gmail.com>,	Daniel Lustig <dlustig@nvidia.com>,
+	Joel Fernandes <joelagnelf@nvidia.com>,	rust-for-linux@vger.kernel.org,
+ linux-kernel@vger.kernel.org,	nova-gpu@lists.linux.dev,
+ dri-devel@lists.freedesktop.org,	lkmm@lists.linux.dev,
+ Eliot Courtney <ecourtney@nvidia.com>
+Subject: Re: [PATCH v2 1/4] rust: sync: add helpers for mb, dma_mb and friends
+Message-ID: <akXqkldA4NnODxAC@MacBook-0RXW5>
+References: <20260609-rust-barrier-v2-0-30fcc48e1cd0@garyguo.net>
+ <20260609-rust-barrier-v2-1-30fcc48e1cd0@garyguo.net>
 Precedence: bulk
 X-Mailing-List: lkmm@lists.linux.dev
 List-Id: <lkmm.lists.linux.dev>
 List-Subscribe: <mailto:lkmm+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:lkmm+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
-	t=1782751779;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=vUtYpDl1uQ44PbsZ1biMHpyJk3g/3hXd1zmMGA9K3Q4=;
-	b=FL1NklTVO0od/kaqvRwWq3gW0vfYCX7GLsAxVpRk0KP4mXu8YI55xjwEkiaBLQZNyxVQAX
-	DZo95wfdB5MgUhtR1u0A4Bq6kstozqeE2jYKmTUDfSeIS8jFxBljMbECABne2wO1pca1J1
-	PkaQwae/BJBKvuUaRXL0ojohOrnhf+U=
-Date: Mon, 29 Jun 2026 16:49:36 +0000
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-From: "Kunwu Chan" <kunwu.chan@linux.dev>
-Message-ID: <70ecf76276244a204b36164858ba85d78e8a5061@linux.dev>
-TLS-Required: No
-Subject: Re: [PATCH v2] smp: Use release stores for csd_lock_record() state
-To: "Usama Arif" <usama.arif@linux.dev>, lkmm@lists.linux.dev,
- joelagnelf@nvidia.com, linux-kernel@vger.kernel.org,
- marco.crivellari@suse.com, paulmck@kernel.org,
- rafael.j.wysocki@intel.com, rdunlap@infradead.org, riel@surriel.com,
- sshegde@linux.ibm.com, tglx@kernel.org, ulfh@kernel.org,
- yury.norov@gmail.com, rcu@vger.kernel.org
-Cc: shakeel.butt@linux.dev, hannes@cmpxchg.org, kernel-team@meta.com
-In-Reply-To: <b0d88052-64d6-40c1-a728-7242bfbcda1b@linux.dev>
-References: <20260622163807.4187558-1-usama.arif@linux.dev>
- <1030b968-4184-4818-99dc-aeb0956ef6a3@linux.dev>
- <b0d88052-64d6-40c1-a728-7242bfbcda1b@linux.dev>
-X-Migadu-Flow: FLOW_OUT
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260609-rust-barrier-v2-1-30fcc48e1cd0@garyguo.net>
 
-2026=E5=B9=B46=E6=9C=8824=E6=97=A5 23:27, "Usama Arif" <usama.arif@linux.=
-dev mailto:usama.arif@linux.dev?to=3D%22Usama%20Arif%22%20%3Cusama.arif%4=
-0linux.dev%3E > =E5=86=99=E5=88=B0:
+On Tue, Jun 09, 2026 at 04:38:37PM +0100, Gary Guo wrote:
+> They supplement the existing smp_mb, smp_rmb and smp_wmb.
+> 
+> Reviewed-by: Eliot Courtney <ecourtney@nvidia.com>
+> Signed-off-by: Gary Guo <gary@garyguo.net>
+
+Queued in rust-sync, thanks!
 
 
->=20
->=20On 24/06/2026 15:15, Kunwu Chan wrote:
->=20
->=20>=20
->=20> On 6/23/26 00:38, Usama Arif wrote:
-> >=20
->=20> >=20
->=20> > __csd_lock_record() publishes per-CPU CSD debug state that is rea=
-d by
-> > >  csd_lock_wait_toolong() on another CPU. The remote side first read=
-s
-> > >  cur_csd with smp_load_acquire() and, when non-NULL, may then read =
-the
-> > >  matching cur_csd_func and cur_csd_info fields.
-> > >=20
->=20> >  Use smp_store_release() when publishing cur_csd so that the prec=
-eding
-> > >  cur_csd_func and cur_csd_info stores are ordered before the pointe=
-r
-> > >  that csd_lock_wait_toolong() acquires. This replaces the open-code=
-d
-> > >  smp_wmb() plus plain cur_csd store with the release operation that
-> > >  matches the smp_load_acquire() in csd_lock_wait_toolong().
-> > >=20
->=20> >  For the clear path, use smp_store_release(&cur_csd, NULL) so tha=
-t
-> > >  clearing the diagnostic state remains ordered after the preceding
-> > >  callback/unlock work, without requiring a full barrier before the
-> > >  store. On x86 this removes the locked full barrier from the clear
-> > >  path; on weaker memory models it uses the release operation needed=
- by
-> > >  the smp_load_acquire() in csd_lock_wait_toolong().
-> > >=20
->=20> >  The old code also had smp_mb() calls around cur_csd updates. Tho=
-se would
-> > >  only be needed if cur_csd were treated as an exact live-state mark=
-er whose
-> > >  publication had to be observed before callback execution or CSD un=
-lock.
-> > >=20
->=20>  =C2=A0The original comments around those updates seem to suggest a=
- stronger
-> >  relationship:
-> >  =C2=A0 /* Update cur_csd before function call. */
-> >  =C2=A0 /* NULL cur_csd after unlock. */
-> >=20=20
->=20>  The changelog characterizes cur_csd as best-effort diagnostic cont=
-ext.=C2=A0
-> >=20=20
->=20>  Is there prior consensus that cur_csd carries no ordering relation=
-ship=C2=A0
-> >  to callback execution / unlock state,=C2=A0
-> >=20=20
->=20>  or is this patch effectively relaxing that historical assumption?
-> >=20=20
->=20>=20=20
->=20>  Thanks,=C2=A0 Kunwu
-> >=20
->=20Thanks for the review Kunwu!
->=20
->=20The patch preserves the ordering that reader actually needs:=20
->=20csd_lock_wait_toolong() observes non-NULL cur_csd, the matching func/=
-info have
-> been published. If it observes NULL, the prior callback/unlock work is =
-ordered
-> before the clear.
->=20
->=20So yes, this relaxes the historical implementation ordering around th=
-e
-> diagnostic marker, but not the CSD execution/reuse ordering.
->=20
-
-
-Thanks=20for the v3 update. The explanation of reader-side tolerance for=
-=20
-snapshot-vs-completion=20races addresses my concern.
-
-
-> >=20
->=20> >=20
->=20> > CSD stall warnings do not currently have RCU-style stall-ended ch=
-ecks, so
-> > >  they already allow the stall to end while diagnostics are being as=
-sembled.
-> > >  The cur_csd record is therefore best-effort diagnostic context, no=
-t a
-> > >  precise completion/stall boundary.
-> > >=20
->=20> >  Signed-off-by: Usama Arif <usama.arif@linux.dev>
-> > >  ---
-> > >  v1 -> v2: https://lore.kernel.org/all/01437928-ff79-4d8e-823b-7f20=
-146946f6@linux.dev/
-> > >  - Document where the smp_store_release() synchronizes with (Alan S=
-tern,
-> > >  Randy Dunlap and Paul McKenney).
-> > >  ---
-> > >  kernel/smp.c | 18 ++++++++++++------
-> > >  1 file changed, 12 insertions(+), 6 deletions(-)
-> > >=20
->=20> >  diff --git a/kernel/smp.c b/kernel/smp.c
-> > >  index a0bb56bd8dda..685829875a3e 100644
-> > >  --- a/kernel/smp.c
-> > >  +++ b/kernel/smp.c
-> > >  @@ -182,16 +182,22 @@ static atomic_t csd_bug_count =3D ATOMIC_INI=
-T(0);
-> > >  static void __csd_lock_record(call_single_data_t *csd)
-> > >  {
-> > >  if (!csd) {
-> > >  - smp_mb(); /* NULL cur_csd after unlock. */
-> > >  - __this_cpu_write(cur_csd, NULL);
-> > >  + /*
-> > >  + * Pairs with smp_load_acquire() of cur_csd in
-> > >  + * csd_lock_wait_toolong(): orders any preceding CSD
-> > >  + * callback/unlock before a remote reader observes NULL.
-> > >  + */
-> > >  + smp_store_release(this_cpu_ptr(&cur_csd), NULL);
-> > >  return;
-> > >  }
-> > >  __this_cpu_write(cur_csd_func, csd->func);
-> > >  __this_cpu_write(cur_csd_info, csd->info);
-> > >  - smp_wmb(); /* func and info before csd. */
-> > >  - __this_cpu_write(cur_csd, csd);
-> > >  - smp_mb(); /* Update cur_csd before function call. */
-> > >  - /* Or before unlock, as the case may be. */
-> > >  + /*
-> > >  + * Pairs with smp_load_acquire() of cur_csd in
-> > >  + * csd_lock_wait_toolong(): publishes cur_csd_func and
-> > >  + * cur_csd_info before the non-NULL pointer becomes visible.
-> > >  + */
-> > >  + smp_store_release(this_cpu_ptr(&cur_csd), csd);
-> > >  }
-> > >=20=20
->=20> >  static __always_inline void csd_lock_record(call_single_data_t *=
-csd)
-> > >
-> >
->
+Regards,
+Boqun

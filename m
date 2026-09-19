@@ -1,118 +1,106 @@
-Received: from mail-ej2-f12.google.com (mail-ej2-f12.google.com [74.125.228.140])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mail.mainlining.org (mail.mainlining.org [5.75.144.95])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 922E834A3BF
-	for <lkmm@lists.linux.dev>; Sat, 19 Sep 2026 16:30:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.228.140
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1880A34D3BE
+	for <lkmm@lists.linux.dev>; Sat, 19 Sep 2026 16:35:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=5.75.144.95
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789835450; cv=none; b=gAiYWxa9z6MAwbycbK1Pr6wEnP7STtG/IxLOuyi7GWZlvLSc8U9szwejcnlq61ed24NIj+EqYNjOxDAZebme62add6U6/Mq8wfp88yTP4tUYkESBZYlZglnu1/vNljxLpKgEcOd0hDZb/S0HcDs2CgxKneUN4wqaTI9ItkysmpE=
+	t=1789835722; cv=none; b=PoZlJJPRW3XxroTEsTqXHc2Tgl40PLr3tTIW79R2KECRIEzutCpfOXYP7HbGPjFLjsIHNoDD/Q2QbEC5zAroPgfb84pIZqbZN82fXDLP/7pQzP8zf6xf/Iu2NNT0xpLur9dLC2mh3cbt1nfjQewwJE2imNNKPGx+MUb2VMRvIV8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789835450; c=relaxed/simple;
-	bh=nBbiCr4fg61dV4D2oGNu2aR4a7biYiZnhkG7Z99V1Hs=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=G8CusUlzO/eoNK8eVX2nD06QqY/1X/1dqfVF+7IZehkNHQNA0ivxQvFhLDj8FGxIGyMfpQJtxGj3Asb5Tv7d12F7VQ4GIdz7JUimukUoGqKpbPnZFsaJkERh/Gau3ooNQ9eTPy/CPZ16kVbMay+HpTIo/BQDZ33K6qcuGiGzT8Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux-foundation.org; spf=pass smtp.mailfrom=linuxfoundation.org; dkim=pass (1024-bit key) header.d=linux-foundation.org header.i=@linux-foundation.org header.b=EjW0zH3H; arc=none smtp.client-ip=74.125.228.140
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux-foundation.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linuxfoundation.org
+	s=arc-20240116; t=1789835722; c=relaxed/simple;
+	bh=83G8wP1wEtWoW0cUFLtn11NPBN+2XzI+CsyuJfeyx+0=;
+	h=Date:From:To:CC:Subject:In-Reply-To:References:Message-ID:
+	 MIME-Version:Content-Type; b=ZGXVuGnZ8dsrn9YLAOKLR2GHQMP21I101wdiGS0ChwlOsK1iEYSNRczOdZEiQva/iXHtIdbAl2aNzzMokDzbeecqfP7YKgimFSES/wQ1w7XOWSgLTscw6EVMRhwn658+lse5vXcinMHVUNWleUYr75/BuMgIzCQ95P9XQuxLIjs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mainlining.org; spf=pass smtp.mailfrom=mainlining.org; dkim=pass (2048-bit key) header.d=mainlining.org header.i=@mainlining.org header.b=RkimT5Bk; dkim=permerror (0-bit key) header.d=mainlining.org header.i=@mainlining.org header.b=6ysdKn0Z; arc=none smtp.client-ip=5.75.144.95
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mainlining.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mainlining.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux-foundation.org header.i=@linux-foundation.org header.b="EjW0zH3H"
-Received: by mail-ej2-f12.google.com with SMTP id a640c23a62f3a-c293c683202so258210966b.3
-        for <lkmm@lists.linux.dev>; Sat, 19 Sep 2026 09:30:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linux-foundation.org; s=google; t=1789835447; x=1790440247; darn=lists.linux.dev;
-        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
-         :references:mime-version:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=UGWocLshUzVVG8Rydp43t4CQtO4FrerHAEoPSMI/C8I=;
-        b=EjW0zH3HInRm1w9bdLS301e85upCKsEUXx6aNSfnxkoL0U8zzDSnpKgrcMDjYi1wpn
-         Z2ayyaMH1r3h9gBjf1V2jBWapMXkXvdaMvYh4i2VDwx+M1Xp2NqpFMVmf6W9+SIF90j7
-         G6e8l3OwOdAtK1e4kLkP0thfdtA61C4TTzOMw=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1789835447; x=1790440247;
-        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
-         :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=UGWocLshUzVVG8Rydp43t4CQtO4FrerHAEoPSMI/C8I=;
-        b=ND1JKUSQ9zRs9YSGmGiAguYkyrb6pRfHAhnEJDbCLqT+3hqRGjyR8FEhmLcSjwJbkj
-         55s37N86MEviyc/JmqfHqu9PhJ4LHVKPAQruwPLbsb8V4VsJFYjP9m4ofv034zFNkdTs
-         aKKivF77xFEgjRJdvJh+3tHpY0HN18koBKgdg3urmMklTWpD9AkXYZC7ELzWC1siHuRv
-         CGqWU/eLl96dDLId3GbYcB77VFbeDwzrEdTmOvR2OXt98btys3DotU3g3qkS6dM3l9CT
-         H06wKsSJ0EXGvVvZkgCsqHX0nkMG/2EiKRonh82XBf6HvlQddK9SCBsVrkqGlBUU/yp0
-         N2vw==
-X-Forwarded-Encrypted: i=1; AKwUvByhjBU3D01Oi1yLbjLEnQ9T6msHxbCfmrVGx9XGb8qRrD+hRerpWP68FWWGWVCO8/Y7J85s@lists.linux.dev
-X-Gm-Message-State: AFuF++m25O0OE/kZMKxmh36+0mcx+TWu00Z3+tzLBNMLJMsg/O+aRSDj
-	Rpvg6lsO4CTG8GB/kjyql+qkrFxAx480T6tH3As8xctA0n0rHsjj5l8cvF70BVvHEScOfsAUtUQ
-	qr6AhC08=
-X-Gm-Gg: AYBFou3NKh2hbInBN/WEoQMH4wQgnX00ffa/e5cZDA2HInrQc8ITB5QOe5GX74fCkHe
-	qjHsxAicYmXMTIUWc6UVSbzylLumE0npVok0bB/gIJnxMfSsNg9LQA5TBHOfYx+mAYvvyYuJKGO
-	E3WwjpMPH675u9T2qq8TCIC++ufgqVqcIdy2AkvlR+hJt+40mKdl2MOvqxIlNOnMKlwnt9YKKch
-	UeQU66NZxJzFZEKjwTYjNK/kcexqnXoCSbTLHSuNopkHOVl3+m3ukpW3amTfnIJfDvRgN4YQFgu
-	6X/vukAHNNx+R/xCdfmAISJvbr7ev+bngjX9TmsllsJQE4t1DBX6NOE78fybi7nQQOlOmswWr2O
-	wXp3vyiaPq7xc0r2xv/+Lio3+PP4BsUuNe3mUUuPWC2Nx/6woG4HxUr768z8VNN0Fooa7KkYlad
-	MwX0xV4BSk7wuXLNcEDb4gEfIH3XghwszbkSDT8+wSy4KPbjC4DRw4RJZVrVnmX3SZAzfi5vkQq
-	+GNm5pSIXYpSX3waEm2L2om30w/4Kruq5bgQGY3+RAWfqA3lA==
-X-Received: by 2002:a17:906:c10e:b0:c26:19de:9ac8 with SMTP id a640c23a62f3a-c2a15e10548mr566061666b.32.1789835446621;
-        Sat, 19 Sep 2026 09:30:46 -0700 (PDT)
-Received: from mail-ej2-f12.google.com (mail-ej2-f12.google.com. [74.125.228.140])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-c2a35700b1dsm95719366b.23.2026.09.19.09.30.44
-        for <lkmm@lists.linux.dev>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 19 Sep 2026 09:30:45 -0700 (PDT)
-Received: by mail-ej2-f12.google.com with SMTP id a640c23a62f3a-c254fa4c24cso277214566b.2
-        for <lkmm@lists.linux.dev>; Sat, 19 Sep 2026 09:30:44 -0700 (PDT)
-X-Forwarded-Encrypted: i=1; AKwUvBy8UyA3Yg1LGznxUb3rUyOeT5DY5B3gio2XIAfhOUXIspUB8QLunmdXeO3Im1q49/m2H2OY@lists.linux.dev
-X-Received: by 2002:a17:907:6d0b:b0:c29:2646:fc3c with SMTP id
- a640c23a62f3a-c2a158569e3mr548265666b.15.1789835444190; Sat, 19 Sep 2026
- 09:30:44 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=mainlining.org header.i=@mainlining.org header.b="RkimT5Bk";
+	dkim=permerror (0-bit key) header.d=mainlining.org header.i=@mainlining.org header.b="6ysdKn0Z"
+DKIM-Signature: v=1; a=rsa-sha256; s=202507r; d=mainlining.org; c=relaxed/relaxed;
+	h=Message-ID:Subject:To:From:Date; t=1789835686; bh=ss08+m6Ho9dtJTXVBqY3w5Z
+	xBXwOCMfnNt1YuIpmHGs=; b=RkimT5BkBTiAaZt96v8HUbIATDIlAJLAunUMzSNZIDzk9bPrVn
+	GDg6ukzcJtXjd7XQaTG/kpIGy54G06dpI5caJNZpfoyN/OFsc//5rFicIO597d+OG34hfjYJplg
+	fYIsbIc7dPfSJXLQLxzf61IAHFcSebtFnJ2+pKT87v0p0qq8HmRwFs8TLqlGtaeeYB9RQbbbf5v
+	KokwkRsGtkM+qKYYAq2XiVQ24YQvHAgx/SZEY+MnprN8oHGPGwteEueNQ8Aa5HgxCBLhaYIUsbj
+	RzaA9+kTbtkFoxKEkn2sBvZLGaghMwqcDJBAzp1q5R+GuO+bsiQc/lCIqOWm2YBQwtQ==;
+DKIM-Signature: v=1; a=ed25519-sha256; s=202507e; d=mainlining.org; c=relaxed/relaxed;
+	h=Message-ID:Subject:To:From:Date; t=1789835686; bh=ss08+m6Ho9dtJTXVBqY3w5Z
+	xBXwOCMfnNt1YuIpmHGs=; b=6ysdKn0ZyB1iJMq/zpPI1XK39XVC7xlLiBElhdUCPQ4AVd3HI2
+	IMLjLff0iUlHgoSDPSjl9nR+oqlFqf9lLfAQ==;
+Date: Sat, 19 Sep 2026 17:34:47 +0100
+From: Bradley Morgan <brads@mainlining.org>
+To: Linus Torvalds <torvalds@linux-foundation.org>,
+ "Paul E. McKenney" <paulmck@kernel.org>
+CC: rcu@vger.kernel.org, linux-kernel@vger.kernel.org, kernel-team@meta.com,
+ Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
+ Boqun Feng <boqun@kernel.org>, Steven Rostedt <rostedt@goodmis.org>,
+ lkmm@lists.linux.dev, Zqiang <qiang.zhang@linux.dev>,
+ Wang Lian <lianux.mm@gmail.com>, Kunwu Chan <kunwu.chan@gmail.com>,
+ Nicholas Piggin <npiggin@gmail.com>, Michael Ellerman <mpe@ellerman.id.au>,
+ Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+ Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
+ Will Deacon <will@kernel.org>, Peter Zijlstra <peterz@infradead.org>,
+ Alan Stern <stern@rowland.harvard.edu>, John Stultz <jstultz@google.com>,
+ Andrew Morton <akpm@linux-foundation.org>,
+ Frederic Weisbecker <frederic@kernel.org>,
+ Joel Fernandes <joel@joelfernandes.org>,
+ Josh Triplett <josh@joshtriplett.org>, Uladzislau Rezki <urezki@gmail.com>,
+ Lai Jiangshan <jiangshanlai@gmail.com>, Zqiang <qiang.zhang1211@gmail.com>,
+ Ingo Molnar <mingo@redhat.com>, Waiman Long <longman@redhat.com>,
+ Mark Rutland <mark.rutland@arm.com>, Thomas Gleixner <tglx@linutronix.de>,
+ Vlastimil Babka <vbabka@suse.cz>, maged.michael@gmail.com,
+ Mateusz Guzik <mjguzik@gmail.com>,
+ Jonas Oberhauser <jonas.oberhauser@huaweicloud.com>, linux-mm@kvack.org
+Subject: Re: [PATCH 01/28] hazptr: Implement Hazard Pointers
+In-Reply-To: <CAHk-=wj9knmxXD01=top1DQ9_aqrN2a3kpWRS5DQv6QLwLOztg@mail.gmail.com>
+References: <e9669b34-12c2-4cf2-a887-315f581f0789@paulmck-laptop> <20260919000056.3132131-1-paulmck@kernel.org> <CAHk-=wj9knmxXD01=top1DQ9_aqrN2a3kpWRS5DQv6QLwLOztg@mail.gmail.com>
+Message-ID: <6B1FC39D-6EB0-433A-8E49-E5EFC9379AD7@mainlining.org>
 Precedence: bulk
 X-Mailing-List: lkmm@lists.linux.dev
 List-Id: <lkmm.lists.linux.dev>
 List-Subscribe: <mailto:lkmm+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:lkmm+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <e9669b34-12c2-4cf2-a887-315f581f0789@paulmck-laptop> <20260919000056.3132131-1-paulmck@kernel.org>
-In-Reply-To: <20260919000056.3132131-1-paulmck@kernel.org>
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Date: Sat, 19 Sep 2026 09:30:26 -0700
-X-Gmail-Original-Message-ID: <CAHk-=wj9knmxXD01=top1DQ9_aqrN2a3kpWRS5DQv6QLwLOztg@mail.gmail.com>
-X-Gm-Features: AcwNN1UfxSUGwclkVhiP1abbV-DjzJIO2ybg4zteTUzmnNfVhojty9fZ436aqK4
-Message-ID: <CAHk-=wj9knmxXD01=top1DQ9_aqrN2a3kpWRS5DQv6QLwLOztg@mail.gmail.com>
-Subject: Re: [PATCH 01/28] hazptr: Implement Hazard Pointers
-To: "Paul E. McKenney" <paulmck@kernel.org>
-Cc: rcu@vger.kernel.org, linux-kernel@vger.kernel.org, kernel-team@meta.com, 
-	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>, Boqun Feng <boqun@kernel.org>, 
-	Steven Rostedt <rostedt@goodmis.org>, lkmm@lists.linux.dev, Zqiang <qiang.zhang@linux.dev>, 
-	Wang Lian <lianux.mm@gmail.com>, Kunwu Chan <kunwu.chan@gmail.com>, 
-	Bradley Morgan <brads@mainlining.org>, Nicholas Piggin <npiggin@gmail.com>, 
-	Michael Ellerman <mpe@ellerman.id.au>, Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
-	Sebastian Andrzej Siewior <bigeasy@linutronix.de>, Will Deacon <will@kernel.org>, 
-	Peter Zijlstra <peterz@infradead.org>, Alan Stern <stern@rowland.harvard.edu>, 
-	John Stultz <jstultz@google.com>, Andrew Morton <akpm@linux-foundation.org>, 
-	Frederic Weisbecker <frederic@kernel.org>, Joel Fernandes <joel@joelfernandes.org>, 
-	Josh Triplett <josh@joshtriplett.org>, Uladzislau Rezki <urezki@gmail.com>, 
-	Lai Jiangshan <jiangshanlai@gmail.com>, Zqiang <qiang.zhang1211@gmail.com>, 
-	Ingo Molnar <mingo@redhat.com>, Waiman Long <longman@redhat.com>, 
-	Mark Rutland <mark.rutland@arm.com>, Thomas Gleixner <tglx@linutronix.de>, 
-	Vlastimil Babka <vbabka@suse.cz>, maged.michael@gmail.com, Mateusz Guzik <mjguzik@gmail.com>, 
-	Jonas Oberhauser <jonas.oberhauser@huaweicloud.com>, linux-mm@kvack.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: 8bit
 
-On Fri, 18 Sept 2026 at 17:01, Paul E. McKenney <paulmck@kernel.org> wrote:
+On 19 September 2026 17:30:26 BST, Linus Torvalds
+<torvalds@linux-foundation.org> wrote:
+>On Fri, 18 Sept 2026 at 17:01, Paul E. McKenney <paulmck@kernel.org>
+>wrote:
+>>
+>> Its main benefit over RCU is that it allows fast reclaim of
+>> HP-protected pointers without needing to wait for a grace period.
 >
-> Its main benefit over RCU is that it allows fast reclaim of
-> HP-protected pointers without needing to wait for a grace period.
+>So last time I looked at this was some time ago, but the thing I was
+>missing then seems to still be missing: actual real numbers.
+>
+>And no, I most *definitely* do not mean the pointless "do this in a tight
+>loop".
+>
+>That's just garbage. Honestly, when I see those numbers it just makes
+>me go "I don't want to merge things that even mention this kind of
+>stupid load". It's worse than irrelevant - it's an actively
+>misleading.
+>
+>So I want to see a real load where this is actually visible not a
+>"loop a billion times on a hot-cache thing that doesn't do anything".
 
-So last time I looked at this was some time ago, but the thing I was
-missing then seems to still be missing: actual real numbers.
+I wanna be a fanboy so bad here but I need to breathe and say something
+technical 
 
-And no, I most *definitely* do not mean the pointless "do this in a tight loop".
+I think hazard pointers are good, what test do YOU suggest we do here?
 
-That's just garbage. Honestly, when I see those numbers it just makes
-me go "I don't want to merge things that even mention this kind of
-stupid load". It's worse than irrelevant - it's an actively
-misleading.
+Once I get that PowerPC grant I'm happy to run it.
 
-So I want to see a real load where this is actually visible not a
-"loop a billion times on a hot-cache thing that doesn't do anything".
+God I wanted to be a fanboy and say omg Linus hi, but I'm sure I'll be
+flamed, sigh. Sigh.
 
-               Linus
+>
+>               Linus
+>
+
+--- Thanks!
+"I'm not a very positive person" - Linus torvalds

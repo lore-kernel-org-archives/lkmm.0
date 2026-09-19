@@ -1,33 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 308232F3C07;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C28D3314DE;
 	Sat, 19 Sep 2026 00:01:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789776063; cv=none; b=L2U0CjJn+ZPVBFWPSSwRkXgjZKC2yTximbN2CrTaoQNT0QXshE/+fcK6mLggQFXXmtrZWrTh5CfHtGZceIHHqPIYJYCbwryZij0iMVrW7JLEScC39hERuN1yp7AapcoyFUcKHXbh0tqt9xLYHeeRd0XCMPX3b9uMM1QGm8Se7JQ=
+	t=1789776064; cv=none; b=qE/LyTUreK4A/Td/JQvPQwQ922MKTU0gBgHiSyb77jfGbDr0Iyreg4VODHXX6WiJDeX1nFn2NF3tCFxb7VWj/7xG68gVl+x53B/8tFsVB4uM4QPQ716Q0l22yGaIyL3rXxJqHDKrE1VaTmNMEVZUDFZcZBvfryNn7M6p4AT8yNQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789776063; c=relaxed/simple;
-	bh=BG/eIdCROidSSovw95vUlJ5Pw6+HBJ8lc7YJNiCSuag=;
+	s=arc-20240116; t=1789776064; c=relaxed/simple;
+	bh=iaZV3IG8J0Aiq2rSuuFWdI5UzAZ31i17fi4VmWM2hvc=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=Hy0anO/fGRCwX4xvwxSOJGy/riviTEpBL+sIIIbq0NJZdL4fSh9saVey6PJzKJrI/softTzuTR0lEoHYAFmcSTaTw0v/bBHeRKH9RFhAdJ8ynDoTOmSq3jOkeGf+0H+3J2ur8giqXtuHdwpoAreVh4t4cBCJ4dKWsRBe9JudIFg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Ewe9Wqed; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=LZ1Y/9n4l1laoCuGA+/6tqN99vweMY2CLEIXYieOCN1OuenH31hQlu0sEKkH4UnYxtYs3aNzUGY5NtUyk8T9dLJialx6ko1cjIPvAlUG59T4o73pc5p5bzAHhD7kMRb/EaQmMwO7t9p1YCGLFQ2RG6LyVS9YfHuT78vvROVZ4b0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=orBQ1UXH; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Ewe9Wqed"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB52C1F008A1;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="orBQ1UXH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E653C1F0089B;
 	Sat, 19 Sep 2026 00:00:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1789776059;
-	bh=f+uBQRZf1YNiOTbEfxFPeHZLB0uvmpwyoRT+Sxtsv/M=;
+	s=k20260515; t=1789776060;
+	bh=CnSiDLJ7QHHXSz6IC5OgMA66MRnY2X7v8dzQ1csx5U4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Ewe9Wqed6IXx0gFj4+hwxnlCAx6hiIa+IVAhoo88vl6w3aGdRJn5sF2F2ka7rxvVO
-	 MQunNLyhUsHIttQNusB7ahAMDkbNzVg+meW2qi9PrEAASuIeQ3bfbl2E8d+DbRm2Lp
-	 NRJY3tEGcfK1Wmxnq110nvf1G5n7KJhpATuO094y+V/WX20UA3Cky1ifNN+sMQODvh
-	 KHQzdCHIG/V/J2UnSUIyH1Af1Fuipv4LG2MNqV4jDVzf0DZPtNTXQBKhSpMsPOo0XM
-	 33J054ZnB6UfvQzZF8g8sJ77o5+kradOTiSIcjPf0cJQAXMN8EF3gKP5MnGV2ZOvPj
-	 sVQc2dhrit1Xg==
+	b=orBQ1UXHxoeJMcxVxFPHnJ27QqvFxuc8BKb2LuqneWF8NlkUW1qRekAmmfpS9w7kW
+	 ejubyANPdn/f0y+sSwd3qVq4I2oNgtCKd6hXtUcHv2assjsjeJF/L51Unv7vN3UE3o
+	 ZONiyd5WdRKJu2tErp7e4cil5+oFzD+NoWa6eWwOFVin1ehYR1y2N3x/GOTqSkm3bb
+	 tp0qImFujAtHlJYJjqgaYecC7zPz7W2FHz9QHD7b8av8IzpoBqP/dB5Hmt2KTx5HLF
+	 YfSSNh1pP9uuHV17NDbcugFknMQ3ql+xAvo6pPPJJBstBuWfC/nwaWOw19P/4r2d/X
+	 PL/Zb1wZtzicA==
 Received: by paulmck-ThinkPad-P17-Gen-1.home (Postfix, from userid 1000)
-	id 63054CE0ADA; Fri, 18 Sep 2026 17:00:59 -0700 (PDT)
+	id 6C835CE0C44; Fri, 18 Sep 2026 17:00:59 -0700 (PDT)
 From: "Paul E. McKenney" <paulmck@kernel.org>
 To: rcu@vger.kernel.org,
 	linux-kernel@vger.kernel.org
@@ -41,9 +41,9 @@ Cc: kernel-team@meta.com,
 	Kunwu Chan <kunwu.chan@gmail.com>,
 	Bradley Morgan <brads@mainlining.org>,
 	"Paul E. McKenney" <paulmck@kernel.org>
-Subject: [PATCH 09/28] hazptrtorture: Split hazptr_torture_reader_tail() from hazptr_torture_reader()
-Date: Fri, 18 Sep 2026 17:00:37 -0700
-Message-Id: <20260919000056.3132131-9-paulmck@kernel.org>
+Subject: [PATCH 12/28] hazptrtorture: Add irq_acquire to acquire hazptr from irq
+Date: Fri, 18 Sep 2026 17:00:40 -0700
+Message-Id: <20260919000056.3132131-12-paulmck@kernel.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <e9669b34-12c2-4cf2-a887-315f581f0789@paulmck-laptop>
 References: <e9669b34-12c2-4cf2-a887-315f581f0789@paulmck-laptop>
@@ -55,11 +55,13 @@ List-Unsubscribe: <mailto:lkmm+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-This commit splits a new hazptr_torture_reader_tail() function out
-of hazptr_torture_reader().  This will allow hazptr_torture_reader()
-to pass hazard pointers off to other tasks and to various types of
-handlers, and those hazard pointers can in turn be passed to this new
-hazptr_torture_reader_tail() function to complete processing.
+This commit adds the irq_acquire module parameter, which specifies how
+often hazard pointers will be acquired from an smp_call_function_single()
+handler.  For example, a value of 10 would result in one of ten
+hazard-pointer acquisitions taking place in a handler, and probably also
+death by excessive numbers of handlers.  A value of zero disables, and
+a value of -1 makes the frequency decrease as a function of the number
+of CPUs.
 
 Signed-off-by: Paul E. McKenney <paulmck@kernel.org>
 Cc: Boqun Feng <boqun@kernel.org>
@@ -67,83 +69,96 @@ Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
 Cc: <rcu@vger.kernel.org>
 Cc: <lkmm@lists.linux.dev>
 ---
- kernel/rcu/hazptrtorture.c | 42 +++++++++++++++++++++++++-------------
- 1 file changed, 28 insertions(+), 14 deletions(-)
+ kernel/rcu/hazptrtorture.c | 35 ++++++++++++++++++++++++++++++++---
+ 1 file changed, 32 insertions(+), 3 deletions(-)
 
 diff --git a/kernel/rcu/hazptrtorture.c b/kernel/rcu/hazptrtorture.c
-index c0ebabdcc72e..8672169f7868 100644
+index ff253fe35ca2..dc148894786b 100644
 --- a/kernel/rcu/hazptrtorture.c
 +++ b/kernel/rcu/hazptrtorture.c
-@@ -351,6 +351,31 @@ hazptr_torture_writer(void *arg)
+@@ -31,6 +31,8 @@ MODULE_LICENSE("GPL");
+ MODULE_AUTHOR("Paul E. McKenney <paulmckrcu@meta.com>");
+ 
+ torture_param(int, defer_modulus, -1, "Defer once per specified # of hazptr ops, zero to disable");
++torture_param(int, irq_acquire, -1,
++	      "Acquire hazard pointers from irq handlers once per specified #, zero to disable");
+ torture_param(int, kthread_do_pending_ms, -1,
+ 	      "Delay between cleanups for deferred hazard pointers (ms), zero to disable");
+ torture_param(int, nreaders, -1, "Number of hazard-pointer reader threads");
+@@ -351,6 +353,16 @@ hazptr_torture_writer(void *arg)
  	return 0;
  }
  
 +/*
-+ * Do the delay, the accounting, and the release.  This in intended to
-+ * be invoked from hazptr_torture_reader, but also for hazard pointers
-+ * sent off to interrupt handlers and the like.
++ * Acquire a hazard pointer from an smp_call_function handler.
 + */
-+static void hazptr_torture_reader_tail(struct hazptr_ctx *hcp, struct hazptr_torture *htp,
-+				       struct torture_random_state *trsp)
++static void hazptr_torture_acquire(void *hppp_in)
 +{
-+	int pipe_count;
++	struct hazptr_pending *hppp = hppp_in;
 +
-+	cur_ops->read_delay(trsp);
-+	preempt_disable();
-+	pipe_count = READ_ONCE(htp->htort_pipe_count);
-+	if (pipe_count > HAZPTR_TORTURE_PIPE_LEN) {
-+		// Should not happen in a correct hazptr implementation,
-+		// happens quite often for TBD torture_type=busted.
-+		pipe_count = HAZPTR_TORTURE_PIPE_LEN;
-+	}
-+	if (pipe_count > 1)
-+		rcu_ftrace_dump(DUMP_ALL);
-+	__this_cpu_inc(hazptr_torture_count[pipe_count]);
-+	preempt_enable();
-+	cur_ops->readunlock(hcp, htp);
++	hppp->hpp_htp = cur_ops->readlock(&hppp->hpp_hc);
 +}
 +
  /*
-  * Hazard-pointer torture reader kthread.  Repeatedly dereferences
-  * hazptr_torture_current, incrementing the corresponding element of the
-@@ -365,7 +390,6 @@ static int hazptr_torture_reader(void *arg)
+  * Do the delay, the accounting, and the release.  This in intended to
+  * be invoked from hazptr_torture_reader, but also for hazard pointers
+@@ -399,6 +411,7 @@ static void hazptr_torture_defer(struct hazptr_pending *hppp, struct torture_ran
+ static int hazptr_torture_reader(void *arg)
+ {
+ 	bool can_defer = !cur_ops->onstack_ctx && kthread_do_pending_ms && defer_modulus;
++	int cpu = 0;
+ 	struct hazptr_pending hpp;
+ 	struct hazptr_pending *hppp = cur_ops->onstack_ctx ? &hpp : NULL;
  	unsigned long lastsleep = jiffies;
- 	long myid = (long)arg;
- 	int mynumonline = myid % nr_cpu_ids;
--	int pipe_count;
- 	DEFINE_TORTURE_RANDOM(rand);
- 
- 	VERBOSE_TOROUT_STRING("hazptr_torture_reader task started");
-@@ -373,6 +397,8 @@ static int hazptr_torture_reader(void *arg)
- 	do {
- 		htp = cur_ops->readlock(&hcp);
- 		if (!htp) {
-+			// Still starting up or allocation failure,
-+			// so get out of the way.
+@@ -417,7 +430,16 @@ static int hazptr_torture_reader(void *arg)
+ 				continue;
+ 			}
+ 		}
+-		hppp->hpp_htp = cur_ops->readlock(&hppp->hpp_hc);
++		if (irq_acquire && !(torture_random(&rand) % irq_acquire)) {
++			guard(preempt)();
++			cpu = cpumask_next_wrap(cpu, cpu_online_mask);
++			if (cpu != smp_processor_id())
++				smp_call_function_single(cpu, hazptr_torture_acquire, hppp, 1);
++			else
++				hppp->hpp_htp = cur_ops->readlock(&hppp->hpp_hc);
++		} else {
++			hppp->hpp_htp = cur_ops->readlock(&hppp->hpp_hc);
++		}
+ 		if (!hppp->hpp_htp) {
+ 			// Still starting up, so get out of the way.
  			schedule_timeout_interruptible(HZ / 10);
- 			continue;
- 		}
-@@ -380,19 +406,7 @@ static int hazptr_torture_reader(void *arg)
- 			torture_hrtimeout_us(500, 1000, &rand);
- 			lastsleep = jiffies + 10;
- 		}
--		cur_ops->read_delay(&rand);
--		preempt_disable();
--		pipe_count = READ_ONCE(htp->htort_pipe_count);
--		if (pipe_count > HAZPTR_TORTURE_PIPE_LEN) {
--			// Should not happen in a correct RCU implementation,
--			// happens quite often for torture_type=busted.
--			pipe_count = HAZPTR_TORTURE_PIPE_LEN;
--		}
--		if (pipe_count > 1)
--			rcu_ftrace_dump(DUMP_ALL);
--		__this_cpu_inc(hazptr_torture_count[pipe_count]);
--		preempt_enable();
--		cur_ops->readunlock(hcp, htp);
-+		hazptr_torture_reader_tail(hcp, htp, &rand);
- 		while (!torture_must_stop() &&
- 		       (torture_num_online_cpus() < mynumonline || !rcu_inkernel_boot_has_ended()))
- 			schedule_timeout_interruptible(HZ / 5);
+@@ -634,14 +656,14 @@ hazptr_torture_print_module_parms(struct hazptr_torture_ops *cur_ops, const char
+ {
+ 	pr_alert("%s" TORTURE_FLAG
+ 		 "--- %s: nreaders=%d "
+-		 "defer_modulus=%d kthread_do_pending_ms=%d "
++		 "defer_modulus=%d irq_acquire=%d kthread_do_pending_ms=%d "
+ 		 "onoff_interval=%d onoff_holdoff=%d "
+ 		 "preempt_duration=%d preempt_interval=%d "
+ 		 "reader_sleep_us=%d "
+ 		 "shuffle_interval=%d shutdown_secs=%d stat_interval=%d stutter=%d "
+ 		 "verbose=%d\n",
+ 		 torture_type, tag, nrealreaders,
+-		 defer_modulus, kthread_do_pending_ms,
++		 defer_modulus, irq_acquire, kthread_do_pending_ms,
+ 		 onoff_interval, onoff_holdoff,
+ 		 preempt_duration, preempt_interval,
+ 		 reader_sleep_us,
+@@ -785,6 +807,13 @@ static int __init hazptr_torture_init(void)
+ 	if (torture_init_error(firsterr))
+ 		goto unwind;
+ 
++	if (irq_acquire == -1) {
++		irq_acquire = 1000 * nr_cpu_ids;
++	} else if (irq_acquire < 0) {
++		pr_alert("Cannot have irq_acquire (%d) < -1, disabling.\n", irq_acquire);
++		WARN_ON(IS_BUILTIN(CONFIG_HAZPTR_TORTURE_TEST));
++		irq_acquire = 0;
++	}
+ 	reader_tasks = kzalloc_objs(reader_tasks[0], nrealreaders);
+ 	for (i = 0; i < nrealreaders; i++) {
+ 		firsterr = torture_create_kthread(hazptr_torture_reader, (void *)i,
 -- 
 2.40.1
 

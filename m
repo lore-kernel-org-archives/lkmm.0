@@ -1,64 +1,64 @@
-Received: from mail-pj2-f42.google.com (mail-pj2-f42.google.com [74.125.227.170])
+Received: from mail-pj2-f12.google.com (mail-pj2-f12.google.com [74.125.227.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68D024CCDCC
-	for <lkmm@lists.linux.dev>; Tue, 22 Sep 2026 07:10:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.227.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12664511E97
+	for <lkmm@lists.linux.dev>; Tue, 22 Sep 2026 07:10:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.227.140
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790061028; cv=none; b=NVeSzayXyR2Q1Q4CbVKpU1pFwy9AoJaKoW/7VDJwTtaIR3qQDnfgb3VPHO9s8Hlkogu7xOLngsrWq3HsAMwlZscK41Mp0d88ysiXsc4NPkEeT5sKYT9P+ALIbKspoT7zX8G6pVXEcfop18u0L/4RFTOXlvkGoLySAyqfoAK/UbQ=
+	t=1790061038; cv=none; b=So1JFFmrQ0XGTQUy2z0vZjkHQO/oJuAIyzVwoNuZniwz9FSzUtwJtnHsanew/qmWLPPaz3+4XVlTiSMppOtp0GtFtnv2ZE+HIo/7Ula4Kdx3E9w/RoZtKLl6cd8HaIYQ2zzUUXVtPQibqkcddapqLNyduSP/XZg1xkB5i7xqgsA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790061028; c=relaxed/simple;
-	bh=Z5Gkdx2wsDeiiFNXcQT9qA1i2avBskmfCcp53LcmQc4=;
+	s=arc-20240116; t=1790061038; c=relaxed/simple;
+	bh=m4OHMwMbzXlh2XQ6c0Igw8Fqh29mNUw6HniKWr6Zo5A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nAjzTGCXcanXfWz+0cyzod4656DrLbRXSUokG7OfPsa64rMUrE/3yfZiGXMRAWEZLe0v/NSQIQrrnGRo3YufSRSRhTNz1Gt1qxHCUDENexOfB4D9HK2DrhLk1osfdSrr3JOdJAeR1xr5xi86J0A++Fy4LMWpYTFlqn+CqMfbYA8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=WMzYeIzm; arc=none smtp.client-ip=74.125.227.170
+	 MIME-Version; b=i0POIwhQm3nr5uSEw35gpVD6mgX77oB/z4YNeLM0f906cTdK1eXiJK23re6QeilKB2SsrrBSpQv/2RJUzYTYC03FMc6Zuif7/AorHH9X0vZ5Sg7SQNAmzIhQl0XMdvGSjyQzaJPkXSVkL+pxauu3TtT+bHJOiBShFzvN5EJX2Jg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=si6Hc0bg; arc=none smtp.client-ip=74.125.227.140
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WMzYeIzm"
-Received: by mail-pj2-f42.google.com with SMTP id 98e67ed59e1d1-396ccafb74fso3622908a91.3
-        for <lkmm@lists.linux.dev>; Tue, 22 Sep 2026 00:10:26 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="si6Hc0bg"
+Received: by mail-pj2-f12.google.com with SMTP id 98e67ed59e1d1-39b910bdf2eso2621384a91.2
+        for <lkmm@lists.linux.dev>; Tue, 22 Sep 2026 00:10:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1790061025; x=1790665825; darn=lists.linux.dev;
+        d=gmail.com; s=20251104; t=1790061035; x=1790665835; darn=lists.linux.dev;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=AVuEObhXGSApyrXTtBablhdwNNS63ZjQVW0XfLpFgyY=;
-        b=WMzYeIzmapGQhvzB8qNU/3fXmd7z01bpHi65G2iPMN9oRjsHxLqLsouqnfdcKBkBTF
-         g4LxAwBwJadDQNQSHpT4hIQOSUJ342dttpdQeo9JlhGC/A9XbCKktOq+hgGKQhnrnhfg
-         IAF6Z+I/YmfitSp1xDAGW0dzA0PLzdBsbXD80UgLZw8HrhcO6AssbLPTmrvRGiulQDGl
-         LXN/H7aEDFAn+8dGQ05m7SpUcO+8UaIenfoGx+iyqk3L/JmVa2FdC949k/O44FH0bGBV
-         qyqW0wT15h0oOQ5EoE1+gySTNT9HnAixj2Bo1EcMw/5UT8JTbDrwzAXcp5bPMvJxv/SN
-         panQ==
+        bh=y92+ar2Zyy71HW4Z81q+yVXNw3aTL5K091H9SB9aDmE=;
+        b=si6Hc0bgvhUMVIZnyLZr3sSvK3q9apEmxUrxKDTmY8qyyN7SdOLN6Oz+cmmqxHrP4Q
+         0+hA1rJxLz+RZRhSUw2mCGOM6U5MQJB64qPvo2Oo9PWzq6FxIzNPVbGvGmaHMvhEQbfk
+         9X8bQEJHUxfmRgC05NxaAeIL83jgZbSc6l2PDy6pjE5vYCR1IVqrB9F7St70af7gZp56
+         RGa2t8E7w3xcIE3VcwnG5vGUQoYAcJCGNVYdbCN1rSMjpjdkRGJNR0OYq/wMMiBWD5Nz
+         JeMlgLIgcIZ3PWOXlS8VYhiy28qxLHwRkfxihevuHeCzEe/bVygGARcOlkV+ODlWOnM1
+         kKEg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1790061025; x=1790665825;
+        d=1e100.net; s=20260707; t=1790061035; x=1790665835;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=AVuEObhXGSApyrXTtBablhdwNNS63ZjQVW0XfLpFgyY=;
-        b=C5tcez/V5xtIgYNY+H/m6t9FYDoPxLKeH2VVgROA9eBdC2myLFFsutYW5OC7S8UHC+
-         qUwLk26R49s2DXA6t0kqLmGsXNLCU74srywQbofb8aEAsa9HzYIEIVHgH+owF0xle8Zj
-         Ur6rIxbU8mDA6nxRE5RRmqrVCrzoZzsZdTsYWhIywdCAe41JIplXjS8JtjhvWu5dHuEM
-         ZMGfcUFC8eXeOMCo88yHTxtW+0Qq+K0oBrDM4k4AuyxbdTqLaN1lWg0BO9sjRw/Qt+ON
-         RwX4UCIIMYJ1uLixUqxuBYcB13oXoInSpn0rvPqOczN2URndyxGGYOJ/REtQIfFVht8T
-         Eq5w==
-X-Forwarded-Encrypted: i=1; AKwUvBxPinZZTpQSRhDjxQGVU+fh1g8tsHiwOJA/pt2QI5kTDZZTN/g1Czr8RorxBVtxbKeOVorN@lists.linux.dev
-X-Gm-Message-State: AFuF++m4yiKRN5ZjRc6E5pJY0CCKtMIHDQ9JyMudfApWA+tlVbFD/EJm
-	T1zI/jDE14ohx6pRhxlBBPtMXX/RzYg5iGsl5qNhIbLPonTL5SEw1Man
-X-Gm-Gg: AYBFou3x6priFOQvojQZc+giyXi2o4kO5Ir9Sm2GIvlshphl08loDeWobxneRgpbyaC
-	64t23wFe5bz68lYnJ2CFVmmM26BMAHd3YDgwhS6mi54hNCHF63hK2M/7xn67mijiOma5YSthgVs
-	b1AuRetfDBK55dlCIrkv/HAc5M9K0AdhlsTl1jVl9bfTuHIlGoQ4XPkSzuC2shyFK5gXTJZEInF
-	H4zJxOMaiFWz5gwoH0iczgs4JW1atqAmygXzup9R6aVgbhQQBfncHW7m43dy1uGzoCh/VSIfWhl
-	l2wwmvBJK5LoI8uG8Zcm8atzq4NgjqZQLV49Yc7sdDa/DMIJpdmihTvVJCrNHf7peqaAAkRURJz
-	/6fR/Fn/qIGq1TKPaSFOacXZQHSVrqGdgSlb9IykP5wMbfBznemUC03RQKPFOWDXROudeCSyYmP
-	HHvIcThEcZPr3PYCgr25a3LYwHPb1ozZMRhk8ENu7HmFP0ucNfp9ExErxhbNKBb104ZKjnBvhxu
-	a4YjLlKc+x2iuoemA==
-X-Received: by 2002:a17:90b:4d8f:b0:39e:6a7f:eef1 with SMTP id 98e67ed59e1d1-3a0731ef87bmr231688a91.22.1790061025401;
-        Tue, 22 Sep 2026 00:10:25 -0700 (PDT)
+        bh=y92+ar2Zyy71HW4Z81q+yVXNw3aTL5K091H9SB9aDmE=;
+        b=AYpPlaEhpHPdp3E/mTddgb8p/MjqMzq8ETwyQLBQwSxt6pfmR2XYU09sFAjnS2oIG6
+         CBMzkAanUUuUFDfLoOb2egCo+/QaLTT1qvkFQbz7S+pmX89DrMvpDzr2RFSp4Nm6cL04
+         Hrw1Iuaf3SVcKvN3lJYcP5DK43c8vlU0ncWE5V3URPom5iY4bUJcHzzMCjQcqYmkxcui
+         cl9pxxm7memCjQXTic3OktHsv/fMjcmLruOVoorR0gVzjiVASBFTK+cOxy9TheOtkov1
+         Mt9bUIujQi1x8ujEbE7mmMHIq5vU1Vee9WkYUtWyvfQOgJNv6dYCS84ODuZcz5LiFNZh
+         YfhA==
+X-Forwarded-Encrypted: i=1; AKwUvByjY6hbQYR5ke1CJaL+jLXbjtEEYifBh1IhfcUD0KwSsV//CuFeQ4eNvPZBswr3UAhYNGJQ@lists.linux.dev
+X-Gm-Message-State: AFuF++nU+bAPNn+sXfSou4mO+W8JF3aE3wOSMBPwg/H9nUnb/XHq2Dza
+	KarqsEE4EK27ZuDyaC+V1ms6vaetbpGq6LZUVXoMDRUKf7rB1/QiSWsl
+X-Gm-Gg: AYBFou2F3gftmvKkEXftMugNQm77PpIUZYV7twI7A625AFQ0NpyA+gLMsF83H5CFZLh
+	My0Mq9yojfe6N0GmBNH54RcNItsZqXD+gxWb/U2tw6qVvqsiyjB4nmbpCz3OEIy/Mp1+/n4zgM/
+	w/DlO54B6WNhZ0dQGmkLHcfiy2UZw4tvIUMQHY0hhkNxgtQ8cIBa2r+U9MoSaoIdSNcQ9KRz8Wn
+	nM+wHXYZ1s5cGK7/HQUY+VXVeIPZ90xchmUuIH3uLhMJmhhXiDcSLinEuImjQ0JyxAyV5r1GCwC
+	YLC1RMLFmjOa3Z39inbkB2tGOgSNp2GqDItbeLYpf/19jK481pWPz/KzPNtLWhN5TrGhWack/fQ
+	oI5lBcvc6yLh0Y9Qr40UdW60PduqcZDfd3Y9Kqb7rAzjVXwt0LpchhTNlqhIRFDXTU2q+MzwLvV
+	W7IITNa7qKDU5WOHWoVkJ5t/QGAFfdquxIILIiPlvOhRX2aV9CfgS13lD5G1rbHceehDiKnx4yM
+	A/KrtSVltIq7FWTiQ==
+X-Received: by 2002:a17:90b:3806:b0:39e:6c6a:2091 with SMTP id 98e67ed59e1d1-3a073235b91mr260254a91.50.1790061035059;
+        Tue, 22 Sep 2026 00:10:35 -0700 (PDT)
 Received: from kernel.tail6741c6.ts.net ([185.220.238.42])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3a067409854sm3079414a91.7.2026.09.22.00.10.16
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3a067409854sm3079414a91.7.2026.09.22.00.10.25
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 22 Sep 2026 00:10:24 -0700 (PDT)
+        Tue, 22 Sep 2026 00:10:34 -0700 (PDT)
 From: Kunwu Chan <kunwu.chan@gmail.com>
 To: stern@rowland.harvard.edu,
 	parri.andrea@gmail.com,
@@ -95,9 +95,9 @@ Cc: akiyks@gmail.com,
 	linux-doc@vger.kernel.org,
 	rcu@vger.kernel.org,
 	lianux.mm@gmail.com
-Subject: [RFC/WIP PATCH 2/4] locking/lockdep: use hazptr to wait for dynamic key lookups
-Date: Tue, 22 Sep 2026 15:09:48 +0800
-Message-ID: <20260922070950.4173245-3-kunwu.chan@gmail.com>
+Subject: [RFC/WIP PATCH 3/4] rcuscale: add hazptr scale type
+Date: Tue, 22 Sep 2026 15:09:49 +0800
+Message-ID: <20260922070950.4173245-4-kunwu.chan@gmail.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260922070950.4173245-1-kunwu.chan@gmail.com>
 References: <20260922070950.4173245-1-kunwu.chan@gmail.com>
@@ -109,82 +109,110 @@ List-Unsubscribe: <mailto:lkmm+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-lockdep_unregister_key() waits for is_dynamic_key() callers with
-synchronize_rcu_expedited(), which sends IPIs to every online CPU.
-Have is_dynamic_key() mark the hash bucket with a hazard pointer
-and use hazptr_synchronize() to wait specifically for those
-traversals.
+Add hazptr reader and synchronize operations so that synchronize
+latency can be measured alongside RCU and SRCU.
 
-The hash bucket address from keyhashentry() is stable, making it a
-suitable hazptr synchronize target.  The rest of the key hashlist
-lifetime (hlist_del_rcu/call_rcu) remains RCU-based.
-
-This adapts the lockdep use case from Boqun Feng's hazard-pointer
-series to the current hazptr API.
+The read side acquires the hazard pointer in readlock() and holds
+it until readunlock(), matching the RCU/SRCU reader model.  The
+address of a static object serves as the synchronize target, which
+is stable and never reclaimed.  Both normal and expedited sync map
+to hazptr_synchronize(), since hazptr has no expedited concept.
 
 Signed-off-by: Kunwu Chan <kunwu.chan@gmail.com>
 ---
- kernel/locking/lockdep.c | 30 ++++++++++++++++++++----------
- 1 file changed, 20 insertions(+), 10 deletions(-)
+ kernel/rcu/rcuscale.c | 65 ++++++++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 64 insertions(+), 1 deletion(-)
 
-diff --git a/kernel/locking/lockdep.c b/kernel/locking/lockdep.c
-index c56a7f91d72e..f67d847f9abf 100644
---- a/kernel/locking/lockdep.c
-+++ b/kernel/locking/lockdep.c
-@@ -58,6 +58,7 @@
- #include <linux/context_tracking.h>
- #include <linux/console.h>
- #include <linux/kasan.h>
+diff --git a/kernel/rcu/rcuscale.c b/kernel/rcu/rcuscale.c
+index 1097ec15879c..072ddf9526c3 100644
+--- a/kernel/rcu/rcuscale.c
++++ b/kernel/rcu/rcuscale.c
+@@ -39,6 +39,7 @@
+ #include <linux/torture.h>
+ #include <linux/vmalloc.h>
+ #include <linux/rcupdate_trace.h>
 +#include <linux/hazptr.h>
+ #include <linux/sched/debug.h>
  
- #include <asm/sections.h>
+ #include "rcu.h"
+@@ -418,6 +419,66 @@ static struct rcu_scale_ops tasks_tracing_ops = {
  
-@@ -1280,14 +1281,24 @@ static bool is_dynamic_key(const struct lock_class_key *key)
+ #endif // #else // #ifdef CONFIG_TASKS_TRACE_RCU
  
- 	hash_head = keyhashentry(key);
- 
--	rcu_read_lock();
--	hlist_for_each_entry_rcu(k, hash_head, hash_entry) {
--		if (k == key) {
--			found = true;
--			break;
-+	/*
-+	 * The traversal is protected by a hazard pointer rather
-+	 * than an RCU read-side critical section.
-+	 */
-+	{
-+		struct hazptr_ctx ctx;
-+		void *bucket = hash_head;
-+		void *addr;
++#if IS_ENABLED(CONFIG_HAZPTR_TORTURE_TEST)
 +
-+		addr = hazptr_acquire(&ctx, &bucket);
-+		hlist_for_each_entry_rcu(k, hash_head, hash_entry, 1) {
-+			if (k == key) {
-+				found = true;
-+				break;
-+			}
- 		}
-+		hazptr_release(&ctx, addr);
- 	}
--	rcu_read_unlock();
++static int hazptr_scale_obj;	/* Stable, non-NULL, never reclaimed. */
++static void *hazptr_scale_ptr = &hazptr_scale_obj;
++
++struct hazptr_scale_state {
++	struct hazptr_ctx ctx;
++	void *addr;
++};
++static DEFINE_PER_CPU(struct hazptr_scale_state, hazptr_scale_state);
++
++static int hazptr_scale_read_lock(void)
++{
++	struct hazptr_scale_state *state = this_cpu_ptr(&hazptr_scale_state);
++
++	preempt_disable();
++	state->addr = hazptr_acquire(&state->ctx, &hazptr_scale_ptr);
++	return 0;
++}
++
++static void hazptr_scale_read_unlock(int idx)
++{
++	struct hazptr_scale_state *state = this_cpu_ptr(&hazptr_scale_state);
++
++	udelay(10);
++	hazptr_release(&state->ctx, state->addr);
++	preempt_enable();
++}
++
++static unsigned long hazptr_scale_completed(void)
++{
++	return 0;
++}
++
++static void hazptr_scale_sync(void)
++{
++	hazptr_synchronize(hazptr_scale_ptr);
++}
++
++static void hazptr_scale_sync_exp(void)
++{
++	hazptr_synchronize(hazptr_scale_ptr);
++}
++
++static struct rcu_scale_ops hazptr_scale_ops = {
++	.ptype		= 0,
++	.readlock	= hazptr_scale_read_lock,
++	.readunlock	= hazptr_scale_read_unlock,
++	.get_gp_seq	= hazptr_scale_completed,
++	.gp_diff	= NULL,
++	.sync		= hazptr_scale_sync,
++	.exp_sync	= hazptr_scale_sync_exp,
++	.name		= "hazptr",
++};
++
++#define HAZPTR_SCALE_OPS &hazptr_scale_ops,
++#else
++#define HAZPTR_SCALE_OPS
++#endif
++
+ static unsigned long rcuscale_seq_diff(unsigned long new, unsigned long old)
+ {
+ 	if (!cur_ops->gp_diff)
+@@ -1110,7 +1171,9 @@ rcu_scale_init(void)
+ 	long i;
+ 	long j;
+ 	static struct rcu_scale_ops *scale_ops[] = {
+-		&rcu_ops, &srcu_ops, &srcud_ops, TASKS_OPS TASKS_RUDE_OPS TASKS_TRACING_OPS
++		&rcu_ops, &srcu_ops, &srcud_ops,
++		TASKS_OPS TASKS_RUDE_OPS TASKS_TRACING_OPS
++		HAZPTR_SCALE_OPS
+ 	};
  
- 	return found;
- }
-@@ -6683,11 +6694,10 @@ void lockdep_unregister_key(struct lock_class_key *key)
- 	 *
- 	 * Some operations like __qdisc_destroy() will call this in a debug
- 	 * kernel, and the network traffic is disabled while waiting, hence
--	 * the delay of the wait matters in debugging cases. Currently use a
--	 * synchronize_rcu_expedited() to speed up the wait at the cost of
--	 * system IPIs. TODO: Replace RCU with hazptr for this.
-+	 * the delay of the wait matters in debugging cases. Replace the
-+	 * expedited RCU wait with hazptr_synchronize().
- 	 */
--	synchronize_rcu_expedited();
-+	hazptr_synchronize(keyhashentry(key));
- }
- EXPORT_SYMBOL_GPL(lockdep_unregister_key);
- 
+ 	if (!torture_init_begin(scale_type, verbose))
 -- 
 2.43.0
 

@@ -1,214 +1,151 @@
-Received: from LO3P265CU004.outbound.protection.outlook.com (mail-uksouthazon11020080.outbound.protection.outlook.com [52.101.196.80])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pz2-f42.google.com (mail-pz2-f42.google.com [74.125.228.42])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6FC3340416
-	for <lkmm@lists.linux.dev>; Sun, 20 Sep 2026 15:57:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.196.80
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789919866; cv=fail; b=hAzZmezsRr9KKhGOWw3J18QzE6FEtZjVP6BrLG/X5DPQMWmbKrStI4yIfWqN3pofT71YeV7PjHKhZ+BRKUXUA7AVafW+WRxoz42LrZWVVkAY20K4Ywyd4rrVEpsuQ/hG547YjYn+oAbIrMYbgvmzvlPXs02jFEyRn2SE7e1Q+eU=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789919866; c=relaxed/simple;
-	bh=vqC5oYyTNgIW+WKHAg5iBtq3HF/94lrEvbNL7k9JFiI=;
-	h=Content-Type:Date:Message-Id:To:Cc:Subject:From:References:
-	 In-Reply-To:MIME-Version; b=Z8Zdo5ahj/NPfM2DY5udSg+KLHon7Uo5dEuQZV3dY4AMr5+pVuehhFItiSMlrlbx8IbQbXFDgSrMy/yDp88R2oPY7k9G0BM2NSFYRrk1F599hiOWcoQyg3oEU+2bUItHNgdVplPzw0CooYpwO4d3z+o7FmmZNuWA8T9Rvcbc7RM=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=garyguo.net; spf=pass smtp.mailfrom=garyguo.net; dkim=pass (1024-bit key) header.d=garyguo.net header.i=@garyguo.net header.b=sesO1D7N; arc=fail smtp.client-ip=52.101.196.80
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=garyguo.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=garyguo.net
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFCE9502D71
+	for <lkmm@lists.linux.dev>; Tue, 22 Sep 2026 07:10:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.228.42
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1790061007; cv=none; b=P9Tfs9QFZf+nVU+9wyLvTMsaynLJJPBPsubntRWrhRSyncjUkctw1wJTJTVZOlka3IA0DWvzEy60R74FZhc1xGfBgvWHCI01+ms57zZW5rkW5IYtzXU+oO/g6SttVc9TITWF4/rX17dDHU/T4kQtYfX/o6y5HCvHK/Uq8bIBI0s=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1790061007; c=relaxed/simple;
+	bh=IT4Omxoh3UL/os4MBcvDO0Y3uwCbEQ/6SyGtTM/wD+k=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=Yj8CT5xhhhkO1aVDdA0mHSMcfQypnEpo/osNgOhUE7VkyeLneJydVO4oF30gMd4Eoqt78w3gNkM14c12cZoHKjnW4zc1m/DKSFXk2XxLAQzO1J+vxueI6cXgLvmcBWddbn7yj6IjTdqAUUg7U/uhpBOdWEewo5jrZu2bCjhtEUw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=brnaJGYA; arc=none smtp.client-ip=74.125.228.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=garyguo.net header.i=@garyguo.net header.b="sesO1D7N"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=LFi7wLc/p4hNXTApQtQGb6Z4PxWG2ted3TcKF5ldsdfaU3eGGbRbMkmHSqlca+ug9cBN4UezojRRLmca9exP/5LEJwbPiy3rfT4Em9P0g6ufIKgN1EWi7mrn0/x2WQFKllrzVN7Xj5fECgyJG1I3O38s7i5zubr+GJFubQ0N8u1VD7kS2V/PpWb0sA7GwSjkpocn8gbkcwjIGGUDX8BxQFlP/NfbLVcGT2fsXkdmxQ63FRh54J5IanGM1tXR2832MEwhJYIFMkIxucmKsKut40316CsJ1ygNvuAUOOwRBUVVSsoIBFENJoccLL8j+bHvVJSOZSIfoNLfHFGhVfmrOQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=vqC5oYyTNgIW+WKHAg5iBtq3HF/94lrEvbNL7k9JFiI=;
- b=aubKa7JTWARrfaXM6y5EB6k4ERHNTuEcBJeZwZi1dzWDRaWTbR/M1Y7dK0gliZGD+/ffBn2r5PUrSGysqCotYp0f7kbyUBPF/YoO0yJyFTYM1mvCMVE6/+eZhZCLTPOM7UkkZCbmNV8UopJjA95J+8peEvJGRRbcQcyrUo5z9FCp6I4EfIDfUw3XnRa39/tuJf3D/diI8BTEI7gm2D15ir4/MyKftAodoT+lQdZgivxccxJbuZ2F578hl4fW0EXj5toiw2F0PfGf43nepN6ohMo4FXP4TQwv4/HLtlezK+IgD+IntjCciJxW9zCYEFolXlySwkbikE+0s3u11CeIhQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=garyguo.net; dmarc=pass action=none header.from=garyguo.net;
- dkim=pass header.d=garyguo.net; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=garyguo.net;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=vqC5oYyTNgIW+WKHAg5iBtq3HF/94lrEvbNL7k9JFiI=;
- b=sesO1D7Nb2bX74lpU76SlMV08w6cZsywDPBGAEjAdP7vc4qfKXLsj0eR7RNbNPpu593ABfA1gWxqVrOEeCUaqCZgVzekjOiqWP40LBAYjek4XY1RXEvMaaBLIYoHPNB3RjX+iC8P4P7aGxyBnhb8/kkdQfaSh162h+MC7garWUU=
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=garyguo.net;
-Received: from LOZP265MB8551.GBRP265.PROD.OUTLOOK.COM (2603:10a6:600:4b4::24)
- by CW1P265MB7573.GBRP265.PROD.OUTLOOK.COM (2603:10a6:400:1d9::13) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.428.16; Sun, 20 Sep
- 2026 15:57:40 +0000
-Received: from LOZP265MB8551.GBRP265.PROD.OUTLOOK.COM
- ([fe80::c07d:488c:d4aa:2a4a]) by LOZP265MB8551.GBRP265.PROD.OUTLOOK.COM
- ([fe80::c07d:488c:d4aa:2a4a%4]) with mapi id 15.21.0428.011; Sun, 20 Sep 2026
- 15:57:40 +0000
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Sun, 20 Sep 2026 16:57:40 +0100
-Message-Id: <DLK9MW1N86KD.2GRWUAD2NX4FU@garyguo.net>
-To: "Mathieu Desnoyers" <mathieu.desnoyers@efficios.com>, "Gary Guo"
- <gary@garyguo.net>, "Paul E. McKenney" <paulmck@kernel.org>,
- <rcu@vger.kernel.org>, <linux-kernel@vger.kernel.org>
-Cc: <kernel-team@meta.com>, "Boqun Feng" <boqun@kernel.org>, "Steven
- Rostedt" <rostedt@goodmis.org>, <lkmm@lists.linux.dev>, "Zqiang"
- <qiang.zhang@linux.dev>, "Wang Lian" <lianux.mm@gmail.com>, "Kunwu Chan"
- <kunwu.chan@gmail.com>, "Bradley Morgan" <brads@mainlining.org>, "Bradley
- Morgan" <include@grrlz.net>
-Subject: Re: [PATCH 26/28] hazptr: Implement two-phase wildcard scan
-From: "Gary Guo" <gary@garyguo.net>
-X-Mailer: aerc 0.22.0
-References: <e9669b34-12c2-4cf2-a887-315f581f0789@paulmck-laptop>
- <20260919000056.3132131-26-paulmck@kernel.org>
- <DLK84KYP9NRK.2254MY7D9AU11@garyguo.net>
- <51044724-7c3d-4200-b0d3-540a31d95804@efficios.com>
-In-Reply-To: <51044724-7c3d-4200-b0d3-540a31d95804@efficios.com>
-X-ClientProxiedBy: LO4P123CA0015.GBRP123.PROD.OUTLOOK.COM
- (2603:10a6:600:150::20) To LOZP265MB8551.GBRP265.PROD.OUTLOOK.COM
- (2603:10a6:600:4b4::24)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="brnaJGYA"
+Received: by mail-pz2-f42.google.com with SMTP id 41be03b00d2f7-cc1cea50dc3so2759857a12.3
+        for <lkmm@lists.linux.dev>; Tue, 22 Sep 2026 00:10:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1790061005; x=1790665805; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=l6nOkseLD4E1uvlk7kwNFkZGEal1mrhs8j7yziX25N0=;
+        b=brnaJGYAW2bzqcupZWX8w6ZFBpi7rt+pGKKY3Kp5uz1uqMUDsJlTWheUG/+cgYsbBu
+         WO6YG6rnYsLqCEmQUmHjkDHpucLihMH1nOonDtx7R7szHg/StsjpY2aSiSUZObEI/m6J
+         6OR6F0tQI18D8h0zTWRWCDlxr2TtoBWm3WPsbHLhb5Q+8bggqZTKREaBs0aHJDbXAmOL
+         Fbn2O4H+FD+sFC9lpXKkn+ACUl7kHZa57Y3nILsWpj0rblhEsbwIh+yiHsbDEg4HpcIf
+         xncQYV838ebFKSU1iiWtK5FZtvI/YIq8PJ6xEsdt811Y/UfZePOmbHSZzo7w5tiDBcis
+         63LA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1790061005; x=1790665805;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=l6nOkseLD4E1uvlk7kwNFkZGEal1mrhs8j7yziX25N0=;
+        b=ikLfetC7xi2guGsJIvihNAyg0pRzDoToHN6X0S+S6mVzRFHIbhz3F0TuOdJX5RCbsy
+         YEA+0enhA89EtvZWNRr/IQj0XR/8aVJ5Iq18OxsDbC1mYqCv4qCULX68jrJVQEPVS5Jn
+         vU8Vh6pbpXNbY6FPpr6x/1PZjMIrALA80GRmPiu7xxojtu5Ifj1at+Qkqbk3vQe4ZqHL
+         Y3qy9O9tcD33+ZSxh/CjyD2xC6wPL0bmZpp5I3GLXB1mjqRh/KvmoKp9o6NxQkT82oXk
+         xRhNO8iGC4xCAT1XhuNUloFMHs5j1/yhXKfQBVcvXlD/pYihG39Andl8iteXWSbNLagB
+         5wuw==
+X-Forwarded-Encrypted: i=1; AKwUvBx3LBTDIg3vnqvMKDbIgZlPbDi+tqxkFic8u3sJGudrf3sX9MJDyOJmNwUASCkoApA3e8tt@lists.linux.dev
+X-Gm-Message-State: AFuF++m0KtuAtloRMaPbXfTrQ+LJiStY3Uf5XRzbJqQSktm5TykbwaRk
+	VZJZTEYGyUJboSLJUHK3KJTlb5+54qqOjoGfPPX3OQauHc8cLetFPg5G
+X-Gm-Gg: AYBFou0U01vf+EkXXillBMuV/p8WViCVamKa82ICKY+4dcWmTUwTEVwX/kiXXrJE2SC
+	lNFjn4q575/L4Q726YQvp+KvyxEbmZCHzKZncLEK9DHbhdZn1L0Xlz4gnrMGnvSWDHiZw6LrPc6
+	SWH6+n0GoxBhxSTMXf+8S9bPZkwadhqRCB5/tm4MWNSIYFjMmiuzlIaJ8EIIASkLJ4RpE7QSFXK
+	O8fssKf6GoCr0eGqn2GrjFvleGK6sag8I65s8L041MMXIKBSHuPN2cfXPt4oRamli4vF0kU+wy/
+	J8mhkiLWR2mVG5dSNfxfCceqf+ob5ur9fk0hbG/125hX1B/E1mYcAVoZrlomte3Ggvf0gRfgSVZ
+	ZuXmpcfRS7GUvj/qbD61RHQCtLU3gC9H/ql2g5lbh3XxYu+7bFEDwV+U4XplQyvgxYLGBaIw5g5
+	WS2tw69bUL63ekn31uyfsiEOnZfHEBf38bR0B34UWSMYjtRbqo+LnNJ1lcdRL8ZCY1BD1X6pS9h
+	IEFCPKIMLZw56D5CA==
+X-Received: by 2002:a17:90b:5404:b0:3a0:2900:f577 with SMTP id 98e67ed59e1d1-3a07324277emr253812a91.51.1790061004682;
+        Tue, 22 Sep 2026 00:10:04 -0700 (PDT)
+Received: from kernel.tail6741c6.ts.net ([185.220.238.42])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3a067409854sm3079414a91.7.2026.09.22.00.09.55
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 22 Sep 2026 00:10:04 -0700 (PDT)
+From: Kunwu Chan <kunwu.chan@gmail.com>
+To: stern@rowland.harvard.edu,
+	parri.andrea@gmail.com,
+	will@kernel.org,
+	peterz@infradead.org,
+	boqun@kernel.org,
+	npiggin@gmail.com,
+	dhowells@redhat.com,
+	j.alglave@ucl.ac.uk,
+	luc.maranget@inria.fr,
+	paulmck@kernel.org,
+	corbet@lwn.net,
+	mingo@redhat.com,
+	dave@stgolabs.net,
+	josh@joshtriplett.org,
+	frederic@kernel.org,
+	neeraj.upadhyay@kernel.org,
+	urezki@gmail.com
+Cc: akiyks@gmail.com,
+	dlustig@nvidia.com,
+	joelagnelf@nvidia.com,
+	skhan@linuxfoundation.org,
+	rdunlap@infradead.org,
+	longman@redhat.com,
+	rostedt@goodmis.org,
+	mathieu.desnoyers@efficios.com,
+	jiangshanlai@gmail.com,
+	qiang.zhang@linux.dev,
+	kunwu.chan@gmail.com,
+	include@grrlz.net,
+	linux-kernel@vger.kernel.org,
+	linux-arch@vger.kernel.org,
+	lkmm@lists.linux.dev,
+	linux-doc@vger.kernel.org,
+	rcu@vger.kernel.org,
+	lianux.mm@gmail.com
+Subject: [RFC/WIP PATCH 0/4] hazptr: add shared scan path and lockdep use case
+Date: Tue, 22 Sep 2026 15:09:46 +0800
+Message-ID: <20260922070950.4173245-1-kunwu.chan@gmail.com>
+X-Mailer: git-send-email 2.43.0
 Precedence: bulk
 X-Mailing-List: lkmm@lists.linux.dev
 List-Id: <lkmm.lists.linux.dev>
 List-Subscribe: <mailto:lkmm+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:lkmm+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: LOZP265MB8551:EE_|CW1P265MB7573:EE_
-X-MS-Office365-Filtering-Correlation-Id: 64f9d6ac-68b4-4dc3-ac14-08df172fe667
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|23010399003|1800799024|366016|7416014|376014|10070799003|10067099003|4143699003|56012099006|18002099003|22082099003;
-X-Microsoft-Antispam-Message-Info:
-	ovy/Zs3a8yuepaoZpTnL3JSXTjFNkq9W+pPB8MWEV+151O9W0h5iA0Mx8J9FJv6poMkLBw7jSDJ8+AyQJfgGI4KgDTcOS46otOQ87CZYWeJAINeKxTaGVmOS/9HA5eTxyeKYXtPZ+Jm5ww8RTk0MFdQLevxHRAId0yQgNVo24xRx/Fq1OouIvrvXbahL/RTEOD6mDU+i5ObksDSedczG2lAkRGRo8xM8uMlsqR6w6L4iHPP8J8hLjR0kubBJG7NYwjmW8Vci/CVHO7wof/2eiUGlUwIx8a8Fhck3j8jVqlKf8sVBKVS+8saGcV6Lz67JKk0elr2REY/fX04HOohMVbMwWCc4n/WLz1nfyaK6vU+fC313iyUWvk8z+1MafjtIDyz40sAd4ON4laIbQT0259FCwF+mCWrFWEYUYnVO4iC2CazeBDrtT0g7qXJ0uuCML9tj8x8GGm738FdE44yukFJQCMoHv0pMea7Yye5lghEO1nTT35diPRK4pfTbxj7fozoz94WwkqROAEDMZnYa8ZQFmv00vuvK6tjtzmCmHY7as+E3ZTNuN4Cc/zUd0t7kmuZjLHx729FCLRLYp3RIFdEovCcelBGt7EIxBfILVXyLgsNJyQ0Sq9N78Yt8dG0sYbiVIfvmuaHMq3/jdigtkv07KAdT8uFpZ6EAPBiruls=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:LOZP265MB8551.GBRP265.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(13230040)(23010399003)(1800799024)(366016)(7416014)(376014)(10070799003)(10067099003)(4143699003)(56012099006)(18002099003)(22082099003);DIR:OUT;SFP:1102;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?utf-8?B?OUhLZXk1SkxlUnI1L0xzeUJyUXNwUGY0MkZwRHNsNUhwN09LVXdxS3Y1SzJG?=
- =?utf-8?B?N1hIY0ZlNFRHTFpzQmk4RFRVeVZoTWpFc2Y4RU5idG56UVZ5THlUczVVQjdR?=
- =?utf-8?B?ZUphREp2ZVZKVHpRVWxKb3RYbmlGQ1E2UlBucm05a0RlazhxSEpzN1d6WlYz?=
- =?utf-8?B?Um5BSFBQM21KY1BxS2JoMlFaZTkxby91NlNvRHA0YVVqWkVUcWZ0eU1WYmZB?=
- =?utf-8?B?Z2F5RVR3d1lReTRJOEZQSDR0b0FVWWgwbEFxSk40d2dWYXM3N2cycDRBWGNL?=
- =?utf-8?B?ZTZaRVN6bUZ5NUM4Z2ZtRGp2NE04Q3RUb1F3b2xqZUc1N0VydUpKYTJ4ZmFK?=
- =?utf-8?B?NG9xMVo3MFV0RXFNQzlwYk5DWm5jaUlkQ3o4L1gxa1NwWkkrc0IyL3R4NHo2?=
- =?utf-8?B?U1drY0VubXI2WiswcGRZeEM3RnFCUER4eGF3WEMrWFZHQ2svNmp2bkNLMTBj?=
- =?utf-8?B?L21nL3I5Z21BK0d1RGg5QnRjbkZvTUFOZGFsb09lc1ZMQm9LYjRGQm5BZEFp?=
- =?utf-8?B?aXNxMzdXTXJvamEzSE1IY0MyblNkVklGNTFKR2g2Z2V5Wkszalp2YWFlc3Fq?=
- =?utf-8?B?Zm1YSU1kWjF5c0FkK3EyN3Y5YThsWDQ2dUR0NVBaazJUaHNlcHlKZU9wRTMx?=
- =?utf-8?B?a28zU2FyQVFaMGVwNDZhcXZKenh6M1I3QkVSSGZHMm9UYkhWT0M5YmkzMzMx?=
- =?utf-8?B?bWcwUGNmYWN5OWdXdStOZUplUklPbnRNK2dveUI4R214TVdIdDdVRFJ2d1Ix?=
- =?utf-8?B?ZHRBM1RDQzNMVkRvYkx2bGVKcmRsN3ZjV3RUbEhWRlg2MkozWTJjbXR1dEs2?=
- =?utf-8?B?YThQZGlWWUpYUzRQTlRSRldxQVpWS3FDSWNYOXF4bFRQeUxRWHFiQzA3cmxI?=
- =?utf-8?B?eEpmWmwxOFNwcXJXVlV4T1o5UktuOSs5SXJTUjlnQlNFL2Q2ZjlJUzcwck1j?=
- =?utf-8?B?RWVHOUxLYk8xY1dEOUptVXMvUUJmRTNGbWxUNyt2TlYyK2srTGdlMjN5MTR3?=
- =?utf-8?B?SnJKTzFicHNOZS8rZVJxSTJYVjhOQmhERyswRGFpUlNEdGYzaGdPek56Sk5T?=
- =?utf-8?B?bDJsRUp6aUY3cThBQWw5Z3FkWjNIaGNIU1plU000aTlRRU1ZU1R3ZmRNeVBP?=
- =?utf-8?B?UHhKMDg2V3FlZ2IzdmxhVXNZVnlmZGQ4OTltTVlxcmFYcDlmQUd6c1p1T3h3?=
- =?utf-8?B?aXlqMkpXbEt5SHUrbkR6a01zR2pWc1FzUHNVNytNbFpYd2pBUkdQZHlWWnMz?=
- =?utf-8?B?THhtOWdWR202ckV2NnZ0MzY0UU83aVFheHN3dTVTUE5kSmlLYkRnSHdoMm1n?=
- =?utf-8?B?QWdTbmNGamFjMktia3dTN3Zjbk1QdDJoQjFZNVdrenRHRHgzMlpsWWZ3ajhl?=
- =?utf-8?B?aDlKdnMwbnRHd1FRcFRvVFJGcUkxQ2xWSkRrL2RNVTF0ZnpFUkFURklSVHRV?=
- =?utf-8?B?ektNWG9TeWJJclh0cmVWaVU4dExRc0FNazRDSHc4bkY4aXgwNEIzNWp4NUpB?=
- =?utf-8?B?UW5FNUlPcXF3aHVEeHNMd09yL1RKaTc3aUwvdkRsS1J6YlJIUXVGMVNKT001?=
- =?utf-8?B?YWV3MDI4MFVYb2tjS3p6QzVXdUpYUndWVS9Qc0tkMXhxdUhIbzNpOTJ4ZUVQ?=
- =?utf-8?B?MEZpdkpUSEpJVklTZDRhcWgwSG9UL1Q0Z1NkN1RJdWcyZ2Y1R3RRODZQckhx?=
- =?utf-8?B?MXdCWGI2MHJ3Z1hkcjh1TUp2ek84TEFmY0FhYXFUNTlERXJKNDF0RXYzdFNv?=
- =?utf-8?B?b1RmemV1VkJWZUVEV2ZMZHRJMFM3ai9qSjA1RUhUb05tZEJzcUZDVzJLVE9W?=
- =?utf-8?B?Z1pxUVNhZytHYlJ1YUY0QVhtUzhwY3N6UkxDKzU5QUpqYW1GQlBhcHdrMFRF?=
- =?utf-8?B?Um9jTHArUGIrL3prSGF6T20xQlJ5K01IR2tvRVhmTkNyd0tRbWlaRnVSWmtn?=
- =?utf-8?B?eHk2Z1llNTI0K1NhUXdkZVgybjg5ckJDbm8wVDQ0MVp3TnFZQ3JBNyt3Vk9Y?=
- =?utf-8?B?REF5TkpaU3NyVjNnRE9HcGxucDBxMFBuY0RRa2NQSE55MDZuTWNDeEpUaC8z?=
- =?utf-8?B?aWtZalEvYTlBNjNCMEpvdGVaZkk2bWk4Q2d2a0pYTVZQLzJ5NnFYVEhIRi9T?=
- =?utf-8?B?Z0phNWlraE9Va2J3bXdJR1RsU1VyYUZ4Nm9UYUYxT25jd0kxL3ZhQkQ2MWdk?=
- =?utf-8?B?bXhXQUorL1FQZjRLMG5wOU9IWkFaL1dMSzlqdG5qRHRXaHVZV0ZTNE5jNTV6?=
- =?utf-8?B?TUY3VGp6SzI4VW1tWE1nSnFEaTB1OHZDL1FLSmJwUUlKZ3hoZGZQSElMejAv?=
- =?utf-8?B?N2pZUHFGT0dEWks0WHhuSytKWW1aei9HRDNEUjRPSVR5TzdNaXRnQT09?=
-X-OriginatorOrg: garyguo.net
-X-MS-Exchange-CrossTenant-Network-Message-Id: 64f9d6ac-68b4-4dc3-ac14-08df172fe667
-X-MS-Exchange-CrossTenant-AuthSource: LOZP265MB8551.GBRP265.PROD.OUTLOOK.COM
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 20 Sep 2026 15:57:40.7207
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: bbc898ad-b10f-4e10-8552-d9377b823d45
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: 7F596VerL1wcJTZDo+g+Tp+N5ZTYL/IkaXOqi7gwucOohyWa95TFxcM17iRGZnjei0akR0ubkqYFdAfb7NVYqw==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CW1P265MB7573
+Content-Transfer-Encoding: 8bit
 
-On Sun Sep 20, 2026 at 4:44 PM BST, Mathieu Desnoyers wrote:
-> On 2026-09-20 10:46, Gary Guo wrote:
->> On Sat Sep 19, 2026 at 1:00 AM BST, Paul E. McKenney wrote:
->>> From: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
->>>
->>> Implement a two-phase wildcard scan to guarantee forward progress of
->>> synchronize_hazptr() even if there is a steady stream of ill-timed
->>> readers which populate wildcards into per-CPU slots.
->>=20
->> Hmm, I am not sure that I understand the problem here. The per-CPU slot =
-is
->> scanned only once per CPU, and patch 1 already introduces flipping of th=
-e
->> overflow list. What prevents the forward progress?
->
-> A steady stream of readers acquiring and releasing various hazard
-> pointers happening concurrently with the percpu slots checks, being
-> unlucky enough that each of the slot is constantly in a "wildcard"
-> state, thus preventing forward progress of the synchronize, just with
-> a steady stream of individually time-bound readers.
+Hi all,
 
-Oh, so the issue is that we cannot progress over a single slot, because wit=
-h
-ill-timing a new iteration of the inner loop of "smp_cond_load_acquire" cou=
-ld
-see a new reader while waiting for the slot to be released?
+This RFC/WIP extends the current v3 hazptr implementation [1] and
+adapts the lockdep use case from Boqun Feng's earlier hazptr series [2]
+to the current hazptr API.
 
-So, in essence, the flipping is used to prevent ABA problem on percpu slots=
-?
+[1] https://lore.kernel.org/all/20260919000056.3132131-26-paulmck@kernel.org/
+[2] https://lore.kernel.org/lkml/20250625031101.12555-1-boqun.feng@gmail.com/
 
->
->>=20
->> I think having a shared global read by all CPUs sounds really undesirabl=
-e,
->> especially that it gets flipped for each hazptr_synchronize -- this mean=
-s that
->> in the pathological case where there are a steady stream of hazptr_synch=
-ronize
->> calls, each fast-path hazptr_acquire will have a cache miss reading
->> hazptr_wildcard.
->
-> There is a straightforward optimization we can do if this happen to
-> cause performance issues: only do the flip when the synchronize
-> encounters a wildcard retry delay beyond a specified threshold.
-> So we ensure synchronize observe the absence of both wildcard
-> values in each cpu slots, and only flip the current wildcard on retry
-> delay.
+The lockdep conversion replaces the expedited RCU wait in
+lockdep_unregister_key() with hazptr_synchronize() for dynamic-key
+lookups.
 
-Another option would be avoid using WILDCARD if possible. IIRC the wildcard=
- is
-used to ensure forward progress on the reader side, so it avoids the possib=
-ility
-of READ_ONCE(*addr_p) changing before and after protecting.
+The series also adds a shared-scan kthread for concurrent
+hazptr_synchronize() callers, rcuscale support, and an LKMM test
+for the acquire-before-scan ordering.
 
-One option would be to first use the typical hazard pointer impl that read =
-the
-pointer twice, and when that fails, use the wildcard protection. This would=
- mean
-that in the common case where the hazptr_acquire does not race with a point=
-er
-update, the WILDCARD protection is not used at all.
+I tested the lockdep path on a 96-CPU ARM64 KVM guest with Boqun's
+original mq workload [2]. With a multiqueue virtio-net device
+(`-device virtio-net-pci,mq=on,vectors=6`), tc mq add/del x100
+completed in 850 ms with hazptr and 860 ms with expedited RCU.
+The rmmod workload similarly showed no measurable difference
+(1360 ms vs. 1380 ms over 10 runs). There were no crashes or hangs
+in these tests.
 
-Best,
-Gary
+This is still RFC/WIP. I would appreciate feedback on the shared-scan
+design and the lockdep conversion.
+ 
+Kunwu Chan (4):
+  hazptr: add shared-scan kthread
+  locking/lockdep: use hazptr to wait for dynamic key lookups
+  rcuscale: add hazptr scale type
+  Documentation/litmus-tests: add hazptr acquire-before-scan test
 
->
-> This would prevent the common "frequent" synchronize case you
-> mention from causing cache misses on the read-side.
->
-> But I preferred to keep it simple and wait until we hit this
-> level of synchronize call throughput until adding that extra
-> complexity.
->
-> Thanks,
->
-> Mathieu
+ .../hazptr/hazptr-acquire-before-scan.litmus  |  49 ++++
+ kernel/hazptr.c                               | 274 ++++++++++++++++++
+ kernel/locking/lockdep.c                      |  30 +-
+ kernel/rcu/rcuscale.c                         |  65 ++++-
+ 4 files changed, 407 insertions(+), 11 deletions(-)
+ create mode 100644 Documentation/litmus-tests/hazptr/hazptr-acquire-before-scan.litmus
+
+-- 
+2.43.0
 

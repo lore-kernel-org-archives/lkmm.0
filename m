@@ -1,191 +1,223 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm2-f12.google.com (mail-wm2-f12.google.com [74.125.225.140])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DAD4429CEC;
-	Tue, 22 Sep 2026 08:51:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790067114; cv=none; b=Kv7Hz5M7B4jyTEagiEDSvBidot+wS+bGtyiCcnjqVeCpAa3T6fcVSUqnR1knzg6+/b4JYzqAoI/70FI62Mdz4R2zLr1xJdXIKrmJL19BYBdKvO+M+P/SjHv+ISrE7fK7tCUzwU7T68bRVOTzyXM42RyhevTrKDgxu4Z/54x/U4M=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790067114; c=relaxed/simple;
-	bh=2Z5Qn60EBb1PnLpPsZn1SPhgCYhV7AGPoEY5wZRgjYE=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=k0WakB9ziIQa7M17hMuaLac4wK/UtSYjWFmmnyWav/VfR9TTbu0Tpm2LaAxUw7Xd3MTxZisGYD5r8m7ckzSGeN+RdGTeVKcahjSwduAcgkUTzNM7vSmY0rms6X0tqbmADIt3AMGvO2k6tXDzH5Vo8Lbw4iedVBFxBVZCvTy061Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=lbvCQH93; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF8A44E73C5
+	for <lkmm@lists.linux.dev>; Tue, 22 Sep 2026 09:56:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.225.140
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1790070981; cv=pass; b=URWoS0f89CMjd4WuWZxtOniv3slHaZB28OJI3RNHieAz7HMrkf3aP6pe97PiMzn4kvHjjjKwoWghQnw23fMrLAFtfVPecYUTn/ye+neCO+iQdlvI6I/ErdesdFQb0l8ZoQc+8PCW9IoVwmieu+qEggIT/Zci+RLffrrkqYuNpKQ=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1790070981; c=relaxed/simple;
+	bh=xCgswTJ/xMHw1lRSMwJ1pqZUnBBu1pooak+t1aa0pNc=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=a414oGeHBJbCk7XlcfBOwYmYSOO6xpwtO5wsn+Y7Z8elsQ2iYGLKC0Lne3rKKZPEoWg87oVV8pavCfy822GSF8ckkjHG2KH4yLOBtZq/YZhT2RU9jZq798ixx4oof0RHQwBn6cVpwwJmf82MAq4zwyijVteTbCJzfzSjGTy4LIc=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=BF68gJeE; arc=pass smtp.client-ip=74.125.225.140
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="lbvCQH93"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 517431F00899;
-	Tue, 22 Sep 2026 08:51:52 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1790067112;
-	bh=Rf220kPvSZHePWxrXLumbg4sIvzSq9oPJ6+CYXZV+kY=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=lbvCQH93gnMPeu+WxM9t8m930LaMWZVLPFyqWebUHcC6bzlwpxg/ZYiqIFWXUPvtp
-	 zQpoQT3vlwF24pE3KPr44lAWD2XIoes+tYKF68WvqV42MNbH/glIiADbC9pFTJcHi1
-	 TdM78Oi/KQfrTsHkbfEx4QlbJldl0T1LxAFUKeo6kUfo1A7Ba3py33ZPfbZGsMEmNe
-	 V7UZCnuDEsz6EFotxHh1UgoZ2HVXSEX2K6gRFNKN9O3FvMswA8snbq7fb3we1LG3H6
-	 laO/7FrBPBzHD2PHsO3sEOTxc9lk6M8lo9GAURe7ohhbvvndXp48a0nlmrsIBhGsH+
-	 vJU/EqUe5xUig==
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
-	by mailfauth.phl.internal (Postfix) with ESMTP id 6AF62F40066;
-	Tue, 22 Sep 2026 04:51:51 -0400 (EDT)
-Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-06.internal (MEProxy); Tue, 22 Sep 2026 04:51:51 -0400
-X-ME-Sender: <xms:p0GyallCIJ245yua978p68HSdMpENIh5TPbVfd2MoRD4cY87cXh4vg>
-    <xme:p0GyanqbhN4H1_Yl9w6MKcrGGUJbCPLXBftJ7w90BduMbHSviNnuTxLS48-O89jeW
-    1-0wfiOvWfdE_7D6yRh2fj9O5qLDLsIMP09dsURWUytZJp58xjRKA>
-X-ME-Received: <xmr:p0GyakllK-AKhk0O7c9iGw4_dmJ2PmLMJnoTIOBwf9F99t_Eh3lmTMPTdpnIbSvlEPkZ7OWEHup5C5NIeL4I1rMOyxyzdPrkJGN-Sk49YJqSMxq3ecVSeXaa>
-X-ME-Proxy-Cause: dmFkZTEy36KmC5z4mpGoh+ErYZsOWD36SPeiGtyIfXZzW33o1dun4y/KdVBmMRSlhAXBIC
-    MsPpfyHDf4nuPxptFgu9Y8O7f+lHMGV33upldO6ejgKpDORUtbLS4jZ9TxFLdGEhSskNdh
-    31JTNaS5eYfbZA8V5oNXxXU0Uswv/eqJAhy3YHj5FLwE76vQLSmLL5lpPb9niaxvJBxQFM
-    Zk0Y36KK135SVAHo0J6iIlNRKatzbdORnIPB6tgdaVzv606Ufa1xsD4U/KQTAXrU6/3O53
-    7S7hajYvAtweWv8iLUY9XKzwivWkyZ5liKtKtDyr0qFrSRtDb//2hnSIgysFO3fnNPluiX
-    ng7LS8vOL4mVzGd3AH8mqcYXGPZX5h2XInrGbDCuu5K3XR6QMwtgtSoX4u+wfkhTdKf0Cm
-    XlyWt6aVO9jlDH7K4oHQPd7Sd1/xyen65RwC9c3TZa/2sOwrG2qLQG3MbmPrWs/F5WhqoN
-    LmV6zmQFOx3VRm7ivI14DSg3lEOTFghBcVvAu7LU4vekPAd8rGamaT/u3XTKVlmqzFJI62
-    Y4ncMUx9YfMmaTYcuupDSEW93QJdaoc+lzYxbE4wnHIi3OCie0+f6lXnF9vTSVKLugO/8H
-    HHGkEMjbqGLooP3tBy72emz5FZnYsaeiH1W6lYxV2OgHukFsEoOOxVnOZ0Yg
-X-ME-Proxy: <xmx:p0GyaoaBxzRD8nC1j0Z65NG67pGEoCg4xtA_ydAzU44860hqcPVlpw>
-    <xmx:p0GyaoENiXKtHslCfa4oPWhTrMZs-3JQQKB5re090vwsWNq8c0dUog>
-    <xmx:p0GyajMOV5oX6N1hpD8JLlc_IM76rie_RhtUCXxgfbRBSsClSm5hHA>
-    <xmx:p0Gyamwal0lyR6aHFMlS3Lq_QYi-Ctrbu6_3aIFKemyHYNunBGHFLw>
-    <xmx:p0GyaomQDK6YGp85hzl7Fs_2E-_gaZnS58KJNdh8kUFg0qFAAeXn9Ter>
-Feedback-ID: i8dbe485b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 22 Sep 2026 04:51:50 -0400 (EDT)
-Date: Tue, 22 Sep 2026 10:51:49 +0200
-From: Boqun Feng <boqun@kernel.org>
-To: Kunwu Chan <kunwu.chan@gmail.com>
-Cc: stern@rowland.harvard.edu, parri.andrea@gmail.com, will@kernel.org,
-	peterz@infradead.org, npiggin@gmail.com, dhowells@redhat.com,
-	j.alglave@ucl.ac.uk, luc.maranget@inria.fr, paulmck@kernel.org,
-	corbet@lwn.net, mingo@redhat.com, dave@stgolabs.net,
-	josh@joshtriplett.org, frederic@kernel.org,
-	neeraj.upadhyay@kernel.org, urezki@gmail.com, akiyks@gmail.com,
-	dlustig@nvidia.com, joelagnelf@nvidia.com,
-	skhan@linuxfoundation.org, rdunlap@infradead.org,
-	longman@redhat.com, rostedt@goodmis.org,
-	mathieu.desnoyers@efficios.com, jiangshanlai@gmail.com,
-	qiang.zhang@linux.dev, include@grrlz.net,
-	linux-kernel@vger.kernel.org, linux-arch@vger.kernel.org,
-	lkmm@lists.linux.dev, linux-doc@vger.kernel.org,
-	rcu@vger.kernel.org, lianux.mm@gmail.com
-Subject: Re: [RFC/WIP PATCH 2/4] locking/lockdep: use hazptr to wait for
- dynamic key lookups
-Message-ID: <arJBpQyOQf3AJ4cA@MacBook-0RXW5>
-References: <20260922070950.4173245-1-kunwu.chan@gmail.com>
- <20260922070950.4173245-3-kunwu.chan@gmail.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BF68gJeE"
+Received: by mail-wm2-f12.google.com with SMTP id 5b1f17b1804b1-49b912d3920so26823215e9.1
+        for <lkmm@lists.linux.dev>; Tue, 22 Sep 2026 02:56:16 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1790070975; cv=none;
+        d=google.com; s=arc-20260327;
+        b=GRGKrAENUn/8dq00Pht/WWamVT7KR0Nk5iTz/gcI6iS2Byu0kodBwnT7qahBfpfapq
+         Uuks9BxpdlflmhSliVycH0hE5FAOsF2Cr0AF67Wq4T0CCu225ajIwAa6IQrbg8J1QCG8
+         rBW7abMPpAvn8ebIfCREgzuPKFZGvefFJBYMqApfg4DrQK/JG4iJbzp5bN0Yj0mtVDHN
+         0s2IPpixpDA70dgk3MT67YAW+ooaODdNrvA3gM3t2JqUeoAiUZuDj974pG4f1MnYjgQG
+         4InTMlSFOGhlN+7J5FlzD9cWgazglGNMqoxrPzV91PH7y0YWwcvsAKj9u+qSJvE0BB3T
+         ChCg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=Mpmxz+siGJavhOivfMHQvVZY8OjM6RnPvSbr/e5q99c=;
+        fh=55PhjZFKEmF8U53jka4iIhNqSD9NJHbvaVXY62E2VPs=;
+        b=qMrJE63zp7JrNvZrhx02aaXoPwYniOSXNUnRgpLl1yGwpGp9wppjKzgcpwDLfcrCo2
+         HljW3y5vR3f/B0Hq9FRH6Btgph05K22fyUjURB7Dotw2/qDUUn/FO0JwLCkKY0659yGV
+         ilewiJqjCOVT5bEJUXtL4jFn1yRB5aZ0hGIiW0AWxYpvkpsoAFjW728YCZv8T5PK76eX
+         iBv7uxH7x8yBlJ5FALuWnoRF9bIcV6T8bvgVBgiNN9vff4yBw4EhcnZJYw6ZFvUrLOGH
+         kguWyLAQF8aAGMMbNivUMvXmz8YbQCWTSL2ezUJaZ1mirMC0GwTZ9UGscFml7V4GN+ev
+         SCJg==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1790070975; x=1790675775; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=Mpmxz+siGJavhOivfMHQvVZY8OjM6RnPvSbr/e5q99c=;
+        b=BF68gJeED2ngY+/UT80mjDrhZgJUCc+tqZ/lAJuEQUCoVob79snbL2SuU46g1G8Tak
+         MR05sRkIw8ddljLdcTZRM+tBRvSbEwelomB9kpnPENRIudCAnyLYYTImj0sjAylfjv08
+         4pKBe/eg7jj0z0BSYLgcEBh7Ibegs7bhKrEYh0Bf8+3Zp6vUK//iPYRVdlAF9FzXeird
+         lZDC2jy/mjI2H8EN/bVmhEPuiMevMdZzc14ufmOi+O4PmgD2aqv+doZ3VIJD4Iz8cQ0L
+         4bJjuuzwDGBErMUqaa+L8Si5W3yBWeGI1doP4T+YruSimnqzr0vodANpjsPyL5R4ElS+
+         1waA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1790070975; x=1790675775;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=Mpmxz+siGJavhOivfMHQvVZY8OjM6RnPvSbr/e5q99c=;
+        b=odptFYwLIYtj8t3sP47B+pCYOPOt4Eur0iP2crkF+FMGNN0/ZiQvOqrnJ8pcn+if2O
+         m5Io1BBhffxp2Hya645SlEZY5JLFjQj9SYTkG4xIsAyv6EVc/jrtBy62u9sqWVJ6EahT
+         X+NjZM3TOd5hjQ7HuWvO+Nk/ndmYWfzpHwsJjaGsuqbfVkGXm+ZNIgqGLA1igdUQLVpG
+         OyYz4OiCQJM5IIlMceIT6OAG+AqAQyynrhmcoPmvNDVXo/9abm155e42D9o5d5K4q4iR
+         1h7Pdy10i73Vg94l/bBwiRow34csWZH2xjhlg9prQTTOp2b15JuszwfcODAzykYCnAPi
+         ld2w==
+X-Forwarded-Encrypted: i=1; AKwUvBwzVYSkcrk3ntjDpmi8kwGUrpiytGho0DDy/g6jQRzDuZiekFJEd5aHva4UY2UHZOVvx8lA@lists.linux.dev
+X-Gm-Message-State: AFuF++k83FkguaH3HaO2bxu0jpTVbW3Tl53ji/rzn2BPf/ZZhES/ysZc
+	Kw9P8yoOTuMKaL9iAzp4dUS08qyyA8dAK4S5pAb3S84uMgd86I4m4ldEpt5MjuEpnkJ0lSgN12T
+	vNoiZ2Z1qtocTygpkbmgeWRDrWMKS09k=
+X-Gm-Gg: AYBFou2G+AxHgJiv28sv8VOESbxTbMh6Md+anTrEmTUTVGuNv0IxhsQOZV3KqlG9Aw0
+	QBHJ2ceUJszMBpYngP8GoA3x+cSestXJygUsZcIH0xFJlna0ZvsCctkErfyXSbnTB7ln5gY88z6
+	T1dCehnIBF52keCAokiTtP/4nHAAw+Ui2cRmupCZvXiW4jTa5GBbZ74VZVjtWirJGf+kz5AmMqf
+	F3Aku93jK/4Vx0EHjJdUKXu7BKYqO16PVLgkfizg7+QJzeTldB79O1MVvdmPkCZHR3y9M7pD8fI
+	MvTD4X4TLe31HqUxZNsggixtxLqo8b+gWY+JJj/2Q73Os8ETyDpAy9cg6uipFJarudvqgKQIyFi
+	DxWj2YyEDj3RmEg==
+X-Received: by 2002:a05:600c:34c1:b0:49e:799a:8951 with SMTP id
+ 5b1f17b1804b1-49fc56aba0dmr207997635e9.11.1790070974214; Tue, 22 Sep 2026
+ 02:56:14 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: lkmm@lists.linux.dev
 List-Id: <lkmm.lists.linux.dev>
 List-Subscribe: <mailto:lkmm+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:lkmm+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260922070950.4173245-3-kunwu.chan@gmail.com>
+References: <20260922070950.4173245-1-kunwu.chan@gmail.com> <arIyx4BaA2eArvYM@MacBook-0RXW5>
+In-Reply-To: <arIyx4BaA2eArvYM@MacBook-0RXW5>
+From: KunWu Chan <kunwu.chan@gmail.com>
+Date: Tue, 22 Sep 2026 17:55:57 +0800
+X-Gm-Features: AcwNN1WuirzzkFb6JjmLl9oXFf7utj_0mv7EZ3p-lcOEdTyD2DTvMQxEs2mG2t0
+Message-ID: <CAN_Opa_kZ1bwgVw5k9E2KkLkK1WP3+J_=n8GW2m83zZMwXVEYQ@mail.gmail.com>
+Subject: Re: [RFC/WIP PATCH 0/4] hazptr: add shared scan path and lockdep use case
+To: Boqun Feng <boqun@kernel.org>
+Cc: stern@rowland.harvard.edu, parri.andrea@gmail.com, will@kernel.org, 
+	peterz@infradead.org, npiggin@gmail.com, dhowells@redhat.com, 
+	j.alglave@ucl.ac.uk, luc.maranget@inria.fr, paulmck@kernel.org, 
+	corbet@lwn.net, mingo@redhat.com, dave@stgolabs.net, josh@joshtriplett.org, 
+	frederic@kernel.org, neeraj.upadhyay@kernel.org, urezki@gmail.com, 
+	akiyks@gmail.com, dlustig@nvidia.com, joelagnelf@nvidia.com, 
+	skhan@linuxfoundation.org, rdunlap@infradead.org, longman@redhat.com, 
+	rostedt@goodmis.org, mathieu.desnoyers@efficios.com, jiangshanlai@gmail.com, 
+	qiang.zhang@linux.dev, include@grrlz.net, linux-kernel@vger.kernel.org, 
+	linux-arch@vger.kernel.org, lkmm@lists.linux.dev, linux-doc@vger.kernel.org, 
+	rcu@vger.kernel.org, lianux.mm@gmail.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Tue, Sep 22, 2026 at 03:09:48PM +0800, Kunwu Chan wrote:
-> lockdep_unregister_key() waits for is_dynamic_key() callers with
-> synchronize_rcu_expedited(), which sends IPIs to every online CPU.
-> Have is_dynamic_key() mark the hash bucket with a hazard pointer
-> and use hazptr_synchronize() to wait specifically for those
-> traversals.
-> 
-> The hash bucket address from keyhashentry() is stable, making it a
-> suitable hazptr synchronize target.  The rest of the key hashlist
-> lifetime (hlist_del_rcu/call_rcu) remains RCU-based.
-> 
-> This adapts the lockdep use case from Boqun Feng's hazard-pointer
-> series to the current hazptr API.
-> 
-> Signed-off-by: Kunwu Chan <kunwu.chan@gmail.com>
-> ---
->  kernel/locking/lockdep.c | 30 ++++++++++++++++++++----------
->  1 file changed, 20 insertions(+), 10 deletions(-)
-> 
-> diff --git a/kernel/locking/lockdep.c b/kernel/locking/lockdep.c
-> index c56a7f91d72e..f67d847f9abf 100644
-> --- a/kernel/locking/lockdep.c
-> +++ b/kernel/locking/lockdep.c
-> @@ -58,6 +58,7 @@
->  #include <linux/context_tracking.h>
->  #include <linux/console.h>
->  #include <linux/kasan.h>
-> +#include <linux/hazptr.h>
->  
->  #include <asm/sections.h>
->  
-> @@ -1280,14 +1281,24 @@ static bool is_dynamic_key(const struct lock_class_key *key)
->  
->  	hash_head = keyhashentry(key);
->  
-> -	rcu_read_lock();
-> -	hlist_for_each_entry_rcu(k, hash_head, hash_entry) {
-> -		if (k == key) {
-> -			found = true;
-> -			break;
-> +	/*
-> +	 * The traversal is protected by a hazard pointer rather
-> +	 * than an RCU read-side critical section.
-> +	 */
-> +	{
-> +		struct hazptr_ctx ctx;
-> +		void *bucket = hash_head;
-> +		void *addr;
-> +
-> +		addr = hazptr_acquire(&ctx, &bucket);
-> +		hlist_for_each_entry_rcu(k, hash_head, hash_entry, 1) {
-> +			if (k == key) {
-> +				found = true;
-> +				break;
-> +			}
->  		}
-> +		hazptr_release(&ctx, addr);
+On Tue, Sep 22, 2026 at 3:48=E2=80=AFPM Boqun Feng <boqun@kernel.org> wrote=
+:
+>
+> On Tue, Sep 22, 2026 at 03:09:46PM +0800, Kunwu Chan wrote:
+> > Hi all,
+> >
+>
+> Hello Kunwu,
+>
+> > This RFC/WIP extends the current v3 hazptr implementation [1] and
+> > adapts the lockdep use case from Boqun Feng's earlier hazptr series [2]
+> > to the current hazptr API.
+> >
+> > [1] https://lore.kernel.org/all/20260919000056.3132131-26-paulmck@kerne=
+l.org/
+> > [2] https://lore.kernel.org/lkml/20250625031101.12555-1-boqun.feng@gmai=
+l.com/
+> >
+> > The lockdep conversion replaces the expedited RCU wait in
+> > lockdep_unregister_key() with hazptr_synchronize() for dynamic-key
+> > lookups.
+> >
+> > The series also adds a shared-scan kthread for concurrent
+> > hazptr_synchronize() callers, rcuscale support, and an LKMM test
+> > for the acquire-before-scan ordering.
+> >
+>
+> Thanks a lot for picking up this, much appreciated.
+>
+> Do you happen to play a bit with rcuscale and see any performance
+> difference between hazptr_synchronize() vs synchronize_{s}rcu() on
+> various configs?
+>
+> > I tested the lockdep path on a 96-CPU ARM64 KVM guest with Boqun's
+> > original mq workload [2]. With a multiqueue virtio-net device
+> > (`-device virtio-net-pci,mq=3Don,vectors=3D6`), tc mq add/del x100
+> > completed in 850 ms with hazptr and 860 ms with expedited RCU.
+> > The rmmod workload similarly showed no measurable difference
+> > (1360 ms vs. 1380 ms over 10 runs). There were no crashes or hangs
+> > in these tests.
+> >
+>
+> You could also use /proc/interrupts to measure the IPI counts during the
+> whole operation, and you should be able to see the difference there.
 
-This looks good to me. However, we probably want to use scoped_guard()
-here, that means cleanup.h support for hazptr.
+Hi Boqun,
 
-The other thing that could be added is a debug option that force we
-skip the fast path, so we always go into the show path in
-hazptr_acquire(). This occurs to me because the slow path here means
-acquiring a lock inside lockdep code, it should work, but I just want to
-be careful. So something like:
+Thanks for the suggestions.
 
-	void *hazptr_acquire(..)
-	{
-		...
-		if (IS_ENABLED(CONFIG_HAZPTR_ACQUIRE_FORCE_SLOWPATH) ||
-		    unlikely(slot->addr))
-			return __hazptr_acquire(ctx, addr_p);
-		...
-	}
+I collected both the rcuscale synchronization latency and the
+/proc/interrupts IPI counts from the current implementation.
 
-Thoughts?
+On a 96-CPU ARM64 KVM guest, the rcuscale results with
+nreaders=3D0 are:
 
-Regards,
-Boqun
+                avg       p50       p90       p99
+nwriters=3D1:
+hazptr          98 us     96 us     101 us    110 us
+rcu             8.4 ms    8.0 ms     8.0 ms   16.0 ms
+srcu            8.0 ms   15.9 ms    16.0 ms   16.0 ms
 
->  	}
-> -	rcu_read_unlock();
->  
->  	return found;
->  }
-> @@ -6683,11 +6694,10 @@ void lockdep_unregister_key(struct lock_class_key *key)
->  	 *
->  	 * Some operations like __qdisc_destroy() will call this in a debug
->  	 * kernel, and the network traffic is disabled while waiting, hence
-> -	 * the delay of the wait matters in debugging cases. Currently use a
-> -	 * synchronize_rcu_expedited() to speed up the wait at the cost of
-> -	 * system IPIs. TODO: Replace RCU with hazptr for this.
-> +	 * the delay of the wait matters in debugging cases. Replace the
-> +	 * expedited RCU wait with hazptr_synchronize().
->  	 */
-> -	synchronize_rcu_expedited();
-> +	hazptr_synchronize(keyhashentry(key));
->  }
->  EXPORT_SYMBOL_GPL(lockdep_unregister_key);
->  
-> -- 
-> 2.43.0
-> 
+nwriters=3D16:
+hazptr          8.0 ms    8.0 ms     8.0 ms    8.1 ms
+rcu            14.9 ms   16.0 ms    16.0 ms   24.0 ms
+
+With a single writer, hazptr completes in ~100 us. With 16
+concurrent synchronizers, the latency approaches ~8 ms, while
+RCU rises from ~8 ms to ~15 ms. The shared-scan batching
+appears to be effective here, while the scan-kthread polling
+mechanism has a significant impact on the completion latency
+once multiple waiters are present. This also motivates the
+Bloom-filter redesign you suggested.
+
+For the lockdep workload (tc qdisc mq x100):
+
+                wall-clock    IPI/op
+hazptr          ~810 ms        5.1
+exp RCU         ~790 ms       12.3
+
+The hazptr path shows substantially lower IPI activity on this
+workload (~41% of expedited RCU), though the wall-clock time is
+similar. The lower IPI activity does not translate into a
+measurable wall-clock improvement in this workload.
+
+I'll update the shared-scan design based on your Bloom-filter
+suggestion, make the rcuscale target cover multiple objects,
+and add the forced-slowpath debug option. I'll then rerun
+the measurements with the updated implementation.
+
+Thanks,
+Kunwu
+
+>
+> Regards,
+> Boqun
+>
+> > This is still RFC/WIP. I would appreciate feedback on the shared-scan
+> > design and the lockdep conversion.
+> >
+> > Kunwu Chan (4):
+> >   hazptr: add shared-scan kthread
+> >   locking/lockdep: use hazptr to wait for dynamic key lookups
+> >   rcuscale: add hazptr scale type
+> >   Documentation/litmus-tests: add hazptr acquire-before-scan test
+> >
+> >  .../hazptr/hazptr-acquire-before-scan.litmus  |  49 ++++
+> >  kernel/hazptr.c                               | 274 ++++++++++++++++++
+> >  kernel/locking/lockdep.c                      |  30 +-
+> >  kernel/rcu/rcuscale.c                         |  65 ++++-
+> >  4 files changed, 407 insertions(+), 11 deletions(-)
+> >  create mode 100644 Documentation/litmus-tests/hazptr/hazptr-acquire-be=
+fore-scan.litmus
+> >
+> > --
+> > 2.43.0
+> >

@@ -1,224 +1,276 @@
-Received: from smtpout.efficios.com (smtpout.efficios.com [158.69.130.18])
+Received: from mail.mainlining.org (mail.mainlining.org [5.75.144.95])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8F613B42C5;
-	Sun, 27 Sep 2026 15:51:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=158.69.130.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D77FF303A37
+	for <lkmm@lists.linux.dev>; Sun, 27 Sep 2026 16:07:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=5.75.144.95
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790524325; cv=none; b=j6MHZO21QzsFBE2zlTM0aZKqrbtWkUIWkq3QYN0p4inZZGOSXkJgy8nKd9EW+p2H2g41LyUJzFqM7X2ecUF30tX4xP3HR+sBKJ89rFoGP9nfg0Bw+SUTKykywBe+wjyB9QjEFSZl4TMzKXvMpBADA0Cr4RRnhuhl4978jO+SMBA=
+	t=1790525273; cv=none; b=c+RGfRJQ6fsor1a9JLUEDqJMMFLnCcfzc0BVxm8wzeIQUTVMCZ7UrMshvQbDg2tblo0RVp/fNWkA0eaCzlsyom1ZEACiC0qV1+uDCTguYEJrxpHMiPpV3DhfOVy+CscgfOmYPLx5eCDE0RaB0roSgfn8PuIbXciaNDIHUv174Cc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790524325; c=relaxed/simple;
-	bh=5k5pyln1qvBoHHcFnrp7Br7iLO4KbmwH1xjkVMxxL0k=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=I4+IT+cGTH1b/9kIfxM0JTENxriFznS5AX8Ly9RCQrXtOB4VcQaf75aUvJwKYeGcjZ7R/hub8grLfFDKmcGm1nY6NduaAt7PZ+bBVCuVf5zC03DAM7uxc0nUWQD5juFH32rLgFM4J5SQg/QZdlwl4Ll6hGk1/sNq7CtnAQKo9s0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=efficios.com; spf=pass smtp.mailfrom=efficios.com; dkim=pass (2048-bit key) header.d=efficios.com header.i=@efficios.com header.b=Kqoo/x0g; arc=none smtp.client-ip=158.69.130.18
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=efficios.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=efficios.com
+	s=arc-20240116; t=1790525273; c=relaxed/simple;
+	bh=gbWdGzj04ByskcW7EiHxIl96t9E/MQA6yDtDgQQdcMs=;
+	h=Date:From:To:CC:Subject:In-Reply-To:References:Message-ID:
+	 MIME-Version:Content-Type; b=OC3cbslgdcgTj/hg9T4NH9/GlN2qll1+VOUx61U0GSTlNYcX6P8ePPgGb6za6RAtYjpxAN49jWYyj1D7aPJui4HoFiCO4NfrPBcbCe0fVGn0wzi2AqJhX184ABFurWc4tprH+xZrWeo0QD953DVGLRUFfV8TGzAyNyJm0GuR4/w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mainlining.org; spf=pass smtp.mailfrom=mainlining.org; dkim=pass (2048-bit key) header.d=mainlining.org header.i=@mainlining.org header.b=ZyTLAoB1; dkim=permerror (0-bit key) header.d=mainlining.org header.i=@mainlining.org header.b=klpwOFwH; arc=none smtp.client-ip=5.75.144.95
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mainlining.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mainlining.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=efficios.com header.i=@efficios.com header.b="Kqoo/x0g"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=efficios.com;
-	s=smtpout1; t=1790524309;
-	bh=XJZtRM91aHOzDwlGhUn7K80dltrSbiTp//FJp6Ow9Ys=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Kqoo/x0gU6cfO/dozoCRndXnjMUQnvEWJJqFnRL1KdacbB59t9bFJQG+UrLMt9tht
-	 JQanVvci7golgHlE/4H1F11J8dkXRmYG4XDEpC1otXSWcNaErQEtJwaeBd6mhKlUYd
-	 U/cut1gZY/CaDNZMmfIj/C7f35+t0E3/qeiRiCfMAjr0BI3Tx2YDfBIcxJbgyXCXka
-	 U44m3Z5cb2VK15CWDdBSrLC2egudDHuOJlGE3cGylihTjJkXeWL9eQA0PIT2kaYuoa
-	 9A/Nr9p9y0kIJk+Lb3Xo4zcgkUaj854GniG3SpgzjdfY+H/E31k0oQfKD+WEU7QrFE
-	 UB7zoVT5J5Yzw==
-Received: from compudjdev.. (mtl.efficios.com [216.120.195.104])
-	by smtpout.efficios.com (Postfix) with ESMTPSA id 4ht87n48FjzhGy;
-	Sun, 27 Sep 2026 11:51:49 -0400 (EDT)
-From: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
-To: "Paul E . McKenney" <paulmck@kernel.org>
-Cc: linux-kernel@vger.kernel.org,
-	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Boqun Feng <boqun.feng@gmail.com>,
-	Joel Fernandes <joel@joelfernandes.org>,
-	Alan Stern <stern@rowland.harvard.edu>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
-	Will Deacon <will@kernel.org>,
-	Peter Zijlstra <peterz@infradead.org>,
-	John Stultz <jstultz@google.com>,
-	Neeraj Upadhyay <Neeraj.Upadhyay@amd.com>,
-	Frederic Weisbecker <frederic@kernel.org>,
-	Josh Triplett <josh@joshtriplett.org>,
-	Uladzislau Rezki <urezki@gmail.com>,
-	Steven Rostedt <rostedt@goodmis.org>,
-	Lai Jiangshan <jiangshanlai@gmail.com>,
-	Zqiang <qiang.zhang1211@gmail.com>,
-	Ingo Molnar <mingo@redhat.com>,
-	Waiman Long <longman@redhat.com>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Vlastimil Babka <vbabka@suse.cz>,
-	maged.michael@gmail.com,
-	Mateusz Guzik <mjguzik@gmail.com>,
-	Gary Guo <gary@garyguo.net>,
-	Jonas Oberhauser <jonas.oberhauser@huaweicloud.com>,
-	rcu@vger.kernel.org,
-	linux-mm@kvack.org,
-	lkmm@lists.linux.dev,
-	Nikita Popov <github@npopov.com>,
-	llvm@lists.linux.dev
-Subject: [PATCH hazptr 2/4] compiler.h: Introduce ptr_eq() to preserve address dependency
-Date: Sun, 27 Sep 2026 11:51:29 -0400
-Message-ID: <20260927155134.4740-3-mathieu.desnoyers@efficios.com>
-X-Mailer: git-send-email 2.43.0
+	dkim=pass (2048-bit key) header.d=mainlining.org header.i=@mainlining.org header.b="ZyTLAoB1";
+	dkim=permerror (0-bit key) header.d=mainlining.org header.i=@mainlining.org header.b="klpwOFwH"
+DKIM-Signature: v=1; a=rsa-sha256; s=202507r; d=mainlining.org; c=relaxed/relaxed;
+	h=Message-ID:Subject:To:From:Date; t=1790525260; bh=Ii4m6m8zSl0ojHbaMGECqVv
+	p29TwxIisGBwqo+qk6X8=; b=ZyTLAoB10QokVEzSd3PP9bIjiLCTd/ancEOdliPZF9j03ToPJ+
+	4Epw6leTlaFxJdoXTrM2GoUxVFPbbJirp3raK4U2qhjKIJhoQP+LkG+YAXrRmReDbmUFcErczDQ
+	OYsxdHMHxvx+uRr3Z0gNuVBlq2fR7eUZ/XrbDQKtIyenATdL06oIADct/n5tty6mUI/boPOYhIe
+	l5mN/gzIQxgFwCwOQDIM7fiZ6nbjSEfSr7P5zTbf8Lh7RqkMJAuHlvcJKMTKuRylviKlzGl7fMT
+	DN5QFKf04eYoUl/KqlcYbJQrbOegoD9tJK9V/yNkloYRkjjGKkYH0nKeBo5xuzJMH9w==;
+DKIM-Signature: v=1; a=ed25519-sha256; s=202507e; d=mainlining.org; c=relaxed/relaxed;
+	h=Message-ID:Subject:To:From:Date; t=1790525260; bh=Ii4m6m8zSl0ojHbaMGECqVv
+	p29TwxIisGBwqo+qk6X8=; b=klpwOFwHZY3HNeBC3ghMPPRdBwcqjDwCkMBEkehnYi9H/0/Hzy
+	RqTW5FpV4+i6XuQWOzkS4v6B2wt4F1/NQPBA==;
+Date: Sun, 27 Sep 2026 17:07:39 +0100
+From: Bradley Morgan <brads@mainlining.org>
+To: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
+ "Paul E . McKenney" <paulmck@kernel.org>
+CC: linux-kernel@vger.kernel.org, Boqun Feng <boqun@kernel.org>,
+ Gary Guo <gary@garyguo.net>, rcu@vger.kernel.org, lkmm@lists.linux.dev
+Subject: Re: [PATCH hazptr 0/4] Hazard pointer updates
 In-Reply-To: <20260927155134.4740-1-mathieu.desnoyers@efficios.com>
 References: <20260927155134.4740-1-mathieu.desnoyers@efficios.com>
+Message-ID: <EAE9B584-7CEC-46AA-AC8F-A06F11073763@mainlining.org>
 Precedence: bulk
 X-Mailing-List: lkmm@lists.linux.dev
 List-Id: <lkmm.lists.linux.dev>
 List-Subscribe: <mailto:lkmm+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:lkmm+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain;
+ charset=utf-8
 Content-Transfer-Encoding: 8bit
 
-Compiler CSE and SSA GVN optimizations can cause the address dependency
-of addresses returned by rcu_dereference to be lost when comparing those
-pointers with either constants or previously loaded pointers.
+On 27 September 2026 16:51:27 BST, Mathieu Desnoyers
+<mathieu.desnoyers@efficios.com> wrote:
+>Hi Paul,
+>
+>This series applies on top of "hazptr: handle NULL address in
+>hazptr_detach" you have in your rcu dev tree.
+>
+>This first patch addresses a race identified by Boqun Feng in the
+>two-phase wildcard scheme.
+>
+>Patches 2-3 are prerequisites for using ptr_eq() in the 4th patch.
+>Those were discussed at length in a prior version of hazard pointer
+>patches.
+>
+>Patch 4 introduces a "try acquire" helper to allow the fast path
+>to not rely on wildcards, while keeping the wildcard forward
+>progress guarantees in the acquire slow path, used on fast path
+>failure.
 
-Introduce ptr_eq() to compare two addresses while preserving the address
-dependencies for later use of the address. It should be used when
-comparing an address returned by rcu_dereference().
+Hi, here is a hazptr perf test on powerpc
 
-This is needed to prevent the compiler CSE and SSA GVN optimizations
-from using @a (or @b) in places where the source refers to @b (or @a)
-based on the fact that after the comparison, the two are known to be
-equal, which does not preserve address dependencies and allows the
-following misordering speculations:
+REAL kill_fasync(), ns per call, best of 3, 100k calls:
+(stock = rwlock walk, conv = hazptr walk, same v3 tree ± the conversion)
 
-- If @b is a constant, the compiler can issue the loads which depend
-  on @a before loading @a.
-- If @b is a register populated by a prior load, weakly-ordered
-  CPUs can speculate loads which depend on @a before loading @a.
+  shape          stock    conv     delta
+  1 node,  1 walker     59      59     +0.0%   (singleton: identical)
+  16 nodes, 1 walker   539     539     +0.0%   (uncontended: identical)
+  16 nodes, 4 walkers  509     134    -73.7%   ← rwlock readers contend
+  16 nodes, 8 walkers  313     113    -63.9%   ← same list, 8 cpus
+  64 nodes, 1 walker  1979    2039     +3.0%   (pure walk: hazptr tax)
+  64 nodes, 4 walkers 1914     509    -73.4%
+  64 nodes, 8 walkers 1015     382    -62.4%
 
-The same logic applies with @a and @b swapped.
+Its SLOWER than rcu, but beats rwlock
 
-Suggested-by: Linus Torvalds <torvalds@linux-foundation.org>
-Suggested-by: Boqun Feng <boqun.feng@gmail.com>
-Signed-off-by: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
-Reviewed-by: Boqun Feng <boqun.feng@gmail.com>
-Reviewed-by: Joel Fernandes (Google) <joel@joelfernandes.org>
-Tested-by: Joel Fernandes (Google) <joel@joelfernandes.org>
-Acked-by: "Paul E. McKenney" <paulmck@kernel.org>
-Acked-by: Alan Stern <stern@rowland.harvard.edu>
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Cc: "Paul E. McKenney" <paulmck@kernel.org>
-Cc: Will Deacon <will@kernel.org>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Cc: Boqun Feng <boqun.feng@gmail.com>
-Cc: Alan Stern <stern@rowland.harvard.edu>
-Cc: John Stultz <jstultz@google.com>
-Cc: Neeraj Upadhyay <Neeraj.Upadhyay@amd.com>
-Cc: Linus Torvalds <torvalds@linux-foundation.org>
-Cc: Boqun Feng <boqun.feng@gmail.com>
-Cc: Frederic Weisbecker <frederic@kernel.org>
-Cc: Joel Fernandes <joel@joelfernandes.org>
-Cc: Josh Triplett <josh@joshtriplett.org>
-Cc: Uladzislau Rezki <urezki@gmail.com>
-Cc: Steven Rostedt <rostedt@goodmis.org>
-Cc: Lai Jiangshan <jiangshanlai@gmail.com>
-Cc: Zqiang <qiang.zhang1211@gmail.com>
-Cc: Ingo Molnar <mingo@redhat.com>
-Cc: Waiman Long <longman@redhat.com>
-Cc: Mark Rutland <mark.rutland@arm.com>
-Cc: Thomas Gleixner <tglx@linutronix.de>
-Cc: Vlastimil Babka <vbabka@suse.cz>
-Cc: maged.michael@gmail.com
-Cc: Mateusz Guzik <mjguzik@gmail.com>
-Cc: Gary Guo <gary@garyguo.net>
-Cc: Jonas Oberhauser <jonas.oberhauser@huaweicloud.com>
-Cc: rcu@vger.kernel.org
-Cc: linux-mm@kvack.org
-Cc: lkmm@lists.linux.dev
-Cc: Nikita Popov <github@npopov.com>
-Cc: llvm@lists.linux.dev
----
-Changes since v0:
-- Include feedback from Alan Stern.
----
- include/linux/compiler.h | 63 ++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 63 insertions(+)
+SIGIO delivery, plain mode, 8 ptys 1 listener each (identical harness):
 
-diff --git a/include/linux/compiler.h b/include/linux/compiler.h
-index 70cb31d60538..0a8c8e53cdad 100644
---- a/include/linux/compiler.h
-+++ b/include/linux/compiler.h
-@@ -166,6 +166,69 @@ void ftrace_likely_update(struct ftrace_likely_data *f, int val,
- 	__PASTE(name,						\
- 	__PASTE(_, __COUNTER__)))
+  BASELINE (rwlock)     472/s
+  CONVERTED v4 (hazptr) 452/s   ← singleton fast path: gap 12% → 4%
+
+With a few changes, it was 12% slower than rcu before.
+
+Do you want those changes?
+
+My idea is, we find something that would put use to hazptr, here is what I
+tried
+
+
+diff --git a/fs/fcntl.c b/fs/fcntl.c
+index c158f082f1da..bb04076ff6d9 100644
+--- a/fs/fcntl.c
++++ b/fs/fcntl.c
+@@ -17,6 +17,7 @@
+ #include <linux/slab.h>
+ #include <linux/module.h>
+ #include <linux/pipe_fs_i.h>
++#include <linux/hazptr.h>
+ #include <linux/security.h>
+ #include <linux/ptrace.h>
+ #include <linux/signal.h>
+@@ -1009,15 +1010,20 @@ int fasync_remove_entry(struct file *filp, struct fasync_struct **fapp)
+ 		if (fa->fa_file != filp)
+ 			continue;
  
-+/*
-+ * Compare two addresses while preserving the address dependencies for
-+ * later use of the address. It should be used when comparing an address
-+ * returned by rcu_dereference().
-+ *
-+ * This is needed to prevent the compiler CSE and SSA GVN optimizations
-+ * from using @a (or @b) in places where the source refers to @b (or @a)
-+ * based on the fact that after the comparison, the two are known to be
-+ * equal, which does not preserve address dependencies and allows the
-+ * following misordering speculations:
-+ *
-+ * - If @b is a constant, the compiler can issue the loads which depend
-+ *   on @a before loading @a.
-+ * - If @b is a register populated by a prior load, weakly-ordered
-+ *   CPUs can speculate loads which depend on @a before loading @a.
-+ *
-+ * The same logic applies with @a and @b swapped.
-+ *
-+ * Return value: true if pointers are equal, false otherwise.
-+ *
-+ * The compiler barrier() is ineffective at fixing this issue. It does
-+ * not prevent the compiler CSE from losing the address dependency:
-+ *
-+ * int fct_2_volatile_barriers(void)
-+ * {
-+ *     int *a, *b;
-+ *
-+ *     do {
-+ *         a = READ_ONCE(p);
-+ *         asm volatile ("" : : : "memory");
-+ *         b = READ_ONCE(p);
-+ *     } while (a != b);
-+ *     asm volatile ("" : : : "memory");  <-- barrier()
-+ *     return *b;
-+ * }
-+ *
-+ * With gcc 14.2 (arm64):
-+ *
-+ * fct_2_volatile_barriers:
-+ *         adrp    x0, .LANCHOR0
-+ *         add     x0, x0, :lo12:.LANCHOR0
-+ * .L2:
-+ *         ldr     x1, [x0]  <-- x1 populated by first load.
-+ *         ldr     x2, [x0]
-+ *         cmp     x1, x2
-+ *         bne     .L2
-+ *         ldr     w0, [x1]  <-- x1 is used for access which should depend on b.
-+ *         ret
-+ *
-+ * On weakly-ordered architectures, this lets CPU speculation use the
-+ * result from the first load to speculate "ldr w0, [x1]" before
-+ * "ldr x2, [x0]".
-+ * Based on the RCU documentation, the control dependency does not
-+ * prevent the CPU from speculating loads.
-+ */
-+static __always_inline
-+int ptr_eq(const volatile void *a, const volatile void *b)
-+{
-+	OPTIMIZER_HIDE_VAR(a);
-+	OPTIMIZER_HIDE_VAR(b);
-+	return a == b;
-+}
+-		write_lock_irq(&fa->fa_lock);
++		/*
++		 * Make the file invisible to the walk before unlinking,
++		 * then wait for any in-flight send_sigio() to be done with
++		 * the node before freeing it.  The walk holds a hazard
++		 * pointer to this node, so it cannot already be freed.
++		 */
+ 		fa->fa_file = NULL;
+-		write_unlock_irq(&fa->fa_lock);
+-
+ 		*fp = fa->fa_next;
+-		kfree_rcu(fa, fa_rcu);
++		spin_unlock(&fasync_lock);
++		spin_unlock(&filp->f_lock);
++		hazptr_synchronize(fa);
++		fasync_free(fa);
+ 		filp->f_flags &= ~FASYNC;
+-		result = 1;
+-		break;
++		return 1;
+ 	}
+ 	spin_unlock(&fasync_lock);
+ 	spin_unlock(&filp->f_lock);
+@@ -1056,13 +1062,10 @@ struct fasync_struct *fasync_insert_entry(int fd, struct file *filp, struct fasy
+ 		if (fa->fa_file != filp)
+ 			continue;
+ 
+-		write_lock_irq(&fa->fa_lock);
+-		fa->fa_fd = fd;
+-		write_unlock_irq(&fa->fa_lock);
++		WRITE_ONCE(fa->fa_fd, fd);
+ 		goto out;
+ 	}
+ 
+-	rwlock_init(&new->fa_lock);
+ 	new->magic = FASYNC_MAGIC;
+ 	new->fa_file = filp;
+ 	new->fa_fd = fd;
+@@ -1121,44 +1124,51 @@ EXPORT_SYMBOL(fasync_helper);
+ /*
+  * rcu_read_lock() is held
+  */
+-static void kill_fasync_rcu(struct fasync_struct *fa, int sig, int band)
++void kill_fasync(struct fasync_struct **fp, int sig, int band)
+ {
++	struct hazptr_ctx cur, nxt;
++	struct fasync_struct *fa;
 +
- /**
-  * data_race - mark an expression as containing intentional data races
-  *
--- 
-2.43.0
++	/* First a quick test without locking: usually
++	 * the list is empty.
++	 */
++	fa = READ_ONCE(*fp);
++	if (!fa)
++		return;
++
++	/*
++	 * Hand-over-hand with two ping-ponged contexts: the next node
++	 * must be acquired before the current one is released, but a
++	 * hazptr_ctx may only front one live slot at a time.
++	 */
++	cur = (struct hazptr_ctx){ };
++	nxt = (struct hazptr_ctx){ };
++	fa = hazptr_acquire(&cur, (void * const *)fp);
+ 	while (fa) {
+-		struct fown_struct *fown;
+-		unsigned long flags;
++		struct fasync_struct *next;
+ 
+ 		if (fa->magic != FASYNC_MAGIC) {
+ 			printk(KERN_ERR "kill_fasync: bad magic number in "
+ 			       "fasync_struct!\n");
+-			return;
++			break;
+ 		}
+-		read_lock_irqsave(&fa->fa_lock, flags);
++
+ 		if (fa->fa_file) {
+-			fown = file_f_owner(fa->fa_file);
+-			if (!fown)
+-				goto next;
+-			/* Don't send SIGURG to processes which have not set a
+-			   queued signum: SIGURG has its own default signalling
+-			   mechanism. */
+-			if (!(sig == SIGURG && fown->signum == 0))
++			struct fown_struct *fown = file_f_owner(fa->fa_file);
++
++			if (fown &&
++			    /* Don't send SIGURG to processes which have not set a
++			       queued signum: SIGURG has its own default signalling
++			       mechanism. */
++			    !(sig == SIGURG && fown->signum == 0))
+ 				send_sigio(fown, fa->fa_fd, band);
+ 		}
+-next:
+-		read_unlock_irqrestore(&fa->fa_lock, flags);
+-		fa = rcu_dereference(fa->fa_next);
+-	}
+-}
+-
+-void kill_fasync(struct fasync_struct **fp, int sig, int band)
+-{
+-	/* First a quick test without locking: usually
+-	 * the list is empty.
+-	 */
+-	if (*fp) {
+-		rcu_read_lock();
+-		kill_fasync_rcu(rcu_dereference(*fp), sig, band);
+-		rcu_read_unlock();
++		next = hazptr_acquire(&nxt, (void * const *)&fa->fa_next);
++		hazptr_release(&cur, fa);
++		swap(cur, nxt);
++		fa = next;
+ 	}
++	hazptr_release(&cur, fa);
+ }
+ EXPORT_SYMBOL(kill_fasync);
+ 
+diff --git a/include/linux/fs.h b/include/linux/fs.h
+index f9d1e05e8ae6..852f1b8c00af 100644
+--- a/include/linux/fs.h
++++ b/include/linux/fs.h
+@@ -1365,7 +1365,6 @@ static inline struct dentry *file_dentry(const struct file *file)
+ }
+ 
+ struct fasync_struct {
+-	rwlock_t		fa_lock;
+ 	int			magic;
+ 	int			fa_fd;
+ 	struct fasync_struct	*fa_next; /* singly linked list */
 
+
+Anything I did wrong? No?
+
+
+>
+>Thanks,
+>
+>Mathieu
+>
+>Mathieu Desnoyers (4):
+>  hazptr: Fix two-phase hazptr_synchronize race with detach
+>  compiler.h: Introduce ptr_eq() to preserve address dependency
+>  Documentation: RCU: Refer to ptr_eq()
+>  hazptr: Introduce "try acquire" fast path, fallback to overflow list
+>
+>Cc: Paul E. McKenney <paulmck@kernel.org>
+>Cc: Boqun Feng <boqun@kernel.org>
+>Cc: Bradley Morgan <brads@mainlining.org>
+>Cc: Gary Guo <gary@garyguo.net>
+>Cc: <rcu@vger.kernel.org>
+>Cc: <lkmm@lists.linux.dev>
+>
+> Documentation/RCU/rcu_dereference.rst |  38 +++++++-
+> include/linux/compiler.h              |  63 ++++++++++++
+> include/linux/hazptr.h                |  47 +++++----
+> kernel/hazptr.c                       | 135 +++++++++++++++-----------
+> 4 files changed, 203 insertions(+), 80 deletions(-)
+>
+>
+
+--- Thanks!
+"I'm not a very positive person" - Linus torvalds

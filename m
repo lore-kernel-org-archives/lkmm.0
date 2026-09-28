@@ -1,75 +1,49 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5ED14E77FE;
-	Mon, 28 Sep 2026 15:32:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40C583FC5AE;
+	Mon, 28 Sep 2026 23:08:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790609537; cv=none; b=nt9pnjxT7Vxedztdeq0e75ns8N9xrVCIV+1i6zuIiR/ntRr9CCCBEyKLeyFRrlOBnFQqgqpChPBGyxDQ37lYbYcounslSuG5DPEbc9jkPrVoCXdsJl6Z8/4xu5pI6s49uTuxSKHy4AepK5MUM+lvDMvMKv/y1iGBS/GO4pgTfNM=
+	t=1790636927; cv=none; b=BXBsWF/24t+EhpKKrKWwDQefUIPUGeJN2zGfbk/rpzJXi1k4cdzk8zqMxicRUG4Qg2nXOm010D6etBk6tIGi+rwgjmQmXbOyhNSccLOU5WE83WZAnEw++DePxvRFsxUPPe3t02VmC++NXIYd4bDWimdcm9VQ4CH9v9AUm8Dj1n0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790609537; c=relaxed/simple;
-	bh=ntpxkvkUTTw0VO100ZA1zeUxr46OPt10yDVvtgdqXfA=;
+	s=arc-20240116; t=1790636927; c=relaxed/simple;
+	bh=KBIWzjGvGBYDOPtvw0F6mbVx/DXbgCJUaC62yKd2cCs=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=uhJSnQ1yJZapoHEUi6fiusaoEer1BGCcD5U4l4shFEh5kRZfs3LGOcPmqAhFYIR2dfY5rSE2hrkqhc01fCdlzKFqeDDoOjXB1nKGNd2c4+AtkJdso+Bdjbs6LhYDQKt5ykKG5hA5ucd+R+wf30hNC7ZBQL+evGUSLAJBQeEiZio=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=XTZvBkIS; arc=none smtp.client-ip=100.103.45.18
+	 Content-Type:Content-Disposition:In-Reply-To; b=W9xfIiLceUDMcRNYsqD5+ONVnavQjeGo6UJ1SY5HdILBunlMRHIAUXki/ZclrkU/8krrDCbToUclpWtEudS7c4qM7v6+xjGtqdhnTHZAX+ZCwpA/ssi42/IXYh2BMvh2NPtpMytzmyTk41Q18+9nfclKikZfegISSL7uXNWtXyo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Ke7UcsGk; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="XTZvBkIS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6F631F000FF;
-	Mon, 28 Sep 2026 15:32:14 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Ke7UcsGk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2E761F000FF;
+	Mon, 28 Sep 2026 23:08:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1790609535;
-	bh=RZ9WA2ykHvGEyuJHbovdsGi/6qSj45jtXA79JrlEcCg=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=XTZvBkISzr474Zrpuc1T2S4Ee8SyZkMMbisMtPO+BYsJSepLkD0Ws6J4iZ5rLcWum
-	 J+yluaFVX3CFencgd9vUdPCfLHFODJKr7sPLW/0rgdpS/9tlquEGZoJPPGd96nn4qV
-	 aswPRYVOdeBbsX1+AajnQKHaCkZL4ECuvjXMLoO7CBj3SV+LAf+9u/wqdF7hQ80/OU
-	 w+roD5V7V7MJpI/IDfHufqIVDdByO/U0hFWn+SmODw/dzeU4/1KvZEoM9JyBXBxIWX
-	 YvOmVvcBXVVUqKRIlaoXskpRULOQGU1hEzOTP4ZtOsIflzCUxfK3INliI1MYw2GHd7
-	 Oy3028w/1pBKg==
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfauth.phl.internal (Postfix) with ESMTP id A57C2F40068;
-	Mon, 28 Sep 2026 11:32:13 -0400 (EDT)
-Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-03.internal (MEProxy); Mon, 28 Sep 2026 11:32:13 -0400
-X-ME-Sender: <xms:fYi6akmsatnwTTU1ehgcboBBVGYR8XCs09lRyFUB6fGnJPLB97C5AA>
-    <xme:fYi6av3uOGsnwrwxy1whc8gqnqYE8ocjsXTOEvr-3TLpOsWOkLLDWQUl5b-yStJ8v
-    rG73um7gCZqZoB9v6snNHVVL-vGBiqKsYhA_3KjESWUTurHpMfiWJM>
-X-ME-Received: <xmr:fYi6ak1g9AdaPJ-xEtQhzi1sp_6Ft2i648EKOMPMFWpz-t1aaAWentqrDf18>
-X-ME-Proxy-Cause: dmFkZTFv+luSSQR1rVkkY244nY3PGCdvQ4HGsOm4gQyyjHU6LnVfxNPuMl9U+fnlQzvYkD
-    B4s2ZrJsH+VJ9jBortm/ytfrL66qBDzSes0sgLOcgPz7HzOUyergtAPYur0rNAIQb2wLxl
-    LvayQYf/e+0Nxox3ythtkc2rSnpbzaqU8sIxJiU8IwGseoHHLPF2DaNSOrhqq0jkpcK/lT
-    RbLxr6EpZHBnE+lUbUa0A7gkJEetinA5jcALDVCqd3uVesAXWhiBYs0N9enpRn89++r5Ug
-    eofTicdHomr127teag8qiWQ/033tJnApSEOuMmouNkWYI2ZQ/uRKa59dwqsaWCOZ54qeKW
-    neQ7Bjm0sbgDMdJNX3s4GcDkAsgQ7iTjbq7UDx7EKyxlZPC1vYO1QlgpLU4V3MOu9mwBiX
-    oBQ4MHsXm6otMwLzVLrT3VSmrjthRPwQqHL4cIrvUNaSxY0EshF+Au2Kb8SC6cJIvvOF22
-    9UZVy8Qf8yQf8dKdtTcYMA3fAiJQbR3z8byluocoGKQCxSYPFpXWOOnzcMLWV+NdF0YLUs
-    4rhPDORQIPa0LT68ewGZYnem1QaObScGUNUj0n/dUjs5VwoqMqut12/rcycwMplBmsqnN0
-    J02hu1L+nNaA7hs4c6E3iSzYfXbuIibhXYPr427T83jm4DzPbeJymStu17ng
-X-ME-Proxy: <xmx:fYi6ahoPQrGMju6JGw_sFvwM6DUUWL7jX5h9pXVSauwh1QjekWMl5A>
-    <xmx:fYi6agifx9Fxz5rWnrbIu2EzuK0oCV28ZvpPNfvR3p5gPL_dtDZj-A>
-    <xmx:fYi6at-bzEN1ZcxUM1_GBJyJzQwLoLmHDKUlN_5GsPOr1I-BSTtZTw>
-    <xmx:fYi6asXnPEetGWabHVQ2r-qPtdev0tjNgpxX4VfZm7zIam7sDCBExg>
-    <xmx:fYi6ahBjZ57kHnC3FbinkI440bPFxkJwazUnopH90j8myaUXYPIs0Q0o>
-Feedback-ID: i8dbe485b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 28 Sep 2026 11:32:12 -0400 (EDT)
-Date: Mon, 28 Sep 2026 17:32:11 +0200
-From: Boqun Feng <boqun@kernel.org>
-To: Gary Guo <gary@garyguo.net>
-Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
-	"Paul E . McKenney" <paulmck@kernel.org>,
-	linux-kernel@vger.kernel.org, Bradley Morgan <brads@mainlining.org>,
-	rcu@vger.kernel.org, lkmm@lists.linux.dev
-Subject: Re: [PATCH hazptr 4/4] hazptr: Introduce "try acquire" fast path,
- fallback to overflow list
-Message-ID: <arqIe2d8Koj857Kt@MacBook-0RXW5>
-References: <20260927155134.4740-1-mathieu.desnoyers@efficios.com>
- <20260927155134.4740-5-mathieu.desnoyers@efficios.com>
- <arlHFVT5EzcX4d1-@MacBook-0RXW5>
- <5c78c338-1be6-456b-b963-bcfc62748aab@efficios.com>
- <DLQGJZK4LIAO.3TAY3HZ6PR76Z@garyguo.net>
- <arovltfvFzv2FFjO@MacBook-0RXW5>
- <DLQX09XGAHDL.1LSFQH13SU7XR@garyguo.net>
+	s=k20260515; t=1790636925;
+	bh=FJiVO1xFKoNP3L1n5Q0K7gyKgPYwYYjio8HDA9W0yec=;
+	h=Date:From:To:Cc:Subject:Reply-To:References:In-Reply-To;
+	b=Ke7UcsGkP28N7rE/l7MN+sL/r6ybN7Z4w30dfBlQWsy4Y0WhgzvAYOTMUorswLwnD
+	 tyYPn94Nrzp6hDpeMa8jEr/2aI+gj9WVygWgD0y0uXQXgTGtSt8acRuttJdJ8pmeSE
+	 AetqovlDJkZuiPhTpNi7h+bvEStZSCdKLXn9U4KBxs1GrhEVXlKIjUEqc8qqDMw/6W
+	 HGjQK46AfwCH2JG9lhqTlfz8GMF1pOK2XO/GH8Os3QRdrDK29d+vN/qS3E1inKjy3r
+	 pmYTePDExBPvqVPm9wvt02HsJk9assMTRMTbQ4zLMRcqPK4EKlCXXq/rhSCvq5oCgE
+	 6koxdDJ6X7maQ==
+Received: by paulmck-ThinkPad-P17-Gen-1.home (Postfix, from userid 1000)
+	id 6C41ECE10F4; Mon, 28 Sep 2026 16:08:45 -0700 (PDT)
+Date: Mon, 28 Sep 2026 16:08:45 -0700
+From: "Paul E. McKenney" <paulmck@kernel.org>
+To: Kunwu Chan <kunwu.chan@gmail.com>
+Cc: dlustig@nvidia.com, joelagnelf@nvidia.com, corbet@lwn.net,
+	akiyks@gmail.com, luc.maranget@inria.fr, j.alglave@ucl.ac.uk,
+	dhowells@redhat.com, npiggin@gmail.com, boqun@kernel.org,
+	peterz@infradead.org, will@kernel.org, parri.andrea@gmail.com,
+	stern@rowland.harvard.edu, linux-doc@vger.kernel.org,
+	lkmm@lists.linux.dev, linux-arch@vger.kernel.org,
+	linux-kernel@vger.kernel.org, rdunlap@infradead.org,
+	skhan@linuxfoundation.org
+Subject: Re: [PATCH v4 0/2] Documentation/litmus-tests: Add SRCU fastpath
+ litmus tests
+Message-ID: <1c555323-fa67-4742-8959-0bb92f21b0d2@paulmck-laptop>
+Reply-To: paulmck@kernel.org
+References: <20260916091613.78352-1-kunwu.chan@gmail.com>
 Precedence: bulk
 X-Mailing-List: lkmm@lists.linux.dev
 List-Id: <lkmm.lists.linux.dev>
@@ -78,48 +52,59 @@ List-Unsubscribe: <mailto:lkmm+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <DLQX09XGAHDL.1LSFQH13SU7XR@garyguo.net>
+In-Reply-To: <20260916091613.78352-1-kunwu.chan@gmail.com>
 
-On Mon, Sep 28, 2026 at 12:32:34PM +0100, Gary Guo wrote:
-[...]
-> >> For some context, the current Rust revocable implementation uses RCU, but this
-> >> is limiting the case where it can be used. The current C revocable series in
-> >> https://lore.kernel.org/all/20260912123529.7951-1-tzungbi@kernel.org/ uses SRCU.
-> >> 
-> >> I think this use case is a good one for hazptr, in fact, I have encouraged Alvin
-> >> Sun to try it out and you can see an implementation (Rust) in here:
-> >> https://lore.kernel.org/rust-for-linux/20260326-b4-tyr-debugfs-v1-6-074badd18716@linux.dev/
-> >> Although, over the course of the year, we have been reducing the amount of
-> >> revocable usage and shifting to represent things with lifetime..
-> >> 
-> >
-> > Paul asked me for the Rust usage a few days ago, and since we moved to
-> > a lifetime based approach [1], which is better IMO, I don't think
-> > switching to hazptr will should observable difference here, especially
-> > for a real workload improvement. It's still worth trying to see how
-> > hazptr in Rust would work for this, but it's less a sufficient condition
-> > to merge hazptr from my understanding. Of course I could be wrong.
-> >
-> > [1]: https://lore.kernel.org/rust-for-linux/20260517000149.3226762-1-dakr@kernel.org/
+On Wed, Sep 16, 2026 at 05:16:11PM +0800, Kunwu Chan wrote:
+> This series moves the SRCU fastpath litmus tests from
+> tools/memory-model/litmus-tests/ to Documentation/litmus-tests/srcu/,
+> as suggested by Paul McKenney.
 > 
-> What we get rid of is to use `Revocable` (or `DevRes`) to protect resources
-> where we _know_ that the resource is alive (for example, in device private data,
-> because it's teared down by driver-core on unbind).
+> This series splits the two litmus-test patches from the earlier
+> [PATCH 00/13] srcu: Round out atomic SRCU support series:
+> https://lore.kernel.org/rcu/20260907075829.2073224-1-kunwu.chan@linux.dev/
 > 
-> However, there are cases where we can still have the `Revocable` pattern, for
-> example when a class device is exposed to userspace and the bus device is
-> unbinding. This is a pretty recurring pattern too, and cannot be handled via
-> lifetime alone. This is what motivates the C revocable series.
+> The two tests verify the memory ordering required by the reader-free
+> synchronize_srcu_atomic() fastpath: the grace-period anchor must be
+> ordered before the per-CPU lock-counter scan.
 > 
+> Patch 1 verifies that the anchor-before-scan ordering forbids a reader
+> from being missed by the scan, while patch 2 shows that reversing the
+> ordering permits the problematic outcome.
 
-Not trying to discourage switching to hazptr in `Revocable`, but I think
-the only shortcoming of RCU there is "unable to sleep while referencing
-a `Revocable`", right? Certainly hazptr can help on that but so does
-SRCU. I'm unsure hazptr can show observable advantages against SRCU
-here. But I could be wrong.
+Queued for testing and further review, thank you!
 
-Regards,
-Boqun
+							Thanx, Paul
 
-> Best,
-> Gary
+> Changes in v4:
+> - Remove the smp_mb() and critical-section write from P1, 
+>   keep litmus tests minimal, as pointed out by Akira Yokosawa.
+> - v3: https://lore.kernel.org/all/20260912024225.2872265-1-kunwu.chan@gmail.com/
+> 
+> Changes in v3:
+> - Add a critical-section write after the smp_mb() in P1 of both
+>   litmus tests, so the barrier properly models the lock-increment
+>   to critical-section ordering in __srcu_read_lock().  The smp_mb()
+>   was previously vacuous because P1 had no subsequent memory access.
+>   Suggested by Akira Yokosawa.
+> - Adjust indentation of the SRCU entries in litmus-tests/README.
+> -v2: https://lore.kernel.org/all/20260912024225.2872265-1-kunwu.chan@gmail.com/
+> 
+> Changes in v2:
+> - Use a filter for the P0 scan result, as suggested by Paul McKenney.
+> 
+> Tested with herd7 7.58 using linux-kernel.cfg.
+> 
+> Kunwu Chan (2):
+>   Documentation/litmus-tests: Add SRCU fastpath anchor-before-scan test
+>   Documentation/litmus-tests: Add SRCU fastpath scan-before-anchor test
+> 
+>  Documentation/litmus-tests/README             | 19 +++++++
+>  .../SRCU-fastpath-anchor-before-scan.litmus   | 55 +++++++++++++++++++
+>  .../SRCU-fastpath-scan-before-anchor.litmus   | 52 ++++++++++++++++++
+>  3 files changed, 126 insertions(+)
+>  create mode 100644 Documentation/litmus-tests/srcu/SRCU-fastpath-anchor-before-scan.litmus
+>  create mode 100644 Documentation/litmus-tests/srcu/SRCU-fastpath-scan-before-anchor.litmus
+> 
+> -- 
+> 2.43.0
+> 

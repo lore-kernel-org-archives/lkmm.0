@@ -1,64 +1,64 @@
-Received: from mail-pj2-f25.google.com (mail-pj2-f25.google.com [74.125.227.153])
+Received: from mail-pj2-f40.google.com (mail-pj2-f40.google.com [74.125.227.168])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1B734F5E0E
-	for <lkmm@lists.linux.dev>; Fri,  2 Oct 2026 17:09:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.227.153
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 729F44F5E0E
+	for <lkmm@lists.linux.dev>; Fri,  2 Oct 2026 17:10:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.227.168
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790960997; cv=none; b=tnqw3+tLN4aVqYcTjmb2YdzlVfSDQSi/V9EhxHNhUJfeVWHLgFpQy9h4tMhjs0lMCGjpxqyBbOg3HDxyknypXnZqGLTqgyBKNYUHBaeTLiC5iblMKnE7Jb+0jYkQXB2CDBVpTNoSAF29xLNmw2xkHCx89mBWS5ECftF0///fj5A=
+	t=1790961005; cv=none; b=SI6e31+TdSEIxDSQoQlXYetpDcksl8YUNOU6qpUCjgiCM/My+3VdflLudmL+HmlR75f5kgqWI76shPVFABTrp5+ARZT7Em91ktCgq6S2B7wkfaSYCx/y+0SmJf85LtO+ZYVw7YnvQboCO6Nw6ZYuNQaEMaYmT1ABHqVeY3lQCq0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790960997; c=relaxed/simple;
-	bh=8NuyF6qDUWQBXBIkLeP3/lavelfuwnWRCmtSE2YKnuQ=;
+	s=arc-20240116; t=1790961005; c=relaxed/simple;
+	bh=9wEbN2n5LQFaWEnfgc/fjcdj12CgL82mEepIN/jxNKo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KDcIXu/JQd5tnPSI63npHO/MywMNUk34+3aJtCLGQVixyuTjWBGRn4QX8DHafvd/C53dHllM+WzIuLeCsmuohg8i4IH9KWiqhYXeNv8X6XpZkwqETEW0jm8KBNJZs2G8nOmKAiyF0kgY474utPTwfeRpXiElKWPsFwvvLj0IqCs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=NAeoV50Y; arc=none smtp.client-ip=74.125.227.153
+	 MIME-Version; b=ZSMuk8/QvbwBzxqPjLwCicUrIOXqsc0eWSiNnE1Ge3SKdjpjsCR991Qk1AHMt1OIPqswqQl6cvpW458SW+LSTixWJjb3pGwes/kNvO67ApPSV/1lcOQm/ADiK5VCa9Pr9TyIJ3MFzHxNc2riqPDCVF3CA+rAqDQOhtOf+jL7oSs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=gZEarUbb; arc=none smtp.client-ip=74.125.227.168
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NAeoV50Y"
-Received: by mail-pj2-f25.google.com with SMTP id d9443c01a7336-2e2e688de2eso29059775ad.3
-        for <lkmm@lists.linux.dev>; Fri, 02 Oct 2026 10:09:49 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gZEarUbb"
+Received: by mail-pj2-f40.google.com with SMTP id 98e67ed59e1d1-3a0d2c37b0bso113826a91.0
+        for <lkmm@lists.linux.dev>; Fri, 02 Oct 2026 10:10:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1790960988; x=1791565788; darn=lists.linux.dev;
+        d=gmail.com; s=20251104; t=1790960998; x=1791565798; darn=lists.linux.dev;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=xtL6vbzPvQXVWHTKwirmF+KIwLuuD5CR0v0OHwTiljs=;
-        b=NAeoV50YWSsQW2ZY38DvstMnD5Xx5r7A3ciWuFbskTzLdsKOmaVw13ThPn/f5sMjTC
-         dolGuNLlgWaHHlBJ56Zi+pIea1l91j0SrOHC4Hac1QWcB13OHi/anbi+yuAKBIEvhy4N
-         hief9cNDn6j3isbRu3UgqZD0dij7oU95SeYdFsrppKLqTRKg8hGv8eqOlK5Q7Pp97RtL
-         hp3t8f6No6wuvWQO9SW96uGRoyOofTx/Vlf8Ddy4nDBL4eMmutPRTufnchVvrVFIQP24
-         Nb9yWcmesnQMr+CqzkzYmV7vQoSqXS1HPo+xy6w85Y83J3IOapRuXhCZT4XzBxQW70oT
-         LlKw==
+        bh=InVY38nfxVAqb/WmgYkdpIBcCwx01OQ8UJwYgwWPio4=;
+        b=gZEarUbbYXyFG4PDrEwiHMEIH2dnkS1cM68Sspa8jQ2lQb89G4u30ICiIZhwkXh9kw
+         qTsKvb/Maxn9gwcnJk2Rmem/7vYAkG8hULpXVzKNzFr1A4JCJYw1eVFZjQY98zqv4Lll
+         raIHJdsQLg1Jkerz4IU8dCiSkW2MpkBGaU7nsSe4twXFwYoGll4dJaOv2c0/4TElU06J
+         DOpyqLD4qNK4muqGg8mYbWUn8jJ53Upmrx+NIsFvWUnln31Won+3asD1PIrKgbQG3O94
+         Se1+r8yL7H5Uh0kPiYXlMw5MkD8MiQdQ+ngvWoJxMna613iNMVagoAh1Tf0LWsR9Fxiz
+         LwLA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1790960988; x=1791565788;
+        d=1e100.net; s=20260707; t=1790960998; x=1791565798;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=xtL6vbzPvQXVWHTKwirmF+KIwLuuD5CR0v0OHwTiljs=;
-        b=offFpo81F3Rvbcrx9if9hNr3B87ZO2KUpiwIldn9vDmb/YT0gOdkvuPH6qHCpaQxo2
-         NkeaM7IkAG5b/LUYzWKmIcmnleI98hA+c1magrZVR+2LUW/X+fGODTrZIq4CAq+6cpAi
-         0QfnOeXpHClANQXnciqPNzXqiG8uXr1N43alJiiR9Dap75r5AWZptWpUozr9NLn219ly
-         FMhjvDkuiu/g6L0V0a1N5HnvEji9kvjHFsigFGQhOSYg8KXmhzUPMNp06abbNBJ5kCub
-         6Enx42REhwN8wMsF8GBqJauWAPQWyJbfVW8JqjDO7gLxfTHqLH2HDV3uHRtvTwJ+weBb
-         MLQw==
-X-Forwarded-Encrypted: i=1; AKwUvBxowJGRcIs0ZJkb2X+OD5D53hXs//8Eke6ZVOtr8W7sSB77+XdPrbRqpPgDpWOtmWpuM+sn@lists.linux.dev
-X-Gm-Message-State: AFq9FYIbEo7aEw7wbSyOcV1ClCXHHSEOXX1ulMzHo82C9AgMpzsbZ2qp
-	WQDS6Howr2aLdVm2NkVulM13FC+th4fWGfbFzYnIOcesD7r17Sdv4+1J
-X-Gm-Gg: AYBFou1QOW4MRgZTmJoEpNqWzdw5s7FVMGMw9A/GMr+A+Rng5+LrlUljn0XtBRp9K2v
-	CNYK75oiJfAqEuP6xxQp0xohnZO9t2Q7fXYaGQCQ4XWdAQWVyI1r3SqRRdAbCEl0Z7bjcVkp/ur
-	RKJCgtkG6wKLW803akoTKSJUVpwokjWwIOFAhEOdgaUKDjeuzvstzQ9u8qnpcmJsw0o4Y2q6COQ
-	+G90A+GNAenVtrGT+xOI/unxQFuPRzk142s5elm2oWp4GiojyzGL98GQ9VBZCqNyYOO+9ltJnkS
-	hKMNa3QEU3lPuCUE68DDNdudWVFdSpsnF6Of+fBzLyFDviqBG0EoaowsYLeQ990VnTy/gvLdhjn
-	H37LiPYYvadW8XjPTFq3HZtgB7lSBsFuQGUnapzaYYPELc2yJJuDjNAy6MELhgqUp+6qcU5wWYx
-	McD00lhNTqX7IfBzIoFb2rGskt//HL4+fawetup6E9EkQxZU4hRbBw8gVEjVtjsUQG9VvCe3ADM
-	HYINL0VsENgzGJe6A==
-X-Received: by 2002:a17:90b:564e:b0:3a4:e9e4:37f9 with SMTP id 98e67ed59e1d1-3a6ceaeebe3mr3029048a91.31.1790960987338;
-        Fri, 02 Oct 2026 10:09:47 -0700 (PDT)
+        bh=InVY38nfxVAqb/WmgYkdpIBcCwx01OQ8UJwYgwWPio4=;
+        b=W0/WbpO1orRm+Ycm+RbswKTlG1jcWMEie4fV8lB38m4nA7/3vBKW8nVYcFyOSin9AQ
+         2M/MCFYh65a1g6d7J2McSb9XAzlzTAjwMRXu9u4Bwmchj6JWjgq/1YSTLl+ewUbxQbqe
+         Du5eWIkMXsysVwsA7+xm7Zar6lt0zjbGMkIyZlkA9x7l3tJCn7PJVQZNPqLVNrnaqs4u
+         Ca2DczR+Z8r6DQJ0sTb4SZtwwCdbfEGIOVgFqQLBP0fDwXPak5IOBBcy5NMzw+tbPtpW
+         KbYbJi0q9cxuBCuihj9IoOmSZ5Bevo1FqOHOEnIJ4PXlWxNKrp8sjJZALzXPP9subCue
+         fiXQ==
+X-Forwarded-Encrypted: i=1; AKwUvBw/mS80cTpEowQM2HY5B6acYr067I52V3NtGD9Q6lPEarmkBHMgLshN0bmx5NZmsnaEo39g@lists.linux.dev
+X-Gm-Message-State: AFq9FYKVe3cy9jXd+yWqjPShZjkvsKtjtCdpVTPAEHB8bezn4ixHuxWU
+	GoYJxcTjtUQ6pe6iNKi28/TaGcRKq4xCDytiM6i86EuinfrlTkabw/Zu
+X-Gm-Gg: AYBFou10yEuU3HxlCj/kxRUexyzO08mKGJzBWtoNqjHkYqfCXkmXWwsElSF7Z9Cs21Q
+	QUBfY/4LtQV0dsF/FnKxIWldivEvJsJAmBHNBgSrIINUdpq5jRYAVhmOYrLbUb8OB1Abx/YvHOv
+	s6V2QhFW25qIebnVX7gwG54sn9B5NGY8Hvc+V7nuxi06tCmC5LpIlvmdCtyIfJWDA7MlbnrXAsB
+	f2zDAYSJ3pgTDEeyigUbzEdlJ8c+dugZcas9FE4HKUioNi1GUTsoKn2+MC1cg6YrLo1B6GnFRJK
+	35v57kbxhBTlKnWF24kSuftMrBD+72hHI6ckrLJ9v3nTTRRP74WFSldZ1rv4DoGubSxTrREphNl
+	f1fkXTK+4ds0BUlGg7PpQhAhfKQzEkFLqpgIBZWXGIjww6q0Aa7T4fmwg0pw/NFx6lfya5RqSbV
+	RtcNSmOkuYP8Kz4V3TmmiliD0xYehIK43dGEiIMsSLXXegUh4idVnc8BQFZy6MLmgec2Z9cLdU9
+	0zdm10t6AzK8dacFg==
+X-Received: by 2002:a17:90b:39ac:b0:3a4:a7eb:1da7 with SMTP id 98e67ed59e1d1-3a6ce7f8bcbmr2920094a91.42.1790960997498;
+        Fri, 02 Oct 2026 10:09:57 -0700 (PDT)
 Received: from kernel.tail6741c6.ts.net ([185.220.238.43])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3a7024d0f5fsm1597719a91.0.2026.10.02.10.09.36
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3a7024d0f5fsm1597719a91.0.2026.10.02.10.09.47
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 02 Oct 2026 10:09:46 -0700 (PDT)
+        Fri, 02 Oct 2026 10:09:57 -0700 (PDT)
 From: Kunwu Chan <kunwu.chan@gmail.com>
 To: paulmck@kernel.org,
 	corbet@lwn.net,
@@ -96,9 +96,9 @@ Cc: stern@rowland.harvard.edu,
 	linux-doc@vger.kernel.org,
 	rcu@vger.kernel.org,
 	linux-kselftest@vger.kernel.org
-Subject: [PATCH RFC v2 04/15] hazptr: add scoped_guard() support
-Date: Sat,  3 Oct 2026 01:08:36 +0800
-Message-ID: <20261002170847.3653663-5-kunwu.chan@gmail.com>
+Subject: [PATCH RFC v2 05/15] hazptr: add debug option to force the acquire slow path
+Date: Sat,  3 Oct 2026 01:08:37 +0800
+Message-ID: <20261002170847.3653663-6-kunwu.chan@gmail.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20261002170847.3653663-1-kunwu.chan@gmail.com>
 References: <20261002170847.3653663-1-kunwu.chan@gmail.com>
@@ -110,82 +110,54 @@ List-Unsubscribe: <mailto:lkmm+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Add a scoped_guard() class for hazptr so that callers can pair
-hazptr_acquire() with hazptr_release() on scope exit.
+Add a debug option that makes hazptr_acquire() always enter
+__hazptr_acquire(), even when a per-CPU slot is available.
 
-The guard holds a pointer to a caller-provided hazptr_ctx rather
-than embedding it.  The ctx must remain at a stable address while
-the hazard pointer is held because the slow path can chain its
-backup slot into the overflow list by address.
+This allows the slow path, including its lock acquisition, to be
+exercised by lockdep-heavy workloads.  It also lets hazptrtorture
+exercise the slow path without requiring the per-CPU slots to be
+exhausted.
 
 Suggested-by: Boqun Feng <boqun@kernel.org>
 Signed-off-by: Kunwu Chan <kunwu.chan@gmail.com>
 ---
- include/linux/hazptr.h | 51 ++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 51 insertions(+)
+ include/linux/hazptr.h   |  3 ++-
+ kernel/rcu/Kconfig.debug | 10 ++++++++++
+ 2 files changed, 12 insertions(+), 1 deletion(-)
 
 diff --git a/include/linux/hazptr.h b/include/linux/hazptr.h
-index d1670121947a..275cbe54b075 100644
+index 275cbe54b075..4ee02d23abc9 100644
 --- a/include/linux/hazptr.h
 +++ b/include/linux/hazptr.h
-@@ -320,6 +320,57 @@ void hazptr_release(struct hazptr_ctx *ctx, void *addr)
- 		hazptr_unchain_backup_slot(ctx);
- }
+@@ -245,7 +245,8 @@ void *hazptr_acquire(struct hazptr_ctx *ctx, void * const *addr_p)
+ 	ctx->acquire_cpu = smp_processor_id();
+ 	ctx->acquire_caller = _THIS_IP_;
+ #endif
+-	if (unlikely(slot->addr))
++	if (IS_ENABLED(CONFIG_HAZPTR_ACQUIRE_FORCE_SLOWPATH) ||
++	    unlikely(slot->addr))
+ 		return __hazptr_acquire(ctx, addr_p);
+ 	WRITE_ONCE(slot->addr, READ_ONCE(hazptr_wildcard));	/* Store B */
  
-+/**
-+ * struct hazptr_guard - cleanup.h guard for a single hazard pointer
-+ *
-+ * @ctx: Pointer to the caller-provided hazard-pointer context.
-+ * @addr: The address returned by the matching hazptr_acquire().
-+ */
-+struct hazptr_guard {
-+	struct hazptr_ctx *ctx;
-+	void *addr;
-+};
-+
-+/**
-+ * hazptr_guard_acquire - Acquire a hazard pointer for scoped_guard() use
-+ *
-+ * @ctx: The caller-provided hazard-pointer context.
-+ * @addr_p: Pointer to the pointer that is to be hazard-pointer protected.
-+ *
-+ * Acquire a hazard pointer using @ctx and return a guard that
-+ * cleanup.h releases via hazptr_release() on scope exit.  The guard
-+ * only carries the ctx pointer and the address returned by
-+ * hazptr_acquire().
-+ */
-+static inline struct hazptr_guard
-+hazptr_guard_acquire(struct hazptr_ctx *ctx, void * const *addr_p)
-+{
-+	struct hazptr_guard g;
-+
-+	g.ctx = ctx;
-+	g.addr = hazptr_acquire(ctx, addr_p);
-+	return g;
-+}
-+
-+DEFINE_CLASS(hazptr, struct hazptr_guard,
-+	     hazptr_release(_T.ctx, _T.addr),
-+	     hazptr_guard_acquire(ctx, addr_p),
-+	     struct hazptr_ctx *ctx, void * const *addr_p)
-+DEFINE_CLASS_IS_UNCONDITIONAL(hazptr)
-+
-+/*
-+ * The ctx must remain at a stable address while the hazard pointer
-+ * is held because the slow path can chain its backup slot
-+ * into the overflow list by address.
-+ *
-+ *	struct hazptr_ctx ctx;
-+ *	void *obj = ptr;
-+ *
-+ *	scoped_guard(hazptr, &ctx, &obj) {
-+ *		...
-+ *	}
-+ */
-+
- void hazptr_init(void);
+diff --git a/kernel/rcu/Kconfig.debug b/kernel/rcu/Kconfig.debug
+index 7c3c6017b266..3a2e9d7f58f8 100644
+--- a/kernel/rcu/Kconfig.debug
++++ b/kernel/rcu/Kconfig.debug
+@@ -265,4 +265,14 @@ config HAZPTR_DEBUG
  
- #endif /* _LINUX_HAZPTR_H */
+ 	  Say Y here if you want to enable those assert, N otherwise.
+ 
++config HAZPTR_ACQUIRE_FORCE_SLOWPATH
++	bool "Force hazard-pointer acquire into the slow path"
++	depends on DEBUG_KERNEL
++	default n
++	help
++	  Make hazptr_acquire() always enter __hazptr_acquire().
++	  This is useful for testing slow-path locking, especially
++	  with lockdep.  It also lets hazptrtorture exercise the slow
++	  path without filling the per-CPU slots.
++
+ endmenu # "RCU Debugging"
 -- 
 2.43.0
 

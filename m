@@ -1,243 +1,338 @@
-Received: from mail.mainlining.org (mail.mainlining.org [5.75.144.95])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj2-f39.google.com (mail-pj2-f39.google.com [74.125.227.167])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD5D64E323C
-	for <lkmm@lists.linux.dev>; Fri,  2 Oct 2026 17:12:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=5.75.144.95
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18FCC4D90C0
+	for <lkmm@lists.linux.dev>; Mon,  5 Oct 2026 17:15:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.227.167
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790961160; cv=none; b=FTtm7xy3UYXvllqgL00nq0YoPoK1ydsA324KMaB1RerYf3bYrnGwV0OBDafXAcPR3EOzzUrVfX6Nl7BfDNZ7s06nTjv3vU7xI4LTsG68aapXxaDP+3EYieFly7KUKjWxNxsXH3y+0iQB+6fYbROw3hIPWjSDkaMEckkUdRFKrkc=
+	t=1791220554; cv=none; b=JRpsioN4mPHQaLSEGoesohRw9W21MLHSULBcL1r9HE7sE/WsEoLAcCa9Gd/t2L/OpX53mgnEQxTMBIjBwAJOYuupwNwmL/ygkbaMTFxYSJsfOcbfBh5EwXjIq3PfemP8GQ1Xl+irwbmCDXL5kyBHpVDEKLUsTYvVM8pJ+ksr5dc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790961160; c=relaxed/simple;
-	bh=bMOormtD/BysD5q/X8WDjYCKDuOENgwnylEY69wimnU=;
-	h=Date:From:To:CC:Subject:In-Reply-To:References:Message-ID:
-	 MIME-Version:Content-Type; b=Y+9BcQ/xw2O5cnhvprbUomufRjwcl5tKSq/PqHsOgbScNP0Remn03oVlTS96NEEKkV6enVuIqbn4pt1zKA/znp8iiH6biflaOeWJfKUKLMhkWwuXmT0/gD1F1d/+tnWzV+ElHs2v1S3AwVotISbylOW80X477zBsgkeJYivU29g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mainlining.org; spf=pass smtp.mailfrom=mainlining.org; dkim=pass (2048-bit key) header.d=mainlining.org header.i=@mainlining.org header.b=k3cOqoXT; dkim=permerror (0-bit key) header.d=mainlining.org header.i=@mainlining.org header.b=CmtFmN6j; arc=none smtp.client-ip=5.75.144.95
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mainlining.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mainlining.org
+	s=arc-20240116; t=1791220554; c=relaxed/simple;
+	bh=b9wO8A8BJk0msRgDSSIm/zwSQ296F+LSttY983JHDrI=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=eOESS+MEbLRlbz7cJi4rXSFQLClK5yMqtz7wS0kmjOJR346i+1aGC1C+K/tmU+qXwZa2Gzt/Z8Z7gsg5U92WdFtxgqiCb/18ktkEZjRrbTf/TT4VBGOGXTGlntxBUyO0DqgIv1Um0YTlkwG/wobDlneJF8jZjgvJ9rq1NlqvKNA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=QRchm9Gs; arc=none smtp.client-ip=74.125.227.167
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=mainlining.org header.i=@mainlining.org header.b="k3cOqoXT";
-	dkim=permerror (0-bit key) header.d=mainlining.org header.i=@mainlining.org header.b="CmtFmN6j"
-DKIM-Signature: v=1; a=rsa-sha256; s=202507r; d=mainlining.org; c=relaxed/relaxed;
-	h=Message-ID:Subject:To:From:Date; t=1790961152; bh=b9Q0i239fHVl2Kmz77y2hqJ
-	hKMRp0ccS9+F9KIK0Jhk=; b=k3cOqoXT7iyuu9IwI3dU6iCnI6VAlceY9g/2speCBBovG+d5lm
-	+8fyy0pebrjEp1MDWDVxLM7103M7XPWEMzwwTBeOxQ4xu3GVRLOmmDBrDzRJ8dvNWF7LxgfLheu
-	xalcN3D8SdgKogqpDG/LdRabowqU0Zswkj3NYeARcKkZDfmTuotP/T0N9IwFAsv2ARks9bzha7y
-	Ia9oBlbaEtoi7V6wGyl4vHUUDH41mQLZHW52FKgh43g/xrZ3+R7p8VnjXozqCmMmZFulXuE5bR4
-	Gzomkm56TsgL/i+VWr1AhKy9VZB9n6sqtN7sU7h7J0XCG/CW2exlPPym7Kb37LzTlpg==;
-DKIM-Signature: v=1; a=ed25519-sha256; s=202507e; d=mainlining.org; c=relaxed/relaxed;
-	h=Message-ID:Subject:To:From:Date; t=1790961152; bh=b9Q0i239fHVl2Kmz77y2hqJ
-	hKMRp0ccS9+F9KIK0Jhk=; b=CmtFmN6jO7CuOtkqUNxQF+NndeulGQxjo9ai9gJ3chl4yCFwcB
-	NtHWgsC4OciGaHrxIKTkj6M518iY0qxAIaDg==;
-Date: Fri, 02 Oct 2026 18:12:32 +0100
-From: Bradley Morgan <brads@mainlining.org>
-To: Kunwu Chan <kunwu.chan@gmail.com>, paulmck@kernel.org, corbet@lwn.net,
- mingo@redhat.com, frederic@kernel.org, neeraj.upadhyay@kernel.org,
- josh@joshtriplett.org, urezki@gmail.com, dave@stgolabs.net,
- lianux.mm@gmail.com
-CC: stern@rowland.harvard.edu, parri.andrea@gmail.com, will@kernel.org,
- peterz@infradead.org, boqun@kernel.org, npiggin@gmail.com,
- dhowells@redhat.com, j.alglave@ucl.ac.uk, luc.maranget@inria.fr,
- akiyks@gmail.com, dlustig@nvidia.com, joelagnelf@nvidia.com,
- skhan@linuxfoundation.org, rdunlap@infradead.org, longman@redhat.com,
- rostedt@goodmis.org, mathieu.desnoyers@efficios.com, jiangshanlai@gmail.com,
- qiang.zhang@linux.dev, kunwu.chan@gmail.com, linux-kernel@vger.kernel.org,
- linux-arch@vger.kernel.org, lkmm@lists.linux.dev, linux-doc@vger.kernel.org,
- rcu@vger.kernel.org, linux-kselftest@vger.kernel.org
-Subject: =?US-ASCII?Q?Re=3A_=5BPATCH_RFC_v2_00/15=5D_hazptr=3A_batch_sy?=
- =?US-ASCII?Q?nchronize_operations_through_a_shared_scan?=
-In-Reply-To: <20261002170847.3653663-1-kunwu.chan@gmail.com>
-References: <20261002170847.3653663-1-kunwu.chan@gmail.com>
-Message-ID: <06F49954-C343-4894-931D-9B2F50F644DE@mainlining.org>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QRchm9Gs"
+Received: by mail-pj2-f39.google.com with SMTP id 98e67ed59e1d1-3a49b6bb21eso1112565a91.3
+        for <lkmm@lists.linux.dev>; Mon, 05 Oct 2026 10:15:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1791220551; x=1791825351; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=noJfd7OdedAOUSKXlipn0GwwH2nQ+S/hQ095hJ1+g44=;
+        b=QRchm9Gs9FQknARfueAwBERtv0ZMNpaPoQfEMTRS6gpB8P6Xy6enFBeMeQfypSeD+1
+         +VCNnwCMu4DGWDH0uQyKkMkuL9JY48xQ8UOC9cYC2JDvsxN+6VhYFAZVjFPT93+1w8E0
+         PjxgM/BzkDPVBHomV5b4+Y8YQ1FdjExrJzgd4b1RAD84WAXhY24J80NayFspccrsfHE1
+         H+z2PPx8ZKuEG5Lf+7JGYFFxarGv+9BEHnPjE76DWVj/2iyRLDA9ibRdKUc/gErM05wA
+         7S71X3oqBZrB2D1eYkdqe+HJhd9WgcxGp6OayxNmAIm6KbPfymmaTNRX6EM5esPzX6sj
+         cZ+w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1791220551; x=1791825351;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=noJfd7OdedAOUSKXlipn0GwwH2nQ+S/hQ095hJ1+g44=;
+        b=LcIzbhsrhs+Jc5CNYaqjCadSRlu7cQeo5oJvsW6SxYi6L9bCEglTMUBgJeKp9seTry
+         Vl9z4SB67D2o+SWbo7/90JmooMT4DLvSE4r1LoPwVpYU7ut3841u+F6oPgY5abcC1rWw
+         AhL6QFo4K7myKb1leNVW0Ymzr23uv8bQUUJ2ZzcUQF4OcNCMTGDV85GX8Qk19Fjhf+qT
+         RmIdxLM1IskPx7+ogXijsff0s6x99HJdLQw7mb7BbLkeTwzRlX1JzUz7IeAqW7ChKDUG
+         g7wdFkrHy0SEpX6Jp+bFug/sWSKLkPVznn2yuhON6fShg2RTTM7a7MprIbx01GVIFS5P
+         NbYg==
+X-Forwarded-Encrypted: i=1; AKwUvBxgVTFpPVAV6PAeIXtTcQ3isR+dhAe49ZGNoRk8WoUCobMUBSh7539I5EVoWgPtTaY/i1vj@lists.linux.dev
+X-Gm-Message-State: AFq9FYKHwDA/n4XM5oe7CQUSiThCa2FGeRK3UaCTe2JQ6jxP6IDvrGFs
+	kafjtH+/gAHd31lu0M712KtWQTXq4GseBC/XXY6IGWoRs0AK49vqvotL
+X-Gm-Gg: AYBFou2029w0tIbm+dsyb5ZA2YS6XybB2ASiCVdm5icofYhVD9oAfZG/B74BFDsy9tc
+	HPU1EqjdIgtM5dhqWGEA7H4zdGw4sDHO8V1iHqYtG45gp1g5Tgjin6VthAYZIk6qbT7jtBaS29o
+	m7xeMSNbirOH7+j6PY6RqljkOYoBKlpMJklOrwVw9OliqCJpcaWDrZfXPdupH1ZKIYYr8DiyGIz
+	pNKV9+cYT/AtesWiJZ3aWk9JrAXAjnOz4XaCabizEz4ZpxEaEn+UoL3yIc6DVvudmCky/CQami0
+	dzgzx7aLFRQviYhTz3tQzT4bqV/ebPFqGKLSrYz3532d2DzfzMqWqRAkVRfL3sns24VHcra2T7G
+	L7nPchsBm9oLzd/3D/mrW9PQ03QdOR2AuOBpKTDWr7SLUS4GnfBBvwlIbK2EzZCZTs12mXXdEq3
+	+FRCP6no3iwNL5+rV/q0uMTtHltCfSNJsrGFIQxqJYmKrx7KFrT39rTU3ukSmK/9iqjZvaWrNjI
+	DvqxvyGin59/ZnLJeP0aPlLjWqwzw==
+X-Received: by 2002:a17:90b:5281:b0:3a4:a370:d888 with SMTP id 98e67ed59e1d1-3a6ceaf8df6mr4799154a91.20.1791220550549;
+        Mon, 05 Oct 2026 10:15:50 -0700 (PDT)
+Received: from kernel.tail6741c6.ts.net ([216.195.201.24])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3a853cafddesm406910a91.10.2026.10.05.10.15.36
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 05 Oct 2026 10:15:50 -0700 (PDT)
+From: Kunwu Chan <kunwu.chan@gmail.com>
+To: paulmck@kernel.org,
+	corbet@lwn.net,
+	mingo@redhat.com,
+	frederic@kernel.org,
+	neeraj.upadhyay@kernel.org,
+	josh@joshtriplett.org,
+	urezki@gmail.com,
+	dave@stgolabs.net,
+	lianux.mm@gmail.com
+Cc: stern@rowland.harvard.edu,
+	parri.andrea@gmail.com,
+	will@kernel.org,
+	peterz@infradead.org,
+	boqun@kernel.org,
+	npiggin@gmail.com,
+	dhowells@redhat.com,
+	j.alglave@ucl.ac.uk,
+	luc.maranget@inria.fr,
+	akiyks@gmail.com,
+	dlustig@nvidia.com,
+	joelagnelf@nvidia.com,
+	skhan@linuxfoundation.org,
+	rdunlap@infradead.org,
+	longman@redhat.com,
+	rostedt@goodmis.org,
+	mathieu.desnoyers@efficios.com,
+	jiangshanlai@gmail.com,
+	qiang.zhang@linux.dev,
+	kunwu.chan@gmail.com,
+	brads@mainlining.org,
+	linux-kernel@vger.kernel.org,
+	linux-arch@vger.kernel.org,
+	lkmm@lists.linux.dev,
+	linux-doc@vger.kernel.org,
+	rcu@vger.kernel.org,
+	linux-kselftest@vger.kernel.org
+Subject: [PATCH RFC v3 00/15] hazptr: batch synchronize operations through a shared scan
+Date: Tue,  6 Oct 2026 01:15:14 +0800
+Message-ID: <20261005171529.1378809-1-kunwu.chan@gmail.com>
+X-Mailer: git-send-email 2.43.0
 Precedence: bulk
 X-Mailing-List: lkmm@lists.linux.dev
 List-Id: <lkmm.lists.linux.dev>
 List-Subscribe: <mailto:lkmm+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:lkmm+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
 Content-Transfer-Encoding: 8bit
 
-On 2 October 2026 18:08:32 BST, Kunwu Chan <kunwu.chan@gmail.com> wrote:
->This series extends Paul McKenney's v3 hazptr implementation [1]
->with a shared scan path for concurrent hazptr_synchronize() callers,
->and adapts the lockdep dynamic-key hashlist use case from Boqun
->Feng's 2025 shazptr series [2] to the current hazptr API.
->
->The series also adds rcuscale support and torture coverage for
->the hazptr implementation.
->
->The lockdep conversion replaces the expedited RCU wait in
->lockdep_unregister_key() with hazptr_synchronize().  This limits
->the wait to hazard pointers protecting the target hash bucket
->instead of waiting for a system-wide expedited RCU grace period.
->
->[1]
->https://lore.kernel.org/all/20260919000056.3132131-26-paulmck@kernel.org/
->[2]
->https://lore.kernel.org/lkml/20250625031101.12555-1-boqun.feng@gmail.com/
->
+This series extends Mathieu Desnoyers's hazard pointer implementation [1]
+with a shared scan path for concurrent hazptr_synchronize() callers,
+and adapts the lockdep dynamic-key hashlist use case from Boqun
+Feng's 2025 shazptr series [2] to the current hazptr API.
+
+The series also adds rcuscale support, torture coverage, and litmus
+tests for the hazptr implementation.
+
+The lockdep conversion replaces the expedited RCU wait in
+lockdep_unregister_key() with hazptr_synchronize().  This limits
+the wait to hazard pointers protecting the target hash bucket
+instead of waiting for a system-wide expedited RCU grace period.
+
+[1] https://lore.kernel.org/all/20260919000056.3132131-26-paulmck@kernel.org/
+[2] https://lore.kernel.org/lkml/20250625031101.12555-1-boqun.feng@gmail.com/
+
+Performance data
+================
+
+The measurements below were collected on an ARM64 KVM guest running
+on an ARM64 server (96 vCPUs, 8 GB RAM), unless noted otherwise.
+The kernel is based on Paul McKenney's -rcu tree "dev" branch at
+commit d21906b0aa1e ("doc: Document additional RCU task-stall dump
+information") with the full hazptr patch series applied.
+
+CONFIG_PREEMPT=y, CONFIG_PREEMPT_RCU=y, CONFIG_NR_CPUS=256.
+Configuration is saved alongside each result set.
+
+Following Paul's suggestion, the reader-side refscale numbers are
+reported separately for CONFIG_PROVE_LOCKING=n and
+CONFIG_PROVE_LOCKING=y, since lockdep instrumentation significantly
+affects the measured RCU and SRCU reader-side costs but has little
+effect on the hazptr reader path in this setup.
+
+Lockdep workload -- tc qdisc mq x100, CONFIG_PROVE_LOCKING=y,
+96 background hazptr readers:
+
+  function-call IPIs (100 tc qdisc operations):  183
+
+For reference, insmod/rmmod x10 in the same setup generated 4930
+function-call IPIs.
+
+The lockdep_unregister_key() path is the motivating use case for
+this series: it replaces a system-wide synchronize_rcu_expedited()
+call with a hazptr_synchronize() scoped to the per-key hash bucket.
+
+Writer-side effective per-GP time (rcuscale, nwriters=16, nreaders=0,
+one run per CPU count; computed as total test duration divided by
+the total number of grace periods across all writers):
+
+                         hazptr      RCU         Tree SRCU
+  CPUs                   per-GP      per-GP      per-GP
+  -----------------------------------------------------------
+   24                    498 us      863 us      632 us
+   96                    493 us      865 us      599 us
+  128                    493 us      873 us      789 us
+  256                    500 us      1162 us     476 us
+
+At 96 CPUs the measurements are from the comparison blocks in the
+same guest boot (order: hazptr nw=16, hazptr nw=1, hazptr nw=16,
+rcu nw=1, rcu nw=16, srcu nw=1, srcu nw=16).  The hazptr scalability
+row uses the first hazptr nw=16 block, which is consistent with the
+single per-CPU runs at 24, 128, and 256 CPUs.  RCU and Tree SRCU
+use their standard implementations.
+
+Hazptr effective per-GP time stays nearly constant from 24 to 256
+CPUs, remaining within 493-500 us, consistent with the shared-scan
+kthread amortising the scan across concurrent synchronize callers.
+At 96 CPUs, the effective per-GP times are approximately 865 us for
+RCU, 599 us for SRCU, and 493 us for hazptr with 16 concurrent
+callers.
+
+For comparison, the nwriters=1, nreaders=0 case measured about 19 us
+per grace period in this run at 96 CPUs.
+
+Reader-side overhead (refscale, nreaders=-1 for 75% of 96 online
+CPUs, nruns=5, median of 5 runs per scale type):
+
+  The lockdep=n and lockdep=y refscale numbers were collected in
+  separate QEMU boots from kernels built from the same source tree
+  with PROVE_LOCKING toggled.  The first hazptr block in each boot
+  is used.  All 96 vCPUs were visible to the guest (CONFIG_NR_CPUS=256).
+
+                   PROVE_LOCKING=n     PROVE_LOCKING=y
+  hazptr           26.1 ns             25.6 ns
+  RCU               5.0 ns            165.5 ns
+  SRCU             38.8 ns            192.3 ns
+
+Hazptr reader-side overhead is nearly unchanged with and without
+CONFIG_PROVE_LOCKING in this setup, while RCU and SRCU show
+substantially higher costs when lockdep is enabled.  This is why
+the refscale results are reported separately for the two
+configurations.
+
+Hazptr torture regression (CONFIG_PROVE_LOCKING=y):
+basic, lockdep+wq_churn, and SLOWPATH PASS at 96 CPUs;
+CPU sweep (8/16/32/64/128/256) also PASS with no lockdep warnings.
+
+Additional x86 server testing with Lian Wang is planned(maybe after
+LPC).
+
+Test reproducibility
+---------------------
+
+Across five refscale runs, the standard deviation was 0.16 ns for
+hazptr and 0.12 ns for RCU with PROVE_LOCKING=n.  Rcuscale data
+points are based on a single test run per CPU count, but each run
+covers thousands of individual grace periods and the hazptr 
+measurements remain within 493-500us across the tested CPU counts.
+The lockdep workload measurement uses 100 tc qdisc operations in 
+a single QEMU boot; repeated runs agree to within ~10 IPIs on 
+this server.
+
+Changes since v2
+================
+
+- v2: https://lore.kernel.org/all/20261002170847.3653663-1-kunwu.chan@gmail.com/
+
+Only cover letter changes; no code changes since v2.
+
+- Fixed attribution: the base hazptr implementation is Mathieu
+  Desnoyers's work.
+
+- Split the refscale reader-overhead table into separate
+  PROVE_LOCKING=n and PROVE_LOCKING=y columns, following Paul's
+  suggestion, so that the lockdep impact on RCU and SRCU fast
+  paths is visible rather than folded into a single number.
+
+- Replaced the rcuscale "per-writer latency" column with
+  per-grace-period values.  The new metric (total test duration
+  divided by total grace periods) is more directly interpretable
+  when comparing 1-vs-16 concurrent synchronize callers.  The
+  nw=16 comparison now uses the same rcuscale test block for
+  hazptr, RCU, and SRCU at each CPU count.  The nw=1 baseline
+  is provided for reference so that the reader can see the single-
+  writer cost and the per-GP cost under 16 concurrent callers side
+  by side.
+
+- Added test-condition and reproducibility notes (kernel commit,
+  PREEMPT model, visible CPU count, boot ordering, standard
+  deviation, sample sizes).
+
+- Removed the unreviewed srcua scale-type patch from this series;
+  it will be posted separately.
+
+Changes since RFC/WIP
+=====================
+
+- RFC/WIP: https://lore.kernel.org/all/20260922070950.4173245-1-kunwu.chan@gmail.com/
+
+- Split the original 4-patch RFC/WIP into smaller commits covering
+  shared scanning, correctness, API support, lockdep, scaling, and
+  torture testing.
+
+- Incorporated Boqun Feng's review feedback: use a Bloom filter to
+  avoid per-waiter allocation, add scoped_guard() support, and add
+  a debug option to force the hazptr acquire slow path.
+
+- Fixed scan ordering around backup-slot promotion by scanning all
+  per-CPU slots before the overflow lists, with a separate
+  overflow-list phase.
+
+- Simplified the scan cycle to flip first and drain only the old
+  wildcard generation, with herd7-verified LKMM tests for both the
+  in-flight and resolved publication cases.
+
+- Extended rcuscale and hazptrtorture coverage, added a selftest
+  script for the torture configurations, and fixed the
+  hazptr_release() kernel-doc.
 
 
-This is well needed. Thanks for the patch, I'll maybe review maybe test if
-I have time, cough cough, school!
+Kunwu Chan (15):
+  hazptr: add shared scan kthread
+  hazptr: use Bloom filter for shared scan waiters
+  hazptr: scan all per-CPU slots before overflow lists
+  hazptr: add scoped_guard() support
+  hazptr: add debug option to force the acquire slow path
+  hazptr: elide redundant first drain pass
+  Documentation/litmus-tests: add hazptr wildcard-flip escape test
+  locking/lockdep: use hazptr to wait for dynamic key lookups
+  rcuscale: add hazptr scale type
+  hazptr: fix kernel-doc of hazptr_release()
+  Documentation/litmus-tests: add hazptr acquire-before-scan test
+  hazptrtorture: add slowpath and lockdep scenarios
+  hazptrtorture: add READERS4 and READERS0 torture configs
+  hazptrtorture: add 128- and 256-CPU configs
+  selftests/rcutorture: add hazptr torture test script
 
->Performance data
->================
->
->All measurements are on an ARM64 KVM guest with
->HAZPTR_SCALE_NR_OBJS=8 and round-robin updater selection; unless
->noted otherwise, nreaders=0.  Scale tests run with
->PROVE_LOCKING=n.
->
->rcuscale synchronize latency (96 CPUs, nw=1):
->
->              nreaders=0      nreaders=1       nreaders=4      nreaders=96
->    scale       avg              avg             avg              avg
->    --------------------------------------------------------------------
->    hazptr     46 us            47 us          102 us            106 ms
->    RCU       8.3 ms           8.5 ms         16.6 ms         54.4 ms
->    SRCU      8.2 ms           8.0 ms         11.7 ms         11.8 ms
->
->Hazptr single-writer latency remains below 110 us with up to
->four readers on this 96-CPU guest, but rises to 106 ms when
->all 96 CPUs hold hazard pointers.
->
->Under 16 concurrent synchronize callers (nw=16), per-writer
->latency at four CPU counts:
->
->              hazptr nw=16      RCU nw=16     SRCU nw=16
->    CPUs       avg               avg             avg
->    -----------------------------------------------------------
->      24       8.0 ms          13.6 ms          9.2 ms
->      96       8.0 ms          13.3 ms          8.6 ms
->     128       7.9 ms          13.0 ms         11.7 ms
->     256       8.0 ms          20.8 ms          9.6 ms
->
->Hazptr remains around 8.0 ms across these CPU counts, with the
->scan-kthread retry interval contributing to the latency.
->RCU rises to ~21 ms at 256 CPUs while SRCU stays around 9-12 ms.
->
->Reader-side overhead (refscale, 96 readers on the 96-CPU guest,
->3 runs each):
->
->    hazptr     25.7 ns/op
->    RCU        96.7 ns/op
->    SRCU      134.6 ns/op
->
->lockdep workload -- tc qdisc mq x100, ARM64 KVM, PROVE_LOCKING=y,
->96 background hazptr readers, function-call IPIs per 100 ops:
->
->    CPUs       hazptr              exp RCU            reduction
->    ------------------------------------------------------------
->      24       196                 207                 5%
->      96       189                 265                29%
->     128       193                 266                27%
->     256       222                 384                42%
->
->Hazptr issues fewer function-call IPIs at each CPU count, with
->the difference reaching 42% at 256 CPUs.
->
->The hazptr.sh test suite passes, including the lockdep scenarios
->and the 8-to-256 CPU sweep, with no lockdep warnings, deadlocks,
->or crashes.
->Additional x86 server testing with Lian Wang is planned(maybe after
->LPC).
->
->Changes since RFC/WIP
->=====================
->
->- RFC/WIP: https://lore.kernel.org/all/20260922070950.4173245-1-kunwu.chan@gmail.com/
->
->- Split the original 4-patch RFC/WIP into smaller commits covering
->  shared scanning, correctness, API support, lockdep, scaling, and
->  torture testing.
->
->- Incorporated Boqun Feng's review feedback: use a Bloom filter to
->  avoid per-waiter allocation, add scoped_guard() support, and add
->  a debug option to force the hazptr acquire slow path.
->
->- Fixed scan ordering around backup-slot promotion by scanning all
->  per-CPU slots before the overflow lists, with a separate
->  overflow-list phase.
->
->- Simplified the scan cycle to flip first and drain only the old
->  wildcard generation, with herd7-verified LKMM tests for both the
->  in-flight and resolved publication cases.
->
->- Extended rcuscale and hazptrtorture coverage, added a selftest
->  script for the torture configurations, and fixed the
->  hazptr_release() kernel-doc.
->
->Kunwu Chan (15):
->  hazptr: add shared scan kthread
->  hazptr: use Bloom filter for shared scan waiters
->  hazptr: scan all per-CPU slots before overflow lists
->  hazptr: add scoped_guard() support
->  hazptr: add debug option to force the acquire slow path
->  hazptr: elide redundant first drain pass
->  Documentation/litmus-tests: add hazptr wildcard-flip escape test
->  locking/lockdep: use hazptr to wait for dynamic key lookups
->  rcuscale: add hazptr scale type
->  hazptr: fix kernel-doc of hazptr_release()
->  Documentation/litmus-tests: add hazptr acquire-before-scan test
->  hazptrtorture: add slowpath and lockdep scenarios
->  hazptrtorture: add READERS4 and READERS0 torture configs
->  hazptrtorture: add 128- and 256-CPU configs
->  selftests/rcutorture: add hazptr torture test script
->
-> Documentation/litmus-tests/README             |  13 +
-> .../hazptr/hazptr-acquire-before-scan.litmus  |  45 +++
-> .../hazptr/hazptr-wildcard-flip-escape.litmus |  46 +++
-> include/linux/hazptr.h                        |  56 ++-
-> kernel/hazptr.c                               | 336 +++++++++++++++++-
-> kernel/locking/lockdep.c                      |  25 +-
-> kernel/rcu/Kconfig.debug                      |  10 +
-> kernel/rcu/hazptrtorture.c                    |  57 ++-
-> kernel/rcu/rcuscale.c                         |  70 +++-
-> .../selftests/rcutorture/bin/hazptr.sh        | 146 ++++++++
-> .../rcutorture/configs/hazptr/CFLIST          |   6 +
-> .../rcutorture/configs/hazptr/CPU128          |  16 +
-> .../rcutorture/configs/hazptr/CPU128.boot     |   1 +
-> .../rcutorture/configs/hazptr/CPU256          |  16 +
-> .../rcutorture/configs/hazptr/CPU256.boot     |   1 +
-> .../rcutorture/configs/hazptr/LOCKDEP         |  17 +
-> .../rcutorture/configs/hazptr/LOCKDEP.boot    |   1 +
-> .../rcutorture/configs/hazptr/READERS0        |  16 +
-> .../rcutorture/configs/hazptr/READERS0.boot   |   2 +
-> .../rcutorture/configs/hazptr/READERS4        |  16 +
-> .../rcutorture/configs/hazptr/READERS4.boot   |   2 +
-> .../rcutorture/configs/hazptr/SLOWPATH        |  16 +
-> 22 files changed, 881 insertions(+), 33 deletions(-)
-> create mode 100644
-> Documentation/litmus-tests/hazptr/hazptr-acquire-before-scan.litmus
-> create mode 100644
-> Documentation/litmus-tests/hazptr/hazptr-wildcard-flip-escape.litmus
-> create mode 100755 tools/testing/selftests/rcutorture/bin/hazptr.sh
-> create mode 100644
-> tools/testing/selftests/rcutorture/configs/hazptr/CPU128
-> create mode 100644
-> tools/testing/selftests/rcutorture/configs/hazptr/CPU128.boot
-> create mode 100644
-> tools/testing/selftests/rcutorture/configs/hazptr/CPU256
-> create mode 100644
-> tools/testing/selftests/rcutorture/configs/hazptr/CPU256.boot
-> create mode 100644
-> tools/testing/selftests/rcutorture/configs/hazptr/LOCKDEP
-> create mode 100644
-> tools/testing/selftests/rcutorture/configs/hazptr/LOCKDEP.boot
-> create mode 100644
-> tools/testing/selftests/rcutorture/configs/hazptr/READERS0
-> create mode 100644
-> tools/testing/selftests/rcutorture/configs/hazptr/READERS0.boot
-> create mode 100644
-> tools/testing/selftests/rcutorture/configs/hazptr/READERS4
-> create mode 100644
-> tools/testing/selftests/rcutorture/configs/hazptr/READERS4.boot
-> create mode 100644
-> tools/testing/selftests/rcutorture/configs/hazptr/SLOWPATH
->
->
+ Documentation/litmus-tests/README             |  13 +
+ .../hazptr/hazptr-acquire-before-scan.litmus  |  45 +++
+ .../hazptr/hazptr-wildcard-flip-escape.litmus |  46 +++
+ include/linux/hazptr.h                        |  56 ++-
+ kernel/hazptr.c                               | 336 +++++++++++++++++-
+ kernel/locking/lockdep.c                      |  25 +-
+ kernel/rcu/Kconfig.debug                      |  10 +
+ kernel/rcu/hazptrtorture.c                    |  57 ++-
+ kernel/rcu/rcuscale.c                         |  70 +++-
+ .../selftests/rcutorture/bin/hazptr.sh        | 146 ++++++++
+ .../rcutorture/configs/hazptr/CFLIST          |   6 +
+ .../rcutorture/configs/hazptr/CPU128          |  16 +
+ .../rcutorture/configs/hazptr/CPU128.boot     |   1 +
+ .../rcutorture/configs/hazptr/CPU256          |  16 +
+ .../rcutorture/configs/hazptr/CPU256.boot     |   1 +
+ .../rcutorture/configs/hazptr/LOCKDEP         |  17 +
+ .../rcutorture/configs/hazptr/LOCKDEP.boot    |   1 +
+ .../rcutorture/configs/hazptr/READERS0        |  16 +
+ .../rcutorture/configs/hazptr/READERS0.boot   |   2 +
+ .../rcutorture/configs/hazptr/READERS4        |  16 +
+ .../rcutorture/configs/hazptr/READERS4.boot   |   2 +
+ .../rcutorture/configs/hazptr/SLOWPATH        |  16 +
+ 22 files changed, 881 insertions(+), 33 deletions(-)
+ create mode 100644 Documentation/litmus-tests/hazptr/hazptr-acquire-before-scan.litmus
+ create mode 100644 Documentation/litmus-tests/hazptr/hazptr-wildcard-flip-escape.litmus
+ create mode 100755 tools/testing/selftests/rcutorture/bin/hazptr.sh
+ create mode 100644 tools/testing/selftests/rcutorture/configs/hazptr/CPU128
+ create mode 100644 tools/testing/selftests/rcutorture/configs/hazptr/CPU128.boot
+ create mode 100644 tools/testing/selftests/rcutorture/configs/hazptr/CPU256
+ create mode 100644 tools/testing/selftests/rcutorture/configs/hazptr/CPU256.boot
+ create mode 100644 tools/testing/selftests/rcutorture/configs/hazptr/LOCKDEP
+ create mode 100644 tools/testing/selftests/rcutorture/configs/hazptr/LOCKDEP.boot
+ create mode 100644 tools/testing/selftests/rcutorture/configs/hazptr/READERS0
+ create mode 100644 tools/testing/selftests/rcutorture/configs/hazptr/READERS0.boot
+ create mode 100644 tools/testing/selftests/rcutorture/configs/hazptr/READERS4
+ create mode 100644 tools/testing/selftests/rcutorture/configs/hazptr/READERS4.boot
+ create mode 100644 tools/testing/selftests/rcutorture/configs/hazptr/SLOWPATH
 
---- Thanks!
-"I'm not a very positive person" - Linus torvalds
+base-commit: d21906b0aa1e9573cdb5e7acaca44966b9d1dcd2
+-- 
+2.43.0
+

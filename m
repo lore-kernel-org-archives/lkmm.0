@@ -1,176 +1,100 @@
-Received: from CWXP265CU009.outbound.protection.outlook.com (mail-ukwestazon11021132.outbound.protection.outlook.com [52.101.100.132])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4419C3C7E19
-	for <lkmm@lists.linux.dev>; Tue,  6 Oct 2026 08:01:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.100.132
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791273691; cv=fail; b=gXSNBB7pu8a9/DfvQe7KfgF00xBUz7IftmfCMui8NA06pGcP4ASvmt6K+PxeB7jJsRyW97hB/ieFejgykIdAQtdjihzoTY2LgeOR+JVy+bMC4bwqEqpwFaleKK/qWFGT6F3wQXAk/UjBoqewV7zIuRPSdSdI2M7vusvcAgznEGI=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791273691; c=relaxed/simple;
-	bh=k0J6vSnbHVUseq3sVwyfiraBmrAgFFShWudOG0R7J68=;
-	h=Content-Type:Date:Message-Id:Subject:From:To:Cc:References:
-	 In-Reply-To:MIME-Version; b=papIPX8uSB5VpooGZLZ/ZTnEDt7shGsOE6hIRjC+XhzMKP1qJZt2JLGmgxtJZvU6yPmTLzv5Fv8pZLzWSW8sC087ERmqOdKNHr0yQXGi8L2gyif2edabaeyazlt/YPI9FeuaHvKvo33dwu6Z9/dXlJMnlqfyk1MjIGBP+STSPQM=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=garyguo.net; spf=pass smtp.mailfrom=garyguo.net; dkim=pass (1024-bit key) header.d=garyguo.net header.i=@garyguo.net header.b=e+NQMuX2; arc=fail smtp.client-ip=52.101.100.132
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=garyguo.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=garyguo.net
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D1222264AB;
+	Tue,  6 Oct 2026 23:40:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1791330029; cv=none; b=JUn6u1leTWwJV/xQMcIo8MYa7tK+91ZnTDNpbKPa8Ed/1ydRpGzFyhJA1J/AozQWu0jJFxsX18fp7uEraz0gsEWHWJBAg987fYImnEn5LPV61tpOgTWBnGeRsKC+nrWl3griQXA/5JjV4ZtBT4PDiZFFXY0f3UBPPAI69Udth6g=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1791330029; c=relaxed/simple;
+	bh=Ng2c8hVROoYWoNchJMFJzak2mYULwuEmntVEYkvgI/E=;
+	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition; b=YOg0/f9pOeX+xSRrbDub4AeiENRe4UEIYWeDJHnNHujGMUDnFEkLG7xs6WH6RoahPpCyunQcwWF4Za9JH0cGYTuKIvABZi5bCzXg2s/sr5jcZLFzFNwwkB8GylJy038TYpYsif/fkOoKNJJ0TOWf3Z7HOYG09yfzNrLKg/VF5RA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=LMvWQyTo; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=garyguo.net header.i=@garyguo.net header.b="e+NQMuX2"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=hApbEdJg/Uv3oDWIPdkXeJdpN7DIWiDXViWNjCmIkV8LNIA9CSlteTaGZkXUzrGzsz+0WowakAszrL5kkcftNP5q1ifG+unNDvrZCsBA3s8EjT9V8vDca/vd8AR5iJHqXWcYw3xD/w2ap+rLsMT9n9bgrX9jA8fTzwDsZQw2ZfetouVg1C1LnwWXLGdXNGJYeSC0dKhcNdLdJEXlkKEgcVs1LCoOxxa7xZzfNYRobW+LtxRP/fNRevw61hMw6Bw6O2pc/JyN/9G5igEgDDXC5S6mGrtHngf3IrDb7OLsBsrfaHcoHYZ5ooTg7KifCfp8wIul7gxaZ+mJTTFfEyW4bw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=BE9HxxPNYs75AN+DUINh3qATOrRVbQSnM1h+y0N25Io=;
- b=u99E7tIftEj1icIJDbjod9ictQATULpR5fiH9NPw7ohCWa5exnfS4M0ff1avuwPMXm0GpcmCgl8WJktCS7UrEA29lUhXMHIvYBiJhSAgZeP96w7dgOZ62SSUjIeRriNpPQS3+wNW5JXUL0smB2DLVRIga/JoOiE/vLmvq15qdu3iFMegg8BoMZqBzusAxoobXAhmXuTZmYfyeKxyVhh5TiFmmAibxtlgNz3oMAqmuiCCtBOYHhxqAM4qo0flD6jcIoho7jdPfmxZ5nV8gIZEHsCRCNnlIwZLSg23wzi/IO/UJEDEtdjbFjP6VF1GFSCrF6oaNpwYU/LH8eOL9fmBdA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=garyguo.net; dmarc=pass action=none header.from=garyguo.net;
- dkim=pass header.d=garyguo.net; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=garyguo.net;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=BE9HxxPNYs75AN+DUINh3qATOrRVbQSnM1h+y0N25Io=;
- b=e+NQMuX2YLquQDZ8W3SvK1CeEhcTxRNYLXYMywMbsKKyCmxh9MleNOz573hSJCnCvXq4JC+NjFHJ6GsQPa48IZYmkUFsCdarlcD5z1XlxeLoR4+AKx43t2Lz4egRwFmLDAZehgMFnLdFJ14ZUPgHwR4KhYhZ6vyxSPtyRohEriI=
-Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=garyguo.net;
-Received: from LOAP265MB8560.GBRP265.PROD.OUTLOOK.COM (2603:10a6:600:4ab::19)
- by CWXP265MB1799.GBRP265.PROD.OUTLOOK.COM (2603:10a6:400:3a::14) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.496.15; Tue, 6 Oct
- 2026 08:01:25 +0000
-Received: from LOAP265MB8560.GBRP265.PROD.OUTLOOK.COM
- ([fe80::f60b:1537:68d7:4fc1]) by LOAP265MB8560.GBRP265.PROD.OUTLOOK.COM
- ([fe80::f60b:1537:68d7:4fc1%6]) with mapi id 15.21.0472.016; Tue, 6 Oct 2026
- 08:01:24 +0000
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Tue, 06 Oct 2026 10:01:23 +0200
-Message-Id: <DLXLIXXAPVD3.1XAPJZQAQGE7G@garyguo.net>
-Subject: Re: [PATCH hazptr 4/4] hazptr: Introduce "try acquire" fast path,
- fallback to overflow list
-From: "Gary Guo" <gary@garyguo.net>
-To: "Mathieu Desnoyers" <mathieu.desnoyers@efficios.com>, "Paul E .
- McKenney" <paulmck@kernel.org>
-Cc: <linux-kernel@vger.kernel.org>, "Boqun Feng" <boqun@kernel.org>,
- "Bradley Morgan" <brads@mainlining.org>, "Gary Guo" <gary@garyguo.net>,
- <rcu@vger.kernel.org>, <lkmm@lists.linux.dev>
-X-Mailer: aerc 0.22.0
-References: <20260927155134.4740-1-mathieu.desnoyers@efficios.com>
- <20260927155134.4740-5-mathieu.desnoyers@efficios.com>
-In-Reply-To: <20260927155134.4740-5-mathieu.desnoyers@efficios.com>
-X-ClientProxiedBy: VI1PR0102CA0059.eurprd01.prod.exchangelabs.com
- (2603:10a6:803::36) To LOAP265MB8560.GBRP265.PROD.OUTLOOK.COM
- (2603:10a6:600:4ab::19)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="LMvWQyTo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02DF21F0089B;
+	Tue,  6 Oct 2026 23:40:28 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1791330028;
+	bh=JA5qZeRZjxBKgrhAgdN67aWKQ4BLjX80WKLhiuAVuBc=;
+	h=Date:From:To:Cc:Subject:Reply-To;
+	b=LMvWQyTokqSgYU81H9BZXaNt5XIP0VTS/PqhtlKmYnFA6JzyLqCc3u0Rn3KXskeoG
+	 Ng15ctU8wX9Rgpy84ec56ot/orn79+/o0e/1KctVwhXGZF3oXuU3jlIo7Qm5QSkY0Y
+	 n107w4RkuT4Apdk1zw3iEAdKsNARzLLRl3gKQGWrI8dt/V1D/8G9UMBRNFakdsd7ei
+	 AM8WYAkEOYkfXogeR3zKmis4tlv2cuW+7/cfygxcTOO+l7l+Jj2/A3N2f4VSogkNG1
+	 ZZzJGfRXN4AKJo6EWrTaJX2kxBVS8JNJDWnkbjR5TAmPfb7Ed+goz5UPS9OslNDUhM
+	 7et7G4R1+MUEQ==
+Received: by paulmck-ThinkPad-P17-Gen-1.home (Postfix, from userid 1000)
+	id B1E2FCE3A08; Tue,  6 Oct 2026 16:40:27 -0700 (PDT)
+Date: Tue, 6 Oct 2026 16:40:27 -0700
+From: "Paul E. McKenney" <paulmck@kernel.org>
+To: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+Cc: Boqun Feng <boqun@kernel.org>, Kunwu Chan <kunwu.chan@gmail.com>,
+	Wang Lian <lianux.mm@gmail.com>, Zqiang <qiang.zhang@linux.dev>,
+	Bradley Morgan <brads@mainlining.org>, rcu@vger.kernel.org,
+	lkmm@lists.linux.dev, linux-kernel@vger.kernel.org,
+	Joel Fernandes <joelagnelf@nvidia.com>
+Subject: [BUG] Splat during modest hazptrtorture run
+Message-ID: <1f885062-4905-4d9c-9293-615c145d2d6b@paulmck-laptop>
+Reply-To: paulmck@kernel.org
 Precedence: bulk
 X-Mailing-List: lkmm@lists.linux.dev
 List-Id: <lkmm.lists.linux.dev>
 List-Subscribe: <mailto:lkmm+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:lkmm+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: LOAP265MB8560:EE_|CWXP265MB1799:EE_
-X-MS-Office365-Filtering-Correlation-Id: e82351a0-578a-42b1-86b8-08df23800462
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|1800799024|366016|23010399003|376014|18002099003|22082099003|10067099003|4143699003|56012099006;
-X-Microsoft-Antispam-Message-Info:
-	cqMusLkleccOUYjV5jy/gMEAxIf7T+vvLIJwyPiuUgb1kN1DRJnfcI63iZbaZiwjIa+/EUYQzV1rgylxOzqYMm+y09LDRtFLwSPGAFJMwbfF6dJAzVzb8ekme3J2cR5D5FBjUArGKxBLA/MSHsgc91HS9b9ubTQKxdTnSdsnMRQeGT9CbGTTgcpr7C9Ewc274imDDTxjbwSL9tIwc85Pa/BKo10YeJkf3vuhlIxog6w9ZwULxwvbxJq2KTIBon95AxOmnaY9hMPXBBt2yIWA9BK5ZS5u4gaOMYGKPXzy/0g1/Y1UZvXvcaxFMEzUk36YRFvXO2Crby5+vT7RRQAPUUijJMMBScrSGbVpjgTC+ptRbfqNT4POd9sywekIRv6+6UTn+7UR5EVJgIiHxCPKTvch820oTdeP4SWQ8obci7GzVpLqWD3T3CEy9mmJv34xjSt7o0pFf0tB8ejvUUTTMKEMazFBVKHg7RjOlhQbb3Ley+U922v52JM5jDTKgd2N4Govr0ovOAnIDbT7kb9C/MgF0qqkNlu0nb+dzZwtcmLqTgyUejL0RZ3xSC0GW23C6oNtxyRN+WHp2+/kqAuz24XxEmGckeZzOYXCtD9+mSZzuOi1HodFA7mWO+S1McI1
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:LOAP265MB8560.GBRP265.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(366016)(23010399003)(376014)(18002099003)(22082099003)(10067099003)(4143699003)(56012099006);DIR:OUT;SFP:1102;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?utf-8?B?ZkpXRnpyaU44UGIrNEtadGF4bU0vblhtS2lXMWpPS1hrNFZrSllmRmdhSHQ4?=
- =?utf-8?B?c0E1RldRNnJsQktwejAvSElWTnRvQnJBREoydE0zVVNiRkVvSXVCMHFLd296?=
- =?utf-8?B?NDBoSkVpNXdaWTJDSVFlSTdObFdmMURoYXV1VTRsZVh1RDdIQk5YNi94TVdo?=
- =?utf-8?B?L1I4ZVpSckpXZTVudXF4c3dkekpCeTA0UW5iWWRYR3JDb1k1dGh0TFozcnoy?=
- =?utf-8?B?SVBsNGM0d2M3VnlMaHZtWHVXWUc3Nk43V1lQZHJxMVBqcStoYjNEMnpwRTJr?=
- =?utf-8?B?czhEWFFMZElQYWNlS1VmMkdWQ242L2ZkUGtGeE4weXlTWE9LMFB6WWVCTmtO?=
- =?utf-8?B?aU9JUC9hNVF4RThYNTlkQysxaWovMElvOUlpSzJ0c0JDb2dxL3U3eEVYQTBL?=
- =?utf-8?B?QWtNNzZLSVFXMk5YcStrdDk1ei91S1NGa0VnM01yQVMxZnFOTXNlejQzM2VG?=
- =?utf-8?B?V3ROdGFzdE54bE9qTlZEamRVQklHUC9aWktGbUlJL0VQaU03R1N1SExwZEFm?=
- =?utf-8?B?ejhwaVNveU0yWnZUVTJ4UDJ6bHlTSFpMVkdSbFlvVE9Vc01EY0k0bGxTdkJT?=
- =?utf-8?B?VWVjeGFpRDlDTzFmeWhMTlcxaUh0cHJwUWRNLzZNeTY1WktYcWtwUHNpeXZB?=
- =?utf-8?B?cXVncnhiV3JodzVKNGdmdmRMSTZwYTE3RWJDL0twRlc4M1EyWis4RzhONm9u?=
- =?utf-8?B?UkkyNDZkNHhyVjNwSXQwRmpJcmR0a2JwN2pTU2d3Q2EzSmwyRTRaOGVpY1hJ?=
- =?utf-8?B?ak4zUy9FeFYyU0xJTXo5bnl5UW9VbzFZUGh4TUE0eGFEQlp5YlpTUUVZdERF?=
- =?utf-8?B?Y1hJcjNycWo5bDZpNmg5V2lWUllKb2pDaFpHVm1KSWkwc2wrZHhEcmFEdDB0?=
- =?utf-8?B?UnNtS2l5OHYzQlhZZVZ2bG9BdSt5MWN2VlVWU0J0cHhsWXMrM05NakhxTHkv?=
- =?utf-8?B?WXpBWVpmVnNnUVJreU1acXlYczNiTlA0TnczdnpJOXVJbkY1ZGZZQjBPcjNL?=
- =?utf-8?B?VHozSnAxMjRUQ0NEMWdYS3NXR1FEcDcxa1I1ZTM3TU5OTjkvR0tIT1htWm4r?=
- =?utf-8?B?NWZBYVMxWnhPcm92ZGNkZzNyd2l1dUxEUnIzcUlGcm9qUjZJVHNTWXJDSG1w?=
- =?utf-8?B?NlViWkl3dDc3NkR3cUJDanh5bWx4azM2QzlSQ2dBdmlza3dJd1JrUGVCNVR0?=
- =?utf-8?B?SFo0c2N6emtGWnlNMFdOTjlvNW5OSXJTT3B6TTNBKzVGY3pQNW11OVNZa3pn?=
- =?utf-8?B?K1BEek85U3BtS21YK3lvanh0MFM3eUF5NGxTYkZyRS9QeHZpbW9va1h5RVIy?=
- =?utf-8?B?b0VtRS9La2dOSXdVQm5mVkJ5Q05DdTBMZXEyYmJndXp5QTFVZ2NQYjJRVzhu?=
- =?utf-8?B?TjV5a24vRDlMWHUxOTFodDlSN2QxRWhjN05yWFRNWTlXRWlBMU1Sd0FnYmoy?=
- =?utf-8?B?VVhoVVdaZWI0MVVtVnYxU3BYOGVoSEtDdzdOQjl5V2NRdmpqY051NkpGMSsx?=
- =?utf-8?B?THpyWDBrNCtlN1dYQ2FJSE9qOFhWTUxwMVovY2lTWVlqOENiMnNtZ3VveW4w?=
- =?utf-8?B?bGxsR1U1ZG05RmN0RnFpNm9jR1ZLOUxDU0kzKzNLcDJvRGNwQmlpR08vOFo1?=
- =?utf-8?B?SzNXZG83dWx2MGovbDQxandSMHdvK3FmbWFIM1ZVVW9tWmxPb0VGaitsZjVE?=
- =?utf-8?B?VHRyUmt4WVhSZEs3UFVmVW8zYWNvWitQL0RqOHVPMzZqRVZnUHRva08ra2tv?=
- =?utf-8?B?MWxpN0FSQ3Nha05HcC9wdFIyRWRTcWJIcE5wK1RiRW04aDNGbUNuSmhLWnJN?=
- =?utf-8?B?b0p2ekNMZUpsVXpWQ1JsdFZPUzA0dzJSZXprcFQ0OEdmRFR6bXdqK1FPbUQx?=
- =?utf-8?B?ZUVaWWhhbjd6WCt2NHpZa1FnTlB4M1I2bUx1cW9SU0ZTbUhZdXZGakRWb01W?=
- =?utf-8?B?QTN1T1JOcGZZTlJRcTh5QSt3M1hmTXBRMStQS3MzNTJ3VlB5a1R2MmVZRVZP?=
- =?utf-8?B?c3BWckVpdHpuRlZQS2NxOEQvOXBIOGhBSExQMS9DWWpxZ05sOURkOE5EaHFJ?=
- =?utf-8?B?TnJTYklLR1dFWmpJYWNTUndKbm9TaVRpKzlPd0UraUlsQXExamJTcHQxTXd0?=
- =?utf-8?B?bFZOVzhKU0wySWxMRjh4NUpSK0JTbkVPYTFkejRJaFJHeGlTQnh4ZHI0RXdM?=
- =?utf-8?B?dDhWQlNMWmhKdVFaaGxNNkpHTDYzclJtTTJnTmYwOUtkVFhDaGpqZWJ0Sk94?=
- =?utf-8?B?cDRKZUg5L3hTTlhyaDdmdk5IZkdxWHM1ZHdJQ2NFMGZrVXVGVVdGcTQ4UDZL?=
- =?utf-8?Q?8gPXSv1u/oUMnOw6rf?=
-X-OriginatorOrg: garyguo.net
-X-MS-Exchange-CrossTenant-Network-Message-Id: e82351a0-578a-42b1-86b8-08df23800462
-X-MS-Exchange-CrossTenant-AuthSource: LOAP265MB8560.GBRP265.PROD.OUTLOOK.COM
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 06 Oct 2026 08:01:24.7981
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: bbc898ad-b10f-4e10-8552-d9377b823d45
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: PdrZPT/i8nN4bptm3U0uzsoWUDRBlEQfdravZr6WRslnSLQrNHECRVaoB8qiY4tUCggkeJ861Ih01uVS4hKUow==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CWXP265MB1799
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-On Sun Sep 27, 2026 at 5:51 PM CEST, Mathieu Desnoyers wrote:
-> Introduce a "try acquire" hazard pointer fast path, which performs an
-> early load of the address to store it into the hazard pointer slot, and
-> then re-loads that address after a barrier to check whether it has
-> changed meanwhile.
->
-> On comparison failure, rather than re-try, guarantee forward progress by
-> falling back to the __hazptr_acquire slow path on failure.
->
-> The acquire slow path attempts a try-acquire for any available per-CPU
-> slot. If that fails, it chains the backup slot into the overflow list,
-> therefore guaranteeing forward progress for both hazard pointer
-> read-side and synchronize:
->
-> - Readers set the wildcard, and then proceed to set the more
->   specific address to replace the wildcard.
->
-> - One synchronize alternates between two overflow list periods,
->   scanning each one while readers are added to the other period,
->   thus preventing a steady flow of readers from preventing
->   synchronize forward progress.
->
-> With this change, the scan on per-CPU slots don't need to expect a
-> wildcard anymore, because none can be produced by readers. Wildcards are
-> only expected within overflow lists.
->
-> Signed-off-by: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+Hello!
 
-Suggested-by: Gary Guo <gary@garyguo.net>
-Link: https://lore.kernel.org/lkmm/DLK9MW1N86KD.2GRWUAD2NX4FU@garyguo.net/
-Reviewed-by: Gary Guo <gary@garyguo.net>
+This is all new code, so the bug could be anywhere.  So you all need
+to know.  ;-)
 
-> Cc: Paul E. McKenney <paulmck@kernel.org>
-> Cc: Boqun Feng <boqun@kernel.org>
-> Cc: Bradley Morgan <brads@mainlining.org>
-> Cc: Gary Guo <gary@garyguo.net>
-> Cc: <rcu@vger.kernel.org>
-> Cc: <lkmm@lists.linux.dev>
-> ---
->  include/linux/hazptr.h |  47 +++++++++++--------
->  kernel/hazptr.c        | 103 ++++++++++++++++++++---------------------
->  2 files changed, 76 insertions(+), 74 deletions(-)
+I got this from the NOPREEMPT variant of hazptr during a nominal
+"--duration 60" run of torture.sh on x86 with the guest OS split across
+two NUMA nodes:
 
+[  137.765104] WARNING: kernel/rcu/hazptrtorture.c:658 at hazptr_torture_stats_print+0x25b/0x4f0, CPU#1: hazptr_torture_/136
+[  137.768647] Modules linked in:
+[  137.768891] CPU: 1 UID: 0 PID: 136 Comm: hazptr_torture_ Not tainted 7.3.0-rc5-00661-ga1f1e4890d1d-dirty #193 PREEMPTLAZY
+[  137.769683] Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.16.3-6.el9 11/05/2023
+[  137.770319] RIP: 0010:hazptr_torture_stats_print+0x25b/0x4f0
+[  137.770735] Code: 48 83 c4 20 e8 86 44 fe ff 41 83 fd 01 7e 23 48 c7 c6 6e 85 17 b0 48 c7 c7 db 27 17 b0 e8 6d 44 fe ff f0 ff 05 76 6e 0a 02 90 <0f> 0b 90 4c 8b 64 24 70 48 c7 c7 73 85 17 b0 e8 51 44 fe ff 48 8b
+[  137.772061] RSP: 0018:ffffa738004ffdf0 EFLAGS: 00010202
+[  137.772435] RAX: 0000000000000004 RBX: ffffa738004ffe08 RCX: 0000000000000027
+[  137.772950] RDX: 0000000000000000 RSI: 0000000000000000 RDI: 0000000000000001
+[  137.773455] RBP: ffffa738004ffe60 R08: 4000000000001236 R09: ffffffffb01727df
+[  137.773980] R10: 0000000020212121 R11: 0000000020212121 R12: 0000000000000000
+[  137.774479] R13: 0000000000000002 R14: 000000000002ffd6 R15: 0000000000034f03
+[  137.775000] FS:  0000000000000000(0000) GS:ffff999c2e502000(0000) knlGS:0000000000000000
+[  137.775578] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+[  137.776001] CR2: 0000000000000000 CR3: 0000000008830000 CR4: 00000000000006f0
+[  137.776512] Call Trace:
+[  137.776700]  <TASK>
+[  137.776863]  ? __pfx_hazptr_torture_stats+0x10/0x10
+[  137.777207]  hazptr_torture_stats+0x25/0x70
+[  137.777508]  kthread+0xd9/0x110
+[  137.777751]  ? __pfx_kthread+0x10/0x10
+[  137.778017]  ret_from_fork+0x1bd/0x220
+[  137.778285]  ? __pfx_kthread+0x10/0x10
+[  137.778560]  ret_from_fork_asm+0x1a/0x30
+[  137.778849]  </TASK>
+[  137.779007] ---[ end trace 0000000000000000 ]---
+
+I have not yet seen this during a PREEMPT run.  Line 658 of
+hazptrtorture.c is the WARN_ON_ONCE() below:
+
+	if (i > 1) {
+		pr_cont("%s", "!!! ");
+		atomic_inc(&n_hazptr_torture_error);
+		WARN_ON_ONCE(i > 1); // Too-short grace period
+	}
+
+Any thoughts on what might be causing this?
+
+For that matter, can anyone else reproduce this?
+
+								Thanx, Paul

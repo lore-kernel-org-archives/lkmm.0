@@ -1,322 +1,408 @@
-Received: from BN8PR05CU002.outbound.protection.outlook.com (mail-eastus2azon11011023.outbound.protection.outlook.com [52.101.57.23])
+Received: from mail.mainlining.org (mail.mainlining.org [5.75.144.95])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFFC93537CD
-	for <lkmm@lists.linux.dev>; Sat, 10 Oct 2026 08:03:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.57.23
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791619413; cv=fail; b=MyybfeGKyBiSb6rhHUnlHSpDpyUm4rGhXzPVFKtPmgUOVps97GMaQYkoA3vg9sc5qs/kACJrnJ5WNBj4FlyRCwZc9lYfy+dkBwgMKG1d4r1/GbqXeiDbrm9dnAedk9kOUHQVrXeihVtnOewe9PqX8kBCN3S3HMRmiO4difSW2KQ=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791619413; c=relaxed/simple;
-	bh=Y9wzpsy3WFHKi1hI6Vs9QzrfAwxUFFovlSLultqyvVU=;
-	h=From:To:CC:Subject:Date:Message-ID:Content-Type:MIME-Version; b=ke3bXF5dFHpIiTDUiWWqkNI42b2+x65ojeN+8/B0VPCS8kkVcNtG/xmEdspo8XqS9eLvzthmoO31K9wWI2QJfZqe15i+9KTPMTouYdCApugFzrGtcvBWYDFq0fHUQqq82/DSHV2kPNM34XZy2HCtYoiAB/l0ZhFsZ5J0cCZORXs=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=toX8d9nv; arc=fail smtp.client-ip=52.101.57.23
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51E3D38F941
+	for <lkmm@lists.linux.dev>; Sat, 10 Oct 2026 19:39:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=5.75.144.95
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1791661186; cv=none; b=djoGGMJsgA0rV2VupF3tETFSPIhgQSYIaZPWCRYRJ4CDjdpjpwws6WBShRVDvLNG+TS5qbU8Be0KM0XmWIkR1f9xs2VLu6FYr7hSys+xjx8bSfPepBZmE25pPrk1vSBtCpHQ5mO7zK5cx4/KT8/fNlZ+xBixmxyCTVxYMDUhWZE=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1791661186; c=relaxed/simple;
+	bh=sYjvaxqxkFNdi4sUEvE6rYYUDtXPCWd+eilqePvbEh0=;
+	h=Date:From:To:CC:Subject:In-Reply-To:References:Message-ID:
+	 MIME-Version:Content-Type; b=jpygyEF7RAAWNhGGrdz9nfwJ6H7H0QSqN8wsd4Boym71IDTk74LPMxZUznoVakTrRZ3ha5+c/n9Gwf0cFMX7Kds+muhDOvR2GOkgu8cD9rniI4m38wDHKd8uK3n1qExU0UOksh/4FCcy2MiZCssTopeIquQRpX+D/umjRTVxh5E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mainlining.org; spf=pass smtp.mailfrom=mainlining.org; dkim=pass (2048-bit key) header.d=mainlining.org header.i=@mainlining.org header.b=JNxlG5q+; dkim=permerror (0-bit key) header.d=mainlining.org header.i=@mainlining.org header.b=KvMnCAF4; arc=none smtp.client-ip=5.75.144.95
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mainlining.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mainlining.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="toX8d9nv"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=nB2SSPAk0qoS+4lHymVIQjnNlJ3Nw9xlA+KocROapIoJF67n/FR6JEawdh1BsJedkI0MjgetGxgshFg0n5gdOE8rfkFcVDK8AbJZC17jYg/eaee+fA6j7/KAGWbMEuKVmKZfHR3K99lyIcsCjZbwwi9RNx97CBRZQPwGkjfUCXsuuQEciOKGKRfVF3yBgZ9KY48DK+8k8DB8GSzXEQeHJfij7xDdix5vdDSoJojSqz2HCh04OhhdoyAZUfr6ZyzdjA1rTUTum4bOYqI+Kq8AWV187TlruyyGDJEOJP+v/VjHfo2dyfblJaTd2+KK9a6/IJVmu4clzxei+PzuYpKxnA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=Y9wzpsy3WFHKi1hI6Vs9QzrfAwxUFFovlSLultqyvVU=;
- b=ac+PCGOMnoKA5kPMw2AmhkawVQ1+WMdb1o9JpxMdjadF+ZrxntUqx6EoyAMvml9THNYJlWgQAsSsLUOJnsjjtu4wb7yjUuQL1p1SwGozQNIGp+cqGc7a7sgkEEwJ1qgOcHiiiwUCIPhm1HdIPR7NoT87T2xPWRV42fJzaDX1up/JRarLxCAPHZ885gqENQbx/qfVdJ9lLmGyStHCo77zK5nZOc1NpjNXclTEUXdSxR2i+/jnw5RVJq3SNOv93pMIWSxGVs5crwq+nXTuegXTnmfCMxuWwP1OcVxRhVfIKa33sYpsaIupIxhQ8FFHySGwu52RYCpUmNsFU2Bx5hFCNw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
- dkim=pass header.d=nvidia.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=Y9wzpsy3WFHKi1hI6Vs9QzrfAwxUFFovlSLultqyvVU=;
- b=toX8d9nvMZrPANRVjs2f1RRIZKjQOqZ/IhVKvMGpLCsUP+xFv/xidB25VoNmQGlkYez3vmov2Hn+ynQY8vZug+zB5DfyafjImixQrpusZue8rCJz4tYhmSB8ykdOtNyR8iyCZ8+PY2krgP/Dc/CwqwBU+/b+rrBEkJHlRU2deX3cmxDwf+2ATXZryK1JN0JsYInM3qvKuNdBiRDx+ywvT/UkZUQ4VHNQt3HqwWouav1X2HDeKPwzB+iCN2wpn64wDocsSxrVyGpUuWTQ+a5DxbNQxeE3wkgckWNRWhYmcDL7+wfr0SGQ1tgYktRNgckCTzal1XMcyzuD51nzaRXqtA==
-Received: from DS0PR12MB6486.namprd12.prod.outlook.com (2603:10b6:8:c5::21) by
- DSVPR12MB999286.namprd12.prod.outlook.com (2603:10b6:8:41a::20) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.496.18; Sat, 10 Oct
- 2026 08:03:24 +0000
-Received: from DS0PR12MB6486.namprd12.prod.outlook.com
- ([fe80::88a9:f314:c95f:8b33]) by DS0PR12MB6486.namprd12.prod.outlook.com
- ([fe80::88a9:f314:c95f:8b33%6]) with mapi id 15.21.0496.017; Sat, 10 Oct 2026
- 08:03:24 +0000
-From: Joel Fernandes <joelagnelf@nvidia.com>
-To: KunWu Chan <kunwu.chan@gmail.com>
-CC: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>, "paulmck@kernel.org"
-	<paulmck@kernel.org>, "corbet@lwn.net" <corbet@lwn.net>, "mingo@redhat.com"
-	<mingo@redhat.com>, "frederic@kernel.org" <frederic@kernel.org>,
-	"neeraj.upadhyay@kernel.org" <neeraj.upadhyay@kernel.org>,
-	"josh@joshtriplett.org" <josh@joshtriplett.org>, "urezki@gmail.com"
-	<urezki@gmail.com>, "dave@stgolabs.net" <dave@stgolabs.net>,
-	"lianux.mm@gmail.com" <lianux.mm@gmail.com>, "stern@rowland.harvard.edu"
-	<stern@rowland.harvard.edu>, "parri.andrea@gmail.com"
-	<parri.andrea@gmail.com>, "will@kernel.org" <will@kernel.org>,
-	"peterz@infradead.org" <peterz@infradead.org>, "boqun@kernel.org"
-	<boqun@kernel.org>, "npiggin@gmail.com" <npiggin@gmail.com>,
-	"dhowells@redhat.com" <dhowells@redhat.com>, "j.alglave@ucl.ac.uk"
-	<j.alglave@ucl.ac.uk>, "luc.maranget@inria.fr" <luc.maranget@inria.fr>,
-	"akiyks@gmail.com" <akiyks@gmail.com>, Dan Lustig <dlustig@nvidia.com>,
-	"skhan@linuxfoundation.org" <skhan@linuxfoundation.org>,
-	"rdunlap@infradead.org" <rdunlap@infradead.org>, "longman@redhat.com"
-	<longman@redhat.com>, "rostedt@goodmis.org" <rostedt@goodmis.org>,
-	"jiangshanlai@gmail.com" <jiangshanlai@gmail.com>, "qiang.zhang@linux.dev"
-	<qiang.zhang@linux.dev>, "brads@mainlining.org" <brads@mainlining.org>,
-	"linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-	"linux-arch@vger.kernel.org" <linux-arch@vger.kernel.org>,
-	"lkmm@lists.linux.dev" <lkmm@lists.linux.dev>, "linux-doc@vger.kernel.org"
-	<linux-doc@vger.kernel.org>, "rcu@vger.kernel.org" <rcu@vger.kernel.org>,
-	"linux-kselftest@vger.kernel.org" <linux-kselftest@vger.kernel.org>
-Subject: Re: [PATCH RFC v3 02/15] hazptr: use Bloom filter for shared scan
- waiters
-Thread-Topic: [PATCH RFC v3 02/15] hazptr: use Bloom filter for shared scan
- waiters
-Thread-Index: AQHdWI3SfxkrEsPixEawznty+v1+Vg==
-Date: Sat, 10 Oct 2026 08:03:24 +0000
-Message-ID: <FEE371F2-1B9F-43FA-AF21-F237504A11F1@nvidia.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-authentication-results: mx.microsoft.com 1; dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nvidia.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: DS0PR12MB6486:EE_|DSVPR12MB999286:EE_
-x-ms-office365-filtering-correlation-id: b4756d2d-f26a-4169-1992-08df26a4f567
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam:
- BCL:0;ARA:13230040|7416014|376014|23010399003|366016|1800799024|261009223027099003|38070700021|56012099006|11063799006|10067099003|18002099003|6133799003;
-x-microsoft-antispam-message-info:
- iTaHFYKrOdO81mIdIv9zjIe2I9CrKDsPabnYtVwv9ouU5UwFfvyV44bRoGGuycvDk5ap0CM5SYh3jiP98NHwgNeUkXdoHu1bLYWEaP2jwvWYAItZwMbqftZcbieQU2wQUcnSrvybfTz/q1KVa9QAXJ7J7KEDE3nWbFkBYbdDPNEhMmB9QMWBwrThDOVV5sXDAgunljR8uaM58x4nR7u+xwaXJXBo6ThHLA/6UHXwM0ls7deeXlWuln7eG6ts7w4WUtGpyRwUM269kAOcMuU9JkAXCplBNaqN8n+bt91db75MWejLxy+WzA02OuYmQeX8d7/OmKOzUYLSA35NVWh6+OsJO8fomceF2NX82sx00zTjeYdgfm8sS7AHlt3dI/c7u9zR5SHCGGmvSrm1TgEHiWCjTYM6UcbsxKrXNlrjga7ThQAZrffDvvdfbBf6loFpQTtMnZelrbVA+cViqGIvPHy67AR3urSlQ8g0RedCSfUukCkVus1rh0vBgal0gGI9oMH16s7RxRswnSOQ6KTv9y6J2fQIT9dXs0fjdELvtkBANZHfT5I9lWkEXqH9+kqhPXjc+Ocd6uBbT4WGrB3kHE0s5kTKCe79i3GGjJXSvsQJs5oTEV3BqYWKwgdUVFF4PLdtfO5IvQDRQ3oQHmtSFtfkTZzG9OSS+EmtaFBralrbiiyNYVoc0PQggXmJrnFjuRx695VzSgd/RPIPBsTCHuRtJb/jCX0zmhw1bJC9zEU=
-x-forefront-antispam-report:
- CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DS0PR12MB6486.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(7416014)(376014)(23010399003)(366016)(1800799024)(261009223027099003)(38070700021)(56012099006)(11063799006)(10067099003)(18002099003)(6133799003);DIR:OUT;SFP:1101;
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0:
- =?utf-8?B?NmE1SkFwUWxvWGhaTVJNU2xkcUQ4K2NMOU1qdWVqRm8raVoyaE8xQ2cveVVM?=
- =?utf-8?B?ZTEwazVubGpCL25NZWE0TVVFVjhtVG81OWV3Z1VoWFRSdXdVbFRwalN2Zzhl?=
- =?utf-8?B?M2ZkbFlua1NPV09MOUhvR1VybDNqU3EvTkhpN2U1VmZaanFjN09oMTFLMVVz?=
- =?utf-8?B?dm16dmxFU042L1hXY3ZoR0RBdFBPa0JTZjRjeENtR3ZlS3FDVzQ0VUoySnR6?=
- =?utf-8?B?dml3TGhvMDZLcW1uazdjL3VMcEE0OHkwbCs3dEpQdDd3V1FoS1FNV1dZQ2pS?=
- =?utf-8?B?SE1hSmZnVHZ3S2NHcEsrNStPcDM5cDdPRzNjVGlBc2dXaHJnWmlKVW5QSnh2?=
- =?utf-8?B?clZHNjNiSDhXaFVkUCtRQkthc0NJMEtCeGp1M3BVYlR6OGd6b2tNUFF3NlBu?=
- =?utf-8?B?NnQ0MzRvSmJxSDR3S09lNkdhUDZMS1U1VlkvNlJXWEZMckNsSXNycUVXOHVt?=
- =?utf-8?B?TWEwSkRlZGRDMVNUcEhNNjliSkN3am1DSnNaenFITGpsd3hpN3VXTzhSWjdT?=
- =?utf-8?B?c0xlcG9hTEJoOFRRNzY3WENpU0pRVCtEVmJSZDlzUUdqNjhxSHJUeTA5Qlha?=
- =?utf-8?B?UVRPWEswZ0dqWTVrd3IzZnBES01LN0p1TnQ3NERtSVhIbi9BazBsUnpjRjBV?=
- =?utf-8?B?YXJYL0FXQ2dtTjNDc2lLU1JiTTU2YnVzRTRNeW55L1FKUE9TeDJmMzJIZ1Ji?=
- =?utf-8?B?RnJjMVhlbURrU1Y0NStrS3A2TkVYc3pqWjY0K2FOK1RkOFMvcFJzV0pVOE55?=
- =?utf-8?B?dkhMSGNKYndyKzJnQXBoZXg0TjFWYXZTKzZ3NG0rU2NEUStnK25MRm1KTFBm?=
- =?utf-8?B?eXF2YkxRUXJUYUQ3dnNuYnFVRE1SNWQ0cVljZSsvK1NzVldDSGdkLzhoZGM4?=
- =?utf-8?B?OVFlNSt2ZjFIek44cHY5SWMyWW1SbDdIQmJETE5sdE1YME43UFF1L3FPbGg5?=
- =?utf-8?B?TkdSamMrTThtK015a3M2RXRMNVZTdEIrclh6UHdUNmVsaHhIcWpiY0M2TGdV?=
- =?utf-8?B?RFNOU0FzYkpVSWhQL21mMC9JQTU1WGZpdGpONWw3d0duOW9LYXNrRzMrenlV?=
- =?utf-8?B?Y1JXc2h0M2IrOVl6WndTVEdzYUIvenNmTDVPRUlTZXlNTEl5ZnEzQzk2aWIy?=
- =?utf-8?B?TjA2c1FUaFY4RHpVajQ1ZzhsM1AxaC8xTHVnZjd5NlpHckZMUDUzejFMR3pS?=
- =?utf-8?B?MFZqT1lHNEFQYjlzTkJrbzVMUFpFY0R5d09PaUZpNURlUkVIMm9ibzYzY3ZY?=
- =?utf-8?B?YWZvMUNObTRvUjk0QzVTWStvVWVURjBwSTVYS0V6SVEyUGlJbDI3bWw4S3l6?=
- =?utf-8?B?TmJLVzhoNTViKytXd20rZEVTN1c1QU03SnByNVVaN29uaTkvY2t5TFZoRTIx?=
- =?utf-8?B?VmVxUHdtT1ZMVi9wQ3VKbGoybDNTcC9vY2NOMlgrTEI5VEJTRkVjNVdVQ25m?=
- =?utf-8?B?TE9kWVZrdVNJMU4rU3NiM0RMNGZGdm11Qy9NMUFRWHFremM4bjFyVzlYeU94?=
- =?utf-8?B?c096bXMxQ3ZhNUVyeDVGby80NmtrdUkwTXZOUE00Q1F0c2V3MjdZaFE2M2VL?=
- =?utf-8?B?aGtLaVpTVE5oaFR2N0FwRFByQ3dPRVp4elhDV0p3N1FoOW1CS2tYaHhGSnZ4?=
- =?utf-8?B?MHdZeitMdzdWR3cyVmRFUDVRV0tWUStTRXlzMzlRb2xaNUFBVVFEMlVOUmlV?=
- =?utf-8?B?Q0VzRUovVStyTEF1UStocE1LRjIzakQvWjZuVzdZYkdZbzM0d3dOR2JTYU02?=
- =?utf-8?B?K1pidUxpcUFJNlJMdTRSRkM1bnMyc3V4K0ZTV1dyb0U2VXp2OUZLQXNhV0N6?=
- =?utf-8?B?bVJqSmpIdUFZSEpxT21FUG9acDA3SWQxdzkrbXZDS0cvR0M3STB6cmhTNi9T?=
- =?utf-8?B?bUFBU1A0VHJKNER5SFhSV2xtUVJXWXhGc29uU0hVNzk2d3VOOG9TWEhkV3cy?=
- =?utf-8?B?YnY4Y1hwaTUvcStvNFU2QU5ZclpwZ1RxeXdlQmxQdU9HQ2M2MHZlYmRJbHVh?=
- =?utf-8?B?dlZKTXZETVozM291bUV0OWxuYXhmZ1YvbW1tS2VYSXVUK3ZzOTJ1TWxaeXlU?=
- =?utf-8?B?aUVkTFoxMVozZDFJQ1l2VTh4ZGJLRUxpdHFNVWtnNXB6RnN0N0ltYkw5MWhk?=
- =?utf-8?B?WXRNck5mdTZhOVFzalRnbzQxN2xIUnFiSThFbGkyUGk5NmI0cUdxcllJRHZC?=
- =?utf-8?B?NG8xQStQZHdlWmdXTzIrUnl0YTFyUEFqeTBRKzFreG93cEJsblh4NlFrYkpP?=
- =?utf-8?B?SHdhcTZST1pkNWhoRjJHSXIyd3h4TVVHeVNqNUcyUTNjR3RXZ0Z1YThEaXRJ?=
- =?utf-8?B?Nmw1c3FlZGIzVkkxSnZaYkdPRDJ3L3FaOHZvWUtRbmFXTEdtREc4dz09?=
-Content-Type: text/plain; charset="utf-8"
-Content-ID: <176D620D5D889144A306D31528A83CA8@NVIDIA.onmicrosoft.com>
-Content-Transfer-Encoding: base64
+	dkim=pass (2048-bit key) header.d=mainlining.org header.i=@mainlining.org header.b="JNxlG5q+";
+	dkim=permerror (0-bit key) header.d=mainlining.org header.i=@mainlining.org header.b="KvMnCAF4"
+DKIM-Signature: v=1; a=rsa-sha256; s=202507r; d=mainlining.org; c=relaxed/relaxed;
+	h=Message-ID:Subject:To:From:Date; t=1791661165; bh=glVgjssUp8RzJlcBNAvMfzu
+	EupdUbllE30zizV0Qv2s=; b=JNxlG5q+Vb6Bf+aBowkruFikC/EozsMfnxiZcsXKnXVin3PheO
+	CIvIRriOvgYlpa+L9hSY5cDp1GcN+kTQIy0WXII47A6ptO5byxncBBWGBZUVTcD6PfYQs5CeHvd
+	XLlggHbK1tJYBTnFCswT/HRSs8fmoDfDnosqYoS9FawUdi32xhIEicisMVnEF+5yRsdwVpkVuN7
+	CsJuPB0wDOpJuJOtTs6Rm4ibT3pKYM/cHGpkYSip4Y0/TQuSMj35YSOhkwnRslgVtt4XpYBEzYR
+	G8ui78uNI0Zz3zpxw3NvRSIMaYaR15a+/djww229gf+rnOQ457i39nDo2D7uL54om+A==;
+DKIM-Signature: v=1; a=ed25519-sha256; s=202507e; d=mainlining.org; c=relaxed/relaxed;
+	h=Message-ID:Subject:To:From:Date; t=1791661165; bh=glVgjssUp8RzJlcBNAvMfzu
+	EupdUbllE30zizV0Qv2s=; b=KvMnCAF4pu3RpwOl8QFr/Re/5oEHGo3s/6Ay8nRYCS5bHMs/tZ
+	ZnaKAA6iDX5LQJF9+q2dSky46iFp+7s2CSBg==;
+Date: Sat, 10 Oct 2026 20:39:26 +0100
+From: Bradley Morgan <brads@mainlining.org>
+To: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
+ "Paul E . McKenney" <paulmck@kernel.org>
+CC: linux-kernel@vger.kernel.org, Gary Guo <gary@garyguo.net>,
+ Boqun Feng <boqun@kernel.org>, rcu@vger.kernel.org, lkmm@lists.linux.dev,
+ Lian Wang <lianux.mm@gmail.com>, Kunwu Chan <kunwu.chan@gmail.com>
+Subject: =?US-ASCII?Q?Re=3A_=5BPATCH_hazptr_v2_4/4=5D_hazptr=3A_Introduce_=22tr?=
+ =?US-ASCII?Q?y_acquire=22_fast_path=2C_fallback_to_overflow_list?=
+In-Reply-To: <20261009182142.6311-5-mathieu.desnoyers@efficios.com>
+References: <20261009182142.6311-1-mathieu.desnoyers@efficios.com> <20261009182142.6311-5-mathieu.desnoyers@efficios.com>
+Message-ID: <C53DEBF5-555F-44A8-A11C-A15C83AAD341@mainlining.org>
 Precedence: bulk
 X-Mailing-List: lkmm@lists.linux.dev
 List-Id: <lkmm.lists.linux.dev>
 List-Subscribe: <mailto:lkmm+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:lkmm+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: DS0PR12MB6486.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: b4756d2d-f26a-4169-1992-08df26a4f567
-X-MS-Exchange-CrossTenant-originalarrivaltime: 10 Oct 2026 08:03:24.3376
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: Ch0gPRW1X8nQLD0DVns3zgT3QP3Rr/zpNUM5VcflbCaVCQ2fPJQ54DbTYUhU8PDVDQq+sP28ZbRuky/zf3x9Xw==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DSVPR12MB999286
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: 8bit
 
-DQoNCj4gT24gT2N0IDksIDIwMjYsIGF0IDExOjA34oCvUE0sIEt1bld1IENoYW4gPGt1bnd1LmNo
-YW5AZ21haWwuY29tPiB3cm90ZToNCj4gDQo+IO+7v09uIFR1ZSwgT2N0IDYsIDIwMjYgYXQgMTo1
-MeKAr1BNIE1hdGhpZXUgRGVzbm95ZXJzDQo+IDxtYXRoaWV1LmRlc25veWVyc0BlZmZpY2lvcy5j
-b20+IHdyb3RlOg0KPj4gDQo+Pj4gT24gMjAyNi0xMC0wNSAxMzoxNSwgS3Vud3UgQ2hhbiB3cm90
-ZToNCj4+PiBSZXBsYWNlIHRoZSBwZXItd2FpdGVyIGV4YWN0LW1hdGNoIHNjYW4gd2l0aCBhIHNo
-YXJlZCBCbG9vbSBmaWx0ZXINCj4+PiBidWlsdCBkdXJpbmcgdGhlIHNlY29uZCBkcmFpbiBwYXNz
-OiBlYWNoIG9ic2VydmVkIG5vbi13aWxkY2FyZA0KPj4+IGFkZHJlc3Mgc2V0cyB0aHJlZSBiaXRz
-LCBzbyBhIHdhaXRlciB3aG9zZSBhZGRyZXNzIGhhc2hlcyB0byBhbg0KPj4+IHVuc2V0IGJpdCBj
-YW4gYmUgY29tcGxldGVkIHdpdGhvdXQgYW5vdGhlciBzbG90IHdhbGsuDQo+Pj4gDQo+Pj4gQSBC
-bG9vbSBmaWx0ZXIgaGFzIG5vIGZhbHNlIG5lZ2F0aXZlcywgc28gYW4gYWRkcmVzcyBhYnNlbnQg
-ZnJvbQ0KPj4+IHRoZSBmaW5hbCBkcmFpbiBzY2FuIGNhbm5vdCBiZSBoZWxkIGJ5IGFuIG9ic2Vy
-dmVkIHNsb3Q7IGZhbHNlDQo+Pj4gcG9zaXRpdmVzIG9ubHkgZGVsYXkgY29tcGxldGlvbiB0byBh
-IGxhdGVyIHNjYW4gY3ljbGUuDQo+Pj4gDQo+Pj4gVGhlIGZpbHRlciB1c2VzIGEgb25lLXBhZ2Ug
-Yml0bWFwIHdpdGggdGhyZWUgbXVsdGlwbHktc2hpZnQgaGFzaA0KPj4+IGZ1bmN0aW9ucy4gIEl0
-IGxpdmVzIGluIHRoZSBoYXpwdHJfc2Nhbl9zdGF0ZSBhbmQgaXMgb25seSB0b3VjaGVkDQo+Pj4g
-YnkgdGhlIHNjYW4ga3RocmVhZCwgc28gd2FpdGVyIHN0YXRlIHJlbWFpbnMgb24gdGhlIGNhbGxl
-cidzIHN0YWNrDQo+Pj4gYW5kIG5vIGR5bmFtaWMgYWxsb2NhdGlvbiBpcyBuZWVkZWQuDQo+Pj4g
-DQo+Pj4gU3VnZ2VzdGVkLWJ5OiBCb3F1biBGZW5nIDxib3F1bkBrZXJuZWwub3JnPg0KPj4gDQo+
-PiBJIGFjdHVhbGx5IHN1Z2dlc3RlZCB0aGF0IHRvIEJvcXVuIGluIHRoZSBmaXJzdCBwbGFjZS4g
-RmVlbA0KPj4gZnJlZSB0byBhZGQgbXkgc3VnZ2VzdGVkLWJ5IHRhZyBhcyB3ZWxsLiA6KQ0KPj4g
-DQo+PiBEaWQgeW91IHJ1biB5b3VyIEJsb29tIGZpbHRlciBpbiBhIHRlc3QgcHJvZ3JhbSBvbiB0
-aGUgc2lkZSB0bw0KPj4gc2VlIGhvdyBpdCBiZWhhdmVzIHdpdGggcG9pbnRlcnMsIGFuZCBjb25m
-aXJtIHRoYXQgdGhlIGZhbHNlDQo+PiBwb3NpdGl2ZSByYXRlIGlzIG5vdCB0b28gaGlnaCBkdWUg
-dG8gaGFzaGluZyBhbGdvcml0aG0vY29uc3RhbnRzDQo+PiBjb25jZXJucyA/DQo+PiANCj4gDQo+
-IEhpIE1hdGhpZXUsDQo+IA0KPiBJIHJhbiBhIHN0YW5kYWxvbmUgdGVzdCB1c2luZyB0aGUgaGFz
-aCBmdW5jdGlvbnMgYW5kDQo+IGNvbnN0YW50cyBmcm9tDQo+IHRoZSBwYXRjaCwgd2l0aCByYW5k
-b20sDQo+IHBhZ2UtYWxpZ25lZCwgY2FjaGVsaW5lLWFsaWduZWQsIHNlcXVlbnRpYWwsIGFuZCB0
-d28gc3ludGhldGljDQo+IGtlcm5lbC1saWtlIGFkZHJlc3MgcGF0dGVybnMuDQoNCmtlcm5lbC1s
-aWtlPyBMaW51eCBvciBDVURBPyBJIGhhdmUgdG8gc2F5IEkgZmluZCBBSSBnZW5lcmF0ZWQgbWVz
-c2FnZXMgaGFyZCB0byByZWFkLg0KDQo+IA0KPiBXaXRoIDc2OCBpbnNlcnRlZCBhZGRyZXNzZXMs
-IHRoZSBtZWFzdXJlZCBmYWxzZS1wb3NpdGl2ZSByYXRlcyB3ZXJlDQo+IDAuMDI1JeKAkzAuMDM0
-JSBhY3Jvc3MNCj4gdGhlc2UgcGF0dGVybnMsIGNvbXBhcmVkIHdpdGggYW4gaWRlYWwgQmxvb20t
-ZmlsdGVyIGVzdGltYXRlIG9mIGFib3V0DQo+IDAuMDMxJS4gSSBhbHNvIHRlc3RlZCBsYXJnZXIN
-Cj4gaW5zZXJ0aW9uIGNvdW50cyBhcyBzdHJlc3MgY2FzZXMuIFRoZSByZXN1bHRzIHdlcmUgY29u
-c2lzdGVudCBhY3Jvc3MNCj4gdGhyZWUgc2VlZHMsDQo+IHdpdGggb25seSBtaW5vciB2YXJpYXRp
-b24gZm9yIHRoZSByYW5kb20gZGlzdHJpYnV0aW9uLg0KDQpXaHkgaXMgdGhlIGRpc3RyaWJ1dGlv
-biByYW5kb20/DQoNCj4gDQo+IFRoZXNlIGFyZSBzeW50aGV0aWMgYWRkcmVzcyBkaXN0cmlidXRp
-b25zIHJhdGhlciB0aGFuIG1lYXN1cmVtZW50cw0KPiBmcm9tIGFjdHVhbCBrZXJuZWwgd2FpdGVy
-DQo+IGFkZHJlc3NlcywgYnV0IHRoZXkgcHJvdmlkZSBhbiBpbml0aWFsIGNoZWNrIG9mIHRoZSBo
-YXNoIGZ1bmN0aW9ucw0KPiBhZ2FpbnN0IHNldmVyYWwgc3RydWN0dXJlZA0KPiBhZGRyZXNzIHBh
-dHRlcm5zLg0KDQpXaHkgbm90IGp1c3QgcHJvdmlkZSB0aGUgdGVzdCBjb2RlPyBPaCwgYnV0IHlv
-dXIgQUkgIGNydXRjaGVzIGRpZCBub3QgYXNrIHlvdSB0byBkbyB0aGF0Lg0KDQpKb2VsDQoNCg0K
-DQo+IA0KPiBUaGFua3MsDQo+IEt1bnd1DQo+IA0KPj4gVGhhbmtzIQ0KPj4gDQo+PiBNYXRoaWV1
-DQo+PiANCj4+PiBTaWduZWQtb2ZmLWJ5OiBLdW53dSBDaGFuIDxrdW53dS5jaGFuQGdtYWlsLmNv
-bT4NCj4+PiAtLS0NCj4+PiAga2VybmVsL2hhenB0ci5jIHwgOTMgKysrKysrKysrKysrKysrKysr
-KysrKysrKysrKysrKysrKysrKysrKysrKy0tLS0tLQ0KPj4+ICAxIGZpbGUgY2hhbmdlZCwgODMg
-aW5zZXJ0aW9ucygrKSwgMTAgZGVsZXRpb25zKC0pDQo+Pj4gDQo+Pj4gZGlmZiAtLWdpdCBhL2tl
-cm5lbC9oYXpwdHIuYyBiL2tlcm5lbC9oYXpwdHIuYw0KPj4+IGluZGV4IDllMjc0YTY5MWFmNS4u
-OTAwYmEzNWRlMmNiIDEwMDY0NA0KPj4+IC0tLSBhL2tlcm5lbC9oYXpwdHIuYw0KPj4+ICsrKyBi
-L2tlcm5lbC9oYXpwdHIuYw0KPj4+IEBAIC03LDYgKzcsNyBAQA0KPj4+ICAgKi8NCj4+PiANCj4+
-PiAgI2luY2x1ZGUgPGxpbnV4L2hhenB0ci5oPg0KPj4+ICsjaW5jbHVkZSA8bGludXgvYml0b3Bz
-Lmg+DQo+Pj4gICNpbmNsdWRlIDxsaW51eC9wZXJjcHUuaD4NCj4+PiAgI2luY2x1ZGUgPGxpbnV4
-L3NwaW5sb2NrLmg+DQo+Pj4gICNpbmNsdWRlIDxsaW51eC9tdXRleC5oPg0KPj4+IEBAIC0xNiw2
-ICsxNyw3IEBADQo+Pj4gICNpbmNsdWRlIDxsaW51eC9rdGhyZWFkLmg+DQo+Pj4gICNpbmNsdWRl
-IDxsaW51eC9zd2FpdC5oPg0KPj4+ICAjaW5jbHVkZSA8bGludXgvc2NoZWQuaD4NCj4+PiArI2lu
-Y2x1ZGUgPGxpbnV4L2JpdG1hcC5oPg0KPj4+IA0KPj4+ICAvKg0KPj4+ICAgKiBUaGUgY3VycmVu
-dCBoYXphcmQgcG9pbnRlciB3aWxkY2FyZC4gRmxpcHMgYmV0d2VlbiAxVUwgYW5kIDJVTCB0byBn
-dWFyYW50ZWUNCj4+PiBAQCAtMjEzLDYgKzIxNSw1NSBAQCB2b2lkIGhhenB0cl9zY2FuX3Blcmlv
-ZCh2b2lkICphZGRyLCB2b2lkICpzY2FuX3dpbGRjYXJkKQ0KPj4+ICAgICAgfQ0KPj4+ICB9DQo+
-Pj4gDQo+Pj4gKy8qIE51bWJlciBvZiBoYXNoIGZ1bmN0aW9ucyBmb3IgdGhlIEJsb29tIGZpbHRl
-ci4gKi8NCj4+PiArI2RlZmluZSBIQVpQVFJfQkxPT01fSEFTSEVTIDMNCj4+PiArDQo+Pj4gKy8q
-IE51bWJlciBvZiBiaXRzIGluIHRoZSBCbG9vbSBmaWx0ZXIgYml0bWFwOiBvbmUgcGFnZS4gKi8N
-Cj4+PiArI2RlZmluZSBIQVpQVFJfQkxPT01fTkJJVFMgKFBBR0VfU0laRSAqIDgpDQo+Pj4gKw0K
-Pj4+ICtzdHJ1Y3QgaGF6cHRyX2Jsb29tIHsNCj4+PiArICAgICB1bnNpZ25lZCBsb25nIG1hcFtQ
-QUdFX1NJWkUgLyBzaXplb2YodW5zaWduZWQgbG9uZyldOw0KPj4+ICt9Ow0KPj4+ICsNCj4+PiAr
-LyoNCj4+PiArICogTXVsdGlwbHkgQGFkZHIgYnkgYSBwZXItaGFzaCBvZGQgY29uc3RhbnQgYW5k
-IHVzZSB0aGUgaGlnaCBiaXRzDQo+Pj4gKyAqIGFzIHRoZSBCbG9vbSBmaWx0ZXIgaW5kZXguDQo+
-Pj4gKyAqLw0KPj4+ICtzdGF0aWMgdW5zaWduZWQgbG9uZyBoYXpwdHJfYmxvb21faGFzaCh2b2lk
-ICphZGRyLCB1bnNpZ25lZCBpbnQgaSkNCj4+PiArew0KPj4+ICsgICAgIHN0YXRpYyBjb25zdCB1
-NjQgbXVsdFtIQVpQVFJfQkxPT01fSEFTSEVTXSA9IHsNCj4+PiArICAgICAgICAgICAgIDB4OUUz
-Nzc5Qjk3RjRBN0MxNVVMTCwNCj4+PiArICAgICAgICAgICAgIDB4QzJCMkFFM0QyN0Q0RUI0RlVM
-TCwNCj4+PiArICAgICAgICAgICAgIDB4MTY1NjY3QjE5RTM3NzlGOVVMTCwNCj4+PiArICAgICB9
-Ow0KPj4+ICsgICAgIHU2NCBoYXNoID0gKHU2NCkodW5zaWduZWQgbG9uZylhZGRyICogbXVsdFtp
-XTsNCj4+PiArDQo+Pj4gKyAgICAgcmV0dXJuIGhhc2ggPj4gKDY0IC0gaWxvZzIoSEFaUFRSX0JM
-T09NX05CSVRTKSk7DQo+Pj4gK30NCj4+PiArDQo+Pj4gK3N0YXRpYyB2b2lkIGhhenB0cl9ibG9v
-bV9yZXNldChzdHJ1Y3QgaGF6cHRyX2Jsb29tICpibG9vbSkNCj4+PiArew0KPj4+ICsgICAgIGJp
-dG1hcF96ZXJvKGJsb29tLT5tYXAsIEhBWlBUUl9CTE9PTV9OQklUUyk7DQo+Pj4gK30NCj4+PiAr
-DQo+Pj4gK3N0YXRpYyB2b2lkIGhhenB0cl9ibG9vbV9hZGQoc3RydWN0IGhhenB0cl9ibG9vbSAq
-Ymxvb20sIHZvaWQgKmFkZHIpDQo+Pj4gK3sNCj4+PiArICAgICB1bnNpZ25lZCBpbnQgaTsNCj4+
-PiArDQo+Pj4gKyAgICAgZm9yIChpID0gMDsgaSA8IEhBWlBUUl9CTE9PTV9IQVNIRVM7IGkrKykN
-Cj4+PiArICAgICAgICAgICAgIF9fc2V0X2JpdChoYXpwdHJfYmxvb21faGFzaChhZGRyLCBpKSwg
-Ymxvb20tPm1hcCk7DQo+Pj4gK30NCj4+PiArDQo+Pj4gK3N0YXRpYyBib29sIGhhenB0cl9ibG9v
-bV9jb250YWlucyhjb25zdCBzdHJ1Y3QgaGF6cHRyX2Jsb29tICpibG9vbSwgdm9pZCAqYWRkcikN
-Cj4+PiArew0KPj4+ICsgICAgIHVuc2lnbmVkIGludCBpOw0KPj4+ICsNCj4+PiArICAgICBmb3Ig
-KGkgPSAwOyBpIDwgSEFaUFRSX0JMT09NX0hBU0hFUzsgaSsrKQ0KPj4+ICsgICAgICAgICAgICAg
-aWYgKCF0ZXN0X2JpdChoYXpwdHJfYmxvb21faGFzaChhZGRyLCBpKSwgYmxvb20tPm1hcCkpDQo+
-Pj4gKyAgICAgICAgICAgICAgICAgICAgIHJldHVybiBmYWxzZTsNCj4+PiArICAgICByZXR1cm4g
-dHJ1ZTsNCj4+PiArfQ0KPj4+ICsNCj4+PiAgc3RydWN0IGhhenB0cl93YWl0ZXIgew0KPj4+ICAg
-ICAgc3RydWN0IGxpc3RfaGVhZCBub2RlOw0KPj4+ICAgICAgdm9pZCAqYWRkcjsNCj4+PiBAQCAt
-MjI2LDE3ICsyNzcsMjYgQEAgc3RydWN0IGhhenB0cl9zY2FuX3N0YXRlIHsNCj4+PiAgICAgIHN0
-cnVjdCBtdXRleCBsb2NrOw0KPj4+ICAgICAgc3RydWN0IGxpc3RfaGVhZCBwZW5kaW5nOw0KPj4+
-ICAgICAgc3RydWN0IGxpc3RfaGVhZCBzY2FubmluZzsgICAgICAvKiBrdGhyZWFkIG9ubHkgKi8N
-Cj4+PiArICAgICBzdHJ1Y3QgaGF6cHRyX2Jsb29tIGJsb29tOyAgICAgIC8qIGt0aHJlYWQgb25s
-eSAqLw0KPj4+ICB9Ow0KPj4+ICBzdGF0aWMgc3RydWN0IGhhenB0cl9zY2FuX3N0YXRlIGhhenB0
-cl9zY2FuOw0KPj4+IA0KPj4+ICAvKg0KPj4+IC0gKiBDaGVjayBwZXItQ1BVIHNsb3RzIGJlZm9y
-ZSBvdmVyZmxvdy1saXN0IHNsb3RzIHRvIG1hdGNoIHRoZQ0KPj4+IC0gKiBhY3F1aXNpdGlvbiBv
-cmRlcmluZyBvZiBwcm9tb3RlZCBzbG90cy4NCj4+PiArICogV2FsayBhbGwgc2xvdHMgYW5kIHJl
-dHVybiB0cnVlIGlmIEB3YXRjaCBpcyBwcmVzZW50LiAgSWYgQGJsb29tDQo+Pj4gKyAqIGlzIG5v
-bi1OVUxMLCByZWNvcmQgb2JzZXJ2ZWQgbm9uLXdpbGRjYXJkIGFkZHJlc3NlcyBpbiBpdC4NCj4+
-PiArICoNCj4+PiArICogUGVyLUNQVSBzbG90cyBhcmUgZXhhbWluZWQgYmVmb3JlIG92ZXJmbG93
-LWxpc3Qgc2xvdHMgb24gZWFjaCBDUFUNCj4+PiArICogdG8gcHJlc2VydmUgdGhlIGFjcXVpc2l0
-aW9uIG9yZGVyaW5nIHJlcXVpcmVkIGJ5IHRoZSBwcm9tb3RlIHBhdGg6DQo+Pj4gKyAqIHN5bmNo
-cm9uaXplIG11c3Qgb2JzZXJ2ZSB0aGUgcGVyLUNQVSBzbG90IHJlbGVhc2UgYmVmb3JlIHRoZQ0K
-Pj4+ICsgKiBvdmVyZmxvdy1saXN0IGVudHJ5IGNhbiBiZSBtaXNzZWQuDQo+Pj4gICAqLw0KPj4+
-IC1zdGF0aWMgYm9vbCBoYXpwdHJfdmFsdWVfcHJlc2VudCh2b2lkICp2YWwpDQo+Pj4gK3N0YXRp
-YyBib29sIGhhenB0cl9zY2FuX3dhbGsodm9pZCAqd2F0Y2gsIHN0cnVjdCBoYXpwdHJfYmxvb20g
-KmJsb29tKQ0KPj4+ICB7DQo+Pj4gICAgICBpbnQgY3B1Ow0KPj4+IA0KPj4+ICsgICAgIGlmIChi
-bG9vbSkNCj4+PiArICAgICAgICAgICAgIGhhenB0cl9ibG9vbV9yZXNldChibG9vbSk7DQo+Pj4g
-Kw0KPj4+ICAgICAgZm9yX2VhY2hfcG9zc2libGVfY3B1KGNwdSkgew0KPj4+ICAgICAgICAgICAg
-ICBzdHJ1Y3QgaGF6cHRyX3BlcmNwdV9zbG90cyAqcGVyY3B1X3Nsb3RzID0gcGVyX2NwdV9wdHIo
-JmhhenB0cl9wZXJjcHVfc2xvdHMsIGNwdSk7DQo+Pj4gICAgICAgICAgICAgIHN0cnVjdCBoYXpw
-dHJfb3ZlcmZsb3dfbGlzdF9mbGlwICpvdmVyZmxvd19saXN0X2ZsaXAgPSBwZXJfY3B1X3B0cigm
-cGVyY3B1X292ZXJmbG93X2xpc3RfZmxpcCwgY3B1KTsNCj4+PiBAQCAtMjQ0LDEwICszMDQsMTQg
-QEAgc3RhdGljIGJvb2wgaGF6cHRyX3ZhbHVlX3ByZXNlbnQodm9pZCAqdmFsKQ0KPj4+IA0KPj4+
-ICAgICAgICAgICAgICBmb3IgKGlkeCA9IDA7IGlkeCA8IE5SX0hBWlBUUl9QRVJDUFVfU0xPVFM7
-IGlkeCsrKSB7DQo+Pj4gICAgICAgICAgICAgICAgICAgICAgc3RydWN0IGhhenB0cl9zbG90X2l0
-ZW0gKml0ZW0gPSAmcGVyY3B1X3Nsb3RzLT5pdGVtc1tpZHhdOw0KPj4+ICsgICAgICAgICAgICAg
-ICAgICAgICB2b2lkICp2Ow0KPj4+IA0KPj4+ICAgICAgICAgICAgICAgICAgICAgIC8qIFBhaXJz
-IHdpdGggc21wX3N0b3JlX3JlbGVhc2UgaW4gaGF6cHRyX3JlbGVhc2UoKS4gKi8NCj4+PiAtICAg
-ICAgICAgICAgICAgICAgICAgaWYgKHNtcF9sb2FkX2FjcXVpcmUoJml0ZW0tPnNsb3QuYWRkcikg
-PT0gdmFsKQ0KPj4+ICsgICAgICAgICAgICAgICAgICAgICB2ID0gc21wX2xvYWRfYWNxdWlyZSgm
-aXRlbS0+c2xvdC5hZGRyKTsNCj4+PiArICAgICAgICAgICAgICAgICAgICAgaWYgKHYgPT0gd2F0
-Y2gpDQo+Pj4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICByZXR1cm4gdHJ1ZTsNCj4+PiAr
-ICAgICAgICAgICAgICAgICAgICAgaWYgKGJsb29tICYmIHYgJiYgIWlzX3dpbGRjYXJkKHYpKQ0K
-Pj4+ICsgICAgICAgICAgICAgICAgICAgICAgICAgICAgIGhhenB0cl9ibG9vbV9hZGQoYmxvb20s
-IHYpOw0KPj4+ICAgICAgICAgICAgICB9DQo+Pj4gICAgICAgICAgICAgIGZvciAoaW50IGkgPSAw
-OyBpIDwgMjsgaSsrKSB7DQo+Pj4gICAgICAgICAgICAgICAgICAgICAgc3RydWN0IGhhenB0cl9v
-dmVyZmxvd19saXN0ICpsaXN0ID0gJm92ZXJmbG93X2xpc3RfZmxpcC0+YXJyYXlbaV07DQo+Pj4g
-QEAgLTI1NiwxMSArMzIwLDE2IEBAIHN0YXRpYyBib29sIGhhenB0cl92YWx1ZV9wcmVzZW50KHZv
-aWQgKnZhbCkNCj4+PiANCj4+PiAgICAgICAgICAgICAgICAgICAgICByYXdfc3Bpbl9sb2NrX2ly
-cXNhdmUoJmxpc3QtPmxvY2ssIGZsYWdzKTsNCj4+PiAgICAgICAgICAgICAgICAgICAgICBobGlz
-dF9mb3JfZWFjaF9lbnRyeShiLCAmbGlzdC0+aGVhZCwgb3ZlcmZsb3dfbm9kZSkgew0KPj4+ICsg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgIHZvaWQgKnY7DQo+Pj4gKw0KPj4+ICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgLyogUGFpcnMgd2l0aCBzbXBfc3RvcmVfcmVsZWFzZSBpbiBo
-YXpwdHJfcmVsZWFzZSgpLiAqLw0KPj4+IC0gICAgICAgICAgICAgICAgICAgICAgICAgICAgIGlm
-IChzbXBfbG9hZF9hY3F1aXJlKCZiLT5zbG90LmFkZHIpID09IHZhbCkgew0KPj4+ICsgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgIHYgPSBzbXBfbG9hZF9hY3F1aXJlKCZiLT5zbG90LmFkZHIp
-Ow0KPj4+ICsgICAgICAgICAgICAgICAgICAgICAgICAgICAgIGlmICh2ID09IHdhdGNoKSB7DQo+
-Pj4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIHJhd19zcGluX3VubG9ja19p
-cnFyZXN0b3JlKCZsaXN0LT5sb2NrLCBmbGFncyk7DQo+Pj4gICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgIHJldHVybiB0cnVlOw0KPj4+ICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgfQ0KPj4+ICsgICAgICAgICAgICAgICAgICAgICAgICAgICAgIGlmIChibG9vbSAmJiB2
-ICYmICFpc193aWxkY2FyZCh2KSkNCj4+PiArICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgIGhhenB0cl9ibG9vbV9hZGQoYmxvb20sIHYpOw0KPj4+ICAgICAgICAgICAgICAgICAg
-ICAgIH0NCj4+PiAgICAgICAgICAgICAgICAgICAgICByYXdfc3Bpbl91bmxvY2tfaXJxcmVzdG9y
-ZSgmbGlzdC0+bG9jaywgZmxhZ3MpOw0KPj4+ICAgICAgICAgICAgICB9DQo+Pj4gQEAgLTI3Niw3
-ICszNDUsNyBAQCBzdGF0aWMgYm9vbCBoYXpwdHJfdmFsdWVfcHJlc2VudCh2b2lkICp2YWwpDQo+
-Pj4gICAqLw0KPj4+ICBzdGF0aWMgdm9pZCBoYXpwdHJfZHJhaW5fd2lsZGNhcmQodm9pZCAqd2Mp
-DQo+Pj4gIHsNCj4+PiAtICAgICB3aGlsZSAoaGF6cHRyX3ZhbHVlX3ByZXNlbnQod2MpKQ0KPj4+
-ICsgICAgIHdoaWxlIChoYXpwdHJfc2Nhbl93YWxrKHdjLCBOVUxMKSkNCj4+PiAgICAgICAgICAg
-ICAgY29uZF9yZXNjaGVkKCk7DQo+Pj4gIH0NCj4+PiANCj4+PiBAQCAtMzA5LDEyICszNzgsMTYg
-QEAgc3RhdGljIHZvaWQgaGF6cHRyX3NjYW5fZG9fY3ljbGUodm9pZCkNCj4+PiAgICAgIFdSSVRF
-X09OQ0UoaGF6cHRyX3dpbGRjYXJkLCBzY2FuX3dpbGRjYXJkKTsNCj4+PiAgICAgIG9sZF93aWxk
-Y2FyZCA9IGZsaXBfd2lsZGNhcmQoc2Nhbl93aWxkY2FyZCk7DQo+Pj4gDQo+Pj4gLSAgICAgLyog
-UGFzcyAyOiBkcmFpbiB0aGUgb2xkIHdpbGRjYXJkLiAqLw0KPj4+IC0gICAgIGhhenB0cl9kcmFp
-bl93aWxkY2FyZChvbGRfd2lsZGNhcmQpOw0KPj4+ICsgICAgIC8qDQo+Pj4gKyAgICAgICogUGFz
-cyAyOiBkcmFpbiB0aGUgb2xkIHdpbGRjYXJkIHdoaWxlIGNvbGxlY3Rpbmcgb2JzZXJ2ZWQNCj4+
-PiArICAgICAgKiBhZGRyZXNzZXMgaW50byB0aGUgQmxvb20gZmlsdGVyLg0KPj4+ICsgICAgICAq
-Lw0KPj4+ICsgICAgIHdoaWxlIChoYXpwdHJfc2Nhbl93YWxrKG9sZF93aWxkY2FyZCwgJmhhenB0
-cl9zY2FuLmJsb29tKSkNCj4+PiArICAgICAgICAgICAgIGNvbmRfcmVzY2hlZCgpOw0KPj4+IA0K
-Pj4+IC0gICAgIC8qIENvbXBsZXRlIHdhaXRlcnMgd2hvc2UgYWRkcmVzcyBpcyBubyBsb25nZXIg
-aGVsZCBieSBhbnkgc2xvdC4gKi8NCj4+PiArICAgICAvKiBDb21wbGV0ZSB3YWl0ZXJzIHdob3Nl
-IGFkZHJlc3MgaXMgbm90IGluIHRoZSBmaWx0ZXIuICovDQo+Pj4gICAgICBsaXN0X2Zvcl9lYWNo
-X2VudHJ5X3NhZmUodywgbiwgJmhhenB0cl9zY2FuLnNjYW5uaW5nLCBub2RlKSB7DQo+Pj4gLSAg
-ICAgICAgICAgICBpZiAoIWhhenB0cl92YWx1ZV9wcmVzZW50KHctPmFkZHIpKQ0KPj4+ICsgICAg
-ICAgICAgICAgaWYgKCFoYXpwdHJfYmxvb21fY29udGFpbnMoJmhhenB0cl9zY2FuLmJsb29tLCB3
-LT5hZGRyKSkNCj4+PiAgICAgICAgICAgICAgICAgICAgICBsaXN0X21vdmUoJnctPm5vZGUsICZk
-b25lKTsNCj4+PiAgICAgIH0NCj4+PiANCj4+IA0KPj4gDQo+PiAtLQ0KPj4gTWF0aGlldSBEZXNu
-b3llcnMNCj4+IEVmZmljaU9TIEluYy4NCj4+IGh0dHBzOi8vd3d3LmVmZmljaW9zLmNvbQ0K
+On 9 October 2026 19:21:35 BST, Mathieu Desnoyers
+<mathieu.desnoyers@efficios.com> wrote:
+>Introduce a "try acquire" hazard pointer fast path, which performs an
+>early load of the address to store it into the hazard pointer slot, and
+>then re-loads that address after a barrier to check whether it has
+>changed meanwhile.
+>
+>On comparison failure, rather than re-try, guarantee forward progress by
+>falling back to the __hazptr_acquire slow path on failure.
+>
+>The acquire slow path attempts a try-acquire for any available per-CPU
+>slot. If that fails, it chains the backup slot into the overflow list,
+>therefore guaranteeing forward progress for both hazard pointer
+>read-side and synchronize:
+>
+>- Readers set the wildcard, and then proceed to set the more
+>  specific address to replace the wildcard.
+>
+>- One synchronize alternates between two overflow list periods,
+>  scanning each one while readers are added to the other period,
+>  thus preventing a steady flow of readers from preventing
+>  synchronize forward progress.
+>
+>With this change, the scan on per-CPU slots don't need to expect a
+>wildcard anymore, because none can be produced by readers. Wildcards are
+>only expected within overflow lists.
+>
+>Signed-off-by: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+>Suggested-by: Gary Guo <gary@garyguo.net>
+>Link: https://lore.kernel.org/lkmm/DLK9MW1N86KD.2GRWUAD2NX4FU@garyguo.net/
+>Reviewed-by: Gary Guo <gary@garyguo.net>
+
+Hey, looks fine to me! 
+
+Reviewed-by: Bradley Morgan <brads@mainlining.org>
+
+(Well needed in my opinion)
+
+>Cc: Paul E. McKenney <paulmck@kernel.org>
+>Cc: Boqun Feng <boqun@kernel.org>
+>Cc: Bradley Morgan <brads@mainlining.org>
+>Cc: Gary Guo <gary@garyguo.net>
+>Cc: <rcu@vger.kernel.org>
+>Cc: <lkmm@lists.linux.dev>
+>Cc: Lian Wang <lianux.mm@gmail.com>
+>Cc: Kunwu Chan <kunwu.chan@gmail.com>
+>---
+> include/linux/hazptr.h |  48 +++++++++++--------
+> kernel/hazptr.c        | 103 ++++++++++++++++++++---------------------
+> 2 files changed, 77 insertions(+), 74 deletions(-)
+>
+>diff --git a/include/linux/hazptr.h b/include/linux/hazptr.h
+>index d1670121947a..df2aca9aa26b 100644
+>--- a/include/linux/hazptr.h
+>+++ b/include/linux/hazptr.h
+>@@ -25,13 +25,11 @@
+> #include <linux/types.h>
+> #include <linux/cleanup.h>
+> #include <linux/sched.h>
+>+#include <linux/ptreq.h>
+> 
+> /* 4 slots (each sizeof(hazptr_slot_item)) fit in a single 64-byte cache
+> line. */
+> #define NR_HAZPTR_PERCPU_SLOTS	4
+> 
+>-/* The current hazard pointer wildcard. */
+>-extern void *hazptr_wildcard;
+>-
+> /*
+>  * Hazard pointer slot.
+>  */
+>@@ -190,6 +188,31 @@ void hazptr_note_context_switch(void)
+> 	}
+> }
+> 
+>+/* Try hazard pointer protection. */
+>+static inline
+>+void *__hazptr_try_acquire(struct hazptr_ctx *ctx, void * const *addr_p, struct hazptr_slot *slot)
+>+{
+>+	void *early_addr, *addr;
+>+
+>+	if (unlikely(slot->addr))
+>+		return NULL;
+>+	early_addr = READ_ONCE(*addr_p);	/* Early load. */
+>+	WRITE_ONCE(slot->addr, early_addr);	/* Store B */
+>+	/* Memory ordering: Store B before Load A. */
+>+	smp_mb();
+>+	addr = READ_ONCE(*addr_p);		/* Load A */
+>+	/*
+>+	 * Validate that address did not change between Early load and Load A.
+>+	 * Use ptr_eq() to make sure that result from Load A is returned to the
+>+	 * caller to preserve address dependency.
+>+	 */
+>+	if (unlikely(!ptr_eq(addr, early_addr))) {
+>+		WRITE_ONCE(slot->addr, NULL);
+>+		return NULL;
+>+	}
+>+	return addr;
+>+}
+>+
+> /**
+>  * hazptr_acquire - Load pointer at address and protect with hazard pointer.
+>  *
+>@@ -245,24 +268,9 @@ void *hazptr_acquire(struct hazptr_ctx *ctx, void * const *addr_p)
+> 	ctx->acquire_cpu = smp_processor_id();
+> 	ctx->acquire_caller = _THIS_IP_;
+> #endif
+>-	if (unlikely(slot->addr))
+>+	addr = __hazptr_try_acquire(ctx, addr_p, slot);
+>+	if (unlikely(!addr))
+> 		return __hazptr_acquire(ctx, addr_p);
+>-	WRITE_ONCE(slot->addr, READ_ONCE(hazptr_wildcard));	/* Store B */
+>-
+>-	/* Memory ordering: Store B before Load A. */
+>-	smp_mb();
+>-
+>-	/*
+>-	 * Load @addr_p after storing wildcard to the hazard pointer slot.
+>-	 */
+>-	addr = READ_ONCE(*addr_p);	/* Load A */
+>-
+>-	/*
+>-	 * We don't care about ordering of Store C. It will simply
+>-	 * replace the wildcard by a more specific address. If addr is
+>-	 * NULL, we simply store NULL into the slot.
+>-	 */
+>-	WRITE_ONCE(slot->addr, addr);	/* Store C */
+> 	slot_item->ctx.ctx = ctx;
+> 	ctx->slot = slot;
+> 	return addr;
+>diff --git a/kernel/hazptr.c b/kernel/hazptr.c
+>index 13faa5ba7677..3ca73b56a5c2 100644
+>--- a/kernel/hazptr.c
+>+++ b/kernel/hazptr.c
+>@@ -13,17 +13,9 @@
+> #include <linux/list.h>
+> #include <linux/export.h>
+> 
+>-static DEFINE_MUTEX(hazptr_phase_lock);	/* Protect the wildcard and list phase flip. */
+>+#define HAZPTR_WILDCARD	((void *) 1UL)
+> 
+>-/*
+>- * The current hazard pointer wildcard. Flips between 1UL and 2UL to guarantee
+>- * hazptr_synchronize forward progress even with a steady stream of readers.
+>- * This wildcard value is used by acquire to temporarily tag the per-CPU slots.
+>- * This also affects the overflow list selection: the current list used by
+>- * readers is array[(unsigned long) hazptr_wildcard - 1].
+>- */
+>-void *hazptr_wildcard = (void *) 1UL;
+>-EXPORT_SYMBOL_GPL(hazptr_wildcard);
+>+static DEFINE_MUTEX(hazptr_phase_lock);	/* Protect the list phase flip. */
+> 
+> /* The current overflow list phase. */
+> static unsigned int hazptr_overflow_list_phase;
+>@@ -41,6 +33,10 @@ struct hazptr_overflow_list {
+>  * successively iterates on both lists. Therefore, only list removals
+>  * can cause the iteration to retry, and the number of removals is
+>  * limited to the number of list elements.
+>+ *
+>+ * Due to the overflow list raw spin lock, the hazard pointer readers are
+>+ * blocking, starvation-free with bounded waiting, assuming bounded critical
+>+ * sections and no NMI or virtualization-induced holder preemption.
+>  */
+> struct hazptr_overflow_list_flip {
+> 	struct hazptr_overflow_list array[2];
+>@@ -51,26 +47,12 @@ static DEFINE_PER_CPU(struct hazptr_overflow_list_flip, percpu_overflow_list_fli
+> DEFINE_PER_CPU(struct hazptr_percpu_slots, hazptr_percpu_slots);
+> EXPORT_PER_CPU_SYMBOL_GPL(hazptr_percpu_slots);
+> 
+>-static
+>-void *flip_wildcard(void *wildcard)
+>-{
+>-	return ((unsigned long) wildcard == 1UL) ? (void *) 2UL : (void *) 1UL;
+>-}
+>-
+> static
+> unsigned int flip_list_phase(unsigned int phase)
+> {
+> 	return 1 - phase;
+> }
+> 
+>-static
+>-bool is_wildcard(void *addr)
+>-{
+>-	if ((unsigned long) addr == 1UL || (unsigned long) addr == 2UL)
+>-		return true;
+>-	return false;
+>-}
+>-
+> static
+> struct hazptr_slot *hazptr_get_free_percpu_slot(struct hazptr_ctx *ctx)
+> {
+>@@ -96,16 +78,36 @@ struct hazptr_slot *hazptr_get_free_percpu_slot(struct hazptr_ctx *ctx)
+>  */
+> void *__hazptr_acquire(struct hazptr_ctx *ctx, void * const *addr_p)
+> {
+>-	struct hazptr_slot *slot = hazptr_get_free_percpu_slot(ctx);
+>+	struct hazptr_slot *slot;
+> 	void *addr;
+> 
+> 	/*
+>-	 * If all the per-CPU slots are already in use, fallback
+>-	 * to the backup slot.
+>+	 * In case we are called due to nested use of hazard pointers,
+>+	 * try a slot protection with per-CPU slots.
+> 	 */
+>-	if (unlikely(!slot))
+>-		slot = hazptr_chain_backup_slot(ctx);
+>-	WRITE_ONCE(slot->addr, READ_ONCE(hazptr_wildcard));	/* Store B */
+>+	slot = hazptr_get_free_percpu_slot(ctx);
+>+	if (likely(slot)) {
+>+		addr = __hazptr_try_acquire(ctx, addr_p, slot);
+>+		if (addr) {
+>+			ctx->slot = slot;
+>+			return addr;
+>+		}
+>+	}
+>+
+>+	/*
+>+	 * The backup slot overflow list guarantees forward progress of both
+>+	 * hazard pointer readers and synchronize:
+>+	 *
+>+	 * - Readers set the wildcard, and then proceed to set the more
+>+	 *   specific address to replace the wildcard.
+>+	 *
+>+	 * - One synchronize alternates between two overflow list periods,
+>+	 *   scanning each one while readers are added to the other period,
+>+	 *   thus preventing a steady flow of readers from preventing
+>+	 *   synchronize forward progress.
+>+	 */
+>+	slot = hazptr_chain_backup_slot(ctx);
+>+	WRITE_ONCE(slot->addr, HAZPTR_WILDCARD);	/* Store B */
+> 
+> 	/* Memory ordering: Store B before Load A. */
+> 	smp_mb();
+>@@ -121,20 +123,21 @@ void *__hazptr_acquire(struct hazptr_ctx *ctx, void * const *addr_p)
+> 	 * NULL, we simply store NULL into the slot.
+> 	 */
+> 	WRITE_ONCE(slot->addr, addr);	/* Store C */
+>+
+> 	ctx->slot = slot;
+>-	if (!addr && hazptr_slot_is_backup(ctx, slot))
+>+	if (!addr)
+> 		hazptr_unchain_backup_slot(ctx);
+> 	return addr;
+> }
+> EXPORT_SYMBOL_GPL(__hazptr_acquire);
+> 
+> /*
+>- * Perform piecewise iteration on overflow list waiting until "addr" is
+>- * not present. Raw spinlock is released and taken between each list
+>- * item and busy loop iteration. The overflow list generation is checked
+>- * each time the lock is taken to validate that the list has not changed
+>- * before resuming iteration or busy wait. If the generation has
+>- * changed, retry the entire list traversal.
+>+ * Perform piecewise iteration on overflow list waiting until "addr" and
+>+ * wildcard are not present. Raw spinlock is released and taken between each
+>+ * list item and busy loop iteration. The overflow list generation is checked
+>+ * each time the lock is taken to validate that the list has not changed before
+>+ * resuming iteration or busy wait. If the generation has changed, retry the
+>+ * entire list traversal.
+>  */
+> static
+> void hazptr_synchronize_overflow_list(struct hazptr_overflow_list
+> *overflow_list, void *addr)
+>@@ -147,13 +150,11 @@ void hazptr_synchronize_overflow_list(struct hazptr_overflow_list *overflow_list
+> retry:
+> 	snapshot_gen = overflow_list->gen;
+> 	hlist_for_each_entry(backup_slot, &overflow_list->head, overflow_node) {
+>-		/* Busy-wait if node is found. */
+>+		/* Busy-wait if addr or wildcard are found. */
+> 		for (;;) {
+> 			void *load_addr = smp_load_acquire(&backup_slot->slot.addr);	/* Load B */
+> 
+>-			/* We don't expect wildcards in overflow list. */
+>-			WARN_ON_ONCE(is_wildcard(load_addr));
+>-			if (load_addr != addr)
+>+			if (load_addr != addr && load_addr != HAZPTR_WILDCARD)
+> 				break;
+> 			raw_spin_unlock_irqrestore(&overflow_list->lock, flags);
+> 			cpu_relax();
+>@@ -174,7 +175,7 @@ void hazptr_synchronize_overflow_list(struct hazptr_overflow_list *overflow_list
+> }
+> 
+> static
+>-void hazptr_synchronize_cpu_slots(int cpu, void *addr, void *scan_wildcard)
+>+void hazptr_synchronize_cpu_slots(int cpu, void *addr)
+> {
+> 	struct hazptr_percpu_slots *percpu_slots = per_cpu_ptr(&hazptr_percpu_slots, cpu);
+> 	unsigned int idx;
+>@@ -182,13 +183,13 @@ void hazptr_synchronize_cpu_slots(int cpu, void *addr, void *scan_wildcard)
+> 	for (idx = 0; idx < NR_HAZPTR_PERCPU_SLOTS; idx++) {
+> 		struct hazptr_slot_item *item = &percpu_slots->items[idx];
+> 
+>-		/* Busy-wait if node is found. */
+>-		smp_cond_load_acquire(&item->slot.addr, VAL != addr && VAL != scan_wildcard); /* Load B */
+>+		/* Busy-wait if addr is found. */
+>+		smp_cond_load_acquire(&item->slot.addr, VAL != addr); /* Load B */
+> 	}
+> }
+> 
+> static
+>-void hazptr_scan_cpu_slots_period(void *addr, void *scan_wildcard)
+>+void hazptr_scan_cpu_slots(void *addr)
+> {
+> 	int cpu;
+> 
+>@@ -196,16 +197,13 @@ void hazptr_scan_cpu_slots_period(void *addr, void *scan_wildcard)
+> 	for_each_possible_cpu(cpu) {
+> 		/*
+> 		 * Scan CPU slots.
+>-		 * Forward progress against recurring wildcards is guaranteed
+>-		 * by scanning for one wildcard while new elements use the
+>-		 * other wildcard value (1UL vs 2UL).
+> 		 * Forward progress against recurring single hazard pointer
+> 		 * values is guaranteed by the fact that a hazard pointer
+> 		 * is not reclaimed nor reused until the scan for that hazard
+> 		 * pointer completes, which prevents a steady flow of readers
+> 		 * to acquire that same hazard pointer value.
+> 		 */
+>-		hazptr_synchronize_cpu_slots(cpu, addr, scan_wildcard);
+>+		hazptr_synchronize_cpu_slots(cpu, addr);
+> 	}
+> }
+> 
+>@@ -237,7 +235,6 @@ void hazptr_scan_overflow_list_period(void *addr, unsigned int scan_idx)
+> void hazptr_synchronize(void *addr)
+> {
+> 	unsigned int scan_list_phase;
+>-	void *scan_wildcard;
+> 
+> 	/*
+> 	 * Busy-wait should only be done from preemptible context.
+>@@ -251,16 +248,14 @@ void hazptr_synchronize(void *addr)
+> 	 */
+> 	if (!addr)
+> 		return;
+>+
+> 	/* Memory ordering: Store A before Load B. */
+> 	smp_mb();
+> 
+> 	guard(mutex)(&hazptr_phase_lock);
+> 
+> 	/* Scan per-CPU slots. */
+>-	scan_wildcard = flip_wildcard(hazptr_wildcard);
+>-	hazptr_scan_cpu_slots_period(addr, scan_wildcard);
+>-	WRITE_ONCE(hazptr_wildcard, scan_wildcard);			/* Flip the current wildcard. */
+>-	hazptr_scan_cpu_slots_period(addr, flip_wildcard(scan_wildcard));
+>+	hazptr_scan_cpu_slots(addr);
+> 
+> 	/*
+> 	 * Scan overflow lists *after* scanning per-CPU slots. See
+>
+
+--- Thanks!
+"I'm not a very positive person" - Linus torvalds

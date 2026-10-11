@@ -1,48 +1,74 @@
 Received: from smtpout.efficios.com (smtpout.efficios.com [158.69.130.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E30C643F8C8
-	for <lkmm@lists.linux.dev>; Sun, 11 Oct 2026 19:49:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2F9043498D;
+	Sun, 11 Oct 2026 19:49:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=158.69.130.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791748154; cv=none; b=FHLuMxzOKU1An9d7VQdYqIW5C4WC1o06cOHMuVMjHJ/Wryo361dJ26Q+nIvPwL351w3SQkXOxdMwE+yrYLsKgqFio1nr8OiQdFotyo/fT0KdDs6tdmZVBezwcNyLUGxlYMBEtiEGBC4qW4FtcIR4RZfoiaqUEfFQPZ2OMLZffpk=
+	t=1791748154; cv=none; b=k9d/tGyZltdJ6zPR3xBPDCtRdX6D+V1n2qS3IiNM9XhHUlZH9IDU2mLSux0wTcp8S0hBjFTTJAZoaUzaVgUY24IK+3+UpHZES/FoMBytCp1bzq6bKTgpiLAZ1DUSz25moRLlRnQS8RXpMrTxIfytP8irOnlqXBQTXnlvYZivYWU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1791748154; c=relaxed/simple;
-	bh=LztY0X7E68Sbewv6578zDUduCssEY7j9KwUdw6BWt3Y=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=PO7O0+dRYGbmEHutjDaT7986aklcIM5l5xgLkEijeJsATyxb/jhuS+7+aJP+Mr5Yr8VmL5VIHXupK+Vaq5Spoy1Hdvtrfbtw3aZx21rJHWnIOEYmL7dPb79Zb7KU7uTaLU62Qys7z1FOg3NEy07KKXd7nadmuHlj5YnW8B1r27Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=efficios.com; spf=pass smtp.mailfrom=efficios.com; dkim=pass (2048-bit key) header.d=efficios.com header.i=@efficios.com header.b=Kt+hu4nP; arc=none smtp.client-ip=158.69.130.18
+	bh=w5kgzhidVX74Op3Uxl1KZNnKififA+r3uz+3btmPKXU=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=Wu0ObLuNNaF5DOGakAaid16sLx4a5hB2tAHDBLjWjk2qhWORohn2SkrQvy7cOewurpKgP0DXPDZa7gfFxhGQWZQs7w9/7btbaWB1iOGgfE0jCwC65EXpQbyQAFV324n7l+OF1ZE9+6/v5VRlbJTJryS4vGOKONy7IFLpZV41MIk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=efficios.com; spf=pass smtp.mailfrom=efficios.com; dkim=pass (2048-bit key) header.d=efficios.com header.i=@efficios.com header.b=kQvXt3iq; arc=none smtp.client-ip=158.69.130.18
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=efficios.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=efficios.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=efficios.com header.i=@efficios.com header.b="Kt+hu4nP"
+	dkim=pass (2048-bit key) header.d=efficios.com header.i=@efficios.com header.b="kQvXt3iq"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=efficios.com;
 	s=smtpout1; t=1791748146;
-	bh=sCnBiFHHnSG6/B0mgE4rKLkgnhja9jqWv4Ks92rPV/w=;
-	h=From:To:Cc:Subject:Date:From;
-	b=Kt+hu4nPYAGuUFUOfYdJ8Me8904l8LieyqRtVHv2dLBPlBjiP3uCqUH5AqI4MnsiZ
-	 1AnfKKao4kK0dCDTwbnCAe96zVNX9U/gZgsOJX+K05gUr65cpLn4+lk25X7dirPFvN
-	 djNnND6/bKa+tTI+K70cFtAE/Uky36wXYieFFGYkdTeNskWZ55LkBW6+kZZkMbCywD
-	 FioBJSuthe9HDjVsvXSrq/KnQ7c/iQapXI73LtqJ7pJ5kSQ8OGPf1LsYCxRg0lYwfN
-	 hFXKhyNHir0hIhN794Viu4PRXtCNTSTf7G1+5NL7zGua9mUnDpiw53zsmmTHFqLhEu
-	 wX1y01gelog1Q==
+	bh=//gnix6Q7zPWZqRUnyYFxl36X37p3SjE7FNUFQA1ViE=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=kQvXt3iqK4O8NKI1hWRm+XbTERguuVGnml0ng/AdDLT/etmcMcXHVngfATD/dLfCX
+	 YuTHcrMfJua/DgO9Iyir/h1R4Vp+UVehFtfeN139aT4EmHMtosRkGoLp1A4ks4bkF6
+	 ejTW0W9WMGTF7k2ReTKq0Cx90TrU87ZV2tMt9bBlnzfDqGbAa5Rzwx8wCfC8UKZjBV
+	 yv8dko47uG/RitxKlYAFkxwsHVboHvtMyc5o/0GEUgYQRjT4K6qAe8ybahjHEyMstq
+	 Az08C/nRiw5scwu9dRKbjI9xQHLO0z6Q33454WofdR0AgoIRq2TeDtHjpzklE6UojZ
+	 r9EdE2K9Gqe5A==
 Received: from compudjdev.. (mtl.efficios.com [216.120.195.104])
-	by smtpout.efficios.com (Postfix) with ESMTPSA id 4j2rl62mbNzmGB;
+	by smtpout.efficios.com (Postfix) with ESMTPSA id 4j2rl64NX1zmC7;
 	Sun, 11 Oct 2026 15:49:06 -0400 (EDT)
 From: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
 To: "Paul E . McKenney" <paulmck@kernel.org>
 Cc: linux-kernel@vger.kernel.org,
 	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
-	Boqun Feng <boqun@kernel.org>,
-	Bradley Morgan <brads@mainlining.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Boqun Feng <boqun.feng@gmail.com>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
+	Will Deacon <will@kernel.org>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Alan Stern <stern@rowland.harvard.edu>,
+	John Stultz <jstultz@google.com>,
+	Frederic Weisbecker <frederic@kernel.org>,
+	Joel Fernandes <joel@joelfernandes.org>,
+	Josh Triplett <josh@joshtriplett.org>,
+	Uladzislau Rezki <urezki@gmail.com>,
+	Steven Rostedt <rostedt@goodmis.org>,
+	Lai Jiangshan <jiangshanlai@gmail.com>,
+	Zqiang <qiang.zhang1211@gmail.com>,
+	Ingo Molnar <mingo@redhat.com>,
+	Waiman Long <longman@redhat.com>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Vlastimil Babka <vbabka@suse.cz>,
+	maged.michael@gmail.com,
+	Mateusz Guzik <mjguzik@gmail.com>,
 	Gary Guo <gary@garyguo.net>,
 	rcu@vger.kernel.org,
+	linux-mm@kvack.org,
 	lkmm@lists.linux.dev,
+	Nikita Popov <github@npopov.com>,
+	llvm@lists.linux.dev,
 	Lian Wang <lianux.mm@gmail.com>,
 	Kunwu Chan <kunwu.chan@gmail.com>
-Subject: [PATCH hazptr v3 0/4] Hazard pointer updates
-Date: Sun, 11 Oct 2026 15:48:46 -0400
-Message-ID: <20261011194902.97364-1-mathieu.desnoyers@efficios.com>
+Subject: [PATCH hazptr v3 2/4] ptr_eq.h: Introduce ptr_eq() to preserve address dependency
+Date: Sun, 11 Oct 2026 15:48:48 -0400
+Message-ID: <20261011194902.97364-3-mathieu.desnoyers@efficios.com>
 X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20261011194902.97364-1-mathieu.desnoyers@efficios.com>
+References: <20261011194902.97364-1-mathieu.desnoyers@efficios.com>
 Precedence: bulk
 X-Mailing-List: lkmm@lists.linux.dev
 List-Id: <lkmm.lists.linux.dev>
@@ -51,57 +77,222 @@ List-Unsubscribe: <mailto:lkmm+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Hi Paul,
+Compiler CSE and SSA GVN optimizations can cause the address dependency
+of addresses returned by rcu_dereference to be lost when comparing those
+pointers with either constants or previously loaded pointers.
 
-This series applies on top of "hazptr: handle NULL address in
-hazptr_detach" you have in your rcu dev tree.
+Introduce ptr_eq() to compare two addresses while preserving the address
+dependencies for later use of the address. It should be used when
+comparing an address returned by rcu_dereference().
 
-This first patch addresses a race identified by Boqun Feng in the
-two-phase wildcard scheme. (no change since the last series)
+This is needed to prevent the compiler CSE and SSA GVN optimizations
+from using @a (or @b) in places where the source refers to @b (or @a)
+based on the fact that after the comparison, the two are known to be
+equal, which does not preserve address dependencies and allows the
+following misordering speculations:
 
-Patches 2-3 are prerequisites for using ptr_eq() in the 4th patch.
-Those were discussed at length in a prior version of hazard pointer
-patches.
+- If @b is a constant, the compiler can issue the loads which depend
+  on @a before loading @a.
+- If @b is a register populated by a prior load, weakly-ordered
+  CPUs can speculate loads which depend on @a before loading @a.
 
-Since the last series, I have renamed ptreq.h to ptr_eq.h, addressing
-the feedback received from Boqun and Gary.
+The same logic applies with @a and @b swapped.
 
-Patch 4 introduces a "try acquire" helper to allow the fast path
-to not rely on wildcards, while keeping the wildcard forward
-progress guarantees in the acquire slow path, used on fast path
-failure.
+The header "linux/ptr_eq.h" is the expected include target. It
+contains the documentation of the ptr_eq() API.
 
-Thanks,
+An architecture specific implementation of the pointer comparison
+can be implemented by each architecture as asm/ptr_eq.h. The x86
+implementation is provided initially. If no implementation header is
+present for the architecture, an arch-agnostic fallback based on
+OPTIMIZER_HIDE_VAR is included from asm-generic.
 
-Mathieu
+The arguments to ptr_eq() are const volatile to take advantage of
+implicit conversion that adds cv-qualifiers, which are thus added
+implicitly.
 
-Mathieu Desnoyers (4):
-  hazptr: Fix two-phase hazptr_synchronize race with detach
-  ptr_eq.h: Introduce ptr_eq() to preserve address dependency
-  Documentation: RCU: Refer to ptr_eq()
-  hazptr: Introduce "try acquire" fast path, fallback to overflow list
-
-Cc: Paul E. McKenney <paulmck@kernel.org>
-Cc: Boqun Feng <boqun@kernel.org>
-Cc: Bradley Morgan <brads@mainlining.org>
+Suggested-by: Linus Torvalds <torvalds@linux-foundation.org>
+Suggested-by: Boqun Feng <boqun.feng@gmail.com>
+Signed-off-by: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+Reviewed-by: Boqun Feng <boqun.feng@gmail.com>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Cc: "Paul E. McKenney" <paulmck@kernel.org>
+Cc: Will Deacon <will@kernel.org>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Cc: Boqun Feng <boqun.feng@gmail.com>
+Cc: Alan Stern <stern@rowland.harvard.edu>
+Cc: John Stultz <jstultz@google.com>
+Cc: Linus Torvalds <torvalds@linux-foundation.org>
+Cc: Boqun Feng <boqun.feng@gmail.com>
+Cc: Frederic Weisbecker <frederic@kernel.org>
+Cc: Joel Fernandes <joel@joelfernandes.org>
+Cc: Josh Triplett <josh@joshtriplett.org>
+Cc: Uladzislau Rezki <urezki@gmail.com>
+Cc: Steven Rostedt <rostedt@goodmis.org>
+Cc: Lai Jiangshan <jiangshanlai@gmail.com>
+Cc: Zqiang <qiang.zhang1211@gmail.com>
+Cc: Ingo Molnar <mingo@redhat.com>
+Cc: Waiman Long <longman@redhat.com>
+Cc: Mark Rutland <mark.rutland@arm.com>
+Cc: Thomas Gleixner <tglx@linutronix.de>
+Cc: Vlastimil Babka <vbabka@suse.cz>
+Cc: maged.michael@gmail.com
+Cc: Mateusz Guzik <mjguzik@gmail.com>
 Cc: Gary Guo <gary@garyguo.net>
-Cc: <rcu@vger.kernel.org>
-Cc: <lkmm@lists.linux.dev>
+Cc: rcu@vger.kernel.org
+Cc: linux-mm@kvack.org
+Cc: lkmm@lists.linux.dev
+Cc: Nikita Popov <github@npopov.com>
+Cc: llvm@lists.linux.dev
 Cc: Lian Wang <lianux.mm@gmail.com>
 Cc: Kunwu Chan <kunwu.chan@gmail.com>
+---
+Changes since v2:
+- Rename ptreq.h to ptr_eq.h (x86, asm-generic and linux headers).
+  Adapt the include guards accordingly.
 
- Documentation/RCU/rcu_dereference.rst |  38 +++++++-
- arch/x86/include/asm/ptr_eq.h         |  16 +++
- include/asm-generic/Kbuild            |   1 +
- include/asm-generic/ptr_eq.h          |  16 +++
- include/linux/hazptr.h                |  48 +++++----
- include/linux/ptr_eq.h                |  63 ++++++++++++
- kernel/hazptr.c                       | 135 +++++++++++++++-----------
- 7 files changed, 237 insertions(+), 80 deletions(-)
+Changes since v1:
+- Move to linux/ptreq.h, implement x86-specific comparison
+  and asm-generic header (fallback).
+
+Changes since v0:
+- Include feedback from Alan Stern.
+---
+ arch/x86/include/asm/ptr_eq.h | 16 +++++++++
+ include/asm-generic/Kbuild    |  1 +
+ include/asm-generic/ptr_eq.h  | 16 +++++++++
+ include/linux/ptr_eq.h        | 63 +++++++++++++++++++++++++++++++++++
+ 4 files changed, 96 insertions(+)
  create mode 100644 arch/x86/include/asm/ptr_eq.h
  create mode 100644 include/asm-generic/ptr_eq.h
  create mode 100644 include/linux/ptr_eq.h
 
+diff --git a/arch/x86/include/asm/ptr_eq.h b/arch/x86/include/asm/ptr_eq.h
+new file mode 100644
+index 000000000000..8e521cabe24b
+--- /dev/null
++++ b/arch/x86/include/asm/ptr_eq.h
+@@ -0,0 +1,16 @@
++/* SPDX-License-Identifier: GPL-2.0 */
++#ifndef _ASM_X86_PTR_EQ_H
++#define _ASM_X86_PTR_EQ_H
++
++#include <linux/types.h>
++#include <asm/asm.h>
++
++static __always_inline
++bool ptr_eq(const volatile void *a, const volatile void *b)
++{
++	bool ret;
++	asm(__ASM_SIZE(cmp) " %1,%2" : "=@ccz" (ret) : "r" (a), "r" (b));
++	return ret;
++}
++
++#endif	/* _ASM_X86_PTR_EQ_H */
+diff --git a/include/asm-generic/Kbuild b/include/asm-generic/Kbuild
+index 2bc00c67dc54..86cee0dfd47f 100644
+--- a/include/asm-generic/Kbuild
++++ b/include/asm-generic/Kbuild
+@@ -47,6 +47,7 @@ mandatory-y += percpu.h
+ mandatory-y += percpu_types.h
+ mandatory-y += pgalloc.h
+ mandatory-y += preempt.h
++mandatory-y += ptr_eq.h
+ mandatory-y += rqspinlock.h
+ mandatory-y += runtime-const.h
+ mandatory-y += rwonce.h
+diff --git a/include/asm-generic/ptr_eq.h b/include/asm-generic/ptr_eq.h
+new file mode 100644
+index 000000000000..2bd1c3b8a56f
+--- /dev/null
++++ b/include/asm-generic/ptr_eq.h
+@@ -0,0 +1,16 @@
++/* SPDX-License-Identifier: GPL-2.0 */
++#ifndef __ASM_GENERIC_PTR_EQ_H
++#define __ASM_GENERIC_PTR_EQ_H
++
++#include <linux/types.h>
++#include <linux/compiler.h>
++
++static __always_inline
++bool ptr_eq(const volatile void *a, const volatile void *b)
++{
++	OPTIMIZER_HIDE_VAR(a);
++	OPTIMIZER_HIDE_VAR(b);
++	return a == b;
++}
++
++#endif	/* __ASM_GENERIC_PTR_EQ_H */
+diff --git a/include/linux/ptr_eq.h b/include/linux/ptr_eq.h
+new file mode 100644
+index 000000000000..7a2bbf6e64b3
+--- /dev/null
++++ b/include/linux/ptr_eq.h
+@@ -0,0 +1,63 @@
++/* SPDX-License-Identifier: GPL-2.0 */
++#ifndef _LINUX_PTR_EQ_H
++#define _LINUX_PTR_EQ_H
++
++/*
++ * Compare two addresses while preserving the address dependencies for
++ * later use of the address. It should be used when comparing an address
++ * returned by rcu_dereference().
++ *
++ * This is needed to prevent the compiler CSE and SSA GVN optimizations
++ * from using @a (or @b) in places where the source refers to @b (or @a)
++ * based on the fact that after the comparison, the two are known to be
++ * equal, which does not preserve address dependencies and allows the
++ * following misordering speculations:
++ *
++ * - If @b is a constant, the compiler can issue the loads which depend
++ *   on @a before loading @a.
++ * - If @b is a register populated by a prior load, weakly-ordered
++ *   CPUs can speculate loads which depend on @a before loading @a.
++ *
++ * The same logic applies with @a and @b swapped.
++ *
++ * Return value: true if pointers are equal, false otherwise.
++ *
++ * The compiler barrier() is ineffective at fixing this issue. It does
++ * not prevent the compiler CSE from losing the address dependency:
++ *
++ * int fct_2_volatile_barriers(void)
++ * {
++ *     int *a, *b;
++ *
++ *     do {
++ *         a = READ_ONCE(p);
++ *         asm volatile ("" : : : "memory");
++ *         b = READ_ONCE(p);
++ *     } while (a != b);
++ *     asm volatile ("" : : : "memory");  <-- barrier()
++ *     return *b;
++ * }
++ *
++ * With gcc 14.2 (arm64):
++ *
++ * fct_2_volatile_barriers:
++ *         adrp    x0, .LANCHOR0
++ *         add     x0, x0, :lo12:.LANCHOR0
++ * .L2:
++ *         ldr     x1, [x0]  <-- x1 populated by first load.
++ *         ldr     x2, [x0]
++ *         cmp     x1, x2
++ *         bne     .L2
++ *         ldr     w0, [x1]  <-- x1 is used for access which should depend on b.
++ *         ret
++ *
++ * On weakly-ordered architectures, this lets CPU speculation use the
++ * result from the first load to speculate "ldr w0, [x1]" before
++ * "ldr x2, [x0]".
++ * Based on the RCU documentation, the control dependency does not
++ * prevent the CPU from speculating loads.
++ */
++
++#include <asm/ptr_eq.h>
++
++#endif	/* _LINUX_PTR_EQ_H */
 -- 
 2.43.0
 

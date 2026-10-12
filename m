@@ -1,35 +1,35 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CAA64A1387;
-	Mon, 12 Oct 2026 15:39:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 817774A2A55;
+	Mon, 12 Oct 2026 15:39:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791819583; cv=none; b=FrjCPaVJNVwe+A10f/JkaBK4tFy1ECS8TX9QpFrcrV5stRA2z7HplM/IpJOJBa0te+wOVeNa8ytSfPdA1E9Oettak2hs/kdVC9GtwnWVzfO3TeeOSYRZordhqqmGkfrYJLTpYqk6a5siJMfj1wRUFTHWsX9Bd0zI80wdIFfFA2k=
+	t=1791819587; cv=none; b=ey4SOQ6rcUU5myMjJqIsm3KRJPOXW4hGLfxednbonYQZ4MhcRnnoyz/2+sdt8BSTI9KLoI4j4H4heO/R826ZRrRihprP9+nWGwOxlKYas74Qro1ywGWpvtEslojsRbMhkTezfX8fFTU+Y6nnShN/+B9wBkn9xCbOigyndJemC4g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791819583; c=relaxed/simple;
-	bh=fc1f5aC2Db2YqGfi4qUt4V5QgjVjozSG+CmmEWJB/0Y=;
+	s=arc-20240116; t=1791819587; c=relaxed/simple;
+	bh=ZfOqJlHcXNBpaql0mublJU8ONdMBeo5ozHw6oN+xBgY=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=fBmRstvx1hJQ7Igw+iMjQEyv74H4Ewe/fd6dQTUiK9f5DpOL+vgJGxg1FPDNV4udHrjJqZFIkVLat91X62Ry41jRO1YK0LsoC28efb1/p0U9c+iQvPiaGeKiUxD/ZQp/LZc0+p5oQ4XdYv72+LseDBObaQ9/x4+QADeVq6fZqGc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=CEzoMxkW; arc=none smtp.client-ip=100.103.45.18
+	 In-Reply-To:To:Cc; b=CZwd+UB1HpdjA8RX6hRv+0dp8/2tZjxkheefWEICMLolf4V1sWqOE6KXRS6dopZT/kyQ9ivuhskE2pQ4Lp7NMReSxylVKXVFYbOF9s0nCk+n5jKSTa2JEocPuaWuJaxbyz9jdwgYf917n496QY8ik8IAQaYxtGDDKrvAZmhK7ww=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fAXGoiqy; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="CEzoMxkW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0BB701F0089B;
-	Mon, 12 Oct 2026 15:39:39 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fAXGoiqy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5AAC91F0089F;
+	Mon, 12 Oct 2026 15:39:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1791819581;
-	bh=2Y84dx6/DEDUyumvhDjTbXRBlESBxVzguYDdel6P8MQ=;
+	s=k20260515; t=1791819584;
+	bh=2y+Sag+WMgniwY0J1ScJuyQynFS/WMItUNBAY/b0l9o=;
 	h=From:Date:Subject:References:In-Reply-To:To:Cc;
-	b=CEzoMxkW7ka67lI4rt0HUtLv2PPBLFMqErvq/tRszbu36ehRy7wYwP6FI45/tG1Pk
-	 t9Z7hJJyWt1NAMbGg7xZR/4/YGqNHEh3EdQ6zFHkrVRoeZswfjJXZUlMSHnS1W9Uo2
-	 M9SF8/HXzxL6pU3nSUeDicJEGeW0v6f258f24+U/041FNr47/qS4IQvWJsbk/IW93a
-	 l8ZMtV0BqTkn2hz4FDnvnqhUzb3C6UppvPFejAfbr/XiR0OsyVj3T1HMGAjY4FlMkw
-	 mf5vJ9HNBYnZ1vsOXOE76LhMzqwi98qT1X7VY47rUFX/8AovvZOaaXaA3fnk7F+obT
-	 bRD1JeblDrAtg==
+	b=fAXGoiqyYHoffOM716LUDgBMikuZT57GM3PMp1KuqRL5loV7HX9ExPd5Tu7WrdVLy
+	 UPO6ycOIw9sEZB3D4pusEIaadzV+UROlaA+7RjdidnEWu058N5CT39xrApimQITsi9
+	 gRFLVUrjhrnLSjw/48EmvFz4ywxDhxOGczdVaHrAMZQiN1dN3RO6tcDTFwL4AqSn59
+	 iFaIcptkS3Ncv5Kez+IYLVVfxvZEgQSD+FAqiM8SneBia5E7IiYyqnpQcR50WFagi5
+	 UYHRRgHvStFcG9vZNPnU6GryMhKy24I8eQ1LmMjcjdemf/UKNqpjvuPvIrzsbW2oGt
+	 P7RR338ylaWgg==
 From: Christian Brauner <brauner@kernel.org>
-Date: Mon, 12 Oct 2026 17:39:19 +0200
-Subject: [PATCH 6/9] selftests/filesystems: check that unheld mounts are
- gone after umount
+Date: Mon, 12 Oct 2026 17:39:20 +0200
+Subject: [PATCH 7/9] Documentation/litmus-tests: add the mount reference
+ count tests
 Precedence: bulk
 X-Mailing-List: lkmm@lists.linux.dev
 List-Id: <lkmm.lists.linux.dev>
@@ -38,7 +38,7 @@ List-Unsubscribe: <mailto:lkmm+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20261012-work-mount-gp_on_demand-proposal-v1-6-43f60221a7d0@kernel.org>
+Message-Id: <20261012-work-mount-gp_on_demand-proposal-v1-7-43f60221a7d0@kernel.org>
 References: <20261012-work-mount-gp_on_demand-proposal-v1-0-43f60221a7d0@kernel.org>
 In-Reply-To: <20261012-work-mount-gp_on_demand-proposal-v1-0-43f60221a7d0@kernel.org>
 To: linux-fsdevel@vger.kernel.org
@@ -48,323 +48,1756 @@ Cc: Alexander Viro <viro@zeniv.linux.org.uk>,
  Jeff Layton <jlayton@kernel.org>, lkmm@lists.linux.dev, 
  "Christian Brauner (Amutable)" <brauner@kernel.org>
 X-Mailer: b4 0.17-dev-3d1b8
-X-Developer-Signature: v=1; a=openpgp-sha256; l=10198; i=brauner@kernel.org;
- h=from:subject:message-id; bh=fc1f5aC2Db2YqGfi4qUt4V5QgjVjozSG+CmmEWJB/0Y=;
- b=owGbwMvMwCU28Zj0gdSKO4sYT6slMWSd+a99y2juhHeN57/+jfJ3qGCp7JdlmFgYekb0V4mXx
- QNVhrjIjlIWBjEuBlkxRRaHdpNwueU8FZuNMjVg5rAygQxh4OIUgInM6GJkeFP1otk9uF1QTbfl
- 9dMFCRfOHvm7TMf+iLpz4kbfKVb+sxn+CoU1fbl5nlfd4dV6mVSxur2r/vEUeC6MzvWvCNH5K3O
- BDQA=
+X-Developer-Signature: v=1; a=openpgp-sha256; l=46511; i=brauner@kernel.org;
+ h=from:subject:message-id; bh=ZfOqJlHcXNBpaql0mublJU8ONdMBeo5ozHw6oN+xBgY=;
+ b=owGbwMvMwCU28Zj0gdSKO4sYT6slMWSd+a/Nt2temsjSbwfWfhc2sUutl9nr+kL1R0palGdKb
+ hXb54KZHaUsDGJcDLJiiiwO7Sbhcst5KjYbZWrAzGFlAhnCwMUpABO5ysjIcOMiO0+IZc1Pv5VW
+ izdl/HzyP1XmwkHW7CDewBcLNN06chn+yv0P4WH3sMw9qS0aJc7Hs+X6rx8nTTu400PNb56IquT
+ lBAA=
 X-Developer-Key: i=brauner@kernel.org; a=openpgp;
  fpr=4880B8C9BD0E5106FC070F4F7B3C391EFEA93624
 
-Use the exclusive open of a loop device to check when the filesystem on
-it is shut down:
+The reference count of a mount is split into per-cpu gets and puts and
+not everyone who touches it takes mount_lock:
 
-- synchronous umount(2), before it returns
-- lazy umount with nothing else holding the mount, before it returns
-- lazy umount of a mount held by a file descriptor, by the last close()
-- synchronous umount(2) of a held mount, refused
-- death of a mount namespace, before its last task can be reaped
+(1) A holder drops a reference on the fast path of mntput_no_expire()
+    under rcu_read_lock() as long as it sees a non-NULL ->mnt_ns.
 
-None of the tests wait or retry. They check what has happened by the
-time the call returns.
+(2) A walker in __legitimize_mnt() speculatively takes a reference
+    during rcu path walk and drops it again under mount_lock if the
+    seqcount has changed.
+
+(3) The unmounter sums up the counters under mount_lock with
+    mnt_get_count() and finishes the mount off without a grace period
+    if the sum says that nothing else holds it.
+
+That relies on three barriers and one grace period:
+
+- the smp_wmb() before the fast-path put in mntput_no_expire()
+- the smp_mb() between the increment and the re-read of the seqcount
+  in __legitimize_mnt()
+- the smp_mb() between the puts pass and the gets pass in
+  mnt_get_count()
+- the synchronize_rcu_expedited() that mntput_unmounted() waits for if
+  the sum came out higher than one
+
+Finishing an unmounted mount off without a grace period when the count
+under mount_lock is one relies on all of this. A holder's get is
+counted whenever its put is. A walker's increment is either counted or
+the walker sees the seqcount change and drops its reference under
+mount_lock. So the one reference the sum found is the mount's own.
+
+That's not enough on its own though. A walker that only starts after
+the sum must not be able to find the mount at all. Its seqcount sample
+would already be current and __legitimize_mnt() would hand it a
+reference to a mount we're tearing down. The mount isn't in the mount
+tree anymore and every other way to get at it goes through a reference
+the sum would have counted. The tricky case is a holder that had its
+cwd on the mount and called chdir() right before the sum. set_fs_pwd()
+stores the new fs->pwd before it puts the old one and both the smp_wmb()
+in write_sequnlock() and the one on the fast path of mntput_no_expire()
+order that. The smp_mb() in mnt_get_count() then orders the load of the
+put before the seqcount store of the unlock. So a walker that sees that
+seqcount also sees the new fs->pwd.
+
+Add litmus tests so we can check that argument against the kernel
+memory model. Each test is a two-process cut of fs/namespace.c except
+for the mnt-walker-late-sees-new-pwd tests which need a third process
+for the late walker. The per-cpu counters are one variable per cpu,
+write_seqlock() is spelled out as a spinlock, a seqcount store and an
+smp_wmb(), and read_seqretry() is an smp_rmb() and a READ_ONCE().
+
+The tests of the code as it is are "Never". The exception is
+mnt-sum-misses-fastpath-put which shows that the sum can miss a put on
+the fast path. That's why mntput_unmounted() still waits for a grace
+period when the count isn't one. Next to them are mutations with one
+ingredient removed and those are "Sometimes": the holder's smp_wmb(),
+the smp_mb() in mnt_get_count() or the order of its two passes, the
+walker's smp_mb(), the lock around the walker's look at ->mnt_flags,
+and the grace period. So we know which barrier carries which pairing.
+
+Run them with herd7 against tools/memory-model:
+
+    cd tools/memory-model
+    scripts/checklitmus.sh ../../Documentation/litmus-tests/fs/<test>
+
+Note that every architecture's smp_mb(), smp_wmb(), READ_ONCE(),
+WRITE_ONCE(), spinlock and RCU implementation has to follow the memory
+model. So a "Never" there holds on all architectures.
 
 Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 ---
- .../selftests/filesystems/mount_cycle/.gitignore   |   1 +
- .../selftests/filesystems/mount_cycle/Makefile     |   2 +-
- .../filesystems/mount_cycle/unheld_umount_test.c   | 262 +++++++++++++++++++++
- 3 files changed, 264 insertions(+), 1 deletion(-)
+ Documentation/litmus-tests/README                  |  95 +++++++++++++++++++
+ .../fs/mnt-gp-sees-fastpath-put-nogp.litmus        |  75 +++++++++++++++
+ .../fs/mnt-gp-sees-fastpath-put-sync-rcu.litmus    |  73 +++++++++++++++
+ .../fs/mnt-gp-sees-fastpath-put.litmus             |  79 ++++++++++++++++
+ .../fs/mnt-holder-get-before-put-getsfirst.litmus  |  63 +++++++++++++
+ .../fs/mnt-holder-get-before-put-nomb.litmus       |  62 +++++++++++++
+ .../fs/mnt-holder-get-before-put-nowmb.litmus      |  62 +++++++++++++
+ .../fs/mnt-holder-get-before-put.litmus            |  73 +++++++++++++++
+ .../mnt-kern-unmount-gp-sees-fastpath-put.litmus   |  70 ++++++++++++++
+ .../mnt-kern-unmount-holder-get-before-put.litmus  |  60 ++++++++++++
+ .../fs/mnt-sum-misses-fastpath-put.litmus          |  69 ++++++++++++++
+ .../fs/mnt-walker-bail-sees-doomed-nolock.litmus   |  89 ++++++++++++++++++
+ .../fs/mnt-walker-bail-sees-doomed.litmus          |  95 +++++++++++++++++++
+ .../mnt-walker-get-vs-seqcount-no-outer-mb.litmus  |  92 ++++++++++++++++++
+ .../fs/mnt-walker-get-vs-seqcount-nomb.litmus      |  92 ++++++++++++++++++
+ .../fs/mnt-walker-get-vs-seqcount.litmus           | 102 ++++++++++++++++++++
+ .../fs/mnt-walker-late-sees-new-pwd-nomb.litmus    |  89 ++++++++++++++++++
+ .../fs/mnt-walker-late-sees-new-pwd-nowmb.litmus   |  88 ++++++++++++++++++
+ .../fs/mnt-walker-late-sees-new-pwd.litmus         | 103 +++++++++++++++++++++
+ 19 files changed, 1531 insertions(+)
 
-diff --git a/tools/testing/selftests/filesystems/mount_cycle/.gitignore b/tools/testing/selftests/filesystems/mount_cycle/.gitignore
-index 30f7dd071bcb..7b9c4f79053c 100644
---- a/tools/testing/selftests/filesystems/mount_cycle/.gitignore
-+++ b/tools/testing/selftests/filesystems/mount_cycle/.gitignore
-@@ -6,3 +6,4 @@ mount_cover_test
- locked_handle_test
- nsfs_rbind_loop_test
- overmount_ns_file_test
-+unheld_umount_test
-diff --git a/tools/testing/selftests/filesystems/mount_cycle/Makefile b/tools/testing/selftests/filesystems/mount_cycle/Makefile
-index fbe8c5e19d42..333b7225d89e 100644
---- a/tools/testing/selftests/filesystems/mount_cycle/Makefile
-+++ b/tools/testing/selftests/filesystems/mount_cycle/Makefile
-@@ -1,6 +1,6 @@
- # SPDX-License-Identifier: GPL-2.0
- TEST_GEN_PROGS := loop_cycle_test unmounted_tree_test overmount_reparent_test mount_cover_test locked_handle_test
--TEST_GEN_PROGS += nsfs_rbind_loop_test overmount_ns_file_test
-+TEST_GEN_PROGS += nsfs_rbind_loop_test overmount_ns_file_test unheld_umount_test
+diff --git a/Documentation/litmus-tests/README b/Documentation/litmus-tests/README
+index 6c666f3422ea..47fca037c6e1 100644
+--- a/Documentation/litmus-tests/README
++++ b/Documentation/litmus-tests/README
+@@ -38,6 +38,101 @@ cmpxchg-fail-unordered-2.litmus
+     acquire operation.
  
- CFLAGS += -Wall -O2 -g $(KHDR_INCLUDES)
  
-diff --git a/tools/testing/selftests/filesystems/mount_cycle/unheld_umount_test.c b/tools/testing/selftests/filesystems/mount_cycle/unheld_umount_test.c
++fs (/fs directory)
++------------------
++
++The reference count of a mount is split into per-CPU gets and puts.  A
++holder drops a reference on the fast path of mntput_no_expire() without
++mount_lock, a walker in __legitimize_mnt() takes one during an RCU path
++walk, and the unmounter sums the counters under mount_lock with
++mnt_get_count() to decide whether it can finish the mount off without
++waiting for a grace period.  The tests spell write_seqlock() out as a
++spinlock, a seqcount store and smp_wmb(), read_seqbegin() and
++read_seqretry() as READ_ONCE() and smp_rmb(), and the per-CPU counters
++as one variable per CPU.
++
++mnt-sum-misses-fastpath-put.litmus
++    Demonstrates that the sum under mount_lock can miss a put on the
++    fast path of mntput_no_expire(), which is why mntput_unmounted()
++    falls back to a grace period when the count is not one.
++
++mnt-holder-get-before-put.litmus
++    Demonstrates that a fast-path put the sum counts has its get counted
++    too: the smp_wmb() in mntput_no_expire() pairs with the smp_mb()
++    between the puts pass and the gets pass of mnt_get_count().
++
++mnt-holder-get-before-put-nowmb.litmus
++    The same without the holder's smp_wmb(); the sum can count the put
++    but not the get.
++
++mnt-holder-get-before-put-nomb.litmus
++    The same without the smp_mb() inside mnt_get_count(); an smp_mb()
++    ahead of the puts pass does not stand in for it.
++
++mnt-holder-get-before-put-getsfirst.litmus
++    The same with the gets summed before the puts; the order of the two
++    passes is part of the pairing.
++
++mnt-gp-sees-fastpath-put.litmus
++    Demonstrates that after the grace period of mntput_unmounted() the
++    plain mntput() sees the fast-path put the sum missed, because the
++    holder's read-side critical section ended before the grace period.
++
++mnt-gp-sees-fastpath-put-sync-rcu.litmus
++    The same with synchronize_rcu() in place of
++    synchronize_rcu_expedited().
++
++mnt-gp-sees-fastpath-put-nogp.litmus
++    The same with an smp_mb() in place of the grace period; the put can
++    still be missed.
++
++mnt-walker-get-vs-seqcount.litmus
++    Demonstrates the store buffering pairing between the increment and
++    smp_mb() of __legitimize_mnt() and the seqcount store and the
++    smp_mb() of mnt_get_count() under mount_lock: the walker cannot
++    keep a reference to a mount the sum finishes off.
++
++mnt-walker-get-vs-seqcount-no-outer-mb.litmus
++    The same with the sum as the tree has it, without an smp_mb()
++    between taking mount_lock and the sum; the smp_mb() inside
++    mnt_get_count() is the one that pairs.
++
++mnt-walker-get-vs-seqcount-nomb.litmus
++    The same without the walker's smp_mb(); the walker can keep a
++    reference to a freed mount.
++
++mnt-walker-bail-sees-doomed.litmus
++    Demonstrates that a walker which sees the seqcount change and reads
++    ->mnt_flags under mount_lock finds MNT_DOOMED on a mount the sum
++    finished off; mount_lock orders the two critical sections.
++
++mnt-walker-bail-sees-doomed-nolock.litmus
++    The same with ->mnt_flags read outside mount_lock; the walker can
++    miss MNT_DOOMED.
++
++mnt-walker-late-sees-new-pwd.litmus
++    Demonstrates that a walker which starts after the sum finished a
++    mount off cannot reach it through the old cwd of a holder whose put
++    the sum counted: the holder orders the new fs->pwd before the put
++    and the smp_mb() of mnt_get_count() orders the load of the put
++    before the seqcount store the walker samples.
++
++mnt-walker-late-sees-new-pwd-nowmb.litmus
++    The same without the smp_wmb()s that order the new fs->pwd before
++    the put; the walker can read the old cwd.
++
++mnt-walker-late-sees-new-pwd-nomb.litmus
++    The same without the smp_mb() inside mnt_get_count(); the walker can
++    read the old cwd.
++
++mnt-kern-unmount-holder-get-before-put.litmus
++    The holder test for kern_unmount_array(), where mnt_make_shortterm()
++    clears ->mnt_ns with a plain WRITE_ONCE() outside mount_lock.
++
++mnt-kern-unmount-gp-sees-fastpath-put.litmus
++    The grace period test for kern_unmount_array().
++
++
+ locking (/locking directory)
+ ----------------------------
+ 
+diff --git a/Documentation/litmus-tests/fs/mnt-gp-sees-fastpath-put-nogp.litmus b/Documentation/litmus-tests/fs/mnt-gp-sees-fastpath-put-nogp.litmus
 new file mode 100644
-index 000000000000..96e3db277e49
+index 000000000000..b0b4037217a4
 --- /dev/null
-+++ b/tools/testing/selftests/filesystems/mount_cycle/unheld_umount_test.c
-@@ -0,0 +1,262 @@
-+// SPDX-License-Identifier: GPL-2.0
-+/*
-+ * A mount that nothing else references is torn down before umount(2)
-+ * returns, lazy or not, before the last close of the file that kept it
-+ * alive returns, and before the task that took a mount namespace down
-+ * with it can be reaped. A loop device shows when that has happened: the
-+ * filesystem claims it, and an exclusive open of the device succeeds
-+ * only once the filesystem has let go.
-+ */
-+#define _GNU_SOURCE
-+#include <errno.h>
-+#include <fcntl.h>
-+#include <sched.h>
-+#include <stdio.h>
-+#include <stdlib.h>
-+#include <string.h>
-+#include <sys/ioctl.h>
-+#include <sys/mount.h>
-+#include <sys/stat.h>
-+#include <sys/wait.h>
-+#include <unistd.h>
-+#include <linux/loop.h>
++++ b/Documentation/litmus-tests/fs/mnt-gp-sees-fastpath-put-nogp.litmus
+@@ -0,0 +1,75 @@
++C mnt-gp-sees-fastpath-put-nogp
 +
-+#include "../../kselftest_harness.h"
++(*
++ * Result: Sometimes
++ *
++ * mnt-gp-sees-fastpath-put.litmus with an smp_mb() in place of the
++ * grace period.  A barrier orders the unmounter's own accesses and
++ * waits for nothing: the holder's read-side critical section may still
++ * be running and the second sum misses the put like the first one.
++ * Only a grace period covers a fast-path put the sum missed.
++ *)
 +
-+#define IMAGE_SIZE	(1440 * 1024)
-+#define SECTOR		512
-+
-+/* A blank FAT12 floppy image: boot sector, two FATs, an empty root directory. */
-+static int write_fat12(int fd)
 +{
-+	unsigned char sector[SECTOR] = {
-+		0xeb, 0x3c, 0x90, 'M', 'S', 'W', 'I', 'N', '4', '.', '1',
-+		[11] = 0x00, 0x02,	/* bytes per sector: 512 */
-+		[13] = 1,		/* sectors per cluster */
-+		[14] = 1, 0,		/* reserved sectors */
-+		[16] = 2,		/* FATs */
-+		[17] = 0xe0, 0x00,	/* root directory entries: 224 */
-+		[19] = 0x40, 0x0b,	/* total sectors: 2880 */
-+		[21] = 0xf0,		/* media descriptor */
-+		[22] = 9, 0,		/* sectors per FAT */
-+		[24] = 18, 0,		/* sectors per track */
-+		[26] = 2, 0,		/* heads */
-+		[38] = 0x29,		/* extended boot signature */
-+		[39] = 0x12, 0x34, 0x56, 0x78,
-+		[43] = 'N', 'O', ' ', 'N', 'A', 'M', 'E', ' ', ' ', ' ', ' ',
-+		[54] = 'F', 'A', 'T', '1', '2', ' ', ' ', ' ',
-+		[510] = 0x55, 0xaa,
-+	};
-+	unsigned char fat[SECTOR] = { 0xf0, 0xff, 0xff };
-+
-+	if (pwrite(fd, sector, SECTOR, 0) != SECTOR)
-+		return -1;
-+	/* the first FAT and the second one, one sector each is enough */
-+	if (pwrite(fd, fat, SECTOR, 1 * SECTOR) != SECTOR ||
-+	    pwrite(fd, fat, SECTOR, 10 * SECTOR) != SECTOR)
-+		return -1;
-+	return ftruncate(fd, IMAGE_SIZE);
++	mnt_ns=1;
++	gets_h=1;
++	puts_h=0;
++	gets_u=1;
++	puts_u=0;
 +}
 +
-+/* Bind a free loop device to the open image @ifd; the device number. */
-+static int loop_bind(int ifd)
++P0(int *mnt_ns, int *gets_h, int *puts_h)
 +{
-+	int cfd, lfd, n;
-+	char dev[32];
++	int r0;
 +
-+	cfd = open("/dev/loop-control", O_RDWR);
-+	if (cfd < 0)
-+		return -1;
-+	n = ioctl(cfd, LOOP_CTL_GET_FREE);
-+	close(cfd);
-+	if (n < 0)
-+		return -1;
-+	snprintf(dev, sizeof(dev), "/dev/loop%d", n);
-+	lfd = open(dev, O_RDWR);
-+	if (lfd < 0)
-+		return -1;
-+	if (ioctl(lfd, LOOP_SET_FD, ifd))
-+		n = -1;
-+	close(lfd);
-+	return n;
++	rcu_read_lock();
++	r0 = READ_ONCE(*mnt_ns);
++	if (r0) {
++		smp_wmb();
++		WRITE_ONCE(*puts_h, 1);
++	}
++	rcu_read_unlock();
 +}
 +
-+/* Mount the loop device at @mp: vfat, or msdos. */
-+static int loop_mount(const char *dev, const char *mp)
++P1(spinlock_t *mlock, int *seq, int *mnt_ns, int *gets_h, int *puts_h, int *gets_u, int *puts_u)
 +{
-+	if (!mount(dev, mp, "vfat", 0, NULL))
-+		return 0;
-+	return mount(dev, mp, "msdos", 0, NULL);
++	int r1;
++	int r3;
++	int r5;
++	int r6;
++
++	spin_lock(mlock);
++	WRITE_ONCE(*seq, 1);
++	smp_wmb();
++	WRITE_ONCE(*mnt_ns, 0);
++	smp_wmb();
++	WRITE_ONCE(*seq, 2);
++	spin_unlock(mlock);
++
++	spin_lock(mlock);
++	WRITE_ONCE(*seq, 3);
++	smp_wmb();
++	smp_mb();
++	r1 = READ_ONCE(*puts_h);
++	smp_mb();
++	r3 = READ_ONCE(*gets_h);
++	smp_wmb();
++	WRITE_ONCE(*seq, 4);
++	spin_unlock(mlock);
++
++	smp_mb();
++
++	spin_lock(mlock);
++	WRITE_ONCE(*seq, 5);
++	smp_wmb();
++	smp_mb();
++	WRITE_ONCE(*puts_u, 1);
++	r5 = READ_ONCE(*puts_h);
++	smp_mb();
++	r6 = READ_ONCE(*gets_h);
++	smp_wmb();
++	WRITE_ONCE(*seq, 6);
++	spin_unlock(mlock);
 +}
 +
-+/*
-+ * An exclusive open of the device fails with EBUSY while a filesystem
-+ * holds it. No retries: the point is that it has been let go by now.
-+ */
-+static bool loop_free(const char *dev)
-+{
-+	int lfd = open(dev, O_RDONLY | O_EXCL);
++exists (0:r0=1 /\ 1:r5=0)
+diff --git a/Documentation/litmus-tests/fs/mnt-gp-sees-fastpath-put-sync-rcu.litmus b/Documentation/litmus-tests/fs/mnt-gp-sees-fastpath-put-sync-rcu.litmus
+new file mode 100644
+index 000000000000..e8d4b17f1426
+--- /dev/null
++++ b/Documentation/litmus-tests/fs/mnt-gp-sees-fastpath-put-sync-rcu.litmus
+@@ -0,0 +1,73 @@
++C mnt-gp-sees-fastpath-put-sync-rcu
 +
-+	if (lfd < 0)
-+		return false;
-+	close(lfd);
-+	return true;
++(*
++ * Result: Never
++ *
++ * mnt-gp-sees-fastpath-put.litmus with synchronize_rcu() in place of
++ * synchronize_rcu_expedited().  To the memory model the two are the
++ * same fence.
++ *)
++
++{
++	mnt_ns=1;
++	gets_h=1;
++	puts_h=0;
++	gets_u=1;
++	puts_u=0;
 +}
 +
-+/* Tell the loop device to let go of its image. */
-+static void loop_clear(const char *dev)
++P0(int *mnt_ns, int *gets_h, int *puts_h)
 +{
-+	int lfd = open(dev, O_RDWR);
++	int r0;
 +
-+	if (lfd >= 0) {
-+		ioctl(lfd, LOOP_CLR_FD);
-+		close(lfd);
++	rcu_read_lock();
++	r0 = READ_ONCE(*mnt_ns);
++	if (r0) {
++		smp_wmb();
++		WRITE_ONCE(*puts_h, 1);
++	}
++	rcu_read_unlock();
++}
++
++P1(spinlock_t *mlock, int *seq, int *mnt_ns, int *gets_h, int *puts_h, int *gets_u, int *puts_u)
++{
++	int r1;
++	int r3;
++	int r5;
++	int r6;
++
++	spin_lock(mlock);
++	WRITE_ONCE(*seq, 1);
++	smp_wmb();
++	WRITE_ONCE(*mnt_ns, 0);
++	smp_wmb();
++	WRITE_ONCE(*seq, 2);
++	spin_unlock(mlock);
++
++	spin_lock(mlock);
++	WRITE_ONCE(*seq, 3);
++	smp_wmb();
++	smp_mb();
++	r1 = READ_ONCE(*puts_h);
++	smp_mb();
++	r3 = READ_ONCE(*gets_h);
++	smp_wmb();
++	WRITE_ONCE(*seq, 4);
++	spin_unlock(mlock);
++
++	synchronize_rcu();
++
++	spin_lock(mlock);
++	WRITE_ONCE(*seq, 5);
++	smp_wmb();
++	smp_mb();
++	WRITE_ONCE(*puts_u, 1);
++	r5 = READ_ONCE(*puts_h);
++	smp_mb();
++	r6 = READ_ONCE(*gets_h);
++	smp_wmb();
++	WRITE_ONCE(*seq, 6);
++	spin_unlock(mlock);
++}
++
++exists (0:r0=1 /\ 1:r5=0)
+diff --git a/Documentation/litmus-tests/fs/mnt-gp-sees-fastpath-put.litmus b/Documentation/litmus-tests/fs/mnt-gp-sees-fastpath-put.litmus
+new file mode 100644
+index 000000000000..b60100fdab5e
+--- /dev/null
++++ b/Documentation/litmus-tests/fs/mnt-gp-sees-fastpath-put.litmus
+@@ -0,0 +1,79 @@
++C mnt-gp-sees-fastpath-put
++
++(*
++ * Result: Never
++ *
++ * The sum of mntput_unheld() can miss the put of a holder on the fast
++ * path of mntput_no_expire(), see mnt-sum-misses-fastpath-put.litmus.
++ * mntput_unmounted() then waits in synchronize_rcu_expedited() and
++ * drops the own reference with a plain mntput(), which sums again in
++ * mntput_no_expire_slowpath() under mount_lock.  The holder read
++ * ->mnt_ns non-NULL inside rcu_read_lock() before umount_tree() stored
++ * NULL, so its read-side critical section, and the put inside it, ends
++ * before the grace period does.  The first sum may miss the put
++ * (1:r1), the second one never does (1:r5=1).
++ *)
++
++{
++	mnt_ns=1;
++	gets_h=1;
++	puts_h=0;
++	gets_u=1;
++	puts_u=0;
++}
++
++P0(int *mnt_ns, int *gets_h, int *puts_h)
++{
++	int r0;
++
++	rcu_read_lock();
++	r0 = READ_ONCE(*mnt_ns);
++	if (r0) {
++		smp_wmb();
++		WRITE_ONCE(*puts_h, 1);
++	}
++	rcu_read_unlock();
++}
++
++P1(spinlock_t *mlock, int *seq, int *mnt_ns, int *gets_h, int *puts_h, int *gets_u, int *puts_u)
++{
++	int r1;
++	int r3;
++	int r5;
++	int r6;
++
++	spin_lock(mlock);
++	WRITE_ONCE(*seq, 1);
++	smp_wmb();
++	WRITE_ONCE(*mnt_ns, 0);
++	smp_wmb();
++	WRITE_ONCE(*seq, 2);
++	spin_unlock(mlock);
++
++	spin_lock(mlock);
++	WRITE_ONCE(*seq, 3);
++	smp_wmb();
++	smp_mb();
++	r1 = READ_ONCE(*puts_h);
++	smp_mb();
++	r3 = READ_ONCE(*gets_h);
++	smp_wmb();
++	WRITE_ONCE(*seq, 4);
++	spin_unlock(mlock);
++
++	synchronize_rcu_expedited();
++
++	spin_lock(mlock);
++	WRITE_ONCE(*seq, 5);
++	smp_wmb();
++	smp_mb();
++	WRITE_ONCE(*puts_u, 1);
++	r5 = READ_ONCE(*puts_h);
++	smp_mb();
++	r6 = READ_ONCE(*gets_h);
++	smp_wmb();
++	WRITE_ONCE(*seq, 6);
++	spin_unlock(mlock);
++}
++
++exists (0:r0=1 /\ 1:r5=0)
+diff --git a/Documentation/litmus-tests/fs/mnt-holder-get-before-put-getsfirst.litmus b/Documentation/litmus-tests/fs/mnt-holder-get-before-put-getsfirst.litmus
+new file mode 100644
+index 000000000000..d20470a276fe
+--- /dev/null
++++ b/Documentation/litmus-tests/fs/mnt-holder-get-before-put-getsfirst.litmus
+@@ -0,0 +1,63 @@
++C mnt-holder-get-before-put-getsfirst
++
++(*
++ * Result: Sometimes
++ *
++ * mnt-holder-get-before-put.litmus with mnt_get_count() summing the
++ * gets before the puts, the smp_mb() still between the two passes.
++ * The order of the passes is part of the pairing: read first, the
++ * gets pass can predate a get whose put is then counted.
++ *)
++
++{
++	mnt_ns=1;
++	gets_h=1;
++	puts_h=0;
++	gets_u=1;
++	puts_u=0;
++}
++
++P0(int *mnt_ns, int *gets_h, int *puts_h)
++{
++	int r0;
++
++	WRITE_ONCE(*gets_h, 2);
++	rcu_read_lock();
++	r0 = READ_ONCE(*mnt_ns);
++	if (r0) {
++		smp_wmb();
++		WRITE_ONCE(*puts_h, 1);
++	}
++	rcu_read_unlock();
++}
++
++P1(spinlock_t *mlock, int *seq, int *mnt_ns, int *gets_h, int *puts_h, int *gets_u, int *puts_u)
++{
++	int r1;
++	int r2;
++	int r3;
++	int r4;
++
++	spin_lock(mlock);
++	WRITE_ONCE(*seq, 1);
++	smp_wmb();
++	WRITE_ONCE(*mnt_ns, 0);
++	smp_wmb();
++	WRITE_ONCE(*seq, 2);
++	spin_unlock(mlock);
++
++	spin_lock(mlock);
++	WRITE_ONCE(*seq, 3);
++	smp_wmb();
++	smp_mb();
++	r3 = READ_ONCE(*gets_h);
++	r4 = READ_ONCE(*gets_u);
++	smp_mb();
++	r1 = READ_ONCE(*puts_h);
++	r2 = READ_ONCE(*puts_u);
++	smp_wmb();
++	WRITE_ONCE(*seq, 4);
++	spin_unlock(mlock);
++}
++
++exists (0:r0=1 /\ 1:r1=1 /\ 1:r3=1)
+diff --git a/Documentation/litmus-tests/fs/mnt-holder-get-before-put-nomb.litmus b/Documentation/litmus-tests/fs/mnt-holder-get-before-put-nomb.litmus
+new file mode 100644
+index 000000000000..2da4353bc087
+--- /dev/null
++++ b/Documentation/litmus-tests/fs/mnt-holder-get-before-put-nomb.litmus
+@@ -0,0 +1,62 @@
++C mnt-holder-get-before-put-nomb
++
++(*
++ * Result: Sometimes
++ *
++ * mnt-holder-get-before-put.litmus without the smp_mb() between the
++ * puts pass and the gets pass of mnt_get_count().  The smp_mb() ahead
++ * of the puts pass is still there and does not help: the barrier that
++ * pairs with the holder's smp_wmb() has to sit between the two loads.
++ *)
++
++{
++	mnt_ns=1;
++	gets_h=1;
++	puts_h=0;
++	gets_u=1;
++	puts_u=0;
++}
++
++P0(int *mnt_ns, int *gets_h, int *puts_h)
++{
++	int r0;
++
++	WRITE_ONCE(*gets_h, 2);
++	rcu_read_lock();
++	r0 = READ_ONCE(*mnt_ns);
++	if (r0) {
++		smp_wmb();
++		WRITE_ONCE(*puts_h, 1);
++	}
++	rcu_read_unlock();
++}
++
++P1(spinlock_t *mlock, int *seq, int *mnt_ns, int *gets_h, int *puts_h, int *gets_u, int *puts_u)
++{
++	int r1;
++	int r2;
++	int r3;
++	int r4;
++
++	spin_lock(mlock);
++	WRITE_ONCE(*seq, 1);
++	smp_wmb();
++	WRITE_ONCE(*mnt_ns, 0);
++	smp_wmb();
++	WRITE_ONCE(*seq, 2);
++	spin_unlock(mlock);
++
++	spin_lock(mlock);
++	WRITE_ONCE(*seq, 3);
++	smp_wmb();
++	smp_mb();
++	r1 = READ_ONCE(*puts_h);
++	r2 = READ_ONCE(*puts_u);
++	r3 = READ_ONCE(*gets_h);
++	r4 = READ_ONCE(*gets_u);
++	smp_wmb();
++	WRITE_ONCE(*seq, 4);
++	spin_unlock(mlock);
++}
++
++exists (0:r0=1 /\ 1:r1=1 /\ 1:r3=1)
+diff --git a/Documentation/litmus-tests/fs/mnt-holder-get-before-put-nowmb.litmus b/Documentation/litmus-tests/fs/mnt-holder-get-before-put-nowmb.litmus
+new file mode 100644
+index 000000000000..d9070e813e47
+--- /dev/null
++++ b/Documentation/litmus-tests/fs/mnt-holder-get-before-put-nowmb.litmus
+@@ -0,0 +1,62 @@
++C mnt-holder-get-before-put-nowmb
++
++(*
++ * Result: Sometimes
++ *
++ * mnt-holder-get-before-put.litmus without the smp_wmb() between the
++ * get and the fast-path put in mntput_no_expire().  Nothing orders the
++ * two stores: the sum counts the put but not the get and finishes the
++ * mount off under the holder.
++ *)
++
++{
++	mnt_ns=1;
++	gets_h=1;
++	puts_h=0;
++	gets_u=1;
++	puts_u=0;
++}
++
++P0(int *mnt_ns, int *gets_h, int *puts_h)
++{
++	int r0;
++
++	WRITE_ONCE(*gets_h, 2);
++	rcu_read_lock();
++	r0 = READ_ONCE(*mnt_ns);
++	if (r0) {
++		WRITE_ONCE(*puts_h, 1);
++	}
++	rcu_read_unlock();
++}
++
++P1(spinlock_t *mlock, int *seq, int *mnt_ns, int *gets_h, int *puts_h, int *gets_u, int *puts_u)
++{
++	int r1;
++	int r2;
++	int r3;
++	int r4;
++
++	spin_lock(mlock);
++	WRITE_ONCE(*seq, 1);
++	smp_wmb();
++	WRITE_ONCE(*mnt_ns, 0);
++	smp_wmb();
++	WRITE_ONCE(*seq, 2);
++	spin_unlock(mlock);
++
++	spin_lock(mlock);
++	WRITE_ONCE(*seq, 3);
++	smp_wmb();
++	smp_mb();
++	r1 = READ_ONCE(*puts_h);
++	r2 = READ_ONCE(*puts_u);
++	smp_mb();
++	r3 = READ_ONCE(*gets_h);
++	r4 = READ_ONCE(*gets_u);
++	smp_wmb();
++	WRITE_ONCE(*seq, 4);
++	spin_unlock(mlock);
++}
++
++exists (0:r0=1 /\ 1:r1=1 /\ 1:r3=1)
+diff --git a/Documentation/litmus-tests/fs/mnt-holder-get-before-put.litmus b/Documentation/litmus-tests/fs/mnt-holder-get-before-put.litmus
+new file mode 100644
+index 000000000000..414c303dcbb6
+--- /dev/null
++++ b/Documentation/litmus-tests/fs/mnt-holder-get-before-put.litmus
+@@ -0,0 +1,73 @@
++C mnt-holder-get-before-put
++
++(*
++ * Result: Never
++ *
++ * A holder with a reference of its own (gets_h=1) does a transient
++ * mntget() and drops it on the fast path of mntput_no_expire(): the
++ * store to its gets counter, READ_ONCE(->mnt_ns) non-NULL, smp_wmb(),
++ * the store to its puts counter.  umount_tree() clears ->mnt_ns under
++ * write_seqlock() and mntput_unheld() sums with mnt_get_count(): the
++ * puts pass, smp_mb(), the gets pass.  The smp_wmb() pairs with that
++ * smp_mb(), so a put the sum counts has its get counted too.  The bad
++ * outcome is the sum counting the put (1:r1=1) but not the get
++ * (1:r3=1): a count of one, and the mount finished off under the
++ * reference the holder still has.  Message passing, smp_wmb() on the
++ * holder's side and smp_mb() on the sum's.  The sum is modelled with
++ * an smp_mb() ahead of the puts pass as well; it takes no part in
++ * this, see the -nomb variant.  A put that lands on another CPU's
++ * counter after a migration is the same test, the model has no CPUs.
++ *)
++
++{
++	mnt_ns=1;
++	gets_h=1;
++	puts_h=0;
++	gets_u=1;
++	puts_u=0;
++}
++
++P0(int *mnt_ns, int *gets_h, int *puts_h)
++{
++	int r0;
++
++	WRITE_ONCE(*gets_h, 2);
++	rcu_read_lock();
++	r0 = READ_ONCE(*mnt_ns);
++	if (r0) {
++		smp_wmb();
++		WRITE_ONCE(*puts_h, 1);
++	}
++	rcu_read_unlock();
++}
++
++P1(spinlock_t *mlock, int *seq, int *mnt_ns, int *gets_h, int *puts_h, int *gets_u, int *puts_u)
++{
++	int r1;
++	int r2;
++	int r3;
++	int r4;
++
++	spin_lock(mlock);
++	WRITE_ONCE(*seq, 1);
++	smp_wmb();
++	WRITE_ONCE(*mnt_ns, 0);
++	smp_wmb();
++	WRITE_ONCE(*seq, 2);
++	spin_unlock(mlock);
++
++	spin_lock(mlock);
++	WRITE_ONCE(*seq, 3);
++	smp_wmb();
++	smp_mb();
++	r1 = READ_ONCE(*puts_h);
++	r2 = READ_ONCE(*puts_u);
++	smp_mb();
++	r3 = READ_ONCE(*gets_h);
++	r4 = READ_ONCE(*gets_u);
++	smp_wmb();
++	WRITE_ONCE(*seq, 4);
++	spin_unlock(mlock);
++}
++
++exists (0:r0=1 /\ 1:r1=1 /\ 1:r3=1)
+diff --git a/Documentation/litmus-tests/fs/mnt-kern-unmount-gp-sees-fastpath-put.litmus b/Documentation/litmus-tests/fs/mnt-kern-unmount-gp-sees-fastpath-put.litmus
+new file mode 100644
+index 000000000000..59dd434e6a76
+--- /dev/null
++++ b/Documentation/litmus-tests/fs/mnt-kern-unmount-gp-sees-fastpath-put.litmus
+@@ -0,0 +1,70 @@
++C mnt-kern-unmount-gp-sees-fastpath-put
++
++(*
++ * Result: Never
++ *
++ * mnt-gp-sees-fastpath-put.litmus for kern_unmount_array(), where
++ * mnt_make_shortterm() clears ->mnt_ns with a plain WRITE_ONCE()
++ * outside mount_lock.  The holder still read it non-NULL inside
++ * rcu_read_lock() before the store, so its read-side critical section
++ * ends before the grace period of mntput_unmounted() does and the
++ * plain mntput() that follows sees its put.
++ *)
++
++{
++	mnt_ns=1;
++	gets_h=1;
++	puts_h=0;
++	gets_u=1;
++	puts_u=0;
++}
++
++P0(int *mnt_ns, int *gets_h, int *puts_h)
++{
++	int r0;
++
++	rcu_read_lock();
++	r0 = READ_ONCE(*mnt_ns);
++	if (r0) {
++		smp_wmb();
++		WRITE_ONCE(*puts_h, 1);
++	}
++	rcu_read_unlock();
++}
++
++P1(spinlock_t *mlock, int *seq, int *mnt_ns, int *gets_h, int *puts_h, int *gets_u, int *puts_u)
++{
++	int r1;
++	int r3;
++	int r5;
++	int r6;
++
++	WRITE_ONCE(*mnt_ns, 0);
++
++	spin_lock(mlock);
++	WRITE_ONCE(*seq, 3);
++	smp_wmb();
++	smp_mb();
++	r1 = READ_ONCE(*puts_h);
++	smp_mb();
++	r3 = READ_ONCE(*gets_h);
++	smp_wmb();
++	WRITE_ONCE(*seq, 4);
++	spin_unlock(mlock);
++
++	synchronize_rcu_expedited();
++
++	spin_lock(mlock);
++	WRITE_ONCE(*seq, 5);
++	smp_wmb();
++	smp_mb();
++	WRITE_ONCE(*puts_u, 1);
++	r5 = READ_ONCE(*puts_h);
++	smp_mb();
++	r6 = READ_ONCE(*gets_h);
++	smp_wmb();
++	WRITE_ONCE(*seq, 6);
++	spin_unlock(mlock);
++}
++
++exists (0:r0=1 /\ 1:r5=0)
+diff --git a/Documentation/litmus-tests/fs/mnt-kern-unmount-holder-get-before-put.litmus b/Documentation/litmus-tests/fs/mnt-kern-unmount-holder-get-before-put.litmus
+new file mode 100644
+index 000000000000..dd7976f06b93
+--- /dev/null
++++ b/Documentation/litmus-tests/fs/mnt-kern-unmount-holder-get-before-put.litmus
+@@ -0,0 +1,60 @@
++C mnt-kern-unmount-holder-get-before-put
++
++(*
++ * Result: Never
++ *
++ * mnt-holder-get-before-put.litmus for kern_unmount_array(), where
++ * mnt_make_shortterm() clears ->mnt_ns with a plain WRITE_ONCE(),
++ * outside mount_lock and without a seqcount write, before
++ * mntput_unmounted() sums under the lock.  The pairing is unchanged:
++ * the holder's smp_wmb() against the smp_mb() of mnt_get_count(),
++ * neither of which needs the lock or the seqcount.  Only holders are
++ * modelled.
++ *)
++
++{
++	mnt_ns=1;
++	gets_h=1;
++	puts_h=0;
++	gets_u=1;
++	puts_u=0;
++}
++
++P0(int *mnt_ns, int *gets_h, int *puts_h)
++{
++	int r0;
++
++	WRITE_ONCE(*gets_h, 2);
++	rcu_read_lock();
++	r0 = READ_ONCE(*mnt_ns);
++	if (r0) {
++		smp_wmb();
++		WRITE_ONCE(*puts_h, 1);
++	}
++	rcu_read_unlock();
++}
++
++P1(spinlock_t *mlock, int *seq, int *mnt_ns, int *gets_h, int *puts_h, int *gets_u, int *puts_u)
++{
++	int r1;
++	int r2;
++	int r3;
++	int r4;
++
++	WRITE_ONCE(*mnt_ns, 0);
++
++	spin_lock(mlock);
++	WRITE_ONCE(*seq, 3);
++	smp_wmb();
++	smp_mb();
++	r1 = READ_ONCE(*puts_h);
++	r2 = READ_ONCE(*puts_u);
++	smp_mb();
++	r3 = READ_ONCE(*gets_h);
++	r4 = READ_ONCE(*gets_u);
++	smp_wmb();
++	WRITE_ONCE(*seq, 4);
++	spin_unlock(mlock);
++}
++
++exists (0:r0=1 /\ 1:r1=1 /\ 1:r3=1)
+diff --git a/Documentation/litmus-tests/fs/mnt-sum-misses-fastpath-put.litmus b/Documentation/litmus-tests/fs/mnt-sum-misses-fastpath-put.litmus
+new file mode 100644
+index 000000000000..34347c6a2b25
+--- /dev/null
++++ b/Documentation/litmus-tests/fs/mnt-sum-misses-fastpath-put.litmus
+@@ -0,0 +1,69 @@
++C mnt-sum-misses-fastpath-put
++
++(*
++ * Result: Sometimes
++ *
++ * A holder drops its reference on the fast path of mntput_no_expire():
++ * READ_ONCE(->mnt_ns) non-NULL under rcu_read_lock(), smp_wmb(), the
++ * put.  umount_tree() clears ->mnt_ns under write_seqlock() and
++ * mntput_unheld() sums the counters with mnt_get_count() under the
++ * lock.  The holder read ->mnt_ns before it was cleared (0:r0=1) and
++ * the sum still does not count its put (1:r1=0): the put is simply
++ * later.  The sum comes out at two, so mntput_unmounted() has to wait
++ * for the holder's read-side critical section before the plain
++ * mntput() that drops the own reference, see
++ * mnt-gp-sees-fastpath-put.litmus.  This is why the grace period
++ * branch exists, not a bug.
++ *)
++
++{
++	mnt_ns=1;
++	gets_h=1;
++	puts_h=0;
++	gets_u=1;
++	puts_u=0;
++}
++
++P0(int *mnt_ns, int *gets_h, int *puts_h)
++{
++	int r0;
++
++	rcu_read_lock();
++	r0 = READ_ONCE(*mnt_ns);
++	if (r0) {
++		smp_wmb();
++		WRITE_ONCE(*puts_h, 1);
++	}
++	rcu_read_unlock();
++}
++
++P1(spinlock_t *mlock, int *seq, int *mnt_ns, int *gets_h, int *puts_h, int *gets_u, int *puts_u)
++{
++	int r1;
++	int r2;
++	int r3;
++	int r4;
++
++	spin_lock(mlock);
++	WRITE_ONCE(*seq, 1);
++	smp_wmb();
++	WRITE_ONCE(*mnt_ns, 0);
++	smp_wmb();
++	WRITE_ONCE(*seq, 2);
++	spin_unlock(mlock);
++
++	spin_lock(mlock);
++	WRITE_ONCE(*seq, 3);
++	smp_wmb();
++	smp_mb();
++	r1 = READ_ONCE(*puts_h);
++	r2 = READ_ONCE(*puts_u);
++	smp_mb();
++	r3 = READ_ONCE(*gets_h);
++	r4 = READ_ONCE(*gets_u);
++	smp_wmb();
++	WRITE_ONCE(*seq, 4);
++	spin_unlock(mlock);
++}
++
++exists (0:r0=1 /\ 1:r1=0)
+diff --git a/Documentation/litmus-tests/fs/mnt-walker-bail-sees-doomed-nolock.litmus b/Documentation/litmus-tests/fs/mnt-walker-bail-sees-doomed-nolock.litmus
+new file mode 100644
+index 000000000000..233f2e65d25d
+--- /dev/null
++++ b/Documentation/litmus-tests/fs/mnt-walker-bail-sees-doomed-nolock.litmus
+@@ -0,0 +1,89 @@
++C mnt-walker-bail-sees-doomed-nolock
++
++(*
++ * Result: Sometimes
++ *
++ * mnt-walker-bail-sees-doomed.litmus with the walker reading
++ * ->mnt_flags outside mount_lock.  Nothing orders that read against
++ * the sum's critical section: the walker can read the flags before
++ * MNT_DOOMED is set and keep a reference to a mount the sum has
++ * finished off.  This is why __legitimize_mnt() looks under the lock.
++ *)
++
++{
++	mnt_ns=1;
++	gets_w=0;
++	puts_w=0;
++	gets_u=1;
++	puts_u=0;
++	flags=0;
++	seq=0;
++	freed=0;
++}
++
++P0(spinlock_t *mlock, int *seq, int *gets_w, int *puts_w, int *flags)
++{
++	int r0;
++	int r1;
++	int r2;
++	int r3;
++
++	r0 = READ_ONCE(*seq);
++	smp_rmb();
++	smp_rmb();
++	r1 = READ_ONCE(*seq);
++	if (r1 == 0) {
++		WRITE_ONCE(*gets_w, 1);
++		smp_mb();
++		smp_rmb();
++		r2 = READ_ONCE(*seq);
++		if (r2 != 0) {
++			r3 = READ_ONCE(*flags);
++			if (r3 != 0) {
++				WRITE_ONCE(*puts_w, 1);
++			}
++		}
 +	}
 +}
 +
-+FIXTURE(unheld_umount) {
-+	char dir[64];
-+	char mp[80];
-+	char dev[32];
-+};
-+
-+FIXTURE_SETUP(unheld_umount)
++P1(spinlock_t *mlock, int *seq, int *mnt_ns, int *flags, int *gets_w, int *puts_w, int *gets_u, int *puts_u, int *freed)
 +{
-+	char img[80];
-+	int ifd, n;
++	int r1;
++	int r2;
++	int r3;
++	int r4;
 +
-+	if (geteuid() != 0)
-+		SKIP(return, "test requires CAP_SYS_ADMIN");
-+	if (access("/dev/loop-control", R_OK | W_OK))
-+		SKIP(return, "test requires loop devices");
++	spin_lock(mlock);
++	WRITE_ONCE(*seq, 1);
++	smp_wmb();
++	WRITE_ONCE(*mnt_ns, 0);
++	smp_wmb();
++	WRITE_ONCE(*seq, 2);
++	spin_unlock(mlock);
 +
-+	ASSERT_EQ(unshare(CLONE_NEWNS), 0);
-+	ASSERT_EQ(mount("", "/", NULL, MS_REC | MS_PRIVATE, NULL), 0);
-+
-+	snprintf(self->dir, sizeof(self->dir), "/tmp/unheld_umount.XXXXXX");
-+	ASSERT_NE(mkdtemp(self->dir), NULL);
-+	ASSERT_EQ(mount("tmpfs", self->dir, "tmpfs", 0, NULL), 0);
-+
-+	snprintf(img, sizeof(img), "%s/img", self->dir);
-+	ifd = open(img, O_RDWR | O_CREAT | O_EXCL, 0600);
-+	ASSERT_GE(ifd, 0);
-+	ASSERT_EQ(write_fat12(ifd), 0);
-+	n = loop_bind(ifd);
-+	close(ifd);	/* the loop device holds the file from now on */
-+	ASSERT_GE(n, 0);
-+	snprintf(self->dev, sizeof(self->dev), "/dev/loop%d", n);
-+
-+	snprintf(self->mp, sizeof(self->mp), "%s/mnt", self->dir);
-+	ASSERT_EQ(mkdir(self->mp, 0755), 0);
-+	/* the harness skips the teardown after a SKIP() here */
-+	if (loop_mount(self->dev, self->mp)) {
-+		loop_clear(self->dev);
-+		SKIP(return, "test requires a FAT filesystem");
++	spin_lock(mlock);
++	WRITE_ONCE(*seq, 3);
++	smp_wmb();
++	smp_mb();
++	r1 = READ_ONCE(*puts_w);
++	r2 = READ_ONCE(*puts_u);
++	smp_mb();
++	r3 = READ_ONCE(*gets_w);
++	r4 = READ_ONCE(*gets_u);
++	if (r3 == 0) {
++		WRITE_ONCE(*flags, 3);
++		WRITE_ONCE(*freed, 1);
 +	}
-+	umount2(self->mp, 0);
-+}
-+
-+FIXTURE_TEARDOWN(unheld_umount)
-+{
-+	umount2(self->mp, MNT_DETACH);
-+	loop_clear(self->dev);
-+	umount2(self->dir, MNT_DETACH);
-+	rmdir(self->dir);
-+}
-+
-+/* A synchronous umount(2) returns with the filesystem shut down. */
-+TEST_F(unheld_umount, sync_umount_releases_before_return)
-+{
-+	ASSERT_EQ(loop_mount(self->dev, self->mp), 0);
-+	ASSERT_FALSE(loop_free(self->dev));
-+	ASSERT_EQ(umount2(self->mp, 0), 0);
-+	EXPECT_TRUE(loop_free(self->dev))
-+		TH_LOG("%s is still claimed after umount(2) returned", self->dev);
-+}
-+
-+/* So does a lazy one when nothing else references the mount. */
-+TEST_F(unheld_umount, lazy_umount_idle_releases_before_return)
-+{
-+	ASSERT_EQ(loop_mount(self->dev, self->mp), 0);
-+	ASSERT_FALSE(loop_free(self->dev));
-+	ASSERT_EQ(umount2(self->mp, MNT_DETACH), 0);
-+	EXPECT_TRUE(loop_free(self->dev))
-+		TH_LOG("%s is still claimed after umount2(MNT_DETACH) returned", self->dev);
-+}
-+
-+/*
-+ * A lazy umount of a mount that a file descriptor holds leaves the
-+ * filesystem alive; the close that drops the last reference shuts it
-+ * down before it returns.
-+ */
-+TEST_F(unheld_umount, lazy_umount_held_releases_on_close)
-+{
-+	int fd;
-+
-+	ASSERT_EQ(loop_mount(self->dev, self->mp), 0);
-+	fd = open(self->mp, O_PATH | O_DIRECTORY | O_CLOEXEC);
-+	ASSERT_GE(fd, 0);
-+	ASSERT_EQ(umount2(self->mp, MNT_DETACH), 0);
-+	EXPECT_FALSE(loop_free(self->dev))
-+		TH_LOG("%s was released while a file on it was still open", self->dev);
-+	ASSERT_EQ(close(fd), 0);
-+	EXPECT_TRUE(loop_free(self->dev))
-+		TH_LOG("%s is still claimed after the last file on it was closed", self->dev);
-+}
-+
-+/* A synchronous umount(2) of a held mount is refused, nothing changes. */
-+TEST_F(unheld_umount, sync_umount_held_refused)
-+{
-+	int fd;
-+
-+	ASSERT_EQ(loop_mount(self->dev, self->mp), 0);
-+	fd = open(self->mp, O_PATH | O_DIRECTORY | O_CLOEXEC);
-+	ASSERT_GE(fd, 0);
-+	EXPECT_EQ(umount2(self->mp, 0), -1);
-+	EXPECT_EQ(errno, EBUSY);
-+	EXPECT_FALSE(loop_free(self->dev));
-+	ASSERT_EQ(close(fd), 0);
-+	ASSERT_EQ(umount2(self->mp, 0), 0);
-+	EXPECT_TRUE(loop_free(self->dev));
-+}
-+
-+/*
-+ * The mounts of a mount namespace go with its last task: by the time
-+ * that task can be reaped the filesystems it had mounted are shut down.
-+ */
-+TEST_F(unheld_umount, namespace_death_releases_before_reap)
-+{
-+	int status, to_parent[2], to_child[2];
-+	pid_t pid;
-+	char c;
-+
-+	ASSERT_EQ(pipe(to_parent), 0);
-+	ASSERT_EQ(pipe(to_child), 0);
-+	pid = fork();
-+	ASSERT_GE(pid, 0);
-+	if (pid == 0) {
-+		close(to_parent[0]);
-+		close(to_child[1]);
-+		if (unshare(CLONE_NEWNS) || loop_mount(self->dev, self->mp))
-+			_exit(1);
-+		if (write(to_parent[1], "", 1) != 1)
-+			_exit(2);
-+		/* leave once the parent has looked, with the mount in place */
-+		if (read(to_child[0], &c, 1) != 0)
-+			_exit(3);
-+		_exit(0);
++	if (r3 == 1) {
++		if (r1 == 1) {
++			WRITE_ONCE(*flags, 3);
++			WRITE_ONCE(*freed, 1);
++		}
 +	}
-+	close(to_parent[1]);
-+	close(to_child[0]);
-+	ASSERT_EQ(read(to_parent[0], &c, 1), 1);
-+	EXPECT_FALSE(loop_free(self->dev))
-+		TH_LOG("%s is not claimed by the child's mount", self->dev);
-+	close(to_child[1]);
-+	ASSERT_EQ(waitpid(pid, &status, 0), pid);
-+	ASSERT_EQ(status, 0);
-+	close(to_parent[0]);
-+	EXPECT_TRUE(loop_free(self->dev))
-+		TH_LOG("%s is still claimed after the namespace's last task was reaped", self->dev);
++	smp_wmb();
++	WRITE_ONCE(*seq, 4);
++	spin_unlock(mlock);
 +}
 +
-+TEST_HARNESS_MAIN
++filter (0:r0=0)
++exists (0:r1=0 /\ ~(0:r2=0) /\ 0:r3=0 /\ freed=1)
+diff --git a/Documentation/litmus-tests/fs/mnt-walker-bail-sees-doomed.litmus b/Documentation/litmus-tests/fs/mnt-walker-bail-sees-doomed.litmus
+new file mode 100644
+index 000000000000..187619db7fb6
+--- /dev/null
++++ b/Documentation/litmus-tests/fs/mnt-walker-bail-sees-doomed.litmus
+@@ -0,0 +1,95 @@
++C mnt-walker-bail-sees-doomed
++
++(*
++ * Result: Never
++ *
++ * A lazy unmount: umount_tree() clears ->mnt_ns under write_seqlock()
++ * without setting MNT_SYNC_UMOUNT, and mntput_unheld() sets MNT_DOOMED
++ * (flags=3) when the sum says nothing else holds the mount.  A walker
++ * in __legitimize_mnt() that sees the seqcount change takes mount_lock
++ * and reads ->mnt_flags there.  Not both the walker finding no flag
++ * set (0:r3=0, it keeps the reference) and the mount being finished
++ * off (freed=1).  mount_lock orders the two critical sections: either
++ * the walker's comes first and the sum counts its increment, or the
++ * sum's does and the walker finds MNT_DOOMED.
++ *)
++
++{
++	mnt_ns=1;
++	gets_w=0;
++	puts_w=0;
++	gets_u=1;
++	puts_u=0;
++	flags=0;
++	seq=0;
++	freed=0;
++}
++
++P0(spinlock_t *mlock, int *seq, int *gets_w, int *puts_w, int *flags)
++{
++	int r0;
++	int r1;
++	int r2;
++	int r3;
++
++	r0 = READ_ONCE(*seq);
++	smp_rmb();
++	smp_rmb();
++	r1 = READ_ONCE(*seq);
++	if (r1 == 0) {
++		WRITE_ONCE(*gets_w, 1);
++		smp_mb();
++		smp_rmb();
++		r2 = READ_ONCE(*seq);
++		if (r2 != 0) {
++			spin_lock(mlock);
++			r3 = READ_ONCE(*flags);
++			if (r3 != 0) {
++				WRITE_ONCE(*puts_w, 1);
++			}
++			spin_unlock(mlock);
++		}
++	}
++}
++
++P1(spinlock_t *mlock, int *seq, int *mnt_ns, int *flags, int *gets_w, int *puts_w, int *gets_u, int *puts_u, int *freed)
++{
++	int r1;
++	int r2;
++	int r3;
++	int r4;
++
++	spin_lock(mlock);
++	WRITE_ONCE(*seq, 1);
++	smp_wmb();
++	WRITE_ONCE(*mnt_ns, 0);
++	smp_wmb();
++	WRITE_ONCE(*seq, 2);
++	spin_unlock(mlock);
++
++	spin_lock(mlock);
++	WRITE_ONCE(*seq, 3);
++	smp_wmb();
++	smp_mb();
++	r1 = READ_ONCE(*puts_w);
++	r2 = READ_ONCE(*puts_u);
++	smp_mb();
++	r3 = READ_ONCE(*gets_w);
++	r4 = READ_ONCE(*gets_u);
++	if (r3 == 0) {
++		WRITE_ONCE(*flags, 3);
++		WRITE_ONCE(*freed, 1);
++	}
++	if (r3 == 1) {
++		if (r1 == 1) {
++			WRITE_ONCE(*flags, 3);
++			WRITE_ONCE(*freed, 1);
++		}
++	}
++	smp_wmb();
++	WRITE_ONCE(*seq, 4);
++	spin_unlock(mlock);
++}
++
++filter (0:r0=0)
++exists (0:r1=0 /\ ~(0:r2=0) /\ 0:r3=0 /\ freed=1)
+diff --git a/Documentation/litmus-tests/fs/mnt-walker-get-vs-seqcount-no-outer-mb.litmus b/Documentation/litmus-tests/fs/mnt-walker-get-vs-seqcount-no-outer-mb.litmus
+new file mode 100644
+index 000000000000..66e65920e491
+--- /dev/null
++++ b/Documentation/litmus-tests/fs/mnt-walker-get-vs-seqcount-no-outer-mb.litmus
+@@ -0,0 +1,92 @@
++C mnt-walker-get-vs-seqcount-no-outer-mb
++
++(*
++ * Result: Never
++ *
++ * mnt-walker-get-vs-seqcount.litmus with the sum as mntput_unheld()
++ * has it: write_seqlock(), the puts pass, the smp_mb() of
++ * mnt_get_count(), the gets pass, and no smp_mb() between taking the
++ * lock and the sum.  The inner smp_mb() comes after the seqcount store
++ * and before the gets loads in program order, which is all store
++ * buffering asks of the unmounter's side.
++ *)
++
++{
++	mnt_ns=1;
++	gets_w=0;
++	puts_w=0;
++	gets_u=1;
++	puts_u=0;
++	flags=0;
++	seq=0;
++	freed=0;
++}
++
++P0(spinlock_t *mlock, int *seq, int *gets_w, int *puts_w, int *flags)
++{
++	int r0;
++	int r1;
++	int r2;
++	int r3;
++
++	r0 = READ_ONCE(*seq);
++	smp_rmb();
++	smp_rmb();
++	r1 = READ_ONCE(*seq);
++	if (r1 == 0) {
++		WRITE_ONCE(*gets_w, 1);
++		smp_mb();
++		smp_rmb();
++		r2 = READ_ONCE(*seq);
++		if (r2 != 0) {
++			spin_lock(mlock);
++			r3 = READ_ONCE(*flags);
++			if (r3 != 0) {
++				WRITE_ONCE(*puts_w, 1);
++			}
++			spin_unlock(mlock);
++		}
++	}
++}
++
++P1(spinlock_t *mlock, int *seq, int *mnt_ns, int *flags, int *gets_w, int *puts_w, int *gets_u, int *puts_u, int *freed)
++{
++	int r1;
++	int r2;
++	int r3;
++	int r4;
++
++	spin_lock(mlock);
++	WRITE_ONCE(*seq, 1);
++	smp_wmb();
++	WRITE_ONCE(*mnt_ns, 0);
++	WRITE_ONCE(*flags, 1);
++	smp_wmb();
++	WRITE_ONCE(*seq, 2);
++	spin_unlock(mlock);
++
++	spin_lock(mlock);
++	WRITE_ONCE(*seq, 3);
++	smp_wmb();
++	r1 = READ_ONCE(*puts_w);
++	r2 = READ_ONCE(*puts_u);
++	smp_mb();
++	r3 = READ_ONCE(*gets_w);
++	r4 = READ_ONCE(*gets_u);
++	if (r3 == 0) {
++		WRITE_ONCE(*flags, 3);
++		WRITE_ONCE(*freed, 1);
++	}
++	if (r3 == 1) {
++		if (r1 == 1) {
++			WRITE_ONCE(*flags, 3);
++			WRITE_ONCE(*freed, 1);
++		}
++	}
++	smp_wmb();
++	WRITE_ONCE(*seq, 4);
++	spin_unlock(mlock);
++}
++
++filter (0:r0=0)
++exists (0:r1=0 /\ 0:r2=0 /\ freed=1)
+diff --git a/Documentation/litmus-tests/fs/mnt-walker-get-vs-seqcount-nomb.litmus b/Documentation/litmus-tests/fs/mnt-walker-get-vs-seqcount-nomb.litmus
+new file mode 100644
+index 000000000000..e3297207e760
+--- /dev/null
++++ b/Documentation/litmus-tests/fs/mnt-walker-get-vs-seqcount-nomb.litmus
+@@ -0,0 +1,92 @@
++C mnt-walker-get-vs-seqcount-nomb
++
++(*
++ * Result: Sometimes
++ *
++ * mnt-walker-get-vs-seqcount.litmus without the smp_mb() between the
++ * increment and the re-read of the seqcount in __legitimize_mnt().
++ * The smp_rmb() of read_seqretry() does not order a store against a
++ * later load: the walker sees the seqcount unchanged and keeps its
++ * reference while the sum misses the increment and finishes the mount
++ * off.
++ *)
++
++{
++	mnt_ns=1;
++	gets_w=0;
++	puts_w=0;
++	gets_u=1;
++	puts_u=0;
++	flags=0;
++	seq=0;
++	freed=0;
++}
++
++P0(spinlock_t *mlock, int *seq, int *gets_w, int *puts_w, int *flags)
++{
++	int r0;
++	int r1;
++	int r2;
++	int r3;
++
++	r0 = READ_ONCE(*seq);
++	smp_rmb();
++	smp_rmb();
++	r1 = READ_ONCE(*seq);
++	if (r1 == 0) {
++		WRITE_ONCE(*gets_w, 1);
++		smp_rmb();
++		r2 = READ_ONCE(*seq);
++		if (r2 != 0) {
++			spin_lock(mlock);
++			r3 = READ_ONCE(*flags);
++			if (r3 != 0) {
++				WRITE_ONCE(*puts_w, 1);
++			}
++			spin_unlock(mlock);
++		}
++	}
++}
++
++P1(spinlock_t *mlock, int *seq, int *mnt_ns, int *flags, int *gets_w, int *puts_w, int *gets_u, int *puts_u, int *freed)
++{
++	int r1;
++	int r2;
++	int r3;
++	int r4;
++
++	spin_lock(mlock);
++	WRITE_ONCE(*seq, 1);
++	smp_wmb();
++	WRITE_ONCE(*mnt_ns, 0);
++	WRITE_ONCE(*flags, 1);
++	smp_wmb();
++	WRITE_ONCE(*seq, 2);
++	spin_unlock(mlock);
++
++	spin_lock(mlock);
++	WRITE_ONCE(*seq, 3);
++	smp_wmb();
++	smp_mb();
++	r1 = READ_ONCE(*puts_w);
++	r2 = READ_ONCE(*puts_u);
++	smp_mb();
++	r3 = READ_ONCE(*gets_w);
++	r4 = READ_ONCE(*gets_u);
++	if (r3 == 0) {
++		WRITE_ONCE(*flags, 3);
++		WRITE_ONCE(*freed, 1);
++	}
++	if (r3 == 1) {
++		if (r1 == 1) {
++			WRITE_ONCE(*flags, 3);
++			WRITE_ONCE(*freed, 1);
++		}
++	}
++	smp_wmb();
++	WRITE_ONCE(*seq, 4);
++	spin_unlock(mlock);
++}
++
++filter (0:r0=0)
++exists (0:r1=0 /\ 0:r2=0 /\ freed=1)
+diff --git a/Documentation/litmus-tests/fs/mnt-walker-get-vs-seqcount.litmus b/Documentation/litmus-tests/fs/mnt-walker-get-vs-seqcount.litmus
+new file mode 100644
+index 000000000000..46ca500f8d50
+--- /dev/null
++++ b/Documentation/litmus-tests/fs/mnt-walker-get-vs-seqcount.litmus
+@@ -0,0 +1,102 @@
++C mnt-walker-get-vs-seqcount
++
++(*
++ * Result: Never
++ *
++ * A walker in __legitimize_mnt() increments its gets counter, does
++ * smp_mb() and re-reads the seqcount of mount_lock with
++ * read_seqretry(); if it changed, the walker takes mount_lock and
++ * drops the reference again when it finds MNT_SYNC_UMOUNT or
++ * MNT_DOOMED.  umount_tree() stores the seqcount when it takes
++ * write_seqlock(), clears ->mnt_ns and sets MNT_SYNC_UMOUNT;
++ * mntput_unheld() takes the lock again and sums with mnt_get_count():
++ * the puts pass, smp_mb(), the gets pass.  Store buffering between the
++ * walker's increment and the unmounter's seqcount store: not both the
++ * walker seeing the seqcount unchanged (0:r1=0, 0:r2=0, it keeps the
++ * reference) and the sum missing the increment (freed=1, the mount is
++ * finished off).  The walker's smp_mb() and the smp_mb() of
++ * mnt_get_count() are the two full barriers that takes.  The sum is
++ * modelled with a further smp_mb() ahead of the puts pass, which the
++ * -no-outer-mb variant drops.
++ *)
++
++{
++	mnt_ns=1;
++	gets_w=0;
++	puts_w=0;
++	gets_u=1;
++	puts_u=0;
++	flags=0;
++	seq=0;
++	freed=0;
++}
++
++P0(spinlock_t *mlock, int *seq, int *gets_w, int *puts_w, int *flags)
++{
++	int r0;
++	int r1;
++	int r2;
++	int r3;
++
++	r0 = READ_ONCE(*seq);
++	smp_rmb();
++	smp_rmb();
++	r1 = READ_ONCE(*seq);
++	if (r1 == 0) {
++		WRITE_ONCE(*gets_w, 1);
++		smp_mb();
++		smp_rmb();
++		r2 = READ_ONCE(*seq);
++		if (r2 != 0) {
++			spin_lock(mlock);
++			r3 = READ_ONCE(*flags);
++			if (r3 != 0) {
++				WRITE_ONCE(*puts_w, 1);
++			}
++			spin_unlock(mlock);
++		}
++	}
++}
++
++P1(spinlock_t *mlock, int *seq, int *mnt_ns, int *flags, int *gets_w, int *puts_w, int *gets_u, int *puts_u, int *freed)
++{
++	int r1;
++	int r2;
++	int r3;
++	int r4;
++
++	spin_lock(mlock);
++	WRITE_ONCE(*seq, 1);
++	smp_wmb();
++	WRITE_ONCE(*mnt_ns, 0);
++	WRITE_ONCE(*flags, 1);
++	smp_wmb();
++	WRITE_ONCE(*seq, 2);
++	spin_unlock(mlock);
++
++	spin_lock(mlock);
++	WRITE_ONCE(*seq, 3);
++	smp_wmb();
++	smp_mb();
++	r1 = READ_ONCE(*puts_w);
++	r2 = READ_ONCE(*puts_u);
++	smp_mb();
++	r3 = READ_ONCE(*gets_w);
++	r4 = READ_ONCE(*gets_u);
++	if (r3 == 0) {
++		WRITE_ONCE(*flags, 3);
++		WRITE_ONCE(*freed, 1);
++	}
++	if (r3 == 1) {
++		if (r1 == 1) {
++			WRITE_ONCE(*flags, 3);
++			WRITE_ONCE(*freed, 1);
++		}
++	}
++	smp_wmb();
++	WRITE_ONCE(*seq, 4);
++	spin_unlock(mlock);
++}
++
++filter (0:r0=0)
++exists (0:r1=0 /\ 0:r2=0 /\ freed=1)
+diff --git a/Documentation/litmus-tests/fs/mnt-walker-late-sees-new-pwd-nomb.litmus b/Documentation/litmus-tests/fs/mnt-walker-late-sees-new-pwd-nomb.litmus
+new file mode 100644
+index 000000000000..38d52c31f0b8
+--- /dev/null
++++ b/Documentation/litmus-tests/fs/mnt-walker-late-sees-new-pwd-nomb.litmus
+@@ -0,0 +1,89 @@
++C mnt-walker-late-sees-new-pwd-nomb
++
++(*
++ * Result: Sometimes
++ *
++ * mnt-walker-late-sees-new-pwd.litmus without the smp_mb() between the
++ * puts pass and the gets pass of mnt_get_count().  The smp_wmb() of
++ * write_sequnlock() orders stores only: the load of the put can be
++ * satisfied after the seqcount store of the unlock and a walker that
++ * samples the seqcount after the sum still reads the old cwd.
++ *)
++
++{
++	mnt_ns=1;
++	pwd=0;
++	fseq=0;
++	gets_h=1;
++	puts_h=0;
++	gets_u=1;
++	puts_u=0;
++	seq=0;
++}
++
++P0(spinlock_t *fslock, int *fseq, int *pwd, int *mnt_ns, int *puts_h)
++{
++	int r0;
++
++	spin_lock(fslock);
++	WRITE_ONCE(*fseq, 1);
++	smp_wmb();
++	WRITE_ONCE(*pwd, 1);
++	smp_wmb();
++	WRITE_ONCE(*fseq, 2);
++	spin_unlock(fslock);
++
++	rcu_read_lock();
++	r0 = READ_ONCE(*mnt_ns);
++	if (r0) {
++		smp_wmb();
++		WRITE_ONCE(*puts_h, 1);
++	}
++	rcu_read_unlock();
++}
++
++P1(spinlock_t *mlock, int *seq, int *mnt_ns, int *gets_h, int *puts_h, int *gets_u, int *puts_u)
++{
++	int r1;
++	int r2;
++	int r3;
++	int r4;
++
++	spin_lock(mlock);
++	WRITE_ONCE(*seq, 1);
++	smp_wmb();
++	WRITE_ONCE(*mnt_ns, 0);
++	smp_wmb();
++	WRITE_ONCE(*seq, 2);
++	spin_unlock(mlock);
++
++	spin_lock(mlock);
++	WRITE_ONCE(*seq, 3);
++	smp_wmb();
++	r1 = READ_ONCE(*puts_h);
++	r2 = READ_ONCE(*puts_u);
++	r3 = READ_ONCE(*gets_h);
++	r4 = READ_ONCE(*gets_u);
++	smp_wmb();
++	WRITE_ONCE(*seq, 4);
++	spin_unlock(mlock);
++}
++
++P2(int *seq, int *fseq, int *pwd)
++{
++	int r5;
++	int r6;
++	int r7;
++	int r8;
++
++	r5 = READ_ONCE(*seq);
++	smp_rmb();
++	r7 = READ_ONCE(*fseq);
++	smp_rmb();
++	r6 = READ_ONCE(*pwd);
++	smp_rmb();
++	r8 = READ_ONCE(*fseq);
++}
++
++filter (2:r7=0 /\ 2:r8=0 \/ 2:r7=2 /\ 2:r8=2)
++exists (1:r1=1 /\ 2:r5=4 /\ 2:r6=0)
+diff --git a/Documentation/litmus-tests/fs/mnt-walker-late-sees-new-pwd-nowmb.litmus b/Documentation/litmus-tests/fs/mnt-walker-late-sees-new-pwd-nowmb.litmus
+new file mode 100644
+index 000000000000..d3d68619311e
+--- /dev/null
++++ b/Documentation/litmus-tests/fs/mnt-walker-late-sees-new-pwd-nowmb.litmus
+@@ -0,0 +1,88 @@
++C mnt-walker-late-sees-new-pwd-nowmb
++
++(*
++ * Result: Sometimes
++ *
++ * mnt-walker-late-sees-new-pwd.litmus without the smp_wmb() of
++ * write_sequnlock() after the store of the new fs->pwd and without the
++ * smp_wmb() on the fast path of mntput_no_expire().  Nothing orders the
++ * new fs->pwd before the put: the sum can count the put while a walker
++ * that samples the seqcount after the sum still reads the old cwd.
++ *)
++
++{
++	mnt_ns=1;
++	pwd=0;
++	fseq=0;
++	gets_h=1;
++	puts_h=0;
++	gets_u=1;
++	puts_u=0;
++	seq=0;
++}
++
++P0(spinlock_t *fslock, int *fseq, int *pwd, int *mnt_ns, int *puts_h)
++{
++	int r0;
++
++	spin_lock(fslock);
++	WRITE_ONCE(*fseq, 1);
++	smp_wmb();
++	WRITE_ONCE(*pwd, 1);
++	WRITE_ONCE(*fseq, 2);
++	spin_unlock(fslock);
++
++	rcu_read_lock();
++	r0 = READ_ONCE(*mnt_ns);
++	if (r0) {
++		WRITE_ONCE(*puts_h, 1);
++	}
++	rcu_read_unlock();
++}
++
++P1(spinlock_t *mlock, int *seq, int *mnt_ns, int *gets_h, int *puts_h, int *gets_u, int *puts_u)
++{
++	int r1;
++	int r2;
++	int r3;
++	int r4;
++
++	spin_lock(mlock);
++	WRITE_ONCE(*seq, 1);
++	smp_wmb();
++	WRITE_ONCE(*mnt_ns, 0);
++	smp_wmb();
++	WRITE_ONCE(*seq, 2);
++	spin_unlock(mlock);
++
++	spin_lock(mlock);
++	WRITE_ONCE(*seq, 3);
++	smp_wmb();
++	r1 = READ_ONCE(*puts_h);
++	r2 = READ_ONCE(*puts_u);
++	smp_mb();
++	r3 = READ_ONCE(*gets_h);
++	r4 = READ_ONCE(*gets_u);
++	smp_wmb();
++	WRITE_ONCE(*seq, 4);
++	spin_unlock(mlock);
++}
++
++P2(int *seq, int *fseq, int *pwd)
++{
++	int r5;
++	int r6;
++	int r7;
++	int r8;
++
++	r5 = READ_ONCE(*seq);
++	smp_rmb();
++	r7 = READ_ONCE(*fseq);
++	smp_rmb();
++	r6 = READ_ONCE(*pwd);
++	smp_rmb();
++	r8 = READ_ONCE(*fseq);
++}
++
++filter (2:r7=0 /\ 2:r8=0 \/ 2:r7=2 /\ 2:r8=2)
++exists (1:r1=1 /\ 2:r5=4 /\ 2:r6=0)
+diff --git a/Documentation/litmus-tests/fs/mnt-walker-late-sees-new-pwd.litmus b/Documentation/litmus-tests/fs/mnt-walker-late-sees-new-pwd.litmus
+new file mode 100644
+index 000000000000..3e195dd4317a
+--- /dev/null
++++ b/Documentation/litmus-tests/fs/mnt-walker-late-sees-new-pwd.litmus
+@@ -0,0 +1,103 @@
++C mnt-walker-late-sees-new-pwd
++
++(*
++ * Result: Never
++ *
++ * A holder has its cwd on the mount and chdir()s away right before
++ * mntput_unheld() sums.  set_fs_pwd() stores the new fs->pwd under
++ * write_seqlock() of fs->seq and then drops the reference to the old cwd
++ * on the fast path of mntput_no_expire(): smp_wmb(), the put.
++ * umount_tree() clears ->mnt_ns under write_seqlock() of mount_lock and
++ * mntput_unheld() sums with mnt_get_count() under the lock: the puts
++ * pass, smp_mb(), the gets pass.  The sum counts the put (1:r1=1), comes
++ * out at one and finishes the mount off.  A walker whose path_init()
++ * samples the seqcount of mount_lock after that critical section
++ * (2:r5=4) and then reads fs->pwd must not read the old cwd (2:r6=0).
++ * Its seqcount sample would never change again and __legitimize_mnt()
++ * would hand it a reference to the finished mount.  The smp_wmb() of
++ * write_sequnlock() orders the new fs->pwd before the put and so does
++ * the smp_wmb() of the fast path, either one is enough.  The smp_mb() of
++ * mnt_get_count() orders the load of the put before the seqcount store
++ * of the unlock, and the walker orders its loads with smp_rmb().  A
++ * holder that already sees ->mnt_ns NULL puts under mount_lock, which
++ * orders the put anyway.
++ *)
++
++{
++	mnt_ns=1;
++	pwd=0;
++	fseq=0;
++	gets_h=1;
++	puts_h=0;
++	gets_u=1;
++	puts_u=0;
++	seq=0;
++}
++
++P0(spinlock_t *fslock, int *fseq, int *pwd, int *mnt_ns, int *puts_h)
++{
++	int r0;
++
++	spin_lock(fslock);
++	WRITE_ONCE(*fseq, 1);
++	smp_wmb();
++	WRITE_ONCE(*pwd, 1);
++	smp_wmb();
++	WRITE_ONCE(*fseq, 2);
++	spin_unlock(fslock);
++
++	rcu_read_lock();
++	r0 = READ_ONCE(*mnt_ns);
++	if (r0) {
++		smp_wmb();
++		WRITE_ONCE(*puts_h, 1);
++	}
++	rcu_read_unlock();
++}
++
++P1(spinlock_t *mlock, int *seq, int *mnt_ns, int *gets_h, int *puts_h, int *gets_u, int *puts_u)
++{
++	int r1;
++	int r2;
++	int r3;
++	int r4;
++
++	spin_lock(mlock);
++	WRITE_ONCE(*seq, 1);
++	smp_wmb();
++	WRITE_ONCE(*mnt_ns, 0);
++	smp_wmb();
++	WRITE_ONCE(*seq, 2);
++	spin_unlock(mlock);
++
++	spin_lock(mlock);
++	WRITE_ONCE(*seq, 3);
++	smp_wmb();
++	r1 = READ_ONCE(*puts_h);
++	r2 = READ_ONCE(*puts_u);
++	smp_mb();
++	r3 = READ_ONCE(*gets_h);
++	r4 = READ_ONCE(*gets_u);
++	smp_wmb();
++	WRITE_ONCE(*seq, 4);
++	spin_unlock(mlock);
++}
++
++P2(int *seq, int *fseq, int *pwd)
++{
++	int r5;
++	int r6;
++	int r7;
++	int r8;
++
++	r5 = READ_ONCE(*seq);
++	smp_rmb();
++	r7 = READ_ONCE(*fseq);
++	smp_rmb();
++	r6 = READ_ONCE(*pwd);
++	smp_rmb();
++	r8 = READ_ONCE(*fseq);
++}
++
++filter (2:r7=0 /\ 2:r8=0 \/ 2:r7=2 /\ 2:r8=2)
++exists (1:r1=1 /\ 2:r5=4 /\ 2:r6=0)
 
 -- 
 2.53.0

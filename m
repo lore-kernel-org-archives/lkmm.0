@@ -1,149 +1,234 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f177.google.com (mail-pl1-f177.google.com [209.85.214.177])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A3A54A384D;
-	Mon, 12 Oct 2026 15:39:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD4EB397B1B
+	for <lkmm@lists.linux.dev>; Tue, 13 Oct 2026 07:40:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791819590; cv=none; b=jrK7rAa5+XGII5Q/ONGQfilfoUYJe8oO2/vNhgB1YX/6Juq6A82MFQ79txAQGrR6YGbnOMWYl7mK28mhXU0VoCZ0WF+JwX+A4XH6k6kQS93VHeqSVmujQ7jNdFofl5zBzbvqtoLwO8/e7u9IftpeoPwHBQVxVwgFZpcMifzs1WM=
+	t=1791877244; cv=none; b=D/r9w64iOqZuLf8AI32jNqDSXxHSQxmejIjtP8yWAmGAFY80yfeuH9XcyPLDVV9Rar/sh3lr6/CNJ/8vUvszkDAmQUk/tjftXMuXfg1svWRYhbwn2pCfYgRgY81bFlam9LKzvtm/Ci+xiztToZ5A0QN0suq0eEMQQveiYx13Iis=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791819590; c=relaxed/simple;
-	bh=2DI4zoaixiVFE4YtZLzssE6VYUn+4bxxHAOutiJxAfo=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=ACUAVgy87S6jBH98vsFWZK7lEjwMY8n4OFNxbKMgdlHY57nKBxZZp7qtING2gGjjepMVbEbpzF/AcGdDq/dD4axzG+nmRRTLbWCGVzEfFLCQDwIoB1sX5icSxUNhfF+cih6DIwzQHD7izD4VbbDm8S84UL8twqXW/hTIr6wqIUQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZGnkPtAa; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1791877244; c=relaxed/simple;
+	bh=BFe/yh5JnfR0DvilafSKJHlexjYInUwEeegNj8QpwgU=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=cGTA/w59xN8vFdg/O8w5q1n4VR5cqDe7TepjmmKFnLJXnwgEobdAulPbwPPLpswbM4ZjrxZBMfE2XpvqFUb5db1Qr1C8FH1T9tJTWQH5S+7yiT8N6dhN3TW/tBrMtcTspPR3945fHqQBUcEgGAEptQFYYvY2+f2tbBdAqCHk3tU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=GZrWz/Zv; arc=none smtp.client-ip=209.85.214.177
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZGnkPtAa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 350731F0089C;
-	Mon, 12 Oct 2026 15:39:47 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1791819589;
-	bh=FMEh0qb/Q0ZT4mEuQnrBmkcWJql3nuGRBlO/MXAiooo=;
-	h=From:Date:Subject:References:In-Reply-To:To:Cc;
-	b=ZGnkPtAangb03QNBzBX9P8OiKrazUFg/XQTpKUqRdGwI0pCqcDP4PVCt9n3pSoYs5
-	 qucJ7yIvJ5Cugvb6xP/BbX9Fi5ELDF45dMe0foZGhEBGgTAtSdFKn4xbQPtI0VjiWn
-	 dA4ZN1ZYj+x+mXuD4RUQaofm0cT2OZewSWbVRZkfx1UaWhIU/bJBoUjBGKPNvzoF/i
-	 Za9KFnD1kuCSFqsq3QqqEh8gRvtKBLIMdhKkUpMRySmMVrW1y19YwuAZT9xVOjd/JO
-	 FLUbCkhmluD283mmNG8DIljlgBSwgVtG0QeQt8rAfvtadFIvtJpzbHHL7JhtQ0FXJ0
-	 UN/m2NWwrwmCg==
-From: Christian Brauner <brauner@kernel.org>
-Date: Mon, 12 Oct 2026 17:39:22 +0200
-Subject: [PATCH 9/9] ipc: unmount the mqueue mount with kern_unmount()
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GZrWz/Zv"
+Received: by mail-pl1-f177.google.com with SMTP id d9443c01a7336-2e86dce4510so12324715ad.3
+        for <lkmm@lists.linux.dev>; Tue, 13 Oct 2026 00:40:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1791877242; x=1792482042; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=sAnTgd/l711nspTx4PUavL/NLYQovTcbYgAtSFrcnZ8=;
+        b=GZrWz/Zv/byxxmn2/ZX3IA/MLwFzwzwB6vM+3RXcTBQqnuMjU8Hutu9GzuiPJWpm4T
+         weUs0PxKefQ6Q37Ns0xVKzJI6TaWN6SvlRh19hQpLV9Ti6Pazg/dzLldxOB302vVswxE
+         R+/vROf8jjQ5lhgBabHBWtQSloFgXO5bfuZmmuM+mVRar3R/bZ7RJurPuuMWhEAETer7
+         BbUNJDF28HnN/6WUTCJ4uSHGn/IweCUOQqqNce8XXaZwK8UolqbMjlSUgQd0FjKKwQKe
+         lrOeX4FD/vt9/agPxRnHMfm65HRRdfQ2CD5pXmWasvd+Dhxouq6y9K0gk3YIQldRLNn1
+         4CFA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1791877242; x=1792482042;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=sAnTgd/l711nspTx4PUavL/NLYQovTcbYgAtSFrcnZ8=;
+        b=KPLugCu/UXNTKEBFcwckh68HvaPYKuQO/gs1D5y+OiHdhQhArJhyX+k+BGdaDCXD76
+         Zf1tRZ1+GsE3OPQ4tCGuHR3PfncrYEN7Y531c2PcyLYjsODRUKPv5CGNEUjtvcG393ee
+         GCMp2D8R0ZVednQuXN7WDm8WrQwgwPnR7R//r5eoFWckRA+OAlZsGlj1zKqoZzlhkBAA
+         riyrNPvVXb8Bf4EL+wJU+nZGm4kc5y5SnAEXLfq6DdUh0X4IbxOwOSQ1auKOwAnFjZEz
+         z6GLhrgMjY34yY4jpAb3/VKIbw3ByQE56XNbHTt2p6/YUoqFK+Z8rNkIbddYSz39Is/D
+         AYYg==
+X-Forwarded-Encrypted: i=1; AKwUvBw9xgpH5HZVwytnezKlzKJc6W9ClUpqEEhxZEGSBWsoJYS8E2XLiuKB8X9v68q+4V1VPUhu@lists.linux.dev
+X-Gm-Message-State: AFq9FYKMtgglS5Fc3+L8Q0MeSN2UNhC4A5LDntwoHxyW7zK8PhUgi8yy
+	hG66HgKpAN1PfromDsGtnso9TwG1O/USv1XZTLurkIxW//Xu0o86EIIW9SpawTYd
+X-Gm-Gg: AYBFou32uerFzUpUBBCpxGF+5jiFrwoPxTNUjsdtIFKw6b59Haikx8HtS+hwjk0Xv3W
+	1teI0W4jc6zAMHMes3JbcdNL+pdJGpHi3CUlGn+wQvLvq5BTsxMEpOuPsYEQ7GONdrorL8Kye6O
+	AnlTGVjOEE15l7Q3BX8ZxxUBoNBXx+zlHj4fxzEB4gHu1xIoO74gLwICXgpzoCU7FS1HzXqwJQA
+	GLjBDTKYSm1pteMRBX+gl5CUPkPWIgn/6Sz8A0yNdRW5f5+YPWZ91iZXR//aV2bVy2bVj9U9ztL
+	jPLW7Ix26OxzCNWkmBpZ/TgZyA++WCmXlgavGI5jWM8mzno+OymXSxkw8PftAqi8qfVHQIrfeOr
+	S/iiEr6kGiUtCFeFgWhVqYJg24uyVjJ067zxlxzYR0seW4ABdR75kQFsLk7fMRWEGfksOy3Schx
+	uViJ4MktS51IW2Nl9HLPxpZ7KiKMQwehddf+TvAY2vf9M+VLUdGcveaoGdsLFoAB48ql0F4yvj/
+	pvZNyrzsy2vA5pfkEKgOocsV+6IlQ==
+X-Received: by 2002:a17:902:f64f:b0:2dd:ad73:c984 with SMTP id d9443c01a7336-2e842bc5ae0mr95318795ad.28.1791877242048;
+        Tue, 13 Oct 2026 00:40:42 -0700 (PDT)
+Received: from localhost ([47.254.74.32])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2e841432a03sm51700235ad.0.2026.10.13.00.40.41
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 13 Oct 2026 00:40:41 -0700 (PDT)
+Date: Tue, 13 Oct 2026 15:40:36 +0800
+From: Lai Jiangshan <jiangshanlai@gmail.com>
+To: Kunwu Chan <kunwu.chan@gmail.com>
+Cc: paulmck@kernel.org, corbet@lwn.net, mingo@redhat.com, 
+	frederic@kernel.org, neeraj.upadhyay@kernel.org, josh@joshtriplett.org, 
+	urezki@gmail.com, dave@stgolabs.net, lianux.mm@gmail.com, 
+	stern@rowland.harvard.edu, parri.andrea@gmail.com, will@kernel.org, peterz@infradead.org, 
+	boqun@kernel.org, npiggin@gmail.com, dhowells@redhat.com, j.alglave@ucl.ac.uk, 
+	luc.maranget@inria.fr, akiyks@gmail.com, dlustig@nvidia.com, joelagnelf@nvidia.com, 
+	skhan@linuxfoundation.org, rdunlap@infradead.org, longman@redhat.com, rostedt@goodmis.org, 
+	mathieu.desnoyers@efficios.com, qiang.zhang@linux.dev, brads@mainlining.org, 
+	linux-kernel@vger.kernel.org, linux-arch@vger.kernel.org, lkmm@lists.linux.dev, 
+	linux-doc@vger.kernel.org, rcu@vger.kernel.org, linux-kselftest@vger.kernel.org
+Subject: Re: [PATCH RFC v3 08/15] locking/lockdep: use hazptr to wait for
+ dynamic key lookups
+Message-ID: <as3aMmPdCHCXW6Ci@U-YXDQC754-96.local>
+References: <20261005171529.1378809-1-kunwu.chan@gmail.com>
+ <20261005171529.1378809-9-kunwu.chan@gmail.com>
 Precedence: bulk
 X-Mailing-List: lkmm@lists.linux.dev
 List-Id: <lkmm.lists.linux.dev>
 List-Subscribe: <mailto:lkmm+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:lkmm+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20261012-work-mount-gp_on_demand-proposal-v1-9-43f60221a7d0@kernel.org>
-References: <20261012-work-mount-gp_on_demand-proposal-v1-0-43f60221a7d0@kernel.org>
-In-Reply-To: <20261012-work-mount-gp_on_demand-proposal-v1-0-43f60221a7d0@kernel.org>
-To: linux-fsdevel@vger.kernel.org
-Cc: Alexander Viro <viro@zeniv.linux.org.uk>, 
- "Paul E. McKenney" <paulmck@kernel.org>, NeilBrown <neil@brown.name>, 
- Alexander Larsson <alexl@redhat.com>, Jan Kara <jack@suse.cz>, 
- Jeff Layton <jlayton@kernel.org>, lkmm@lists.linux.dev, 
- "Christian Brauner (Amutable)" <brauner@kernel.org>
-X-Mailer: b4 0.17-dev-3d1b8
-X-Developer-Signature: v=1; a=openpgp-sha256; l=3339; i=brauner@kernel.org;
- h=from:subject:message-id; bh=2DI4zoaixiVFE4YtZLzssE6VYUn+4bxxHAOutiJxAfo=;
- b=owGbwMvMwCU28Zj0gdSKO4sYT6slMWSd+a9dtTGgzjgwnt9359cz2r58vRJ6iibLGLaFPphop
- ztn+pegjlIWBjEuBlkxRRaHdpNwueU8FZuNMjVg5rAygQxh4OIUgInMucHwv9LGbLlnldSL/jL/
- uN/qk//qX5DfudLwILeioJzX/C+yBxn+R8slFPAc9g4K23tD5ZZP9po13nu/aAo/rgoTefdVd1k
- ZJwA=
-X-Developer-Key: i=brauner@kernel.org; a=openpgp;
- fpr=4880B8C9BD0E5106FC070F4F7B3C391EFEA93624
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20261005171529.1378809-9-kunwu.chan@gmail.com>
 
-free_ipc() open-codes kern_unmount() for the whole batch of dying
-namespaces. Just let free_ipc_ns() call kern_unmount() instead. A
-namespace whose queues are still open elsewhere now waits for an
-expedited grace period of its own instead of the normal one for the
-whole batch.
+On Tue, Oct 06, 2026 at 01:15:22AM +0800, Kunwu Chan wrote:
+> lockdep_unregister_key() waits for is_dynamic_key() callers with
+> synchronize_rcu_expedited(), which requires system-wide coordination.
+> Make is_dynamic_key() protect the hash bucket with a hazard pointer
+> and use hazptr_synchronize() to wait for traversals of that bucket.
+> 
+> The hash bucket returned by keyhashentry() has a stable address, so
+> it can be used as the hazptr synchronization target.  Keep the key
+> hashlist lifetime RCU-based with hlist_del_rcu() and call_rcu().
+> 
+> Protect the traversal with the hazptr scoped_guard() added earlier
+> in this series.
+> 
+> This adapts the lockdep use case from Boqun Feng's shazptr series
+> to the current hazptr API.
+> 
+> Link: https://lore.kernel.org/lkml/20250625031101.12555-1-boqun.feng@gmail.com/
 
-Currently free_ipc() pays a normal grace period for every batch of
-dying ipc namespaces. That's one of the two normal grace periods a
-podman run --rm costs per container. The other one is for the network
-namespace.
+Hello,
 
-That leaves kern_unmount_array() as the only user of
-mnt_make_shortterm() so make it static. While at it, update the comment
-above the work queue. It isn't there to avoid synchronize_rcu() anymore.
+I think this is a misuse of hazard pointers.
 
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
----
- fs/namespace.c        |  2 +-
- include/linux/mount.h |  1 -
- ipc/namespace.c       | 15 +++------------
- 3 files changed, 4 insertions(+), 14 deletions(-)
+The bucket has a permanent, static address; its lifetime does not
+need hazard-pointer protection. Instead, this patch combines a
+hazard pointer with that address to construct a read-side/synchronize
+mechanism in the same category as RCU. However, this construction
+lacks the generation distinction needed to separate pre-existing
+readers from subsequent readers.
 
-diff --git a/fs/namespace.c b/fs/namespace.c
-index af36cce922a2..e6b3a3206f3a 100644
---- a/fs/namespace.c
-+++ b/fs/namespace.c
-@@ -1602,7 +1602,7 @@ EXPORT_SYMBOL(mntget);
-  * it finds under mount_lock that it holds the only reference left,
-  * see mntput_unheld().
-  */
--void mnt_make_shortterm(struct vfsmount *mnt)
-+static void mnt_make_shortterm(struct vfsmount *mnt)
- {
- 	if (mnt)
- 		WRITE_ONCE(real_mount(mnt)->mnt_ns, NULL);
-diff --git a/include/linux/mount.h b/include/linux/mount.h
-index b16ba5d45605..2342929e2fff 100644
---- a/include/linux/mount.h
-+++ b/include/linux/mount.h
-@@ -74,7 +74,6 @@ extern void mnt_drop_write(struct vfsmount *mnt);
- extern void mnt_drop_write_file(struct file *file);
- extern void mntput(struct vfsmount *mnt);
- extern struct vfsmount *mntget(struct vfsmount *mnt);
--extern void mnt_make_shortterm(struct vfsmount *mnt);
- extern struct vfsmount *mnt_clone_internal(const struct path *path);
- extern bool __mnt_is_readonly(const struct vfsmount *mnt);
- extern bool mnt_may_suid(struct vfsmount *mnt);
-diff --git a/ipc/namespace.c b/ipc/namespace.c
-index 76df11e0b134..24706b910654 100644
---- a/ipc/namespace.c
-+++ b/ipc/namespace.c
-@@ -21,7 +21,8 @@
- #include "util.h"
- 
- /*
-- * The work queue is used to avoid the cost of synchronize_rcu in kern_unmount.
-+ * The work queue keeps the teardown of a namespace out of the callers of
-+ * put_ipc_ns(), the eviction of an mqueue inode among them.
-  */
- static void free_ipc(struct work_struct *unused);
- static DECLARE_WORK(free_ipc_work, free_ipc);
-@@ -149,11 +150,7 @@ void free_ipcs(struct ipc_namespace *ns, struct ipc_ids *ids,
- 
- static void free_ipc_ns(struct ipc_namespace *ns)
- {
--	/*
--	 * Caller needs to wait for an RCU grace period to have passed
--	 * after making the mount point inaccessible to new accesses.
--	 */
--	mntput(ns->mq_mnt);
-+	kern_unmount(ns->mq_mnt);
- 	sem_exit_ns(ns);
- 	msg_exit_ns(ns);
- 	shm_exit_ns(ns);
-@@ -173,12 +170,6 @@ static void free_ipc(struct work_struct *unused)
- 	struct llist_node *node = llist_del_all(&free_ipc_list);
- 	struct ipc_namespace *n, *t;
- 
--	llist_for_each_entry_safe(n, t, node, mnt_llist)
--		mnt_make_shortterm(n->mq_mnt);
--
--	/* Wait for any last users to have gone away. */
--	synchronize_rcu();
--
- 	llist_for_each_entry_safe(n, t, node, mnt_llist)
- 		free_ipc_ns(n);
- }
+The object being removed is the key, but the synchronization target
+is the bucket. Unlinking the key does not prevent new lookups from
+acquiring the same bucket address, including lookups for unrelated
+keys that hash to that bucket.
 
--- 
-2.53.0
+This breaks the forward-progress argument used by the underlying
+hazptr implementation: after removing an object from publication,
+there should not be a continuing stream of new readers acquiring
+that same object. Here, the bucket is never unpublished.
 
+For example, let B be the bucket containing key K:
+
+  Updater                    Reader                 Scan kthread
+  -------                    ------                 ------------
+  Unlink K from B
+  hazptr_synchronize(B)
+                             Acquire B
+                                                    Observe B;
+                                                    retain waiter
+                             Release B
+                             Acquire B again
+                                                    Observe B;
+                                                    retain waiter
+                             Release B
+                             ...                    ...
+
+Every reader critical section can finish, and the scan kthread
+can keep running, while the updater waits indefinitely. Readers
+that could have observed K may already have completed; later
+lookups alone can keep the waiter pending.
+
+RCU does not need the reader population to become empty. Its
+generation (grace-period) machinery allows pre-existing readers to
+drain without letting a continuous stream of subsequent readers
+indefinitely extend that wait. This address-based construction has
+no equivalent distinction.
+
+So this is not merely protecting a different object with hazptr:
+it is using hazptr as a different synchronization primitive without
+providing the corresponding progress guarantee.
+
+I think we should retain the RCU wait here. If the intention is to
+implement bucket-scoped read-side synchronization, that needs an
+explicit protocol to distinguish the readers being drained from
+new arrivals; a permanent bucket address is not sufficient.
+
+Sorry for the lengthy reply, which was written with the help of an AI
+agent. I noticed this issue when this use case was first proposed, but
+I struggled to articulate my concerns clearly back then. Well, now we
+have AI. :)
+
+Thanks
+Lai
+
+> Signed-off-by: Kunwu Chan <kunwu.chan@gmail.com>
+> ---
+>  kernel/locking/lockdep.c | 25 +++++++++++++++----------
+>  1 file changed, 15 insertions(+), 10 deletions(-)
+> 
+> diff --git a/kernel/locking/lockdep.c b/kernel/locking/lockdep.c
+> index c56a7f91d72e..d1ce5ace7fbf 100644
+> --- a/kernel/locking/lockdep.c
+> +++ b/kernel/locking/lockdep.c
+> @@ -58,6 +58,7 @@
+>  #include <linux/context_tracking.h>
+>  #include <linux/console.h>
+>  #include <linux/kasan.h>
+> +#include <linux/hazptr.h>
+>  
+>  #include <asm/sections.h>
+>  
+> @@ -1280,14 +1281,19 @@ static bool is_dynamic_key(const struct lock_class_key *key)
+>  
+>  	hash_head = keyhashentry(key);
+>  
+> -	rcu_read_lock();
+> -	hlist_for_each_entry_rcu(k, hash_head, hash_entry) {
+> -		if (k == key) {
+> -			found = true;
+> -			break;
+> +	{
+> +		struct hazptr_ctx ctx;
+> +		void *bucket = hash_head;
+> +
+> +		scoped_guard(hazptr, &ctx, &bucket) {
+> +			hlist_for_each_entry_rcu(k, hash_head, hash_entry, 1) {
+> +				if (k == key) {
+> +					found = true;
+> +					break;
+> +				}
+> +			}
+>  		}
+>  	}
+> -	rcu_read_unlock();
+>  
+>  	return found;
+>  }
+> @@ -6683,11 +6689,10 @@ void lockdep_unregister_key(struct lock_class_key *key)
+>  	 *
+>  	 * Some operations like __qdisc_destroy() will call this in a debug
+>  	 * kernel, and the network traffic is disabled while waiting, hence
+> -	 * the delay of the wait matters in debugging cases. Currently use a
+> -	 * synchronize_rcu_expedited() to speed up the wait at the cost of
+> -	 * system IPIs. TODO: Replace RCU with hazptr for this.
+> +	 * the delay of the wait matters in debugging cases. Replace the
+> +	 * expedited RCU wait with hazptr_synchronize().
+>  	 */
+> -	synchronize_rcu_expedited();
+> +	hazptr_synchronize(keyhashentry(key));
+>  }
+>  EXPORT_SYMBOL_GPL(lockdep_unregister_key);
+>  
+> -- 
+> 2.43.0
+> 

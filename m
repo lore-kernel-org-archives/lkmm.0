@@ -1,111 +1,128 @@
-Received: from mail-wm1-f46.google.com (mail-wm1-f46.google.com [209.85.128.46])
+Received: from mail-ej1-f41.google.com (mail-ej1-f41.google.com [209.85.218.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B4E03F44D7
-	for <lkmm@lists.linux.dev>; Fri, 16 Oct 2026 08:24:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.128.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E69DC44C658
+	for <lkmm@lists.linux.dev>; Fri, 16 Oct 2026 08:36:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.218.41
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792139077; cv=pass; b=riQLf8bF4FgM6rTuSvHJwr7SkRLzuhCwoY1WKQTKu46thcJZsdn/aUUyLXi/+jwn4mQS92bWOpmvYOG5DaOmuoDkrTnmz2BTDHCS9WawjhOtgLJp2Qzl7FdhEcc2/KXvxLzoIA+eDVUD4wR6IEIPcUiN9Pye3pXw3HA2I+fX27M=
+	t=1792139810; cv=pass; b=o3/efCiPYhGggZQgn6GpmsbaOsguAOEanFfQspXPIC4qPve81h2puSrxX1Tt2sW0OZj0nB+nsXdNcFL4zo2L3pd8mCUWagFzNmE5ARcp6NbJHZSDfN6h5g0AsqxC8c1Yy2xoqJd/wJgTKcZ1Tzta7JOPHZUnrEOVpetxeZftm1A=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792139077; c=relaxed/simple;
-	bh=zFZtjuMJCKAH5rWRVMQCBJBw5Fu75jP8ohWlhoXBSfo=;
+	s=arc-20240116; t=1792139810; c=relaxed/simple;
+	bh=YGxrPNmKo+Cu2MYeesggWlBjJm+RWBe5YXtDpPU+Wk0=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=dWtKVhV2WAmEpLuD07bSHmeY9KKeLv2wkcVYuPId4zfl/zdKf2UwS9CMoXr5P8wHcCV0+25XHvwYwD8XB0+M76+SnAs/LjwMQsVoTCUYSrVUWqTjn7Z7YQpgKaeHRipbooJ0WXj5geY3GMaQDt+6wzjbMUKm5r3pPxEDKao2SXc=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=BIb5FV93; arc=pass smtp.client-ip=209.85.128.46
+	 To:Cc:Content-Type; b=rhRZIIHgUfMo7GoyJebFxvW05//fNgXlfUMHbqvdl0HdPSwOcdxyJQFhBdn6GnK/Eu3mmX5jAou3fwFLzDuBGgFOgA7Yg8ZBt3r28hLWKDwMyBl/DqSll69x1M0QryWk+qY6HsGEQuWdvm2hTwnDNnZLA9zHkaGMlIDmT/xe/lg=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=A3X8aows; arc=pass smtp.client-ip=209.85.218.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BIb5FV93"
-Received: by mail-wm1-f46.google.com with SMTP id 5b1f17b1804b1-4a1682bff3cso13312315e9.1
-        for <lkmm@lists.linux.dev>; Fri, 16 Oct 2026 01:24:35 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1792139074; cv=none;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="A3X8aows"
+Received: by mail-ej1-f41.google.com with SMTP id a640c23a62f3a-c3fd91337baso183170766b.3
+        for <lkmm@lists.linux.dev>; Fri, 16 Oct 2026 01:36:45 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1792139804; cv=none;
         d=google.com; s=arc-20260327;
-        b=EfExraiPkAV61zr5wEZphJ8PGzujMCg/0ukK3lJHsqkQk/yarTbFHy66YwNNagE07u
-         YE7q4NAfu2JG+f6EaQWJ/bZGq9YNlhI/eMyNJATL6rMlzhwuRLcc0D1RW4mF6XR/W4Su
-         8+DJHhabMNtpsiycY3w6w9LJcbT+dyBPFDbT3RUa2Ndy67BTCNIIJecrBo9ccstOcByY
-         YeDfJ1m6Va0B5rbtX5+k2rOAUE43o6ehkri+gdH/UcSFDngl/WSRnPqCfHe/tT8HVyGT
-         l4nbx11ruK0Nex1KaFcrVOGxcM5oQhQQRKOhoUsMTUOhNdmb9wr+Ec65X1Zj0I76xCTH
-         Zebg==
+        b=NxCiAL3xEDowk7aXOKMGrmC8iuZQYTV4ovOY7RAhrIrgBVZuFOMYk0iDFMceNt1Qxl
+         zy1ChjSTldXVi7Z3BNqGqa06WYtwqx2HeOIO3dkqoU3SWAhZOPtYqp8+0KAnsDg/MtzH
+         FvXctb/vt2JajMfJnV2ZPLs+It7FzV90dGvtP/3kVQ1DXCqE0HgPxjWbm8pAMugPEbS3
+         z9vFaS0dNnZOPr3V1lTB7TkRjpyOctrBhuCU0AnchtPrQ6M3qqhEmJMS1vdcDsYfDV2g
+         HebD98e0ymSwk8a7FB9SJQr1gDwM7EjZXnNwiLTKq55tWHJiH2w5IMRc9vZQPziencbF
+         t+Ig==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:dkim-signature;
-        bh=E8gxo2ExdAcC67lQx6KTJbVCAq98YK23bGoiwCanXEA=;
-        fh=rVX3xHpaWSOnNjQJUpoMCLTE/MzEmCrAJAD5+KvN4GU=;
-        b=q6q2KTut3SR6ABghiqBBkh4ETp+TYM6No3cNV+Amk9hKXQNljEQDKfpDf8T/JUzk2L
-         wHqlkJbHcciRyWOVvAD4YUB+QgfBt4bKD6vVa1t/Qpr/i/zTu8d2ewyBvUcMkEaB9EGG
-         jZtsJMo3LFrT5+T5QkJQkLaB3cp3yCMIYSZAtedoO/tggTioQ3/UqPf6lGWrzsXKt0ZQ
-         cEkCGDledIjZXCf5UtBLXEmdgCe29X/Hw/s3bSDYHS42TS6KjtnVkKZ7B1HcmaFHYA9A
-         HvIquk6AebFTgBrP/9rWrfNFEcuBFEr9W4Uxr+vXv50d54lbZypTjXC/tXFZ33wtFOGl
-         BvhA==;
+        bh=Ko2nFEKzryM0Joy0DntqtRQJcRZwX6j2MQIGWblaJQ0=;
+        fh=+C3q2R1/9rSB+0SrhkQ4Sv0N9YdjDm2z8nwQ9PcZKD0=;
+        b=J7QJGYFZzKggA+DOxlfVwVsaNhUACNGwoI5YALQZR/85vtnbm5xkBPwkHn5x1GRFl6
+         qL4+wcENR2kc1y9Gi72xBvzZlKn+0jb8S1G4a6TCThhxkXIYVtTGdIw0vTmzQfKenSeh
+         ET2IYnYS945YVRctyKSjSSpo52HPy7MvCClSPmSAFms2mmPosn8hN5V0yajUNCAhegg+
+         hojim67kQgqsfUnLvsGpTGoBZYJ1YQhmxvwTAp8X7yZ555gQgfuac5wdJhkJCveePlBJ
+         8mZk6vDRYeEG7dGPhM3z8D6I68JDfHTo8USx9teuv75LH2dQWjTpk0B8VWMZR5xwyd4a
+         /aTA==;
         darn=lists.linux.dev
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1792139074; x=1792743874; darn=lists.linux.dev;
+        d=gmail.com; s=20251104; t=1792139804; x=1792744604; darn=lists.linux.dev;
         h=content-transfer-encoding:content-type:cc:to:subject:message-id
          :date:from:in-reply-to:references:mime-version:from:to:cc:subject
          :date:message-id:reply-to:content-type;
-        bh=E8gxo2ExdAcC67lQx6KTJbVCAq98YK23bGoiwCanXEA=;
-        b=BIb5FV93anlXNgemmEQIwgulNSBKRmITkQ2+mYH1UWYQK2st6DZF3j2ipHLE8JMZY8
-         hqgMN4v/iL4ShIwJrYl0k2cLPZh1NTfulewOwDcRBrzyrE8pSMJWQFVAljrLAeTnoS8p
-         x0ZZQRWIWSPbEnRN24p6d6pfjv7Y0RBNwd/l6sRKN21QGOpyERHbjJhTwYn/IZ7kbjJj
-         QmcG6TCAwU+B5iC9CJMNkD8KwV3J3xVE4iPj54RC7lXDS45b6QElmttTWtlCQt4SnGdN
-         XLFdKsfZObNSlxBjnAEKCxB6HG7WyWBtHSplD/m3Cmd6NCzG8cj7Qc6zU5mK7McuoRX5
-         9lVA==
+        bh=Ko2nFEKzryM0Joy0DntqtRQJcRZwX6j2MQIGWblaJQ0=;
+        b=A3X8aowsN/xMriiuC771bBUlWezDVajs6HuRJLsSrl9xSRtS8UrJDD3dRwsCY8yObK
+         YfbwjP6wqPFJZGirfRKcvfDYd12iMdA0YRM/7pwD/IkYw+HS53Lnr3fcJF/oPel75NX7
+         gjuQ7HqHbYit2XEuxMmumheofOzTeNADXLdEJJZvN7kCa14CxJoMaSbvdmIykHmYQwfl
+         VY7mBjQGnhsi7d4lnpeYrKkfnne4XDF6yeXqjanK5sl+GcD+UY7bdaY1WWtHDqhTuWIy
+         TXl4ZMREQVxaV1NBkBcNjEiMJWZ7IAiGv6RsksPbEocJhr6S/lSRxmkJgAYd2EtF4kF+
+         j/dQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1792139074; x=1792743874;
+        d=1e100.net; s=20260707; t=1792139804; x=1792744604;
         h=content-transfer-encoding:content-type:cc:to:subject:message-id
          :date:from:in-reply-to:references:mime-version:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=E8gxo2ExdAcC67lQx6KTJbVCAq98YK23bGoiwCanXEA=;
-        b=0ThK7Poo8JdoRHJB6Bhaz43yiHQXVUSbiCFuH9f/OjN6ErHPiGXZnzdMBLNXDMJnP9
-         ctB8TFKrRbhEefBK/HwxMK0++S5Nx4l6ES46YLG6qWKAR+yxSjaWAVApTLj7OUTBVLfq
-         gpdxYYk0khyy25Sw2g20+fVdv6ZcvzKDs+5HIa7oCNb1xJpzvFuIOClvmF0noQOapnPL
-         dHp28vIjhhQ9P1XfV38jAtJ7NPWfvayVhgXqcSNeoEGfdElOKZkEIMaj+PwBXfbRsv4U
-         Iisx0vGYGjd6FJXE7TkUuHArFjOxmMsuzljwM3btbETtYhvIdXPpHafyN06/Qve8862f
-         yAJw==
-X-Forwarded-Encrypted: i=1; AKwUvBw5MN4KPRzK+91sk7A+A1JFd3Z3yDck1x/kyCk98kNpNhEZX/4MAAHn7cTrXqczodWZXNh7@lists.linux.dev
-X-Gm-Message-State: AFq9FYKXN5tMXXTxvr82D7U27DYaRdm/7tZFMkzAb4Gey44YBMB89ZOT
-	fx92n8M5Uy4RhS+YHzBDl7XlxQZfhs1mUaji1klaWt4XzJQ4EHB+/QFdTLnlYRdoKUb/rpphSpK
-	5mPK2hl5QQqZWzBsqOjR0Q3C87Hyzl94=
-X-Gm-Gg: AYBFou2IpwzqTear+Dkn1fLY8FGYsT8Y92r2udM03bt7QjLvufJ12QY07EaD6ITVzXo
-	sbEZgfRyTl1GKAWRVKE4XUZCJS9eToE+GMpUjnsWPo69dK3Vo8ghJSGyEuFOAC9f0swJ2BrHcgZ
-	iRMf3jkJI1ksgXdqnM3rB/9Od18W9PKUIg4nFcbrtv977lW3txxXie+4f5+P1/zGWsCbPI2Z+sW
-	S4d0dDI0xuAhew8eTfEd0oqshifhs2wYeKux3OqKxbw3MGqlc2JDFzfeBPC5ClpaWE6NwUbC3EI
-	DG4/jm7ZG36ShWDn98QyZMcK4SU031+oWYPT6fXJkl2x5JyBeHkwQ0et
-X-Received: by 2002:a05:600d:82c1:b0:4a1:6a10:4dc8 with SMTP id
- 5b1f17b1804b1-4a1bd175fa1mr146577265e9.28.1792139073577; Fri, 16 Oct 2026
- 01:24:33 -0700 (PDT)
+        bh=Ko2nFEKzryM0Joy0DntqtRQJcRZwX6j2MQIGWblaJQ0=;
+        b=JcGcZ27Wia0XXJAVY+N/7pV5lLEWKRVJoNGkE1JohefoepavQKdlcy654XEzrRD+OV
+         E3zwkHLfO5vkbUB/rlsnwXfU7RRKGXO5gdgujfVwdXlof7KfY4zoQQEjTiDhID9ml1RD
+         7ZCAsfeRtTSfF5UYf3ngfy9c6fEb92YzPRr9WP7pkK2PC/mLm1+twUqZJOkDNgbm152o
+         Z4qyjLT0rj58FUe2en0mfaSBXkD204e+zzr0hosadWgLUEmSyEBq1/X/VgsUry0BntSm
+         QqOZ1C3loE2cJhSOkcHxHbrwSo2qJ8zw+k3TWDz71yLQ5miJOe0k+6OJ4RGI4QYN56h5
+         cFoA==
+X-Forwarded-Encrypted: i=1; AKwUvByWDCiGxeow+OHX9TdpbZ3wSjfE9Vj7mG5U1r1+GNsmXce8uRN8FFiQVjH1oCmW4hXFNvkJ@lists.linux.dev
+X-Gm-Message-State: AFq9FYIbZDjAlKZF60eCPrvrmRCvS5HppdKoqFmfXH3vBHuCLy5C5PUd
+	IKMkSqETHjiUBJO+l25PplnvK/EdPC2xnO3xwO9hvIzuRxQL96F/3S4UckG7ZiL3zHAtlkjTaGu
+	sds8l1RYQBl6SWVyxmYsGWTmoLCc9SHM=
+X-Gm-Gg: AYBFou0uDEckG8izhcyrg1lJSqRk+iC/+f9htS9wdQ5uabey8CxYtgUSZHgaRYZQpj/
+	j+aDMZOG/EWIh8xz+LpYfAsVexyx5l723Gcph8zx6Mq9G4O8s0ByD/ASnsq3Vg+z1A19bnCHu7G
+	s6BlWRwluxZ5JMyzRASLyh0Bvc71DJcmphbW2fy/Mqxy0JS/poWNxbUoQyKmDa1EEJLxe2nq+ep
+	6d3m8CKbr7JCMh9+Is1BPZfL9l+jhDsffDFysb25nR+GJXQVDw0XW6mhhJD0zjrMbQ8Hb57K8gF
+	YxZ/hXS1Gq9fJIxHofKeGJQUhKlfUhyLR2bQJaf+J8xHPLbhmFpEK/w/
+X-Received: by 2002:a05:6938:a082:10b0:c3e:f39b:2286 with SMTP id
+ a640c23a62f3a-c3ef39b2474mr293285166b.0.1792139803822; Fri, 16 Oct 2026
+ 01:36:43 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: lkmm@lists.linux.dev
 List-Id: <lkmm.lists.linux.dev>
 List-Subscribe: <mailto:lkmm+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:lkmm+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20261011194902.97364-1-mathieu.desnoyers@efficios.com> <20261011194902.97364-2-mathieu.desnoyers@efficios.com>
-In-Reply-To: <20261011194902.97364-2-mathieu.desnoyers@efficios.com>
+References: <20261011194902.97364-1-mathieu.desnoyers@efficios.com> <20261011194902.97364-3-mathieu.desnoyers@efficios.com>
+In-Reply-To: <20261011194902.97364-3-mathieu.desnoyers@efficios.com>
 From: KunWu Chan <kunwu.chan@gmail.com>
-Date: Fri, 16 Oct 2026 16:24:21 +0800
-X-Gm-Features: AclHuK_PTuneKkOgmgJaVDS6GjsvRFKMkj_6VcBtfZcfMgJ14F3yG1rp3naG8VE
-Message-ID: <CAN_Opa-zH=+By+Qrsrg3W0prQPNv17xCCh_n0CzfimUB9__obA@mail.gmail.com>
-Subject: Re: [PATCH hazptr v3 1/4] hazptr: Fix two-phase hazptr_synchronize
- race with detach
+Date: Fri, 16 Oct 2026 16:36:31 +0800
+X-Gm-Features: AclHuK999gbk47tvgPj7S_99XIxJx7kM0oNSpmR7D65tPGL3PLvLQleVMZhU9_g
+Message-ID: <CAN_Opa_aBH0iP+q_GoG=2JhVaCpgu6_K5S7hPDhLQ4u1jw=jqg@mail.gmail.com>
+Subject: Re: [PATCH hazptr v3 2/4] ptr_eq.h: Introduce ptr_eq() to preserve
+ address dependency
 To: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
 Cc: "Paul E . McKenney" <paulmck@kernel.org>, linux-kernel@vger.kernel.org, 
-	Boqun Feng <boqun@kernel.org>, Bradley Morgan <brads@mainlining.org>, Gary Guo <gary@garyguo.net>, 
-	rcu@vger.kernel.org, lkmm@lists.linux.dev, Lian Wang <lianux.mm@gmail.com>
+	Linus Torvalds <torvalds@linux-foundation.org>, Boqun Feng <boqun.feng@gmail.com>, 
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
+	Sebastian Andrzej Siewior <bigeasy@linutronix.de>, Will Deacon <will@kernel.org>, 
+	Peter Zijlstra <peterz@infradead.org>, Alan Stern <stern@rowland.harvard.edu>, 
+	John Stultz <jstultz@google.com>, Frederic Weisbecker <frederic@kernel.org>, 
+	Joel Fernandes <joel@joelfernandes.org>, Josh Triplett <josh@joshtriplett.org>, 
+	Uladzislau Rezki <urezki@gmail.com>, Steven Rostedt <rostedt@goodmis.org>, 
+	Lai Jiangshan <jiangshanlai@gmail.com>, Zqiang <qiang.zhang1211@gmail.com>, 
+	Ingo Molnar <mingo@redhat.com>, Waiman Long <longman@redhat.com>, 
+	Mark Rutland <mark.rutland@arm.com>, Thomas Gleixner <tglx@linutronix.de>, 
+	Vlastimil Babka <vbabka@suse.cz>, maged.michael@gmail.com, Mateusz Guzik <mjguzik@gmail.com>, 
+	Gary Guo <gary@garyguo.net>, rcu@vger.kernel.org, linux-mm@kvack.org, 
+	lkmm@lists.linux.dev, Nikita Popov <github@npopov.com>, llvm@lists.linux.dev, 
+	Lian Wang <lianux.mm@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
 Hi Mathieu,
 
-Scanning all per-CPU slots before the overflow lists
-addresses the race where a backup slot can be moved to
-a list that has already been scanned.
+I checked both implementations of ptr_eq().
 
-Using a separate overflow-list phase also decouples list
-selection from the wildcard phase.
+The x86 version uses inline asm for the comparison, so
+the compiler cannot reason about it as an ordinary C
+pointer comparison.
 
+The generic version uses OPTIMIZER_HIDE_VAR() before
+the comparison to prevent the compiler from propagating
+the original pointer values through it. I verified this
+with GCC 13.3 on ARM64: the generated code uses the
+second load's result for the dependent access, rather
+than reusing the first load's result.
 
 Reviewed-by: Kunwu Chan <chentao@kylinos.cn>
 
@@ -115,168 +132,225 @@ Kunwu
 On Mon, Oct 12, 2026 at 3:49=E2=80=AFAM Mathieu Desnoyers
 <mathieu.desnoyers@efficios.com> wrote:
 >
-> Boqun Feng pointed out that a detach happening concurrently with
-> hazptr_synchronize can miss a slot. Indeed, scanning the per-CPU
-> slots needs to be done *before* scanning the overflow lists. Fix the
-> implementation accordingly.
+> Compiler CSE and SSA GVN optimizations can cause the address dependency
+> of addresses returned by rcu_dereference to be lost when comparing those
+> pointers with either constants or previously loaded pointers.
 >
+> Introduce ptr_eq() to compare two addresses while preserving the address
+> dependencies for later use of the address. It should be used when
+> comparing an address returned by rcu_dereference().
+>
+> This is needed to prevent the compiler CSE and SSA GVN optimizations
+> from using @a (or @b) in places where the source refers to @b (or @a)
+> based on the fact that after the comparison, the two are known to be
+> equal, which does not preserve address dependencies and allows the
+> following misordering speculations:
+>
+> - If @b is a constant, the compiler can issue the loads which depend
+>   on @a before loading @a.
+> - If @b is a register populated by a prior load, weakly-ordered
+>   CPUs can speculate loads which depend on @a before loading @a.
+>
+> The same logic applies with @a and @b swapped.
+>
+> The header "linux/ptr_eq.h" is the expected include target. It
+> contains the documentation of the ptr_eq() API.
+>
+> An architecture specific implementation of the pointer comparison
+> can be implemented by each architecture as asm/ptr_eq.h. The x86
+> implementation is provided initially. If no implementation header is
+> present for the architecture, an arch-agnostic fallback based on
+> OPTIMIZER_HIDE_VAR is included from asm-generic.
+>
+> The arguments to ptr_eq() are const volatile to take advantage of
+> implicit conversion that adds cv-qualifiers, which are thus added
+> implicitly.
+>
+> Suggested-by: Linus Torvalds <torvalds@linux-foundation.org>
+> Suggested-by: Boqun Feng <boqun.feng@gmail.com>
 > Signed-off-by: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
-> Reported-by: Boqun Feng <boqun@kernel.org>
-> Cc: Paul E. McKenney <paulmck@kernel.org>
-> Cc: Boqun Feng <boqun@kernel.org>
-> Cc: Bradley Morgan <brads@mainlining.org>
+> Reviewed-by: Boqun Feng <boqun.feng@gmail.com>
+> Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+> Cc: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+> Cc: "Paul E. McKenney" <paulmck@kernel.org>
+> Cc: Will Deacon <will@kernel.org>
+> Cc: Peter Zijlstra <peterz@infradead.org>
+> Cc: Boqun Feng <boqun.feng@gmail.com>
+> Cc: Alan Stern <stern@rowland.harvard.edu>
+> Cc: John Stultz <jstultz@google.com>
+> Cc: Linus Torvalds <torvalds@linux-foundation.org>
+> Cc: Boqun Feng <boqun.feng@gmail.com>
+> Cc: Frederic Weisbecker <frederic@kernel.org>
+> Cc: Joel Fernandes <joel@joelfernandes.org>
+> Cc: Josh Triplett <josh@joshtriplett.org>
+> Cc: Uladzislau Rezki <urezki@gmail.com>
+> Cc: Steven Rostedt <rostedt@goodmis.org>
+> Cc: Lai Jiangshan <jiangshanlai@gmail.com>
+> Cc: Zqiang <qiang.zhang1211@gmail.com>
+> Cc: Ingo Molnar <mingo@redhat.com>
+> Cc: Waiman Long <longman@redhat.com>
+> Cc: Mark Rutland <mark.rutland@arm.com>
+> Cc: Thomas Gleixner <tglx@linutronix.de>
+> Cc: Vlastimil Babka <vbabka@suse.cz>
+> Cc: maged.michael@gmail.com
+> Cc: Mateusz Guzik <mjguzik@gmail.com>
 > Cc: Gary Guo <gary@garyguo.net>
-> Cc: <rcu@vger.kernel.org>
-> Cc: <lkmm@lists.linux.dev>
+> Cc: rcu@vger.kernel.org
+> Cc: linux-mm@kvack.org
+> Cc: lkmm@lists.linux.dev
+> Cc: Nikita Popov <github@npopov.com>
+> Cc: llvm@lists.linux.dev
 > Cc: Lian Wang <lianux.mm@gmail.com>
 > Cc: Kunwu Chan <kunwu.chan@gmail.com>
 > ---
+> Changes since v2:
+> - Rename ptreq.h to ptr_eq.h (x86, asm-generic and linux headers).
+>   Adapt the include guards accordingly.
+>
+> Changes since v1:
+> - Move to linux/ptreq.h, implement x86-specific comparison
+>   and asm-generic header (fallback).
+>
 > Changes since v0:
-> - Load the new overflow list phase word in "hazptr_chain_backup_slot".
-> - Rename the lock to hazptr_phase_lock to make it clear that it
->   protects both the wildcard and the overflow list phases.
+> - Include feedback from Alan Stern.
 > ---
->  kernel/hazptr.c | 50 +++++++++++++++++++++++++++++++++++++++----------
->  1 file changed, 40 insertions(+), 10 deletions(-)
+>  arch/x86/include/asm/ptr_eq.h | 16 +++++++++
+>  include/asm-generic/Kbuild    |  1 +
+>  include/asm-generic/ptr_eq.h  | 16 +++++++++
+>  include/linux/ptr_eq.h        | 63 +++++++++++++++++++++++++++++++++++
+>  4 files changed, 96 insertions(+)
+>  create mode 100644 arch/x86/include/asm/ptr_eq.h
+>  create mode 100644 include/asm-generic/ptr_eq.h
+>  create mode 100644 include/linux/ptr_eq.h
 >
-> diff --git a/kernel/hazptr.c b/kernel/hazptr.c
-> index d3d1050d92cf..13faa5ba7677 100644
-> --- a/kernel/hazptr.c
-> +++ b/kernel/hazptr.c
-> @@ -13,6 +13,8 @@
->  #include <linux/list.h>
->  #include <linux/export.h>
->
-> +static DEFINE_MUTEX(hazptr_phase_lock);        /* Protect the wildcard a=
-nd list phase flip. */
+> diff --git a/arch/x86/include/asm/ptr_eq.h b/arch/x86/include/asm/ptr_eq.=
+h
+> new file mode 100644
+> index 000000000000..8e521cabe24b
+> --- /dev/null
+> +++ b/arch/x86/include/asm/ptr_eq.h
+> @@ -0,0 +1,16 @@
+> +/* SPDX-License-Identifier: GPL-2.0 */
+> +#ifndef _ASM_X86_PTR_EQ_H
+> +#define _ASM_X86_PTR_EQ_H
 > +
->  /*
->   * The current hazard pointer wildcard. Flips between 1UL and 2UL to gua=
-rantee
->   * hazptr_synchronize forward progress even with a steady stream of read=
-ers.
-> @@ -20,10 +22,12 @@
->   * This also affects the overflow list selection: the current list used =
-by
->   * readers is array[(unsigned long) hazptr_wildcard - 1].
->   */
-> -static DEFINE_MUTEX(hazptr_wildcard_lock);     /* Protect the wildcard f=
-lip. */
->  void *hazptr_wildcard =3D (void *) 1UL;
->  EXPORT_SYMBOL_GPL(hazptr_wildcard);
->
-> +/* The current overflow list phase. */
-> +static unsigned int hazptr_overflow_list_phase;
+> +#include <linux/types.h>
+> +#include <asm/asm.h>
 > +
->  struct hazptr_overflow_list {
->         raw_spinlock_t lock;            /* Lock protecting overflow list =
-and list generation. */
->         struct hlist_head head;         /* Overflow list head. */
-> @@ -53,6 +57,12 @@ void *flip_wildcard(void *wildcard)
->         return ((unsigned long) wildcard =3D=3D 1UL) ? (void *) 2UL : (vo=
-id *) 1UL;
->  }
->
-> +static
-> +unsigned int flip_list_phase(unsigned int phase)
+> +static __always_inline
+> +bool ptr_eq(const volatile void *a, const volatile void *b)
 > +{
-> +       return 1 - phase;
+> +       bool ret;
+> +       asm(__ASM_SIZE(cmp) " %1,%2" : "=3D@ccz" (ret) : "r" (a), "r" (b)=
+);
+> +       return ret;
 > +}
 > +
->  static
->  bool is_wildcard(void *addr)
->  {
-> @@ -178,15 +188,12 @@ void hazptr_synchronize_cpu_slots(int cpu, void *ad=
-dr, void *scan_wildcard)
->  }
->
->  static
-> -void hazptr_scan_period(void *addr, void *scan_wildcard)
-> +void hazptr_scan_cpu_slots_period(void *addr, void *scan_wildcard)
->  {
-> -       unsigned int scan_idx =3D (unsigned long) scan_wildcard - 1;
->         int cpu;
->
->         /* Scan all CPUs slots. */
->         for_each_possible_cpu(cpu) {
-> -               struct hazptr_overflow_list_flip *overflow_list_flip =3D =
-per_cpu_ptr(&percpu_overflow_list_flip, cpu);
-> -
->                 /*
->                  * Scan CPU slots.
->                  * Forward progress against recurring wildcards is guaran=
-teed
-> @@ -199,6 +206,17 @@ void hazptr_scan_period(void *addr, void *scan_wildc=
-ard)
->                  * to acquire that same hazard pointer value.
->                  */
->                 hazptr_synchronize_cpu_slots(cpu, addr, scan_wildcard);
-> +       }
+> +#endif /* _ASM_X86_PTR_EQ_H */
+> diff --git a/include/asm-generic/Kbuild b/include/asm-generic/Kbuild
+> index 2bc00c67dc54..86cee0dfd47f 100644
+> --- a/include/asm-generic/Kbuild
+> +++ b/include/asm-generic/Kbuild
+> @@ -47,6 +47,7 @@ mandatory-y +=3D percpu.h
+>  mandatory-y +=3D percpu_types.h
+>  mandatory-y +=3D pgalloc.h
+>  mandatory-y +=3D preempt.h
+> +mandatory-y +=3D ptr_eq.h
+>  mandatory-y +=3D rqspinlock.h
+>  mandatory-y +=3D runtime-const.h
+>  mandatory-y +=3D rwonce.h
+> diff --git a/include/asm-generic/ptr_eq.h b/include/asm-generic/ptr_eq.h
+> new file mode 100644
+> index 000000000000..2bd1c3b8a56f
+> --- /dev/null
+> +++ b/include/asm-generic/ptr_eq.h
+> @@ -0,0 +1,16 @@
+> +/* SPDX-License-Identifier: GPL-2.0 */
+> +#ifndef __ASM_GENERIC_PTR_EQ_H
+> +#define __ASM_GENERIC_PTR_EQ_H
+> +
+> +#include <linux/types.h>
+> +#include <linux/compiler.h>
+> +
+> +static __always_inline
+> +bool ptr_eq(const volatile void *a, const volatile void *b)
+> +{
+> +       OPTIMIZER_HIDE_VAR(a);
+> +       OPTIMIZER_HIDE_VAR(b);
+> +       return a =3D=3D b;
 > +}
 > +
-> +static
-> +void hazptr_scan_overflow_list_period(void *addr, unsigned int scan_idx)
-> +{
-> +       int cpu;
+> +#endif /* __ASM_GENERIC_PTR_EQ_H */
+> diff --git a/include/linux/ptr_eq.h b/include/linux/ptr_eq.h
+> new file mode 100644
+> index 000000000000..7a2bbf6e64b3
+> --- /dev/null
+> +++ b/include/linux/ptr_eq.h
+> @@ -0,0 +1,63 @@
+> +/* SPDX-License-Identifier: GPL-2.0 */
+> +#ifndef _LINUX_PTR_EQ_H
+> +#define _LINUX_PTR_EQ_H
 > +
-> +       /* Scan all CPUs overflow lists. */
-> +       for_each_possible_cpu(cpu) {
-> +               struct hazptr_overflow_list_flip *overflow_list_flip =3D =
-per_cpu_ptr(&percpu_overflow_list_flip, cpu);
->
->                 /*
->                  * Scan backup slots in percpu overflow lists.
-> @@ -218,6 +236,7 @@ void hazptr_scan_period(void *addr, void *scan_wildca=
-rd)
->   */
->  void hazptr_synchronize(void *addr)
->  {
-> +       unsigned int scan_list_phase;
->         void *scan_wildcard;
->
->         /*
-> @@ -235,18 +254,29 @@ void hazptr_synchronize(void *addr)
->         /* Memory ordering: Store A before Load B. */
->         smp_mb();
->
-> -       guard(mutex)(&hazptr_wildcard_lock);
-> +       guard(mutex)(&hazptr_phase_lock);
+> +/*
+> + * Compare two addresses while preserving the address dependencies for
+> + * later use of the address. It should be used when comparing an address
+> + * returned by rcu_dereference().
+> + *
+> + * This is needed to prevent the compiler CSE and SSA GVN optimizations
+> + * from using @a (or @b) in places where the source refers to @b (or @a)
+> + * based on the fact that after the comparison, the two are known to be
+> + * equal, which does not preserve address dependencies and allows the
+> + * following misordering speculations:
+> + *
+> + * - If @b is a constant, the compiler can issue the loads which depend
+> + *   on @a before loading @a.
+> + * - If @b is a register populated by a prior load, weakly-ordered
+> + *   CPUs can speculate loads which depend on @a before loading @a.
+> + *
+> + * The same logic applies with @a and @b swapped.
+> + *
+> + * Return value: true if pointers are equal, false otherwise.
+> + *
+> + * The compiler barrier() is ineffective at fixing this issue. It does
+> + * not prevent the compiler CSE from losing the address dependency:
+> + *
+> + * int fct_2_volatile_barriers(void)
+> + * {
+> + *     int *a, *b;
+> + *
+> + *     do {
+> + *         a =3D READ_ONCE(p);
+> + *         asm volatile ("" : : : "memory");
+> + *         b =3D READ_ONCE(p);
+> + *     } while (a !=3D b);
+> + *     asm volatile ("" : : : "memory");  <-- barrier()
+> + *     return *b;
+> + * }
+> + *
+> + * With gcc 14.2 (arm64):
+> + *
+> + * fct_2_volatile_barriers:
+> + *         adrp    x0, .LANCHOR0
+> + *         add     x0, x0, :lo12:.LANCHOR0
+> + * .L2:
+> + *         ldr     x1, [x0]  <-- x1 populated by first load.
+> + *         ldr     x2, [x0]
+> + *         cmp     x1, x2
+> + *         bne     .L2
+> + *         ldr     w0, [x1]  <-- x1 is used for access which should depe=
+nd on b.
+> + *         ret
+> + *
+> + * On weakly-ordered architectures, this lets CPU speculation use the
+> + * result from the first load to speculate "ldr w0, [x1]" before
+> + * "ldr x2, [x0]".
+> + * Based on the RCU documentation, the control dependency does not
+> + * prevent the CPU from speculating loads.
+> + */
 > +
-> +       /* Scan per-CPU slots. */
->         scan_wildcard =3D flip_wildcard(hazptr_wildcard);
-> -       hazptr_scan_period(addr, scan_wildcard);
-> -       WRITE_ONCE(hazptr_wildcard, scan_wildcard);     /* Flip the curre=
-nt wildcard. */
-> -       hazptr_scan_period(addr, flip_wildcard(scan_wildcard));
-> +       hazptr_scan_cpu_slots_period(addr, scan_wildcard);
-> +       WRITE_ONCE(hazptr_wildcard, scan_wildcard);                     /=
-* Flip the current wildcard. */
-> +       hazptr_scan_cpu_slots_period(addr, flip_wildcard(scan_wildcard));
+> +#include <asm/ptr_eq.h>
 > +
-> +       /*
-> +        * Scan overflow lists *after* scanning per-CPU slots. See
-> +        * hazptr_promote_to_backup_slot() for scan ordering requirement.
-> +        */
-> +       scan_list_phase =3D flip_list_phase(hazptr_overflow_list_phase);
-> +       hazptr_scan_overflow_list_period(addr, scan_list_phase);
-> +       WRITE_ONCE(hazptr_overflow_list_phase, scan_list_phase);        /=
-* Flip the current list phase. */
-> +       hazptr_scan_overflow_list_period(addr, flip_list_phase(scan_list_=
-phase));
->  }
->  EXPORT_SYMBOL_GPL(hazptr_synchronize);
->
->  struct hazptr_slot *hazptr_chain_backup_slot(struct hazptr_ctx *ctx)
->  {
->         struct hazptr_overflow_list_flip *overflow_list_flip =3D this_cpu=
-_ptr(&percpu_overflow_list_flip);
-> -       unsigned int list_idx =3D (unsigned long) READ_ONCE(hazptr_wildca=
-rd) - 1;
-> +       unsigned int list_idx =3D READ_ONCE(hazptr_overflow_list_phase);
->         struct hazptr_overflow_list *overflow_list =3D &overflow_list_fli=
-p->array[list_idx];
->         struct hazptr_slot *slot =3D &ctx->backup_slot.slot;
->
+> +#endif /* _LINUX_PTR_EQ_H */
 > --
 > 2.43.0
 >

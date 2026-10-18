@@ -1,49 +1,46 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from zeniv.linux.org.uk (zeniv.linux.org.uk [62.89.141.173])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB4C04EF152;
-	Fri, 16 Oct 2026 16:12:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80D654CF496;
+	Sun, 18 Oct 2026 02:20:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=62.89.141.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792167147; cv=none; b=se+V4DwZN3wuv/8/FwkL0yfSZvjlBbnTvrTcU4b1CLD5AR+ADjd/4A9K3YzkV9fYg5KYGaLntXT4gGIxHFyah84eDWapHI+MsaWzMynvmwnng9wvknz7MjJFi/xy3AcGq8RsUjZ7vzEmtKk0PiSntgF0HOO/0NfGiySbtOK6NbQ=
+	t=1792290024; cv=none; b=ZFJ8ETlJKPDrjSMxmF6eL6u7l0lRh/eOAYvgQcy4zR8Cqxapm7Qb+pyPr8gE4V7UZJ7b0GKD/u5ws3f53ySNdjICO0R9pVFi1d9e/9J/KLgVwBRYIq24wm1gA3S0hNRJg/1X01Z9PM+zGjDwwHG7+eJoWgh4ykl0eG/vP+BWlcE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792167147; c=relaxed/simple;
-	bh=6p6k1tESHb6KLOyroOCrQTVD9xoFJZXMURVK4JcZqRo=;
+	s=arc-20240116; t=1792290024; c=relaxed/simple;
+	bh=4kwc1QYKBJYhCHoM467+RKJmBKF3hvlYJxRSnGdF+PQ=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=bFla6t65GH7Z6Q/DYg74S0YypXuHCpq6miEUovTKQ2kJrOelzExuUsk1K7NucC2X+Cga2MRDlSokXbksn027dIHVdVrZPK5WmlHd8hsz5ySbfpB4apnR5NQ+Ij21nUOoCKpD73biY5K663n7og2C/IUFYvcv6ugof8fZEAvTjEU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Nu84eWNG; arc=none smtp.client-ip=100.103.45.18
+	 Content-Type:Content-Disposition:In-Reply-To; b=ezXkwoBIKuOO/+ZeX6ioBTk+VEZSbjoMjoGw/UxtUI+uSzLfx6TcyXKS8WXceqoVPHFpuPbSHytcqk9ji8Jk+uTQPPkkQq+h0lROxhBkheoSTcWv0XdKaipq72i71H3SJP1rVwJ6sq63FfAs/+PH94tldw9JLofw2ENAc9nhgpA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=zeniv.linux.org.uk; spf=none smtp.mailfrom=ftp.linux.org.uk; dkim=pass (2048-bit key) header.d=linux.org.uk header.i=@linux.org.uk header.b=foXTMe/B; arc=none smtp.client-ip=62.89.141.173
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=zeniv.linux.org.uk
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ftp.linux.org.uk
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Nu84eWNG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77EA41F000C4;
-	Fri, 16 Oct 2026 16:12:24 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792167144;
-	bh=BkRKNTsVNbs/xZi9aRNbP/sFK8QUWl/Yq+okInPou/o=;
-	h=Date:From:To:Cc:Subject:Reply-To:References:In-Reply-To;
-	b=Nu84eWNGsZIlwjZlO/A878R3/4HqGFugQF4mH6MMaM73/tYkY8fCiA10Wv2wN5G5y
-	 6Dqw3iaZVRtThsKTq01RYaziz9dRanAvn/5iKGpkiXBRnTNfziRlyf9pucZWCMY4BO
-	 Zg0rijBwnka1MY3PHyJfWyOXZg9N/qN/eaNoFFYbMMIHlwf/MJeMinEoiyZ3k7Vtwe
-	 5G/RRSlpf52I6qVcJJA1lgBaROQ1f7vHqiFYT3WC4GuSqz5oEXIFMQukC+lks4s99A
-	 dmwcRKBDGYPMWfk5nXWgPvkE2toeu266QvbiYo6RrZ7x1haQXpy5UsrVpJxQxO6rAM
-	 C6E6rbUjdp8uw==
-Received: by paulmck-ThinkPad-P17-Gen-1.home (Postfix, from userid 1000)
-	id 42C4DCE0854; Fri, 16 Oct 2026 09:12:24 -0700 (PDT)
-Date: Fri, 16 Oct 2026 09:12:24 -0700
-From: "Paul E. McKenney" <paulmck@kernel.org>
-To: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
-Cc: KunWu Chan <kunwu.chan@gmail.com>, linux-kernel@vger.kernel.org,
-	Boqun Feng <boqun@kernel.org>,
-	Bradley Morgan <brads@mainlining.org>, Gary Guo <gary@garyguo.net>,
-	rcu@vger.kernel.org, lkmm@lists.linux.dev,
-	Lian Wang <lianux.mm@gmail.com>
-Subject: Re: [PATCH hazptr v3 1/4] hazptr: Fix two-phase hazptr_synchronize
- race with detach
-Message-ID: <9fe81762-af07-4161-bc87-82b369540a66@paulmck-laptop>
-Reply-To: paulmck@kernel.org
-References: <20261011194902.97364-1-mathieu.desnoyers@efficios.com>
- <20261011194902.97364-2-mathieu.desnoyers@efficios.com>
- <CAN_Opa-zH=+By+Qrsrg3W0prQPNv17xCCh_n0CzfimUB9__obA@mail.gmail.com>
- <c38a5c3d-ad8b-4cb4-8ef3-a9602a1f3c38@efficios.com>
+	dkim=pass (2048-bit key) header.d=linux.org.uk header.i=@linux.org.uk header.b="foXTMe/B"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=linux.org.uk; s=zeniv-20220401; h=Sender:In-Reply-To:Content-Type:
+	MIME-Version:References:Message-ID:Subject:Cc:To:From:Date:Reply-To:
+	Content-Transfer-Encoding:Content-ID:Content-Description;
+	bh=HsdYOKJFCGE7LaEBaLKNX8p+jHBdg59f86rUkY0OYU0=; b=foXTMe/BC7SHF2pYTFnMdSo0YZ
+	i3wFgzpbIDduWet2qDVSh8brvMm9YAeq9c64DdGbiMZmBHJGAxgzeEcZI3oz40MeZxE5dDcd1tAFy
+	sxlLWtGEiUzjuZgpcF5Sc7qaJ5Cqj6CkxtCfjVzzz8nJREQRSEKRYVK7j1LPATOeaPHYPLtQJmx+6
+	6/dQl/MTkwQbmoNENzn6TbUmvsJQIw1gZa/AXVUMfxmTMUpuUUaP2FYhkp4cjhsxciVEweWUttYGy
+	QlmNKPOIiH3XbYkT9CpWSlTK7flbogsSjGtRcn38fvVz38aQIJxFFPosQv5Zor2W7FA5pqR8sAGGz
+	EhfcT/gw==;
+Received: from viro by zeniv.linux.org.uk with local (Exim 4.99.5 #2 (Red Hat Linux))
+	id 1xIGVX-00000002ccL-0YOK;
+	Sun, 18 Oct 2026 02:20:19 +0000
+Date: Sun, 18 Oct 2026 03:20:19 +0100
+From: Al Viro <viro@zeniv.linux.org.uk>
+To: Christian Brauner <brauner@kernel.org>
+Cc: linux-fsdevel@vger.kernel.org, "Paul E. McKenney" <paulmck@kernel.org>,
+	NeilBrown <neil@brown.name>, Alexander Larsson <alexl@redhat.com>,
+	Jan Kara <jack@suse.cz>, Jeff Layton <jlayton@kernel.org>,
+	lkmm@lists.linux.dev
+Subject: Re: [PATCH 3/9] fs: drop the caller's umount(2) reference under
+ mount_lock
+Message-ID: <20261018022019.GB3535232@ZenIV>
+References: <20261012-work-mount-gp_on_demand-proposal-v1-0-43f60221a7d0@kernel.org>
+ <20261012-work-mount-gp_on_demand-proposal-v1-3-43f60221a7d0@kernel.org>
 Precedence: bulk
 X-Mailing-List: lkmm@lists.linux.dev
 List-Id: <lkmm.lists.linux.dev>
@@ -52,26 +49,19 @@ List-Unsubscribe: <mailto:lkmm+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <c38a5c3d-ad8b-4cb4-8ef3-a9602a1f3c38@efficios.com>
+In-Reply-To: <20261012-work-mount-gp_on_demand-proposal-v1-3-43f60221a7d0@kernel.org>
+Sender: Al Viro <viro@ftp.linux.org.uk>
 
-On Fri, Oct 16, 2026 at 09:41:12AM -0400, Mathieu Desnoyers wrote:
-> On 2026-10-16 04:24, KunWu Chan wrote:
-> > Hi Mathieu,
-> > 
-> > Scanning all per-CPU slots before the overflow lists
-> > addresses the race where a backup slot can be moved to
-> > a list that has already been scanned.
-> > 
-> > Using a separate overflow-list phase also decouples list
-> > selection from the wildcard phase.
-> > 
-> > 
-> > Reviewed-by: Kunwu Chan <chentao@kylinos.cn>
-> 
-> Thanks for the reviews ! I've picked them up in my own local
-> branches, but it would be best if Paul can add those 3 review
-> tags into the commits he recently picked up.
+On Mon, Oct 12, 2026 at 05:39:16PM +0200, Christian Brauner wrote:
 
-I will apply them (1/4, 2/4, and 4/4) on my next rebase, thank you both!
+> +DEFINE_FREE(mntput_no_expire, struct mount *, if (_T) mntput_no_expire(_T))
 
-							Thanx, Paul
+You probably want to make it clear in commit message that this is _not_ the
+decrement-under-lock referred to by the subject...
+
+>  static int do_umount(struct mount *mnt, int flags)
+>  {
+> +	struct mount *ref __free(mntput_no_expire) = mnt;
+
+... since it's outside of guard(mount_writer()) scope, thankfully (it would
+obviously break under mount_lock).

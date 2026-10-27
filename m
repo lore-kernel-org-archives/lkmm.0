@@ -1,71 +1,105 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=14.137.139.54
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.221.51
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793105966;
-	b=PS2JBiq3jq5lxuK4yuMqZbI3e077O4j0G7WNQmAJZFd5HcDo/EF3t4hRl+MMNL34MUpt
-	 p5yXnIjYRust/x386P6X++3F/MDVq0+otnElpnc/PjnKjp8mYbVTz3QzpUbErMTjZniTK
-	 QZ6qlYHXrIKdJ4ncUT6ufR7cfwO0wfSis2xhNwMk+rlU1JhdJ2/bZppXJ8mwKsC5ACNMb
-	 saIHtEVq8V8wkfuFs/lKklbAYTqbTihTOlswnLY3TTbI8Qh4MEnEdwp6cyMeq7cHqY20w
-	 JtXmKW//eIeNEhxzLmH9K1IqD3hRlQzu2PdNstKzXLHwyhxJBsfqhZyu+TPGIGqN+0Q==
+	t=1793119128;
+	b=ogVTC7NF58dEry5Em+wiIpvnaKXP9aOt7fJI6ZAX0GwmYwoSrSonjCfZbzVpJizjoxnT
+	 DqlZlAhCqG4bEzkKaOLvBmjIp5nnKZqmFB84CpipQZ3TFeMUi/vcXPKmpDF1JwlHNPb52
+	 rIW5LuB23/6Ri5l/H/cDh/q+w7WSKtiA0NncKWtRp2Z2LW3qWYCNM+ywVJTJT25gfvBW8
+	 k9nfb/5gz5wK7zlgY2vM1F4HGTs7vw9zJmjHHLsBeIe2DSv8JZMvkBQnDiixFqmHEvE8b
+	 zuKBke4j7h2XpabJF8e7ydq0CAZ/XkVGlkG9UBmG5xlBjss45cqn+CHVnfmX6xgDrAQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793105966;
-	h=DMARC-Filter:dkim-signature:Received:Received:Received:From:To:CC:
-	 Subject:In-Reply-To:References:Date:Message-ID:User-Agent:
-	 MIME-Version:Content-Type:X-Originating-IP:X-ClientProxiedBy;
-	bh=rF+a08Lsku2sRPHUdkTK839lgFmJP9xDh/1R1mglwvU=;
-	b=kPpdreSdkeUF41qohSctj226lAkoRBqegwCszF5u5pk957s6xTQxy3kI8I3mKl2VzgQD
-	 Ogen8+qywCjiz//lic4qee/Dwi0gk6CulEzT3eKugt/IvO5/xoloLJFLMYy0g0Z9KaH2T
-	 mrDisX/LN1CLUlksjieR4U/1oYP6wqGwjWCzZFxhMdaHandsUX+98xtuuY9z0kleu8xjh
-	 KLoZyiW1z19KQzMXUZLyIE+K8VT8c5DVF7+hJ/UgRuCvU8pgQcOhLDy4RbW5G7I3SXYDd
-	 l/hgUss9QsjwfGhK0TAEgHpMPq4+mRVs3qu1RebwVegGp1MTYH4HUXl52IMlgLqF6UQ==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793119128;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
+	 From:To:Cc:Subject:Date:Message-ID:X-Mailer:MIME-Version:
+	 Content-Transfer-Encoding;
+	bh=YdzeYBRZDVgcxRLuViW9S+/Z+tRK+ASP+jbr26j52IM=;
+	b=aC5vNN8BTnwM9nuaCKmR0QrFkiJJjLVqxneHf4PdCMdBtMb7BNvSaiKOer3wvyVQ695d
+	 nkjyBz/CoRHnWVQy3sICJhp1hzTjl61rPlNU80T5TwT2Vv3DZHRPzM56/eq1eUfOHdlbp
+	 M2p7IAiSjLm0XiHDkAQY84bPpWD+/e2uD8jC2lOj/sqoz8vY+Qn7uo//RIPPwwudAMrXR
+	 9SewtN7YFyJYKWzpjn7IAtua30btLFabqg4OUtnObd3z6LBOU9jo3ExJ7GHaHXvRmSxgE
+	 G3WUZD3I/iP0XM6MOtY8pdk42L3u+YKGVkvSi/iuvijRXqVIrR1tovGrUvpFFK2KQLA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=huawei.com;
-	spf=pass smtp.mailfrom=huawei.com;
-	dkim=pass header.d=huawei.com header.i=@huawei.com header.a=rsa-sha256 header.s=dkim header.b=rn2OkQcs;
-	arc=none smtp.remote-ip=14.137.139.54
-Received: from framsgout02.his.huawei.com (framsgout02.his.huawei.com [14.137.139.54])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=r7jXte+J;
+	arc=none smtp.remote-ip=209.85.221.51
+Received: from mail-wr1-f51.google.com (mail-wr1-f51.google.com [209.85.221.51])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7DCC606A31D
-	for <lkmm@lists.linux.dev>; Tue, 27 Oct 2026 12:59:23 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org D7DCC606A31D
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huawei.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 097E8606A31A
+	for <lkmm@lists.linux.dev>; Tue, 27 Oct 2026 16:38:47 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 097E8606A31A
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=huawei.com header.i=@huawei.com header.a=rsa-sha256 header.s=dkim header.b=rn2OkQcs
-dkim-signature: v=1; a=rsa-sha256; d=huawei.com; s=dkim;
-	c=relaxed/relaxed; q=dns/txt;
-	h=From;
-	bh=rF+a08Lsku2sRPHUdkTK839lgFmJP9xDh/1R1mglwvU=;
-	b=rn2OkQcs9y8sJqgPBxCCEJiRagpb/zg7BoYc0KELGsnzCf0lV1r5lB25Lzo4xwVJTgdahl8Nm
-	WpYFhFcpmtU/ftBAuc97R/mOmJbgy28buxWZCn+q+Z5MXuPmaKliiMoAYrrzJtVzfc44h3uSXnj
-	ecf+SkPnxj5H/AtqB/CReX4=
-Received: from mail.maildlp.com (unknown [172.18.224.107])
-	by framsgout02.his.huawei.com (SkyGuard) with ESMTPS id 4jDVtk136PzLlSd;
-	Tue, 27 Oct 2026 20:59:10 +0800 (CST)
-Received: from frapema500004.china.huawei.com (unknown [7.182.19.21])
-	by mail.maildlp.com (Postfix) with ESMTPS id 750CD40584;
-	Tue, 27 Oct 2026 20:59:16 +0800 (CST)
-Received: from M2403003457HW (10.224.107.248) by
- frapema500004.china.huawei.com (7.182.19.21) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.46; Tue, 27 Oct 2026 13:59:16 +0100
-From: Kai Ma <kai.ma1@huawei.com>
-To: <paulmck@kernel.org>
-CC: Kai Ma <kai.ma1@huawei.com>, Mathieu Desnoyers
-	<mathieu.desnoyers@efficios.com>, <linux-kernel@vger.kernel.org>, "Boqun
- Feng" <boqun@kernel.org>, Bradley Morgan <brads@mainlining.org>, Gary Guo
-	<gary@garyguo.net>, <rcu@vger.kernel.org>, <lkmm@lists.linux.dev>, "Lian
- Wang" <lianux.mm@gmail.com>, Kunwu Chan <kunwu.chan@gmail.com>
-Subject: Re: [PATCH hazptr v3 0/4] Hazard pointer updates
-In-Reply-To: <e3b1c73d-8248-4644-80e7-a0640538fde6@paulmck-laptop>
-References: <20261011194902.97364-1-mathieu.desnoyers@efficios.com>
-	<2cf703a6-7828-4735-98af-1a6fe93abd3f@paulmck-laptop>
-	<87cxsw4qnl.fsf@huawei.com>
-	<e3b1c73d-8248-4644-80e7-a0640538fde6@paulmck-laptop>
-Date: Tue, 27 Oct 2026 13:59:13 +0100
-Message-ID: <87zevz2tb2.fsf@huawei.com>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=r7jXte+J
+Received: by mail-wr1-f51.google.com with SMTP id ffacd0b85a97d-48e10a70540so29530f8f.1
+        for <lkmm@lists.linux.dev>; Tue, 27 Oct 2026 09:38:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20260707; t=1793119126; x=1793723926; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=YdzeYBRZDVgcxRLuViW9S+/Z+tRK+ASP+jbr26j52IM=;
+        b=r7jXte+Jeh6KdhGUtEnrZCjDJgURPnP0m2+8/R/jnAJl9v4Iz0F2YudZwf3QlEGYUi
+         QFDn6xJEU/Scv6D7MLZNl6IP+rXG520F0gE++751iFCDrEfPu+4VqSZwLkrHpI0ROS5k
+         QHJTYuJfkZxsDtml43LTOg7/xfj4JrO73jVzmE2UBo3cDg5hl9/xOgNpR4XZDcegw4F/
+         MKnv0mZ2dAKY1Tjr+q5M3XP+xjidq/xkGZ+5xsVxS2tl6g4VZMiW9d1xX6obDYWk27VI
+         BOCG8+66r9IknOgu4Yc5mDmdnxJDTmaJuUy9Aq+mWoT6FyJpPp3SejJaBGfC6Kqa4lah
+         EKtA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1793119126; x=1793723926;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=YdzeYBRZDVgcxRLuViW9S+/Z+tRK+ASP+jbr26j52IM=;
+        b=JMXHBaYt3Nt8ajfKh2fKBrwhzsIhkJRvptqvsHzA4dzpQgI4mJMRAEJn+BrTIChFiq
+         g1NYD1Pn8AcZLe0sW1h6a8Cy9Xt5DzUPXYQk6raEu1I2nJuOm5aJEcoBNS2QCavFp9Ei
+         piCe1jiDUMzTnVhzt0EKkl1F4E/A5f0CiCWosU1EIYCAUYVaD94ivM2/H2uhg20t8ZyH
+         4tq+TyU1INRZoQ4MJKImuDV9+aH4/o0rwIUSA8WkAElbHs4InPn9HoWw0+3RodvwwP7L
+         +MrCRC7+TFsxEVufwAQ1eFYz4bXUOEvbPDu9pYuEvB6apNmSW3piSxl22i3qqxZp/Seq
+         QU0g==
+X-Forwarded-Encrypted: i=1; AKwUvByL4rDFOwsgXUc7fFme5e/iq/lAjZGS5crwGV4ChjMF8+HPXqFuQ157fjiBE4ddNNc7Qbjl@lists.linux.dev
+X-Gm-Message-State: AFq9FYLK1zdw2OICK+O2ZdMBPrxTNd3jWOvDnrdHUml2G4GoRilRq3rn
+	2kxzcwd0aOMoaWjMTqX5qlMCEstnDhNCVyV6xWk93sGi/DYGwgwwSnvV
+X-Gm-Gg: AYBFou11e6BJ6qFeHKpkJULjmWcPZiBRoknQn+loUGOfq0mWIH5afa8YupAGFrjIGJq
+	6OIXcw186KZF7oeUPasr+grUjiYGkkFuVzd/sxo1Fo8q5Qsg+IA356JCongCbTDS000vxPWlwNh
+	mnyJ1p3EFVuLo36IIvqR4dviTnSTilIMs4rJb0QqxRTFyQOwKal1lNkYuo5TLG0ZoxcboUI4OrK
+	pQCjaxd4ZOknMBObrRKO7VAXwMu7hmIbOl8VxMbbSvnMcgsTwai6dNjVYqSgfCzhpKgbHgfdBaN
+	PDgo6Ujg0Pg/RudICX9qe32AuIw+3z0YK8nmBXmYy0pXOoCRmMlSjRplVzjHG1N2dSZ3L0aeYzx
+	VwrukgPZqXWVW4Si4NOQCO54wVKhOxGtXgBV9xWZqeCOhP9cg1W8GLtf2QpjACqmegOdgdAm33T
+	1xfkvhuleLqPNwqJQI1bcDgi91JXWAlRMkSZLFWqpqM7R0FC4PeIVswvedVYAtc8pCsody/iyTC
+	29yPHwUWfS4kDzCDlgwJPx8x5QvlSaMRryq7jKJhbu/GSlWlRAYRNVnZKnd7e0YscOzwV/U5nBY
+	ssyU+Orve5vbytbIheISWOvt42A=
+X-Received: by 2002:a05:600c:c09a:b0:4a4:3a2d:15da with SMTP id 5b1f17b1804b1-4a43a2d1805mr146805825e9.15.1793119126174;
+        Tue, 27 Oct 2026 09:38:46 -0700 (PDT)
+Received: from andreayoga.wind3.hub ([31.189.68.219])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4a92c21df84sm2358195e9.15.2026.10.27.09.38.44
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 27 Oct 2026 09:38:45 -0700 (PDT)
+From: Andrea Parri <parri.andrea@gmail.com>
+To: "Paul E. McKenney" <paulmck@kernel.org>,
+	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+Cc: Andrea Parri <parri.andrea@gmail.com>,
+	Frederic Weisbecker <frederic@kernel.org>,
+	Neeraj Upadhyay <neeraj.upadhyay@kernel.org>,
+	Joel Fernandes <joelagnelf@nvidia.com>,
+	Josh Triplett <josh@joshtriplett.org>,
+	Boqun Feng <boqun@kernel.org>,
+	Uladzislau Rezki <urezki@gmail.com>,
+	Steven Rostedt <rostedt@goodmis.org>,
+	Lai Jiangshan <jiangshanlai@gmail.com>,
+	Zqiang <qiang.zhang@linux.dev>,
+	Gary Guo <gary@garyguo.net>,
+	Bradley Morgan <brads@mainlining.org>,
+	Kunwu Chan <kunwu.chan@gmail.com>,
+	rcu@vger.kernel.org,
+	lkmm@lists.linux.dev,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH -rcu/dev 0/4] hazptrtorture: Fix shutdown hang and catch slot owner race
+Date: Tue, 27 Oct 2026 17:38:02 +0100
+Message-ID: <20261027163811.2470569-1-parri.andrea@gmail.com>
+X-Mailer: git-send-email 2.53.0
 X-Mailing-List: lkmm@lists.linux.dev
 List-Id: <lkmm.lists.linux.dev>
 List-Post: <mailto:lkmm@lists.linux.dev>
@@ -75,119 +109,111 @@ List-Unsubscribe: <mailto:lkmm+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:lkmm+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain
-X-ClientProxiedBy: frapema500003.china.huawei.com (7.182.19.114) To
- frapema500004.china.huawei.com (7.182.19.21)
+Content-Transfer-Encoding: 8bit
 
-"Paul E. McKenney" <paulmck@kernel.org> writes:
+Patch 1 fixes a shutdown hang in hazptrtorture with deferral enabled, as
+in the PREEMPT scenario: hazptr_torture_cleanup() stops the kthread that
+releases deferred hazard pointers before the writer, which can then
+wait in ->sync() forever.  It now stops the readers before that
+kthread, which releases what is left once the readers have stopped, and
+that kthread before the writer.
 
-> On Mon, Oct 26, 2026 at 01:01:18PM +0100, Kai Ma wrote:
->> "Paul E. McKenney" <paulmck@kernel.org> writes:
->> 
->> > On Sun, Oct 11, 2026 at 03:48:46PM -0400, Mathieu Desnoyers wrote:
->> >> Hi Paul,
->> >> 
->> >> This series applies on top of "hazptr: handle NULL address in
->> >> hazptr_detach" you have in your rcu dev tree.
->> >> 
->> >> This first patch addresses a race identified by Boqun Feng in the
->> >> two-phase wildcard scheme. (no change since the last series)
->> >> 
->> >> Patches 2-3 are prerequisites for using ptr_eq() in the 4th patch.
->> >> Those were discussed at length in a prior version of hazard pointer
->> >> patches.
->> >> 
->> >> Since the last series, I have renamed ptreq.h to ptr_eq.h, addressing
->> >> the feedback received from Boqun and Gary.
->> >> 
->> >> Patch 4 introduces a "try acquire" helper to allow the fast path
->> >> to not rely on wildcards, while keeping the wildcard forward
->> >> progress guarantees in the acquire slow path, used on fast path
->> >> failure.
->> >
->> > I have pulled this in for additional review and testing, thank you!
->> > (With Bradley's Reviewed-by on 4/4.)  Still subject to rebase, which means
->> > that I can easily replace it with an updated series from you, if you
->> > wish.
->> 
->> Hi Paul, Mathieu, and everyone,
->> 
->> I've been following the hazard pointer work and have done some testing
->> on earlier versions. I'd be interested in getting more involved,
->> particularly in concurrency correctness testing.
->> 
->> If there are WIP patches or early design discussions where additional
->> review or testing would be useful, could you please CC me? I'd
->> appreciate the opportunity to get involved earlier and help identify
->> potential concurrency issues.
->
-> The current stack is in my -rcu tree [1] at v7.3-rc1..c3aea7747975,
-> with these patches on top:
->
-> 5df49d76ff3a3 hazptr: Fix two-phase hazptr_synchronize race with detach
-> b41c6c2d4a33f ptr_eq.h: Introduce ptr_eq() to preserve address dependency
-> 97ff14db1c381 Documentation: RCU: Refer to ptr_eq()
-> 451174c765179 hazptr: Introduce "try acquire" fast path, fallback to overflow list
-> 633f91e3408cc hazptr: Record per-CPU slot owner after claiming the slot
->
-> The biggest need is use cases, with the most likely ones being cases
-> where per-CPU reference counts consume too much memory or a reference
-> count is suffering from memory contention.  However, we are still finding
-> critical bugs both in the mechanism and the torture tests, so as you say,
-> review or testing is also very important.
->
-> These patches CC the rcu@vger.kernel.org list, so the best way to get
-> involved in the discussions is to join that list.
->
-> And welcome aboard!!!
+Patches 2 and 4 make hazptrtorture catch the race fixed by "hazptr:
+Record per-CPU slot owner after claiming the slot" (now on -rcu/dev)
+should it come back, as Paul asked [1] and agreed to [2].  Patch 2
+adds two CONFIG_HAZPTR_DEBUG checks of the recorded slot owner, in
+hazptr_release_debug() and hazptr_note_context_switch().  Patch 4 adds
+the nest_acquire module parameter, which makes readers take a second,
+nested hazard pointer that goes through __hazptr_acquire() while the
+first is in slot 0.
 
-Thank you and also Bradley!
+Patch 3 fixes a false positive of an existing CONFIG_HAZPTR_DEBUG
+check, which the nesting of patch 4 exposes with CPU hotplug: a hazard
+pointer that __hazptr_acquire() puts directly in the backup slot warns
+if the task migrates before releasing it.  It comes before patch 4,
+which would otherwise make runs with CPU hotplug warn.
 
-Kai
+The series applies on -rcu/dev.  30-minute hazptrtorture runs of the
+PREEMPT and NOPREEMPT scenarios pass on x86_64 with 8 CPUs, as do a
+30-minute NOPREEMPT run with torture_type=hazptr and three 10-minute
+PREEMPT runs: one with irq_acquire=100 and nest_acquire=1, one with
+CONFIG_HAZPTR_DEBUG=n, and one with torture_type=hazptr-stack.  The
+30-minute PREEMPT run ends with as many hazard pointers released from
+the pending lists as were deferred (reldefer: 650385 relundefer
+650385).  With kthread_do_pending_ms=10000, two 3-minute PREEMPT runs
+shut down in 100 and 130ms, well within one period.
 
->
-> 							Thanx, Paul
->
-> [1] git://git.kernel.org/pub/scm/linux/kernel/git/paulmck/linux-rcu.git
->
->> Thanks,
->> Kai
->> 
->> > But in the meantime, some additional testing.  ;-)
->> >
->> > 							Thanx, Paul
->> >
->> >> Thanks,
->> >> 
->> >> Mathieu
->> >> 
->> >> Mathieu Desnoyers (4):
->> >>   hazptr: Fix two-phase hazptr_synchronize race with detach
->> >>   ptr_eq.h: Introduce ptr_eq() to preserve address dependency
->> >>   Documentation: RCU: Refer to ptr_eq()
->> >>   hazptr: Introduce "try acquire" fast path, fallback to overflow list
->> >> 
->> >> Cc: Paul E. McKenney <paulmck@kernel.org>
->> >> Cc: Boqun Feng <boqun@kernel.org>
->> >> Cc: Bradley Morgan <brads@mainlining.org>
->> >> Cc: Gary Guo <gary@garyguo.net>
->> >> Cc: <rcu@vger.kernel.org>
->> >> Cc: <lkmm@lists.linux.dev>
->> >> Cc: Lian Wang <lianux.mm@gmail.com>
->> >> Cc: Kunwu Chan <kunwu.chan@gmail.com>
->> >> 
->> >>  Documentation/RCU/rcu_dereference.rst |  38 +++++++-
->> >>  arch/x86/include/asm/ptr_eq.h         |  16 +++
->> >>  include/asm-generic/Kbuild            |   1 +
->> >>  include/asm-generic/ptr_eq.h          |  16 +++
->> >>  include/linux/hazptr.h                |  48 +++++----
->> >>  include/linux/ptr_eq.h                |  63 ++++++++++++
->> >>  kernel/hazptr.c                       | 135 +++++++++++++++-----------
->> >>  7 files changed, 237 insertions(+), 80 deletions(-)
->> >>  create mode 100644 arch/x86/include/asm/ptr_eq.h
->> >>  create mode 100644 include/asm-generic/ptr_eq.h
->> >>  create mode 100644 include/linux/ptr_eq.h
->> >> 
->> >> -- 
->> >> 2.43.0
->> >> 
+Without patch 4, hazptrtorture passes even without the slot-owner fix:
+its readers hold one hazard pointer each, so they reach the slow path
+only when the ptr_eq() check fails or the pointer is NULL.  With
+patches 2 and 4 but without the fix, PREEMPT and NOPREEMPT report the
+race 6.3 and 6.0 seconds after boot, and with nest_acquire=0 both run
+10 minutes without a report.
+
+The nesting costs about a third of the outer reader iterations at the
+default nest_acquire=2.  If that is too much for every run, it could
+default to zero and be enabled from the scenario files instead.
+
+Patches 2 and 4 stand in for the KUnit reproducer mentioned in the RFC
+notes of the fix, which needs a test-only hook in
+__hazptr_try_acquire().  The checks can miss one case that the KUnit
+test covers: an interrupt handler that acquires and releases the slot
+instead of detaching it, then a context switch before the task's
+release, when no other hazard pointer claims the slot in between.
+hazptrtorture does not produce that case either, as
+hazptr_torture_acquire() always detaches.
+
+Patch 2's release check also warns about a second hazptr_release() of
+a ctx whose per-CPU slot another hazard pointer has claimed since.  The
+hazptr_release() kernel-doc permits that second release, but it clears
+the other hazard pointer, and a second release of a backup slot oopses
+even without this series.  Nothing in-tree releases a hazard pointer
+twice.  I will follow up separately on the kernel-doc.
+
+An LLM found the hang fixed by patch 1, the crash shown in patch 2 and
+the false positive fixed by patch 3.  It also helped write all four
+patches and their changelogs, and ran the tests above.
+
+---
+Changes since RFC:
+- Patch 1: stop the readers, then do_pending, then the writer, and
+  release all deferred hazard pointers after torture_kthread_stopping(),
+  instead of keeping do_pending in its loop until it is stopped (Paul).
+  Paul suggested changing the "while (!torture_must_stop())" condition
+  to "while (!kthread_should_stop())"; this keeps it, for the reason in
+  [3].  The changelog also says when kthread_stop() can still delay the
+  exit of do_pending by a full kthread_do_pending_ms sleep (Paul).
+  Bradley's Acked-by is not carried over, as the patch changed.
+- Post patch 1 in a series (Bradley), now with patches 2 and 4, so
+  that hazptrtorture catches the race fixed by the slot-owner RFC patch
+  (Paul).
+- Patch 3: new, for the false positive that patch 4 exposes.
+- Do not repost the slot-owner RFC patch, which Paul has queued.
+- Drop the Assisted-by tags, following mainline commit 1e035297ffda
+  ("docs: remove Assisted-by references"), and describe the LLM use
+  in the changelogs and above instead.
+
+[1] https://lore.kernel.org/r/fa16d2b1-594e-494b-8cfc-9b8c13f2c223@paulmck-laptop/
+[2] https://lore.kernel.org/r/e0145c14-9d6a-4c91-816c-57dabd98879b@paulmck-laptop/
+[3] https://lore.kernel.org/r/20261023120755.2463384-1-parri.andrea@gmail.com/
+
+RFC patch 1: https://lore.kernel.org/r/20261019162005.12888-1-parri.andrea@gmail.com/
+RFC slot-owner fix: https://lore.kernel.org/r/20261019161852.12783-1-parri.andrea@gmail.com/
+
+Andrea Parri (4):
+  hazptrtorture: Release all deferred hazard pointers before stopping
+  hazptr: Check per-CPU slot owner with CONFIG_HAZPTR_DEBUG
+  hazptr: Do not warn when a backup slot is released on another CPU
+  hazptrtorture: Nest a second hazard pointer in readers
+
+ .../admin-guide/kernel-parameters.txt         |  6 +++
+ include/linux/hazptr.h                        | 13 ++++++
+ kernel/hazptr.c                               |  4 ++
+ kernel/rcu/hazptrtorture.c                    | 40 ++++++++++++++++++-
+ 4 files changed, 61 insertions(+), 2 deletions(-)
+
+
+base-commit: 633f91e3408cc65a5237752a3265b031c389e43e
+-- 
+2.53.0
+

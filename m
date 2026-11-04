@@ -1,83 +1,83 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=74.125.82.175
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=74.125.82.44
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793811524;
-	b=RIHVvJ2lKVi1Zg35lJI324hlJIpDnauHStNPNWgbn8I1OWmvH1XVpmZM8POc2OS6MXTH
-	 EYvEg/MU5Pv8KwFtYlyMDzhGCYzxRnj2UIFaPIAmv04riUTeCj0SeBmjCDuo+9J7I8LKr
-	 U+NZ/HEqWzqvNwXwA3v1G9g7LDRHwVIddY88u59v2o021dzK/pIJzgvE6xDADxA4HQ9/W
-	 Rfe8E3HDE/zrGsr4gEZHCtwMEj3e5X8u4x9x2nkuRS3GU3HajBZ0Reex8ALItuLbc3kD4
-	 nClHT9SM08f4S5SC3hqHYU5zWH0Xom08Vus7KE1cEyBBv+QI9VDG3euX76/vz3prTtQ==
+	t=1793811533;
+	b=l3X/eYM4sTcCEPWjGVApHzBPjgbNLhozoQQitsq1oJtVQGCiUfrviz/6ALN4XzP83f9j
+	 FKmxLcKIcM4dWncKuuWPoVQEoyFygSC51UBxxf2JSjvjzD7cOMtUFftCKBBHqbJusLeCr
+	 C6QX5jxpVS7muHmo9do7T7fAoCFLKJl8mJMKUmJyhcHj/iKGzGlTjbwHhlzhf4FfRKR9y
+	 b8UDvoYZwrIPUucDxN4h/b/vtJ8jrYDnjgbLWgXHIbtaEO3AJ1xilVqgG2spa3JdairGi
+	 6ItlB7HxU0n9pOp7X1WMAAMrxAKKo8j7BVmdtcngLuLDF0Z/uVEvHKnynsu92EMnMkA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793811524;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793811533;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
 	 From:To:Cc:Subject:Date:Message-ID:X-Mailer:In-Reply-To:References:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=LPhJ/LZWrehxYqi2srB7hOfC0/MmzJuEkML/aEZarl0=;
-	b=pR1Ef2CUx8LMKmtCyB4LhRS/Nm92RkXORjCCVMra/DoiDZ/oCWkA2Q6cVW9DWn7VQQg2
-	 TbR8Nl1dSm7lEto+ejQH6hW+EkrIyEm5FS4ukR36akksQEaoRPgo27jzwnATSU//BfTxT
-	 wmcMjQ3pEberasycp9iT5tKBo1oMBhtjdlMzYNToVmmt0OUBux5Kexg12cIX5yzVXpj90
-	 VbyAWNqktHrgI7Szg83SskxDfvuLTdcHrRkKZoYNX9gKw84K/xO2eYCw5liRfUaVtKkyO
-	 +xBqiSkBuSkYMyhPqCWX8iMcwiuPfezkls2Iy0YPc5+G28PMkzHkmf3/4QD8SEV0f6A==
+	bh=mOm43uVjDHc2zReKMHzQN6iIWpo1wHm4zcoGnRZJRRg=;
+	b=3hpJX5fadXP7pk2mLiIi19XvhI7SzJfRY8DPh1uXtK4pGekOdzrnyqAEkTui8HsSqxv3
+	 yL9ChLYXUQn7E7YaFIASksLe+PZ31NLVfvSAsVNS/lseUq5++C5BFydleS9/GwdV59iLY
+	 rXTHn0SgKYHnkCGMMrB7GfGHZZhzEnK3O0QxlU/OfCteoXUrafMSCY/4dj3Z0g46400Ot
+	 57K2JHFlOVKDzECgZTtXfA4qhHaLuCmR74/WkjxiW9QwATyi8tPd0sXrRS2xdguimEv1q
+	 8os9KQZbPQpRnAWnT1jWM+0CfgVz3hsnSRJ6UP/SmGYq3lP/6oAyiEB5SoPpIChgcfA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=X8mI++9o;
-	arc=none smtp.remote-ip=74.125.82.175
-Received: from mail-dy1-f175.google.com (mail-dy1-f175.google.com [74.125.82.175])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=lC8pIGTf;
+	arc=none smtp.remote-ip=74.125.82.44
+Received: from mail-dl1-f44.google.com (mail-dl1-f44.google.com [74.125.82.44])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65710606D801
-	for <lkmm@lists.linux.dev>; Wed,  4 Nov 2026 16:58:44 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 65710606D801
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69C7D606EE97
+	for <lkmm@lists.linux.dev>; Wed,  4 Nov 2026 16:58:53 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 69C7D606EE97
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=X8mI++9o
-Received: by mail-dy1-f175.google.com with SMTP id 5a478bee46e88-36dbde64409so286491eec.0
-        for <lkmm@lists.linux.dev>; Wed, 04 Nov 2026 08:58:44 -0800 (PST)
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=lC8pIGTf
+Received: by mail-dl1-f44.google.com with SMTP id a92af1059eb24-19305bcb72cso881155c88.1
+        for <lkmm@lists.linux.dev>; Wed, 04 Nov 2026 08:58:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1793811523; x=1794416323; darn=lists.linux.dev;
+        d=gmail.com; s=20260707; t=1793811532; x=1794416332; darn=lists.linux.dev;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=LPhJ/LZWrehxYqi2srB7hOfC0/MmzJuEkML/aEZarl0=;
-        b=X8mI++9oL3XAc3qn6kJmKJyC24l4eITRMhDkRTxr3bfH4BiZ8pJdTrEAgsWdOKO8pC
-         b+TqR4MyTwD/daSSPNTBrynzArQLZe4VZjJn3ZOihYcNT0/CRyiz8TNU9FvCmPsiGWvh
-         /gOEjojiIg2sAA2pKoF3v6ir7yW17+nL5Notid8hR5GZWaOX7xJCEI4+5GWpTmvwt1nb
-         CuVPFUkTDtE3YcmRxJeuM7rlhxHlh+J2lS5/7xIaGbb15NPnHanya6JPdi67K+pXO2w2
-         HOR+8HwKR5HoN+LcpLd8chAvVZIh9uKfC8LkwJCm9rXCDfVLTJlSUH8nvJ2/JTyWpAMG
-         T/XQ==
+        bh=mOm43uVjDHc2zReKMHzQN6iIWpo1wHm4zcoGnRZJRRg=;
+        b=lC8pIGTffyJvV8sai2XuyZrZtaeRO1Nf2NrsAHsA/Gavh3909A5vZc1sPz0Vgzist3
+         k5PP3R2Tkz3M2JI9De5gobZbPAMGQudBvR8sYDDqKqwtQNztvSeB8Pxu8DMeeDWIBnfq
+         naXRTJvTzPMhEtKTaQu7KpXG7BmSlBZdEFvT3l7AIAdFk/RZj8Cll7TpB8sUc1sIPI7E
+         mQARV0ZsTMUoKoKQ6PqqEEBNppWUqzYWYjqwso+8EV+5fabnCQiGdUjk7BZYUfzkfFfC
+         PlR9ilKV6ebfqdDUUhDD88DtIweesMvLEV/reCAhrPzZ+leZ/hGUYSo2I6vwCUPpSqdy
+         k8lQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793811523; x=1794416323;
+        d=1e100.net; s=20260707; t=1793811532; x=1794416332;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=LPhJ/LZWrehxYqi2srB7hOfC0/MmzJuEkML/aEZarl0=;
-        b=InwfgsX21Ki2OuskG1RXBQJ97z9bkiBU/IC881rRspK9N1VhhhB5aZ7YWVmxNfL4/P
-         6zdY3JDWQvey+R3trkdlzIwiFUAi49oNzlhX2aKgeXXtTGAAToc+puZf7m85viRLT+js
-         ssj/mwAL5lGY5ENLj9R+IV9Tz+c6H692e5VEe36ut52HcpNAyJghWL8qJujdCd6wP5tk
-         R4UpC7RO7YWRq3173Y127hNndLluIW8rXUgwPnOnPHP1EXkt7JDMbSaCHhOhQjVMkeKv
-         PnRfI2z6L+DvHiIvfcc5MDbd4IAFOSLtqNb7fkSJjkJY05tDGQ+g4fEHF25vcJ/yYLn9
-         rXEg==
-X-Forwarded-Encrypted: i=1; AKwUvBzLkhsaUxVE9RiTCG1j+qG785Gt01U9HkhKU1649iCvVuxusv7DRgwVThKPVugYG6hJvqDO@lists.linux.dev
-X-Gm-Message-State: APuU4Z/Mu1g8oIaHxIr/p5CGFrf8tvty6LhLoMXbZE5iRsQjhh9yNn36
-	QMzlstxUQun8Rd/GhH+nfIPvvB1SZWMVgCO4DGIR2iwgLuG76wtID3/i
-X-Gm-Gg: AYBFou2D5KcroIMYGxib1GiKaa9xyomn+oNCQ7VWepalvf9N7RgcjoIWitc3VbBuDki
-	ctSyMB5AabRScXmVwAhD4SgNBHc0mlsNqcAOcjmbmomSU+3JkUmO0H9QfYYCpCyUXJ9EbFCU7b/
-	6X6wyV0FKypzsOHSsYSZJEHl6fL1yUa7AHwNkW53RlaStrFi4OsSCbEMDmPz9Z1TtX58q+lQ6of
-	7K1aXNZqB6Ztjg3mfqHmHKRSJgqzkqzg6zrYbWIo8irdg3SNAEUYIf/lAMjzBupRAxO1Adncp6B
-	sH/DwvtaP74qGL15PEWSHofi5dD0d2l2zaVbbfFWGdiQDoZAVPctKFlOHWwzy8+6CKZU2Y23iwV
-	LsSwOp84NqlKuOKsv1PwOV1nSR8W1UNZm6aK45gCHCjqOgZOeKrdehpyF5ZmGR//VcQHptEo18c
-	8zX72WK+WesXUhfriEnvdov46z1zbMTwVz4ouvUsQjxyRuowO+YAsSf3Sk4kk9lP6QMgBou3gN9
-	J5iCAJBhPxEosV3qKpvkAZw6TKykmscQWJEJX43OUvwFFS0YXucOT0zQnJO+1nbhsjFXcQLFSFm
-	+YGAfLVRXsLX5dTsVHiCoc22UVeAmcSxlN2k9bY=
-X-Received: by 2002:a05:693c:87c9:10b0:360:e2e6:f849 with SMTP id 5a478bee46e88-36a4241985bmr24785233eec.28.1793811522563;
-        Wed, 04 Nov 2026 08:58:42 -0800 (PST)
+        bh=mOm43uVjDHc2zReKMHzQN6iIWpo1wHm4zcoGnRZJRRg=;
+        b=M73/Bc9qXkSEHuMIEcyj5b8ykg7kmkJ/+bDwkTwgz73j6M5flh81nFRNcbOsSAAU+P
+         0LB5gfY9MyWtRpI8qHiWzTsiHz2FiEUSqaNmCuqROKim55PvaLQ9dw1MuUT5mJ+dyy/i
+         eDpWwQVsfic4zgL56cDTVKASP15WSm8OD2/EmOAw66D9i+neoVLB7cgIM44pdZ09muN0
+         8f/IHoFRzoA4LDPYAE0mhIuTtMGK5LY/ji8ix82lwd+JCi+zzr2d5y3Hr09czaDDt9D6
+         BfeRfsu372IZx2NtZr0krhsRB7kgNOGt0fG6+B7ySEWk2P6neeVE27p85GPLrR/qKYLw
+         kE/Q==
+X-Forwarded-Encrypted: i=1; AKwUvBzcuhuL0wrNRWVlsvwAfyxSzpgt6N8+klURFZnp5ENPqshbfA3NoSSyuvNUIqGKdy8dUrtq@lists.linux.dev
+X-Gm-Message-State: APuU4Z9Wza8GFi7n679YVg4j+YXsidKOe6LFCdtcVS4FrWVQxIh+OTRj
+	zXtDiKTybY4UjoBi6L+zXo8gEpEIHGwMokh5equgRBR2bqTKQ+cChKiE
+X-Gm-Gg: AYBFou12L2zEnyOdn7uVAsonomTqGaePWWRT4TkOHBZvUFbNeKLpFzwTRKjDnaN15bX
+	KUkpdiJ+XQoaPQuWtM/IBVLClR+RgSPpu+VNOvHXwLKJUe8tAB7jmZWDAcfgqyuYL1F11Z4jt4Y
+	DbbakHk2AMsWeOHN15OqJadyMUuOpMinBmVob/tQyCJP2RNf8bnnETJdp6di5ScBLKCwXqJbdE5
+	AfKckdQQlylSZWMMjpPNXUf0+OJLdD5kmeSeOQVPdb93wgyCc9subl1XYE4I9O4hTdotVWsdi0t
+	R4MFUvRrdw2/d1iOCKE0jrgkEOTbRyuIH7zFjw94/A7RQR4ziTZaaEOmTEWB4fmFcgXSL6xs77/
+	dGSJH24CD9mR8a2WF7KoM8PirA7U/Nx5LZsXn4wTWKS8hnWz+nZ2xTAVT9kiKbTqplllj9vs+JX
+	OLWwp1ZEdAfPXpB/dPoH6SI65o6/sacLiJnMlk86cQGafZo0QyaN6CTnUGVgASCnlaRWazrZctA
+	PnhLeGFfOHPBsNf5HYgsDj0mbr+LtUPOL+LxYqehw9ywt/ior0sj3MGEJTt7tkQD6/bIu00t31S
+	CLJ6qgvE0GoM+yiCLArwlzSYmfy6sn1UJ0Yr1KmP6acd6TWDu5b/nyiH7WNa
+X-Received: by 2002:a05:7300:5b89:b0:36a:1732:1e7 with SMTP id 5a478bee46e88-36a424c7b7dmr37599893eec.31.1793811531717;
+        Wed, 04 Nov 2026 08:58:51 -0800 (PST)
 Received: from kernel.. ([216.195.201.23])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-36ca38d46fcsm9019567eec.13.2026.11.04.08.58.33
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-36ca38d46fcsm9019567eec.13.2026.11.04.08.58.43
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 04 Nov 2026 08:58:41 -0800 (PST)
+        Wed, 04 Nov 2026 08:58:51 -0800 (PST)
 From: Kunwu Chan <kunwu.chan@gmail.com>
 To: paulmck@kernel.org,
 	boqun@kernel.org,
@@ -112,9 +112,9 @@ Cc: stern@rowland.harvard.edu,
 	linux-doc@vger.kernel.org,
 	rcu@vger.kernel.org,
 	linux-kselftest@vger.kernel.org
-Subject: [PATCH 22/28] hazptrtorture: Add drain fairness rotation scenario
-Date: Thu,  5 Nov 2026 00:54:40 +0800
-Message-ID: <20261104165504.2430480-23-kunwu.chan@gmail.com>
+Subject: [PATCH 23/28] rcuscale: Add hazptr scale type
+Date: Thu,  5 Nov 2026 00:54:41 +0800
+Message-ID: <20261104165504.2430480-24-kunwu.chan@gmail.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20261104165504.2430480-1-kunwu.chan@gmail.com>
 References: <20261104165504.2430480-1-kunwu.chan@gmail.com>
@@ -129,394 +129,106 @@ Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Two stuck addresses, each held by a dedicated holder for the
-whole observation window (hot_fair_ms), with two sync waiters
-launched back to back.  The first waiter's drain engages and,
-because its holder never releases, must hit the fairness cap;
-the second waiter's counter kept growing, so it gets the next
-drain turn.  Rotation evidence comes from the kernel drain logs:
-distinct addresses in "drain engaged" lines plus at least one
-"drain disengaged (fairness-cap" line.
-
-The module verdict only requires forward progress: after both
-holders release, both syncs must drain within 30 s.  Rotation
-observation is reported via console-log checks in hazptr.sh,
-graded as notes (not errors) when the window is too short for
-the configured HZ.
+Add a hazptr scale type for per-writer hazptr_synchronize()
+cost and per-reader hazptr_acquire()/hazptr_release() overhead.
 
 Signed-off-by: Kunwu Chan <kunwu.chan@gmail.com>
 ---
- kernel/rcu/hazptrtorture.c                    | 211 +++++++++++++++++-
- .../selftests/rcutorture/bin/hazptr.sh        |  51 +++++
- .../rcutorture/configs/hazptr/CFLIST          |   1 +
- .../rcutorture/configs/hazptr/FAIRNESS        |  19 ++
- .../rcutorture/configs/hazptr/FAIRNESS.boot   |   1 +
- 5 files changed, 281 insertions(+), 2 deletions(-)
- create mode 100644 tools/testing/selftests/rcutorture/configs/hazptr/FAIRNESS
- create mode 100644 tools/testing/selftests/rcutorture/configs/hazptr/FAIRNESS.boot
+ kernel/rcu/rcuscale.c | 67 +++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 67 insertions(+)
 
-diff --git a/kernel/rcu/hazptrtorture.c b/kernel/rcu/hazptrtorture.c
-index 5dbe04af7515..787862a4d4eb 100644
---- a/kernel/rcu/hazptrtorture.c
-+++ b/kernel/rcu/hazptrtorture.c
-@@ -64,6 +64,8 @@ torture_param(int, hot_longhold_ms, 0,
- 	      "Long-hold round duration (ms), 0 disables; R0 holds past the stall timeout, no hammer");
- torture_param(bool, starve_expected, false,
- 	      "Starvation episodes are expected (documenting mode)");
-+torture_param(int, hot_fair_ms, 0,
-+	      "Drain fairness rotation window (ms), 0 disables");
+diff --git a/kernel/rcu/rcuscale.c b/kernel/rcu/rcuscale.c
+index 5659eaebc5c0..6e3e3f296f85 100644
+--- a/kernel/rcu/rcuscale.c
++++ b/kernel/rcu/rcuscale.c
+@@ -40,6 +40,7 @@
+ #include <linux/vmalloc.h>
+ #include <linux/rcupdate_trace.h>
+ #include <linux/sched/debug.h>
++#include <linux/hazptr.h>
  
- static char *torture_type = "hazptr";
- module_param(torture_type, charp, 0444);
-@@ -93,6 +95,24 @@ static DECLARE_COMPLETION(r0_held);
- static DECLARE_COMPLETION(r0_release);
- static bool hot_hammer_active;
+ #include "rcu.h"
  
-+/* Fairness rotation scenario: two stuck addresses whose holders
-+ * never release during the observation window.  Two sync waiters
-+ * are launched; the drain fairness cap must rotate the drain
-+ * between the two addresses instead of monopolizing one.
-+ */
-+static int fair_target_a;
-+static int fair_target_b;
-+static void *const fair_addr[2] = { &fair_target_a, &fair_target_b };
-+static struct task_struct *fair_holder_tasks[2];
-+static struct task_struct *fair_stage_task;
-+static struct completion fair_held[2];
-+static struct completion fair_release[2];
-+static struct completion fair_released[2];
-+static struct completion fair_sync_done[2];
-+static atomic_t fair_live_syncs;
-+static atomic_t n_fair_rounds;
-+static atomic_t n_fair_timeout;
+@@ -460,6 +461,71 @@ static struct rcu_scale_ops tasks_tracing_ops = {
+ 
+ #endif // #else // #ifdef CONFIG_TASKS_TRACE_RCU
+ 
++#if IS_ENABLED(CONFIG_HAZPTR_TORTURE_TEST)
 +
- #define HAZPTR_TORTURE_PIPE_LEN 10
- 
- // Update-side data structure used to check RCU readers.
-@@ -707,10 +727,13 @@ hazptr_torture_stats_print(void)
- 		torture_sum_pcpu_atomic_long(&hazptr_torture_releases_defer),
- 		torture_sum_pcpu_atomic_long(&hazptr_torture_releases_undefer),
- 		atomic_read(&n_hazptr_torture_wq_churn));
--	pr_cont(" hotsync: %d hotstarve: %d hotseq: %d",
-+	pr_cont(" hotsync: %d hotstarve: %d hotseq: %d"
-+		" fairrounds: %d fairtimeout: %d",
- 		atomic_read(&n_hot_syncs),
- 		atomic_read(&n_hot_starves),
--		atomic_read(&n_hot_in_seq));
-+		atomic_read(&n_hot_in_seq),
-+		atomic_read(&n_fair_rounds),
-+		atomic_read(&n_fair_timeout));
- 
- 	pr_alert("%s%s ", torture_type, TORTURE_FLAG);
- 	if (i > 1) {
-@@ -1127,6 +1150,152 @@ static int hazptr_torture_hot_stage(void *unused)
- 	return 0;
- }
- 
-+/*
-+ * Fairness rotation scenario --- two stuck addresses, two
-+ * perpetual holders, two sync waiters.
-+ *
-+ *   fair_holder_tasks[2]  each acquires its own address and holds
-+ *                         it until commanded to release; the hold
-+ *                         spans the whole observation window.
-+ *   fair_stage_task       orchestrator: waits for both holds,
-+ *                         launches both sync waiters (address A
-+ *                         first so it is at the head of the
-+ *                         scanning list), waits out the window,
-+ *                         then releases both holders and requires
-+ *                         both syncs to drain.
-+ *
-+ * The window must be long enough for the drain to engage (~100
-+ * scan cycles) and hit the fairness cap (HAZPTR_DRAIN_MAX_CYCLES,
-+ * default 1000) on address A, after which address B's waiter --
-+ * whose re-engage counter kept growing -- gets the next drain
-+ * turn.  Rotation evidence is read from the kernel drain logs
-+ * ("drain engaged" for both addresses, at least one "drain
-+ * disengaged (fairness-cap").
-+ *
-+ * The module verdict (n_hazptr_torture_error) does not depend on
-+ * rotation: it fails only if a sync fails to drain after both
-+ * holders released (a forward-progress regression).
-+ */
-+static int hazptr_torture_fair_holder(void *arg)
-+{
-+	long i = (long)arg;
++#define HAZPTR_SCALE_NR_OBJS 8
++static int hazptr_scale_obj[HAZPTR_SCALE_NR_OBJS];
++static atomic_t hazptr_scale_sync_idx = ATOMIC_INIT(0);
++
++struct hazptr_scale_state {
 +	struct hazptr_ctx ctx;
-+	void *p;
++	void *addr;
++};
++static DEFINE_PER_CPU(struct hazptr_scale_state, hazptr_scale_state);
 +
-+	VERBOSE_TOROUT_STRING("fair_holder task started");
-+	p = fair_addr[i];
-+	(void)hazptr_acquire(&ctx, &p);
-+	complete(&fair_held[i]);
-+	while (!wait_for_completion_timeout(&fair_release[i], HZ)) {
-+		if (torture_must_stop())
-+			break;
-+	}
-+	hazptr_release(&ctx, p);
-+	complete(&fair_released[i]);
-+	torture_kthread_stopping("fair_holder");
-+	return 0;
-+}
-+
-+/* Transient per-round sync kthread.  fair_live_syncs is
-+ * incremented by the stage before kthread_run() and decremented
-+ * here at exit, so the count covers the full lifetime including
-+ * the window between thread creation and first execution.
-+ */
-+static int hazptr_torture_fair_do_sync(void *arg)
++static int hazptr_scale_read_lock(void)
 +{
-+	long i = (long)arg;
++	struct hazptr_scale_state *state = this_cpu_ptr(&hazptr_scale_state);
++	int idx = smp_processor_id() % HAZPTR_SCALE_NR_OBJS;
++	void *ptr = &hazptr_scale_obj[idx];
 +
-+	hazptr_synchronize(fair_addr[i]);
-+	complete(&fair_sync_done[i]);
-+	atomic_dec(&fair_live_syncs);
++	state->addr = hazptr_acquire(&state->ctx, &ptr);
 +	return 0;
 +}
 +
-+static int hazptr_torture_fair_stage(void *unused)
++static void hazptr_scale_read_unlock(int idx)
 +{
-+	int i;
++	struct hazptr_scale_state *state = this_cpu_ptr(&hazptr_scale_state);
 +
-+	VERBOSE_TOROUT_STRING("fair_stage task started");
++	hazptr_release(&state->ctx, state->addr);
++}
 +
-+	while (!torture_must_stop() && !rcu_inkernel_boot_has_ended())
-+		schedule_timeout_interruptible(HZ);
-+	{
-+		bool sync_launched[2] = { false, false };
-+
-+	/* Wait for both holders to acquire their addresses. */
-+	for (i = 0; i < 2; i++) {
-+		while (!wait_for_completion_timeout(&fair_held[i], HZ)) {
-+			if (torture_must_stop())
-+				goto out;
-+		}
-+	}
-+
-+	/* Launch both sync waiters; A first so it leads the list. */
-+	for (i = 0; i < 2; i++) {
-+		struct task_struct *t;
-+
-+		atomic_inc(&fair_live_syncs);
-+		t = kthread_run(hazptr_torture_fair_do_sync, (void *)(long)i,
-+				"fair_do_sync");
-+		if (IS_ERR(t)) {
-+			atomic_dec(&fair_live_syncs);
-+			pr_alert("%sfair: sync kthread alloc failed (%d)\n",
-+				 TORTURE_FLAG, i);
-+			atomic_inc(&n_hazptr_torture_error);
-+			goto release;
-+		}
-+		sync_launched[i] = true;
-+	}
-+
-+	/* Observation window: drains rotate via the fairness cap. */
-+	{
-+		unsigned long end = jiffies + msecs_to_jiffies(hot_fair_ms);
-+
-+		while (time_before(jiffies, end) && !torture_must_stop())
-+			schedule_timeout_interruptible(HZ);
-+	}
-+
-+	/* Negative observation: holders still hold, so the syncs
-+	 * must not have completed during the window.
-+	 */
-+	for (i = 0; i < 2; i++) {
-+		if (completion_done(&fair_sync_done[i])) {
-+			pr_alert("%sfair: sync %d completed while holder holds\n",
-+				 TORTURE_FLAG, i);
-+			atomic_inc(&n_hazptr_torture_error);
-+		}
-+	}
-+
-+release:
-+	/* Release both holders; the syncs must now drain. */
-+	for (i = 0; i < 2; i++)
-+		complete(&fair_release[i]);
-+	for (i = 0; i < 2; i++) {
-+		unsigned long deadline = jiffies + 30 * HZ;
-+
-+		if (!sync_launched[i])
-+			continue;
-+		while (!wait_for_completion_timeout(&fair_sync_done[i], HZ)) {
-+			if (torture_must_stop() ||
-+			    time_after(jiffies, deadline)) {
-+				pr_alert("%sfair: sync %d did not drain after release\n",
-+					 TORTURE_FLAG, i);
-+				atomic_inc(&n_hazptr_torture_error);
-+				atomic_inc(&n_fair_timeout);
-+				break;
-+			}
-+		}
-+	}
-+	atomic_inc(&n_fair_rounds);
-+	}
-+out:
-+	/* Unblock holders even on skip paths. */
-+	for (i = 0; i < 2; i++)
-+		complete(&fair_release[i]);
-+	torture_kthread_stopping("fair_stage");
++static unsigned long hazptr_scale_completed(void)
++{
 +	return 0;
 +}
 +
- static void
- hazptr_torture_cleanup(void)
++static void hazptr_scale_sync(void)
++{
++	int idx = atomic_fetch_inc(&hazptr_scale_sync_idx) % HAZPTR_SCALE_NR_OBJS;
++
++	hazptr_synchronize(&hazptr_scale_obj[idx]);
++}
++
++static void hazptr_scale_sync_exp(void)
++{
++	int idx = atomic_fetch_inc(&hazptr_scale_sync_idx) % HAZPTR_SCALE_NR_OBJS;
++
++	hazptr_synchronize(&hazptr_scale_obj[idx]);
++}
++
++static struct rcu_scale_ops hazptr_scale_ops = {
++	.ptype		= 0,
++	.readlock	= hazptr_scale_read_lock,
++	.readunlock	= hazptr_scale_read_unlock,
++	.get_gp_seq	= hazptr_scale_completed,
++	.gp_diff	= NULL,
++	.exp_completed	= hazptr_scale_completed,
++	.sync		= hazptr_scale_sync,
++	.exp_sync	= hazptr_scale_sync_exp,
++	.name		= "hazptr",
++};
++
++#define HAZPTR_SCALE_OPS &hazptr_scale_ops,
++#else
++#define HAZPTR_SCALE_OPS
++#endif
++
+ static unsigned long rcuscale_seq_diff(unsigned long new, unsigned long old)
  {
-@@ -1169,6 +1338,24 @@ hazptr_torture_cleanup(void)
- 		unregister_trace_hazptr_waiter_enqueue(hot_probe_enqueue, NULL);
- 	}
+ 	if (!cur_ops->gp_diff)
+@@ -1140,6 +1206,7 @@ rcu_scale_init(void)
+ 	static struct rcu_scale_ops *scale_ops[] = {
+ 		&rcu_ops, &srcu_ops, &srcua_ops, &srcud_ops,
+ 		TASKS_OPS TASKS_RUDE_OPS TASKS_TRACING_OPS
++		HAZPTR_SCALE_OPS
+ 	};
  
-+	if (hot_fair_ms > 0) {
-+		int wait_ms = 5000;
-+
-+		for (i = 0; i < 2; i++)
-+			complete(&fair_release[i]);
-+		for (i = 0; i < 2; i++)
-+			torture_stop_kthread(hazptr_torture_fair_holder,
-+					     fair_holder_tasks[i]);
-+		torture_stop_kthread(hazptr_torture_fair_stage, fair_stage_task);
-+		while (atomic_read(&fair_live_syncs) && wait_ms > 0) {
-+			schedule_timeout_uninterruptible(msecs_to_jiffies(50));
-+			wait_ms -= 50;
-+		}
-+		if (atomic_read(&fair_live_syncs))
-+			pr_alert("%sfair: %d sync kthread(s) still alive at exit\n",
-+				 TORTURE_FLAG, atomic_read(&fair_live_syncs));
-+	}
-+
- 	torture_stop_kthread(hazptr_torture_writer, writer_task);
- 
- 	if (reader_tasks) {
-@@ -1378,6 +1565,26 @@ static int __init hazptr_torture_init(void)
- 		if (torture_init_error(firsterr))
- 			goto unwind;
- 	}
-+	if (hot_fair_ms > 0) {
-+		atomic_set(&fair_live_syncs, 0);
-+		atomic_set(&n_fair_rounds, 0);
-+		atomic_set(&n_fair_timeout, 0);
-+		for (i = 0; i < 2; i++) {
-+			init_completion(&fair_held[i]);
-+			init_completion(&fair_release[i]);
-+			init_completion(&fair_released[i]);
-+			init_completion(&fair_sync_done[i]);
-+			firsterr = torture_create_kthread(
-+				hazptr_torture_fair_holder,
-+				(void *)(long)i, fair_holder_tasks[i]);
-+			if (torture_init_error(firsterr))
-+				goto unwind;
-+		}
-+		firsterr = torture_create_kthread(hazptr_torture_fair_stage,
-+						  NULL, fair_stage_task);
-+		if (torture_init_error(firsterr))
-+			goto unwind;
-+	}
- 
- 	torture_init_end();
- 	return 0;
-diff --git a/tools/testing/selftests/rcutorture/bin/hazptr.sh b/tools/testing/selftests/rcutorture/bin/hazptr.sh
-index d12735ddfefc..8109cb76bf04 100755
---- a/tools/testing/selftests/rcutorture/bin/hazptr.sh
-+++ b/tools/testing/selftests/rcutorture/bin/hazptr.sh
-@@ -297,6 +297,57 @@ else
- 	nerrs=$((nerrs+1))
- fi
- 
-+# FAIRNESS: drain rotation between two stuck addresses.  The
-+# module verdict covers forward progress (syncs drain after
-+# release); rotation itself is observed from the kernel drain
-+# logs.
-+
-+echo "--- hazptr FAIRNESS (drain rotation) ---"
-+if run_kvm fairness FAIRNESS "$cpus" "" "50s"
-+then
-+	resdir="$RCUTORTURE/res/$ds/fairness/FAIRNESS"
-+	console="$resdir/console.log"
-+	fair_err=""
-+	if ! test -f "$console"
-+	then
-+		echo "Missing console.log for FAIRNESS" > "$RCUTORTURE/res/$ds/fairness/kvm.sh.err"
-+		fair_err=1
-+	elif ! grep -q "End of test: SUCCESS" "$console"
-+	then
-+		echo "FAIRNESS: module verdict not SUCCESS" > "$resdir/kvm.sh.err"
-+		fair_err=1
-+	elif ! grep -q "fair_stage task started" "$console"
-+	then
-+		echo "FAIRNESS: scenario did not run" > "$resdir/kvm.sh.err"
-+		fair_err=1
-+	elif grep -q "fair: sync .* did not drain" "$console"
-+	then
-+		echo "FAIRNESS: sync failed to drain after release" > "$resdir/kvm.sh.err"
-+		fair_err=1
-+	fi
-+	if [ -z "$fair_err" ]
-+	then
-+		engages=$(grep -o "drain engaged for [0-9a-f]*" "$console" | sort -u | wc -l)
-+		caps=$(grep -c "drain disengaged (fairness-cap" "$console")
-+		if test "$engages" -ge 2 -a "$caps" -ge 1
-+		then
-+			echo "FAIRNESS: drain rotated between $engages addresses, $caps fairness-cap disengage(s)"
-+		elif test "$caps" -ge 1
-+		then
-+			echo "FAIRNESS note: fairness-cap hit but only $engages address engaged (window may be short)" > "$resdir/kvm.sh.note"
-+		else
-+			echo "FAIRNESS note: no fairness-cap observed (window too short for HZ; consider larger hot_fair_ms)" > "$resdir/kvm.sh.note"
-+		fi
-+	fi
-+	if [ -n "$fair_err" ]
-+	then
-+		nerrs=$((nerrs+1))
-+	fi
-+else
-+	nerrs=$((nerrs+1))
-+fi
-+echo
-+
- # CPU scaling: optionally test at multiple CPU counts
- 
- if test "$allcpus" -ne 0
-diff --git a/tools/testing/selftests/rcutorture/configs/hazptr/CFLIST b/tools/testing/selftests/rcutorture/configs/hazptr/CFLIST
-index b3f6137ce8ab..03ce4940ab4a 100644
---- a/tools/testing/selftests/rcutorture/configs/hazptr/CFLIST
-+++ b/tools/testing/selftests/rcutorture/configs/hazptr/CFLIST
-@@ -8,3 +8,4 @@ CPU128
- CPU256
- HOTADDR
- LONGHOLD
-+FAIRNESS
-diff --git a/tools/testing/selftests/rcutorture/configs/hazptr/FAIRNESS b/tools/testing/selftests/rcutorture/configs/hazptr/FAIRNESS
-new file mode 100644
-index 000000000000..b81b57307036
---- /dev/null
-+++ b/tools/testing/selftests/rcutorture/configs/hazptr/FAIRNESS
-@@ -0,0 +1,19 @@
-+CONFIG_SMP=y
-+CONFIG_NR_CPUS=16
-+CONFIG_PREEMPT_NONE=n
-+CONFIG_PREEMPT_VOLUNTARY=n
-+CONFIG_PREEMPT=y
-+CONFIG_HZ_PERIODIC=n
-+CONFIG_NO_HZ_IDLE=y
-+CONFIG_NO_HZ_FULL=n
-+CONFIG_HOTPLUG_CPU=y
-+CONFIG_SUSPEND=n
-+CONFIG_HIBERNATION=n
-+CONFIG_PROVE_LOCKING=n
-+CONFIG_DEBUG_LOCK_ALLOC=n
-+CONFIG_DEBUG_OBJECTS_RCU_HEAD=n
-+CONFIG_DEBUG_KERNEL=y
-+CONFIG_HAZPTR_DEBUG=y
-+CONFIG_HAZPTR_STALL_DETECTOR=y
-+CONFIG_HAZPTR_STALL_TIMEOUT=60000
-+CONFIG_HAZPTR_DRAIN_ASSIST=y
-diff --git a/tools/testing/selftests/rcutorture/configs/hazptr/FAIRNESS.boot b/tools/testing/selftests/rcutorture/configs/hazptr/FAIRNESS.boot
-new file mode 100644
-index 000000000000..ef54cbfc5b50
---- /dev/null
-+++ b/tools/testing/selftests/rcutorture/configs/hazptr/FAIRNESS.boot
-@@ -0,0 +1 @@
-+hazptrtorture.nreaders=0 hazptrtorture.nwriters=0 hazptrtorture.hot_fair_ms=30000 hazptrtorture.shutdown_secs=45
+ 	if (!torture_init_begin(scale_type, verbose))
 -- 
 2.43.0
 

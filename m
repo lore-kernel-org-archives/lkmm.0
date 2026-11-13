@@ -1,81 +1,136 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=158.69.130.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794531474;
-	b=WtTOebMKDhnzXMePKf2/BTc7NJaAubW7L0nxi105bHDX4nGr0NFM2UXvwgvj4NBwe5BM
-	 5ZOJXtMfOIMHX1ftPpZBHHbcBGjnplkzsJEV5BsPZPmCQ+QXo6OQie2ygWO0Cmh6Ij7cK
-	 hA4H1NgXXP/j29d+oWIb1MG01JeaLkftC+6YGmVE9hJyE0fO8fbE5CB871QJwrXSXFZej
-	 PAa74QeBduLNbeGJaCP0itkoA6okHnT6MWLVk1n6fkz+bitp97g86VH1W1bmZIukwUrop
-	 m9+IvnOCdZrVbsYa9YG8L64StUDkPRJlMOt+D81H21Q9On/3lWgpGt2AtjaCfZ1O8vQ==
+	t=1794575956;
+	b=QvjbpzcVTqGxrxp1ZYDdh3Wayg1ZeEy9IC4nOnx6Of7k1GKsPoG1G7y/sb47hD2/gChh
+	 HXvY3veRtJ1A7b6EDKqbs6liqlhh1oU2tL3akFLsMJBHgOOKazQGsdg1YtQSquCWty378
+	 OMtlZIq+nmdhs4QcNr+1DcENmUcjreIMmmHy7rY+iO3qdCJE/I72s4Wib0HJa63hdG6vN
+	 CTX0+16YmM8RiUlUjdyElYh+V299lXHFpw4xlAU6veRqAJhzapcZELv8O4pM4hzvXYiU6
+	 m4KdqRJ951OK1wuHJYjsRz0uPrLQfT2p1TupqD1xSDjpRy7PAw2qvmVezBYxvX2mgJg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794531474;
-	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
-	 In-Reply-To:References:MIME-Version:Content-Transfer-Encoding;
-	bh=OcfSVkWao6pdjVtwXUlio7NDEQODdtBQ2I49ki3ouiQ=;
-	b=tmH/e8uyqO3pPcMQyij38fhC6k3pMEWN5BaaLG3JN4Tv6KZnsgBrzi00ZNwiootJlFMG
-	 mxtHLhk4Mln9R8brONXteI4y1Xnv9FwFrpAhq2rIyBCDoSeLvibANbiy6120ZNxwoRO4b
-	 J0VXPClW+BFI5j9SnGZ3eylmgOvstZEQB8hNAv5zFqICFCmoPUH1JjdZ11RhAe1LcBk9v
-	 o+LlcqnO8OzvO42iEj0vpOKFZMz0UULcwq4Cd/iOrSRwCb8JkUXNZ5yYZsyQIQW2n+IMQ
-	 Yo6zIdpZtH6tgfqsYumYZGO3amgCSD5CD7PVhcpEya3UlLsEE+xlcfz1NF+JPuuiUIg==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794575956;
+	h=DMARC-Filter:DKIM-Signature:Received:From:To:Cc:Subject:Date:
+	 Message-Id:X-Mailer:In-Reply-To:References:MIME-Version:
+	 Content-Transfer-Encoding;
+	bh=V6G0bPzKPqW9y5CcOLYbTf+p7g3V14XBJCbAwz7OwwM=;
+	b=nOXXceIqvQ49Aoq5MRMyXW6w1MoTIxe9C0/myw3tRbEff9wkyd9zsUV+bXbHq4jWl8Ii
+	 3Y0nti5WlM92Sh0OsMZMu8g35yMH98AH4nPDL+3Vlf03T4vaQs8cQXnMGfMbRhfaC11zM
+	 v8yyTHRPyyON9OZHpSzwHKpm11otHAC0Ppz+C/bHT4D+a2qkF0Y5qHCeQaIW6P0F+S0Pp
+	 dnzT/Z/gWXsSKsCJ8dhyt+FEgKJWbaz/z9qDq7ZQfsDfahOkzlTuAkfS+VnAel80+K9fe
+	 2b/3wznIgWWpnzZUwpIyJT7dOQ3QaU/9a9J8Wr+CSdUzyygOsBGH3Q7VirrZNg7tJ0A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=Yck2E+XZ;
-	arc=none smtp.remote-ip=100.103.45.18
-Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
+	dmarc=pass header.from=efficios.com;
+	spf=pass smtp.mailfrom=efficios.com;
+	dkim=pass header.d=efficios.com header.i=@efficios.com header.a=rsa-sha256 header.s=smtpout1 header.b=X8cJyEAv;
+	arc=none smtp.remote-ip=158.69.130.18
+Received: from smtpout.efficios.com (smtpout.efficios.com [158.69.130.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with UTF8SMTPS id 7372F606A88C;
-	Fri, 13 Nov 2026 00:57:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4828606A890;
+	Fri, 13 Nov 2026 13:19:15 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org C4828606A890
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=efficios.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=efficios.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=Yck2E+XZ
-Received: by smtp.kernel.org (Postfix) with UTF8SMTPSA id 0407F1F000C8;
-	Fri, 13 Nov 2026 00:57:54 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1794531474;
-	bh=OcfSVkWao6pdjVtwXUlio7NDEQODdtBQ2I49ki3ouiQ=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Yck2E+XZD2a+MPTzefi/1pfLD6NZuHf1ey/lRUeQ4c/2CXFjhPHzuXygb+i6r6loR
-	 2roibeg6Yz163yZSofMKFawKBQrHXbKIlS2H14m4OpQL3axGmK5vKWF/2d0LhI0eLw
-	 XRU6Pxr+tVBzC0WYtQVsTNFth81OuNWMdOCl0VgU8EbnZy5Yk7Mlx6qbICQxjabAz1
-	 cukSQeSPOObOdiUGGxlx6ZAgUThKEJLHWD0OLspjeYoheEZhvMw+7yH0jtAvgMWv1x
-	 N+2nSUuz6qCEhcyF3MFcxkky2zKGBPAl2VE0snnH4u+Zs+tfrJ6xmbsN/g8Dbi1P0U
-	 g4IXYwF4W9Rpg==
-From: Joel Fernandes <jfern@kernel.org>
-To: linux-kernel@vger.kernel.org,
-	"Paul E . McKenney" <paulmck@kernel.org>,
-	Frederic Weisbecker <frederic@kernel.org>,
-	Neeraj Upadhyay <neeraj.upadhyay@kernel.org>,
-	Joel Fernandes <jfern@kernel.org>,
-	Josh Triplett <josh@joshtriplett.org>,
-	Boqun Feng <boqun@kernel.org>,
-	Uladzislau Rezki <urezki@gmail.com>,
-	Steven Rostedt <rostedt@goodmis.org>,
+	dkim=pass (2048-bit key) header.d=efficios.com header.i=@efficios.com header.a=rsa-sha256 header.s=smtpout1 header.b=X8cJyEAv
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=efficios.com;
+	s=smtpout1; t=1794575949;
+	bh=V6G0bPzKPqW9y5CcOLYbTf+p7g3V14XBJCbAwz7OwwM=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=X8cJyEAvdMWB71Tx5hYHbX9rgjIzRtn8e8WljOb6kbBjAJRhCppqLMlzblBT84BpS
+	 5t5XEneMR04259TaXcu7brlD7exXU8OdKknO6REXSWgXX7zcAVeD3JF4/s1t/ZP0U7
+	 jf/Ws0yxqDnkpjI4f3YE5RwDc/Wl6SOiodXJHhMjZ4INF+PIk/gbGt71GD8DLae5dU
+	 ERyWsM3Aw2wIDyAi5wSFdKln0zJ5I5ty1Qiwv9D3OLerH+HQO6XVK2AuJOxOtunMdH
+	 4udFKcw+CmrF1RqutBd3gAm7D6gvCufrIKUqxSVLdZRG8Xxf6ysWn/cx+PmhZHatou
+	 pUO6qcX8nAbDw==
+Received: from thinkos.internal.efficios.com (mtl.efficios.com [216.120.195.104])
+	by smtpout.efficios.com (Postfix) with ESMTPSA id 4jQyWw64mfzPxK;
+	Fri, 13 Nov 2026 08:19:08 -0500 (EST)
+From: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+To: Peter Zijlstra <peterz@infradead.org>,
+	Ingo Molnar <mingo@redhat.com>
+Cc: linux-kernel@vger.kernel.org,
 	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
-	Lai Jiangshan <jiangshanlai@gmail.com>,
-	Zqiang <qiang.zhang@linux.dev>,
+	Juri Lelli <juri.lelli@redhat.com>,
+	Vincent Guittot <vincent.guittot@linaro.org>,
+	Dietmar Eggemann <dietmar.eggemann@arm.com>,
+	Steven Rostedt <rostedt@goodmis.org>,
+	Ben Segall <bsegall@google.com>,
+	Mel Gorman <mgorman@suse.de>,
+	Valentin Schneider <vschneid@redhat.com>,
+	K Prateek Nayak <kprateek.nayak@amd.com>,
+	"Paul E. McKenney" <paulmck@kernel.org>,
+	Michal Clapinski <mclapinski@google.com>,
+	Andrei Vagin <avagin@gmail.com>,
+	Shuah Khan <shuah@kernel.org>,
+	Aniket Gattani <aniketgattani@google.com>,
+	linux-kselftest@vger.kernel.org,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Chris Gellermann <christian.gellermann@codasip.com>,
+	Bala-Vignesh-Reddy <reddybalavignesh9979@gmail.com>,
+	Wei Yang <richard.weiyang@gmail.com>,
+	Thomas Gleixner <tglx@kernel.org>,
+	Huacai Chen <chenhuacai@kernel.org>,
+	WANG Xuerui <kernel@xen0n.name>,
+	loongarch@lists.linux.dev,
+	"James E.J. Bottomley" <James.Bottomley@HansenPartnership.com>,
+	Helge Deller <deller@gmx.de>,
+	John David Anglin <dave.anglin@bell.net>,
+	linux-parisc@vger.kernel.org,
+	Jonathan Corbet <corbet@lwn.net>,
+	Shuah Khan <skhan@linuxfoundation.org>,
+	Randy Dunlap <rdunlap@infradead.org>,
+	Paul Walmsley <pjw@kernel.org>,
+	Palmer Dabbelt <palmer@dabbelt.com>,
+	Albert Ou <aou@eecs.berkeley.edu>,
+	Alexandre Ghiti <alex@ghiti.fr>,
+	Guo Ren <guoren@kernel.org>,
+	linux-doc@vger.kernel.org,
+	linux-riscv@lists.infradead.org,
+	linux-csky@vger.kernel.org,
+	Jonas Bonn <jonas@southpole.se>,
+	Stefan Kristiansson <stefan.kristiansson@saunalahti.fi>,
+	Stafford Horne <shorne@gmail.com>,
+	linux-openrisc@vger.kernel.org,
+	Yoshinori Sato <ysato@users.sourceforge.jp>,
+	Rich Felker <dalias@libc.org>,
+	John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>,
+	linux-sh@vger.kernel.org,
+	Chris Zankel <chris@zankel.net>,
+	Max Filippov <jcmvbkbc@gmail.com>,
+	linux-arch@vger.kernel.org,
+	Borislav Petkov <bp@alien8.de>,
+	Dave Hansen <dave.hansen@linux.intel.com>,
+	x86@kernel.org,
+	"H. Peter Anvin" <hpa@zytor.com>,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	Will Deacon <will@kernel.org>,
+	Mark Rutland <mark.rutland@arm.com>,
+	linux-arm-kernel@lists.infradead.org,
+	Andy Lutomirski <luto@kernel.org>,
 	Alan Stern <stern@rowland.harvard.edu>,
 	Andrea Parri <parri.andrea@gmail.com>,
-	Will Deacon <will@kernel.org>,
-	Peter Zijlstra <peterz@infradead.org>,
+	Boqun Feng <boqun@kernel.org>,
 	Nicholas Piggin <npiggin@gmail.com>,
 	David Howells <dhowells@redhat.com>,
 	Jade Alglave <j.alglave@ucl.ac.uk>,
 	Luc Maranget <luc.maranget@inria.fr>,
 	Akira Yokosawa <akiyks@gmail.com>,
 	Daniel Lustig <dlustig@nvidia.com>,
-	Jonathan Corbet <corbet@lwn.net>,
-	Shuah Khan <skhan@linuxfoundation.org>,
-	Randy Dunlap <rdunlap@infradead.org>
-Cc: rcu@vger.kernel.org,
-	Kunwu Chan <kunwu.chan@gmail.com>,
-	linux-arch@vger.kernel.org,
+	Joel Fernandes <joelagnelf@nvidia.com>,
 	lkmm@lists.linux.dev,
-	linux-doc@vger.kernel.org
-Subject: [PATCH for-v7.5 02/14] Documentation/litmus-tests: Add SRCU fastpath scan-before-anchor test
-Date: Thu, 12 Nov 2026 19:57:29 -0500
-Message-ID: <20261113005747.2977123-3-jfern@kernel.org>
-X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20261113005747.2977123-1-jfern@kernel.org>
-References: <20261113005747.2977123-1-jfern@kernel.org>
+	bpf@vger.kernel.org,
+	Naveen N Rao <naveen@kernel.org>,
+	"David S. Miller" <davem@davemloft.net>,
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	linux-trace-kernel@vger.kernel.org,
+	stable@vger.kernel.org
+Subject: [RFC PATCH 02/16] sched/membarrier: Report only completed registrations
+Date: Fri, 13 Nov 2026 08:18:49 -0500
+Message-Id: <20261113131903.157186-3-mathieu.desnoyers@efficios.com>
+X-Mailer: git-send-email 2.39.5
+In-Reply-To: <20261113131903.157186-1-mathieu.desnoyers@efficios.com>
+References: <20261113131903.157186-1-mathieu.desnoyers@efficios.com>
 X-Mailing-List: lkmm@lists.linux.dev
 List-Id: <lkmm.lists.linux.dev>
 List-Post: <mailto:lkmm@lists.linux.dev>
@@ -87,122 +142,97 @@ Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-From: Kunwu Chan <kunwu.chan@gmail.com>
+MEMBARRIER_CMD_GET_REGISTRATIONS returns the registration commands
+which the process issued.
 
-If the synchronize_srcu_atomic() fastpath instead places its lock scan
-before the grace-period anchor, the scan can miss a reader whose
-increment was already visible before the anchor.  That reader already
-existed when the grace period started, so completing the grace period
-without waiting for it would violate the SRCU grace-period guarantee.
+Each registration has two state bits: one is set when the registration
+starts and the "ready" one when it completes. The command reports a
+registration when either bit is set.
 
-This litmus test models the reversed ordering, with the lock scan placed
-before the grace-period anchor.  "seq" models the grace-period anchor in
-->srcu_gp_seq and "ctr" models the per-CPU ->srcu_ctrs[].srcu_locks
-counter.  P0 scans the lock counter before writing the anchor, with an
-smp_mb() between them.  P1 models the reader-side counter increment.
-P2 models an observer that sees the reader's increment before seeing
-the anchor.
+The sync core and rseq registrations also set
+MEMBARRIER_STATE_PRIVATE_EXPEDITED, without its "ready" bit. They set
+it because their commands need the same scheduler barriers as
+MEMBARRIER_CMD_PRIVATE_EXPEDITED. So a process which only issued
+MEMBARRIER_CMD_REGISTER_PRIVATE_EXPEDITED_RSEQ is reported as having
+issued MEMBARRIER_CMD_REGISTER_PRIVATE_EXPEDITED as well. Yet
+MEMBARRIER_CMD_PRIVATE_EXPEDITED returns -EPERM for that process.
 
-The same outcome is allowed with this ordering, and herd7 reports
-"Sometimes".  The litmus-tests README is also updated to describe both
-SRCU fastpath tests.
+A registration which failed with -ENOMEM would be reported the same
+way.
 
-Tested with herd7 7.58 using linux-kernel.cfg.
+User-space gets a wrong registration mask. The command was added for
+CRIU, which saves the registrations of a process at checkpoint. A
+restored process would carry a registration which the original
+process did not issue. A program which trusts the mask would issue
+MEMBARRIER_CMD_PRIVATE_EXPEDITED and get -EPERM.
 
-Signed-off-by: Kunwu Chan <kunwu.chan@gmail.com>
-Signed-off-by: Paul E. McKenney <paulmck@kernel.org>
-Signed-off-by: Joel Fernandes <jfern@kernel.org>
+Fix this by reporting a registration only when its "ready" bit is
+set.
+
+This changes the mask which user-space reads.
+MEMBARRIER_CMD_GET_REGISTRATIONS no longer reports
+MEMBARRIER_CMD_REGISTER_PRIVATE_EXPEDITED for a process which only
+issued the sync core or the rseq registration. The result of every
+other command is unchanged.
+
+Fixes: 544a4f2ecd45 ("sched/membarrier: Introduce MEMBARRIER_CMD_GET_REGISTRATIONS")
+Cc: stable@vger.kernel.org
+Signed-off-by: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
 ---
- Documentation/litmus-tests/README             | 19 +++++++
- .../SRCU-fastpath-scan-before-anchor.litmus   | 52 +++++++++++++++++++
- 2 files changed, 71 insertions(+)
- create mode 100644 Documentation/litmus-tests/srcu/SRCU-fastpath-scan-before-anchor.litmus
+ kernel/sched/membarrier.c | 29 ++++++++++++++---------------
+ 1 file changed, 14 insertions(+), 15 deletions(-)
 
-diff --git a/Documentation/litmus-tests/README b/Documentation/litmus-tests/README
-index 6c666f3422ea..4d4ec9c6f2cc 100644
---- a/Documentation/litmus-tests/README
-+++ b/Documentation/litmus-tests/README
-@@ -78,3 +78,22 @@ RCU+sync+read.litmus
- RCU+sync+free.litmus
-     Both the above litmus tests demonstrate the RCU grace period guarantee
-     that an RCU read-side critical section can never span a grace period.
-+
-+SRCU (/srcu directory)
-+----------------------
-+
-+SRCU-fastpath-anchor-before-scan.litmus
-+    This models the synchronize_srcu_atomic() fastpath with the
-+    grace-period anchor ordered before the lock-counter scan.  This
-+    ordering prevents readers that existed before the grace period
-+    from being missed by the scan.  See
-+    SRCU-fastpath-scan-before-anchor.litmus for the reversed
-+    ordering.
-+
-+SRCU-fastpath-scan-before-anchor.litmus
-+    This models the synchronize_srcu_atomic() fastpath with the
-+    lock-counter scan ordered before the grace-period anchor.  This
-+    permits the scan to miss readers that existed before the grace
-+    period, violating the SRCU grace-period guarantee.  See
-+    SRCU-fastpath-anchor-before-scan.litmus for the opposite
-+    ordering.
-diff --git a/Documentation/litmus-tests/srcu/SRCU-fastpath-scan-before-anchor.litmus b/Documentation/litmus-tests/srcu/SRCU-fastpath-scan-before-anchor.litmus
-new file mode 100644
-index 000000000000..7df0641b5470
---- /dev/null
-+++ b/Documentation/litmus-tests/srcu/SRCU-fastpath-scan-before-anchor.litmus
-@@ -0,0 +1,52 @@
-+C SRCU-fastpath-scan-before-anchor
-+
-+(*
-+ * Result: Sometimes
-+ *
-+ * If the synchronize_srcu_atomic() fastpath instead places its lock
-+ * scan before the grace-period anchor, the scan can miss a reader whose
-+ * increment was already visible before the anchor.  That reader already
-+ * existed when the grace period started, so completing the grace period
-+ * without waiting for it would violate the SRCU grace-period guarantee.
-+ *
-+ * This litmus test models the reversed ordering, with the lock scan
-+ * placed before the grace-period anchor.  "seq" models the grace-period
-+ * anchor in ->srcu_gp_seq and "ctr" models the per-CPU
-+ * ->srcu_ctrs[].srcu_locks counter.  P0 scans the lock counter before
-+ * writing the anchor, with an smp_mb() between them.  P1 models the
-+ * reader-side counter increment.  P2 models an observer that sees the
-+ * reader's increment before seeing the anchor.
-+ *
-+ * The same outcome is allowed with this ordering, and herd7 reports
-+ * "Sometimes".  See SRCU-fastpath-anchor-before-scan.litmus for the
-+ * opposite ordering, which forbids this outcome.
-+ *)
-+
-+{}
-+
-+P0(int *seq, int *ctr)
-+{
-+	int r2;
-+
-+	r2 = READ_ONCE(*ctr);
-+	smp_mb();
-+	WRITE_ONCE(*seq, 1);
-+}
-+
-+P1(int *ctr)
-+{
-+	WRITE_ONCE(*ctr, 1);
-+}
-+
-+P2(int *seq, int *ctr)
-+{
-+	int r3;
-+	int r4;
-+
-+	r3 = READ_ONCE(*ctr);
-+	smp_mb();
-+	r4 = READ_ONCE(*seq);
-+}
-+
-+filter (0:r2 = 0)
-+exists (2:r3 = 1 /\ 2:r4 = 0)
+diff --git a/kernel/sched/membarrier.c b/kernel/sched/membarrier.c
+index cb957b8f1946..46e823a3d668 100644
+--- a/kernel/sched/membarrier.c
++++ b/kernel/sched/membarrier.c
+@@ -566,15 +566,17 @@ static int membarrier_get_registrations(void)
+ 	struct task_struct *p = current;
+ 	struct mm_struct *mm = p->mm;
+ 	int registrations_mask = 0, membarrier_state, i;
+-	static const int states[] = {
+-		MEMBARRIER_STATE_GLOBAL_EXPEDITED |
+-			MEMBARRIER_STATE_GLOBAL_EXPEDITED_READY,
+-		MEMBARRIER_STATE_PRIVATE_EXPEDITED |
+-			MEMBARRIER_STATE_PRIVATE_EXPEDITED_READY,
+-		MEMBARRIER_STATE_PRIVATE_EXPEDITED_SYNC_CORE |
+-			MEMBARRIER_STATE_PRIVATE_EXPEDITED_SYNC_CORE_READY,
+-		MEMBARRIER_STATE_PRIVATE_EXPEDITED_RSEQ |
+-			MEMBARRIER_STATE_PRIVATE_EXPEDITED_RSEQ_READY
++	/*
++	 * Only the "ready" state tells that a registration command
++	 * completed. The other state of each pair is not specific to
++	 * one registration command: the sync core and rseq
++	 * registrations also set MEMBARRIER_STATE_PRIVATE_EXPEDITED.
++	 */
++	static const int ready_states[] = {
++		MEMBARRIER_STATE_GLOBAL_EXPEDITED_READY,
++		MEMBARRIER_STATE_PRIVATE_EXPEDITED_READY,
++		MEMBARRIER_STATE_PRIVATE_EXPEDITED_SYNC_CORE_READY,
++		MEMBARRIER_STATE_PRIVATE_EXPEDITED_RSEQ_READY
+ 	};
+ 	static const int registration_cmds[] = {
+ 		MEMBARRIER_CMD_REGISTER_GLOBAL_EXPEDITED,
+@@ -582,16 +584,13 @@ static int membarrier_get_registrations(void)
+ 		MEMBARRIER_CMD_REGISTER_PRIVATE_EXPEDITED_SYNC_CORE,
+ 		MEMBARRIER_CMD_REGISTER_PRIVATE_EXPEDITED_RSEQ
+ 	};
+-	BUILD_BUG_ON(ARRAY_SIZE(states) != ARRAY_SIZE(registration_cmds));
++	BUILD_BUG_ON(ARRAY_SIZE(ready_states) != ARRAY_SIZE(registration_cmds));
+ 
+ 	membarrier_state = atomic_read(&mm->membarrier_state);
+-	for (i = 0; i < ARRAY_SIZE(states); ++i) {
+-		if (membarrier_state & states[i]) {
++	for (i = 0; i < ARRAY_SIZE(ready_states); ++i) {
++		if (membarrier_state & ready_states[i])
+ 			registrations_mask |= registration_cmds[i];
+-			membarrier_state &= ~states[i];
+-		}
+ 	}
+-	WARN_ON_ONCE(membarrier_state != 0);
+ 	return registrations_mask;
+ }
+ 
 -- 
-2.54.0
+2.47.3
 

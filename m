@@ -1,135 +1,72 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=158.69.130.18
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.214.197
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794575964;
-	b=hVBV6Dj88u34TLYVpq787/stnspoK1Q8Xs87wr2cgQKVV5ZBn1EIcuU+8JEYQKxwTiX0
-	 OUkRPCMaCiHGKL63630PXOXXHhB0XS0Ma3p1mssrxqLuYfSB+cXojDs1Ev7MRO9gCvjIN
-	 Gp42HN0w31NQj7Shqm8TCQ2UzWrusLaan9IZFsb09U0p8TGOwurn/Kp/tMpL7cLtLbx2l
-	 MHG5+elomMmAC1hdCq2B2rdOcIJQ2dyteBriKE0aqI3fVG+Nrs/+Z3JPYH6Oh0gPx/1RD
-	 JgsZF64k5WTJJZ4vFiVsHMdTdKCTM2LwYXUFmXkF4hIWDwAMKRkhgemRhvVVdupemAQ==
+	t=1795163784;
+	b=RyP7+MocmmaAG6MGsgkWjZ2ZqYWApUOTPoeUx1g0HAn3C/m9wz62nZvYhNlxOw9NhJCG
+	 KJ3+UhJnufq1V5HhBQi2ShxzFnpSWzfI/s+1qNCO47OBXIcEBtVWC5fjfcwfwtarGrjDc
+	 ThQ9FhpUU3mWD+Xwwhj/kbTyhpFoeW/ePz4eDdkmQD/nZx6lB85O/UTZEFURbxnpsoK0t
+	 TNKVhKKC0RYxLZGFemGz1HtWvhlTan+OIdeOvyLCWXG5JdvLRmrtsF8fHGA3pQ+r5T9D1
+	 hwOx1oDDUS5xmwbk7+tz00TfFfJxDX+O8kjrSPzVDG+ilQDAACGeumrMAWwZJ9To7gA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794575964;
-	h=DMARC-Filter:DKIM-Signature:Received:From:To:Cc:Subject:Date:
-	 Message-Id:X-Mailer:In-Reply-To:References:MIME-Version:
-	 Content-Transfer-Encoding;
-	bh=6K5+1bJFXUKUg3IFl6qgg/BC25Z/G5ULg9pbLn4UPTA=;
-	b=4i1eXjkR8LeHBwEcHKWt/qMk4E1jq87sIBhc7JgUPRCn825moYg3UwyCrOGsQia1zXgS
-	 oTaOdBurEj24Y1g+pcY+lfp3EzDdX4KpmvnpH3TWjnjGRfGgKzhtoaXtlDrZ2nIw4JnsP
-	 QSdd8kc9YzR3SMNkMDg9PwJGj/70TEju5wsM1wm/OdkZ5Iaj275ckuqQYO/JF0qicg3vj
-	 m4qolCJhoKRnYswXEpUeJFhRGk+sdg8J+agrvBDtD6zIPBrvpGbN3R0gAApua/uRA7n9A
-	 MVyfJmo+OedlFWOhHTv3SJU+YDn/2kDenHPemz1xyfstuJegSQcq95dnAFq5TpUN+6w==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795163784;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Gm-Message-State:X-Received:Date:Mime-Version:X-Mailer:Message-ID:
+	 Subject:From:To:Cc:Content-Type;
+	bh=0lKUc8C/gyZhGaTL2gzUmAz+oRQN67l0txxqZPe6hks=;
+	b=AOY5oIal122S7KUV9ohWIvThO02fTJ61u7Raq5Okzg1/PK2vho8RgqBMufvHe6lBY3b+
+	 g0MNLC/3fWHog7dF0EOqAqz9qTxkuMkazK0OEswpw2wO5B4OR1qtQHqjkDEeBpGmGT/Zm
+	 A4SN5W+sbRhmDO9vFtkgy+6oAJpnyShKRy6kwamaQG5/hnXZDR7fjVC3MAzo+bIWydQ92
+	 D76q5QgUI3icDYYQRnq5ty9gvNPAUNVMEhWeEfT74ITcy+fAtOOtLRInHjrgsj7lp5b6W
+	 k21FbDVNb7V/2A5gDPPSoc24FYfhkKV5fSDiaxUhlqGdyd7Iz7aML0sTYlF/R+WEGRw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=efficios.com;
-	spf=pass smtp.mailfrom=efficios.com;
-	dkim=pass header.d=efficios.com header.i=@efficios.com header.a=rsa-sha256 header.s=smtpout1 header.b=EnxNh76r;
-	arc=none smtp.remote-ip=158.69.130.18
-Received: from smtpout.efficios.com (smtpout.efficios.com [158.69.130.18])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+	dmarc=pass header.from=google.com;
+	spf=pass smtp.mailfrom=flex--wayneyan.bounces.google.com;
+	dkim=pass header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20260707 header.b="BCs/I4hk";
+	arc=none smtp.remote-ip=209.85.214.197
+Received: from mail-pl1-f197.google.com (mail-pl1-f197.google.com [209.85.214.197])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7CD3606CAA9;
-	Fri, 13 Nov 2026 13:19:23 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org D7CD3606CAA9
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=efficios.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=efficios.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCE16606A325
+	for <lkmm@lists.linux.dev>; Fri, 20 Nov 2026 08:36:23 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org DCE16606A325
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--wayneyan.bounces.google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=efficios.com header.i=@efficios.com header.a=rsa-sha256 header.s=smtpout1 header.b=EnxNh76r
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=efficios.com;
-	s=smtpout1; t=1794575952;
-	bh=6K5+1bJFXUKUg3IFl6qgg/BC25Z/G5ULg9pbLn4UPTA=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EnxNh76rEx+TrhUSzsnsZ3F3UT4G7JmFnAvOLo6y79PyIBiGOXO4WqcvtgE72z/My
-	 XLC2uBUfs5RuTsJHWD7upDrBo2yWHu2qw00ST7Al48W+unxLZ8BcO64rq5v44UaUJG
-	 ceddhO7H2rLjQWrMw6RoD3eygdTLKoWz6eaak4Nt3rN4oMAZ0/bzVhrBGx2A3X9WZ+
-	 ed2zb6dOBn8sZzAi/6MdgfCFQyoG+LKrByO4Fd9u7jJvYSBqp5Sy5AJPSeeVkDdLO0
-	 0lE7M6E5Wvw5G12zAdr1LZyZj/Q2uCcfbdxMx/wltow8YbrqtXEvHcy6UpX9CT5M4a
-	 sRsxvpkpqemUA==
-Received: from thinkos.internal.efficios.com (mtl.efficios.com [216.120.195.104])
-	by smtpout.efficios.com (Postfix) with ESMTPSA id 4jQyX04hD8zPxN;
-	Fri, 13 Nov 2026 08:19:12 -0500 (EST)
-From: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
-To: Peter Zijlstra <peterz@infradead.org>,
-	Ingo Molnar <mingo@redhat.com>
-Cc: linux-kernel@vger.kernel.org,
-	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
-	Juri Lelli <juri.lelli@redhat.com>,
-	Vincent Guittot <vincent.guittot@linaro.org>,
-	Dietmar Eggemann <dietmar.eggemann@arm.com>,
-	Steven Rostedt <rostedt@goodmis.org>,
-	Ben Segall <bsegall@google.com>,
-	Mel Gorman <mgorman@suse.de>,
-	Valentin Schneider <vschneid@redhat.com>,
-	K Prateek Nayak <kprateek.nayak@amd.com>,
-	"Paul E. McKenney" <paulmck@kernel.org>,
-	Michal Clapinski <mclapinski@google.com>,
-	Andrei Vagin <avagin@gmail.com>,
-	Shuah Khan <shuah@kernel.org>,
-	Aniket Gattani <aniketgattani@google.com>,
-	linux-kselftest@vger.kernel.org,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Chris Gellermann <christian.gellermann@codasip.com>,
-	Bala-Vignesh-Reddy <reddybalavignesh9979@gmail.com>,
-	Wei Yang <richard.weiyang@gmail.com>,
-	Thomas Gleixner <tglx@kernel.org>,
-	Huacai Chen <chenhuacai@kernel.org>,
-	WANG Xuerui <kernel@xen0n.name>,
-	loongarch@lists.linux.dev,
-	"James E.J. Bottomley" <James.Bottomley@HansenPartnership.com>,
-	Helge Deller <deller@gmx.de>,
-	John David Anglin <dave.anglin@bell.net>,
-	linux-parisc@vger.kernel.org,
-	Jonathan Corbet <corbet@lwn.net>,
-	Shuah Khan <skhan@linuxfoundation.org>,
-	Randy Dunlap <rdunlap@infradead.org>,
-	Paul Walmsley <pjw@kernel.org>,
-	Palmer Dabbelt <palmer@dabbelt.com>,
-	Albert Ou <aou@eecs.berkeley.edu>,
-	Alexandre Ghiti <alex@ghiti.fr>,
-	Guo Ren <guoren@kernel.org>,
-	linux-doc@vger.kernel.org,
-	linux-riscv@lists.infradead.org,
-	linux-csky@vger.kernel.org,
-	Jonas Bonn <jonas@southpole.se>,
-	Stefan Kristiansson <stefan.kristiansson@saunalahti.fi>,
-	Stafford Horne <shorne@gmail.com>,
-	linux-openrisc@vger.kernel.org,
-	Yoshinori Sato <ysato@users.sourceforge.jp>,
-	Rich Felker <dalias@libc.org>,
-	John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>,
-	linux-sh@vger.kernel.org,
-	Chris Zankel <chris@zankel.net>,
-	Max Filippov <jcmvbkbc@gmail.com>,
-	linux-arch@vger.kernel.org,
-	Borislav Petkov <bp@alien8.de>,
-	Dave Hansen <dave.hansen@linux.intel.com>,
-	x86@kernel.org,
-	"H. Peter Anvin" <hpa@zytor.com>,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Will Deacon <will@kernel.org>,
-	Mark Rutland <mark.rutland@arm.com>,
-	linux-arm-kernel@lists.infradead.org,
-	Andy Lutomirski <luto@kernel.org>,
-	Alan Stern <stern@rowland.harvard.edu>,
-	Andrea Parri <parri.andrea@gmail.com>,
-	Boqun Feng <boqun@kernel.org>,
-	Nicholas Piggin <npiggin@gmail.com>,
-	David Howells <dhowells@redhat.com>,
-	Jade Alglave <j.alglave@ucl.ac.uk>,
-	Luc Maranget <luc.maranget@inria.fr>,
-	Akira Yokosawa <akiyks@gmail.com>,
-	Daniel Lustig <dlustig@nvidia.com>,
-	Joel Fernandes <joelagnelf@nvidia.com>,
-	lkmm@lists.linux.dev,
-	bpf@vger.kernel.org,
-	Naveen N Rao <naveen@kernel.org>,
-	"David S. Miller" <davem@davemloft.net>,
-	Masami Hiramatsu <mhiramat@kernel.org>,
-	linux-trace-kernel@vger.kernel.org
-Subject: [RFC PATCH 16/16] selftests/membarrier: Check the core serialization of the sync core command
-Date: Fri, 13 Nov 2026 08:19:03 -0500
-Message-Id: <20261113131903.157186-17-mathieu.desnoyers@efficios.com>
-X-Mailer: git-send-email 2.39.5
-In-Reply-To: <20261113131903.157186-1-mathieu.desnoyers@efficios.com>
-References: <20261113131903.157186-1-mathieu.desnoyers@efficios.com>
+	dkim=pass (2048-bit key, unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20260707 header.b=BCs/I4hk
+Received: by mail-pl1-f197.google.com with SMTP id d9443c01a7336-2ee184a2474so5938435ad.2
+        for <lkmm@lists.linux.dev>; Fri, 20 Nov 2026 00:36:23 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20260707; t=1795163783; x=1795768583; darn=lists.linux.dev;
+        h=content-type:cc:to:from:subject:message-id:mime-version:date:from
+         :to:cc:subject:date:message-id:reply-to:content-type;
+        bh=0lKUc8C/gyZhGaTL2gzUmAz+oRQN67l0txxqZPe6hks=;
+        b=BCs/I4hkl8ZfQlt2sopIpRLHKmkA4klarSnB4KVcVTkQKWukldfXxC0Gju2DgFLZRz
+         WfkrEklSHZ6uoMpxYWnpi+ftXQBu0oC94qZDtW0eCQwPcECPYMJvKwohgCjLGyulamKX
+         ZYttjtKtOkbOl/nVt+IyAPDTov7sAR2kd7tPCT9jXQsyInoOVrgRMso3LnrMSE8VqBJ3
+         WcjMLafYK1szy3D9ngSmY/4BM332TYum+0z2wtBx5qCpLZVNt/6I8HDDCsMyqfAo1Jzv
+         7QGnFlAiR56i25W0GJfRj8W9jC0VovKZPypP47jTF0brnpyLw3Ea5/eR2ptxj5Q+EidQ
+         YQeg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1795163783; x=1795768583;
+        h=content-type:cc:to:from:subject:message-id:mime-version:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=0lKUc8C/gyZhGaTL2gzUmAz+oRQN67l0txxqZPe6hks=;
+        b=uVGOrSBYn/ZVKmasL/bIORcMefw9v0n/u94NBpXe1tqOZtL9J0kZZ4IEJJHP/JuRUh
+         kLjQ0RlAeoWVCnCvq7+D6mQAH2ynw6f5lpOxpV1pjvkDaih4N/2lijTcZfeQB+cDEtoE
+         CxbmJIA2A3wlM0Un2NC4x+wmM/EFxwvmoExC8Ajq44cxQ3D7HxWTPrCnqKf/VVZdNwMK
+         UTMPUaYMtLpNrYN97sLgXonuquOMx5VcXtbCD+0xreyeDeVftpoAOJ7eJ0IZUY6rOnFR
+         tL0NJqNpGM/Hi1YGIdL5UNeVBiE1GsLZHViUx8LMm+sVanViJn74NP1v/Fu0tU7he/OD
+         Vmxw==
+X-Gm-Message-State: APuU4Z8alSOQYjYMShbQeuC7FaOAqMWioaOX5SnMgDfQNoy3zZvAF5sl
+	wdJSsX26OWBFKbm5ifL8Ci62QOcs/VzREyGI//BLfB7Kh6Pwq8pXCaSc3kQ9j/gpseveVhJ+D9E
+	ffj7+xVRcuA0pgN17KovGQXZYaNKH6OL2cP209WfAXediB3rYfIsdjyQZEprQsha6wbfYg9/sUB
+	SZymd+fzbBfmneE0+xDfCdxS2lCZHSyL3t1YwKBRyKaQED
+X-Received: from pllh10.prod.google.com ([2002:a17:902:748a:b0:2f0:31d5:4411])
+ (user=wayneyan job=prod-delivery.src-stubby-dispatcher) by
+ 2002:a17:902:db11:b0:2e5:54c6:e5c9 with SMTP id d9443c01a7336-2f03ef870c8mr26725135ad.2.1795163782800;
+ Fri, 20 Nov 2026 00:36:22 -0800 (PST)
+Date: Fri, 20 Nov 2026 16:36:20 +0800
 X-Mailing-List: lkmm@lists.linux.dev
 List-Id: <lkmm.lists.linux.dev>
 List-Post: <mailto:lkmm@lists.linux.dev>
@@ -138,350 +75,98 @@ List-Subscribe: <mailto:lkmm+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:lkmm+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:lkmm+owner@lists.linux.dev>
 Precedence: list
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.56.1.750.gf70dc682cf-goog
+Message-ID: <20261120083620.2186353-1-wayneyan@google.com>
+Subject: Question on (prop \ id) & int excluding non-trivial self-links
+From: Wayne Yan <wayneyan@google.com>
+To: lkmm@lists.linux.dev
+Cc: Alan Stern <stern@rowland.harvard.edu>, Andrea Parri <parri.andrea@gmail.com>, 
+	"Paul E . McKenney" <paulmck@kernel.org>, Boqun Feng <boqun.feng@gmail.com>, 
+	Jade Alglave <j.alglave@ucl.ac.uk>, Luc Maranget <luc.maranget@inria.fr>, 
+	Mars Cheng <marscheng@google.com>, Kuan-Wei Chiu <visitorckw@gmail.com>, 
+	Wayne Yan <wayneyan@google.com>
+Content-Type: text/plain; charset="UTF-8"
 
-MEMBARRIER_CMD_PRIVATE_EXPEDITED_SYNC_CORE promises more than a
-memory barrier. Each running sibling thread of the caller executes a
-core serializing instruction after the call starts, and before it
-runs user-space code again. A thread which is not running executes
-one before it resumes user-space. This supports memory reclaim by a
-JIT compiler.
+Hi all,
 
-On x86, the kernel serializes the core in the IPI handler and in the
-scheduler. membarrier_test_barrier counts the memory barriers of each
-thread, but not these instructions.
+While experimenting with extending LKMM to model MMIO semantics, we
+noticed a subtlety in how hb uses prop in linux-kernel.cat:
 
-Count them as well. These are the instructions, for x86-64:
+let prop = [Marked] ; (overwrite & ext)? ; cumul-fence* ;
+	[Marked] ; rfe? ; [Marked]
 
- - sync_core() in ipi_sync_core(),
- - the writes to CR3 in switch_mm_irqs_off(),
- - sync_core() in finish_task_switch().
+let hb = [Marked] ; (ppo | rfe | ((prop \ id) & int)) ; [Marked]
+acyclic hb as happens-before
 
-sync_core() issues SERIALIZE or IRET. An IRET cannot be probed, so the
-instruction before it is probed instead.
+Because every step in prop is optional, (x, x) is in prop in the
+degenerate zero-step [Marked] case, and hb uses (prop \ id) & int to
+drop those trivial self-links.
 
-The sync core test case then checks two more things:
+However, \ id removes all self-links, including non-trivial multi-step
+paths in prop from an event back to itself. Semantically, such a path
+means an overwrite of A must propagate back to A's CPU before A
+executes, which should be forbidden as an hb cycle rather than
+excluded by \ id.
 
- - A call makes each target execute a core serializing instruction
-   in the IPI handler. A check where the target was scheduled out is
-   dropped.
+In the current model, this seems harmless because any candidate
+execution with a non-trivial prop self-link is already rejected
+elsewhere. In our MMIO experiment, some of those self-cycles were no
+longer caught elsewhere and leaked through because prop \ id stripped
+them.
 
- - A target can be scheduled in after a task of another mm or after
-   a kernel thread. The scheduler then executes a core serializing
-   instruction before the target is scheduled out again.
+Defining a non-empty variant of prop and using (nonempty-prop & int)
+in hb avoids dropping real cycles. Is this a semantic issue? Would
+patches for this kind of issue be welcome?
 
-These checks are skipped with page table isolation. The kernel then
-serializes the core with the write to CR3 of each return to
-user-space, in entry code which cannot be probed.
+Note 1: Here's an example where A ->prop A:
 
-Signed-off-by: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
----
- .../membarrier/membarrier_test_barrier.bpf.c  |  11 +-
- .../membarrier/membarrier_test_barrier.c      | 102 +++++++++++++++++-
- .../membarrier/membarrier_test_barrier.h      |   6 ++
- 3 files changed, 112 insertions(+), 7 deletions(-)
+C prop-self-loop
 
-diff --git a/tools/testing/selftests/membarrier/membarrier_test_barrier.bpf.c b/tools/testing/selftests/membarrier/membarrier_test_barrier.bpf.c
-index 46cfba13f00f..ce18089f8dab 100644
---- a/tools/testing/selftests/membarrier/membarrier_test_barrier.bpf.c
-+++ b/tools/testing/selftests/membarrier/membarrier_test_barrier.bpf.c
-@@ -1,7 +1,7 @@
- // SPDX-License-Identifier: GPL-2.0
- /*
-- * Count the memory barriers which membarrier relies on, for each
-- * registered thread.
-+ * Count the memory barriers and the core serializing instructions which
-+ * membarrier relies on, for each registered thread.
-  *
-  * See membarrier_test_barrier.c.
-  */
-@@ -40,6 +40,7 @@ struct {
- 
- /* What the scheduler owes to the thread which it switched to. */
- #define OWES_BARRIER	1
-+#define OWES_SYNC_CORE	2
- 
- struct cpu_state {
- 	/* Slot, plus one, of the thread which this CPU last switched to. */
-@@ -111,6 +112,8 @@ int barrier_site(struct pt_regs *ctx)
- 		slot = state->slot;
- 		if (mask & (1U << MBT_SWITCH_MM))
- 			state->owed &= ~OWES_BARRIER;
-+		if (mask & (1U << MBT_SYNC_CORE_SWITCH))
-+			state->owed &= ~OWES_SYNC_CORE;
- 	} else {
- 		slot = slot_of(bpf_get_current_task_btf());
- 	}
-@@ -131,13 +134,15 @@ int BPF_PROG(sched_switch, bool preempt, struct task_struct *prev,
- 	/* The CPU leaves the thread which it last switched to. */
- 	if (state->owed & OWES_BARRIER)
- 		count(state->slot, 1U << MBT_SCHED_IN_MISSED);
-+	if (state->owed & OWES_SYNC_CORE)
-+		count(state->slot, 1U << MBT_SYNC_CORE_IN_MISSED);
- 	count(slot_of(prev), 1U << MBT_SCHED_OUT);
- 	slot = slot_of(next);
- 	state->slot = slot;
- 	state->owed = 0;
- 	/* The cases which need a barrier after the store to rq->curr. */
- 	if (slot && next->mm && prev->mm != next->mm) {
--		state->owed = OWES_BARRIER;
-+		state->owed = OWES_BARRIER | OWES_SYNC_CORE;
- 		count(slot, 1U << MBT_SCHED_IN);
- 	}
- 	return 0;
-diff --git a/tools/testing/selftests/membarrier/membarrier_test_barrier.c b/tools/testing/selftests/membarrier/membarrier_test_barrier.c
-index 46502d271242..a8152ec4eecd 100644
---- a/tools/testing/selftests/membarrier/membarrier_test_barrier.c
-+++ b/tools/testing/selftests/membarrier/membarrier_test_barrier.c
-@@ -36,6 +36,9 @@
-  * must then execute a memory barrier after the store to rq->curr,
-  * before the target is scheduled out again.
-  *
-+ * The sync core command is checked in the same way, with the core
-+ * serializing instructions.
-+ *
-  * The instructions are found by their bytes in the kernel text, which
-  * is read from /proc/kcore. The list is for x86-64. It depends on what
-  * the compiler inlines into the functions it names.
-@@ -94,6 +97,10 @@ struct target_stats {
- 	atomic_ulong sched_in;
- 	/* Scheduled in without a barrier after the store to rq->curr. */
- 	atomic_ulong sched_in_missed;
-+	/* Checks where the target did not serialize its core. */
-+	atomic_ulong sync_core_missed;
-+	/* Scheduled in without a core serializing instruction. */
-+	atomic_ulong sync_core_in_missed;
- };
- 
- struct shared {
-@@ -126,6 +133,9 @@ struct target {
- static struct shared *shared;
- static int shared_fd;
- 
-+/* The targets of this process also check the sync core guarantee. */
-+static bool check_sync_core;
-+
- static int sys_membarrier(int cmd, unsigned int flags, int cpu_id)
- {
- 	return syscall(__NR_membarrier, cmd, flags, cpu_id);
-@@ -190,6 +200,11 @@ enum match {
- 	MATCH_CR3,
- 	/* Instruction with a LOCK prefix. */
- 	MATCH_LOCK,
-+	/*
-+	 * SERIALIZE or IRET, as issued by sync_core(). An IRET cannot be
-+	 * probed: the instruction before it is probed instead.
-+	 */
-+	MATCH_SYNC_CORE,
- };
- 
- struct site {
-@@ -205,15 +220,21 @@ struct site {
- #define IPI		(1U << MBT_IPI)
- #define SYSCALL		(1U << MBT_SYSCALL)
- #define SWITCH_MM	(1U << MBT_SWITCH_MM)
-+#define SYNC_CORE	(1U << MBT_SYNC_CORE)
-+#define SYNC_CORE_SWITCH (1U << MBT_SYNC_CORE_SWITCH)
- 
- static const struct site sites[] = {
- 	{ "ipi_mb", MATCH_MB, IPI },
- 	{ "ipi_sync_core", MATCH_MB, IPI },
-+	{ "ipi_sync_core", MATCH_SYNC_CORE, SYNC_CORE },
- 	{ "ipi_rseq", MATCH_MB, IPI },
- 	{ "membarrier_global_expedited", MATCH_MB, SYSCALL },
- 	{ "membarrier_private_expedited", MATCH_MB, SYSCALL },
--	/* Switch to another mm: write to CR3. It is a full barrier. */
--	{ "switch_mm_irqs_off", MATCH_CR3, SWITCH_MM, true },
-+	/*
-+	 * Switch to another mm: write to CR3. It is a full barrier and
-+	 * it is core serializing.
-+	 */
-+	{ "switch_mm_irqs_off", MATCH_CR3, SWITCH_MM | SYNC_CORE_SWITCH, true },
- 	/* Switch to the mm which the CPU kept in lazy TLB mode: smp_mb(). */
- 	{ "switch_mm_irqs_off", MATCH_MB, SWITCH_MM, true },
- 	/*
-@@ -221,6 +242,8 @@ static const struct site sites[] = {
- 	 * locked instruction of this function counts as well.
- 	 */
- 	{ "finish_task_switch", MATCH_LOCK, SWITCH_MM, true },
-+	/* membarrier_mm_sync_core_before_usermode() */
-+	{ "finish_task_switch", MATCH_SYNC_CORE, SYNC_CORE_SWITCH, true },
- };
- 
- struct probe {
-@@ -319,6 +342,7 @@ static void scan_function(const struct site *site, const struct ksym *sym,
- {
- 	unsigned char *text;
- 	size_t i, left;
-+	int32_t imm;
- 
- 	text = malloc(size);
- 	if (!text || !read_kernel(sym->addr, text, size)) {
-@@ -350,6 +374,24 @@ static void scan_function(const struct site *site, const struct ksym *sym,
- 			if (insn[0] == 0xf0)
- 				probe_insn(site, sym, addr);
- 			break;
-+		case MATCH_SYNC_CORE:
-+			/* SERIALIZE is 0f 01 e8. */
-+			if (left >= 3 && insn[0] == 0x0f && insn[1] == 0x01 &&
-+			    insn[2] == 0xe8) {
-+				probe_insn(site, sym, addr);
-+				break;
-+			}
-+			/*
-+			 * iret_to_self() is "pushq $1f; iretq; 1:". Probe the
-+			 * push.
-+			 */
-+			if (left < 7 || insn[0] != 0x68 || insn[5] != 0x48 ||
-+			    insn[6] != 0xcf)
-+				break;
-+			memcpy(&imm, insn + 1, sizeof(imm));
-+			if (imm == (int32_t)(addr + 7))
-+				probe_insn(site, sym, addr);
-+			break;
- 		}
- 	}
- 	free(text);
-@@ -624,8 +666,9 @@ static bool check_call(const uint64_t *counters, struct target_stats *stats)
- 	unsigned long done = atomic_load(&shared->done);
- 	uint64_t ipi = counter(counters, MBT_IPI);
- 	uint64_t sched_out = counter(counters, MBT_SCHED_OUT);
-+	uint64_t sync_core = counter(counters, MBT_SYNC_CORE);
- 	unsigned long started = atomic_load(&shared->started);
--	bool by_ipi, scheduled;
-+	bool by_ipi, scheduled, serialized;
- 	int spins = 0;
- 
- 	/* A call is in flight. */
-@@ -637,6 +680,7 @@ static bool check_call(const uint64_t *counters, struct target_stats *stats)
- 	}
- 	by_ipi = counter(counters, MBT_IPI) != ipi;
- 	scheduled = counter(counters, MBT_SCHED_OUT) != sched_out;
-+	serialized = counter(counters, MBT_SYNC_CORE) != sync_core;
- 	if (scheduled) {
- 		atomic_fetch_add(&stats->by_sched, 1);
- 		return true;
-@@ -648,6 +692,8 @@ static bool check_call(const uint64_t *counters, struct target_stats *stats)
- 		atomic_fetch_add(&stats->by_ipi, 1);
- 	else
- 		atomic_fetch_add(&stats->missed, 1);
-+	if (check_sync_core && !serialized)
-+		atomic_fetch_add(&stats->sync_core_missed, 1);
- 	return true;
- }
- 
-@@ -658,7 +704,8 @@ static void run_target(const struct target *target)
- 	const uint64_t *counters;
- 	long deadline = now_ms() + target->ms;
- 	unsigned long checks = 0;
--	uint64_t first_ipi, first_sched_in;
-+	uint64_t first_ipi, first_sched_in, first_sync_core_missed;
-+	uint64_t first_sched_out;
- 
- 	if (target->cpu >= 0 && pin_to_cpu(target->cpu))
- 		setup_error("sched_setaffinity");
-@@ -671,6 +718,18 @@ static void run_target(const struct target *target)
- 	atomic_fetch_add(&shared->ready, 1);
- 	while (!atomic_load(&shared->registered) && !atomic_load(&shared->stop))
- 		sched_yield();
-+	/*
-+	 * The scheduler serializes the core of a registered process
-+	 * only. The target may have been scheduled in before the
-+	 * registration. So wait until it is scheduled out, and count
-+	 * from there.
-+	 */
-+	first_sched_out = counter(counters, MBT_SCHED_OUT);
-+	while (check_sync_core &&
-+	       counter(counters, MBT_SCHED_OUT) == first_sched_out &&
-+	       !atomic_load(&shared->stop))
-+		usleep(1000);
-+	first_sync_core_missed = counter(counters, MBT_SYNC_CORE_IN_MISSED);
- 	first_ipi = counter(counters, MBT_IPI);
- 	first_sched_in = counter(counters, MBT_SCHED_IN);
- 	while (!atomic_load(&shared->stop)) {
-@@ -690,6 +749,10 @@ static void run_target(const struct target *target)
- 			 counter(counters, MBT_SCHED_IN) - first_sched_in);
- 	atomic_fetch_add(&stats->sched_in_missed,
- 			 counter(counters, MBT_SCHED_IN_MISSED));
-+	if (check_sync_core)
-+		atomic_fetch_add(&stats->sync_core_in_missed,
-+				 counter(counters, MBT_SYNC_CORE_IN_MISSED) -
-+				 first_sync_core_missed);
- }
- 
- static void *target_thread(void *arg)
-@@ -816,6 +879,9 @@ static void sum_stats(int first, int nr, struct target_stats *sum)
- 		sum->ipis += atomic_load(&stats->ipis);
- 		sum->sched_in += atomic_load(&stats->sched_in);
- 		sum->sched_in_missed += atomic_load(&stats->sched_in_missed);
-+		sum->sync_core_missed += atomic_load(&stats->sync_core_missed);
-+		sum->sync_core_in_missed +=
-+			atomic_load(&stats->sync_core_in_missed);
- 	}
- }
- 
-@@ -828,6 +894,8 @@ static void sum_stats(int first, int nr, struct target_stats *sum)
- 	       __sum.by_ipi, __sum.by_sched, __sum.ipis);		\
- 	EXPECT_EQ(__sum.missed, 0);					\
- 	EXPECT_EQ(__sum.sched_in_missed, 0);				\
-+	EXPECT_EQ(__sum.sync_core_missed, 0);				\
-+	EXPECT_EQ(__sum.sync_core_in_missed, 0);			\
- 	EXPECT_GT(__sum.by_ipi + __sum.by_sched + __sum.missed, 0);			\
- } while (0)
- 
-@@ -902,8 +970,34 @@ TEST(private_expedited)
- 		     MEMBARRIER_CMD_PRIVATE_EXPEDITED);
- }
- 
-+/*
-+ * With page table isolation, the kernel serializes the core with the
-+ * write to CR3 of each return to user-space. This write is in the entry
-+ * code, which cannot be probed.
-+ */
-+static bool page_table_isolation(void)
-+{
-+	char *line = NULL;
-+	bool pti = false;
-+	size_t len = 0;
-+	FILE *f;
-+
-+	f = fopen("/proc/cpuinfo", "r");
-+	if (!f)
-+		return false;
-+	while (!pti && getline(&line, &len, f) >= 0)
-+		pti = !strncmp(line, "flags", 5) &&
-+		      (strstr(line, " pti ") || strstr(line, " pti\n"));
-+	free(line);
-+	fclose(f);
-+	return pti;
-+}
-+
- TEST(private_expedited_sync_core)
- {
-+	check_sync_core = !page_table_isolation();
-+	if (!check_sync_core)
-+		TH_LOG("page table isolation: core serialization not checked");
- 	test_private(_metadata,
- 		     MEMBARRIER_CMD_REGISTER_PRIVATE_EXPEDITED_SYNC_CORE,
- 		     MEMBARRIER_CMD_PRIVATE_EXPEDITED_SYNC_CORE);
-diff --git a/tools/testing/selftests/membarrier/membarrier_test_barrier.h b/tools/testing/selftests/membarrier/membarrier_test_barrier.h
-index d615ad1d9e8a..7c31d8cba544 100644
---- a/tools/testing/selftests/membarrier/membarrier_test_barrier.h
-+++ b/tools/testing/selftests/membarrier/membarrier_test_barrier.h
-@@ -24,6 +24,12 @@ enum {
- 	 * the scheduler executed no memory barrier in between.
- 	 */
- 	MBT_SCHED_IN_MISSED,
-+	/* Core serializing instruction of the membarrier IPI handler. */
-+	MBT_SYNC_CORE,
-+	/* Core serializing instruction of the scheduler. */
-+	MBT_SYNC_CORE_SWITCH,
-+	/* Like MBT_SCHED_IN_MISSED, for a core serializing instruction. */
-+	MBT_SYNC_CORE_IN_MISSED,
- 	MBT_NR_COUNTERS,
- };
- 
--- 
-2.47.3
+{}
 
+P0(int *x, int *y)
+{
+	int r0;
+
+	r0 = READ_ONCE(*y);
+	smp_store_release(x, 1); // A
+}
+
+P1(int *x, int *y)
+{
+	WRITE_ONCE(*x, 2);
+	smp_store_release(y, 1);
+}
+
+exists (0:r0=1 /\ x=2)
+
+In the candidate execution with 0:r0=1 and x=2, A reaches itself in
+prop via coe ; po-rel ; (rfe ; po-rel).
+
+Note 2: Here's an example fix:
+
+  diff --git a/tools/memory-model/linux-kernel.cat b/tools/memory-model/linux-kernel.cat
+  --- a/tools/memory-model/linux-kernel.cat
+  +++ b/tools/memory-model/linux-kernel.cat
+  @@ -99,14 +99,16 @@ let A-cumul(r) = (rfe ; [Marked])? ; r
+   let rmw-sequence = (rf ; rmw)*
+   let cumul-fence = [Marked] ; (A-cumul(strong-fence | po-rel) | wmb |
+   	po-unlock-lock-po) ; [Marked] ; rmw-sequence
+  -let prop = [Marked] ; (overwrite & ext)? ; cumul-fence* ;
+  -	[Marked] ; rfe? ; [Marked]
+  +let nonempty-prop = [Marked] ; (
+  +	((overwrite & ext) ; cumul-fence* ; [Marked] ; rfe?) |
+  +	(cumul-fence+ ; [Marked] ; rfe?) | rfe) ; [Marked]
+  +let prop = [Marked] | nonempty-prop
+   
+   (*
+    * Happens Before: Ordering from the passage of time.
+    * No fences needed here for prop because relation confined to one process.
+    *)
+  -let hb = [Marked] ; (ppo | rfe | ((prop \ id) & int)) ; [Marked]
+  +let hb = [Marked] ; (ppo | rfe | (nonempty-prop & int)) ; [Marked]
+   acyclic hb as happens-before
+
+Thanks,
+Wayne

@@ -1,73 +1,99 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.216.70
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.160.177
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795408397;
-	b=3rS+IfDMt8ICkxGSwIKfYuXrAPpS/FhQ/MInbEUd7XuDjLafKahOW3hlsdWgrC9CZM7f
-	 mX++RxMMQyEI2lL0uf35wAFaTwU/HTnbnmGDU7BHsoF4eq3J7CAV2SJoMBAHodjSdTRaX
-	 UXFjKlpBYZ/bHSBPli6WHkRiCZip+y6tB1j3PInZgqiEBjfm9Alq87O2PG/0SDyEEypJu
-	 s8VyXC7xgLz71+c2JdYJOO7nt1tLsCs7HrT9dY5bpsEL0+Pyp3VfqA7FDXCOMzz4E+Q4b
-	 xnxlOCSu7pLXuTHUJ9+zNK7F7iuojerkf73ArfU/Pcwk81T1kcdCp+ZWqMLgE5dvOzA==
+	t=1795445918;
+	b=ERCIQ7qQ4usY/FjSFGHtn1mcpD6pPAoWBZdwTN140y3c7qa6RCIPxoy9PUmajjYahno6
+	 5Zeb8mLXO9BQLrjcHcidt4pfaa81H6noJ13zqulu3zsnyOYknVfLykQhrD1wwp4L0ciNW
+	 O/gzMis2WfAfTa2zY5Xz5LdlBSVu5dWUfTQhmvFlo9XqTgMEHnKTbS3Mwb2706UQ3O9FM
+	 ZXL1glD0ELRJEYVcG4CM3amMc006nUT8QvTeu/r4cRuvEgETX/peUHxfMadbzBLxIB/gm
+	 NO2HNqU7xQ8W33ArwwfaXJ5/6hrMG8q4HZaAqrZGxEnnB+reDAfwp3YAKP3fZJ7dokA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795408397;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795445918;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Received:Date:In-Reply-To:Mime-Version:
-	 References:X-Mailer:Message-ID:Subject:From:To:Cc:Content-Type;
-	bh=2igfz4o64f3h+SJ6EV7b3a22Ao4Z+RGhRptKFvD0FuY=;
-	b=MbByOAzATEMdaV03qasxLqHmAnbBfPyGf6HvZ779FTwyZcWhUj7zQH304l6DIGQD568j
-	 icSo2evp5aI/xKS9yLo36Hzo2fX4lI66LJ8W9S94urLM9I2Yrfl1I3eWemfvl4H4zanUW
-	 nuk2634m7+7oA17KaDXhjXfZ9sH/fGbEGBH3ciCUEAxqIZiHL/vyK97I1YNeWeP1AZo1U
-	 +65SZub+sMt4pcoltiZfe+jPzMW+955nxmf3brJ8nFE52GrDCIprXIFnMJGRdtsP4MXkX
-	 VSvI6AbKCC/a9nLZBWUb5n2eBxU4/ZmP6ZtDEkrpz8f24BGnsjuHLlaNCWIl1XDlKtA==
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Date:From:To:Cc:
+	 Subject:Message-ID:References:MIME-Version:Content-Type:
+	 Content-Disposition:In-Reply-To;
+	bh=Z9sGErjvuTdsND5vQoTeu95uEySWd8dkG2qG5cilc7U=;
+	b=sAkJlYNFIMQVIHvH17wUDB/PSdCmEDEpnP140sX9/iHx7q91XsGKmhdjEzrHEwXYdYmW
+	 EjsC+sagh4I4CDWFGkUw+CWQlX77Z+htqR3HeiSu0aVMG3TaYG9j24oeyItSZKXuCLNo6
+	 eSCwxc6o+KIN+YEH2vdMMaJ+dJkXOA4WQTl2Q5v7I8zvsUP9EFAf057urXy1f1XQGBj4I
+	 K3Hpr3D4j0LrqetYoTxrJl24xMZnXf3kRFR6VcGUR1ceESQjMzDNf7J4cGzXzdxJmW0nJ
+	 bnWFq4j4WWYBfnIc+uuBd0PCOeG/s70kV1N1myeqxnlsjIWjntKpKYZT0UXORb3ZOCg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=google.com;
-	spf=pass smtp.mailfrom=flex--wayneyan.bounces.google.com;
-	dkim=pass header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20260707 header.b=bScARQu2;
-	arc=none smtp.remote-ip=209.85.216.70
-Received: from mail-pj1-f70.google.com (mail-pj1-f70.google.com [209.85.216.70])
+	dmarc=pass header.from=rowland.harvard.edu;
+	spf=fail smtp.mailfrom=g.harvard.edu;
+	dkim=pass header.d=rowland.harvard.edu header.i=@rowland.harvard.edu header.a=rsa-sha256 header.s=google header.b=usUOj+jf;
+	arc=none smtp.remote-ip=209.85.160.177
+Received: from mail-qt1-f177.google.com (mail-qt1-f177.google.com [209.85.160.177])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78F87606A31A
-	for <lkmm@lists.linux.dev>; Mon, 23 Nov 2026 04:33:17 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 78F87606A31A
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--wayneyan.bounces.google.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 866F8606A33E
+	for <lkmm@lists.linux.dev>; Mon, 23 Nov 2026 14:58:38 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 866F8606A33E
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=rowland.harvard.edu
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=g.harvard.edu
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20260707 header.b=bScARQu2
-Received: by mail-pj1-f70.google.com with SMTP id 98e67ed59e1d1-3b45655b428so1723386a91.0
-        for <lkmm@lists.linux.dev>; Sun, 22 Nov 2026 20:33:17 -0800 (PST)
+	dkim=pass (2048-bit key, unprotected) header.d=rowland.harvard.edu header.i=@rowland.harvard.edu header.a=rsa-sha256 header.s=google header.b=usUOj+jf
+Received: by mail-qt1-f177.google.com with SMTP id d75a77b69052e-5364648ae07so35003291cf.1
+        for <lkmm@lists.linux.dev>; Mon, 23 Nov 2026 06:58:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20260707; t=1795408397; x=1796013197; darn=lists.linux.dev;
-        h=content-type:cc:to:from:subject:message-id:references:mime-version
-         :in-reply-to:date:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=2igfz4o64f3h+SJ6EV7b3a22Ao4Z+RGhRptKFvD0FuY=;
-        b=bScARQu2Z7t1TD8l07ie1bWVaKLBNZgcWGvoU5/rwrtchHBrpnPKyLdN/62+DS10jq
-         3W0V7eLjmED7mFRBTBnmgbD0FpOmrsrtEk8b3W3rKl8gcRGI3uWus3ATXZljDfMuogrR
-         lqmYBv6o74IQfUzzwFby9dertH2q0WKbKtFY8CJkmsD1c9bHAyIeDkaaAu9M57JN5JK/
-         npCWg7Ih+Y70Myi+RHQ4/Yk202TzCnNNVVs8560fsok73FoumYecc481UgD/vJqrRvLz
-         ykOQ1FR5Qeb7aXdGNy4sxwnUWgQkQ49WRB//gGa50khIgUcUDzjCplFAeiq4AOnubFp9
-         zP4Q==
+        d=rowland.harvard.edu; s=google; t=1795445917; x=1796050717; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=Z9sGErjvuTdsND5vQoTeu95uEySWd8dkG2qG5cilc7U=;
+        b=usUOj+jfBxbu8f/MobuhJL9vYLS9MMyU3FP7esrIUmWjUlSHmC1fIAMCjYT0TYLJ+d
+         S8BSTtSge/4mRbsU9mP6xQ7NeNiE7EEqNvDNsoSKjqMS+yKVWzHt8PltT5kkszGJqDH+
+         4B3vQNvOm6jcCYTVnYZQxfDyiZmL7QodihskrlWNMmLO/dmHjo4tQ0cRSzxyCBNbgGSj
+         r9u6MZSBlVjT2K3MafuLfpBrZABBxy50CQ1q2AzXbeOUh75e0lDjcbs+QJFiJWsxtUfA
+         SPK192jv6XMkSPDAFo4vBdzEV5ab6VsslftDib2j6HSG2wuWPGD1m9wuIVbesltp3UvH
+         aElg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1795408397; x=1796013197;
-        h=content-type:cc:to:from:subject:message-id:references:mime-version
-         :in-reply-to:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=2igfz4o64f3h+SJ6EV7b3a22Ao4Z+RGhRptKFvD0FuY=;
-        b=ptX6vauAher9DaMklMF78mwPDZy07Vo4uCGpUV3kN8cvKLq5rSDfiGFV5MR7loLNwa
-         FrixlIoVSLVgWCDxTJn3z/cviAC5DmvRs9XnaTZ72kGzmsIqpPJRqwejB9D4D9ArIYRB
-         Pum/ONQf+evCpCJl89W3A1Ql8EcuOhyNy/1GDXBSHJIJzkzeCkGk1tIvI4pIDH9WZjih
-         /JxduyjRQ0WQfvlufk+e1t/4IREKcHfscwwk+YCO8oe+Tv+TM6O3ccetnqwdE20rueLR
-         bk+04VaMZeUM4Mtc4BaIX4J4N0/chXX3/iYjGd1E8HtLLT9N47PslrJbllOOLvfZPgyL
-         Fy7A==
-X-Gm-Message-State: APuU4Z9s6pk57s4gfJKGEUSbQmYXMWn+HAdZW3+LdxZzjndocv0JqA9U
-	VcOKT4SrQ6v8NInLAAH+OqPh47n5Hl/3w5rfQzrcoRinRVZTxF3xBQaDN0NbcwDMLg/SCCTXj2e
-	3VINx7RR+c0jOeA==
-X-Received: from pgfy29.prod.google.com ([2002:a05:6a02:851d:b0:cdd:ad4c:6247])
- (user=wayneyan job=prod-delivery.src-stubby-dispatcher) by
- 2002:a17:90b:1649:b0:3b1:2810:dfd6 with SMTP id 98e67ed59e1d1-3b41cb50c4fmr10169858a91.64.1795408396621;
- Sun, 22 Nov 2026 20:33:16 -0800 (PST)
-Date: Mon, 23 Nov 2026 12:33:14 +0800
-In-Reply-To: <e14d32d9-1734-4e55-8ad2-9c8aa0b49c9a@rowland.harvard.edu>
+        d=1e100.net; s=20260707; t=1795445917; x=1796050717;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=Z9sGErjvuTdsND5vQoTeu95uEySWd8dkG2qG5cilc7U=;
+        b=LoqXx+e8yNaz3WCgts6seJpEIT2Y049SQq6g/qSNvSuM16wu7f4ApahVskn/0xXI8T
+         apkKLHvhA56tcHW9DZp5og9RTA4hSw2dGJw3ZyaGzh0CtCeU0j5k3wqTMoxRhx+bdV07
+         YTd4A9ax+gKRN30+BAgmvPrV/Caubm8qfecVLAYfEzSUtZYMxLebahYnOhsEArETcmde
+         JG45l+wEvXVmJxOJdW4gCl7PfSVQBCgNJ5TvMRXMhXbbANkGZjW6Is7C1uz8J8/IJxWg
+         c24xX5ewCSDjgGWCd/P4aGeq4Zy9cKWhSAa0ZqgpV/F+m/a9FVQGyuicIN3LfBFmvWzC
+         WySw==
+X-Gm-Message-State: APuU4Z9iWr05+xQHurjvBKlDGlMS9tcgG2zbmeK5bpVP8z5xpZhCO19n
+	R1yuDCJ0Fmi54Fx05LkS25qx4rKnfNRqtn3HOHCgwAi5ot8DcVJQprx8kgucBSPJDA==
+X-Gm-Gg: AZFdTZd6YYemrhxPYjTp2Ghlxr9u7idMUoCLfzEgYMWH1ShdqWHJ5LoapkKw1gkyjJR
+	VjAKzpH4C4zF/nZZpqkNU1uqVyuLL0tgiJOL/1mDgn5qWl0WHNZg4qifs5aZnOMhK/xQasYrzCS
+	YeD+InwINQ/2j32mGSTWxqzXkJ+/tW0NrJKbT8SK+ac8CQLzTsc2f07/x+2QhDvBS6zOJ5LFGKZ
+	Mtpakaa+nHDZLzHCCMyd+X4Vy/blgiLPAeGanY2ow7ZzEktMJva9IxaDFNTV8F1BX5RKAeb7TKA
+	L3UvO6AqMybDfGe49afGMRaniNkUYn7P9+DHugq/iV4EVBvmVo0MMSLSRtOoEPH/lPtstCguutG
+	J++8PsWh+C+PbA1zUL8JAUQGXT7y3nJFuWAvHHegaVUOlERyZjY4bJoETM78WMlGLe86/lbzIYY
+	RvDjbi9eus0tsk4ilwRUkkjjfQzHFs4DiUhdJmRtbolTfohUBQwVXHyz4ihGG8M8QVL7OlAM86g
+	aORbse2n+hDGukqslK7gqGtMBJkxlxz6SYG8TegQI4IL2hSddrKjTf+rO1tHQQBFr4JlV2v2i2y
+	IfuDzc5lqmuguisjlj8uFzYVWgpkMH3X972n7J3Uzylciyk=
+X-Received: by 2002:ac8:6f16:0:b0:55d:6cfa:3e78 with SMTP id d75a77b69052e-55d76a1f704mr229976471cf.34.1795445917234;
+        Mon, 23 Nov 2026 06:58:37 -0800 (PST)
+Received: from rowland.harvard.edu ([140.247.181.15])
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-92134bf848dsm108115136d6.44.2026.11.23.06.58.36
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 23 Nov 2026 06:58:36 -0800 (PST)
+Date: Mon, 23 Nov 2026 09:58:34 -0500
+From: Alan Stern <stern@rowland.harvard.edu>
+To: Wayne Yan <wayneyan@google.com>
+Cc: lkmm@lists.linux.dev, Jonas Oberhauser <jonas.oberhauser@huawei.com>,
+	Andrea Parri <parri.andrea@gmail.com>,
+	"Paul E . McKenney" <paulmck@kernel.org>,
+	Boqun Feng <boqun.feng@gmail.com>,
+	Jade Alglave <j.alglave@ucl.ac.uk>,
+	Luc Maranget <luc.maranget@inria.fr>,
+	Mars Cheng <marscheng@google.com>,
+	Kuan-Wei Chiu <visitorckw@google.com>
+Subject: Re: Question on (prop \ id) & int excluding non-trivial self-links
+Message-ID: <3422c76c-67ca-4314-bc82-4f6b35f9ece4@rowland.harvard.edu>
+References: <20261120083620.2186353-1-wayneyan@google.com>
+ <e14d32d9-1734-4e55-8ad2-9c8aa0b49c9a@rowland.harvard.edu>
+ <20261123043314.819493-1-wayneyan@google.com>
 X-Mailing-List: lkmm@lists.linux.dev
 List-Id: <lkmm.lists.linux.dev>
 List-Post: <mailto:lkmm@lists.linux.dev>
@@ -76,62 +102,31 @@ List-Subscribe: <mailto:lkmm+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:lkmm+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:lkmm+owner@lists.linux.dev>
 Precedence: list
-Mime-Version: 1.0
-References: <20261120083620.2186353-1-wayneyan@google.com> <e14d32d9-1734-4e55-8ad2-9c8aa0b49c9a@rowland.harvard.edu>
-X-Mailer: git-send-email 2.56.1.750.gf70dc682cf-goog
-Message-ID: <20261123043314.819493-1-wayneyan@google.com>
-Subject: Re: Question on (prop \ id) & int excluding non-trivial self-links
-From: Wayne Yan <wayneyan@google.com>
-To: Alan Stern <stern@rowland.harvard.edu>
-Cc: lkmm@lists.linux.dev, Jonas Oberhauser <jonas.oberhauser@huawei.com>, 
-	Andrea Parri <parri.andrea@gmail.com>, "Paul E . McKenney" <paulmck@kernel.org>, 
-	Boqun Feng <boqun.feng@gmail.com>, Jade Alglave <j.alglave@ucl.ac.uk>, 
-	Luc Maranget <luc.maranget@inria.fr>, Mars Cheng <marscheng@google.com>, 
-	Kuan-Wei Chiu <visitorckw@google.com>, Wayne Yan <wayneyan@google.com>
-Content-Type: text/plain; charset="UTF-8"
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20261123043314.819493-1-wayneyan@google.com>
 
-On Fri, Nov 20, 2026 at 04:16:18PM -0500, Alan Stern wrote:
-> > In our MMIO experiment, some of those self-cycles were no
-> > longer caught elsewhere and leaked through because prop \ id stripped
-> > them.
->
-> As Jonas asked, how does this happen?
+On Mon, Nov 23, 2026 at 12:33:14PM +0800, Wayne Yan wrote:
+> On Fri, Nov 20, 2026 at 04:16:18PM -0500, Alan Stern wrote:
+> > There doesn't seem to be any need for them, especially considering that
+> > the memory model is not meant to apply to MMIO.  In fact, you would
+> > probably want a completely different memory model if you had to cover
+> > interactions between CPUs and I/O devices.
+> 
+> On this point: our goal is to model the CPU-side ordering guarantees
+> for MMIO primitives mentioned in memory-barriers.txt. Since driver
+> code uses them alongside normal RAM accesses, spinlocks, and RCU,
+> extending linux-kernel.cat seemed much more practical for our use
+> case. Do you think it's wrong to put the CPU-side subset on top of
+> the existing linux-kernel.cat?
 
-Jonas is right: I put an ordering relation in cumul-fence and didn't
-put it in hb in an earlier draft of our model, thinking that since
-cumul-fence is a stronger guarantee, putting it there was enough.
+Nothing wrong at all, provided you put the extension in a separate file 
+(like lock.cat is separate).
 
-Specifically, I was modeling Rule 2 for readX()/writeX() from
-Documentation/memory-barriers.txt:
+How does your memory model express the relation between two MMIO-mapped 
+addresses of being on the same device?
 
-  2. A writeX() issued by a CPU thread holding a spinlock is ordered
-     before a writeX() to the same peripheral from another CPU thread
-     issued after a later acquisition of the same spinlock.
+Does the model include things like PCI's posted writes?
 
-as:
-
-  let in-spinlock = ([LKW] ; po) \ ([LKW] ; po-loc ; [UL] ; po?)
-  let mmio-lock = [Mmio-write] ; in-spinlock^-1 ; co ; in-spinlock ;
-  	[Mmio-write]
-
-and put it inside cumul-fence after restricting acq-po/po-rel to
-normal RAM, per the rule that SMP acquire/release and spinlocks do
-not order relaxed MMIO accesses.
-
-Once we added the proper MMIO hb edges, changing back to prop \ id
-changed nothing, so no upstream change to prop is needed.
-
-> There doesn't seem to be any need for them, especially considering that
-> the memory model is not meant to apply to MMIO.  In fact, you would
-> probably want a completely different memory model if you had to cover
-> interactions between CPUs and I/O devices.
-
-On this point: our goal is to model the CPU-side ordering guarantees
-for MMIO primitives mentioned in memory-barriers.txt. Since driver
-code uses them alongside normal RAM accesses, spinlocks, and RCU,
-extending linux-kernel.cat seemed much more practical for our use
-case. Do you think it's wrong to put the CPU-side subset on top of
-the existing linux-kernel.cat?
-
-Thanks,
-Wayne
+Alan Stern

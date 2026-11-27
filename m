@@ -1,73 +1,131 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=74.125.82.200
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=158.69.130.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795494382;
-	b=qHPciFAEuMY+RsXK6R0nwobHfRGZY9IlVakvti8loRcA5khTorWVdgid3ImN6vmjnHhG
-	 rkNXJPIDCFh0951KvUM2hbjZI9gqhcIyPXAijuG5RmGM+dQEI/Z3Wanv0UCrz844Kec2H
-	 UYEPFbVGF6HRh36f/N8FZh54kbD6urXZyfOYQikKfHqPv6imSKoKoyguU5lNiAmzUyRKe
-	 ZesG5TfsIsbOyzvxcJPhDZ3cTQUxpB65yc1ZbCvwdbuTaeetDh1kiReWZwmi+KBRf0Dgp
-	 DL5rPQUltBUAMQLX587oKEy8SEoTBIWscTaFnPSIxV9sM2X6v2U4OF8P/psaVTME+xQ==
+	t=1795805906;
+	b=o7imVjMtN8fAtra8vWHuXQBT6+w+Q5gkKxa/vY06RzG97Nww2P+afxBK3OgJEDP7O3L0
+	 /2RPJIKE32DwgChhEYLCXQ8mGHRb/UcXYE7dd0D3hmWs8Qwt4IWRm3fmeGfLH2RC7DONd
+	 SA2/i1GcMFZfc8Xqob1LJAJh1BiEvs9mR0ZmN4rqdT0bY8Au8yRi5xPDpf/K+cqqFj3dV
+	 JoPnNQHjjNxfiqvrgPAF+EkFXIVNw3akSSnpFoC/0xSr0vg/yVaaa/TxqNH28PnXTvzSE
+	 sAMhTwhjbqKgxCVHGAqgwujKVU1JXcYsC12+xFPbjkMV/8JUGyAcLorrvALebO2NZyA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795494382;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Received:Date:In-Reply-To:Mime-Version:
-	 References:X-Mailer:Message-ID:Subject:From:To:Cc:Content-Type;
-	bh=aIci3Qk7fN5eLXhpIXDm+EfzO1nSUnwHA6TBtJc3Q/g=;
-	b=kuwNYUV7rBKg7Yql6kdPbP7use9r0vlolsdNK7mnRjytVeZBySAp/CLBz/G/EPY/KqGe
-	 8pVPiGbTKnBbYjUrbQDhcRtw0hRiNzBLuavkSv5QWKutdC1AHf0OUPv2BmylmKbNHNGH1
-	 PUas1EiFn5nSetHLw5ZxsevDNjRWuFnOO5prsQy8RsV5ZAIoZPW7gLZxcCVSbD1cw9SrE
-	 Z3IKIX9EFJjCLsFkmQjf38jJLhBxdLNYQMdFCkPgesE8Pi8Up+zHdBfnwaZwhtVoaQADj
-	 6E6a5yesbm9mhpdghc9o43NDYPBStWnvv16l3e38WCtRnoWncvnpHUm2RZdCdBF35uw==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795805906;
+	h=DMARC-Filter:DKIM-Signature:Received:From:To:Cc:Subject:Date:
+	 Message-ID:X-Mailer:MIME-Version:Content-Transfer-Encoding;
+	bh=zuf19/Sm9DL6ZOPD0E1irSSwGTnKZXB6/6sdFafIiyg=;
+	b=C9g0b61gCOr3l6OcB9Do+RCSMwxom6idfVAgjGEcXJarGbT3VyUPN52ARm4z8MLR6s0e
+	 TFNAUE0XvT+/oCP80C6GSxYRiIb3aFMZcSkRMAre5cerHuVQsx6xRNWzl4L4qETfXAD7B
+	 /yK8lj6+5voZBE2u5Ny0yy8d67+UX/SDnYVZwIJAX3rApI6uMHqo88DtfRtoJlPvccq71
+	 OEP+OMpFHbEr5j11gOolKQofB4QK68Bl9CdGDckBnCjSqP+7OkILpZ5jzUaRDFEEwpVRW
+	 21hZZN51VEVEwRbafaCFUZbRAUxrBtA6nKtL3ujEwckV0XmGK4JkGtVK9kXO0GOw9Ug==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=google.com;
-	spf=pass smtp.mailfrom=flex--wayneyan.bounces.google.com;
-	dkim=pass header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20260707 header.b="WOS+z/Gw";
-	arc=none smtp.remote-ip=74.125.82.200
-Received: from mail-dy1-f200.google.com (mail-dy1-f200.google.com [74.125.82.200])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	dmarc=pass header.from=efficios.com;
+	spf=pass smtp.mailfrom=efficios.com;
+	dkim=pass header.d=efficios.com header.i=@efficios.com header.a=rsa-sha256 header.s=smtpout1 header.b=C1em5emX;
+	arc=none smtp.remote-ip=158.69.130.18
+Received: from smtpout.efficios.com (smtpout.efficios.com [158.69.130.18])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42642606A31E
-	for <lkmm@lists.linux.dev>; Tue, 24 Nov 2026 04:26:22 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 42642606A31E
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--wayneyan.bounces.google.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC821606A324;
+	Fri, 27 Nov 2026 18:58:24 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org EC821606A324
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=efficios.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=efficios.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20260707 header.b=WOS+z/Gw
-Received: by mail-dy1-f200.google.com with SMTP id 5a478bee46e88-3846d5f54c1so5045708eec.1
-        for <lkmm@lists.linux.dev>; Mon, 23 Nov 2026 20:26:22 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20260707; t=1795494381; x=1796099181; darn=lists.linux.dev;
-        h=content-type:cc:to:from:subject:message-id:references:mime-version
-         :in-reply-to:date:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=aIci3Qk7fN5eLXhpIXDm+EfzO1nSUnwHA6TBtJc3Q/g=;
-        b=WOS+z/Gw6hVcPyd5cSMHo7cyOIJUuulc8rNzCNP/c4J4IOzCCcPPFDP8Irtd7Xuave
-         ELKvOHgtkJD3gEzb0nqdvP8/g0uEIZo/BsXdYPQMsNj5UoJ35/Jw7RGci7moMS6Sxp1Z
-         FHC78Gc/CVshSy5x5XhWCEzYl0gxT6UMCWxDBZA0zIVWkbglfFiSo0A1nI3qPtlkqvP0
-         /G+tk3WMr4xD4/UXDbaMur5Mem5KOSNXLsCsh4GuLyRgKoVWY4drQAH+D+coPIj3uNRI
-         2TII3vPMUak89TvKyaQ6VQqVefZi+zr2Fnb43EVp5EAs4hpsQkClLAk2RlqifdpoC4+d
-         PrMQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1795494381; x=1796099181;
-        h=content-type:cc:to:from:subject:message-id:references:mime-version
-         :in-reply-to:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=aIci3Qk7fN5eLXhpIXDm+EfzO1nSUnwHA6TBtJc3Q/g=;
-        b=HvK7AYud29wjCWCtYlj6IJZTbRoi299Kd9c7MMIv2zcptzAC74ScfUWZwFZBUx5OBt
-         30jcHK5ZHnZOTP57Ly/VovwV8tflth1n9YFKyKwWsB6oc7u5n019Y3u2njHDv9LerYa9
-         mfKFvikSbHRcRK+FsW7OkQ9dSb8Ctro+sVg7PUgXsJ+J9A8fqa2KpfeN07Z3pD2/UMMv
-         kzmhSxuPNaU94DOdiUek7rvev/2ptTzm5/8sNbMAN4B8aDr2l1ymrEfkur4W87UvYlCI
-         jqEJC1E33p1sB6LKYwffGcnb3PK4QM31OPBi631r04+85AZTUh9elnOSg/5EjpEANLJE
-         JGzA==
-X-Gm-Message-State: APuU4Z8qqS+m+HHydmGib7zx78S8PYe9S2kO+ExanhuzVGextaRQTiEF
-	aLXtZ2+7KViy+52OzwcG3EcqegN3hWUTxzeqKGgv/cc+5HeJlb1E6axvWELYay+TJBLfuL64n8J
-	K11rIrEP7Ecm3Sw==
-X-Received: from dlgj1-n1.prod.google.com ([2002:a05:7023:e41:10b0:1a7:2bf1:46cc])
- (user=wayneyan job=prod-delivery.src-stubby-dispatcher) by
- 2002:a05:701a:cc95:20b0:144:fa57:c617 with SMTP id a92af1059eb24-1b5568f1200mr12791401c88.34.1795494380844;
- Mon, 23 Nov 2026 20:26:20 -0800 (PST)
-Date: Tue, 24 Nov 2026 12:26:18 +0800
-In-Reply-To: <3422c76c-67ca-4314-bc82-4f6b35f9ece4@rowland.harvard.edu>
+	dkim=pass (2048-bit key) header.d=efficios.com header.i=@efficios.com header.a=rsa-sha256 header.s=smtpout1 header.b=C1em5emX
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=efficios.com;
+	s=smtpout1; t=1795805903;
+	bh=zuf19/Sm9DL6ZOPD0E1irSSwGTnKZXB6/6sdFafIiyg=;
+	h=From:To:Cc:Subject:Date:From;
+	b=C1em5emXbpmwbUaychggQSZrT3/kvUnR68z3W0GT1P/KTN19CUjYc2REt7KFklvVF
+	 J8ry+o1VdxlmxoI+X886jiZoEdbjCzH0pgZlg5BvEB4Y6+RxL3+wiFZCoNWiE5hg94
+	 f7LHNRAybdMcAiNE53dIeZ6shefiwO8hFGsCtqfr9BRFRqP3hIkjZpjLniFGxpJTE1
+	 tHV46If6OOv3tjaOmG0aNuRMZ3sxMzj/fRgNPMhfMxRoVKW3Y1oroobsD5q2j9K0bW
+	 m/M98kcEHIDkPJPyzTY5YMyUrYtiXgLO3X72Jba1FZUJUA3zbA4Bz1BjRsuzUVP3j1
+	 wLoVrol/jTNkw==
+Received: from thinkos.internal.efficios.com (mtl.efficios.com [216.120.195.104])
+	by smtpout.efficios.com (Postfix) with ESMTPSA id 4jbjNv3kpyzXT5;
+	Fri, 27 Nov 2026 13:58:23 -0500 (EST)
+From: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+To: Peter Zijlstra <peterz@infradead.org>,
+	Ingo Molnar <mingo@redhat.com>
+Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
+	Juri Lelli <juri.lelli@redhat.com>,
+	Vincent Guittot <vincent.guittot@linaro.org>,
+	Dietmar Eggemann <dietmar.eggemann@arm.com>,
+	Steven Rostedt <rostedt@goodmis.org>,
+	Ben Segall <bsegall@google.com>,
+	Mel Gorman <mgorman@suse.de>,
+	Valentin Schneider <vschneid@redhat.com>,
+	K Prateek Nayak <kprateek.nayak@amd.com>,
+	linux-kernel@vger.kernel.org,
+	"Paul E. McKenney" <paulmck@kernel.org>,
+	Michal Clapinski <mclapinski@google.com>,
+	Andrei Vagin <avagin@gmail.com>,
+	Shuah Khan <shuah@kernel.org>,
+	Aniket Gattani <aniketgattani@google.com>,
+	linux-kselftest@vger.kernel.org,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Chris Gellermann <christian.gellermann@codasip.com>,
+	Bala-Vignesh-Reddy <reddybalavignesh9979@gmail.com>,
+	Wei Yang <richard.weiyang@gmail.com>,
+	Thomas Gleixner <tglx@kernel.org>,
+	Huacai Chen <chenhuacai@kernel.org>,
+	WANG Xuerui <kernel@xen0n.name>,
+	loongarch@lists.linux.dev,
+	"James E.J. Bottomley" <James.Bottomley@HansenPartnership.com>,
+	Helge Deller <deller@gmx.de>,
+	John David Anglin <dave.anglin@bell.net>,
+	linux-parisc@vger.kernel.org,
+	Jonathan Corbet <corbet@lwn.net>,
+	Shuah Khan <skhan@linuxfoundation.org>,
+	Randy Dunlap <rdunlap@infradead.org>,
+	Paul Walmsley <pjw@kernel.org>,
+	Palmer Dabbelt <palmer@dabbelt.com>,
+	Albert Ou <aou@eecs.berkeley.edu>,
+	Alexandre Ghiti <alex@ghiti.fr>,
+	Guo Ren <guoren@kernel.org>,
+	linux-doc@vger.kernel.org,
+	linux-riscv@lists.infradead.org,
+	linux-csky@vger.kernel.org,
+	Jonas Bonn <jonas@southpole.se>,
+	Stefan Kristiansson <stefan.kristiansson@saunalahti.fi>,
+	Stafford Horne <shorne@gmail.com>,
+	linux-openrisc@vger.kernel.org,
+	Rich Felker <dalias@libc.org>,
+	John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>,
+	linux-sh@vger.kernel.org,
+	Chris Zankel <chris@zankel.net>,
+	Max Filippov <jcmvbkbc@gmail.com>,
+	linux-arch@vger.kernel.org,
+	Borislav Petkov <bp@alien8.de>,
+	Dave Hansen <dave.hansen@linux.intel.com>,
+	x86@kernel.org,
+	"H. Peter Anvin" <hpa@zytor.com>,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	Will Deacon <will@kernel.org>,
+	Mark Rutland <mark.rutland@arm.com>,
+	linux-arm-kernel@lists.infradead.org,
+	Andy Lutomirski <luto@kernel.org>,
+	Alan Stern <stern@rowland.harvard.edu>,
+	Andrea Parri <parri.andrea@gmail.com>,
+	Boqun Feng <boqun@kernel.org>,
+	Nicholas Piggin <npiggin@gmail.com>,
+	David Howells <dhowells@redhat.com>,
+	Jade Alglave <j.alglave@ucl.ac.uk>,
+	Luc Maranget <luc.maranget@inria.fr>,
+	Akira Yokosawa <akiyks@gmail.com>,
+	Daniel Lustig <dlustig@nvidia.com>,
+	Joel Fernandes <joelagnelf@nvidia.com>,
+	lkmm@lists.linux.dev,
+	bpf@vger.kernel.org,
+	Naveen N Rao <naveen@kernel.org>,
+	"David S. Miller" <davem@davemloft.net>,
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	linux-trace-kernel@vger.kernel.org
+Subject: [PATCH v2 00/16] membarrier: fixes, selftests and documentation
+Date: Fri, 27 Nov 2026 13:58:05 -0500
+Message-ID: <20261127185822.158216-1-mathieu.desnoyers@efficios.com>
+X-Mailer: git-send-email 2.47.3
 X-Mailing-List: lkmm@lists.linux.dev
 List-Id: <lkmm.lists.linux.dev>
 List-Post: <mailto:lkmm@lists.linux.dev>
@@ -76,93 +134,211 @@ List-Subscribe: <mailto:lkmm+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:lkmm+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:lkmm+owner@lists.linux.dev>
 Precedence: list
-Mime-Version: 1.0
-References: <20261120083620.2186353-1-wayneyan@google.com> <e14d32d9-1734-4e55-8ad2-9c8aa0b49c9a@rowland.harvard.edu>
- <20261123043314.819493-1-wayneyan@google.com> <3422c76c-67ca-4314-bc82-4f6b35f9ece4@rowland.harvard.edu>
-X-Mailer: git-send-email 2.56.1.809.ga0b61035b5-goog
-Message-ID: <20261124042618.1239002-1-wayneyan@google.com>
-Subject: Re: Question on (prop \ id) & int excluding non-trivial self-links
-From: Wayne Yan <wayneyan@google.com>
-To: Alan Stern <stern@rowland.harvard.edu>
-Cc: lkmm@lists.linux.dev, Jonas Oberhauser <jonas.oberhauser@huawei.com>, 
-	Andrea Parri <parri.andrea@gmail.com>, "Paul E . McKenney" <paulmck@kernel.org>, 
-	Boqun Feng <boqun.feng@gmail.com>, Jade Alglave <j.alglave@ucl.ac.uk>, 
-	Luc Maranget <luc.maranget@inria.fr>, Mars Cheng <marscheng@google.com>, 
-	Kuan-Wei Chiu <visitorckw@google.com>, Wayne Yan <wayneyan@google.com>
-Content-Type: text/plain; charset="UTF-8"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 
-On Mon, Nov 23, 2026 at 09:58:34AM -0500, Alan Stern wrote:
-> How does your memory model express the relation between two MMIO-mapped
-> addresses of being on the same device?
+This series comes from a review of the membarrier system call. The
+review covered the code, its selftests and the fixes applied over
+time. It also covered the barrier and core serialization requirements
+of each architecture.
 
-For now we assume all MMIO variables in a litmus test belong to a
-single peripheral. Supporting multiple distinct peripherals in one
-test would probably require changes to the herd7 runtime that we
-haven't looked into yet.
+The series fixes four kernel issues:
 
-> Does the model include things like PCI's posted writes?
+ - Patch 1: update the runqueue membarrier state when the scheduler
+   switches from a kernel thread or an exited task which borrowed the
+   mm. MEMBARRIER_CMD_GLOBAL_EXPEDITED no longer skips a registered
+   process.
 
-We don't model a PCI bus explicitly; we only constrain what
-memory-barriers.txt and device-io.rst guarantee and nothing else, so
-writeX() ordering stays loose enough to allow posted-write effects
-unless flushed.
+ - Patch 2: report a registration in MEMBARRIER_CMD_GET_REGISTRATIONS
+   only when it completed. An rseq or sync core registration is no
+   longer reported as a private expedited registration as well.
 
-For example, in this test:
+ - Patch 8 and patch 9: add a full memory barrier in switch_mm() for
+   registered processes, on LoongArch and on parisc. The expedited
+   commands need it after the store to rq->curr.
 
-  P0(int *reg, int *buf)
-  {
-  	int r1;
+Patch 1 and patch 2 were reproduced from user-space on v7.4-rc2.
 
-  	writel(1, reg);
-  	r1 = READ_ONCE(*buf);
-  }
+Patch 8 and patch 9 were found by reading the code and the
+architecture manuals. Feedback from the LoongArch and parisc
+maintainers is welcome.
 
-  P1(int *reg, int *buf)
-  {
-  	int r2;
+The series fixes and extends the selftests:
 
-  	WRITE_ONCE(*buf, 1);
-  	mb();
-  	r2 = readl(reg);
-  }
+ - Patch 3: rebuild the tests when membarrier_test_impl.h changes.
 
-  exists (0:r1=0 /\ 1:r2=0)
+ - Patch 4: issue the sync core command in the test which is named
+   after it.
 
-0:r1=0 /\ 1:r2=0 is allowed because writel() is only ordered after
-prior RAM writes, so P0 can execute READ_ONCE(*buf) while writel() is
-still posted in flight.
+ - Patch 5: run the tests on nohz_full kernels, which only lack
+   MEMBARRIER_CMD_GLOBAL.
 
-Instead, inserting a readl(reg); flush right after writel(1, reg); on
-P0 makes the outcome forbidden because writel() is ordered before
-readl() to the same peripheral and readl() completes before subsequent
-RAM reads, matching the readback flush pattern in device-io.rst.
+ - Patch 6: add membarrier_test_ipi. It checks which CPUs each
+   expedited command interrupts. Two of its test cases fail without
+   patch 1.
 
-Similarly, under a spinlock:
+ - Patch 7: add membarrier_test_cmd. It checks the command arguments
+   and the registrations across fork, exec and CLONE_VM. Two of its
+   tests fail without patch 2.
 
-  P0(int *reg, int *x, spinlock_t *l)
-  {
-  	spin_lock(l);
-  	writel(1, reg);
-  	WRITE_ONCE(*x, 1);
-  	spin_unlock(l);
-  }
+ - Patch 13: add litmus tests of the memory ordering scenarios, for
+   the Linux kernel memory model. One variant shows the LoongArch and
+   parisc issue.
 
-  P1(int *reg, int *x, spinlock_t *l)
-  {
-  	int r0;
-  	int r1;
+ - Patch 14: add the selftests to the MEMBARRIER SUPPORT entry of
+   MAINTAINERS.
 
-  	spin_lock(l);
-  	r0 = READ_ONCE(*x);
-  	if (r0)
-  		r1 = readl(reg);
-  	spin_unlock(l);
-  }
+ - Patch 15: add membarrier_test_barrier, a stress test for x86-64.
+   BPF programs on kprobes count, for each thread, the memory
+   barriers which membarrier relies on. The test also checks the
+   barriers of the scheduler. Two of its test cases fail without
+   patch 1. It adds no kernel code.
 
-  exists (1:r0=1 /\ 1:r1=0)
+ - Patch 16: extend membarrier_test_barrier to the sync core
+   command. It counts the core serializing instructions in the same
+   way.
 
-1:r0=1 /\ 1:r1=0 is still allowed because spinlocks only order
-writeX() against a later lock holder's writeX().
+The series updates the documentation:
+
+ - Patch 10: add the missing architectures to the list of barriers
+   after the store to rq->curr.
+
+ - Patch 11: describe what the sync core command relies on for x86
+   with FRED and for arm64 with FEAT_ExS.
+
+ - Patch 12: remove two stale x86 entry comments.
+
+The sync core requirements were checked against the architecture
+manuals of x86 (Intel SDM and AMD APM), arm, arm64, powerpc, s390 and
+riscv. These are the architectures which support the sync core
+command. No return path to user-space was found to miss its documented
+serialization.
+
+Testing:
+
+ - The six membarrier test programs pass in an x86-64 KVM guest
+   with 8 CPUs and lockdep.
+
+ - With nohz_full=2-7, the six programs pass. Only the
+   MEMBARRIER_CMD_GLOBAL test is skipped.
+
+ - With nosmp and with maxcpus=2, membarrier_test_ipi is skipped
+   because it needs 3 CPUs. membarrier_test_barrier skips the two
+   test cases which need 3 CPUs. The four other programs pass.
+
+ - With pti=on, membarrier_test_barrier passes and does not check
+   the core serialization.
+
+ - Patch 8 and patch 9 are compile-tested only: LoongArch and parisc
+   (32-bit, SMP), default configuration.
+
+ - herd7 reports the expected result for each of the 13 litmus tests.
+
+The series is based on v7.4-rc2.
+
+Changes since RFC v1:
+
+ - Patch 15: fix three issues reported by Sashiko in
+   membarrier_test_barrier. The lazy TLB test case now sees the target
+   switch back to its CPU. The test is skipped, instead of failing,
+   on a kernel without CONFIG_BPF_EVENTS or CONFIG_KPROBE_EVENTS. A
+   test case no longer reuses the counter slots of the previous one.
+
+ - Patch 16: context changes only.
+
+RFC v1: https://lore.kernel.org/lkml/20261113131903.157186-1-mathieu.desnoyers@efficios.com/
+
+An LLM coding assistant did this work at my request: the review, the
+reproducers, the fixes, the tests and the changelogs. I actively
+steered it and reviewed the result.
 
 Thanks,
-Wayne
+
+Mathieu
+
+Mathieu Desnoyers (16):
+  sched/membarrier: Fix stale runqueue state after a lazy mm switch
+  sched/membarrier: Report only completed registrations
+  selftests/membarrier: Rebuild the tests when their header changes
+  selftests/membarrier: Issue the sync core command in its test
+  selftests/membarrier: Run the tests on nohz_full kernels
+  selftests/membarrier: Test which CPUs the expedited commands interrupt
+  selftests/membarrier: Test command arguments and registration lifetime
+  LoongArch: membarrier: Add full memory barrier in switch_mm()
+  parisc: membarrier: Add full memory barrier in switch_mm()
+  Documentation/membarrier: Update the per-architecture barrier list
+  Documentation/features: Update the membarrier sync core requirements
+  x86/entry: Remove stale membarrier sync core comments
+  selftests/membarrier: Add litmus tests of the memory ordering
+  MAINTAINERS: Add the membarrier selftests to MEMBARRIER SUPPORT
+  selftests/membarrier: Check the memory barriers of each thread
+  selftests/membarrier: Check the core serialization of the sync core
+    command
+
+ .../membarrier-sync-core/arch-support.txt     |   35 +-
+ Documentation/scheduler/membarrier.rst        |   14 +-
+ MAINTAINERS                                   |    1 +
+ arch/loongarch/Kconfig                        |    1 +
+ arch/loongarch/include/asm/membarrier.h       |   33 +
+ arch/loongarch/include/asm/mmu_context.h      |    4 +
+ arch/parisc/Kconfig                           |    1 +
+ arch/parisc/include/asm/membarrier.h          |   33 +
+ arch/parisc/include/asm/mmu_context.h         |    2 +
+ arch/x86/entry/entry_32.S                     |    5 -
+ arch/x86/entry/entry_64.S                     |    4 -
+ arch/x86/include/asm/sync_core.h              |    2 +-
+ kernel/sched/core.c                           |   16 +-
+ kernel/sched/membarrier.c                     |   32 +-
+ kernel/sched/sched.h                          |   15 +
+ tools/testing/selftests/membarrier/.gitignore |    6 +
+ tools/testing/selftests/membarrier/Makefile   |   20 +
+ tools/testing/selftests/membarrier/config     |    9 +
+ .../selftests/membarrier/litmus/README        |   52 +
+ .../litmus/ipi-after-thread-no-exit-mb.litmus |   36 +
+ .../ipi-after-thread-no-handler-mb.litmus     |   36 +
+ .../membarrier/litmus/ipi-after-thread.litmus |   47 +
+ .../ipi-before-thread-no-entry-mb.litmus      |   37 +
+ .../ipi-before-thread-no-handler-mb.litmus    |   37 +
+ .../litmus/ipi-before-thread.litmus           |   46 +
+ .../litmus/sched-in-no-entry-mb.litmus        |   34 +
+ .../membarrier/litmus/sched-in-no-mb.litmus   |   33 +
+ .../membarrier/litmus/sched-in-release.litmus |   38 +
+ .../membarrier/litmus/sched-in.litmus         |   51 +
+ .../litmus/sched-out-no-exit-mb.litmus        |   34 +
+ .../litmus/sched-out-no-sched-mb.litmus       |   34 +
+ .../membarrier/litmus/sched-out.litmus        |   49 +
+ .../membarrier/membarrier_test_barrier.bpf.c  |  173 +++
+ .../membarrier/membarrier_test_barrier.c      | 1364 +++++++++++++++++
+ .../membarrier/membarrier_test_barrier.h      |   54 +
+ .../membarrier/membarrier_test_cmd.c          |  352 +++++
+ .../membarrier/membarrier_test_impl.h         |   14 +-
+ .../membarrier/membarrier_test_ipi.c          |  739 +++++++++
+ 38 files changed, 3443 insertions(+), 50 deletions(-)
+ create mode 100644 arch/loongarch/include/asm/membarrier.h
+ create mode 100644 arch/parisc/include/asm/membarrier.h
+ create mode 100644 tools/testing/selftests/membarrier/config
+ create mode 100644 tools/testing/selftests/membarrier/litmus/README
+ create mode 100644 tools/testing/selftests/membarrier/litmus/ipi-after-thread-no-exit-mb.litmus
+ create mode 100644 tools/testing/selftests/membarrier/litmus/ipi-after-thread-no-handler-mb.litmus
+ create mode 100644 tools/testing/selftests/membarrier/litmus/ipi-after-thread.litmus
+ create mode 100644 tools/testing/selftests/membarrier/litmus/ipi-before-thread-no-entry-mb.litmus
+ create mode 100644 tools/testing/selftests/membarrier/litmus/ipi-before-thread-no-handler-mb.litmus
+ create mode 100644 tools/testing/selftests/membarrier/litmus/ipi-before-thread.litmus
+ create mode 100644 tools/testing/selftests/membarrier/litmus/sched-in-no-entry-mb.litmus
+ create mode 100644 tools/testing/selftests/membarrier/litmus/sched-in-no-mb.litmus
+ create mode 100644 tools/testing/selftests/membarrier/litmus/sched-in-release.litmus
+ create mode 100644 tools/testing/selftests/membarrier/litmus/sched-in.litmus
+ create mode 100644 tools/testing/selftests/membarrier/litmus/sched-out-no-exit-mb.litmus
+ create mode 100644 tools/testing/selftests/membarrier/litmus/sched-out-no-sched-mb.litmus
+ create mode 100644 tools/testing/selftests/membarrier/litmus/sched-out.litmus
+ create mode 100644 tools/testing/selftests/membarrier/membarrier_test_barrier.bpf.c
+ create mode 100644 tools/testing/selftests/membarrier/membarrier_test_barrier.c
+ create mode 100644 tools/testing/selftests/membarrier/membarrier_test_barrier.h
+ create mode 100644 tools/testing/selftests/membarrier/membarrier_test_cmd.c
+ create mode 100644 tools/testing/selftests/membarrier/membarrier_test_ipi.c
+
+
+base-commit: 7475ea8b58616b33c04afb976cf0fbaad9dd63fb
+-- 
+2.47.3
+
